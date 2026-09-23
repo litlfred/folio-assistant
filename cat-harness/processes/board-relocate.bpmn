@@ -78,6 +78,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:startEvent>
 
     <bpmn:task id="A_AskConfirm" name="Name what will move, and where it lands">
+      <bpmn:documentation>Before anything moves, name the content that would move — what it is, with its size and age — and where it lands. The confirmation sits in front of the move: an agent never relocates a durable artefact on its own initiative.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- The question carries the SUBJECT and the DESTINATION, not a
              bare "are you sure": a confirmation that does not say what is
@@ -95,6 +96,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_Cancel" name="Leave the content exactly where it is">
+      <bpmn:documentation>The reader said no: nothing moves, no position is dropped, and the board is left exactly as it was. Drawn as its own end state because a destructive action whose refusal is not drawn gets performed by accident.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_No</bpmn:incoming>
       <bpmn:outgoing>F_Cancelled</bpmn:outgoing>
@@ -105,6 +107,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:endEvent>
 
     <bpmn:task id="A_MoveContent" name="Relocate the content to the trashcan">
+      <bpmn:documentation>Relocate the confirmed content — that one thing, not the class it belongs to — to the trashcan. The folio changes first, because the folio carries what is true.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- A MOVE in the folio, the semantic layer. The node keeps its
              identity, so every reference to it still resolves. -->
@@ -115,6 +118,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:task>
 
     <bpmn:task id="A_UpdateLayer" name="Drop its positions and sweep orphans">
+      <bpmn:documentation>Only after the content has moved: drop its positions from the layout layer and sweep any position whose note is now gone. Sweeping first would make the board authoritative over the folio for one step.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- The layer follows the folio and never the other way: an
              orphan is swept from `board-positions.json`, not edited out
@@ -126,6 +130,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:task>
 
     <bpmn:task id="A_ReportMove" name="Say what moved and where it went">
+      <bpmn:documentation>Tell the reader what moved and where it went, so the content can be found in the trashcan rather than inferred missing from a card that disappeared.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="deletion-requires-confirmation"/></bpmn:extensionElements>
       <bpmn:incoming>F_4</bpmn:incoming>
       <bpmn:outgoing>F_5</bpmn:outgoing>

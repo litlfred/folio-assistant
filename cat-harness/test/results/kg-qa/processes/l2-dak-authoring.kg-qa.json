@@ -5,7 +5,7 @@
     "id": "Process_L2Dak",
     "path": "processes/l2-dak-authoring.bpmn"
   },
-  "source_hash": "sha256:26c552d02ee79f93150ceca622b482429f4a72d25d146911c8c8cbffb4abe96f",
+  "source_hash": "sha256:c9c6d489590444271db05e25735c4b87ed8263b2573bcd47ffc2f4f7587f191a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 11,
     "fail": 0,
     "n/a": 7,
     "unknown": 0

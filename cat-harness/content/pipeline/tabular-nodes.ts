@@ -150,7 +150,7 @@ export function buildTabularNodes(
       path: `blocks/${bId}.jsonld`,
       content: node({
         "@id": bIri,
-        "@type": ["folio:Block", "doco:Table"],
+        "@type": ["folio-assistant-core:Block", "doco:Table"],
         kind: "table",
         label: sheet.name || bId,
         // The header vocabulary IS the findable surface — `p67i`: "a grep for
@@ -192,7 +192,7 @@ export function buildTabularNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": opts.iri("manifest"),
-      "@type": ["folio:SourceDocument"],
+      "@type": ["folio-assistant-core:SourceDocument"],
       title: opts.title,
       contains: containedByManifest,
       provenance: "ingested",

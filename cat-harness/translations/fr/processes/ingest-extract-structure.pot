@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-extract-structure\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.490Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.312Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ingest-extract-structure.bpmn:67
+#: processes/ingest-extract-structure.bpmn:68
 #. Diagram element documentation
 msgid "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier."
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "Binary in hand"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:93
+#: processes/ingest-extract-structure.bpmn:95
 #. Diagram element documentation
 msgid "candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts."
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:76
+#: processes/ingest-extract-structure.bpmn:77
 #. Diagram element documentation
 msgid "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief."
 msgstr ""
@@ -39,7 +39,7 @@ msgstr ""
 msgid "Embedded text layer?"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:92
+#: processes/ingest-extract-structure.bpmn:94
 #. Diagram label
 msgid "Extract claim candidates"
 msgstr ""
@@ -64,24 +64,29 @@ msgstr ""
 msgid "Ingestion subprocess — extract structure"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:105
+#: processes/ingest-extract-structure.bpmn:107
 #. Diagram label
 msgid "no — scanned"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:66
+#: processes/ingest-extract-structure.bpmn:67
 #. Diagram label
 msgid "OCR to ocr/page-*.txt"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:74
+#: processes/ingest-extract-structure.bpmn:75
 #. Diagram label
 msgid "Split into sections/*.md with doc_brief front-matter"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:100
+#: processes/ingest-extract-structure.bpmn:102
 #. Diagram label
 msgid "Structured"
+msgstr ""
+
+#: processes/ingest-extract-structure.bpmn:60
+#. Diagram element documentation
+msgid "The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document."
 msgstr ""
 
 #: processes/ingest-extract-structure.bpmn:39
@@ -89,12 +94,17 @@ msgstr ""
 msgid "Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled."
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:84
+#: processes/ingest-extract-structure.bpmn:87
+#. Diagram element documentation
+msgid "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one."
+msgstr ""
+
+#: processes/ingest-extract-structure.bpmn:85
 #. Diagram label
 msgid "Write structure.json (TOC, page ranges, metadata)"
 msgstr ""
 
-#: processes/ingest-extract-structure.bpmn:104
+#: processes/ingest-extract-structure.bpmn:106
 #. Diagram label
 msgid "yes"
 msgstr ""

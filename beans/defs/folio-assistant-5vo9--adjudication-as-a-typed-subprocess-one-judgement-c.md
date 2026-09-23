@@ -1,11 +1,12 @@
 ---
 # folio-assistant-5vo9
 title: 'ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN'
-status: todo
-parent: folio-assistant-ahvw
+status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-23T06:15:42Z
-updated_at: 2026-09-23T06:15:42Z
+updated_at: 2026-09-23T07:30:16Z
+parent: folio-assistant-ahvw
 ---
 
 Formalize 'use judgement' as a declared subprocess with a typed I/O contract, so a non-deterministic step is marked as one rather than left implicit. Owner's spec 2026-09-23. A CONCRETE INSTANCE ALREADY EXISTS (processes/adjudication.bpmn) — this generalises it rather than starting over.
@@ -144,3 +145,54 @@ survey is needed to produce one.
       `check:workflow-refs` three-state count rather than paralleling it.
 - [ ] Applied to the diagrams `check:workflow-refs` reports as undeclared —
       that list, not "all BPMN".
+
+## PLACEMENT RULED — 2026-09-23
+
+Owner: **"contract in core, machinery in cat-harness"** — the third option, the
+one neither of their two messages had named.
+
+### And a constraint that decides HOW, found while acting on it
+
+**`folio-assistant-core` declares `"needs": ["cat-harness"]`**, quoting the
+owner's own layer order: *"So bootstrap, cat harness, fa-core, f-a, from bottom
+to top."* Core sits **ABOVE** cat-harness.
+
+Measured 2026-09-23: cat-harness names `folio-assistant-core` in **comments
+only** and imports it nowhere; core imports cat-harness (`library-ref.test.ts`).
+The declared direction and the actual imports agree.
+
+So the naive reading of the ruling — a zod schema in core that
+`cat-harness/src/workflow/process-model.ts` imports — **is a layer inversion**,
+and a declared one. It cannot be built that way.
+
+### The reading that works: the layers meet at DATA, not at code
+
+- **Core owns the document contract.** What an adjudication request and its
+  outcome ARE, as artefacts: assets (with their materialization state), the
+  prompt, the declared code enum, and `{code, reasoning}` out. These are
+  content-layer objects, which is core's subject.
+- **cat-harness owns the diagram machinery.** `<folio:adjudication …/>` read
+  from BPMN, the enum validated against what the diagram declares, the
+  refusal reported. Exactly the shape `INVOLVEMENT_VOCABULARIES` took for
+  RASCI: the vocabulary is read from the declaration, not imported from above.
+
+No import crosses the layer in either direction, and each half is checkable
+where it lives. **The risk this accepts** is two statements of the code enum —
+one in a diagram, one in a recorded outcome — and the mitigation is that the
+outcome document carries the enum it was judged against, so a consumer compares
+rather than assumes.
+
+## What ALREADY EXISTS — three of the five asked-for pieces
+
+Measured before writing anything, and it shrinks this bean substantially:
+
+| the spec asks for | already declared? |
+|---|---|
+| ONLY agentic/human actor | ✅ `<folio:fulfilment kinds="person agent" reason="…"/>`, **validated at load time** in `process-model.ts`. `A_Judge` already carries it, and its reason already says *"a mechanical system may NOT take this step, which is the whole reason the process exists."* |
+| marked non-deterministic | ✅ `<folio:judgement reason="…"/>`. `GW_Outcome` already carries it, and `check:workflow-refs` counts the three states. |
+| restricted input set | ✅ `UntaintedDispatch` (`cat-harness/schemas/block-qa.ts`) — `checker_sees` / `adjudicator_sees`, disjointness enforced by `untaintedPartitionDefects`, which reports `overlap` when one party could grade its own input. **Typed to `CompanionRole`, so it is block-QA-specific**: the general contract must generalise it without losing the ability to RESTRICT. |
+| judgement codes as data | ❌ the outcomes are sequence-flow names in one diagram |
+| typed request/outcome, materialized or by reference | ❌ |
+
+**So the genuinely missing piece is the data contract**, not the markers. A
+bean that had assumed otherwise would have rebuilt three working mechanisms.

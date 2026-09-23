@@ -112,6 +112,7 @@
     </bpmn:task>
 
     <bpmn:task id="Task_Isolate" name="3 &amp;#183; Isolate &amp;#8212; own declaration,&amp;#10;namespace, artefact">
+      <bpmn:documentation>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>
@@ -149,6 +150,7 @@
     </bpmn:endEvent>
 
     <bpmn:task id="Task_Extract" name="4 &amp;#183; Extract &amp;#8212; a directory move,&amp;#10;not a file-by-file sift">
+      <bpmn:documentation>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="graph-detanglement"/>
         <folio:bean op="resolve"/>

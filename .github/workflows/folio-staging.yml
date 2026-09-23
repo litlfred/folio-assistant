@@ -35,7 +35,21 @@ name: Folio Staging (reusable)
 # should be designed with the same care, and it is not designed yet.
 #
 # TRIGGERS, ACTUAL: `workflow_call` only. The pull requests named above are
-# the CALLING FOLIO's: its own workflow fires on them and calls this one.
+# the CALLING FOLIO's: its own workflow fires on them and calls this one. A
+# caller that also lists `issue_comment` gets the `comments` job below, which
+# refreshes a preview's review comments when somebody comments (bean `423d`).
+#
+# ## Review comments, and why the `comments` job checks out no PR code
+#
+# The `folio-review-comments` Tool, governed by the `review-comments` skill,
+# turns a PR's tagged comments into `folio-review-comment/v1` todos and
+# writes `review-comments.json`. `stage` runs it against the checked-out PR
+# and also publishes `blocks.json`. `comments` runs it against that published
+# `blocks.json` instead, because an `issue_comment` run is started by anyone
+# who can comment and holds a write token. Checking out the PR's code there
+# is the well-known way to hand that token to a stranger. So `comments`
+# checks out only the platform (at `platform_ref`, never the PR's copy) and
+# the publish branch.
 #
 # ## Invoked by folios
 #
@@ -72,6 +86,14 @@ on:
         required: false
         default: folio-assistant
         type: string
+      todos_dir:
+        description: >
+          The folio's todos graph root. Review-comment statuses committed on the
+          feature branch under its `todo-feedback` directory win over the
+          previously published ones (bean `423d`). Absent is fine.
+        required: false
+        default: todos
+        type: string
       platform_ref:
         description: The platform ref to check out when the folio does not carry it.
         required: false
@@ -91,16 +113,21 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # Reading a PR's conversation comments for the review-comments Tool.
+  issues: read
 
 concurrency:
   # Keyed on the BRANCH, never on the shared publish ref, so two previews do
   # not cancel each other (bean `xd1s`).
-  group: folio-staging-${{ github.event.pull_request.head.ref || github.ref_name }}
+  # A comment run is keyed on its PR NUMBER: on `issue_comment` the ref is the
+  # default branch, so keying on it would put every PR's comment runs in one
+  # group and cancel them against each other.
+  group: folio-staging-${{ github.event.pull_request.head.ref || (github.event.issue.number && format('pr-{0}', github.event.issue.number)) || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   stage:
-    if: github.event.action != 'closed'
+    if: github.event_name != 'issue_comment' && github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -225,6 +252,32 @@ jobs:
           path: pages
           persist-credentials: true
 
+      - name: Ingest review comments
+        # Tagged PR comments → `folio-review-comment/v1` todos, kept across
+        # builds via the preview's previous file (bean `423d`). A failure here
+        # fails the build: a preview whose comment list silently went empty
+        # would read as "nobody commented".
+        if: github.event_name == 'pull_request'
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          FOLIO_DIR: ${{ inputs.folio_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          PR: ${{ github.event.pull_request.number }}
+          TODOS_DIR: ${{ inputs.todos_dir }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          case "$STAGING_SLUG" in ""|.|..|*/*) echo "::error::unsafe slug '$STAGING_SLUG'"; exit 1 ;; esac
+          # Statuses committed on the feature branch (review-comment-move) win.
+          TODOS_ARGS=()
+          if [ -f "$TODOS_DIR/todos.json" ]; then TODOS_ARGS=(--todos "$TODOS_DIR"); fi
+          bun run "$PLATFORM_DIR/folio-assistant-core/scripts/review-comments.ts" "${TODOS_ARGS[@]}" \
+            --repo "$GITHUB_REPOSITORY" --pr "$PR" --commit "$GITHUB_SHA" \
+            --folio "$FOLIO_DIR" --blocks-out "$SITE_DIR/blocks.json" \
+            --existing "pages/STAGING/$STAGING_SLUG/review-comments.json" \
+            --out "$SITE_DIR/review-comments.json"
+
       - name: Deploy the preview and log the render, in one commit
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
@@ -247,8 +300,9 @@ jobs:
           # The build is checked BEFORE anything is deleted (bean `oisv`). A
           # build that exited 0 having written nothing would otherwise replace a
           # working preview with an empty one, which 404s exactly like a page
-          # the author meant to delete. A changeset.json alone is not a site.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vx changeset.json || true)" ]; then
+          # the author meant to delete. The data files the steps above write
+          # (changeset, blocks, review comments) are not a site on their own.
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|blocks\.json|review-comments\.json' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
@@ -323,3 +377,102 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
             }
+
+  comments:
+    # A new or edited PR comment that carries a `block:` tag: refresh that
+    # preview's review-comments.json and nothing else. See the header for why
+    # this job checks out no PR code. Bots are skipped, so the preview comment
+    # this workflow posts cannot start it.
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      github.event.comment.user.type != 'Bot' &&
+      contains(github.event.comment.body, 'block:')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: folio-review-comments-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - name: Check out the platform (never the pull request's copy)
+        uses: actions/checkout@v4
+        with:
+          repository: litlfred/folio-assistant
+          ref: ${{ inputs.platform_ref }}
+          path: platform
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install the platform's dependencies
+        run: |
+          set -eu
+          cd platform
+          if [ ! -f bun.lock ]; then
+            echo "::error::no bun.lock in the platform checkout; refusing an unpinned install"
+            exit 1
+          fi
+          bun install --frozen-lockfile
+
+      - name: Find the pull request's preview
+        id: slug
+        # The head branch is ATTACKER-CONTROLLED on a fork PR: read from the
+        # API into env, never interpolated, and checked by VALUE (bean `fuzm`).
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.pulls.get({ ...context.repo, pull_number: context.issue.number });
+            core.setOutput("branch", data.head.ref);
+
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.publish_branch }}
+          path: pages
+          persist-credentials: true
+
+      - name: Refresh review-comments.json
+        env:
+          PLATFORM_DIR: platform
+          HEAD_BRANCH: ${{ steps.slug.outputs.branch }}
+          PR: ${{ github.event.issue.number }}
+          PUBLISH_BRANCH: ${{ inputs.publish_branch }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          SLUG=$(echo "$HEAD_BRANCH" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          case "$SLUG" in
+            ""|.|..|*/*)
+              echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
+              exit 1
+              ;;
+          esac
+          DIR="pages/STAGING/$SLUG"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            if [ ! -f "$DIR/blocks.json" ]; then
+              echo "::notice::STAGING/$SLUG has no blocks.json yet — no preview to attach comments to. The next build of the PR ingests them."
+              exit 0
+            fi
+            # Recomputed from the publish branch as it is NOW on every
+            # attempt, rather than rebased: a rebase of two runs' versions of
+            # one file conflicts, and a recomputation cannot.
+            bun run "$PLATFORM_DIR/folio-assistant-core/scripts/review-comments.ts" \
+              --repo "$GITHUB_REPOSITORY" --pr "$PR" \
+              --commit "$(jq -r '.commit // "unknown"' "$DIR/review-comments.json" 2>/dev/null || echo unknown)" \
+              --blocks "$DIR/blocks.json" --existing "$DIR/review-comments.json" \
+              --out "$DIR/review-comments.json"
+            git -C pages add "STAGING/$SLUG/review-comments.json"
+            git -C pages commit -m "review-comments($SLUG): refresh on a PR comment" || exit 0
+            if git -C pages push origin "$PUBLISH_BRANCH"; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not publish review comments after 3 attempts"
+              exit 1
+            fi
+            git -C pages fetch origin "$PUBLISH_BRANCH"
+            git -C pages reset --hard "origin/$PUBLISH_BRANCH"
+            bun run "$PLATFORM_DIR/cat-harness/scripts/backoff-sleep.ts" --attempt "$attempt"
+          done

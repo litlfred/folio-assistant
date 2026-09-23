@@ -118,6 +118,9 @@ describe("what gets written", () => {
     expect(wf).toContain("uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(true);
     expect(wf).toContain("cat-harness/scripts/build-document-site.ts --out _site");
+    // A reviewer's tagged comment refreshes the preview's review comments (423d).
+    expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
+    expect(wf).toContain("issues: read");
     expect(r.notes.join(" ")).not.toContain("wired but OFF");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
   });
@@ -127,6 +130,7 @@ describe("what gets written", () => {
     const r = initFolio(opts(d, { contentType: "paper" }));
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
+    expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(false);
     expect(wf).toContain("exit 1");
     expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
   });

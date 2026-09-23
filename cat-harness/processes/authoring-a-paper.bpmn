@@ -89,6 +89,7 @@
       <bpmn:outgoing>A03</bpmn:outgoing>
     </bpmn:task>
     <bpmn:serviceTask id="Task_Scaffold" name="3 · Scaffold the folio repo&#10;[content-plan]">
+      <bpmn:documentation>Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-plan" />
       </bpmn:extensionElements>
@@ -105,6 +106,7 @@
       <bpmn:outgoing>A05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Formalize" name="5 · Formalise in Lean&#10;[lean-formalization]">
+      <bpmn:documentation>Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="lean-formalization" />
         <folio:skill ref="proof-verification" />
@@ -122,6 +124,7 @@
       <bpmn:outgoing>A08</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_Validate" name="6 · Validate&#10;[content-validate]">
+      <bpmn:documentation>Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-validate" />
       </bpmn:extensionElements>
@@ -129,6 +132,7 @@
       <bpmn:outgoing>A09</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Render" name="7 · Render PDF / HTML&#10;[latex-authoring]">
+      <bpmn:documentation>Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="latex-authoring" />
       </bpmn:extensionElements>
@@ -136,6 +140,7 @@
       <bpmn:outgoing>A10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_Review" name="8 · Review and feedback&#10;[content-review]">
+      <bpmn:documentation>Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-review" />
       </bpmn:extensionElements>

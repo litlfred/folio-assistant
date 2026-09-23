@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Issue",
     "path": "processes/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:7fba27fdedf090b17607acb6bcc8c421613f0d03a2593763179da6199577f122",
+  "source_hash": "sha256:a814931b97abd1cf13711d426fc664c762bda3d29d9664bb78550db90284ad31",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

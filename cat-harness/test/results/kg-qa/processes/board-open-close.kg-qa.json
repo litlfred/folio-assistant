@@ -5,7 +5,7 @@
     "id": "Process_BoardOpenClose",
     "path": "processes/board-open-close.bpmn"
   },
-  "source_hash": "sha256:2c682445ba75902112c90a6a9dbf5b02cc915553b6cdc2d1dacdd06a7d7e6497",
+  "source_hash": "sha256:5fa982a417c0f95fe16afdde0e92e4ab44e5b53e0b5e8571b242d880da76ef79",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

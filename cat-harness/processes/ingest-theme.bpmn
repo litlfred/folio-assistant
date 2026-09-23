@@ -120,7 +120,7 @@ non-colour signal">
       <bpmn:documentation>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees ("Never red with green, never blue with yellow").</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="theme-ui-review" />
-      </bpmn:extensionElements>
+      <folio:no-call reason="One automated check (no colour-only signal) out of the post-MVP theme-ui-review, which adds branding, locales and a human judgement. Calling it would put a human gate into an automated ingest."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_t8</bpmn:incoming>
       <bpmn:outgoing>Flow_t10</bpmn:outgoing>
     </bpmn:serviceTask>

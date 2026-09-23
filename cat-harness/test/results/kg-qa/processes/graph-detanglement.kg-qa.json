@@ -5,7 +5,7 @@
     "id": "Process_GraphDetanglement",
     "path": "processes/graph-detanglement.bpmn"
   },
-  "source_hash": "sha256:f59aa1ee18d3d92e76da6efc9e1858ae117cc544656b4cf6272a732eb0d33233",
+  "source_hash": "sha256:3e4461c4eac89c1802d8211149215b363403b645443b92b2fc54b45c61432928",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 12,
     "fail": 0,
     "n/a": 6,
     "unknown": 0

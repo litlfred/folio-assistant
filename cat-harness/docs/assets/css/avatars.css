@@ -52,6 +52,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="who-iris"] {
+  /* an open book — a repository of published documents, in WHO blue */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="skills"] {
   /* an open book — the instruction an Actor performs a Task from */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -329,6 +336,7 @@
 :root[data-fa-scheme="light"] {
   .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
+  .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 46% 34%); }
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
@@ -374,6 +382,7 @@
   :root:not([data-fa-scheme="dark"]) {
     .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 46% 34%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 46% 34%); }
+    .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 46% 34%); }
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 46% 34%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 46% 34%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 46% 34%); }
@@ -420,6 +429,7 @@
 :root[data-fa-scheme="dark"] {
   .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
   .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
+  .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 42% 72%); }
   .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
   .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
   .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
@@ -465,6 +475,7 @@
   :root:not([data-fa-scheme="light"]) {
     .fa-avatar[data-fa-kind="bootstrap"] { background-color: hsl(96 42% 72%); }
     .fa-avatar[data-fa-kind="cat-harness"] { background-color: hsl(268 42% 72%); }
+    .fa-avatar[data-fa-kind="who-iris"] { background-color: hsl(199 42% 72%); }
     .fa-avatar[data-fa-kind="skills"] { background-color: hsl(256 42% 72%); }
     .fa-avatar[data-fa-kind="processes"] { background-color: hsl(280 42% 72%); }
     .fa-avatar[data-fa-kind="scenarios"] { background-color: hsl(292 42% 72%); }
@@ -513,6 +524,7 @@
 :root[data-fa-scheme="light"] {
   .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+  .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
@@ -557,6 +569,7 @@
   :root:not([data-fa-scheme="dark"]) {
     .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 16% 52%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 16% 52%); }
+    .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 16% 52%); }
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 16% 52%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 16% 52%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 16% 52%); }
@@ -601,6 +614,7 @@
 :root[data-fa-scheme="dark"] {
   .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
   .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+  .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
   .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
   .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
   .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }
@@ -645,6 +659,7 @@
   :root:not([data-fa-scheme="light"]) {
     .fa-avatar[data-fa-kind="bootstrap"][data-fa-trash="true"] { background-color: hsl(96 14% 56%); }
     .fa-avatar[data-fa-kind="cat-harness"][data-fa-trash="true"] { background-color: hsl(268 14% 56%); }
+    .fa-avatar[data-fa-kind="who-iris"][data-fa-trash="true"] { background-color: hsl(199 14% 56%); }
     .fa-avatar[data-fa-kind="skills"][data-fa-trash="true"] { background-color: hsl(256 14% 56%); }
     .fa-avatar[data-fa-kind="processes"][data-fa-trash="true"] { background-color: hsl(280 14% 56%); }
     .fa-avatar[data-fa-kind="scenarios"][data-fa-trash="true"] { background-color: hsl(292 14% 56%); }

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jsonld-drift-check\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.493Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.315Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -29,22 +29,22 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:47
+#: processes/jsonld-drift-check.bpmn:48
 #. Diagram label
 msgid "Did anything&#10;change?"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:52
+#: processes/jsonld-drift-check.bpmn:53
 #. Diagram label
 msgid "Every sibling in sync"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:55
+#: processes/jsonld-drift-check.bpmn:56
 #. Diagram label
 msgid "Job RED &#8212; the generated&#10;file is stale"
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:60
+#: processes/jsonld-drift-check.bpmn:61
 #. Diagram label
 msgid "no &#8212; in sync"
 msgstr ""
@@ -59,12 +59,17 @@ msgstr ""
 msgid "Regenerate the context, block,&#10;library and site graphs &#8212; and diff"
 msgstr ""
 
+#: processes/jsonld-drift-check.bpmn:41
+#. Diagram element documentation
+msgid "Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted."
+msgstr ""
+
 #: processes/jsonld-drift-check.bpmn:26
 #. Diagram element documentation
 msgid "The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against."
 msgstr ""
 
-#: processes/jsonld-drift-check.bpmn:61
+#: processes/jsonld-drift-check.bpmn:62
 #. Diagram label
 msgid "yes &#8212; drifted"
 msgstr ""

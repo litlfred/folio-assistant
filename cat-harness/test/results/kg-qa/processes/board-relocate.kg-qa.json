@@ -5,7 +5,7 @@
     "id": "Process_BoardRelocate",
     "path": "processes/board-relocate.bpmn"
   },
-  "source_hash": "sha256:7ae2916b54f7fc630299ad786f6f12414bfa09d658331397fc9bcddb2aa7871a",
+  "source_hash": "sha256:f6f27b61c10b40ae124d8561431a91962fa47725507222d669ffed0d05275fe5",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

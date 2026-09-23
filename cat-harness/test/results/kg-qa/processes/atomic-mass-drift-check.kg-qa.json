@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "processes/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:14cbfa6074619e9c6f2eca0234c7dc46cb06e87e737655f23b2df4a85d014a18",
+  "source_hash": "sha256:7844c74ed28090fec54101ae67a43f0cb1edef020488f5e154ef8822dd8e6bed",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

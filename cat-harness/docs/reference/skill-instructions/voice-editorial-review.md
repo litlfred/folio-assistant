@@ -113,3 +113,10 @@ the criterion opens the witness that ruled on it — which checker, at which
 - **Do not delete a finding from a sidecar.** The sweep rewrites its own
   entries; a hand-removed one comes back with no record that anyone looked.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
+

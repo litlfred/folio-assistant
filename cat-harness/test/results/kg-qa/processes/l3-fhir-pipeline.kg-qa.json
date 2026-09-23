@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "processes/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:a0995037341722653d4de7c8b2f37a9120daf6914554b093eb36561d119b0f49",
+  "source_hash": "sha256:4e2fee64d1a05ee74495348627b345c8206bec1b3d2cf23ec79a249afcf7a426",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 11,
     "fail": 0,
     "n/a": 7,
     "unknown": 0

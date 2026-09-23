@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:6e74bfe0c3da83987081cdc888260bae80f84a745d2a5e9ddb7f2a71ee4d1544",
+  "source_hash": "sha256:145ef3f79104859f145746faf010362b95c5abd31464ccb01d00040cf9c3734f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -83,10 +83,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 9,
     "fail": 1,
     "n/a": 8,
     "unknown": 0

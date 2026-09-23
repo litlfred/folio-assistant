@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:363a0d0c5cde3d861d61cb91467b559b10f2653b7373e4389f04095d2ab9bbc4",
+  "source_hash": "sha256:ab2a96ba1dee915b565dc32ce1c52a7d322c5e7169d9a7110d1097cd52629a4f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -108,10 +108,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 9,
     "fail": 2,
     "n/a": 7,
     "unknown": 0

@@ -45,6 +45,7 @@ import { createHash } from "node:crypto";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
+import { docsLayers } from "./compose-docs.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -235,6 +236,46 @@ async function loadProcesses(): Promise<LoadedProcess[]> {
   return out;
 }
 
+// ── Documentation surface ───────────────────────────────────────
+
+/**
+ * What a reader can reach: the base docs layer's rendered diagrams, and the
+ * text of every page in every layer, read once per run.
+ *
+ * `undefined` when no docs layer is declared, which `process-diagram-published`
+ * records as `unknown` — the third state. Treating "could not look" as "shown
+ * nowhere" would fail every diagram in an instance that publishes elsewhere;
+ * treating it as "shown" would be the clean run over nothing (`dh4f`).
+ */
+interface DocsSurface {
+  /** Absolute directory `render:bpmn` writes SVGs into. */
+  svgDir: string;
+  /** Every page's text, concatenated — searched for `workflows/<stem>.svg`. */
+  pages: string;
+}
+
+function docsSurface(): DocsSurface | undefined {
+  let layers;
+  try {
+    layers = docsLayers(resolve(root, "..")).layers;
+  } catch {
+    return undefined;
+  }
+  const base = layers.find((l) => !l.repositoryScoped);
+  if (!base) return undefined;
+  const texts: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (/\.(md|html)$/.test(e.name)) texts.push(readFileSync(p, "utf-8"));
+    }
+  };
+  for (const l of layers) walk(l.dir);
+  return { svgDir: join(base.dir, "assets", "img", "workflows"), pages: texts.join("\n") };
+}
+
 // ── Per-process criteria ────────────────────────────────────────
 
 async function auditProcess(
@@ -242,6 +283,9 @@ async function auditProcess(
   graph: RoleGraph | undefined,
   skills: Set<string>,
   processIds: Set<string>,
+  /** Basenames of every loadable diagram — a skill of the same name OWNS that process. */
+  processStems: Set<string> = new Set(),
+  docs?: DocsSurface,
 ): Promise<KgQaReport> {
   const rel = relative(root, p.file);
   const hash = sha256(readFileSync(p.file, "utf-8"));
@@ -257,6 +301,7 @@ async function auditProcess(
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
   const unresolvedCall: KgFinding[] = [];
+  const undocumented: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
 
   // Lane ids whose role is declared `actedUpon` — a store or an external
@@ -325,6 +370,48 @@ async function auditProcess(
       });
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
+    if (!n.documentation) {
+      undocumented.push({ where: n.id, detail: `"${n.name}" carries no <bpmn:documentation>, so its page shows a name and nothing more.` });
+    }
+  }
+
+  // A skill that owns a same-named process, named by exactly ONE plain step
+  // here. Several steps naming it are using its know-how, not calling it —
+  // see the criterion's note in `schemas/kg-qa.ts`.
+  const stem = basename(p.file, ".bpmn");
+  const namers = new Map<string, typeof activities>();
+  for (const n of activities) {
+    for (const ref of new Set(n.skills)) {
+      if (ref === stem || !processStems.has(ref)) continue;
+      namers.set(ref, [...(namers.get(ref) ?? []), n]);
+    }
+  }
+  const shouldCall: KgFinding[] = [];
+  for (const [ref, ns] of namers) {
+    // A declared `<folio:no-call reason>` is the recorded judgement that this
+    // step uses the skill without being its process — `n/a` for that step.
+    if (ns.length !== 1 || ns[0].calledElement !== undefined || ns[0].noCallReason !== undefined) continue;
+    shouldCall.push({
+      where: ns[0].id,
+      detail:
+        `"${ns[0].name}" names skill "${ref}", which owns ${ref}.bpmn, but is a plain task. Make it a ` +
+        `<bpmn:callActivity calledElement="…"> so the diagram descends into that process, or declare ` +
+        `<folio:no-call reason="…"/> saying why it only uses the skill.`,
+    });
+  }
+
+  // Published: an SVG exists AND some page embeds it.
+  let published: KgCriterionEntry;
+  if (!docs) {
+    published = { result: "unknown", findings: [{ where: "—", detail: "no docs layer is declared, so no page could be searched." }] };
+  } else if (!existsSync(join(docs.svgDir, `${stem}.svg`))) {
+    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run render:bpmn\`.` }]);
+  } else {
+    published = entry(
+      docs.pages.includes(`workflows/${stem}.svg`)
+        ? []
+        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run processes:viz\`.` }],
+    );
   }
 
   // Lanes → roles.
@@ -540,6 +627,9 @@ async function auditProcess(
         : unresolvedCall.length
           ? { result: "unknown" as KgResult, findings: unresolvedCall }
           : { result: "pass" as KgResult, findings: [] },
+    "process-diagram-published": published,
+    "activity-documented": entry(undocumented, activities.length > 0),
+    "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -1618,7 +1708,9 @@ if (graphError) {
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
+const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.file, ".bpmn")] : [])));
+const docs = docsSurface();
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
 if (graph) {
   reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));

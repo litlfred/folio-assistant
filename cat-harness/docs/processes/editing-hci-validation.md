@@ -1,0 +1,59 @@
+---
+title: 'Editing and HCI validation'
+nav_exclude: true
+---
+
+{: .note }
+> Generated from `cat-harness/processes/editing-hci-validation.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+
+{% raw %}
+# Editing and HCI validation
+
+`Process_Editing` · strict · 17 step(s)
+
+folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+
+<img src="../assets/img/workflows/editing-hci-validation.svg" alt="BPMN diagram: Editing and HCI validation" style="max-width:100%">
+
+## How it connects
+
+- **Called by:** [Content lifecycle](content-lifecycle.html), [Draft, review and publish](draft-to-publication.html)
+- **Calls:** [Evidence for a recommendation](evidence-retrieval.html), [Options analysis](options-analysis.html)
+
+## Lanes — who acts
+
+| lane | role | what it does here |
+|---|---|---|
+| Editor / author (person) | — | Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built. |
+| Work plan — beans (shared by humans and agents) | — | Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome. |
+| Authoring agent (system) | — | Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide. |
+| HCI validation pipeline (system) | — | Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything. |
+| Mechanical validation (system) | — | Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse. |
+| Non-mechanical validation (review agent or SME) | — | Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial. |
+| Corpus (versioned store) | — | Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance. |
+
+## Steps
+
+Every one of the 17 step(s) is documented.
+
+| step | lane | skill / sub-process | what it does |
+|---|---|---|---|
+| **Describe the intended change**<br>`Task_DescribeChange` | Editor / author (person) | — | The editor states the change in natural language; no content has moved yet. |
+| **Claim or open the bean**<br>`Task_ClaimBean` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate. |
+| **Gather and verify the evidence**<br>`CallActivity_Evidence` | Editor / author (person) | calls [Evidence for a recommendation](evidence-retrieval.html) | Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded. This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously. |
+| **Draft the block edit**<br>`Task_DraftEdit` | Authoring agent (system) | [`content-author`](../reference/skill-instructions/content-author.html) | The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. |
+| **Schema and constraint checks**<br>`Task_SchemaValidate` | Mechanical validation (system) | [`content-validate`](../reference/skill-instructions/content-validate.html) | Block schema, label prefixes, required fields, constraint rules. |
+| **Syntax, spelling and links**<br>`Task_SyntaxSpell` | Mechanical validation (system) | [`content-validate`](../reference/skill-instructions/content-validate.html) | Syntax, spelling, cross-references, citation and link resolution. |
+| **Build and QA gates**<br>`Task_BuildGates` | Mechanical validation (system) | [`content-test`](../reference/skill-instructions/content-test.html) | Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes. |
+| **Agent review of the change**<br>`Task_AgentReview` | Non-mechanical validation (review agent or SME) | [`content-review`](../reference/skill-instructions/content-review.html) | A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant. |
+| **Human / SME review**<br>`Task_SmeReview` | Non-mechanical validation (review agent or SME) | [`content-review`](../reference/skill-instructions/content-review.html) | Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. |
+| **Collate findings into a report**<br>`Task_CollateFindings` | HCI validation pipeline (system) | [`content-validate`](../reference/skill-instructions/content-validate.html)<br>[`content-validate`](../reference/skill-instructions/content-validate.html)<br>[`content-validate`](../reference/skill-instructions/content-validate.html) | Mechanical results and review findings are merged into one report against the proposed change. |
+| **Log findings on the bean**<br>`Task_LogFindings` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Findings are appended to the bean, so the next agent or human sees what is outstanding. |
+| **Review the findings**<br>`Task_ReviewFindings` | Editor / author (person) | [`decision-audit`](../reference/skill-instructions/decision-audit.html)<br>[`decision-audit`](../reference/skill-instructions/decision-audit.html)<br>[`decision-audit`](../reference/skill-instructions/decision-audit.html) | THE GATE: the editor sees every finding BEFORE anything reaches the corpus. |
+| **Options analysis accept · revise · discard**<br>`Call_OptionsAnalysis` | Authoring agent (system) | calls [Options analysis](options-analysis.html) | On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -> `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision` is a `userTask` in `Lane_Editor` that already names `decision-audit`, and `Process_OptionsAnalysis` ends with its own `decision-audit` note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not. |
+| **Record the decision and its audit note**<br>`Task_RecordDecision` | Editor / author (person) | [`decision-audit`](../reference/skill-instructions/decision-audit.html) | A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided. |
+| **Revise the proposed change**<br>`Task_ReviseEdit` | Authoring agent (system) | [`content-author`](../reference/skill-instructions/content-author.html) | The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. |
+| **Commit into the corpus**<br>`Task_Commit` | Corpus (versioned store) | — | Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement. |
+| **Resolve or re-open the bean**<br>`Task_ResolveBean` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Resolved when the change landed clean; left open with the residue when it did not. |
+
+{% endraw %}

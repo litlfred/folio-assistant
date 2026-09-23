@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Signoff",
     "path": "processes/crdm-signoff.bpmn"
   },
-  "source_hash": "sha256:1f56cc1c6110e2550bc26174fa4c9966be5b2297f78053e57b45eb73393c58e2",
+  "source_hash": "sha256:a5cfdc974775d11da77d60ac3ed74d80afd13b1862fc66918e1321d84704ce6b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -75,10 +75,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 1,
     "n/a": 7,
     "unknown": 0

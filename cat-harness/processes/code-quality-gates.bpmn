@@ -50,6 +50,7 @@
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
+      <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:job name="lean-bare-import"/>
         <folio:skill ref="platform-gates"/>
@@ -58,6 +59,7 @@
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Python" name="Python: unused and&amp;#10;wildcard imports (HARD)">
+      <bpmn:documentation>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:job name="python-imports"/>
         <folio:skill ref="platform-gates"/>
@@ -66,6 +68,7 @@
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
+      <bpmn:documentation>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:job name="typescript"/>
         <folio:skill ref="platform-gates"/>
@@ -74,6 +77,7 @@
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
+      <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:job name="e2e"/>
         <folio:skill ref="platform-gates"/>
@@ -82,6 +86,7 @@
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_Rust" name="Rust wildcard imports&amp;#10;(WARN-ONLY)">
+      <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:job name="rust-wildcard"/>
         <folio:skill ref="platform-gates"/>

@@ -5,7 +5,7 @@
     "id": "Process_BuildL1Kg",
     "path": "processes/ingest-build-l1-kg.bpmn"
   },
-  "source_hash": "sha256:eab57b88731f492cc70e2b85dfa84fe9ef166ddeca51727bb9c03d9208b337c9",
+  "source_hash": "sha256:46bfe782afb0f47c8b92a3bdcbd2dcb6f4c2855f3ca202a3bf88ecf766c7a876",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 11,
     "fail": 0,
     "n/a": 7,
     "unknown": 0

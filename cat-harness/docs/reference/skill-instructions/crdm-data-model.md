@@ -84,3 +84,14 @@ is `placement`'s question and the folio's choice. This phase requires only
 that the artefact is **declared**, so the next phase can read it rather than
 be told about it.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[CRDM data model](../../processes/crdm-data-model.html)**.
+
+<img src="../../assets/img/workflows/crdm-data-model.svg" alt="BPMN diagram: CRDM data model" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM data model](../../processes/crdm-data-model.html) | Identify entities from the BPA and requirements; Relations and cardinalities, both ways; Confirm the entities are the ones meant; Confirm the cardinalities; Declare the model where a tool can read it |
+

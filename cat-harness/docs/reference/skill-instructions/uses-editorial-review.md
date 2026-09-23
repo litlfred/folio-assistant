@@ -308,3 +308,10 @@ read that other block first. Record the reasoning in the sidecar
 | `proof-simplifier` | Extracts shared lemmas; new blocks need `uses[]` entries authored, not derived |
 | `prepare-merge` | Runs the `uses` axis as part of the content gates |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Narrative review](../../processes/review-narrative.html) | Review the editorial dependencies |
+

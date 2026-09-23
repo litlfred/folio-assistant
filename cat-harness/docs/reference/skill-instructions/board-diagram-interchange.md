@@ -115,3 +115,11 @@ what an open window does are [`board-windows`](board-windows.md).
 **Not the tiles.** Which boards and viewers a reader can reach is
 [`harness-tiles`](harness-tiles.md).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Board: place a note](../../processes/board-place-note.html) | Write the note into the folio — with no coordinate; Record x,y for this note on THIS board; Sweep positions whose note is gone |
+| [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Relocate the content to the trashcan; Drop its positions and sweep orphans |
+

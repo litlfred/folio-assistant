@@ -564,6 +564,17 @@ export const RULES: Rule[] = [
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      // The methodology graph → projection + viewer. CORE by the same two
+      // counts as its siblings, and by a third: it renders the graph across
+      // EVERY instance that declares one, so it is the harness answering
+      // "what has this repository adopted", not one instance answering for
+      // itself. Its node list and its evidence join both come from
+      // `check-methodology-evidence.ts` rather than a second walk.
+      "scripts/gen-methodologies-viz.ts",
+      // The external-schema registry → projection + viewer, plus the one join
+      // nothing else makes: whether each record's `usedBy` path still exists.
+      // CORE beside `external-schemas.ts` itself, which is already here.
+      "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
@@ -1035,6 +1046,8 @@ export const RULES: Rule[] = [
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
+      "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
+      "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
       "scripts/check-asset-roles.ts",     // one place says what an asset ROLE is (bean `7syd`)
       "scripts/check-instance-graph.ts",  // every instance's dependency graph resolves (bean `a1lq`)

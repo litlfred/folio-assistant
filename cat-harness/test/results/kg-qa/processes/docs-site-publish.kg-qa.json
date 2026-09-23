@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:ea2c001a2c563a6400e2d8b1fbf10912b17b4d21e403962c71b312aa20665501",
+  "source_hash": "sha256:f7c95b60249ce25081c7888796ee978c159290ee9b84e4b18803f55f03a1ec47",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,10 +66,22 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 10,
     "fail": 0,
     "n/a": 8,
     "unknown": 0
