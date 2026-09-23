@@ -90,3 +90,15 @@ authoring decision, and this review does not second-guess it; it asks whether
 what was chosen **renders legibly, consistently and in every declared
 language**.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Post-MVP theme and UI review](../../processes/theme-ui-review.html)**.
+
+<img src="../../assets/img/workflows/theme-ui-review.svg" alt="BPMN diagram: Post-MVP theme and UI review" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Review contrast and non-colour signal |
+| [Post-MVP theme and UI review](../../processes/theme-ui-review.html) | Inventory what actually renders; Accessibility: measure, do not assert; Branding: does it read as this instance?; Languages: extracted, rendered, and RTL; Raise findings against the authoring |
+

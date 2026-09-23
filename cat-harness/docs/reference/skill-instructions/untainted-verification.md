@@ -159,3 +159,10 @@ fencing it and saying so is the honest move.
   parties, so recording works the same for two subagents, two API calls, or two
   people.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Adjudication](../../processes/adjudication.html) | Dispatch with adjudicator_sees — never the artefact |
+

@@ -701,3 +701,12 @@ When presenting translated content for review, use the `staging-review`
 skill to provide before/after URL comparison tables. See
 `schemas/staging.ts` for the `StagingComparison` schema.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Human Translation Workflow](../../processes/human-translation-workflow.html) | Identify content and target locale; Assign to qualified human translator; Check translation completeness; Request completion of remaining strings; Receive assignment and materials; Translate strings in preferred tool; Submit completed .po file; Review translation for accuracy; Return for correction with annotations; Sign off translation as official; Extract POT (translatable strings); Prepare domain glossary; Inject PO → translated Markdown; Round-trip translation QA; Append WHO disclaimer (if DAK); Write status.json (official) |
+| [Narrative review](../../processes/review-narrative.html) | Review the translation |
+| [Translation Workflow](../../processes/translation-workflow.html) | Extract translatable strings (POT generation); Produce translation (PO file); Inject translations (PO → Markdown); Round-trip translation QA (back-translate); Adjudicate flagged passage (human reviewer) (calls a sub-process); Write status.json (unofficial); Sign off translation (human adjudicator); Write status.json (official); Check staleness (source hash) |
+

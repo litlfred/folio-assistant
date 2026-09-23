@@ -5,7 +5,7 @@
     "id": "Process_RefreshMaterialized",
     "path": "processes/refresh-materialized.bpmn"
   },
-  "source_hash": "sha256:d8ad7e9397d047b5c88cadb36015f35d107a306395427e9c8fcd5ab882c85570",
+  "source_hash": "sha256:a60cf7229491784ae2b586b692189927f6f878390a1b3dad56fe9ad3926916d3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,36 +64,26 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Process_RefreshMaterialized",
-          "detail": "refresh-materialized.svg is rendered but no docs page shows it — run `bun run processes:viz`."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-documented": {
       "result": "pass",
       "findings": []
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Adjudicate",
-          "detail": "\"Adjudicate the conflict\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
-    "n/a": 7,
+    "pass": 12,
+    "fail": 0,
+    "n/a": 6,
     "unknown": 0
   }
 }

@@ -229,6 +229,8 @@ export interface ProcessFlow {
 export interface LaneDef {
   id: string;
   name?: string;
+  /** `<bpmn:documentation>` on the lane — what the role does IN this diagram. */
+  documentation?: string;
   /** `<folio:role ref="…"/>` on the lane, when declared. */
   roleRef?: string;
   /**
@@ -729,7 +731,8 @@ export async function loadProcessModel(
       .filter((v) => v.$type === CONVENTION_EXT && v.ref)
       .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
-    lanes.push({ id: laneId, name: lane.name, roleRef, performerVaries, nodes: nodeIds });
+    const laneDoc = (lane as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined;
+    lanes.push({ id: laneId, name: lane.name, ...(laneDoc ? { documentation: laneDoc } : {}), roleRef, performerVaries, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);

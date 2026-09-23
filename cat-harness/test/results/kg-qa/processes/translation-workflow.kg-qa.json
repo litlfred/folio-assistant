@@ -5,7 +5,7 @@
     "id": "Process_Translation",
     "path": "processes/translation-workflow.bpmn"
   },
-  "source_hash": "sha256:03e8d79ea380c2f8d318d228ec10b0e9ba27aa523324763f5bcca9edaa8230cf",
+  "source_hash": "sha256:a1535d354ed9e0ff52e1b94ff20838c2476f65b566c34276dcc1531d87b4a00b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,36 +64,26 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Process_Translation",
-          "detail": "translation-workflow.svg is rendered but no docs page shows it — run `bun run processes:viz`."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-documented": {
       "result": "pass",
       "findings": []
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Adjudicate",
-          "detail": "\"Adjudicate flagged passage (human reviewer)\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
-    "n/a": 7,
+    "pass": 12,
+    "fail": 0,
+    "n/a": 6,
     "unknown": 0
   }
 }

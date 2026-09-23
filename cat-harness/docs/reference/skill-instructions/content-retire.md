@@ -38,3 +38,10 @@ Deprecate and retire content that is no longer current or needed.
 - Updated redirects
 - Retirement record
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content lifecycle](../../processes/content-lifecycle.html) | Retire or archive |
+

@@ -115,3 +115,14 @@ assumption they are relying on — and the two are not interchangeable: one
 attests that a service with a key saw these hashes, the other that a person
 holding release authority did.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[QA report signing](../../processes/qa-report-signing.html)**.
+
+<img src="../../assets/img/workflows/qa-report-signing.svg" alt="BPMN diagram: QA report signing" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [QA report signing](../../processes/qa-report-signing.html) | Build the test run [folio-test-run/v1]; Resolve the performer's reach [effectiveReach + signing-api probe]; Sign over the API; Sign as release authority; Record which route signed it |
+

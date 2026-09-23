@@ -78,3 +78,11 @@ artefacts a change touches rather than the whole IG. That is a build
 optimisation, not a validation shortcut: the full publisher build in that same
 diagram is what the release is cut from.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Incremental IG build](../../processes/ig-incremental-build.html) | SUSHI on the restricted tank |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Map L2 → L3; Author FSH profiles; SUSHI compile → FHIR JSON |
+

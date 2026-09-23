@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "processes/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:3a999608610a3386ce8b388a7e6e1958764a759e1d1b33e1272160c72c37c541",
+  "source_hash": "sha256:cb91d09a0f0a2036654e388c2bc9bf6c9ca02412a19a9e5adb68836e1760cec2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -81,19 +81,14 @@
       ]
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_FlagDrift",
-          "detail": "\"Adjudicate the flagged passage\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
-    "n/a": 7,
+    "pass": 11,
+    "fail": 1,
+    "n/a": 6,
     "unknown": 0
   }
 }

@@ -3,8 +3,10 @@
 title: 'DOC COMPLETENESS: a QA control over process documentation — 45 of 62 diagrams are shown on no page, 95 of 456 steps undocumented, adjudication callers do not call it'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-23T06:49:40Z
-updated_at: 2026-09-23T06:49:40Z
+updated_at: 2026-09-23T06:58:44Z
+parent: folio-assistant-1swy
 ---
 
 Owner 2026-09-23 (session_01SiFEMuTciyB681XP5WfcbB): asked whether the adjudication process (7pdi) is rendered; it is rendered (adjudication.svg fresh) but shown on no page. Owner: 'add skills/bpmn/sub-process to surface it. show documentation' then 'make this a QA control on documentation completion - lots of issues were found'.
@@ -17,8 +19,17 @@ Owner 2026-09-23 (session_01SiFEMuTciyB681XP5WfcbB): asked whether the adjudicat
 - activity names a skill that owns its own process, one step only, and is not a call activity: 9 (5 adjudication, ingest-theme->theme-ui-review, 3 ->feature-staging)
 
 ## Done when
-- [ ] kg-qa criteria: process-diagram-published, activity-documented, activity-calls-skill-process — sidecars written
-- [ ] gen-processes-viz writes one page per process: documentation, embedded diagram, lanes, steps with skill links, callers/callees
-- [ ] generated skill pages list the processes that run them, embedding the skill's own process diagram
-- [ ] the 5 adjudication steps become call activities of adjudication.bpmn; SVGs re-rendered
-- [ ] bun run gates green
+- [x] kg-qa criteria: process-diagram-published, activity-documented, activity-calls-skill-process — sidecars written
+- [x] gen-processes-viz writes one page per process: documentation, embedded diagram, lanes, steps with skill links, callers/callees
+- [x] generated skill pages list the processes that run them, embedding the skill's own process diagram
+- [x] the 5 adjudication steps become call activities of adjudication.bpmn; SVGs re-rendered
+- [x] bun run gates green
+
+## Progress — 2026-09-23 (PR #1008)
+
+- `process-diagram-published`: 45 → **0** findings once per-process pages exist.
+- `activity-calls-skill-process`: 9 → **4**. The 5 adjudication steps now call
+  `Process_Adjudication`. Left for the owner: `crdm-deliver` · `A_DeployStaging`,
+  `docs-site-publish` · `Task_Restore`, `upstream-version-adoption` · `Task_Mvp`
+  (all → `feature-staging`) and `ingest-theme` · `Task_Review` → `theme-ui-review`.
+- `activity-documented`: the backlog stands (minor, not gated) — 95 steps.

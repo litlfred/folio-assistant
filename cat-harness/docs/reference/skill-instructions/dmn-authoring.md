@@ -75,3 +75,10 @@ ordering is then part of the logic and must be reviewed as such.
 **source artefact**, not documentation of one; `smart-base-tools` has the
 mechanics and the caveats.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Decision logic · DMN tables |
+

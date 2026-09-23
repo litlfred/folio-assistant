@@ -5,7 +5,7 @@
     "id": "Process_NarrativeReview",
     "path": "processes/review-narrative.bpmn"
   },
-  "source_hash": "sha256:faab0ea7355c94b14aec9eb052658c995d0a5a0cf9708c51d111d29923ccb06d",
+  "source_hash": "sha256:e6cc24aeb09ac75187a492b7d9f3b63947a3a5bc6bdb70df222105a436141921",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -68,31 +68,21 @@
       "findings": []
     },
     "process-diagram-published": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Process_NarrativeReview",
-          "detail": "review-narrative.svg is rendered but no docs page shows it — run `bun run processes:viz`."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-documented": {
       "result": "pass",
       "findings": []
     },
     "activity-calls-skill-process": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_AdjudicateVoice",
-          "detail": "\"Adjudicate the voice findings\" names skill \"adjudication\", which owns adjudication.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process rather than restating it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 2,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

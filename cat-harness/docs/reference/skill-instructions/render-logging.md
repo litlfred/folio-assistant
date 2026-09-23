@@ -216,3 +216,11 @@ is on the publish branch belongs where its subject's absence can be seen.
 | why a closed PR is not an abandoned branch | bean `w2g5` |
 | the path hazard | bean `fuzm` |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Append `rendered` to the render log; Append `retained`, with why it stays |
+| [Render log — the publish branch keeps its own history](../../processes/staging-render-log.html) | Append `rendered`; Preflight: is the preview live?; Append `retained` with the reason; Append `removed` with the reason; Remove the artefact; Append `restored` |
+
