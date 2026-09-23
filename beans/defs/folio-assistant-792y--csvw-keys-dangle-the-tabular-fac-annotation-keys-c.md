@@ -42,13 +42,31 @@ false, and `csvwOnly()` also leaked `datatypeSource` on every column.
 - [x] skill `tabular-metadata`: the false claim replaced, the decision table recorded; `kg-export` note; the gate's `csvw` forward reason
 - [x] bun run gates green (133/133); issue #1047; PR opened
 
-## Found, not fixed here
+## Found, not fixed here — SETTLED by `yh6u`, and the other way
 
 `tabular.jsonld` (`folio-tabular-records/v1`, written by `tabular-records.py`)
 is the same shape — `.jsonld`, an `@id`, no `@context`. Its keys are plain
 names, so JSON-LD DROPS them rather than minting bad IRIs: lossy, not
 dangling. None is committed. Worth the same decision when that format is
 next touched or retired.
+
+**Resolved 2026-09-23 by bean `yh6u` (#1078, `b4612fb`) — which found it while
+closing this one — and NOT by the ruling above.** The owner chose to make the
+record real JSON-LD rather than rename it: *"Owner's choice (2026-09-23): make
+them real JSON-LD rather than rename."*
+
+The reason this record could take the option that record could not: CSVW
+metadata may bind only `@language` and `@base` locally, so no context of ours
+can reach a `fac:` key there. `folio-tabular-records/v1` has no such
+constraint, so the published content context binds its keys directly — and
+`narrative`, `sheets`, `source`, `entries` and `archive` are typed
+`@type: "@json"`, which carries their nulls verbatim. **That is what makes the
+two answers different rather than inconsistent**: the three-state rule survives
+either way, by a different mechanism each time.
+
+Leaving this paragraph reading "not fixed" cost an hour on 2026-09-23 — an
+agent followed it, re-measured on a branch cut before `b4612fb`, and asked the
+owner to re-decide a settled question. Bean `nbjv` carries that account.
 
 ## Done when
 
