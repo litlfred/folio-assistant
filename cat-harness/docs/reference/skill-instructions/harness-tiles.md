@@ -39,6 +39,48 @@ Dependencies keep a group of their own rather than disappearing. Making the
 distinction a **disappearance** would answer *"where did who-iris go"* with
 silence.
 
+## "Harness" carries TWO senses, and only one of them is this rule
+
+**Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
+
+The rule above is a rule about **sense 1**. The word is also used, correctly
+and by the owner, for something else:
+
+| sense | what it means | how you tell |
+|---|---|---|
+| **1 — instantiated here** | this checkout runs it | a `<name>.config.json` at the **repository** root. 5 of 19 instances |
+| **2 — a layer others instantiate** | a base a *downstream* repo stands up | nothing in this checkout. It is a statement about the layer's role in the stack |
+
+Sense 2 is not loose talk. `smart-stack-layering` says *"the DAK harness every
+smart-\* DAK repo instantiates"*; `fhir-harness`'s own description says *"what
+a non-WHO implementation guide instantiates"*; the owner's bean titles use it —
+`2yyh` **SMART-BASE HARNESS**, `wm63` **FHIR-HARNESS**.
+
+**So a thing can carry the word and not satisfy this page's rule, and be
+right.** `fhir-harness` is the clearest case: declared, not instantiated, and
+it declares no visualiser either, so by the rule above it owes no tile and gets
+none — while being exactly what a downstream IG instantiates.
+
+### Do not write a checker for this
+
+One was built and withdrawn, and the measurement is the argument. Anchored on
+declared instance names beside the word: **246 findings** first, then **31**
+after excluding names that contain "harness" — and **none of the 31 was the
+defect being hunted**. Ten came from one generator template, four from the
+retired declaration filename that `check:declaration-filename` already counts
+(not written out here — that gate flagged this very paragraph for naming it,
+which is the gate working), the rest from directory listings, hyphenated ids,
+and the check flagging its own docstring.
+
+A predicate that cannot separate its two senses is not a check. It is an
+**adjudication**, and this corpus already says what that means: if a mechanism
+could decide it, the process would not have been entered
+([`adjudication`](adjudication.md)).
+
+**What to do instead when the word is load-bearing:** say which sense, or say
+the fact. *"instantiated here"* and *"a layer downstream repos instantiate"*
+are both shorter than the ambiguity is expensive.
+
 ## A tile opens the INSTANCE, not a kind handler's view of it
 
 `scripts/mount-instance-docs.ts` carries the owner's own rule for the two

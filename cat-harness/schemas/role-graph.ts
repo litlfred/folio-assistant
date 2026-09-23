@@ -768,8 +768,37 @@ export type LaneBinding =
   /** Nothing matched and nothing was declared. The finding. */
   | { readonly kind: "unbound" };
 
+/**
+ * The graph is REQUIRED — bean `7go7`, the owner's ruling 2026-09-23.
+ *
+ * It was `RoleGraph | undefined`, and with no graph every lane carrying a
+ * `roleRef` came back `dangling`. Measured on this corpus: 183 of 184 lanes
+ * bind and 44 carry an explicit ref, so one unreadable file rendered as 44
+ * broken references that were all fine — a sweep that could not look reporting
+ * findings rather than reporting that it could not look. The `dh4f` shape.
+ *
+ * Three shapes were on the table (see the bean). The owner chose this one over
+ * a sixth `ungraphed` kind, and the reason it is the stronger choice is that
+ * **a caller with no graph cannot ask the question, which is the honest
+ * answer** — the binding of a lane is not a fact that exists in the absence of
+ * a role registry. A sixth kind would have let a consumer keep asking and then
+ * forget to handle the reply.
+ *
+ * ## The premise the bean gave for NOT fixing it was false
+ *
+ * `7go7` said a local guard "would make the viewer and the audit disagree
+ * about whether a lane is bound". It would not have. `kg-audit.ts` ALREADY
+ * branches on `!graph` and overwrites `role-ref-resolves`, `lane-binds-role`
+ * and five more with `unknown` — *"No role graph is a state the audit can be
+ * in, and it is not a pass."* So the audit never published a `dangling`
+ * verdict in that state; it computed one and discarded it. The consumer that
+ * disagreed with the audit was the VIEWER, which took the verdict verbatim.
+ *
+ * Checked before writing this, because the bean's reasoning was the only thing
+ * standing between the defect and a one-line fix, and it was wrong.
+ */
 export function laneBinding(
-  graph: RoleGraph | undefined,
+  graph: RoleGraph,
   lane: { name?: string; roleRef?: string; performerVaries?: boolean },
 ): LaneBinding {
   // Checked FIRST, and before the graph is consulted at all: a lane that says
@@ -779,7 +808,7 @@ export function laneBinding(
     return { kind: "contradictory", ref: lane.roleRef };
   }
   if (lane.performerVaries) return { kind: "variable" };
-  const role = graph ? roleForLane(graph, lane.name, lane.roleRef) : undefined;
+  const role = roleForLane(graph, lane.name, lane.roleRef);
   if (role) return { kind: "bound", role };
   // A dangling `ref` is reported as itself rather than as "unbound", because
   // the fix differs: one is a typo to correct, the other a binding to add.

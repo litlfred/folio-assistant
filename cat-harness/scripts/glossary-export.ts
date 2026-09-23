@@ -366,7 +366,20 @@ export function buildGlossary(opts: {
   const occurrences = new Map<string, LaneOccurrence[]>();
   const varying: LaneOccurrence[] = [];
   const problems: string[] = [];
+  // ONE problem, not one per lane. Bean `7go7`: `laneBinding` used to take an
+  // undefined graph and answer `dangling` for every lane carrying a ref, so an
+  // instance with swimlanes and no role registry failed this gate with N false
+  // symptoms instead of its one real cause — and `problems` is fatal here
+  // (`exit(1)`), so that wall was a red gate, not a report. The graph is now a
+  // required parameter and the question is not asked.
+  if (merged === undefined && swimlanes.length > 0) {
+    problems.push(
+      `${id.stub}: ${swimlanes.length} swimlane(s) but no role graph declared, so no lane's binding can be judged`,
+    );
+  }
   for (const l of swimlanes) {
+    // `break` rather than a cast: it narrows `merged` for the rest of the body.
+    if (merged === undefined) break;
     const b: LaneBinding = laneBinding(merged, {
       name: l.laneName ?? undefined,
       roleRef: l.roleRef,
