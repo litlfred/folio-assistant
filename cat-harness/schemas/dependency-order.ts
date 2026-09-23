@@ -55,7 +55,8 @@
  * whose input never rendered produces output that LOOKS complete. That
  * cascade is the whole reason skip is not the same as "carry on".
  *
- * @module scripts/dependency-order
+ * @module schemas/dependency-order
+ * @graphNode none — an ordering function library: it defines no schema
  */
 
 /** One node of a dependency hierarchy, before it is flattened. */
@@ -230,4 +231,81 @@ export function runInOrder(
   }
 
   return { records };
+}
+
+// ── Multiple inheritance: who reaches whom, and who may win (bean `a1lq`) ──
+
+/**
+ * For every id, every id it reaches through `needs`, transitively.
+ *
+ * Computed over a flattened `order`, never over a raw list, so it inherits
+ * the flattener's refusals: there is no ancestor set for a graph with a cycle
+ * or a missing node, because there is no order to compute it from.
+ */
+export function ancestorsOf(order: readonly Pick<OrderedStep, "id" | "needs">[]): Map<string, Set<string>> {
+  const out = new Map<string, Set<string>>();
+  // Foundation-first, so every need's own set is complete before it is read.
+  for (const s of order) {
+    const set = new Set<string>();
+    for (const n of s.needs ?? []) {
+      set.add(n);
+      for (const a of out.get(n) ?? []) set.add(a);
+    }
+    out.set(s.id, set);
+  }
+  return out;
+}
+
+/** Two layers define one key and neither reaches the other. */
+export interface InheritanceConflict {
+  key: string;
+  /** Every definer none of the others reaches. Always two or more. */
+  ids: string[];
+  detail: string;
+}
+
+/**
+ * The keys that more than one UNRELATED layer defines.
+ *
+ * The owner, 2026-09-23: *"once depedencies of (orderd) dependecy tree are
+ * full resolve, walk tree in order starting w/ deepest depenencies"*. A later
+ * layer overrides an earlier one, and that is intended — but only a layer that
+ * REACHES the one it overrides. Two layers that do not reach each other have
+ * no order that means anything; the flattened list puts one first, and
+ * letting that decide a value would be last-writer-wins by accident.
+ *
+ * **Incomparable, not same-depth.** The root needs A and B, B needs D; A and D
+ * both define `k`. Their depths differ, deepest-first puts D before A, and a
+ * same-depth rule would let A win silently. They are unrelated, so it is a
+ * conflict.
+ *
+ * **A child settles it.** A layer that reaches every other definer of a key is
+ * the key's unique winner, which is how a conflict between two parents is
+ * resolved on purpose: the child redefines the key. So the rule is one line —
+ * a key is a conflict when its definers have more than one MAXIMAL member.
+ */
+export function findConflicts(
+  order: readonly Pick<OrderedStep, "id" | "needs">[],
+  keysOf: (id: string) => Iterable<string>,
+): InheritanceConflict[] {
+  const anc = ancestorsOf(order);
+  const definers = new Map<string, string[]>();
+  for (const s of order) {
+    for (const k of new Set(keysOf(s.id))) definers.set(k, [...(definers.get(k) ?? []), s.id]);
+  }
+  const conflicts: InheritanceConflict[] = [];
+  for (const [key, ids] of definers) {
+    if (ids.length < 2) continue;
+    const maximal = ids.filter((a) => !ids.some((b) => b !== a && anc.get(b)?.has(a)));
+    if (maximal.length > 1) {
+      conflicts.push({
+        key,
+        ids: maximal,
+        detail:
+          `\`${key}\` is defined by ${maximal.map((i) => `\`${i}\``).join(" and ")}, and none of them reaches the others — ` +
+          `the flattened order would pick a winner nobody chose. Redefine it in a layer that needs all of them.`,
+      });
+    }
+  }
+  return conflicts;
 }

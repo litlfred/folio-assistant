@@ -360,6 +360,7 @@ export const HarnessConfigSchema = z.object({
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { flattenDependencies as flattenSteps } from "./dependency-order";
 import {
   describeRepository,
   type ContentTypeDisagreement,
@@ -403,8 +404,12 @@ export interface ResolvedDependency {
   rootPath: string;
   /** The dependency's own harness config (if present). */
   config: HarnessConfig | null;
-  /** Transitive dependencies (resolved recursively). */
-  transitive: ResolvedDependency[];
+  /**
+   * Absolute roots of this dependency's OWN dependencies. Edges, not a
+   * subtree: a diamond's shared node is one object reached twice, and a
+   * nested copy of it under each branch was how the old walk lost it.
+   */
+  needs: string[];
 }
 
 /**
@@ -616,17 +621,6 @@ export function resolveDependencyPath(
 }
 
 /**
- * Resolve the full dependency tree depth-first.
- *
- * Walks `harness.config.json` dependencies in listed order, resolving
- * each to a path and recursing into its own dependencies. Cycle
- * detection prevents infinite loops.
- *
- * @param folioRoot - Absolute path to the folio root.
- * @param seen - Set of already-visited roots (for cycle detection).
- * @returns Array of resolved dependencies in depth-first order.
- */
-/**
  * The dependencies implied by an instance's declared `needs`, for edges whose
  * target is an instance in this same checkout.
  *
@@ -710,70 +704,141 @@ export function dependenciesFromNeeds(instanceRoot: string): {
   return { dependencies, unresolved };
 }
 
-export function resolveDependencyTree(
-  folioRoot: string,
-  seen: Set<string> = new Set(),
-): ResolvedDependency[] {
-  const absRoot = resolve(folioRoot);
-  if (seen.has(absRoot)) return []; // cycle
-  seen.add(absRoot);
+/** Something wrong with an instance's dependency graph. */
+export type InstanceGraphProblem =
+  | { kind: "missing"; from: string; name: string; detail: string }
+  | { kind: "cycle"; roots: string[]; detail: string };
 
-  const config = readHarnessConfig(absRoot);
-  const authored = config?.dependencies?.folioAssistant ?? [];
-
-  // AUTHORED WINS ON NAME. A config entry can say what a derived one cannot —
-  // a git URL, a version, a `provides` narrowing — so letting derivation
-  // override it would silently widen a deliberately narrowed edge.
-  const authoredNames = new Set(authored.map((d) => d.name));
-  const derived = dependenciesFromNeeds(absRoot).dependencies.filter(
-    (d) => !authoredNames.has(d.name),
-  );
-  const deps = [...derived, ...authored];
-  const resolved: ResolvedDependency[] = [];
-
-  for (const dep of deps) {
-    const rootPath = resolveDependencyPath(absRoot, dep);
-    if (!rootPath) continue;
-
-    const depConfig = readHarnessConfig(rootPath);
-    const transitive = resolveDependencyTree(rootPath, seen);
-
-    resolved.push({
-      dependency: dep,
-      rootPath,
-      config: depConfig,
-      transitive,
-    });
-  }
-
-  return resolved;
+export interface InstanceGraph {
+  /**
+   * Every dependency the root reaches, EACH ONCE, deepest first and the root's
+   * direct dependencies last. The root itself is not in it.
+   */
+  order: ResolvedDependency[];
+  problems: InstanceGraphProblem[];
 }
 
 /**
- * Flatten the dependency tree into a depth-first ordered list.
+ * Resolve an instance's dependency graph COMPLETELY, then walk it.
  *
- * Transitive dependencies appear before the dependency that declared
- * them, so the overlay order is: deepest first, root last — meaning
- * the root's files override everything, which is the desired behavior
- * for skills and content overlay.
+ * The owner, 2026-09-23 (bean `a1lq`): *"once depedencies of (orderd)
+ * dependecy tree are full resolve, walk tree in order starting w/ deepest
+ * depenencies (bootstreap/)"*. Two passes, and the second is the platform's
+ * one flattener, `schemas/dependency-order.ts`, the same one the render
+ * pipeline and the harness tiles order with.
+ *
+ * ## What the single interleaved pass got wrong
+ *
+ * It recursed and built as it went, with one `seen` set shared across sibling
+ * branches as its cycle guard. So:
+ *
+ * - **a diamond read as a cycle.** A needs B and C, both need D: D resolved
+ *   under B and came back EMPTY under C, behind a comment saying `// cycle`;
+ * - **a real cycle was dropped just as silently**;
+ * - **a dependency that could not be found was skipped**, so "not in this
+ *   checkout" and "misspelled" were the same observation.
+ *
+ * None of that had fired, because no instance here needs two others. It fires
+ * on the first that does.
+ *
+ * ## Pass 1, resolve: every node once, keyed by absolute root
+ *
+ * A node is resolved the first time it is reached and reused after that,
+ * which is what makes a diamond ONE node. The memo is not a cycle guard; the
+ * flattener finds cycles, and names every instance in one.
+ *
+ * ## Pass 2, order: foundation first
+ *
+ * Ties break on the order dependencies were declared, depth-first — which for
+ * a chain (every instance here today) is exactly the order the old walk gave.
  */
-export function flattenDependencies(
-  tree: ResolvedDependency[],
-): ResolvedDependency[] {
-  const flat: ResolvedDependency[] = [];
-  for (const dep of tree) {
-    flat.push(...flattenDependencies(dep.transitive));
-    flat.push(dep);
+export function resolveInstanceGraph(folioRoot: string): InstanceGraph {
+  const root = resolve(folioRoot);
+  const nodes = new Map<string, ResolvedDependency>();
+  const needsOf = new Map<string, string[]>();
+  const declared: string[] = [];
+  const problems: InstanceGraphProblem[] = [];
+
+  const visit = (at: string): void => {
+    if (needsOf.has(at)) return;
+    const needs: string[] = [];
+    needsOf.set(at, needs);
+
+    const config = at === root ? readHarnessConfig(at) : nodes.get(at)!.config;
+    const authored = config?.dependencies?.folioAssistant ?? [];
+    // AUTHORED WINS ON NAME. A config entry can say what a derived one cannot —
+    // a git URL, a version, a `provides` narrowing — so letting derivation
+    // override it would silently widen a deliberately narrowed edge.
+    const authoredNames = new Set(authored.map((d) => d.name));
+    const derived = dependenciesFromNeeds(at).dependencies.filter((d) => !authoredNames.has(d.name));
+
+    for (const dep of [...derived, ...authored]) {
+      const found = resolveDependencyPath(at, dep);
+      if (!found) {
+        problems.push({
+          kind: "missing",
+          from: at,
+          name: dep.name,
+          detail: `\`${dep.name}\`, a dependency of ${at}, is not in this checkout — its layer is absent from every overlay`,
+        });
+        continue;
+      }
+      const abs = resolve(found);
+      needs.push(abs);
+      if (abs !== root && !nodes.has(abs)) {
+        nodes.set(abs, { dependency: dep, rootPath: found, config: readHarnessConfig(found), needs: [] });
+      }
+      visit(abs);
+    }
+    if (at !== root) nodes.get(at)!.needs = needs;
+    declared.push(at);
+  };
+  visit(root);
+
+  const { order, problems: orderProblems } = flattenSteps(
+    declared.map((id) => ({ id, needs: needsOf.get(id), fatal: true })),
+  );
+  for (const p of orderProblems) {
+    if (p.kind === "cycle") problems.push({ kind: "cycle", roots: p.ids, detail: p.detail });
   }
-  return flat;
+  return {
+    order: order.filter((s) => s.id !== root).map((s) => nodes.get(s.id)!),
+    problems,
+  };
 }
+
+/**
+ * The resolved dependencies, deepest first, for a caller that overlays them.
+ *
+ * The owner's ruling on a1lq, 2026-09-23: **a cycle throws, a missing
+ * dependency warns and the run continues without that layer**. A missing
+ * dependency is also what an uncloned git-URL dependency looks like in a
+ * partial checkout, and throwing there would stop sessions that work. It is
+ * not silent: the warning names it, and `check:instance-graph` fails on it, so
+ * it cannot merge unnoticed.
+ */
+export function orderedDependencies(folioRoot: string): ResolvedDependency[] {
+  const g = resolveInstanceGraph(folioRoot);
+  const cycles = g.problems.filter((p) => p.kind === "cycle");
+  if (cycles.length > 0) {
+    throw new Error(`dependency cycle under ${resolve(folioRoot)}:\n` + cycles.map((c) => `  ${c.detail}`).join("\n"));
+  }
+  for (const p of g.problems) {
+    const key = `${p.kind}:${p.detail}`;
+    if (warned.has(key)) continue;
+    warned.add(key);
+    console.warn(`⚠ ${p.detail}`);
+  }
+  return g.order;
+}
+const warned = new Set<string>();
 
 /**
  * The declaration chain for an instance: deepest dependency first, root last.
  *
  * This is the argument `resolveDirectories` in `schemas/cat-harness.ts` asks
  * for and documents ("callers usually get this from
- * `flattenDependencies(resolveDependencyTree(root))` plus the root itself") and
+ * `orderedDependencies(root)` plus the root itself") and
  * which, until now, nothing built — `resolveDirectories` had no caller outside
  * its own tests, the same gap `resolveSkillDirs` carries and this file's own
  * status table records. A resolver with no caller is a declaration nobody
@@ -781,12 +846,12 @@ export function flattenDependencies(
  * documents and declared in none.
  *
  * Root LAST so a root redeclaring an inherited id wins, matching the overlay
- * order `flattenDependencies` documents and `resolveDirectories` relies on.
+ * order `orderedDependencies` documents and `resolveDirectories` relies on.
  */
 export function declarationChain(
   folioRoot: string,
 ): Array<{ name: string; root: string; own?: boolean }> {
-  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+  const flat = orderedDependencies(folioRoot);
   const chain: Array<{ name: string; root: string; own?: boolean }> = flat.map(
     (d) => ({ name: d.dependency.name ?? d.rootPath, root: d.rootPath }),
   );
@@ -865,7 +930,7 @@ export function materialiseDeclaredDirectories(
 export function resolveSkillDirs(folioRoot: string): string[] {
   const dirs: string[] = [];
 
-  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
+  for (const dep of orderedDependencies(folioRoot)) {
     if (dep.dependency.provides && !dep.dependency.provides.includes("skills")) {
       continue;
     }
@@ -891,8 +956,7 @@ export function resolveSkillDirs(folioRoot: string): string[] {
  * dependency first, root last.
  */
 export function resolveTranslationDirs(folioRoot: string): string[] {
-  const tree = resolveDependencyTree(folioRoot);
-  const flat = flattenDependencies(tree);
+  const flat = orderedDependencies(folioRoot);
   const dirs: string[] = [];
 
   for (const dep of flat) {
@@ -950,7 +1014,7 @@ export async function loadContributions<C extends { name: string }, S extends Co
   folioRoot: string,
   registry: S,
 ): Promise<S> {
-  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+  const flat = orderedDependencies(folioRoot);
 
   for (const dep of flat) {
     const spec = dep.config?.contributes;
@@ -1043,8 +1107,8 @@ export interface ClosedRepositoryDescription {
  * `schemas/content-type.ts` reads a root and nothing else, on purpose: the
  * dependency resolver lives in THIS module, and importing it there would make
  * the type registry depend on the thing that should depend on it. So closure
- * is composed at the layer that already owns the walk — `resolveDependencyTree`
- * is three functions up — rather than the walk being pushed down.
+ * is composed at the layer that already owns the walk — `resolveInstanceGraph`
+ * is above it — rather than the walk being pushed down.
  *
  * ## Membership is ATTRIBUTED, never merged
  *
@@ -1080,7 +1144,7 @@ export function describeRepositoryClosure(
   // Dependencies first, root last — the same depth-first order
   // `resolveSkillDirs` uses, so a reader comparing the two sees one traversal
   // rather than two conventions.
-  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
+  for (const dep of orderedDependencies(folioRoot)) {
     visit(dep.rootPath, dep.dependency.name, false);
   }
   visit(resolve(folioRoot), "(root)", true);

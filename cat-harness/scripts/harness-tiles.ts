@@ -57,7 +57,7 @@ import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeById } from "../schemas/themes.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
-import { flattenDependencies } from "./dependency-order.js";
+import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
   type CatHarnessDeclaration,
   type NavbarIcon,

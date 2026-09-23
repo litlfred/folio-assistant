@@ -51,10 +51,10 @@ So the platform already contains the resolve-then-walk the owner describes. It j
 - **Where the node-kind parent declaration lives.** Probably the graph-kind or node-kind registry in `schemas/graph-kind-registry.ts`, which harness owns, with core's types (the review comment) registering into it.
 
 ## Done when
-- [ ] the roast is held and answered here, and nothing is built first
-- [ ] one resolver is used by instance resolution AND node-kind composition; the second `flattenDependencies` is gone or delegates
-- [ ] a diamond resolves once; a cycle and a missing dependency are reported problems (tests for each)
-- [ ] a same-depth field conflict between two parents is reported; an explicit child override is allowed (test)
+- [x] the roast is held and answered here, and nothing is built first
+- [x] one resolver is used by instance resolution AND node-kind composition; the second `flattenDependencies` is gone or delegates
+- [x] a diamond resolves once; a cycle and a missing dependency are reported problems (tests for each)
+- [x] a same-depth field conflict between two parents is reported; an explicit child override is allowed (test)
 - [ ] `TodoNodeSchema` and 423d's review comment declare their parents and are composed by the resolver
 
 ## Roast, held 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): measured, nothing built
@@ -150,3 +150,26 @@ That registry holds GRAPH kinds (directories such as `todo-items` and
    runtime the missing layer is named in a warning and the run continues
    without it. A gate check fails on it, so it cannot merge unnoticed. A cycle
    always throws.
+
+## Built 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE)
+
+- `schemas/dependency-order.ts` (moved from `scripts/`) is the one flattener.
+  It gains `ancestorsOf` and `findConflicts`. The conflict test is
+  *incomparable*, not same-depth, as the roast corrected.
+- `harness-config.ts`: `resolveInstanceGraph` resolves every node once and
+  THEN orders it with that flattener. `orderedDependencies` throws on a cycle
+  and warns on a missing dependency (the owner's ruling). The old
+  `resolveDependencyTree` and `flattenDependencies` are gone, and all callers
+  are repointed.
+- `schemas/node-kind.ts`: `nodeKind(id, parents, own, { overrides })`.
+  Parents are objects, not registry ids, so there is no load order to get
+  wrong. It refuses:
+  - a field two unrelated ancestors define;
+  - a redefinition the child did not declare;
+  - a declared override that overrides nothing.
+- `TodoNodeKind` = `carried-note` + `themed` + its own fields. The composed
+  shape is key-for-key identical to the old `.extend()` + spread (tested).
+- `check:instance-graph` is in the gate set: 19 instances, clean.
+
+Left for 423d: its review comment declares `TodoNodeKind` as its parent.
+That is the last unchecked box, and it is 423d's work.
