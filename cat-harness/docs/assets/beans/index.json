@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 258,
+      "count": 259,
       "unit": "beans"
     }
   },
@@ -2667,6 +2667,20 @@
       "file": "beans/defs/folio-assistant-s0ki--uploads-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-s36s",
+      "title": "SWEEP COVERAGE: a corpus sweep that silently under-matches reports a clean corpus — found while sweeping for exactly that",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:14:41Z",
+      "updatedAt": "2026-09-23T22:14:57Z",
+      "preview": "Four findings this session had prescribed actions that could not clear them —\n`o5qj`, `thux`, `vq8g`, `7umv`. Four is a class, so `generalise-the-fix` Move 1.2\nsays to sweep for siblings rather than stop at the fourth instance.\n\n## The sweep\n\nEvery `action:` in `cat-harness/test/health/checks.ts`, asked one question: **can\nthe mechanism this names reach the subject this finding can have?**\n\n**Resu",
+      "file": "beans/defs/folio-assistant-s36s--sweep-coverage-a-corpus-sweep-that-silently-under.md"
+    },
+    {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
       "status": "in-progress",
@@ -2923,14 +2937,14 @@
     {
       "id": "folio-assistant-uknu",
       "title": "DUPLICATE id ON EVERY DOCS PAGE: just-the-docs renders nav_footer_custom twice, so both copies carry id=\"fa-nav-open\"",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:18:10Z",
-      "updatedAt": "2026-09-22T19:18:10Z",
+      "updatedAt": "2026-09-23T21:59:49Z",
       "preview": "## What\n\nEvery generated docs page carries **two elements with `id=\"fa-nav-open\"`**. A\nduplicate `id` is invalid HTML, and `document.getElementById` plus every\n`<label for=…>` resolve to the **first** one only.\n\n## How it was found\n\nMeasured 2026-09-22 on the **rendered** page, not on the source — the staging\npreview for PR #957, read out of the `gh-pages` publish ref rather than over\nHTTP (the ag",
       "file": "beans/defs/folio-assistant-uknu--duplicate-id-on-every-docs-page-just-the-docs-rend.md"
     },

@@ -76,7 +76,10 @@ not decided does not compile.
 > **A directory `id` of `kg` is untouched.** An id is the instance's own
 > handle and must survive a rename of anything else; this repository's own
 > declaration moved to `id: "cat-harness"` because it chose to, not because
-> it had to.
+> it had to, and moved on to `id: "skills"` on 2026-09-23. A Subgraph id is
+> its name inside its Harness, and the Harness name qualifies it
+> (`cat-harness.skills`). `RENAMED_DIRECTORY_IDS` reads the old id as the new
+> one, so an older declaration still overrides the entry it meant.
 >
 > **The JSON-LD projection canonicalises.** `toJsonLd` emits the type IRI, not
 > the spelling, so reading a projection back yields `cat-harness` whatever was

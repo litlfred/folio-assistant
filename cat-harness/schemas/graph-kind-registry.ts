@@ -903,7 +903,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // that did would be manufacturing its own evidence.
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "bootstrap:schemas/model-registry.ts#ModelRegistrySchema",
+    validator: "schemas/model-registry.ts#ModelRegistrySchema",
     summary:
       "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
       "as ONE input to the communication-language determination and never as the answer. " +

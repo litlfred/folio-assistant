@@ -42,7 +42,7 @@ import {
   parseModelRegistry,
   validatedLanguages,
   type ModelEntry,
-} from "../../bootstrap/schemas/model-registry.js";
+} from "../schemas/model-registry.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
