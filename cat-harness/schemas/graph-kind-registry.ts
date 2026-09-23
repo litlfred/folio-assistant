@@ -1254,6 +1254,21 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Feedback items — todos raised against a specific block, carrying the submitter's " +
       "identity. Read by the `todo-review` skill.",
   },
+  "review-verdicts": {
+    type: termIri("ReviewVerdictsGraph"),
+    renderable: false,
+    // Written by a running review: the coordinator's step commits each
+    // verdict as it is ingested. A record OF a review, like `todo-feedback`,
+    // and not a todo: it asks for nothing.
+    holds: "state",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "folio-assistant-core:schemas/review-verdict.ts#ReviewVerdictSchema",
+    recordsWork: false, // a verdict is a finished judgement, not work anybody is partway through
+    summary:
+      "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the " +
+      "block's content hash and committed on the edit-set's feature branch. Read by the review " +
+      "coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
+  },
   // ── The one kind that is not-rendered ON PURPOSE ──────────────────────
   //
   // Every other kind above is `renderable: false` because it is a graph a

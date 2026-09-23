@@ -378,10 +378,13 @@ screen and above it on a narrow one:
 | `k` | Previous | the previous item |
 | `n` | Next with comments | the next block with open comments |
 | `p` | Previous with comments | the previous block with open comments |
+| `u` | Next unreviewed | the next changed block with no reviewer verdict on its CURRENT version (bean `px0t`) |
 
-**"Next unreviewed" is deliberately absent.** Nothing records a review
-verdict yet (bean `px0t`), and a guess would skip blocks nobody has read.
-Typing into a selector is never navigation.
+**"Unreviewed" means no verdict on this version**, not "no comments". A
+block whose only verdict is on an earlier version is unreviewed, and says so
+in words ("1 verdict on an earlier version, not counted"). A build whose
+`review-comments.json` carries no verdicts says "No verdict data on this
+build" rather than treating every block as unread. Typing into a selector is never navigation.
 
 **Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
 keyboard alone. It uses no mouse, no click and no hover.

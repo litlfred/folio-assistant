@@ -198,6 +198,49 @@ between the two.
 **What it costs.** One extra commit on the edit-set's branch per decision,
 and a PR from a fork cannot be written to by anyone but its author.
 
+## Verdicts: "I read this version" (bean `px0t`)
+
+A comment asks for something. A **verdict** records that a reviewer read a
+block, and what they judged. The coverage gate needs verdicts, because
+comments cannot say whether a block with none was read.
+
+The owner chose the channel (2026-09-23, option 1 of 3): **the same tagged
+PR comment**, with a `verdict:` or `waive:` line instead of `kind:`.
+
+```
+block: prose:dose prose:schedule
+verdict: ok
+role: clinical-sme
+```
+
+| line | means |
+|---|---|
+| `verdict: ok` | read, no objection |
+| `verdict: changes` | read, and it needs changing. The reasons go in review COMMENTS; the verdict only records the reading |
+| `waive: <reason>` | the block needs no review (a pure rename, say). The reason is required and kept |
+
+- `block:` may name **several labels**, so one comment can close a slice.
+  One verdict is recorded per label.
+- **A comment is a verdict or a review comment, never both.** A tag with
+  `kind:` as well is refused and shown as malformed, so nothing is counted
+  twice under two meanings. The comment parser passes every verdict tag over.
+- **A verdict is pinned to the block's hash.** It counts only while the block
+  is at that version. An edit after review reopens exactly the blocks it
+  touched. The old verdict is kept and shown as "on an earlier version".
+- A verdict on a label the head does not carry is malformed, not recorded.
+
+The `folio-review-comments` Tool ingests verdicts into the same
+`review-comments.json`, as its `verdicts` array
+(`folio-review-verdict/v1`, `folio-assistant-core/schemas/review-verdict.ts`).
+
+**Coverage.** The `folio-review-coverage` Tool computes the two facts
+`GW_Covered` reads (`uncoveredBlocks`, `openDefects`) and prints them as JSON
+on stdout, ready for `workflow_complete`. With `--todos <root> --commit` it
+writes the verdicts into the todos graph's declared `review-verdicts`
+directory and commits them to the **feature branch**, as comment statuses
+are, and it refuses the base branch and a detached HEAD. `init-folio`
+declares that directory (`todos/verdicts/`) for every new folio.
+
 ## Publication: where the file comes from, and when
 
 `folio-staging.yml` (the reusable workflow a folio calls) has two jobs:

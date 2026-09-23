@@ -8,8 +8,10 @@
     uncoveredBlocks  blocks the ChangeSet lists as added or changed that have
                      NEITHER a verdict from a reviewer in a review lane NOR a
                      waiver the review coordinator wrote a reason for (for
-                     example, a pure rename). The engine reads a fact by name
-                     and does no arithmetic, so the caller supplies this count.
+                     example, a pure rename), on the block's CURRENT version.
+                     The engine reads a fact by name and does no arithmetic,
+                     so the `folio-review-coverage` Tool computes both counts
+                     (bean px0t) and the coordinator passes them in.
     openDefects      review comments of kind `defect` still open or addressed
 
   Covered means every changed block has either a verdict or a waiver, and no
