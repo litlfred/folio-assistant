@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T09:02:08Z
-updated_at: 2026-09-22T11:45:48Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-5a3l
 ---
 
 Owner, 2026-09-20: 'as part of rendeing pipleine, can we tarball or so as binary archives the justthedocs search (and only aviaable on release, not refresh on staging?)'
@@ -295,3 +295,18 @@ agrees by CONSTRUCTION rather than by both being kept in step.
       Pages budget, so ONE FILE and no sharding**
 - [ ] The budget is declared with its BASIS — the basis now exists (the
       measurement above); the declaration does not
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `5a3l`.** Its own title is the reason: "build it on release, never on staging refresh". That is a release-pipeline rule about WHERE an artifact is built, which is DEPLOYMENT.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.
