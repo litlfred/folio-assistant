@@ -1051,6 +1051,28 @@
      where it sits in the markup, so neither control needs the theme's
      `sidebar.html` overridden. */
   .fa-nav-close { display: none; }
+  /* SHOWN WHENEVER THE BAR IS OPEN, not only while pinned — and only when the
+   * script is here to make it mean something.
+   *
+   * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
+   * all pages)"*, with a screenshot of the bar open and nothing to press.
+   *
+   * ## Why `.fa-nav-js` guards it
+   *
+   * This control is a `<label for="fa-nav-open">`, and a label TOGGLES. While
+   * pinned that is exactly right: it unchecks and the bar closes, with no
+   * script at all, which is the property this file has protected twice. While
+   * the bar is open because a POINTER is on it the checkbox is already clear,
+   * so the same click would CHECK it — pinning the bar open, the opposite of
+   * what the control says.
+   *
+   * `mountNavPreference` intercepts that case and records a stay-closed
+   * preference instead. So the control is offered in the hover case only when
+   * that handler exists; with no script the pinned behaviour is unchanged and
+   * nothing new appears that would do the wrong thing.
+   */
+  .side-bar.fa-nav-js:hover .fa-nav-close,
+  .side-bar.fa-nav-js:focus-within .fa-nav-close,
   .side-bar:has(.fa-nav-open:checked) .fa-nav-close {
     /* IN THE ICON ROW, not floating over the bar — owner, 2026-09-22: *"[x]
      * should be on the navbar w/ other icons"*.
@@ -1085,6 +1107,58 @@
     opacity: 0.75;
   }
   .fa-nav-close:hover { opacity: 1; }
+
+  /* STAY CLOSED — the second state bit, and the owner's choice of three.
+   *
+   * *"[x] appears whenever the bar is open. Pressing it sets a remembered
+   * 'stay closed' preference that stops the bar peeking on hover, on every
+   * page in that browser."*
+   *
+   * ## It re-asserts the rest state rather than guarding every open rule
+   *
+   * The bar opens through several rules — its width, the `--fa-nav-text` flag,
+   * the icon row's width and wrap. Adding a `:not([data-fa-nav="closed"])` to
+   * each would be four places to keep in step and one to forget. This block
+   * instead re-states the CLOSED geometry at a specificity that wins, in one
+   * place, so a new open rule is covered by whichever of these it fights.
+   *
+   * ## `:focus-within` IS DELIBERATELY NOT SUPPRESSED
+   *
+   * A keyboard reader tabs into `.site-nav` whether or not the bar looks open.
+   * Suppressing focus-opening would leave them moving through links they
+   * cannot see — a trap, and a worse defect than the one this fixes. Only the
+   * POINTER peek is withheld, which is the thing a reader asked to stop.
+   *
+   * The pinned checkbox is not suppressed either: `☰` is how the preference is
+   * lifted, and a control that did nothing would be the `l4zi` defect — an
+   * action whose inverse is not reachable is not a toggle. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) {
+    width: var(--fa-nav-collapsed);
+    --fa-nav-text: 0;
+  }
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) > .fa-nav-icons {
+    width: var(--fa-nav-collapsed);
+    flex-wrap: wrap;
+    padding-top: 2rem;
+  }
+  /* AND `[x]` GOES AWAY WITH THE OPEN STATE, because otherwise it lands ON
+   * the hamburger.
+   *
+   * Found by the test rather than by looking: Playwright reported *"`<span
+   * aria-hidden="true">x</span>` from `.fa-nav-close` subtree intercepts
+   * pointer events"* while trying to press `☰` — the control that LIFTS this
+   * preference was underneath the one that sets it.
+   *
+   * The arithmetic, once it was pointed at: `.fa-nav-close` is `right: 0.5rem`
+   * with a 1.75rem box and a 0.5rem margin, so in a 3.5rem strip it occupies
+   * roughly x 12-40 — inside the hamburger's full-width 0-56 band. It never
+   * collided before because it was only ever shown while PINNED, where the bar
+   * is 15.5rem wide and `☰` is hidden anyway. Showing it whenever the bar is
+   * open is what brought the two together, and only in this state, where the
+   * bar is hovered and still a strip. */
+  :root[data-fa-nav="closed"] .side-bar:hover:not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-nav-close {
+    display: none;
+  }
 }
 
 /* The control itself is never seen -- the two labels are the interface. A real
@@ -3917,7 +3991,17 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   font-variant: small-caps;
 }
 
+/* TARGET SIZE, measured rather than assumed. At 0.72rem with 0.2rem padding
+ * this button drew 95.6 × 18.4px — under the 24px SC 2.5.8 floor, on the one
+ * control that leads back out of an opened item. Nothing measured it, because
+ * `a11y.e2e.ts` never has a document to open (bean `7vhe`'s last Done-when
+ * item). 1.75rem is 28px: past the floor with room, for the low-dexterity
+ * profile this instance declares. The source link below is the same shape
+ * and gets the same floor. */
 .fa-discarded-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
   border: 0;
   background: transparent;
   color: inherit;
@@ -3976,7 +4060,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-discarded-source {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
   margin-top: 0.6rem;
   font-size: 0.72rem;
 }
@@ -4361,6 +4447,44 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   overscroll-behavior: contain;
 }
 
+/* THE BACKDROP SCROLLS WITH THE WORDS — bean `624f`, owner 2026-09-23.
+ *
+ * Owner, 2026-09-21: *"if the content shape is not square and overruns, then
+ * you can scroll contents and background will scrll accoringing"*. Offered
+ * four readings on 2026-09-23 — scroll together, keep the art still, repeat
+ * it, stretch it — they chose **"scrolls with text"**: *"picture and words
+ * move together as one surface. The picture stays whole, and text past its
+ * end continues on the plain theme colour."*
+ *
+ * THE CARD IS THE SCROLLER, NOT THE TEXT BOX. Before this, the text box
+ * scrolled inside a still card, so the words slid over a fixed cat. Now the
+ * text box grows to its content and the CARD scrolls; the `<picture>` and the
+ * scrim are absolutely positioned against the card's scroll origin, so they
+ * move with the content — which is what makes it one surface.
+ *
+ * THE PICTURE STAYS WHOLE, because `object-fit: contain` above is unchanged:
+ * *"show full sticky image, not cropped"* (owner, earlier) is not traded
+ * away. So it covers exactly the first square, and a long note continues
+ * below it on `.fa-sticky`'s own themed surface. That is the honest
+ * consequence of "whole and unrepeated", and it is what the owner chose.
+ *
+ * DOCKED ONLY. On the glass (`.fa-sticky-floating`) a sticky is shaped to its
+ * content (the other half of this bean), so there is nothing to overrun. */
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) > .fa-landing-sticky__text {
+  /* At least the declared cloud, so a short note still sits where the art
+   * put it; taller when the words need it, which is what overflows the CARD. */
+  height: auto;
+  min-height: calc(var(--fa-th, 0.84) * 100%);
+  overflow: visible;
+  /* Room below the last line, so it never sits flush on the card's edge. */
+  padding-bottom: 0.75em;
+}
+
 /* A sticky with no art keeps the old flow behaviour exactly: no fixed shape, no
  * absolute box. `--fixed` is only added when art resolved, so this is the
  * third-state case the template already distinguishes. */
@@ -4742,6 +4866,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the folder list with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -4764,7 +4891,10 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-nav-folders__link {
-  display: block;
+  /* See the target-size block above `.fa-doc-index__link`. */
+  display: flex;
+  align-items: center;
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -4784,10 +4914,53 @@ a.fa-nav-folders__link:focus-visible {
 /* Declared, with no published viewer. Struck through rather than hidden, the
  * same way the harness tabs' graph list marks one: a gap a reader can see is a
  * gap somebody can close. */
+/* AN INERT ROW, AND THE WORDS ARE THE STATE.
+ *
+ * Owner ruling on #1036: a declared graph with no viewer is shown, inert and
+ * LABELLED. `gjli` is the constraint that decides how: the state must not be
+ * carried by colour alone, and it must not read as a control.
+ *
+ * So this rule only DE-EMPHASISES; it no longer has to carry the meaning,
+ * because `.fa-nav-folders__note` beside it says which of the four inert
+ * states this is. `line-through` is gone with the same reasoning — on a row
+ * that now reads `code  no viewer yet` it struck through the kind's own name,
+ * which says "removed" rather than "not built", and struck text is harder to
+ * read for exactly the audience this rule is for.
+ *
+ * `opacity` raised from 0.45 to 0.7, and BOTH numbers are measured in a
+ * browser rather than reasoned about: composited over this panel the row
+ * cleared **3.56:1** at 0.45 and clears **6.48:1** at 0.7. The first is under
+ * the 4.5:1 a label this size owes; dimmer than a link and still legible is
+ * the whole requirement. (An earlier draft of this comment guessed "about
+ * 2.4:1" — wrong, and wrong in the direction that oversells the fix.) */
 .fa-nav-folders__link--dead {
   cursor: default;
-  opacity: 0.45;
-  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* The reason, in the same shape the harness tabs already use for theirs —
+ * `.fa-harness-graph__note`. One appearance for one meaning across the two
+ * surfaces, rather than a second look a reader has to learn. */
+.fa-nav-folders__note {
+  margin-left: 0.4em;
+  /* THE ROW'S OWN SIZE, not 0.75em of it. The folders block is already
+   * 0.75rem, so a further 0.75em put the reason at **9px** — measured, not
+   * estimated. `.fa-harness-graph__note` can afford that shrink because its
+   * row is larger; this one cannot, and the reason is the part of the row a
+   * reader most needs. Italic carries the de-emphasis on its own.
+   *
+   * This instance's declared interaction profile is low-dexterity
+   * (`interaction/interaction.json`), and `ui-accessibility` is explicit that
+   * density is cheaper than a missed target; the same argument applies to a
+   * label nobody can read. */
+  font-style: italic;
+  /* NO OPACITY OF ITS OWN, unlike `.fa-harness-graph__note`, and the
+   * difference is not an oversight. That note sits on a row at full strength;
+   * this one sits INSIDE `--dead`, which is already at 0.7, and opacity
+   * multiplies — 0.7 x 0.75 put the reason at roughly 4.3:1 while the kind
+   * beside it sat at 6.48. The reason is the part a reader needs most and it
+   * would have been the least legible thing in the row. Italic and 0.75em
+   * carry the de-emphasis without touching contrast. */
 }
 
 /* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
@@ -4942,6 +5115,9 @@ button.fa-nav-icon {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the index with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -4963,8 +5139,64 @@ button.fa-nav-icon {
   list-style: none;
 }
 
+/* ═══ EVERY ROW IN THIS NAVBAR IS A TARGET ═════════════════════════════════
+ *
+ * `ui-accessibility`: *"Targets are at least 24x24 CSS px (SC 2.5.8), and aim
+ * higher: 32px for rows in a list … Density is cheaper than a missed target."*
+ * This instance's declared interaction profile is low-dexterity
+ * (`interaction/interaction.json`), so that is the binding constraint here
+ * rather than a nicety.
+ *
+ * THREE ROWS WERE UNDER IT, measured in a browser at 1400x900 rather than read
+ * off this file:
+ *
+ * | row | was | why it was missed |
+ * |---|---|---|
+ * | `.fa-doc-index__link` | 23px | `0.1875rem` padding on a 16.8px line — one pixel short |
+ * | `.fa-nav-folders__link` | 23px | the same rule, copied |
+ * | `.fa-harness-graph__link` | **13px** | an inline `<a>`, so its box IS its text |
+ *
+ * The repository already holds this floor in two places — the KG viewer's
+ * `a11y.e2e.ts` and the language bar — and the navbar was in neither, which is
+ * why three rows drifted under it unnoticed. `navbar-row.e2e.ts` now sweeps
+ * every interactive element in `.side-bar`, so the next row added is measured
+ * rather than trusted.
+ *
+ * `min-height` rather than more padding on the two block rows: padding alone
+ * would push the text off-centre in a row whose height is set by its line, and
+ * the point is the BOX a pointer has to hit. The inline one has to become
+ * `inline-block` before a height applies to it at all.
+ *
+ * ## 1.75rem on the two primary rows, not 1.5
+ *
+ * The skill asks for the floor AND a margin above it — *"a target that is
+ * barely legal is a target that is hard to hit … aim higher: 32px for rows in
+ * a list"* — and `a11y.e2e.ts`'s own note says the suite holds the floor *"so
+ * the comfort margin can be spent without silence"*. 24px exactly is the
+ * legal minimum and nothing more.
+ *
+ * So the document index and the folder list, which are the navigation a
+ * reader actually clicks, get **28px**. Measured cost, in a browser rather
+ * than arithmetic: the folder list's 24 rows make it **772px** tall, inside a
+ * region that already scrolls. That is the trade `ui-accessibility` names in
+ * one line — *"density is cheaper than a missed target"*. (An earlier draft of
+ * this paragraph computed 24 x 28 = 672 and wrote it as a measurement; the
+ * list has margins the arithmetic did not.)
+ *
+ * The per-harness graph sub-links stay at the 24px floor plus their padding
+ * (26px). They nest under a `.fa-harness-tab__body` that is already 40px, so
+ * the reader reaching for a harness is not reaching for these; spending the
+ * margin on six sub-rows per harness would push the fixed bottom past its cap
+ * and cost the avatars the owner asked to keep.
+ * ───────────────────────────────────────────────────────────────────────── */
+
 .fa-doc-index__link {
-  display: block;
+  display: flex;
+  align-items: center;
+  /* 1.75rem — the floor plus the margin the skill asks for; see the block
+     above. `flex` + `align-items` keeps the text centred in a box that is now
+     taller than its own line. */
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -5254,6 +5486,17 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-graph__link {
+  /* THE WORST OF THE THREE, at 26x13: an inline `<a>`, so its box was exactly
+   * its text and no height applied to it. `inline-block` is what makes the
+   * floor reachable at all; the padding is what a pointer aims at. See the
+   * target-size block above `.fa-doc-index__link`. */
+  display: inline-block;
+  min-height: 1.5rem;
+  /* WIDTH TOO, and it is the half a height fix leaves behind: SC 2.5.8 is
+     24x24, and once the height was right this row was 20x32 because its text
+     is the word "docs". Found by the sweep, not by looking. */
+  min-width: 1.5rem;
+  padding: 0.25rem 0;
   color: inherit;
   opacity: 0.72;
   text-decoration: none;
@@ -6555,3 +6798,261 @@ a.fa-harness-tab__body:focus-visible {
   cursor: pointer;
 }
 .fa-home-pin { margin-top: 0.4rem; }
+
+/* ── Touch: where a finger drags, and where it scrolls (bean `c132`) ──────
+ *
+ * `wireMove` takes a non-mouse drag only from a GRIP or in move mode. These
+ * are exactly those, and `touch-action: none` is what stops the browser
+ * claiming the gesture as a scroll before the page sees it. Everywhere else
+ * a finger scrolls, so a long note is still readable on a tablet. */
+[data-fa-grip],
+.fa-sticky-floating[data-fa-moving="true"],
+.fa-glass-asset[data-fa-moving="true"] {
+  touch-action: none;
+}
+
+/* ── A PHONE gets one column (bean `c132`) ─────────────────────────────────
+ *
+ * Owner, 2026-09-23: *"Mobile phone is maybe linearized view due to space.
+ * But tablet should be like laptops."* 37.5rem (600px) is the line: every
+ * phone in portrait is under it and every tablet is over it, including an
+ * iPad mini (744px) held upright.
+ *
+ * LINEARIZED, and !important is the mechanism, not a shortcut: each card
+ * carries its laptop geometry as INLINE left/top/width/height (the reader's
+ * saved place), and only !important outranks an inline style. The saved
+ * place is left in the store untouched, so the same reader on a laptop finds
+ * their cards where they put them. */
+@media (max-width: 37.49rem) {
+  /* Closed: nothing floats over the page. The handle says how many wait. */
+  .fa-sticky-layer[data-fa-glass="closed"] > .fa-sticky-floating { display: none; }
+  .fa-glass-handle[data-fa-count]::after {
+    content: " \00b7 " attr(data-fa-count);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Open: the layer is ONE scrolling column, in reading order. */
+  .fa-sticky-layer[data-fa-glass="open"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    padding: 3.5rem 0.75rem 8.5rem;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-glass-sheet {
+    position: static;
+    inset: auto;
+    padding: 0;
+    overflow: visible;
+    order: 1;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-sticky-floating {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none;
+    order: 2;
+  }
+  .fa-glass-shelf {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .fa-glass-shelf > .fa-glass-asset {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  /* A position means nothing in a column, so the controls that set one go.
+     Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
+  .fa-sticky-layer [data-fa-control="move"],
+  .fa-glass-asset-tool[aria-label^="Make "],
+  .fa-glass-tidy { display: none; }
+}
+
+/* ── The glass's filter (bean `7m6g`) ─────────────────────────────────────
+ *
+ * An attribute rather than `hidden`, because a pinned sticky and a shelf card
+ * already use `hidden` for their own states, and the reader's filter must
+ * never be confused with — or undo — one of those. `!important` because the
+ * phone column sets `display` on the same cards. */
+.fa-sticky-layer [data-fa-filtered-out] { display: none !important; }
+.fa-glass-filter-select {
+  min-height: 2.75rem;
+  min-width: 12rem;
+  padding: 0 0.5rem;
+  font: inherit;
+  color: var(--fa-glass-ink);
+  background: var(--fa-glass-card);
+  border: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-filtered-note {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  padding: 0.6rem 0.75rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px dashed var(--fa-glass-edge);
+}
+
+/* ── The avatar COVERS the card — owner, 2026-09-23 ──────────────────────
+ *
+ * *"artefact avatar should cover sheet"*; offered three shapes, the owner
+ * chose **"Fills the card"**: the cover (or the kind icon) is the whole card's
+ * background, like a sticky's picture, and the title and buttons sit over it
+ * on a readable strip. The avatar is positioned against the CARD (which is
+ * absolutely positioned, so it is the containing block), not the face. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) {
+  justify-content: space-between;
+  overflow: hidden;
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  z-index: 0;
+  background: rgba(var(--fa-glass-tint), 0.35);
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar img {
+  object-fit: cover;
+  object-position: center top;
+}
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-glass-kind-avatar {
+  --fa-avatar-size: 45%;
+  width: 45%;
+  height: 45%;
+}
+/* The words and the controls ride ABOVE the picture, each on its own strip of
+   the card's colour, so they are legible over any cover at any opacity. */
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-face {
+  align-items: flex-start;
+  min-height: 0;
+}
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name,
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools {
+  position: relative;
+  z-index: 1;
+  background: var(--fa-glass-card);
+  padding: 0.35rem 0.5rem;
+}
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+.fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
+/* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
+/* On a phone the column gives a card no height of its own, so a covered card
+   keeps a book's shape. */
+@media (max-width: 37.49rem) {
+  .fa-glass-shelf > .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) { min-height: 16rem; }
+}
+
+/* The browser-only note's dismiss. */
+.fa-glass-local-note { position: relative; padding-right: 3.25rem !important; }
+.fa-glass-settings-note { padding-right: 0 !important; }
+.fa-glass-note-dismiss {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fa-glass-more { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.fa-glass-more .fa-tile {
+  width: 6.5rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 1px solid var(--fa-glass-edge);
+  color: var(--fa-glass-ink);
+  font-size: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+}
+.fa-glass-more .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+
+/* ── Landing stickies as TILES — bean `z1ug` ───────────────────────────────
+ *
+ * Owner: *"they should be closed/tiled to start"*, and on 2026-09-23,
+ * **"Opens as a window"**. The card stays in its slot (it is the sticky's
+ * home, and Pin clones it) but is not drawn while the cell is a tile; the tile
+ * opens a copy of it as a board window. The class is added by the script, so
+ * with no script the full cards show — the linear floor. */
+.fa-sticky-cell--tile > .fa-sticky { display: none; }
+.fa-landing-board { position: relative; }
+.fa-landing-board:has(> .fa-sticky-cell--tile) {
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+}
+.fa-landing-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--fa-sticky-edge, rgba(128, 128, 128, 0.4));
+  border-radius: var(--fa-folio-radius, 0);
+  /* The theme's surface AND ink, together, never one without the other: a
+     themed surface under an inherited foreground is `23bc` again. With no
+     theme, the page's own Canvas and CanvasText pair. */
+  background: var(--fa-sticky-surface, Canvas);
+  color: var(--fa-sticky-ink, CanvasText);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.fa-landing-tile-art {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.fa-landing-tile-title {
+  padding: 0.3rem 0.45rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.fa-landing-tile:focus-visible { outline: 3px solid var(--link-color, #7253ed); outline-offset: 2px; }
+/* The copy inside a window is shaped to the window, not to the square dock. */
+.fa-landing-window .fa-landing-sticky--fixed { aspect-ratio: auto; min-height: 16rem; }
+/* THE LANDING WINDOWS OPEN BELOW THE TILES, not over them. On the todo board
+ * an open window covers the grid (the limit `le8b` records); in a panel of a
+ * few tiles that would bury every other tile under the first window a reader
+ * opened — measured, the second tile could not be clicked. So the layer is
+ * anchored to the board's BOTTOM edge with no height of its own, and the
+ * windows (and their cascade) hang beneath the tile row, over the page. */
+.fa-landing-windows {
+  top: 100%;
+  bottom: auto;
+  height: 0;
+  overflow: visible;
+  z-index: 20;
+}
+.fa-landing-windows .fa-board-window { top: 0.5rem; max-height: 70vh; }
+.fa-landing-windows .fa-board-window[data-fa-z="2"] { top: 3.5rem; }
+.fa-landing-windows .fa-board-window[data-fa-z="3"] { top: 6.5rem; }
+.fa-landing-windows .fa-board-window[data-fa-z="4"] { top: 9.5rem; }
+/* A landing window wears its sticky's surface and ink — both, together. */
+.fa-landing-window {
+  background: var(--fa-sticky-surface, Canvas);
+  color: var(--fa-sticky-ink, CanvasText);
+  border-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.5));
+}
+.fa-landing-window .fa-board-window-control { color: inherit; border-color: currentColor; }
