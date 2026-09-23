@@ -15223,6 +15223,63 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
+      "name": "KgPairAttestation",
+      "module": "cat-harness/schemas/kg-qa.ts",
+      "kind": "interface",
+      "doc": "One declared pair's accepted state. Paths are repo-relative.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "\"implements\" | \"co-located\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose_hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code_hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "\"baseline\" | \"agent\" | \"human\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/kg-qa.ts#KgQaManifest",
       "name": "KgQaManifest",
       "module": "cat-harness/schemas/kg-qa.ts",
@@ -15319,12 +15376,20 @@
           "type": "Record<KgResult, number>",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "pair_attestations",
+          "type": "KgPairAttestation[]",
+          "optional": true,
+          "array": true,
+          "doc": "Declared prose ↔ code pairs and the state each was last accepted in —"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/kg-qa.ts#KgCriterionEntry",
+        "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
         "cat-harness/schemas/kg-qa.ts#KgResult",
         "cat-harness/schemas/kg-qa.ts#KgSubject"
       ],
@@ -15369,6 +15434,12 @@
           "type": "z.record(z.enum(KG_RESULTS), z.number())",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "pair_attestations",
+          "type": "z .array( z.object({ kind: z.enum([\"implements\", \"co-located\"]), prose: z.string().min(1), code: z.string().min(1), pro…",
+          "optional": true,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -36901,6 +36972,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",
+      "to": "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
+      "via": "pair_attestations",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",

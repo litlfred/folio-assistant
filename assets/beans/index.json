@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 612,
+      "count": 616,
       "unit": "beans"
     }
   },
@@ -3039,6 +3039,20 @@
       "file": "beans/defs/folio-assistant-c4rz--migrate-the-feedback-store-into-the-declared-todos.md"
     },
     {
+      "id": "folio-assistant-ca4a",
+      "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [ ] stage B merged\n- [ ] claim shapes extended and run over each declared pair kind\n- [ ] not-parsed count reported per run; tests pin each shape",
+      "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
+    },
+    {
       "id": "folio-assistant-ccqg",
       "title": "pdf-structure --json is contaminated by MuPDF's C-level stdout, so the artefact does not parse",
       "status": "completed",
@@ -3093,6 +3107,20 @@
       "updatedAt": "2026-09-19T06:19:44Z",
       "preview": "_2026-09-19T06:19:44Z_ — MEASURED 2026-09-19, on main at d4b9f7479, by appending one comment line to scripts/kg-audit.ts and running `bun run kg:audit`:\n\n  218 sidecars rewritten. Zero verdicts changed.\n\nCause: `auditor.script_hash` was stored in every one of the 214 kg-qa sidecars. That is not 214 facts. `kg-audit.ts` computes `auditorHash` ONCE per run (one line, before any subject is audited) a",
       "file": "beans/defs/folio-assistant-cflw--generated-artefacts-collide-218-sidecars-rewritten.md"
+    },
+    {
+      "id": "folio-assistant-chhd",
+      "title": "flbx stage C: review-task branch for prose and the code it describes, calling adjudication",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [ ] stages B and A merged\n- [ ] review-task gains the branch; skill written; Lean skill re-pointed\n- [ ] kg:audit, render and gates green",
+      "file": "beans/defs/folio-assistant-chhd--flbx-stage-c-review-task-branch-for-prose-and-the.md"
     },
     {
       "id": "folio-assistant-chq5",
@@ -3195,6 +3223,20 @@
       "updatedAt": "2026-09-22T11:55:46Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
+    },
+    {
+      "id": "folio-assistant-cuxx",
+      "title": "flbx stage B: flag declared prose/code pairs where one side changed and the other did not",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R1 R2 R6 R7. Declared pairs only: <folio:implements workflow> (+ <folio:job>) on BPMN, co-located skill .md/.ts, block .md/lean.ref. Hash each side; a one-sided change since the pair was last reviewed is a minor, advisory finding ('prose not re-reviewed'), recorded as a sidecar in an existing QA family. Asserts nothing about truth, so it cannot cry wolf.\n\n## Done when\n- [x] pair disco",
+      "file": "beans/defs/folio-assistant-cuxx--flbx-stage-b-flag-declared-prosecode-pairs-where-o.md"
     },
     {
       "id": "folio-assistant-cvab",
@@ -3703,6 +3745,20 @@
       "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "Found 2026-09-21 while picking up `tyyc`, which was `in-progress` with all\nfive Done-when boxes ticked and its work fully landed on `main` — gate\nregistered, passing, third states intact. Re-deriving it from a clean\ncheckout cost a session's opening; the claim it carried is what a sibling\nwould have honoured.\n\n## Measured 2026-09-21 on `645dd7dd91`\n\nSix `in-progress` beans have **every** checkbox ",
       "file": "beans/defs/folio-assistant-fkjo--a-bean-can-declare-itself-finished-and-stay-claime.md"
+    },
+    {
+      "id": "folio-assistant-flbx",
+      "title": "NARRATIVE-ASSERTS-CODE: one review axis for 'does the prose say what the artefact does', with Lean as a specialisation",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:55:39Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "The open item from bean 7pdi (its unchecked 'narrative-asserts-code axis' Done-when). Owner 2026-09-23 chose it as next work (session_01SiFEMuTciyB681XP5WfcbB). CRDM: this bean starts at Phase 1 (needs) — nothing built before the needs statement is confirmed.\n\n## Existing partial answers (measured 2026-09-23)\n- proof-narrative-lean-equivalence (agent skill): paper prose vs .lean. Lean only; nrv8 f",
+      "file": "beans/defs/folio-assistant-flbx--narrative-asserts-code-one-review-axis-for-does-th.md"
     },
     {
       "id": "folio-assistant-flh4",
