@@ -17,7 +17,7 @@ A criterion's reviewer entries disagree and no mechanism can settle them: this i
 
 ## How it connects
 
-- **Called by:** [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Refresh materialized remote content](refresh-materialized.html), [Narrative review](review-narrative.html), [Translation Workflow](translation-workflow.html), [Voice overlay review](voice-review.html), [Wireframe design review](wireframe-design-review.html)
+- **Called by:** [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Prose and the code it describes](narrative-code-review.html), [Refresh materialized remote content](refresh-materialized.html), [Narrative review](review-narrative.html), [Translation Workflow](translation-workflow.html), [Voice overlay review](voice-review.html), [Wireframe design review](wireframe-design-review.html)
 - **Calls:** none
 - **Skill:** [`adjudication`](../reference/skill-instructions/adjudication.html)
 
