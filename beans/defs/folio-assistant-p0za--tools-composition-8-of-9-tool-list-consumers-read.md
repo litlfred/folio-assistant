@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p0za
 title: 'TOOLS COMPOSITION: 8 of 9 tool-list consumers read the harness-only barrel, so no instance outside cat-harness can serve a Tool'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T22:33:12Z
-updated_at: 2026-09-22T23:10:07Z
+updated_at: 2026-09-23T14:44:37Z
 parent: folio-assistant-zzmr
 ---
 
@@ -56,3 +56,17 @@ It loads modules synchronously with Bun's `require` and a variable path, so the 
 The audit writes sidecars for the 11, now 12 with folio-changeset: all pass or n/a, with no findings. Tools: 69 → 81.
 
 **Found, not fixed, and not this bean:** `project()` (MCP) has no caller outside its test.
+
+## Closed with evidence — 2026-09-23
+
+Re-derived against `main` at `948afb5`.
+
+- `cat-harness/scripts/tests/tools-discover.test.ts` green
+- `bun run check:partition` — 0 edges touching an unassigned module
+- `folio-assistant-core/tools/index.ts` present, so jwox's `folio-changeset`
+  Tool is declared where the item says
+
+The MCP projection gap this bean's second item names as NOT covered is still
+not covered; it is recorded there as a separate gap and stays one.
+
+No open pull request mentions this bean and it has no children.

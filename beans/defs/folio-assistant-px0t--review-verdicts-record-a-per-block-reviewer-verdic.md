@@ -1,11 +1,11 @@
 ---
 # folio-assistant-px0t
 title: 'REVIEW VERDICTS: record a per-block reviewer verdict so GW_Covered''s uncoveredBlocks is computed, not supplied'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T11:41:17Z
-updated_at: 2026-09-23T12:28:17Z
+updated_at: 2026-09-23T14:44:37Z
 parent: folio-assistant-q4jm
 ---
 
@@ -33,3 +33,12 @@ Asked how a reviewer records a verdict, the owner chose **option 1, a tagged
 PR comment** (`block:` + `verdict: ok|changes` or `waive: <reason>`), over a
 review-page button (which a static page could only turn into a pre-filled
 comment anyway) and GitHub's whole-PR approval (all-or-nothing, so no slices).
+
+## Closed with evidence — 2026-09-23
+
+Re-derived against `main` at `948afb5`; the verdict work landed via #1086.
+
+- `folio-assistant-core/schemas/review-verdict.ts` and its test green
+- `folio-assistant-core/scripts/review-coverage.ts` and its test green
+
+No open pull request mentions this bean and it has no children.
