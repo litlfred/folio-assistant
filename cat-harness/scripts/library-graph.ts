@@ -145,6 +145,59 @@ export interface LibraryEntry {
    * which is again not the same as empty.
    */
   referencedBy?: LibraryRef[];
+  /**
+   * The entry's AVATAR — the picture a reader sees for this book on a library
+   * row and on the folio glass. Bean `zrvt`, issue #1006. Owner, 2026-09-23:
+   * *"library items need avatar (book's) which should use the cover or
+   * whatever is associated to it if there is something"*.
+   *
+   * In order: the rendered COVER beside the entry (`<slug>-cover.png`, the
+   * file `who-iris/scripts/gen-covers.ts` writes, emblem already masked),
+   * then the first image `images.json` declares a `figure`. A logo is never
+   * the avatar — it names who published the book, not the book.
+   *
+   * **ABSENT when there is nothing, and when there is something the site does
+   * not serve.** No guess, no placeholder URL: the viewer draws a book glyph
+   * for an absent avatar, which says "no picture" rather than a broken image
+   * saying "a picture failed".
+   */
+  avatar?: LibraryAvatar;
+}
+
+/** Where an entry's picture came from, and the SITE-ROOT path it is served at. */
+export interface LibraryAvatar {
+  /** Site-root-relative, leading `/`, no base — composed by the viewer. */
+  href: string;
+  source: "cover" | "figure";
+}
+
+/**
+ * The entry's avatar, or `undefined`.
+ *
+ * The published path follows `mount-instance-docs`' rule: a directory is
+ * mounted at `/<kind>/<instance>/` **only when it carries an `index.html` at
+ * its own root**. So the same floor is asked here — an avatar under a library
+ * the site does not mount would be a link to a 404, and `pb04` says no link
+ * beats that.
+ */
+export function avatarOf(
+  libDir: string,
+  instance: string,
+  slug: string,
+  images: { images?: unknown[] } | null,
+): LibraryAvatar | undefined {
+  if (!existsSync(join(libDir, "index.html"))) return undefined;
+  const at = (rel: string): string => `/library/${instance}/${rel.split("\\").join("/")}`;
+  const cover = `${slug}-cover.png`;
+  if (existsSync(join(libDir, cover))) return { href: at(cover), source: "cover" };
+  for (const raw of images?.images ?? []) {
+    const img = raw as { file?: unknown; role?: unknown };
+    if (img.role !== "figure" || typeof img.file !== "string") continue;
+    // A declared file that is not on disk is not an avatar either.
+    if (!existsSync(join(libDir, slug, img.file))) continue;
+    return { href: at(`${slug}/${img.file}`), source: "figure" };
+  }
+  return undefined;
 }
 
 /**
@@ -388,6 +441,10 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         // and deciding it here would mean deciding it without the file.
         upload: sourceFile ? "absent" : "unknown",
         uploadInstance: "",
+        ...(() => {
+          const avatar = avatarOf(libDir, instance, slug, images);
+          return avatar ? { avatar } : {};
+        })(),
       });
     }
   }

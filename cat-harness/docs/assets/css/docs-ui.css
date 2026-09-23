@@ -3105,15 +3105,240 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * is mounted on — which is now every page — unusable, and it would do so
  * invisibly, since a transparent full-viewport div looks like nothing at all.
  */
+/* THE GLASS'S LOOK IS THE READER'S, set from the Settings tile (bean `zrvt`,
+ * issue #1006). Three tokens per theme — the tint, the card and the ink —
+ * and ONE opacity the reader moves, carried as `--fa-glass-opacity` on the
+ * layer. Default, on the owner's words 2026-09-23: *"start with the glass
+ * being 20% opaque with a blur effect."*
+ *
+ * THE CARDS ARE SOLID WHATEVER THE OPACITY. The owner's screenshot of the
+ * first glass showed an asset's title printed straight over the library
+ * table — *"very hard to read"*. See-through is the glass; the things ON it
+ * are paper, so a reader can turn the glass down to nothing and still read. */
+.fa-sticky-layer {
+  --fa-glass-tint: 20, 20, 24;
+  --fa-glass-card: #1f1e24;
+  --fa-glass-ink: #e8eaed;
+  --fa-glass-muted: #b4b8c0;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #8c74f0;
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer,
+.fa-sticky-layer[data-fa-glass-theme="paper"] {
+  --fa-glass-tint: 240, 240, 244;
+  --fa-glass-card: #ffffff;
+  --fa-glass-ink: #1b1b1f;
+  --fa-glass-muted: #4a4d55;
+  --fa-glass-edge: #8a8699;
+  --fa-glass-accent: #4a34b8;
+}
+.fa-sticky-layer[data-fa-glass-theme="night"] {
+  --fa-glass-tint: 12, 12, 16;
+  --fa-glass-card: #1a1a1f;
+  --fa-glass-ink: #f1f2f4;
+  --fa-glass-muted: #c3c6cc;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #a592ff;
+}
+/* HIGH CONTRAST: black and white, 2px white edges and a yellow focus — the
+   usability theme, so no tint, no shadow and no picture is load-bearing. */
+.fa-sticky-layer[data-fa-glass-theme="contrast"] {
+  --fa-glass-tint: 0, 0, 0;
+  --fa-glass-card: #000000;
+  --fa-glass-ink: #ffffff;
+  --fa-glass-muted: #ffffff;
+  --fa-glass-edge: #ffffff;
+  --fa-glass-accent: #ffe600;
+}
 .fa-sticky-layer[data-fa-glass="open"] {
   pointer-events: auto;
   /* Translucent rather than opaque: the point of a glass is that you can see
      what you were browsing underneath it. */
-  background: rgba(20, 20, 24, 0.55);
+  background: rgba(var(--fa-glass-tint), var(--fa-glass-opacity, 0.2));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-:root[data-fa-scheme="light"] .fa-sticky-layer[data-fa-glass="open"] {
-  background: rgba(240, 240, 244, 0.72);
+.fa-sticky-layer[data-fa-glass="open"][data-fa-glass-blur="off"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
+
+/* ── What sits ON the glass: solid, and legible at any opacity ─────────── */
+.fa-glass-empty,
+.fa-glass-notes p,
+.fa-glass-asset,
+.fa-glass-panel {
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-empty,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-notes p,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-asset,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-panel {
+  border-width: 2px;
+  box-shadow: none;
+}
+.fa-glass-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1rem auto 0;
+  max-width: 60rem;
+}
+.fa-glass-asset {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: min(20rem, 100%);
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
+  border-radius: var(--fa-folio-radius, 0);
+}
+.fa-glass-avatar {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 4.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--fa-glass-edge);
+  background: rgba(var(--fa-glass-tint), 0.35);
+}
+.fa-glass-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fa-glass-kind-avatar { --fa-avatar-size: 2rem; color: var(--fa-glass-accent); }
+.fa-glass-asset-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--fa-glass-ink);
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; }
+.fa-glass-asset-close,
+.fa-glass-panel-close,
+.fa-glass-step {
+  flex: 0 0 auto;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fa-glass-notes { max-width: 40rem; margin: 1rem auto 0; }
+.fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
+
+/* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
+.fa-glass-sheet { padding-bottom: 8.5rem; }
+.fa-glass-tiles {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--fa-glass-card);
+  border-top: 2px solid var(--fa-glass-accent);
+  color: var(--fa-glass-ink);
+}
+.fa-glass-tiles .fa-tile {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+.fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+.fa-glass-tile-glyph { font-size: 1.6rem; line-height: 1; }
+.fa-glass-tiles .fa-tile[aria-expanded="true"] {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-tiles .fa-tile-caption { overflow-wrap: anywhere; line-height: 1.15; }
+.fa-glass-tiles .fa-tile:focus-visible,
+.fa-glass-sheet button:focus-visible,
+.fa-glass-sheet a:focus-visible,
+.fa-glass-sheet input:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* ── The panel a chrome tile opens, above the strip ───────────────────── */
+.fa-glass-panel {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  padding: 0.75rem 1rem 1rem;
+}
+.fa-glass-panel-head { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-panel-title { flex: 1 1 auto; margin: 0; font-size: 1.1rem; color: var(--fa-glass-ink); }
+.fa-glass-panel-status { color: var(--fa-glass-muted); font-size: 0.85rem; }
+.fa-glass-panel-more { color: var(--fa-glass-ink); text-decoration: underline; }
+.fa-glass-todo-list { list-style: none; margin: 0.5rem 0; padding: 0; }
+.fa-glass-todo { border-top: 1px solid var(--fa-glass-edge); padding: 0.5rem 0; }
+.fa-glass-todo-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.fa-glass-todo-row .fa-avatar { --fa-avatar-size: 1.5rem; color: var(--fa-glass-accent); }
+.fa-glass-todo-summary { flex: 1 1 14rem; }
+.fa-glass-setting { border: 1px solid var(--fa-glass-edge); margin: 0.75rem 0; padding: 0.5rem 0.75rem; }
+.fa-glass-setting legend { font-weight: 700; padding: 0 0.25rem; }
+.fa-glass-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+.fa-glass-choice input { width: 1.4rem; height: 1.4rem; margin: 0; }
+.fa-glass-choice-label { font-weight: 600; }
+.fa-glass-choice-hint { color: var(--fa-glass-muted); font-size: 0.82rem; }
+.fa-glass-opacity { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-opacity input[type="range"] { flex: 1 1 auto; min-width: 6rem; height: 2.75rem; }
+.fa-glass-opacity-value { min-width: 3.5rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+.fa-glass-reset {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  cursor: pointer;
+}
+
+/* ── The pull-out, first in its row ───────────────────────────────────── */
+.fa-pullout-slot { display: inline-flex; align-items: center; gap: 0.4rem; margin-left: 0.5rem; vertical-align: middle; }
+.fa-pullout {
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  border: 2px solid #8c74f0;
+  background: #4a34b8;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.fa-pullout::before { content: "\2934\00a0"; }
+.fa-pullout-state { font-size: 0.78rem; }
 
 /* The sheet is the glass's own chrome and is ALWAYS present, which is what
    keeps `:empty` above from hiding an open glass that holds no cards yet. It
