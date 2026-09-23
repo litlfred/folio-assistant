@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T19:34:36.497Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4b1f5d2ec47e1720a18f67c71063e874c90cfb0d",
-  "sourceCommitSha": "4b1f5d2ec47e1720a18f67c71063e874c90cfb0d",
-  "sourceCommitAt": "2026-09-23T19:31:43Z",
+  "generatedAt": "2026-09-23T19:45:56.003Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7adb0085388766e8f44c4e6c109c8e601d3e0b72",
+  "sourceCommitSha": "7adb0085388766e8f44c4e6c109c8e601d3e0b72",
+  "sourceCommitAt": "2026-09-23T19:43:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -285,10 +285,10 @@
     "Convention": 2,
     "SkillPackage": 15,
     "Process": 67,
-    "SequenceFlow": 851,
+    "SequenceFlow": 863,
     "Role": 146,
-    "ProcessNode": 810,
-    "Tool": 76,
+    "ProcessNode": 817,
+    "Tool": 77,
     "Schema": 105,
     "GraphKind": 30,
     "Directory": 38,
@@ -984,7 +984,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-rendering.md",
-      "instructionLines": 127,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1882,7 +1882,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/uml-overview.md",
-      "instructionLines": 177,
+      "instructionLines": 178,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2119,7 +2119,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1033,
+      "instructionLines": 1058,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3499,7 +3499,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-graph.md",
-      "instructionLines": 460,
+      "instructionLines": 467,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -12039,8 +12039,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/StartEvent_Due"
       ],
-      "nodeCount": 9,
-      "flowCount": 10,
+      "nodeCount": 14,
+      "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized"
     },
@@ -12116,9 +12116,76 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Adjudicate",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Remote",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the remote wins",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Remote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Local",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the local edit wins",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_KeepLocal",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Local"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Merge",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "neither whole — reconcile",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Reconcile",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Defer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not decidable today",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_RecordConflict",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Defer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Reconciled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Reconcile",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Reconciled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Kept",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_KeepLocal",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/EndEvent_Diverged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Kept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Deferred",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_RecordConflict",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/EndEvent_Diverged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Deferred"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_9",
@@ -12295,6 +12362,51 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Adjudicate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which side, and on what terms?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Local",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Merge",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Defer"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/GW_Outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Reconcile",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Reconcile the two by hand",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/materialize-remote"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Merge"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Reconciled"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Reconcile"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Re-materialize, re-asking the five gates — and record the new fixity",
@@ -12310,13 +12422,79 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_7",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_8"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Reconciled"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_10"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_KeepLocal",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Keep the local edit, and re-pin so it stops being asked",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/materialize-remote"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Local"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Kept"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_KeepLocal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_RecordConflict",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record the conflict, decide nothing, and do NOT re-pin",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/materialize-remote"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Defer"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Deferred"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/Task_RecordConflict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/EndEvent_Diverged",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Diverged on purpose, and the record says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Corpus%20—%20L1%20source%20knowledge%20graph",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Kept",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/flow/Flow_Deferred"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized/node/EndEvent_Diverged"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_RefreshMaterialized/node/EndEvent_Fresh",
@@ -17986,8 +18164,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Start_ContentAuthored"
       ],
-      "nodeCount": 15,
-      "flowCount": 16,
+      "nodeCount": 16,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation"
     },
@@ -18068,7 +18246,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Redo",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "Re-translate",
+      "name": "Reject — re-translate",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Gateway_PostQA",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_Translate",
@@ -18078,12 +18256,31 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Accept",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "Accepted",
+      "name": "Accept as-is (false positive)",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Gateway_PostQA",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_WriteUnofficial",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Edit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "Edit and re-run QA",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Gateway_PostQA",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_EditTranslation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Edited",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_EditTranslation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_PoInject",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/flow/Flow_Edited"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Unofficial",
@@ -18239,7 +18436,8 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Translate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Translate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Edited"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Inject"
@@ -18316,7 +18514,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Gateway_PostQA",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "QA passed?",
+      "name": "Which of the three?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
@@ -18329,10 +18527,33 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Redo",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Accept"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Accept",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Edit"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/node/Gateway_PostQA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_EditTranslation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Edit the flagged passage and re-inject",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_PostQA_Edit"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/flow/Flow_Edited"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation/node/Task_EditTranslation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_Translation/node/Task_WriteUnofficial",
@@ -26538,8 +26759,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/StartEvent_KgBuilt"
       ],
-      "nodeCount": 7,
-      "flowCount": 7,
+      "nodeCount": 8,
+      "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate"
     },
@@ -26585,9 +26806,39 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_FlagDrift",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_g5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftReal",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the drift is real",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftReal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftSpurious",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "false positive",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftSpurious"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_SourceWrong",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "the SOURCE is wrong",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_SourceWrong"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_g6",
@@ -26722,6 +26973,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/Task_FlagDrift"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Which reading was right?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_g5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftReal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftSpurious",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_SourceWrong"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/GW_DriftOutcome"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/node/Task_Verdict",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Record the L1 completeness verdict",
@@ -26736,7 +27009,9 @@
       "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_g5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftReal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_DriftSpurious",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_SourceWrong",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#process/Process_L1Gate/flow/Flow_g6"
       ],
       "outgoing": [
@@ -34276,6 +34551,77 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/uml-object-model"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#tool/content-graph-uml",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-graph-uml",
+      "title": "A paper's block graph as UML",
+      "description": "Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run content:graph:uml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "root",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio's content directory, where the block manifests are.",
+            "required": true,
+            "arg": {
+              "flag": "--root"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the .puml files and their SVGs.",
+            "required": true,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "status",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json, for status fills. Without it every block is drawn unfilled.",
+            "required": false,
+            "arg": {
+              "flag": "--status"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a diagram or SVG is stale or orphaned, instead of writing. Needs no Java.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "diagrams",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/tool-types.schema.json#/$defs/RepoPath",
+            "description": "content-graph.puml and content-graph/<chapter>.puml, with portrait and landscape SVGs beside them."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/graph-rendering",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#skill/content-graph"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-graph-uml"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-entry-browser/cat-harness.jsonld#tool/themes-css",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "themes-css",
@@ -39731,8 +40077,8 @@
   ],
   "staging": {
     "branch": "claude/kg-entry-browser",
-    "sha": "d6b86ed98523fb581abd17da4e816fea21a0b2d8",
+    "sha": "741f7aa5fb1d464c992e7e4526ffac806d46482c",
     "pr": "1165/merge",
-    "run": "35909966382"
+    "run": "35911233620"
   }
 }
