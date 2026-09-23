@@ -72,6 +72,16 @@ tbody tr:hover { background:var(--panel); }
 h2 { font-size:.95rem; margin:24px 16px 4px; }
 p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 .wrap { overflow:auto; }
+/* THE BOOK'S AVATAR, first in its row -- bean zrvt, issue #1006. A fixed box
+   so a row does not reflow when the cover arrives, and a glyph of the same
+   size when there is no picture, so "no cover" never looks like a broken one. */
+.lib-ava { display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:46px; margin-right:8px; vertical-align:middle; flex:0 0 auto;
+  border:1px solid var(--line); background:var(--panel); overflow:hidden; }
+.lib-ava img { width:100%; height:100%; object-fit:cover; display:block; }
+.lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
+td.lib-first { white-space:nowrap; }
+.card .lib-ava { width:56px; height:76px; }
 </style>
 </head>
 <body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
@@ -153,6 +163,32 @@ var DATA_HREF = "../../assets/library/index.json";
    facts written N+1 times, free to disagree the moment one is regenerated. */
 var SCOPE = "";
 function inScope(x){ return !SCOPE || x.instance === SCOPE; }
+/* THE SITE ROOT, derived from the projection's own relative address rather
+   than declared -- the page is served at more than one depth, and DATA_HREF
+   is already the one path that is right at every one of them. */
+var SITE_ROOT = new URL(DATA_HREF.slice(0, DATA_HREF.length - "assets/library/index.json".length), location.href).pathname;
+/* An entry's avatar URL, or "". The projection carries a SITE-ROOT path
+   (library-graph.ts avatarOf), absent when there is no picture or the site
+   does not serve it; nothing is guessed here either. */
+function avatarUrl(e){
+  var h = e.avatar && typeof e.avatar.href === "string" ? e.avatar.href : "";
+  return h.charAt(0) === "/" ? SITE_ROOT + h.slice(1) : "";
+}
+var BOOK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>';
+/* A cover that fails to load falls back to the glyph. ONE capturing listener
+   rather than an inline onerror per image: 'error' does not bubble, and an
+   inline handler is a script-src relaxation this site does not make. */
+document.addEventListener("error", function(ev){
+  var t = ev.target;
+  if (t && t.tagName === "IMG" && t.parentNode && t.parentNode.classList &&
+      t.parentNode.classList.contains("lib-ava")) t.parentNode.innerHTML = BOOK_SVG;
+}, true);
+function avatarHtml(e){
+  var u = avatarUrl(e);
+  return '<span class="lib-ava">' + (u
+    ? '<img src="' + esc(u) + '" alt="" loading="lazy">'
+    : BOOK_SVG) + "</span>";
+}
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -191,7 +227,7 @@ function uploadState(e){
 }
 
 var COLS = [
-  { k:"id",       t:"slug",     n:false, f:function(e){ return '<span class="slug">'+esc(e.id)+"</span>"; } },
+  { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
   { k:"title",    t:"title",    n:false, f:function(e){ return esc(e.title); } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
@@ -260,10 +296,15 @@ function renderList(){
        declare, so nothing to drift -- the folio-mount's argument for
        deriving its root, applied one level in. */
     var href = location.pathname + "#" + encodeURIComponent(key);
+    /* data-fa-pullout-host puts the pull-out control in the FIRST cell.
+       It used to land in the last one, which on a table wider than the
+       screen is past its right edge -- the owner could not find a way onto
+       the glass at all (issue #1006). */
     return '<tr data-fa-library-item="' + esc(key) + '"' +
       ' data-fa-library-href="' + esc(href) + '"' +
-      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c){
-      return "<td"+(c.n?' class="num"':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
+      ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c, i){
+      return "<td"+(c.n?' class="num"':i===0?' class="lib-first" data-fa-pullout-host':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
   $("listing").innerHTML = h + "</tbody></table>";
@@ -273,8 +314,15 @@ function renderDesk(){
   var r = rows();
   $("desktop").innerHTML = r.map(function(e){
     var o = ocrState(e), u = uploadState(e);
-    return '<article class="card"><div class="spine"></div>' +
-      "<h3>"+esc(e.title)+"</h3>" +
+    /* The SAME three attributes the listing row carries, so a card is a
+       library item too and the folio's pull-out finds it in either view. */
+    var key = e.instance + "/" + e.id;
+    return '<article class="card" data-fa-library-item="' + esc(key) + '"' +
+      ' data-fa-library-href="' + esc(location.pathname + "#" + encodeURIComponent(key)) + '"' +
+      ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '"><div class="spine"></div>' +
+      '<div data-fa-pullout-host style="display:flex;gap:8px;align-items:flex-start">' + avatarHtml(e) +
+      "<h3>"+esc(e.title)+"</h3></div>" +
       '<div class="slug">'+esc(e.instance)+" / "+esc(e.id)+"</div>" +
       '<div class="rows">' +
         "<span>sections</span><b>"+e.sections+"</b>" +
