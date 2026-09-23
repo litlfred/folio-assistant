@@ -57,7 +57,7 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
 
     <bpmn:task id="A_ListHarnesses" name="List the harnesses
 this could be">
-      <bpmn:documentation>Zero or more. The DEFAULT is bootstrap itself. Context may name others — "please initialize litlfred/folio-assistant" in a discussion is one, and so is a derivative such as cat-harness or smart-guidelines. This step narrows; it does not decide.</bpmn:documentation>
+      <bpmn:documentation>Zero or more. The DEFAULT is bootstrap itself. Context may name others: "please set up &lt;owner&gt;/&lt;repo&gt; here" in a discussion names one, and so does any Harness built on bootstrap that the Requestor mentions. This step narrows; it does not decide.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -103,7 +103,7 @@ A callActivity rather than a task: `log-message` is an independent sub-process, 
 
     <bpmn:task id="A_Install" name="Follow them, at
 each location">
-      <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to.</bpmn:documentation>
+      <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what any Harness above it requires, and does not need to.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 

@@ -4,7 +4,7 @@
  * graph leakage").
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "../../cat-harness/schemas/cat-harness.ts";
@@ -66,5 +66,52 @@ describe("bootstrap/README.md is self-definitional", () => {
       const target = `schemas/graph.schema.json#/$defs/${term}`;
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
+  });
+});
+
+describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
+  /**
+   * What is allowed, and why. Anything else that matches LEAKS fails.
+   * - The publication address and the source repository: bootstrap's own
+   *   location, not a reference to another Harness.
+   * - The `folio:` BPMN extension prefix and `folio-*` schema identifiers:
+   *   structural names shared with the platform, waiting on the owner's
+   *   ruling (bean iwtn), listed so they cannot grow unnoticed.
+   */
+  const ALLOW = [
+    /https:\/\/litlfred\.github\.io\/folio-assistant\//g,
+    /https:\/\/github\.com\/litlfred\/folio-assistant\//g,
+    /\bxmlns:folio="[^"]*"/g,
+    /<\/?folio:[a-z-]+/g,
+    /folio:(skill|decision|precondition|role|bean|no-skill)\b/g,
+    /"folio-[a-z-]+\/v1"/g,
+  ];
+  /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
+  const PENDING = [
+    'bootstrap.json: "id": "cat-harness",',
+    'bootstrap.json: "reachableAt": "cat-harness/docs/bootstrap/initialization.md",',
+    "schemas/model-registry.ts: * would otherwise answer**. A model registry in cat-harness would be",
+  ];
+  const files: string[] = [];
+  const walk = (d: string) => {
+    for (const f of readdirSync(d)) {
+      const p = join(d, f);
+      if (statSync(p).isDirectory()) {
+        if (f !== "translations") walk(p);
+      } else files.push(p);
+    }
+  };
+  walk(BOOTSTRAP);
+
+  test("only the listed structural names remain", () => {
+    const found: string[] = [];
+    for (const p of files) {
+      let text = readFileSync(p, "utf-8");
+      for (const a of ALLOW) text = text.replace(a, "");
+      for (const line of text.split("\n")) {
+        if (LEAKS.some((re) => re.test(line))) found.push(`${p.slice(BOOTSTRAP.length + 1)}: ${line.trim()}`);
+      }
+    }
+    expect(found.sort()).toEqual([...PENDING].sort());
   });
 });

@@ -634,6 +634,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   directories: ContentDirectory[];
   /** Graphs known but not held — {@link RemoteGraph}. */
   remoteGraphs?: RemoteGraph[];
+  /** Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146. */
+  associatedHarnesses?: AssociatedHarness[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -1776,6 +1778,63 @@ export interface RemoteGraph extends KgNodeLabels {
   graphKinds: GraphKind[];
 }
 
+/**
+ * A HARNESS this instance is associated with: another instance, with its own
+ * declaration, properties and graphs, that lives ELSEWHERE — its own repository
+ * and its own site. Issue #1146. Owner, 2026-09-23: *"we need a good mechanism for
+ * 'associated' harnessed KGs. it should be an optional list property of any
+ * harness inheriting cat-harness (including itself)"*, and **not** a
+ * `/folio-assistant/<name>/` publish: *"certainly not a materialized publish"*.
+ *
+ * ## Not a remote graph, not a dependency
+ *
+ * - {@link RemoteGraph} is a GRAPH known but not held: graph kinds at a URL. An
+ *   associated harness is an INSTANCE — a declaration of its own — so it is a
+ *   separate list, not a `RemoteGraph` with more fields.
+ * - It is **not** `needs`: it fixes no build order, adds nothing to the overlay,
+ *   resolves no skills, and nothing here is materialized. It is the fourth
+ *   relation beside depends (`needs`), references (`remoteGraphs`) and utilizes
+ *   (`dependencies`): **associated** — "this harness knows that one, and where".
+ *
+ * Rendering one needs no network: the config panel draws these fields as
+ * declared, marked remote. `url` is where a reader goes; `repository` is where
+ * its ✎ points (never this checkout's `origin`).
+ */
+export interface AssociatedHarness {
+  /** The associated harness's instance name, as ITS declaration gives it. Unique within this list. */
+  name: string;
+  /** Human title, as its declaration gives it. */
+  title?: string;
+  /** Where a reader goes: the harness's own published site. */
+  url: string;
+  /** Its source repository, where edits to it are made. */
+  repository?: string;
+  /** Its declaration file, when published at a stable URL. */
+  declarationUrl?: string;
+  /** How it relates to this harness, in a few words: e.g. `folio-of` (a folio on this platform). */
+  relation?: string;
+  /** One sentence a reader of the panel sees. */
+  note?: string;
+}
+
+/** The `name` grammar instance names already follow: lowercase, digits, hyphens. */
+const INSTANCE_NAME = /^[a-z0-9][a-z0-9-]*$/;
+
+export const AssociatedHarnessSchema = z
+  .object({
+    name: z.string().regex(INSTANCE_NAME),
+    title: z.string().min(1).optional(),
+    url: z.string().url(),
+    repository: z.string().url().optional(),
+    declarationUrl: z.string().url().optional(),
+    relation: z.string().min(1).optional(),
+    note: z.string().min(1).optional(),
+  })
+  // STRICT for the reason RemoteGraphSchema is: the declaration is parsed by a
+  // plain z.object that drops unknown keys, and a misspelt `repo` would vanish
+  // without a word and leave ✎ pointing nowhere.
+  .strict();
+
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
@@ -2154,6 +2213,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * graph has no directory.
    */
   remoteGraphs: z.array(RemoteGraphSchema).default([]),
+  /**
+   * Harnesses this one is associated with — see {@link AssociatedHarness}.
+   * `.optional()`, not `.default([])`: absent is "has not said", and a default
+   * would make the field required in the output type of every declaration.
+   * Names are unique, never also in `needs`, and never a harness in this
+   * checkout (that would be local, not associated) — refined below.
+   */
+  associatedHarnesses: z
+    .array(AssociatedHarnessSchema)
+    .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "associatedHarnesses: a name appears twice" })
+    .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
   /**
@@ -2240,6 +2310,18 @@ export const CatHarnessDeclarationSchema = z.object({
    * "undecided", and undecided is the state every instance is in today.
    */
   .superRefine((d, ctx) => {
+    // Issue #1146: an associated harness is referenced, never held. A name that
+    // is also in `needs` would make it both, and the overlay would load it.
+    const needs = new Set(d.needs ?? []);
+    (d.associatedHarnesses ?? []).forEach((a, i) => {
+      if (needs.has(a.name)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["associatedHarnesses", i, "name"],
+          message: `\`${a.name}\` is in \`needs\`: an associated harness is referenced, not loaded (issue #1146)`,
+        });
+      }
+    });
     if (d.publishable === true) {
       // §3.2 names `id` and `version`; the third obligation is §3.4's, and it
       // is the same rule rather than an extra one. The exported `dependsOn`
