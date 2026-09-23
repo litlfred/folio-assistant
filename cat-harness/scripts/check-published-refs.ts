@@ -17,7 +17,7 @@
  * published artefact carrying one is not a stricter pin, it is an unresolvable
  * one.
  *
- * Scheme: `fsh-guts/proposals/instance-versioning.md`. This is its §3.3 gate,
+ * Scheme: `cat-harness/docs/proposals/instance-versioning.md`. This is its §3.3 gate,
  * built first on purpose — it is the one that can be written against today's
  * data, before `id`, `version` or `publishable` exist anywhere.
  *
@@ -271,7 +271,7 @@ export function publishedGraphRefs(_repoRoot: string): CarrierReport {
     examined: 0,
     findings: [],
     note:
-      "the exported graph carries no `dependsOn` records yet — §3.4 of `fsh-guts/proposals/instance-versioning.md` adds them. " +
+      "the exported graph carries no `dependsOn` records yet — §3.4 of `cat-harness/docs/proposals/instance-versioning.md` adds them. " +
       "Its one 40-hex string is the build stamp, which is PROVENANCE and deliberately out of scope",
   };
 }

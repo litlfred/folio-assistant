@@ -1,7 +1,8 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "SDLC process audit"
 kind: proposal
+movedFrom: fsh-guts/proposals/
+movedOn: 2026-09-23
 issue: 363
 bean: folio-assistant-haya
 summary: >-

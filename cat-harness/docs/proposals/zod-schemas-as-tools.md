@@ -1,7 +1,8 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Zod schemas as Tools — audit and analysis"
 kind: proposal
+movedFrom: fsh-guts/proposals/
+movedOn: 2026-09-23
 issue: 223
 bean: folio-assistant-3lbz
 summary: >-
@@ -9,6 +10,15 @@ summary: >-
 ---
 
 # Zod schemas as Tools — audit and analysis
+
+> **Editorial correction, 2026-09-23.** This proposal was written while the
+> instance declaration was a fixed `harness.json`; it is `<name>.json` since
+> the 2026-09-21 split (`<name>.config.json` is the config beside it). The
+> references below were updated so a reader is not sent to a file that does not
+> exist — the proposal's argument is untouched, and only the filename moved.
+> The occurrences were invisible while this lived under `fsh-guts/`, which the
+> filename gate counts as retired material; publishing it is what surfaced them.
+
 {: .no_toc }
 
 Asked by the owner, 2026-09-20:
@@ -116,7 +126,7 @@ What makes it possible is that two of the three declarations already exist:
 
 | needed | status |
 |---|---|
-| which directory holds which **graph kind** | ✅ `harness.json`, per `ContentDirectory.graphs` |
+| which directory holds which **graph kind** | ✅ `<name>.json`, per `ContentDirectory.graphs` |
 | a module declaring itself a schema node | ✅ the `@graphNode schema` tag, checked by `check:schema-nodes` |
 | **graph kind → the schema that validates its nodes** | ⚠️ **this row was wrong — see below** |
 

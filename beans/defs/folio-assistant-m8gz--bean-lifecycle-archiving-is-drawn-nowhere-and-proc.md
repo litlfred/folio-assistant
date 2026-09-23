@@ -15,7 +15,7 @@ on bean archiving wired up for process state management generally and
 specifically for things like publication pipeline, CRDM, SDLC... do analysis
 and create bean to fill in."*
 
-Analysis: `fsh-guts/proposals/bean-archiving-in-bpmn.md`. Measured on
+Analysis: `cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Measured on
 `654a48c2`.
 
 ## The answer: wired up nowhere, and there is no wiring to extend

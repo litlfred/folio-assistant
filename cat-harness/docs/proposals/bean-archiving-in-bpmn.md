@@ -1,7 +1,8 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Bean archiving in BPMN — the terminal state nothing draws"
 kind: proposal
+movedFrom: fsh-guts/proposals/
+movedOn: 2026-09-23
 issue: 200
 bean: folio-assistant-m8gz
 summary: >-

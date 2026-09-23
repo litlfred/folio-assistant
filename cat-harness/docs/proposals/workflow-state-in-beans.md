@@ -1,5 +1,4 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Workflow state in beans"
 kind: proposal
 movedOn: 2026-09-19

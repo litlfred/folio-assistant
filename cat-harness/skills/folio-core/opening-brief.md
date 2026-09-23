@@ -103,10 +103,17 @@ a decision exists.
 
 Three places to look, in this order, and none of them is the code:
 
-1. **`fsh-guts/proposals/`** — the design corpus. Start at its `index.md`. The
-   graph kind is named for *deprecated and throwaway* content and it also holds
-   **live schemes that govern**; `directory-conventions`' entry for the kind
-   now says so, because the name reads as permission to skip it.
+1. **The proposals — the design corpus.** They live in the `docs/` of the
+   instance whose stub needs them; today that is
+   [`cat-harness/docs/proposals/`](../../docs/proposals/index.md), and its
+   `index.md` is where to start.
+
+   They were in `fsh-guts/proposals/` until 2026-09-23, under a kind named for
+   *deprecated and throwaway* content, and the owner moved them rather than
+   re-describing the kind: *"proposals not in fsh-guts but docs/ for needed
+   &lt;stub&gt;"*. **Resolve the directory rather than remembering this
+   sentence** — a stub's `docs/` is where its proposals are, and this path is
+   an example of the rule, not the rule.
 2. **The owner's rulings**, in beans and in the declarations that quote them
    verbatim. A `_comment` field in a `*.json` is frequently where a decision
    was recorded, because that is where it had to be obeyed.
@@ -125,7 +132,7 @@ choose — citing `AGENTS.md`'s warning that *"merging the two compositions give
 a closure too broad to fail an audit"* as the reason.
 
 Both halves were wrong. The question was **already settled**:
-`fsh-guts/proposals/instance-versioning.md` §3.3 and an owner ruling of
+`cat-harness/docs/proposals/instance-versioning.md` §3.3 and an owner ruling of
 2026-09-20 — *"sha is for staging, regernecing in published SEMVER"* — had
 decided it, with the gate already implemented. And the citation was about
 **Roles** — `inherits` versus the scoped subprocess stack — not about
