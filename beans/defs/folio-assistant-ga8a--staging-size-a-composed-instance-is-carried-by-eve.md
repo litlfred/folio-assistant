@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ga8a
 title: 'STAGING SIZE: a composed instance is carried by every preview — smart-trust is 776.6 MB across 13, larger than the reference/ lever already pulled'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-23T13:30:49Z
-updated_at: 2026-09-23T13:31:14Z
+updated_at: 2026-09-23T14:42:13Z
 parent: folio-assistant-1xhc
 ---
 
