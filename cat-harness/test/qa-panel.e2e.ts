@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { applyVerdicts, sidecarWithVerdicts } from "./support/qa-fixture.js";
+import { applyVerdicts, sidecar, sidecarWithVerdicts } from "./support/qa-fixture.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
@@ -93,8 +93,8 @@ const LOUD_ID = "voice-status-leak";
  * precisely how the original verbatim fixture managed to assert nothing here.
  *
  * The witness stays the corpus's own rather than being written out as a
- * literal: `scriptHash: "5af6856733f3"` is the value test 2 asserts, and a
- * frozen copy keeps passing after the voice checker changes — a fixture
+ * literal: test 2 asserts the witness's own `scriptHash` (see {@link SCRIPT_HASH}),
+ * and a frozen copy keeps passing after the voice checker changes — a fixture
  * drifting from the corpus is the exact defect this section exists to fix.
  *
  * Built through `test/support/qa-fixture.ts`, which throws by name if
@@ -125,6 +125,32 @@ const BLOCK_JSON = sidecarWithVerdicts(CORPUS_PATH, [
 const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteria.length - 1;
 
 /**
+ * The checker hash the loud row's script witness recorded, READ from the
+ * fixture rather than written out.
+ *
+ * It was the literal `"5af6856733f3"`. That is a value the corpus holds, not a
+ * property of the panel: re-sweeping after any edit to the voice checker
+ * rewrites it, and the panel test would go red on a correct content change —
+ * bean `iumj`'s defect in the one string nobody had derived. What the test is
+ * about is that the panel SHOWS the recorded hash, whatever it is.
+ */
+const SCRIPT_HASH = (() => {
+  const doc = JSON.parse(BLOCK_JSON) as {
+    criteria: Array<{ id: string; witnesses?: Array<{ kind: string; scriptHash?: string }> }>;
+  };
+  const h = doc.criteria
+    .find((c) => c.id === LOUD_ID)
+    ?.witnesses?.find((w) => w.kind === "script")?.scriptHash;
+  if (!h) {
+    throw new Error(
+      `fixture: \`${LOUD_ID}\` has no script witness with a scriptHash in ${CORPUS_PATH} — ` +
+        `the witness assertion would have nothing to compare against.`,
+    );
+  }
+  return h;
+})();
+
+/**
  * The same document with that criterion's witness marked stale.
  *
  * Derived from {@link BLOCK_JSON}, not from the pristine corpus, so the row
@@ -141,10 +167,18 @@ const FOLDED_COUNT = (JSON.parse(BLOCK_JSON) as { criteria: unknown[] }).criteri
  */
 const STALE_JSON = applyVerdicts(BLOCK_JSON, [{ id: LOUD_ID, stale: { changed: ["md"] } }]);
 
-/** A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash. */
-const KG_JSON = readFileSync(
+/**
+ * A KG sidecar: one auditor, no timestamp, a `sha256:`-prefixed hash.
+ *
+ * VERBATIM, through `sidecar()`, because every assertion on it is SHAPE —
+ * "not recorded" for a field `kg-audit.ts` never writes, and the subject name.
+ * No test below asserts a verdict off this document; if one ever needs to,
+ * it goes through `sidecarWithVerdicts` like {@link BLOCK_JSON}.
+ * `scripts/tests/e2e-corpus-coupling.test.ts` fails a raw `readFileSync` of a
+ * corpus path in any e2e spec, so the helper is the declaration of intent.
+ */
+const KG_JSON = sidecar(
   join(ROOT, "test/results/witnesses/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
-  "utf8",
 );
 
 const PAGE_URL = "http://qa.test/page.html";
@@ -261,7 +295,7 @@ test("a criterion expands to the witness that ruled on it, with the checker's ha
   // The hash of the checker's own source at audit time — the thing that says
   // whether the verdict came from the logic now in the tree.
   await expect(witness).toContainText("checker source hash");
-  await expect(witness).toContainText("5af6856733f3");
+  await expect(witness).toContainText(SCRIPT_HASH);
   // Evidence is quoted verbatim out of the content, and reaches the page
   // through textContent — if it were concatenated into markup it would be the
   // string that closes a tag.
