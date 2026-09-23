@@ -63,7 +63,9 @@ nothing from you.
 3. **You disagree with a checker's `false`.** The machine says a claim is false
    and you read it as true, or the other way round. Do not overrule it quietly.
    That disagreement is exactly what `adjudication` exists for: call
-   `Process_Adjudication`, and the checker's entry is kept beneath the
+   `Process_CriterionAdjudication` (the QA-criterion specialisation of
+   `adjudication`, whose outcomes are: the finding stands, the criterion is
+   scoped, or a dispensation is granted), and the checker's entry is kept beneath the
    verdict, because a disagreement between a checker and a reviewer is
    information.
 

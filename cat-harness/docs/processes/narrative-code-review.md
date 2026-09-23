@@ -18,7 +18,7 @@ Judging whether the prose side of a declared prose/code pair still says what the
 ## How it connects
 
 - **Called by:** [Review task](review-task.html)
-- **Calls:** [Adjudication](adjudication.html)
+- **Calls:** [Criterion adjudication](criterion-adjudication.html)
 
 ## Lanes — who acts
 
@@ -36,7 +36,7 @@ Every one of the 5 step(s) is documented.
 | **Re-read the prose against the code**<br>`A_ReRead` | Reviewer | [`narrative-asserts-code`](../reference/skill-instructions/narrative-asserts-code.html) | For each open item, read the prose claim beside the code it describes and decide what is true. For a stale pair, read what changed in the code and whether the prose still describes it. For an undetermined claim, say whether it points at something real outside this repository. For a false claim, check the checker's reading before trusting it. |
 | **Attest the pair, with a reason**<br>`A_Attest` | Reviewer | [`narrative-asserts-code`](../reference/skill-instructions/narrative-asserts-code.html) | The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent\|human --reason "…"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again. |
 | **Raise a finding against the wrong side**<br>`A_RaiseFinding` | Reviewer | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | The prose and the code really disagree: raise a finding that names which side is wrong and why. Usually the prose, because the code is what runs — but a skill can state intended behaviour correctly while the code has regressed, and then the finding is against the code. |
-| **Adjudicate against the checker**<br>`Call_Adjudication` | Reviewer | calls [Adjudication](adjudication.html) | The reviewer and a checker read the same claim differently. Descend into Process_Adjudication, which judges it and keeps the checker's entry beneath the verdict rather than overwriting it (requirement R4 of issue #1042). |
+| **Adjudicate against the checker**<br>`Call_Adjudication` | Reviewer | calls [Criterion adjudication](criterion-adjudication.html) | The reviewer and a checker read the same claim differently — a disagreement about ONE kg-qa criterion (prose-claims-resolve). Descend into Process_CriterionAdjudication, which runs the shared adjudication and then one of its three outcomes: the checker's finding stands, the criterion is scoped, or a dispensation is granted with its reason. The checker's entry is kept beneath the verdict rather than overwritten (requirement R4 of issue #1042). |
 
 ## Decisions
 

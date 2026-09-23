@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: narrative-code-review\n"
-"POT-Creation-Date: 2026-09-23T12:22:35.040Z\n"
+"POT-Creation-Date: 2026-09-23T13:45:38.006Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "For each open item, read the prose claim beside the code it describes and decide what is true. For a stale pair, read what changed in the code and whether the prose still describes it. For an undetermined claim, say whether it points at something real outside this repository. For a false claim, check the checker's reading before trusting it."
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:135
+#: processes/narrative-code-review.bpmn:136
 #. Diagram label
 msgid "I disagree with the checker"
 msgstr ""
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can. You are in this process when a change touches both sides of a declared pair — a diagram and the workflow it implements, a skill and the code beside it — and review-task has sent it here. The mechanical half is already on the subject's kg-qa sidecar: prose-reviewed-since-code-changed says whether the code moved while the prose stood still, and prose-claims-resolve says which claims the prose makes about the code hold, are false, or could not be determined. This process judges only what is left — the stale pairs, the false claims and the undetermined ones — and never re-derives what the checks already settled. Three outcomes, each leaving a record: the prose holds (attested, with a reason), the two really disagree (a finding against the side that is wrong), or the reviewer disagrees with a checker's verdict (adjudication, which keeps the checker's entry beneath the judgement). A proof and its Lean are the one pair kind a proof assistant can settle; that specialisation is proof-narrative-lean-equivalence, not this diagram."
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:131
+#: processes/narrative-code-review.bpmn:132
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Reviewer"
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:122
+#: processes/narrative-code-review.bpmn:123
 #. Diagram label
 msgid "Settled, with a record"
 msgstr ""
@@ -104,7 +104,7 @@ msgstr ""
 msgid "The prose and the code really disagree: raise a finding that names which side is wrong and why. Usually the prose, because the code is what runs — but a skill can state intended behaviour correctly while the code has regressed, and then the finding is against the code."
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:133
+#: processes/narrative-code-review.bpmn:134
 #. Diagram label
 msgid "the prose holds"
 msgstr ""
@@ -116,7 +116,7 @@ msgstr ""
 
 #: processes/narrative-code-review.bpmn:117
 #. Diagram element documentation
-msgid "The reviewer and a checker read the same claim differently. Descend into Process_Adjudication, which judges it and keeps the checker's entry beneath the verdict rather than overwriting it (requirement R4 of issue #1042)."
+msgid "The reviewer and a checker read the same claim differently — a disagreement about ONE kg-qa criterion (prose-claims-resolve). Descend into Process_CriterionAdjudication, which runs the shared adjudication and then one of its three outcomes: the checker's finding stands, the criterion is scoped, or a dispensation is granted with its reason. The checker's entry is kept beneath the verdict rather than overwritten (requirement R4 of issue #1042)."
 msgstr ""
 
 #: processes/narrative-code-review.bpmn:92
@@ -124,7 +124,7 @@ msgstr ""
 msgid "The reviewer's reading, one of three: the prose still holds; the prose and the code really disagree; or the reviewer disagrees with a checker's own verdict. The third is never resolved in this lane, because a reviewer overruling a checker quietly loses the disagreement, which is information."
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:134
+#: processes/narrative-code-review.bpmn:135
 #. Diagram label
 msgid "they disagree"
 msgstr ""
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Whether the sidecar holds anything the machine could not settle: a stale pair, or a claim that is false or undetermined. Computable from the two criteria's results, not a judgement. Nothing open means the pair review has nothing to add."
 msgstr ""
 
-#: processes/narrative-code-review.bpmn:130
+#: processes/narrative-code-review.bpmn:131
 #. Diagram label
 msgid "yes"
 msgstr ""

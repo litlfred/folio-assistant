@@ -113,8 +113,9 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
       <bpmn:outgoing>F_5</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:callActivity id="Call_Adjudication" name="Adjudicate against the checker" calledElement="Process_Adjudication">
-      <bpmn:documentation>The reviewer and a checker read the same claim differently. Descend into Process_Adjudication, which judges it and keeps the checker's entry beneath the verdict rather than overwriting it (requirement R4 of issue #1042).</bpmn:documentation>
+    <bpmn:callActivity id="Call_Adjudication" name="Adjudicate against the checker" calledElement="Process_CriterionAdjudication">
+      <bpmn:documentation>The reviewer and a checker read the same claim differently — a disagreement about ONE kg-qa criterion (prose-claims-resolve). Descend into Process_CriterionAdjudication, which runs the shared adjudication and then one of its three outcomes: the checker's finding stands, the criterion is scoped, or a dispensation is granted with its reason. The checker's entry is kept beneath the verdict rather than overwritten (requirement R4 of issue #1042).</bpmn:documentation>
+      <bpmn:extensionElements><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
       <bpmn:incoming>F_Disagree</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:callActivity>
