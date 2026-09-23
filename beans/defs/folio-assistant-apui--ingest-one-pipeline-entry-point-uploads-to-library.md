@@ -197,6 +197,25 @@ also reported **81 pre-existing stale nodes** under `arxiv-2508.05192v2` and
 offers `--prune`; nothing was pruned —
 `deletion-requires-confirmation`, and they are not this change's to remove.
 
+## A fifth thing the path does not do: no licence is recorded
+
+Running the gates after promotion moved `source-licence.qa-results.json`'s
+`not-recorded` family from **20 to 21**, the new entry being
+`agent-skills/library/skills-in-openai-api` — the document this session
+ingested.
+
+So an entry produced by the full pipeline arrives **licence-unknown**. The
+family is *"Reported, not gated; the field is new"*, so nothing fails and
+nothing is blocked; but "the pipeline ran and the entry is complete" and "we
+know what we may do with this content" are different claims, and only the
+first is established by promotion.
+
+Not fixed here, and not fixable by a tool alone: a licence is a fact ABOUT a
+source, read off the document or its provenance, and an arm that guessed one
+would be asserting a legal claim from a heuristic. That is a worse failure
+than leaving it unknown, which is presumably why the family reports rather
+than gates.
+
 ## Still open
 
 - Folding the two corpus generators into promotion, or deciding they stay
