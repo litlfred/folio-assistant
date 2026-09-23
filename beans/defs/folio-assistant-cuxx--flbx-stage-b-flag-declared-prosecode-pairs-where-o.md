@@ -1,10 +1,11 @@
 ---
 # folio-assistant-cuxx
 title: 'flbx stage B: flag declared prose/code pairs where one side changed and the other did not'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T10:38:11Z
-updated_at: 2026-09-23T10:38:11Z
+updated_at: 2026-09-23T11:21:05Z
 parent: folio-assistant-flbx
 ---
 
@@ -14,4 +15,13 @@ Issue #1042, R1 R2 R6 R7. Declared pairs only: <folio:implements workflow> (+ <f
 - [x] pair discovery from existing declarations, with the count of pairs found and of kinds not scanned
 - [x] per-pair hash baseline and a re-review mark, in an existing QA sidecar family
 - [x] criterion reported by kg:audit (minor, not gated), with tests
-- [ ] bun run gates green; PR opened
+- [x] bun run gates green; PR opened (#1065, merged)
+
+## Summary of Changes
+
+PR #1065, merged 2026-09-23 on the owner's "merge it when green". kg-qa
+criterion `prose-reviewed-since-code-changed` over 32 declared pairs (9
+diagram ↔ workflow, 23 skill .md ↔ .ts), attestations carried in each
+subject's sidecar, `pairs:attest` as the re-review mark, requirements page
+docs/proposals/narrative-asserts-code.md. Verified end to end on
+ci-health.yml.

@@ -47,6 +47,7 @@ import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -1862,11 +1863,14 @@ if (!check) {
 // `--check` regenerates the same text the writer would.
 {
   const repoRoot = resolve(root, "..");
+  const scripts = rootScripts(repoRoot);
   for (const r of reports) {
     if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
     const pairs = discoverPairs(r.subject, root, repoRoot);
     const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
     r.criteria[PAIR_CRITERION] = e;
+    // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
+    r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
     r.totals = tally(r.criteria);
     if (attestations.length) r.pair_attestations = attestations;
   }
