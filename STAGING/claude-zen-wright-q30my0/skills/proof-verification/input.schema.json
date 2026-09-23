@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/skills/proof-verification/input.schema.json",
+  "title": "Proof Verification Input",
+  "description": "Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations.",
+  "type": "object",
+  "required": [
+    "projectRoot"
+  ],
+  "properties": {
+    "projectRoot": {
+      "type": "string",
+      "description": "Path to the Lean project root (containing lakefile.lean)."
+    },
+    "targetFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific files to verify (empty = entire project)."
+    },
+    "trackSorries": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track and report sorry placeholders."
+    }
+  },
+  "staging": {
+    "branch": "claude/zen-wright-q30my0",
+    "sha": "8a5592c0fdce810c26a55278eef197aa080023ba",
+    "pr": "1030/merge",
+    "run": "35840637604"
+  }
+}
