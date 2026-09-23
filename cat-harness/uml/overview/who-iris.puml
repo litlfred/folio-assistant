@@ -136,4 +136,7 @@ who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
+pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_skills
+pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_themes
+pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_docs
 @enduml
