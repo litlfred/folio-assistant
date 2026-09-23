@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: publish-verification\n"
-"POT-Creation-Date: 2026-09-23T21:29:14.674Z\n"
+"POT-Creation-Date: 2026-09-23T22:06:42.240Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/publish-verification.bpmn:54
+#: processes/publish-verification.bpmn:55
 #. Diagram label
 msgid "A verifier failed"
 msgstr ""
 
-#: processes/publish-verification.bpmn:46
+#: processes/publish-verification.bpmn:47
 #. Diagram element documentation
 msgid "Answered by the findings. `yes` (exit 0) ends verified and the caller deploys; `no` (exit 1) ends failed, and the caller blocks the deploy and alerts the publication manager with the report."
 msgstr ""
 
-#: processes/publish-verification.bpmn:37
+#: processes/publish-verification.bpmn:38
 #. Diagram element documentation
 msgid "Answered by the verifier set's exit code. `no` (exit 2 — nothing to verify, or a verifier could not run) ends as could-not-verify, which the caller treats as a failure: an unverified release is not a verified one. `yes` asks whether everything passed."
 msgstr ""
@@ -39,37 +39,37 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/publish-verification.bpmn:36
+#: processes/publish-verification.bpmn:37
 #. Diagram label
 msgid "Could every verifier tell?"
 msgstr ""
 
-#: processes/publish-verification.bpmn:42
+#: processes/publish-verification.bpmn:43
 #. Diagram label
 msgid "Could not verify — treated as failed"
 msgstr ""
 
-#: processes/publish-verification.bpmn:45
+#: processes/publish-verification.bpmn:46
 #. Diagram label
 msgid "Did every in-scope document pass?"
 msgstr ""
 
-#: processes/publish-verification.bpmn:27
+#: processes/publish-verification.bpmn:28
 #. Diagram label
 msgid "Documents exported, not yet deployed"
 msgstr ""
 
-#: processes/publish-verification.bpmn:59
+#: processes/publish-verification.bpmn:60
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/publish-verification.bpmn:30
+#: processes/publish-verification.bpmn:31
 #. Diagram label
 msgid "Run every verifier over the export"
 msgstr ""
 
-#: processes/publish-verification.bpmn:31
+#: processes/publish-verification.bpmn:32
 #. Diagram element documentation
 msgid "Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir <site>`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block."
 msgstr ""
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass."
 msgstr ""
 
-#: processes/publish-verification.bpmn:51
+#: processes/publish-verification.bpmn:52
 #. Diagram label
 msgid "Verified"
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Verify the export before it is deployed"
 msgstr ""
 
-#: processes/publish-verification.bpmn:60
+#: processes/publish-verification.bpmn:61
 #. Diagram label
 msgid "yes"
 msgstr ""

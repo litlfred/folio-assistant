@@ -26,7 +26,7 @@ Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass. |
+| CI/CD Pipeline | `build-pipeline` | Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass. |
 
 ## Steps
 

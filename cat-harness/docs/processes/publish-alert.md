@@ -24,8 +24,8 @@ Owner, 2026-09-23: "there is another alert needed for deployment failure. every 
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed. |
-| Publication manager | — | The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release. |
+| CI/CD Pipeline | `build-pipeline` | The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed. |
+| Publication manager | `publication-manager` | The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release. |
 
 ## Steps
 

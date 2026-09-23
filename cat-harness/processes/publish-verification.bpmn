@@ -15,6 +15,7 @@
     <bpmn:laneSet id="LaneSet_Process_PublishVerification">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Exported</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Verify</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>

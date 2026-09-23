@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: publish-alert\n"
-"POT-Creation-Date: 2026-09-23T21:29:14.674Z\n"
+"POT-Creation-Date: 2026-09-23T22:06:42.239Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/publish-alert.bpmn:30
+#: processes/publish-alert.bpmn:32
 #. Diagram label
 msgid "A step after the publish button failed"
 msgstr ""
 
-#: processes/publish-alert.bpmn:52
+#: processes/publish-alert.bpmn:54
 #. Diagram element documentation
 msgid "Add this failure to the open issue as a comment (which notifies), and refresh the body to the latest state."
 msgstr ""
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Alert the publication manager"
 msgstr ""
 
-#: processes/publish-alert.bpmn:39
+#: processes/publish-alert.bpmn:41
 #. Diagram label
 msgid "An alert already open?"
 msgstr ""
@@ -39,32 +39,32 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/publish-alert.bpmn:51
+#: processes/publish-alert.bpmn:53
 #. Diagram label
 msgid "Comment on the open issue, naming the step"
 msgstr ""
 
-#: processes/publish-alert.bpmn:33
+#: processes/publish-alert.bpmn:35
 #. Diagram label
 msgid "Ensure the publication-manager label"
 msgstr ""
 
-#: processes/publish-alert.bpmn:40
+#: processes/publish-alert.bpmn:42
 #. Diagram element documentation
 msgid "Is a publication-manager tracking issue already open? `no` opens one; `yes` comments on it, because each failed publish is a new event the publication manager should be notified of — an edit alone would not notify."
 msgstr ""
 
-#: processes/publish-alert.bpmn:69
+#: processes/publish-alert.bpmn:71
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/publish-alert.bpmn:46
+#: processes/publish-alert.bpmn:48
 #. Diagram element documentation
 msgid "Open the issue with the step that failed, the run link and — for a verification failure — the verifier report."
 msgstr ""
 
-#: processes/publish-alert.bpmn:45
+#: processes/publish-alert.bpmn:47
 #. Diagram label
 msgid "Open the tracking issue, naming the failed step"
 msgstr ""
@@ -74,12 +74,12 @@ msgstr ""
 msgid "Owner, 2026-09-23: \"there is another alert needed for deployment failure. every step post 'push the publish button' should be same\". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager."
 msgstr ""
 
-#: processes/publish-alert.bpmn:24
+#: processes/publish-alert.bpmn:25
 #. Diagram label
 msgid "Publication manager"
 msgstr ""
 
-#: processes/publish-alert.bpmn:34
+#: processes/publish-alert.bpmn:36
 #. Diagram element documentation
 msgid "The alert is a tracking issue labelled `publication-manager` — the role, not a person, because no actor declares a GitHub account for it. Whoever watches that label is alerted."
 msgstr ""
@@ -89,27 +89,27 @@ msgstr ""
 msgid "The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed."
 msgstr ""
 
-#: processes/publish-alert.bpmn:25
+#: processes/publish-alert.bpmn:26
 #. Diagram element documentation
 msgid "The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release."
 msgstr ""
 
-#: processes/publish-alert.bpmn:58
+#: processes/publish-alert.bpmn:60
 #. Diagram element documentation
 msgid "The publication manager reads what failed and decides: hold the release, or fix forward and publish again. Nothing was deployed on a failure before the deploy; a failure after it (the deploy itself, or the previews lost) is live, and says so. The next successful publish closes the issue."
 msgstr ""
 
-#: processes/publish-alert.bpmn:57
+#: processes/publish-alert.bpmn:59
 #. Diagram label
 msgid "Triage the failure: hold or fix forward"
 msgstr ""
 
-#: processes/publish-alert.bpmn:64
+#: processes/publish-alert.bpmn:66
 #. Diagram label
 msgid "Triaged"
 msgstr ""
 
-#: processes/publish-alert.bpmn:70
+#: processes/publish-alert.bpmn:72
 #. Diagram label
 msgid "yes"
 msgstr ""

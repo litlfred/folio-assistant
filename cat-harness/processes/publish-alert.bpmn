@@ -15,6 +15,7 @@
     <bpmn:laneSet id="LaneSet_Process_PublishAlert">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Label</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Open</bpmn:flowNodeRef>
@@ -23,6 +24,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager">
         <bpmn:documentation>The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>U_Triage</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Triaged</bpmn:flowNodeRef>
       </bpmn:lane>
