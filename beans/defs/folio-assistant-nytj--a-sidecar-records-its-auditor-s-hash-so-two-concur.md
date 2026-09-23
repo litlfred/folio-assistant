@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nytj
-title: 'A sidecar records its auditor''s hash, so two concurrent PRs go green alone and red together'
-status: todo
+title: A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:26:19Z
-updated_at: 2026-09-19T01:18:43Z
+updated_at: 2026-09-23T13:26:05Z
 parent: folio-assistant-1swy
 ---
 
@@ -39,3 +39,18 @@ Two latent bugs fell out of the fix, both from indexing rather than naming. `STA
 Fixed in PR #319: the fixture is derived from the real sidecar with the criterion located BY ID, and a criterion that has vanished from the corpus throws by name, so "dropped" and "adjudicated" cannot both read as a pass.
 
 This one is NOT an argument for a merge queue, unlike instances 1-3. A merge queue would have caught it, since it tests the combined state, but the cheaper and more durable fix is the rule the file already half-knew: A VERDICT IS NOT A FIXTURE. Derive the state under test from the real artefact; never depend on the corpus being in it.
+
+_2026-09-23_ — **Decision (owner): both halves.** Instance 1 recurred three times today: `kg:detangle` / `kg:audit` measurements green on a PR, green on `main`, merged without a text conflict, stale on the result. The owner chose, over one alone:
+
+- **Merge queue support:** `merge_group:` on the two gating workflows (`code-quality-gates.yml`, `jsonld-gen-check.yml`), so GitHub tests EXACTLY the commit that will land. Neither reads `event_name`/`head_ref`, which a merge_group run leaves empty. Inert until the owner switches the queue on for `main` — a repository setting no agent can change.
+- **`bun run check:merged`** (Tool node `gates-merged`): the full gate set on the merged tree, in a throwaway worktree. Three outcomes; 2 = could not determine. Documented in `/prepare-merge` and its skill.
+
+Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency and were fixed case by case; they are out of scope here, as this bean's own notes argue.
+
+## Todo
+
+- [x] `merge_group:` on the two gating workflows
+- [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node `gates-merged`; `/prepare-merge` skill and command
+- [ ] falsified by replaying a real stale pair (d0c91582 against main at 10:52, cc6548ef)
+- [ ] bun run gates green; PR
+- [ ] owner switches on the merge queue for `main` (Settings → Rules/Branch protection → Require merge queue) — the owner's action, not an agent's

@@ -62,6 +62,18 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
      `<<<<<<<` / "changed in both" — that false-positives on files which
      legitimately contain those literals (docs about merge conflicts, test
      fixtures — this very skill tripped that check when it was first run).
+   - **A clean text merge is not a clean state.** `merge-tree` answers "do
+     the files conflict?", not "do the gates pass on the result?". Before
+     asking for a merge, run **`bun run check:merged`**: it builds the merge
+     with the current base in a throwaway worktree and runs the full
+     `bun run gates` there (exit 0 passes, 1 fails, 2 could not determine —
+     never read as clean). Bean `nytj`: three times on 2026-09-23 a
+     generated measurement was green on the branch, green on the base,
+     merged without a conflict, and stale on the result.
+   - The structural fix is GitHub's **merge queue**, which tests exactly the
+     commit that will land; the gating workflows carry `merge_group:` so it
+     works the moment the owner turns it on. Until then, `check:merged` is
+     the agent's half.
 5. **Green check.** Run the project's tests/build (here: `bun test`, plus
    `bun build <file> --target=bun` for type-checking touched files). Report
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
