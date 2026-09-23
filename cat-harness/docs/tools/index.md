@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>76</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>79</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>55</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>58</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>61</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,7 +37,7 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 58 |
+| <span class="tg-tag tg-shell">shell</span> | 61 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
@@ -45,11 +45,11 @@ A tool may declare more than one invocation, so these do not sum to the total.
 | installation | tools |
 |---|---|
 | `none` | 71 |
-| `cli` | 5 |
+| `cli` | 8 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **55** skills named across **76** tools resolve to a
+Yes — all **55** skills named across **79** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -118,6 +118,9 @@ tool advertising a capability the graph cannot locate.
 | `tool-coverage`<br>Which uncovered skills warrant a Tool? | Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to "which of these still have their mechanism inlined in their prose". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 0 in / 1 out |
 | `tool-schema`<br>Tool node schema | The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `tool-types-schema`<br>Tool I/O type vocabulary | The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
+| `transcribe-faster-whisper`<br>Transcribe audio — faster-whisper (option, not installed) | Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
+| `transcribe-vosk`<br>Transcribe audio — vosk (option, not installed) | Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
+| `transcribe-whisper-cpp`<br>Transcribe audio — whisper.cpp (option, not installed) | Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`). | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
 | `translation-extract`<br>Extract translatable strings | Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `translation-inject`<br>Inject translations | Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `translation-roundtrip-record`<br>Record a round-trip translation verdict | Write a back-translation verdict, produced by a pair of translation agents, into a block's existing translation-QA sidecar. It records a judgement rather than making one, and refuses where no sidecar exists — a round trip cannot be what decides a block is translated. | <span class="tg-tag tg-shell">shell</span> | `translation-manager` | 1 in / 1 out |
