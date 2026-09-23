@@ -60,6 +60,7 @@
 import { z } from "zod";
 
 import { AlsoAboutSchema, NoteAnchorSchema } from "./note-anchor.js";
+import { nodeKind } from "./node-kind.js";
 
 /**
  * A task, addressed as the pair it actually is.
@@ -274,4 +275,11 @@ export const CarriedNoteSchema = z.object({
   /** The knowledge-graph edges — see {@link NoteTagsSchema}. */
   tags: NoteTagsSchema.default(EMPTY_NOTE_TAGS),
 });
+
+/**
+ * The carried note as a node KIND, so a kind built on it (a todo) declares it
+ * as a parent and is composed by the one walk (`schemas/node-kind.ts`, bean
+ * `a1lq`) instead of `.extend()`ing it.
+ */
+export const CarriedNoteKind = nodeKind("carried-note", [], CarriedNoteSchema.shape);
 export type CarriedNote = z.infer<typeof CarriedNoteSchema>;

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-2xfl
 title: RACI is a skill, not a methodology node, so the methodology graph reports 5 where a reader expects 7
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-22T20:12:47Z
-updated_at: 2026-09-22T20:12:47Z
+updated_at: 2026-09-22T23:29:06Z
 parent: folio-assistant-ahvw
 ---
 
@@ -33,6 +34,47 @@ Whether RACI is a methodology or a modelling overlay is the owner's call, and it
 
 ## Done when
 
-- [ ] the owner rules on whether RACI is a methodology node, an overlay, or both
-- [ ] if a node: a `raci` node with an `origin`, and the skill keeps its own file
-- [ ] `methodology-adoption` says which of the two shapes a new adoption takes
+- [x] the owner rules on whether RACI is a methodology node, an overlay, or both
+- [x] if a node: a `raci` node with an `origin`, and the skill keeps its own file
+- [x] `methodology-adoption` says which of the two shapes a new adoption takes
+
+## Summary of Changes
+
+**Owner's ruling, 2026-09-22: "raci is a methodology."** Settled the question
+this bean was opened to hand over rather than decide.
+
+- **`cat-harness/methodologies/raci.md`** — the node. The four letters with
+  their directions, the exactly-one-Accountable constraint, and the four things
+  RACI is not (a decision method, an approval gate, a permission model, a party
+  registry).
+- **`skills/raci/raci.md` no longer restates the method.** It now names the
+  node and keeps only this platform's application: R read from the BPMN lane,
+  the `folio:raci` element, `check:raci`, and the project-initiation procedure.
+  Its "exactly one Accountable" section keeps the ENFORCEMENT and hands the
+  constraint back to the node; its "what this is NOT" keeps the three that are
+  about the overlay.
+- **`methodology-adoption` §"Node, skill, or both?"** — the third done-when.
+  A table plus three worked cases: `raci` (both), `crdm` (skill only, because a
+  house method with no external origin must not be dressed as an adoption),
+  `swot` (both from the start).
+
+### The part worth reading: it is adopted with NO source, and says so
+
+Every other node names a text. This one cannot. `doi.org` and `pmi.org` fail
+through this container's proxy (re-measured, not recalled), and RACI's commonly
+cited sources — PMI's *PMBOK Guide* RAM treatment, the Linear Responsibility
+Chart literature — are a paid standard and books. **No open-access primary
+exists to fetch**, which puts RACI in `kepner-tregoe`'s bucket.
+
+So the node carries a boxed warning that the rendering is not backed, lists
+those two as CANDIDATES TO FETCH rather than as provenance, and leaves
+`evidence` absent. `check:methodology-evidence` reports it unbacked, which is
+correct and must not be "fixed" by adding a citation nobody fetched.
+
+### A count this changed
+
+The axis now reports **7 nodes, 1 backed** — up from 5. RACI is one of the two
+new ones; the other is `diig`, which arrived from #881 while this was being
+written and was never this bean's.
+
+`bun run gates` — 127/127.
