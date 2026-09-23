@@ -299,6 +299,17 @@ export interface ProcessFlow {
   name?: string;
   from: string;
   to: string;
+  /**
+   * `<folio:adjudication code="…"/>` — on a branch out of an adjudicated
+   * judgement's gateway, WHICH declared answer selects this branch.
+   *
+   * The flow's `name` is prose for a reader ("the finding stands"); this is
+   * the token the recorded outcome carries. They are deliberately not the
+   * same field: a label is free to be rewritten for clarity, and a code that
+   * moved with it would silently invalidate every record judged under the old
+   * one.
+   */
+  adjudicationCode?: string;
 }
 
 /**
@@ -764,6 +775,8 @@ interface ModdleElement {
       vocabulary?: string;
       /** `<folio:adjudication codes="…"/>` on an activity. */
       codes?: string;
+      /** `<folio:adjudication code="…"/>` on a branch out of its gateway. */
+      code?: string;
       relaxable?: string;
       /** `<folio:precondition>` — bean `lv3j`. */
       id?: string;
@@ -1017,7 +1030,15 @@ export async function loadProcessModel(
         `${basename(bpmnPath)}: sequence flow ${el.id} does not connect two known nodes`,
       );
     }
-    flows.set(el.id, { id: el.id, name: el.name?.trim() || undefined, from, to });
+    flows.set(el.id, {
+      id: el.id,
+      name: el.name?.trim() || undefined,
+      from,
+      to,
+      adjudicationCode: (el.extensionElements?.values ?? [])
+        .find((v) => v.$type === "folio:adjudication")
+        ?.code?.trim() || undefined,
+    });
     nodes.get(from)!.outgoing.push(el.id);
     nodes.get(to)!.incoming.push(el.id);
   }
@@ -1130,6 +1151,53 @@ export async function loadProcessModel(
       );
     }
     seenIds.add(p.id);
+  }
+
+  // An adjudicated activity's declared codes must match the branches out of the
+  // gateway it feeds — bean `5vo9`.
+  //
+  // Without this the codes are decoration. The judge step says the answers are
+  // `stands scope dispensation` and the gateway draws three branches, and
+  // nothing asserts they are the same three: two statements of one fact, free
+  // to drift, which is the failure this repository keeps paying for.
+  //
+  // The comparison is against `<folio:adjudication code="…"/>` on each branch
+  // rather than against the flow's NAME. A label is prose a reader may improve
+  // ("the finding stands"); the code is the token a recorded outcome carries,
+  // and a code that moved when somebody reworded a label would silently
+  // invalidate every record judged under the old one.
+  //
+  // ONLY the direct case is checked: the activity's single outgoing flow
+  // reaching an exclusive gateway. A judgement whose answer is recorded rather
+  // than branched is legitimate — `A_RecordEntry` is where all three of
+  // adjudication.bpmn's converge — so demanding a gateway everywhere would
+  // report a false finding on the diagram that motivated this.
+  for (const n of nodes.values()) {
+    if (n.adjudication === undefined) continue;
+    const out = n.outgoing.map((f) => flows.get(f)).filter((f) => f !== undefined);
+    if (out.length !== 1) continue;
+    const next = nodes.get(out[0]!.to);
+    if (next?.kind !== "exclusive") continue;
+    const branches = next.outgoing.map((f) => flows.get(f)?.adjudicationCode);
+    if (branches.every((c) => c === undefined)) continue; // gateway opts out entirely
+    const onBranches = [...new Set(branches.filter((c): c is string => c !== undefined))].sort();
+    const declared = [...new Set(n.adjudication.codes)].sort();
+    if (onBranches.join("\u0000") !== declared.join("\u0000")) {
+      throw new Error(
+        `${n.id}: declares codes (${declared.join(", ")}) but ${next.id}'s branches carry ` +
+          `(${onBranches.join(", ") || "none"}). A judgement's permitted answers and the branches ` +
+          `that act on them must be the same set, or a recorded outcome can name an answer the ` +
+          `process cannot take.`,
+      );
+    }
+    const unlabelled = next.outgoing.filter((f) => flows.get(f)?.adjudicationCode === undefined);
+    if (unlabelled.length > 0) {
+      throw new Error(
+        `${next.id}: branch(es) ${unlabelled.join(", ")} carry no <folio:adjudication code="…"/> ` +
+          `while their siblings do. A partly-coded gateway reads as complete — either every branch ` +
+          `names the answer that selects it, or none does.`,
+      );
+    }
   }
 
   const startNodes = [...nodes.values()].filter((n) => n.kind === "start").map((n) => n.id);
