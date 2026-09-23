@@ -101,9 +101,7 @@ a registry nobody prunes is one that stops describing the repository.
 
 ## Each specification
 
-### DCMI Metadata Terms
-
-<a id="dcmi-terms"></a>
+### DCMI Metadata Terms {#dcmi-terms}
 
 `dcmi-terms` — DCMI, edition [2020-01-20](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/) — `reads`, meaning this repository parses documents written in it.
 
@@ -151,9 +149,7 @@ a subset of the edition rather than a transcription of it.
 | `dc.type` | derived from the corpus; what this repository does with it is not yet described |
 | `who.relation.languageVersion` | derived from the corpus; what this repository does with it is not yet described |
 
-### HL7 FHIR
-
-<a id="hl7-fhir"></a>
+### HL7 FHIR {#hl7-fhir}
 
 `hl7-fhir` — HL7, edition [unpinned](https://hl7.org/fhir/) — `reads`, meaning this repository parses documents written in it.
 
@@ -177,9 +173,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | `fhir:ValueSet` | derived from the corpus; what this repository does with it is not yet described |
 
-### Business Process Model and Notation (BPMN)
-
-<a id="omg-bpmn-2.0"></a>
+### Business Process Model and Notation (BPMN) {#omg-bpmn-2.0}
 
 `omg-bpmn-2.0` — OMG, edition [2.0](https://www.omg.org/spec/BPMN/2.0/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -227,9 +221,7 @@ a subset of the edition rather than a transcription of it.
 | `bpmn:timerEventDefinition` | derived from the corpus; what this repository does with it is not yet described |
 | `bpmn:userTask` | derived from the corpus; what this repository does with it is not yet described |
 
-### Diagram Definition (DD)
-
-<a id="omg-dd-1.0"></a>
+### Diagram Definition (DD) {#omg-dd-1.0}
 
 `omg-dd-1.0` — OMG, edition [1.0](https://www.omg.org/spec/DD/1.0/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -251,9 +243,7 @@ a subset of the edition rather than a transcription of it.
 without branching on any of its terms, so none is materialised into the
 graph. That is a determined zero, not an unfilled field.
 
-### Schema.org
-
-<a id="schema-org"></a>
+### Schema.org {#schema-org}
 
 `schema-org` — other, edition [unpinned](https://schema.org/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -280,9 +270,7 @@ a subset of the edition rather than a transcription of it.
 | `schema:softwareVersion` | derived from the corpus; what this repository does with it is not yet described |
 | `schema:text` | derived from the corpus; what this repository does with it is not yet described |
 
-### SPAR Ontologies: DoCO, DEO and CiTO
-
-<a id="spar-doco-deo-cito"></a>
+### SPAR Ontologies: DoCO, DEO and CiTO {#spar-doco-deo-cito}
 
 `spar-doco-deo-cito` — other, edition [unpinned](http://www.sparontologies.net/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -314,9 +302,7 @@ a subset of the edition rather than a transcription of it.
 | `doco:Section` | derived from the corpus; what this repository does with it is not yet described |
 | `doco:Table` | derived from the corpus; what this repository does with it is not yet described |
 
-### Metadata Vocabulary for Tabular Data
-
-<a id="w3c-csvw"></a>
+### Metadata Vocabulary for Tabular Data {#w3c-csvw}
 
 `w3c-csvw` — W3C, edition [2015-12-17](https://www.w3.org/TR/tabular-metadata/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -338,9 +324,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
 
-### ODRL Information Model 2.2
-
-<a id="w3c-odrl"></a>
+### ODRL Information Model 2.2 {#w3c-odrl}
 
 `w3c-odrl` — W3C, edition [2018-02-15](https://www.w3.org/TR/odrl-model/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -378,9 +362,7 @@ a subset of the edition rather than a transcription of it.
 | `odrl:translate` | derived from the corpus; what this repository does with it is not yet described |
 | `odrl:use` | derived from the corpus; what this repository does with it is not yet described |
 
-### OWL 2 Web Ontology Language Document Overview (Second Edition)
-
-<a id="w3c-owl2"></a>
+### OWL 2 Web Ontology Language Document Overview (Second Edition) {#w3c-owl2}
 
 `w3c-owl2` — W3C, edition [2012-12-11](https://www.w3.org/TR/owl2-overview/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -406,9 +388,7 @@ a subset of the edition rather than a transcription of it.
 | `owl:deprecated` | derived from the corpus; what this repository does with it is not yet described |
 | `owl:sameAs` | derived from the corpus; what this repository does with it is not yet described |
 
-### PROV-O: The PROV Ontology
-
-<a id="w3c-prov-o"></a>
+### PROV-O: The PROV Ontology {#w3c-prov-o}
 
 `w3c-prov-o` — W3C, edition [2013-04-30](https://www.w3.org/TR/prov-o/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -434,9 +414,7 @@ a subset of the edition rather than a transcription of it.
 | `prov:alternateOf` | derived from the corpus; what this repository does with it is not yet described |
 | `prov:wasDerivedFrom` | derived from the corpus; what this repository does with it is not yet described |
 
-### RDF 1.1 Concepts and Abstract Syntax
-
-<a id="w3c-rdf"></a>
+### RDF 1.1 Concepts and Abstract Syntax {#w3c-rdf}
 
 `w3c-rdf` — W3C, edition [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -460,9 +438,7 @@ a subset of the edition rather than a transcription of it.
 | `rdf:JSON` | derived from the corpus; what this repository does with it is not yet described |
 | `rdf:Property` | derived from the corpus; what this repository does with it is not yet described |
 
-### RDF Schema 1.1
-
-<a id="w3c-rdfs"></a>
+### RDF Schema 1.1 {#w3c-rdfs}
 
 `w3c-rdfs` — W3C, edition [2014-02-25](https://www.w3.org/TR/rdf-schema/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -490,9 +466,7 @@ a subset of the edition rather than a transcription of it.
 | `rdfs:label` | derived from the corpus; what this repository does with it is not yet described |
 | `rdfs:seeAlso` | derived from the corpus; what this repository does with it is not yet described |
 
-### SKOS Simple Knowledge Organization System Reference
-
-<a id="w3c-skos"></a>
+### SKOS Simple Knowledge Organization System Reference {#w3c-skos}
 
 `w3c-skos` — W3C, edition [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -532,9 +506,7 @@ a subset of the edition rather than a transcription of it.
 | `skos:related` | A glossary term's `related`: a local term id or an external IRI. |
 | `skos:scopeNote` | What a lane is accountable for IN ONE PROCESS. Carried on the LaneUsage node, never the concept: of 26 lane names appearing in more than one diagram, 26 of 26 document themselves differently per occurrence, so ten unattributed notes on one concept would read as ten contradictions. Stored verbatim, because the note is a `.pot` msgid. |
 
-### Web Annotation Vocabulary
-
-<a id="w3c-web-annotation"></a>
+### Web Annotation Vocabulary {#w3c-web-annotation}
 
 `w3c-web-annotation` — W3C, edition [2017-02-23](https://www.w3.org/TR/annotation-vocab/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -552,9 +524,7 @@ a subset of the edition rather than a transcription of it.
 without branching on any of its terms, so none is materialised into the
 graph. That is a determined zero, not an unfilled field.
 
-### XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes
-
-<a id="w3c-xsd11-datatypes"></a>
+### XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes {#w3c-xsd11-datatypes}
 
 `w3c-xsd11-datatypes` — W3C, edition [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) — `conforms`, meaning this repository's artefacts are valid against it.
 
@@ -573,9 +543,7 @@ graph. That is a determined zero, not an unfilled field.
 without branching on any of its terms, so none is materialised into the
 graph. That is a determined zero, not an unfilled field.
 
-### WHO SMART Guidelines base IG
-
-<a id="who-smart-base"></a>
+### WHO SMART Guidelines base IG {#who-smart-base}
 
 `who-smart-base` — other, edition [unpinned](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
 

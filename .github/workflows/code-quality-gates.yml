@@ -592,7 +592,7 @@ jobs:
         run: bun run ns:check
 
       # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
+      # `bootstrap-tools`, because bootstrap promises a Bootstrapping Agent it needs
       # no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked

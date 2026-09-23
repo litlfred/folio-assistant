@@ -219,7 +219,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/cat-harness/' | relative_url }})
+- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*

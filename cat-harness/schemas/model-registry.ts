@@ -1,7 +1,7 @@
 /**
  * Which languages a MODEL is good at, and whether anybody checked.
  *
- * @module bootstrap/schemas/model-registry
+ * @module schemas/model-registry
  * @graphNode schema
  *
  * Owner, 2026-09-21: *"note if agent was not trained primaruily in english,
@@ -10,13 +10,20 @@
  * each new model added to bootstrap which of the preferred languages"*.
  * Bean `46uh`.
  *
- * ## Why this lives in bootstrap
+ * ## Why the registry lives in bootstrap, and this file does not
  *
- * The same reason everything else here does: an agent reaching for the
- * language it should communicate in **has not yet loaded the harness that
- * would otherwise answer**. A model registry in cat-harness would be
- * unreachable in exactly the case it exists for — the opening steps of a
- * session on a model nobody has looked at.
+ * The REGISTRY (`bootstrap/models/models.json`) lives in bootstrap for the
+ * reason everything else there does: an agent reaching for the language it
+ * should communicate in **has not yet loaded the Harness that would
+ * otherwise answer**. Kept anywhere higher, it would be unreachable in
+ * exactly the case it exists for — the opening steps of a session on a model
+ * nobody has looked at.
+ *
+ * THIS FILE is code, and bootstrap holds none (its FR-7). Zod lives in
+ * cat-harness, with the Tools that read the registry (`check-model-languages`),
+ * so it lives here and `gen-bootstrap-schemas.ts` publishes it into bootstrap as
+ * `schemas/model-registry.schema.json`, which is what a reader with nothing
+ * installed opens. Moved 2026-09-23 on the owner's ruling (bean iwtn).
  *
  * ## "Especially if human validated" is the whole design
  *

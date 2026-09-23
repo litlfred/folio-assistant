@@ -1555,7 +1555,7 @@ async function collectProcesses(
  * cat-harness because a Tool is cat-harness's vocabulary and bootstrap may
  * not import it — recorded there as *a limitation rather than a decision*,
  * with the nodes moving unchanged once tool collection stops being
- * import-bound. The SKILLS live in bootstrap so an Initiator can read them
+ * import-bound. The SKILLS live in bootstrap so a Bootstrapping Agent can read them
  * with nothing installed. So the edge crosses instances by construction.
  *
  * While cat-harness declared `bootstrap/skills/` the crossing was hidden:
