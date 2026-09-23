@@ -3,8 +3,10 @@
 title: Document the 70 gateways that gateway-documented fails on
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-23T16:26:05Z
-updated_at: 2026-09-23T16:26:05Z
+updated_at: 2026-09-23T16:42:42Z
+parent: folio-assistant-1swy
 ---
 
 Reported by `gateway-documented` (#1051, bean 6hq4), measured on main 2026-09-23: 70 exclusive/inclusive gateways across the processes/ corpus have no <documentation> saying what question they decide or what answers it. Count from the kg-qa sidecars (test/results/kg-qa/**), not from this text: re-run `bun run kg:audit` and count before starting.

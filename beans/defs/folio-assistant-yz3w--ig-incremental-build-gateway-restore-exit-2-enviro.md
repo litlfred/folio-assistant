@@ -3,8 +3,10 @@
 title: 'ig-incremental-build Gateway_Restore: exit 2 (environment error) has no route'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-23T16:26:05Z
-updated_at: 2026-09-23T16:26:05Z
+updated_at: 2026-09-23T16:42:42Z
+parent: folio-assistant-1swy
 ---
 
 processes/ig-incremental-build.bpmn: Gateway_Restore ('Cache usable?') routes `ig-cache restore` exit 0 → yes (F03, Task_Cone) and exits 1/3 → no (F04, Task_FullBuild). Its own documentation says: 'Exit 2 (an environment error) is not routed by either branch in this diagram.' So the diagram has no path for a real exit code, and an engine following it has nowhere to go.
