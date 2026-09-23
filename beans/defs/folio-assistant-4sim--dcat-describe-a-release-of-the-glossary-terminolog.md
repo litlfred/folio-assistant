@@ -1,10 +1,11 @@
 ---
 # folio-assistant-4sim
 title: 'DCAT: describe a RELEASE of the glossary / terminology as a published dataset — held until the term model lands'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-22T11:48:00Z
-updated_at: 2026-09-22T11:48:00Z
+updated_at: 2026-09-23T22:13:21Z
 parent: folio-assistant-1swy
 ---
 
@@ -34,3 +35,12 @@ Recorded in [`vocabulary-authority`](../../cat-harness/skills/folio-core/vocabul
 ## Not this bean
 
 The authoritative-scheme question is answered: SKOS for meaning, DC for resources, FHIR for clinical codes. DCAT sits beside all three and arbitrates none of them.
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner chose **"Reference only"**.
+
+- **Record added:** `cat-harness/external-schemas/w3c-dcat-3.json`, pinning DCAT 3 (W3C Recommendation, 2024-08-22), namespace `http://www.w3.org/ns/dcat#`, `use: "cites"`, with no operative terms. Nothing emits a DCAT term, and this bean does not change that.
+- **Report wording changed:** `external-schemas.ts` now words a `cites` namespace that nothing uses as *"cited AHEAD of use — pinned by decision"*. It was *"a record outliving its dependency"*, whose remedy (drop the record) would have undone this decision.
+- **Checks:** `external-schemas:check` passes, and the external-schemas viewer was regenerated.
+- **Still open, deliberately:** emitting a `dcat:Dataset` per released graph document waits on a settled term model. DCAT is also one more target vocabulary for the ETL Tools of bean `k74z`.

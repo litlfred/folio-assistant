@@ -24,9 +24,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>4</b><span>specifications</span></div>
+<div class="xs-stat"><b>5</b><span>specifications</span></div>
 <div class="xs-stat"><b>53</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>14</b><span>declared dependents</span></div>
+<div class="xs-stat"><b>15</b><span>declared dependents</span></div>
 <div class="xs-stat"><b>0</b><span>dependents that no longer resolve</span></div>
 </div>
 
@@ -37,6 +37,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[DCMI Metadata Terms](#dcmi-terms)**<br>`dcmi-terms` | DCMI | [2020-01-20](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/) | `reads` — this repository parses documents written in it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
+| **[Data Catalog Vocabulary (DCAT) - Version 3](#w3c-dcat-3)**<br>`w3c-dcat-3` | W3C | [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) | `cites` — it is referenced, and nothing here is validated against it |
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
 
 ## Does every declared dependent still exist?
@@ -50,7 +51,7 @@ the same way a dangling citation does one graph over.
 a note after it names something this cannot open and is written that way on
 purpose; reporting it as broken would teach a reader to ignore the column.
 
-Every one of the **8** entries spelled as a path
+Every one of the **9** entries spelled as a path
 resolves in this checkout. **6** name a set or
 carry a note and were not checked.
 
@@ -65,13 +66,14 @@ repository writes and has said nothing about.
 
 - `https://litlfred.github.io/folio-assistant/bpmn`
 
-**3 declared and not in use.** Not a defect on its own: a
+**4 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
 - `http://purl.org/dc/elements/1.1/`
 - `http://purl.org/dc/terms/`
 - `http://www.w3.org/2004/02/skos/core#`
+- `http://www.w3.org/ns/dcat#`
 
 ## Each specification
 
@@ -194,6 +196,28 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | `processes/*.bpmn — the BPMNDI layout every diagram carries` | <span class="xs-tag xs-na">not a path</span> |
 | `scripts/render-bpmn.ts — bpmn-js reads DI to place shapes` | <span class="xs-tag xs-na">not a path</span> |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### Data Catalog Vocabulary (DCAT) - Version 3
+
+<a id="w3c-dcat-3"></a>
+
+`w3c-dcat-3` — W3C, edition [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) — `cites`, meaning it is referenced, and nothing here is validated against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/dcat#`
+
+**Note.** REFERENCE ONLY — owner, 2026-09-23, on bean 4sim: 'Reference only'. Pinned so that the day a glossary or terminology RELEASE is described (a dcat:Dataset per published graph document, a dcat:Distribution per serialisation), the edition is already chosen and named, not guessed. Nothing in this repository emits a DCAT term today, so there are no operative terms. DCAT is also one more TARGET vocabulary for the ETL Tools of bean k74z.
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `beans/defs/folio-assistant-4sim--dcat-describe-a-release-of-the-glossary-terminolog.md` | <span class="xs-tag xs-ok">resolves</span> |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
