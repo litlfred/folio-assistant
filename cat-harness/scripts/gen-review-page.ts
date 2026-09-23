@@ -59,6 +59,17 @@
  * `scripts/review-renderers.ts` and `scripts/word-diff.ts`, embedded here
  * with `toString()`, so the functions the tests drive are the ones that run.
  *
+ * ## Where to look first: the heat map (bean `qbfi`)
+ *
+ * Above the list, a section-by-metric table: changed blocks, open review
+ * comments (defects apart), and stale comments (the block changed after the
+ * comment was made). Review coverage and QA are columns too, and say per row
+ * that they are not measured or not published YET, never 0. The numbers are
+ * `scripts/review-heat.ts`, embedded with `toString()`. The tint is a
+ * one-hue sequential ramp validated with the dataviz skill's validator in
+ * both themes, and every cell also shows its number, so colour never carries
+ * meaning alone. Each row's header moves focus to that section in the list.
+ *
  * ## Accessibility is not a finish
  *
  * - Every change kind is a WORD, never a colour alone.
@@ -72,6 +83,7 @@
 
 import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
 import { cleanRendered, renderInline, renderSideBySide, renderWordDiff } from "./review-renderers.js";
+import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
 import { wordDiff } from "./word-diff.js";
 
 const STYLE = `
@@ -103,6 +115,19 @@ const STYLE = `
   .diff-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
   .diff-sbs iframe { width: 100%; height: 22rem; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; }
   @media (max-width: 40rem) { .diff-sbs { grid-template-columns: 1fr; } }
+  /* Heat map (qbfi). Blue 250/400/550 on light and 600/500/400 on dark: an
+     ordinal ramp that passes the dataviz validator, each fill paired with an
+     ink that clears 4.7:1 against it. */
+  .heatwrap { overflow-x: auto; margin: 1rem 0; }
+  table.heat { border-collapse: separate; border-spacing: 2px; font-size: .95rem; }
+  table.heat caption { text-align: left; color: var(--muted); padding-bottom: .4rem; }
+  table.heat th, table.heat td { padding: .35rem .6rem; text-align: left; border-radius: .25rem; }
+  table.heat thead th { font-weight: 600; border-bottom: 1px solid var(--rule); }
+  table.heat td { font-variant-numeric: tabular-nums; }
+  .h1 { background: #86b6ef; color: #1b1b1b; } .h2 { background: #3987e5; color: #1b1b1b; } .h3 { background: #1c5cab; color: #ffffff; }
+  @media (prefers-color-scheme: dark) { .h1 { background: #184f95; color: #ffffff; } .h2 { background: #256abf; color: #ffffff; } .h3 { background: #3987e5; color: #161616; } }
+  button.linklike { border: 0; padding: 0; min-height: 0; background: none; color: var(--link); text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
+  h2:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
 `;
 
 const SCRIPT = `
@@ -169,9 +194,12 @@ const SCRIPT = `
     cs.forEach(function (c) { box.appendChild(commentEl(c)); });
     return box;
   }
-  function section(title, nodes) {
+  function section(title, nodes, key) {
     if (!nodes.length) return;
-    list.appendChild(el("h2", title));
+    var h = el("h2", title);
+    h.tabIndex = -1;
+    if (key) h.setAttribute("data-section", key);
+    list.appendChild(h);
     var ul = el("ul");
     nodes.forEach(function (n) { var li = el("li"); li.tabIndex = -1; li.appendChild(n); ul.appendChild(li); items.push(li); });
     list.appendChild(ul);
@@ -270,7 +298,11 @@ const SCRIPT = `
       get("../staging.json").catch(function () { return {}; }),
       get("../review-comments.json").catch(function () { return null; }),
       get("../changeset-text.json").catch(function () { return null; }),
+      get("../blocks.json").catch(function () { return null; }),
+      get("../block-qa.json").catch(function () { return null; }),
     ]).then(function (both) {
+      var blocksFile = both[3];
+      var qaFile = both[4];
       var st = both[0];
       var rc = both[1];
       var txt = both[2];
@@ -303,7 +335,10 @@ const SCRIPT = `
         groups[where].push(c);
       });
       order.forEach(function (where) {
-        list.appendChild(el("h2", where.replace("::", " \\u203a ")));
+        var h2 = el("h2", where.replace("::", " \\u203a "));
+        h2.tabIndex = -1;
+        h2.setAttribute("data-section", where);
+        list.appendChild(h2);
         var ul = el("ul");
         groups[where].forEach(function (c) {
           var li = el("li");
@@ -350,7 +385,7 @@ const SCRIPT = `
           d.appendChild(commentList(byLabel[label]));
           elsewhere.push(d);
         });
-        section("Comments on blocks this pull request did not change", elsewhere);
+        section("Comments on blocks this pull request did not change", elsewhere, "(unchanged)");
         section("Orphaned: the block these were made on is gone", rc.comments
           .filter(function (c) { return c.review && c.review.orphaned; })
           .map(function (c) { var d = el("div"); d.appendChild(el("span", c.targetLabel, "label")); d.appendChild(commentList([c])); return d; }));
@@ -363,6 +398,17 @@ const SCRIPT = `
       }
       if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only side by side is available.";
       applyView(viewAll.value);
+      // The heat map (qbfi), above the list it indexes.
+      var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile, qa: qaFile ? qaFile.blocks : null });
+      if (heat.rows.length) {
+        var wrap = document.getElementById("heat");
+        wrap.appendChild(renderHeat(document, heat, heatBucket, function (sec) {
+          var t = list.querySelector('h2[data-section="' + (window.CSS && CSS.escape ? CSS.escape(sec) : sec) + '"]') ||
+            list.querySelector('h2[data-section="(unchanged)"]');
+          if (t) { t.focus(); t.scrollIntoView({ block: "start" }); }
+        }));
+        wrap.appendChild(el("p", "Review coverage is not measured yet: it needs a per-block reviewer verdict, which nothing records until the review process does, and resolved comments are not approval. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
+      }
       if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
     });
   }).catch(function () {
@@ -394,6 +440,7 @@ export function reviewPageHtml(): string {
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
+<div id="heat" class="heatwrap"></div>
 <div id="changes"></div>
 </main>
 <script>
@@ -403,6 +450,9 @@ var cleanRendered = ${cleanRendered.toString()};
 var renderWordDiff = ${renderWordDiff.toString()};
 var renderInline = ${renderInline.toString()};
 var renderSideBySide = ${renderSideBySide.toString()};
+var computeHeat = ${computeHeat.toString()};
+var heatBucket = ${heatBucket.toString()};
+var renderHeat = ${renderHeat.toString()};
 </script>
 <script>${SCRIPT}</script>
 </body>

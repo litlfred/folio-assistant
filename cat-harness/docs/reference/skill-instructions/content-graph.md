@@ -279,6 +279,12 @@ Two DOT/SVG outputs (via Graphviz):
   coupling, gray = normal backward dependencies
 
 **5b. Block graph heat-map** (`/tmp/content_block_heatmap.svg`)
+
+This is the DEPENDENCY heat map, for a paper's structure. For "where should a
+reviewer of this edit look first", the heat map is the review page's
+section-by-metric table, and the `review-heatmap` skill says what each of its
+columns means.
+
 - Nodes: blocks (grouped by chapter/section in clusters)
 - Edges: forward references only (red), cross-chapter edges (orange)
 - Isolated blocks highlighted in yellow
