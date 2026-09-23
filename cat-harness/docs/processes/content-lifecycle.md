@@ -33,7 +33,7 @@ folio-assistant — the content lifecycle end to end, one cycle of a folio. Sour
 
 ## Steps
 
-**1** of 8 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 8 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -44,6 +44,6 @@ folio-assistant — the content lifecycle end to end, one cycle of a folio. Sour
 | **Draft, review and publish**<br>`CallActivity_Publication` | Publication manager | calls [Draft, review and publish](draft-to-publication.html)<br>[`content-review`](../reference/skill-instructions/content-review.html)<br>[`content-publish`](../reference/skill-instructions/content-publish.html) | See draft-to-publication.bpmn. |
 | **Triage published feedback**<br>`Task_Feedback` | Review team and SMEs | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | Implementer and reader feedback on the published folio, triaged by severity and scope. |
 | **File feedback as beans**<br>`Task_FeedbackBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html)<br>[`content-feedback`](../reference/skill-instructions/content-feedback.html) | Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for. |
-| **Retire or archive**<br>`Task_Retire` | Programme manager | [`content-retire`](../reference/skill-instructions/content-retire.html) | — |
+| **Retire or archive**<br>`Task_Retire` | Programme manager | [`content-retire`](../reference/skill-instructions/content-retire.html) | No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes. |
 
 {% endraw %}

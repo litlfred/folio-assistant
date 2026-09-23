@@ -43,6 +43,7 @@
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run check:ci-health,&amp;#10;WRITING the report file">
+      <bpmn:documentation>Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -58,6 +59,7 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
+      <bpmn:documentation>Create the ci-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -70,6 +72,7 @@
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
+      <bpmn:documentation>Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>
@@ -80,6 +83,7 @@
       <bpmn:incoming>Flow_6</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
+      <bpmn:documentation>Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ci-health"/>
       </bpmn:extensionElements>

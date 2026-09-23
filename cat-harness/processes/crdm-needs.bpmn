@@ -38,6 +38,7 @@ The BA knows the domain — the agent does not guess.</bpmn:documentation>
     </bpmn:task>
     <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise
 needs from sources">
+      <bpmn:documentation>From the chat, issue, uploads and library sources, write a clear, jargon-free statement of what is needed and why, tied to a concrete workflow. Post it on the GitHub issue, not in chat, and ask the requester and stakeholders to review it.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_ReviewNeeds" name="Review synthesised
@@ -47,7 +48,9 @@ checks it against what they actually need.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="S_ConfirmNeeds" name="Confirm needs
-statement"/>
+statement">
+      <bpmn:documentation>Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them.</bpmn:documentation>
+    </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
     <bpmn:endEvent id="End_Process_CRDM_Needs" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_1" sourceRef="Start_Process_CRDM_Needs" targetRef="A_Stakeholders"/>

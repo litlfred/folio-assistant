@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: authoring-a-paper\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.431Z\n"
+"POT-Creation-Date: 2026-09-23T08:54:30.324Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -29,37 +29,37 @@ msgstr ""
 msgid "3 · Scaffold the folio repo [content-plan]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:98
+#: processes/authoring-a-paper.bpmn:99
 #. Diagram label
 msgid "4 · Author blocks [content-author]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:107
+#: processes/authoring-a-paper.bpmn:108
 #. Diagram label
 msgid "5 · Formalise in Lean [lean-formalization]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:124
+#: processes/authoring-a-paper.bpmn:126
 #. Diagram label
 msgid "6 · Validate [content-validate]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:131
+#: processes/authoring-a-paper.bpmn:134
 #. Diagram label
 msgid "7 · Render PDF / HTML [latex-authoring]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:138
+#: processes/authoring-a-paper.bpmn:142
 #. Diagram label
 msgid "8 · Review and feedback [content-review]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:150
+#: processes/authoring-a-paper.bpmn:155
 #. Diagram label
 msgid "9 · Publish [content-publish]"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:173
+#: processes/authoring-a-paper.bpmn:178
 #. Diagram label
 msgid "approved"
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Authoring agent (system)"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:116
+#: processes/authoring-a-paper.bpmn:118
 #. Diagram label
 msgid "Build green, no sorries?"
 msgstr ""
@@ -94,7 +94,12 @@ msgstr ""
 msgid "Build pipeline — validate · render · publish"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:99
+#: processes/authoring-a-paper.bpmn:92
+#. Diagram element documentation
+msgid "Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied."
+msgstr ""
+
+#: processes/authoring-a-paper.bpmn:100
 #. Diagram element documentation
 msgid "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn."
 msgstr ""
@@ -109,12 +114,17 @@ msgstr ""
 msgid "Gateway_ReviewOutcome sits in this lane rather than a separate editor's, so in this diagram the reviewer's finding and its disposition are the same decision — iterate back to Task_AuthorBlocks or clear Task_Publish — because paper authoring has no editor lane to hold the accept/reject split modelled elsewhere in this corpus."
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:168
+#: processes/authoring-a-paper.bpmn:109
+#. Diagram element documentation
+msgid "Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification."
+msgstr ""
+
+#: processes/authoring-a-paper.bpmn:173
 #. Diagram label
 msgid "green"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:172
+#: processes/authoring-a-paper.bpmn:177
 #. Diagram label
 msgid "iterate"
 msgstr ""
@@ -134,7 +144,7 @@ msgstr ""
 msgid "New paper"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:167
+#: processes/authoring-a-paper.bpmn:172
 #. Diagram label
 msgid "not yet"
 msgstr ""
@@ -144,19 +154,29 @@ msgstr ""
 msgid "Owns its own loop: Gateway_LeanGreen's 'not yet' branch returns straight to Task_Formalize rather than out to a person, and the gateway itself is DMN-computed off the build result rather than argued, so nothing downstream can proceed on a proof that merely looks close enough. The paper does not reach Task_Validate until this lane's own gate says green."
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:158
+#: processes/authoring-a-paper.bpmn:163
 #. Diagram label
 msgid "Paper published"
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:145
+#: processes/authoring-a-paper.bpmn:150
 #. Diagram label
 msgid "Ready to publish?"
+msgstr ""
+
+#: processes/authoring-a-paper.bpmn:143
+#. Diagram element documentation
+msgid "Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path."
 msgstr ""
 
 #: processes/authoring-a-paper.bpmn:65
 #. Diagram label
 msgid "Reviewer / SME"
+msgstr ""
+
+#: processes/authoring-a-paper.bpmn:127
+#. Diagram element documentation
+msgid "Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure."
 msgstr ""
 
 #: processes/authoring-a-paper.bpmn:49
@@ -169,7 +189,7 @@ msgstr ""
 msgid "Scope the paper: chapters, the blocks each needs, what gets formalised."
 msgstr ""
 
-#: processes/authoring-a-paper.bpmn:151
+#: processes/authoring-a-paper.bpmn:156
 #. Diagram element documentation
 msgid "See draft-to-publication.bpmn for the review and release path this expands into."
 msgstr ""
@@ -187,6 +207,11 @@ msgstr ""
 #: processes/authoring-a-paper.bpmn:40
 #. Diagram element documentation
 msgid "The plan set here — chapters, the blocks each needs, what gets formalised — is upstream of everything else in the diagram and is never revisited: Gateway_ReviewOutcome's 'iterate' branch re-enters Lane_Agent's Task_AuthorBlocks directly, not this lane, so a scoping mistake made here surfaces only as churn several lanes downstream."
+msgstr ""
+
+#: processes/authoring-a-paper.bpmn:135
+#. Diagram element documentation
+msgid "Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform."
 msgstr ""
 
 #: processes/authoring-a-paper.bpmn:44

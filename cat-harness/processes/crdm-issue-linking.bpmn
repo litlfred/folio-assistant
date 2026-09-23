@@ -25,6 +25,7 @@
     <bpmn:startEvent id="Start_Process_CRDM_Issue" name="Phase begins"/>
     <bpmn:task id="A_ScanIssues" name="Scan open issues
 for match">
+      <bpmn:documentation>Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
@@ -35,6 +36,7 @@ BA's permission is the thing this step exists to prevent.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_LinkIssue" name="Link to existing issue">
+      <bpmn:documentation>A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Process_CRDM_Issue" name="Phase complete"/>

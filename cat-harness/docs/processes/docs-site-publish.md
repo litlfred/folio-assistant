@@ -28,14 +28,14 @@ PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAW
 
 ## Steps
 
-**5** of 5 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Regenerate every derived&#10;reference from its source**<br>`Task_Regenerate` | CI/CD Pipeline | — | — |
-| **Build the Jekyll site&#10;and the API reference**<br>`Task_Build` | CI/CD Pipeline | — | — |
-| **Export the knowledge graph&#10;and its schema**<br>`Task_Export` | CI/CD Pipeline | — | — |
-| **Restore the OPEN PRs'&#10;staging previews**<br>`Task_Restore` | CI/CD Pipeline | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | — |
-| **Publish to gh-pages&#10;(FULL REPLACE)**<br>`Task_Publish` | CI/CD Pipeline | — | — |
+| **Regenerate every derived&#10;reference from its source**<br>`Task_Regenerate` | CI/CD Pipeline | — | Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale. |
+| **Build the Jekyll site&#10;and the API reference**<br>`Task_Build` | CI/CD Pipeline | — | Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc. |
+| **Export the knowledge graph&#10;and its schema**<br>`Task_Export` | CI/CD Pipeline | — | Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export. |
+| **Restore the OPEN PRs'&#10;staging previews**<br>`Task_Restore` | CI/CD Pipeline | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried. |
+| **Publish to gh-pages&#10;(FULL REPLACE)**<br>`Task_Publish` | CI/CD Pipeline | — | Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived. |
 
 {% endraw %}

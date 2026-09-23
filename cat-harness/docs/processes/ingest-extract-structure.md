@@ -28,14 +28,14 @@ folio-assistant — Ingestion subprocess — extract structure. Source of truth:
 
 ## Steps
 
-**2** of 5 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Extract the text layer**<br>`Task_ExtractText` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | — |
+| **Extract the text layer**<br>`Task_ExtractText` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document. |
 | **OCR to ocr/page-*.txt**<br>`Task_Ocr` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier. |
 | **Split into sections/*.md with doc_brief front-matter**<br>`Task_Sections` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief. |
-| **Write structure.json (TOC, page ranges, metadata)**<br>`Task_Structure` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | — |
+| **Write structure.json (TOC, page ranges, metadata)**<br>`Task_Structure` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one. |
 | **Extract claim candidates**<br>`Task_Candidates` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts. |
 
 {% endraw %}

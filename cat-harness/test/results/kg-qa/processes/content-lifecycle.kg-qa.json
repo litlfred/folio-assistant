@@ -5,7 +5,7 @@
     "id": "Process_Lifecycle",
     "path": "processes/content-lifecycle.bpmn"
   },
-  "source_hash": "sha256:c5e0f3371ac86909634bc1c483e22f9e33fc1993a1add833c5ce38e755eb35ce",
+  "source_hash": "sha256:30f756812ed97028ddf0ae97e5a490fb44f1b8cb162b325ef8a144d2b74de2d0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,13 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Retire",
-          "detail": "\"Retire or archive\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -86,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
+    "pass": 12,
+    "fail": 0,
     "n/a": 6,
     "unknown": 0
   }
