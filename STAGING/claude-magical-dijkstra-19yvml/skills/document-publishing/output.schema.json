@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/document-publishing/output.schema.json",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-dijkstra-19yvml",
+    "sha": "9b076a42d7120be277a44d02a646a012e393317d",
+    "pr": "1074/merge",
+    "run": "35856519033"
+  }
+}
