@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 641,
+      "count": 647,
       "unit": "beans"
     }
   },
@@ -683,6 +683,20 @@
       "updatedAt": "2026-09-23T10:36:13Z",
       "preview": "A page wider than a 390 px viewport makes the reader pan sideways to reach columns or actions. Fix in the shared table/grid CSS: wrap, stack or collapse columns at narrow widths, and let only a table's own container scroll, with a visible cue.\n\nObserved on: `catalogue`, `folio`, `fsh-guts`, `kg-viewer`, `library`, `navbar`, `processes`, `skills-index`, `tools`, `translation-status`, `uploads` (see",
       "file": "beans/defs/folio-assistant-2r2n--mobile-pages-scroll-sideways-at-phone-width.md"
+    },
+    {
+      "id": "folio-assistant-2sns",
+      "title": "GRAPH RENDERING: one skill for drawing any graph, applied to schemas, papers and Lean (#1137)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:09:10Z",
+      "updatedAt": "2026-09-23T18:09:10Z",
+      "preview": "Owner 2026-09-23: 'make skill that applies to graphs in general.... then apply to papers, shcemas, math proofs/lean etc'. Issue #1137. Related: xgd8 (schema visualiser).",
+      "file": "beans/defs/folio-assistant-2sns--graph-rendering-one-skill-for-drawing-any-graph-ap.md"
     },
     {
       "id": "folio-assistant-2tlx",
@@ -2451,6 +2465,20 @@
       "file": "beans/defs/folio-assistant-95s1--import-cycle-extended-automated-checkers-is-reacha.md"
     },
     {
+      "id": "folio-assistant-95sk",
+      "title": "FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and reader documents in folio/, cross-library references — wait on the split",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:59:01Z",
+      "updatedAt": "2026-09-23T17:59:01Z",
+      "preview": "Carried over from `j2if` on 2026-09-23, on the owner's choice \"Move to split, close\". The source of truth for the wording is `cat-harness/docs/architecture/folio-board-requirements.md` §\"The folio is a convention, not a page — R24 to R29\". Quoted here so this bean can be read on its own:\n\n| | requirement | state 2026-09-23 |\n|---|---|---|\n| **R24** | the folio visualisation is `cat-harness`'s, and",
+      "file": "beans/defs/folio-assistant-95sk--folio-as-convention-r24-r27r29-the-folio-on-any-ha.md"
+    },
+    {
       "id": "folio-assistant-9c34",
       "title": "STAGING: incremental render — seed from main's render as cache, re-render only changed assets and their downstream indexes",
       "status": "completed",
@@ -2719,14 +2747,14 @@
     {
       "id": "folio-assistant-alox",
       "title": "The landing panel and its onboarding block — what shipped, and what is still judgement",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T07:27:54Z",
-      "updatedAt": "2026-09-22T08:17:09Z",
+      "updatedAt": "2026-09-23T17:08:01Z",
       "preview": "_2026-09-19T07:28:25Z_ — WHY THIS BEAN EXISTS: the owner asked, 2026-09-19, that the landing work be 'implemented as a todo' rather than carried ad-hoc through a chat. This is that record. WHAT SHIPPED, all on branch claude/festive-galileo-s7ibx0 / PR #345, all verified by a local jekyll build rather than by reading the template. (1) THE BACKDROP 404. docs/_includes/landing.html interpolated card.",
       "file": "beans/defs/folio-assistant-alox--the-landing-panel-and-its-onboarding-block-what-sh.md"
     },
@@ -4631,14 +4659,14 @@
     {
       "id": "folio-assistant-j2if",
       "title": "FOLIO VISUALISATION (R18-R32): square strip on top, condensed cornerless geometry, and an asset's THREE states",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:40:00Z",
-      "updatedAt": "2026-09-22T08:55:33Z",
+      "updatedAt": "2026-09-23T17:59:08Z",
       "preview": "Owner, 2026-09-21, in one message plus three follow-ups. The verbatim text and\nthe full R18-R32 table are in the design record\n(`cat-harness/docs/architecture/folio-board-requirements.md`, \"Round three\");\nthis bean carries only what is to be built and what would falsify it.\n\n## Why this is a round and not an amendment\n\nTwo of these requirements **reverse work that had not yet merged**. `v0jv`\nbuil",
       "file": "beans/defs/folio-assistant-j2if--folio-visualisation-r18-r32-square-strip-on-top-co.md"
     },
@@ -4943,14 +4971,14 @@
     {
       "id": "folio-assistant-ka1p",
       "title": "HARNESS THEME AVATARS: an instance's mark is its theme art, cropped — and the supplier is not always the subject",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T22:30:48Z",
-      "updatedAt": "2026-09-22T22:30:48Z",
+      "updatedAt": "2026-09-23T17:58:25Z",
       "preview": "Owner, 2026-09-22: \"bootstrap and who-iris need theme avatars, bootstrap = cowboy grump cat\", then the IRIS wordmark by screenshot.\n\n## What was wrong\n\n`tileFor` resolved an instance's theme backdrop against **its own** `decl.images`. `bootstrap` declares a sticky naming `theme: bootstrap` and **zero images** — `cat-harness` declares the `landing-bootstrap` role. So the resolver found nothing and ",
       "file": "beans/defs/folio-assistant-ka1p--harness-theme-avatars-an-instances-mark-is-its-the.md"
     },
@@ -5737,6 +5765,20 @@
       "updatedAt": "2026-09-23T13:26:05Z",
       "preview": "_2026-09-19T00:35:15Z_ — A THIRD instance of this shape, 2026-09-19, different mechanism again — worth recording together because the FAMILY is what matters. feature-staging's stage job checks out github.event.pull_request.head.ref, the BRANCH HEAD, while the workflow FILE comes from the merge ref. So main's steps run against the branch's files. PR #307 added both a new step ('Emit the knowledge-g",
       "file": "beans/defs/folio-assistant-nytj--a-sidecar-records-its-auditor-s-hash-so-two-concur.md"
+    },
+    {
+      "id": "folio-assistant-o3p3",
+      "title": "Apply graph-rendering to paper block graphs (uses[] editorial vs formal, chapters as groups)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2sns",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:09:22Z",
+      "updatedAt": "2026-09-23T18:09:22Z",
+      "preview": "Replace or wrap content-graph-analysis.py with a renderer built on buildContentGraph: groups = chapters, editorial and formal edges drawn distinctly, portrait/landscape, stamped staleness check. Folio content lives in separate repos (qou): ask the owner before any PR there. Issue #1137.",
+      "file": "beans/defs/folio-assistant-o3p3--apply-graph-rendering-to-paper-block-graphs-uses-e.md"
     },
     {
       "id": "folio-assistant-o3xy",
@@ -7551,6 +7593,20 @@
       "file": "beans/defs/folio-assistant-uiw6--kg-audit-12-sidecars-audit-skills-the-audit-no-lon.md"
     },
     {
+      "id": "folio-assistant-ukfw",
+      "title": "Apply graph-rendering to Lean proof dependency graphs (stale check, status colours)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2sns",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:09:22Z",
+      "updatedAt": "2026-09-23T18:09:22Z",
+      "preview": "generate_dependency_graph.py draws proof-object dependencies with dot and has no staleness check. Bring it under the graph-rendering rules: one source, stamped output, status colour declared once, portrait/landscape. Math repos: ask the owner before any PR. Issue #1137.",
+      "file": "beans/defs/folio-assistant-ukfw--apply-graph-rendering-to-lean-proof-dependency-gra.md"
+    },
+    {
       "id": "folio-assistant-uknu",
       "title": "DUPLICATE id ON EVERY DOCS PAGE: just-the-docs renders nav_footer_custom twice, so both copies carry id=\"fa-nav-open\"",
       "status": "todo",
@@ -7891,6 +7947,34 @@
       "file": "beans/defs/folio-assistant-vo9d--orphaned-mechanism-translation-roundtrip-and-check.md"
     },
     {
+      "id": "folio-assistant-vorg",
+      "title": "graph-rendering skill + cross-links + detangle numbers on UML pages",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2sns",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:09:22Z",
+      "updatedAt": "2026-09-23T18:09:22Z",
+      "preview": "## Done when\n- [x] skills/graph-management/graph-rendering.md states the general rules and inventories every renderer\n- [x] graph-detanglement, uml-overview, content-graph link to it\n- [x] UML pages show size / cohesion / in / out per sub-graph from detangle/results\n- [ ] gates green, PR open",
+      "file": "beans/defs/folio-assistant-vorg--graph-rendering-skill-cross-links-detangle-numbers.md"
+    },
+    {
+      "id": "folio-assistant-vq8g",
+      "title": "THIN DECISION RECORDS: the option counter reads one markdown form, so it calls the two best analyses empty and over-counts a third",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:00:40Z",
+      "updatedAt": "2026-09-23T18:02:56Z",
+      "preview": "`bean-thin-decision-records` counts an options section's **top-level markdown\nlist items**. That is the detector's own invention: `madr.md` asks for *\"at least\ntwo, every one real\"* and says nothing about markdown. Measured across the 12\ndecision records the store has grown to, the rule is wrong in **both**\ndirections.\n\n## Under-count — and it is the worst kind\n\n`j6t3` and `xgd8` enumerate their o",
+      "file": "beans/defs/folio-assistant-vq8g--thin-decision-records-the-option-counter-reads-one.md"
+    },
+    {
       "id": "folio-assistant-vsv4",
       "title": "voices visualiser: 7 wireframe findings",
       "status": "todo",
@@ -8005,14 +8089,14 @@
     {
       "id": "folio-assistant-w5bn",
       "title": "LARGE DATA SETS: a subgraph of skills for taking a SUBSET of a corpus you will never hold — IRIS, mathlib, CODATA, weather",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:01:32Z",
-      "updatedAt": "2026-09-23T18:20:09Z",
+      "updatedAt": "2026-09-23T18:44:43Z",
       "preview": "Owner, 2026-09-20, generalising away from IRIS:\n\n> 'someone may want to pull in a few nodes of a large data set, IRIS, CODATA, cosomological, weather, whatever, need to know sources and how to get subsets of data, not acquire all. IRIS is one concrete example. lean-mathlib is another large corpus example. genealize processes.'\n\nand, on where it belongs:\n\n> 'maybe not core skill, sub-graph of skill",
       "file": "beans/defs/folio-assistant-w5bn--large-data-sets-a-subgraph-of-skills-for-taking-a.md"
     },
@@ -8665,14 +8749,14 @@
     {
       "id": "folio-assistant-yunp",
       "title": "VIEWERS FOR THE REST: 16 declared graph kinds have no visualiser — fsh-guts among them — so the navbar lists them disabled",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:34Z",
-      "updatedAt": "2026-09-22T01:16:15Z",
+      "updatedAt": "2026-09-23T17:57:16Z",
       "preview": "## What — owner, 2026-09-21\n\n> i eant to see beans/ todos/ fsh-guts/\n>\n> catalogue = libraru?   move?\n>\n> yes need viewer made for rest. bean up.. add links but disabled to LHS\n> navbar on the \"harneesd\" dirs/sub-graphs\n\nThe last clause is **already done** (`sjic`, PR #802): every declared graph\nreaches the navbar, and one with no published viewer renders as a non-link.\nThis bean is the other half",
       "file": "beans/defs/folio-assistant-yunp--viewers-for-the-rest-16-declared-graph-kinds-have.md"
     },
