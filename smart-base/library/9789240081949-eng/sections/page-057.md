@@ -7,7 +7,7 @@ pages: 57-57
 pdf_page: 57
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 D5 

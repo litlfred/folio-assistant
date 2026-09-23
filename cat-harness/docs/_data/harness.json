@@ -144,7 +144,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 632,
+      "count": 638,
       "unit": "beans"
     },
     {
@@ -527,12 +527,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -541,6 +541,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
@@ -552,7 +556,7 @@
         }
       ],
       "findings": [
-        "smart-trust: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -686,12 +690,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -705,6 +709,10 @@
           "path": "/cat-harness/schemas/detangle/"
         },
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet"
         },
@@ -714,7 +722,7 @@
         }
       ],
       "findings": [
-        "detangle: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "detangle: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "detangle: no avatar declared for this instance — showing the generic mark.",
         "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
         "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -906,12 +914,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -924,6 +932,10 @@
           "kind": "catalogue",
           "path": "/cat-harness/catalogue/who-iris/",
           "readOnly": true
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "docs",
@@ -948,7 +960,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 2 graph(s) with no published viewer — skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 3 graph(s) with no published viewer — code, skills, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
@@ -1208,7 +1220,7 @@
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
-      "instantiated": false,
+      "instantiated": true,
       "href": "/cat-harness/library/smart-base/",
       "hrefKind": "viewer",
       "stats": [
@@ -1459,12 +1471,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -1476,6 +1488,10 @@
         {
           "kind": "cat-harness",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "folio",
@@ -1495,7 +1511,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 2 graph(s) with no published viewer — folio, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 3 graph(s) with no published viewer — code, folio, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [

@@ -7,7 +7,7 @@ pages: 66-66
 pdf_page: 66
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 _(no text on this page)_
