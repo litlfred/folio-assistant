@@ -43,6 +43,26 @@ classDiagram
       note [0..1] string
     }
   }
+  namespace cat_harness__code_lists {
+    class cat_harness_code_lists_Code["Code"] {
+      <<json: CodeListSchema>>
+      code [1] string
+      label [1] string
+      definition [1] string
+      source [0..1] object
+      value [0..1] string
+      status [0..1] active | retired
+    }
+    class cat_harness_code_lists_CodeList["CodeList"] {
+      <<json: CodeListSchema>>
+      $schema [1] 'folio-code-list/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      source [1] object
+      codes [1..*] Code[]
+    }
+  }
   namespace cat_harness__schemas {
     class cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input["BPMN Authoring Input"] {
       <<schema: skills/bpmn-authoring/input.schema.json>>
@@ -507,8 +527,8 @@ classDiagram
       fields not machine-readable: scripts/gen-uml-overview.ts names no exported schema
     }
   }
-  namespace cat_harness__cat_harness {
-    class cat_harness_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+  namespace cat_harness__skills {
+    class cat_harness_skills_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
       $schema [1] 'kg-qa-manifest/v1'
       auditor [1] object
@@ -518,8 +538,6 @@ classDiagram
     class cat_harness_scenarios_Role["Role"] {
       <<json: RoleGraphSchema>>
       persona [0..1] string
-      voice [0..1] string
-      useCases [0..*] string[]
       id [1] string
       title [1] string
       description [1] string
@@ -1132,6 +1150,9 @@ classDiagram
   cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
   cssClass "cat_harness_external_schemas_Term" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_ExternalSchema" fa_uml_kind_external_schema
+  cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
+  cssClass "cat_harness_code_lists_Code" fa_uml_kind_code_list
+  cssClass "cat_harness_code_lists_CodeList" fa_uml_kind_code_list
   cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
   cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
   cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems
@@ -1219,7 +1240,7 @@ classDiagram
   cssClass "cat_harness_schemas_block_qa_schema_schema_block_qa_schema_json_BlockQaReport" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_block_qa_schema_schema_qa_script_schema_json_QaScriptSidecar" fa_uml_kind_schemas
   cssClass "cat_harness_uml_uml_shape" fa_uml_kind_uml
-  cssClass "cat_harness_cat_harness_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
+  cssClass "cat_harness_skills_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
   cssClass "cat_harness_scenarios_Role" fa_uml_kind_scenarios
