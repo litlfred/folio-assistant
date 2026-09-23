@@ -21,7 +21,7 @@ file:line + a verbatim quote of the offending text.
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">QaCriterionEntry</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#evidence">evidence</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">line</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">text</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#field_hash">field_hash</a><span class="tsd-signature-symbol">:</span> <a href="schemas_block-qa.QaFieldHash.html" class="tsd-signature-type tsd-kind-interface">QaFieldHash</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#metrics">metrics</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#notes">notes</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rebuttal">rebuttal</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#referee_argument">referee_argument</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#result">result</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;fail&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;warn&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;pass&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;n/a&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reviewed_at">reviewed_at</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reviewed_sha">reviewed_sha</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#reviewer">reviewer</a><span class="tsd-signature-symbol">:</span> <a href="schemas_block-qa.QaReviewer.html" class="tsd-signature-type tsd-kind-interface">QaReviewer</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#ruling">ruling</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;partial&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;surviving&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;rebutted&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#scope">scope</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;limited&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;structural&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#score">score</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">max</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">rubric</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#severity">severity</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;critical&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;major&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;minor&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#verdict">verdict</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;clean&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;survivable-objection&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;open-objection&quot;</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L556">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:556</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L556">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:556</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -57,14 +57,14 @@ locations. Some agent reviewers (voice axis especially) emit the
 structured shape; the live corpus carries both.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L578">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:578</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L578">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:578</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="field_hash"><span>field_<wbr/>hash</span><a href="#field_hash" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">field_hash</span><span class="tsd-signature-symbol">:</span> <a href="schemas_block-qa.QaFieldHash.html" class="tsd-signature-type tsd-kind-interface">QaFieldHash</a></div>
 <div class="tsd-comment tsd-typography"><p>Source-file hashes captured at audit time.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L558">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:558</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L558">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:558</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="metrics"><code class="tsd-tag">Optional</code><span>metrics</span><a href="#metrics" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">metrics</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
@@ -79,14 +79,14 @@ short strings (e.g. a worst-offending target label). Persisted so
 the sidecar carries the heuristic snapshot, not just pass/fail.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L590">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:590</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L590">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:590</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="notes"><code class="tsd-tag">Optional</code><span>notes</span><a href="#notes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">notes</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Free-form notes.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L618">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:618</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L618">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:618</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rebuttal"><code class="tsd-tag">Optional</code><span>rebuttal</span><a href="#rebuttal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rebuttal</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -94,7 +94,7 @@ the sidecar carries the heuristic snapshot, not just pass/fail.</p>
 For scope:&quot;structural&quot; this must name the proved invariant.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L602">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:602</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L602">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:602</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="referee_argument"><code class="tsd-tag">Optional</code><span>referee_<wbr/>argument</span><a href="#referee_argument" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">referee_argument</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -102,21 +102,21 @@ For scope:&quot;structural&quot; this must name the proved invariant.</p>
 da-referee-verdict rollup entry, the strongest objection.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L599">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:599</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L599">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:599</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="result"><span>result</span><a href="#result" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">result</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;fail&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;warn&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;pass&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;n/a&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Outcome.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L560">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:560</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L560">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:560</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reviewed_at"><span>reviewed_<wbr/>at</span><a href="#reviewed_at" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reviewed_at</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>When the audit ran (ISO-8601 UTC).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L609">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:609</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L609">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:609</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reviewed_sha"><code class="tsd-tag">Optional</code><span>reviewed_<wbr/>sha</span><a href="#reviewed_sha" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reviewed_sha</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -126,28 +126,28 @@ entries (pre-2026-06) omit it — matching the interchange schema
 (<code>tools/block-qa-schema/</code>), where it is likewise optional.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L616">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:616</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L616">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:616</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="reviewer"><span>reviewer</span><a href="#reviewer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">reviewer</span><span class="tsd-signature-symbol">:</span> <a href="schemas_block-qa.QaReviewer.html" class="tsd-signature-type tsd-kind-interface">QaReviewer</a></div>
 <div class="tsd-comment tsd-typography"><p>Reviewer identity + provenance.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L607">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:607</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L607">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:607</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="ruling"><code class="tsd-tag">Optional</code><span>ruling</span><a href="#ruling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">ruling</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;partial&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;surviving&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;rebutted&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Adjudicator ruling on a single objection.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L596">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:596</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L596">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:596</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="scope"><code class="tsd-tag">Optional</code><span>scope</span><a href="#scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">scope</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;limited&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;structural&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Refutation scope (<a href="http://AGENTS.md">AGENTS.md</a> &quot;Before declaring refuted&quot;).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L594">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:594</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L594">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:594</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="score"><code class="tsd-tag">Optional</code><span>score</span><a href="#score" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">score</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">max</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">rubric</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span> <span class="tsd-signature-symbol">}</span></div>
@@ -159,21 +159,21 @@ a pass/fail gate. Convention: value/max ≥ 0.66 ⇒ result &quot;pass&quot;,
 <code>kind: &quot;agent&quot;</code> reviewers; absent for binary criteria.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L571">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:571</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L571">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:571</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="severity"><code class="tsd-tag">Optional</code><span>severity</span><a href="#severity" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">severity</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;critical&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;major&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;minor&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Severity if <code>result</code> is <code>&quot;fail&quot;</code> or <code>&quot;warn&quot;</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L562">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:562</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L562">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:562</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="verdict"><code class="tsd-tag">Optional</code><span>verdict</span><a href="#verdict" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">verdict</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;clean&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;survivable-objection&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;open-objection&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Block-level rollup verdict. Set ONLY on da-referee-verdict entries.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/7338a279cbacd4ba7131784f10b4a1322faf921f/cat-harness/schemas/block-qa.ts#L604">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:604</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e/cat-harness/schemas/block-qa.ts#L604">work/folio-assistant/folio-assistant/cat-harness/schemas/block-qa.ts:604</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

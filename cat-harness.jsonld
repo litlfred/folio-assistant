@@ -268,10 +268,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T16:32:01.399Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7338a279cbacd4ba7131784f10b4a1322faf921f",
-  "sourceCommitSha": "7338a279cbacd4ba7131784f10b4a1322faf921f",
-  "sourceCommitAt": "2026-09-23T18:28:36+02:00",
+  "generatedAt": "2026-09-23T16:47:14.265Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e",
+  "sourceCommitSha": "899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e",
+  "sourceCommitAt": "2026-09-23T18:44:39+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -285,7 +285,7 @@
     "Role": 146,
     "ProcessNode": 807,
     "Tool": 75,
-    "Schema": 104,
+    "Schema": 105,
     "GraphKind": 30,
     "Directory": 40,
     "Asset": 3
@@ -34918,6 +34918,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/pdf-structure",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "pdf-structure",
+      "title": "`structure.json`: the structure of an ingested PDF, tagged `_schema: pdf-structure/v1`.",
+      "module": "schemas/pdf-structure.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "precision-scalar",
@@ -37132,8 +37140,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "7338a279cbacd4ba7131784f10b4a1322faf921f",
+    "sha": "899476a9f7cb4ae8f84e1fc7aa23d950f975fd5e",
     "pr": "main",
-    "run": "35889125219"
+    "run": "35890862787"
   }
 }

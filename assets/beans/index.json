@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 632,
+      "count": 633,
       "unit": "beans"
     }
   },
@@ -4249,6 +4249,20 @@
       "updatedAt": "2026-09-20T08:02:10Z",
       "preview": "Owner: 'this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright. bpmn and skills strawperson please.'\n\nGENERAL, NOT WHO-SPECIFIC. The subject is 'a sample import into a structured data store'; IRIS is the worked instance. So the BPMN and the skill are cat",
       "file": "beans/defs/folio-assistant-hfwl--sample-import-sdlc-the-process-for-testing-an-impo.md"
+    },
+    {
+      "id": "folio-assistant-hn0l",
+      "title": "pdf-structure/v1: the text origin is spelled two ways (source.text_source embedded|ocr vs text_source text-layer|ocr)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T16:30:13Z",
+      "updatedAt": "2026-09-23T16:30:13Z",
+      "preview": "Measured while defining pdf-structure/v1 (issue #1112, `cat-harness/schemas/pdf-structure.ts`).\n\nOne question, whether the section text came from the PDF's own text layer or from OCR, has two fields and two vocabularies in the same file:\n\n| writer | field | values |\n|---|---|---|\n| `scripts/pdf-structure.py` | `source.text_source` | `embedded`, `ocr` |\n| `scripts/pdf-pages.py` | top-level `text_so",
+      "file": "beans/defs/folio-assistant-hn0l--pdf-structurev1-the-text-origin-is-spelled-two-way.md"
     },
     {
       "id": "folio-assistant-hpax",

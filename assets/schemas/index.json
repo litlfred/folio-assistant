@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 139,
+      "count": 141,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -666,6 +666,22 @@
       "name": "panel-chrome",
       "graphNode": "schema",
       "summary": "What a card's open panel offers — the kind declares, the platform fixes.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/pdf-structure.test.ts",
+      "instance": "cat-harness",
+      "name": "pdf-structure.test",
+      "graphNode": "undeclared",
+      "summary": "pdf-structure/v1 (issue #1112): every committed `structure.json` conforms, and",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "instance": "cat-harness",
+      "name": "pdf-structure",
+      "graphNode": "schema",
+      "summary": "`structure.json`: the structure of an ingested PDF, tagged `_schema: pdf-structure/v1`.",
       "isTest": false
     },
     {
@@ -17266,6 +17282,398 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "name": "PdfDiagnosticsSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "pages_without_text",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "likely_scanned",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc_entries",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc_inferred_entries",
+          "type": "z.number().int().min(0).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "chars_total",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
+      "name": "PdfMetadataSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "Front matter parsed from the first pages, plus the PDF's own docinfo. Its keys",
+      "fields": [
+        {
+          "name": "title",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "docinfo",
+          "type": "z.record(z.string(), z.unknown())",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
+      "name": "PdfSectionSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One section. The single shape every consumer of `library/` reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "level",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page_start",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page_end",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_chars",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_words",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
+      "name": "PdfSourceSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "The file the artefact was built from. `file`, `sha256`, `bytes`, `mtime` and",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mtime",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mimetype_sniffed",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mimetype_source",
+          "type": "z.enum([\"magic-bytes\", \"unrecognised\", \"unreadable\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.number().int().min(0).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "text_source",
+          "type": "z.enum([\"embedded\", \"ocr\"]).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "extractor",
+          "type": "z.enum([\"pymupdf\", \"pypdf\"]).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/pdf-structure.ts#Sha256"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfStructure",
+      "name": "PdfStructure",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "name": "PdfStructureSchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(PDF_STRUCTURE_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "PdfSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "metadata",
+          "type": "PdfMetadataSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "toc",
+          "type": "z.array(PdfTocEntrySchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "toc_source",
+          "type": "z.enum(TOC_SOURCES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc_undetermined_reason",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why an inferred TOC was not trusted, in a sentence a person can check."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(PdfSectionSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "diagnostics",
+          "type": "PdfDiagnosticsSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "granularity",
+          "type": "z.literal(\"page\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Written by `pdf-pages.py`: the entry was ingested one section per page."
+        },
+        {
+          "name": "text_source",
+          "type": "z.enum([\"text-layer\", \"ocr\"]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`pdf-pages.py`'s spelling of the text origin; see the module doc."
+        },
+        {
+          "name": "structure_note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a rung did NOT claim. Required by check-l1-complete when there are no sections."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
+        "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "PDF_STRUCTURE_SCHEMA_ID",
+        "TOC_SOURCES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema",
+      "name": "PdfTocEntrySchema",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-object",
+      "doc": "One entry of the table of contents, as `pdf-structure.py`'s `TocEntry`.",
+      "fields": [
+        {
+          "name": "level",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().min(1).nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.enum([\"outline\", \"inferred\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/pdf-structure.ts#Sha256",
+      "name": "Sha256",
+      "module": "cat-harness/schemas/pdf-structure.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/portable-path.ts#UnportableReason",
@@ -37685,6 +38093,54 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#Sha256",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfDiagnosticsSchema",
+      "via": "diagnostics",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfMetadataSchema",
+      "via": "metadata",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema",
+      "to": "cat-harness/schemas/pdf-structure.ts#PdfTocEntrySchema",
+      "via": "toc",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
