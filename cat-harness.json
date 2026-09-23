@@ -268,10 +268,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T10:39:54.295Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/61aacc07a1e166259aeb704c0be0b6492093528f",
-  "sourceCommitSha": "61aacc07a1e166259aeb704c0be0b6492093528f",
-  "sourceCommitAt": "2026-09-23T12:36:50+02:00",
+  "generatedAt": "2026-09-23T10:49:24.823Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cc6548ef7a49be9284b707e04cec938e07f0a837",
+  "sourceCommitSha": "cc6548ef7a49be9284b707e04cec938e07f0a837",
+  "sourceCommitAt": "2026-09-23T12:46:44+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -285,7 +285,7 @@
     "Role": 144,
     "ProcessNode": 784,
     "Tool": 71,
-    "Schema": 101,
+    "Schema": 102,
     "GraphKind": 30,
     "Directory": 40,
     "Asset": 3
@@ -2578,7 +2578,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 517,
+      "instructionLines": 547,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -33785,6 +33785,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/diff-renderers",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "diff-renderers",
+      "title": "The diff renderers a reviewer chooses between on the review page. Bean",
+      "module": "schemas/diff-renderers.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -36125,8 +36133,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "61aacc07a1e166259aeb704c0be0b6492093528f",
+    "sha": "cc6548ef7a49be9284b707e04cec938e07f0a837",
     "pr": "main",
-    "run": "35849807993"
+    "run": "35850741721"
   }
 }

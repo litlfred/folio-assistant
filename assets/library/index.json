@@ -2,11 +2,11 @@
   "$schema": "folio-library-index/v1",
   "tile": {
     "uploads": {
-      "count": 22,
+      "count": 21,
       "unit": "waiting"
     },
     "agent-skills-library": {
-      "count": 4,
+      "count": 5,
       "unit": "entries"
     },
     "library": {
@@ -170,6 +170,36 @@
           "count": 2
         }
       ]
+    },
+    {
+      "id": "skills-in-openai-api",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/skills-in-openai-api",
+      "title": "skills-in-openai-api",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "skills-in-openai-api",
+      "sourceFile": "Skills in OpenAI API.pdf",
+      "sourceSha256": "2d261aeb7a6af6ab14d13d323960455165422e7dbefc88c451bc058133565de3",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 1,
+      "blocks": 1,
+      "images": 1,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "words": 175,
+      "chars": 1639,
+      "bytes": 4963,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "referencedBy": []
     },
     {
       "id": "arxiv-2312.07755v1",
@@ -1199,7 +1229,7 @@
       "path": "uploads/Skills in OpenAI API.pdf",
       "bytes": 94337,
       "ext": "pdf",
-      "ingestedBy": "",
+      "ingestedBy": "skills-in-openai-api",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -1277,8 +1307,8 @@
       "instance": "folio-assistant",
       "dir": "uploads",
       "total": 31,
-      "ingested": 11,
-      "uningested": 20
+      "ingested": 12,
+      "uningested": 19
     },
     {
       "instance": "who-iris",
@@ -1289,7 +1319,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1741,
+    "filesRead": 1744,
     "unreadable": []
   }
 }

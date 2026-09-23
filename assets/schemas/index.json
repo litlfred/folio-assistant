@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 136,
+      "count": 137,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -351,6 +351,14 @@
       "name": "depends-on",
       "graphNode": "schema",
       "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/diff-renderers.ts",
+      "instance": "cat-harness",
+      "name": "diff-renderers",
+      "graphNode": "schema",
+      "summary": "The diff renderers a reviewer chooses between on the review page. Bean",
       "isTest": false
     },
     {
@@ -10716,6 +10724,83 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/diff-renderers.ts#DIFF_RENDERERS",
+      "name": "DIFF_RENDERERS",
+      "module": "cat-harness/schemas/diff-renderers.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/diff-renderers.ts#DiffRenderer",
+      "name": "DiffRenderer",
+      "module": "cat-harness/schemas/diff-renderers.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/diff-renderers.ts#DiffRendererSchema",
+      "name": "DiffRendererSchema",
+      "module": "cat-harness/schemas/diff-renderers.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable, and what a viewer's saved choice refers to."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the selector shows. Words, never an icon alone."
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "One sentence: what the reviewer will see."
+        },
+        {
+          "name": "needs",
+          "type": "z.array(z.enum(DIFF_RENDERER_INPUTS)).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "defaultFor",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "Block kinds this renderer is the DEFAULT for, from `BLOCK_KINDS`. `*` is"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "DIFF_RENDERER_INPUTS",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -31656,6 +31741,37 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema",
+      "name": "BlockSideTextSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "doc": "One side of one block: its source prose, and that prose rendered.",
+      "fields": [
+        {
+          "name": "prose",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The Markdown source, exactly as committed."
+        },
+        {
+          "name": "html",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The same, rendered by the platform's Markdown renderer."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/changeset.ts#ChangeAspect",
       "name": "ChangeAspect",
       "module": "folio-assistant-core/schemas/changeset.ts",
@@ -31735,6 +31851,51 @@
       "unresolved": [],
       "external": [
         "CHANGESET_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetText",
+      "name": "ChangeSetText",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetTextSchema",
+      "name": "ChangeSetTextSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "doc": "`changeset-text.json`: the prose of every block the ChangeSet lists, on each",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CHANGESET_TEXT_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blocks",
+          "type": "z.record( z.string(), z.object({ base: BlockSideTextSchema.optional(), head: BlockSideTextSchema.optional() }), )",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CHANGESET_TEXT_SCHEMA",
         "z"
       ],
       "exported": true
@@ -31834,6 +31995,13 @@
           "type": "string",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "mdPath",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Absolute path of the prose sidecar, when there is one. Never serialised."
         },
         {
           "name": "renamedFrom",
@@ -38899,6 +39067,14 @@
       "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
       "to": "folio-assistant-core/schemas/changeset.ts#RefSchema",
       "via": "head",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetTextSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema",
+      "via": "blocks",
       "kind": "field",
       "optional": false,
       "array": false
