@@ -48,11 +48,11 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Within the declared profile?**<br>`Gateway_ProfileClean` | — | **violations** → 4 · Author blocks<br>**clean** → 6 · Validate |
-| **Ready to publish?**<br>`Gateway_ReviewOutcome` | — | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
+| **Within the declared profile?**<br>`Gateway_ProfileClean` | Answered by the profile check (step 5): does every block stay within the folio's declared content profile? `violations` sends the author back to step 4 to fix the blocks; `clean` goes on to validation. | **violations** → 4 · Author blocks<br>**clean** → 6 · Validate |
+| **Ready to publish?**<br>`Gateway_ReviewOutcome` | The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish. | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
 
 {% endraw %}

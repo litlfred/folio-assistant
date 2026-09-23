@@ -121,6 +121,7 @@ origin goes">
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_Gates" name="All five answered,
 none refused?">
+      <bpmn:documentation>Have all five gates been answered, with none refusing? `yes` fetches the copy and records its fixity; `no, or unknown` leaves the source `referenced` and records why. An unanswered gate counts as a refusal.</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: l2-dak-authoring\n"
-"POT-Creation-Date: 2026-09-23T08:42:27.165Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.945Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -19,12 +19,12 @@ msgstr ""
 msgid "A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:175
+#: processes/l2-dak-authoring.bpmn:176
 #. Diagram label
 msgid "Assemble and validate the DAK [content-validate]"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:176
+#: processes/l2-dak-authoring.bpmn:177
 #. Diagram element documentation
 msgid "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
 msgstr ""
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Business processes · BPMN 2.0 [bpmn-authoring]"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:204
+#: processes/l2-dak-authoring.bpmn:205
 #. Diagram label
 msgid "changes needed"
 msgstr ""
@@ -124,7 +124,7 @@ msgstr ""
 msgid "L2 DAK authoring"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:183
+#: processes/l2-dak-authoring.bpmn:184
 #. Diagram label
 msgid "L2 DAK ready for L3"
 msgstr ""
@@ -174,6 +174,11 @@ msgstr ""
 msgid "Terminology bindings [terminology-management]"
 msgstr ""
 
+#: processes/l2-dak-authoring.bpmn:171
+#. Diagram element documentation
+msgid "The clinical validator's result. `changes needed` goes back to the author; `validated` goes on to assemble and validate the DAK."
+msgstr ""
+
 #: processes/l2-dak-authoring.bpmn:66
 #. Diagram element documentation
 msgid "The one gate every authored track must clear before assembly: a \"no\" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together."
@@ -184,7 +189,7 @@ msgstr ""
 msgid "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:205
+#: processes/l2-dak-authoring.bpmn:206
 #. Diagram label
 msgid "validated"
 msgstr ""

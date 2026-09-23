@@ -50,10 +50,10 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Clinically accurate?**<br>`Gateway_Accurate` | — | **changes needed** → Gateway_AuthorMerge<br>**validated** → Assemble and validate the DAK |
+| **Clinically accurate?**<br>`Gateway_Accurate` | The clinical validator's result. `changes needed` goes back to the author; `validated` goes on to assemble and validate the DAK. | **changes needed** → Gateway_AuthorMerge<br>**validated** → Assemble and validate the DAK |
 
 {% endraw %}

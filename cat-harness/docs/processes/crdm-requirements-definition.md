@@ -42,10 +42,10 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **BA approves?**<br>`GW_Reqs` | — | **revise** → Phases 3–4: Define requirements + impact<br>**yes** → Phase complete |
+| **BA approves?**<br>`GW_Reqs` | The BA's answer to the requirements and impact. `revise` goes back to defining them; `yes` completes the phase. | **revise** → Phases 3–4: Define requirements + impact<br>**yes** → Phase complete |
 
 {% endraw %}

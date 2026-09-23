@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-narrative\n"
-"POT-Creation-Date: 2026-09-22T08:18:10.081Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.982Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph."
 msgstr ""
 
-#: processes/review-narrative.bpmn:96
+#: processes/review-narrative.bpmn:98
 #. Diagram element documentation
 msgid "A reviewer cannot accept a change — that is the editor's lane — so the output is findings on the sidecar, not a commit."
 msgstr ""
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Adjudicate the voice findings"
 msgstr ""
 
-#: processes/review-narrative.bpmn:85
+#: processes/review-narrative.bpmn:87
 #. Diagram element documentation
 msgid "Coverage, preserved terms and echoes are mechanical. A semantic round trip needs a back-translator that has not seen the original; where none has run, the criterion carries no verdict and that is the honest state."
 msgstr ""
@@ -37,6 +37,11 @@ msgstr ""
 #: processes/review-narrative.bpmn:69
 #. Diagram element documentation
 msgid "Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register. Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance's case and the default everywhere."
+msgstr ""
+
+#: processes/review-narrative.bpmn:83
+#. Diagram element documentation
+msgid "Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join."
 msgstr ""
 
 #: processes/review-narrative.bpmn:27
@@ -49,7 +54,7 @@ msgstr ""
 msgid "Narrative review"
 msgstr ""
 
-#: processes/review-narrative.bpmn:103
+#: processes/review-narrative.bpmn:105
 #. Diagram label
 msgid "Narrative reviewed"
 msgstr ""
@@ -59,7 +64,7 @@ msgstr ""
 msgid "Narrative reviewer"
 msgstr ""
 
-#: processes/review-narrative.bpmn:111
+#: processes/review-narrative.bpmn:113
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -79,7 +84,7 @@ msgstr ""
 msgid "Read the sidecar findings"
 msgstr ""
 
-#: processes/review-narrative.bpmn:95
+#: processes/review-narrative.bpmn:97
 #. Diagram label
 msgid "Record findings as advice"
 msgstr ""
@@ -89,7 +94,7 @@ msgstr ""
 msgid "Review the editorial dependencies"
 msgstr ""
 
-#: processes/review-narrative.bpmn:84
+#: processes/review-narrative.bpmn:86
 #. Diagram label
 msgid "Review the translation"
 msgstr ""
@@ -114,7 +119,7 @@ msgstr ""
 msgid "Voice overlay review"
 msgstr ""
 
-#: processes/review-narrative.bpmn:110
+#: processes/review-narrative.bpmn:112
 #. Diagram label
 msgid "yes"
 msgstr ""

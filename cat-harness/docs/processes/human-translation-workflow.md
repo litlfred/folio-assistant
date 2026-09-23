@@ -54,11 +54,11 @@ Every one of the 16 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Complete enough?**<br>`Gateway_Complete` | — | **Incomplete** → Request completion of remaining strings<br>**Complete** → Inject PO → translated Markdown |
-| **Translation accurate?**<br>`Gateway_Accurate` | — | **Needs correction** → Return for correction with annotations<br>**Accurate** → Append WHO disclaimer (if DAK) |
+| **Complete enough?**<br>`Gateway_Complete` | Answered by the completeness check on the submitted PO file: are enough strings translated? `Incomplete` asks the translator to finish the rest; `Complete` injects the PO into translated Markdown. | **Incomplete** → Request completion of remaining strings<br>**Complete** → Inject PO → translated Markdown |
+| **Translation accurate?**<br>`Gateway_Accurate` | The SME's result. `Needs correction` returns the translation with annotations; `Accurate` goes on to the WHO disclaimer, sign-off and status. | **Needs correction** → Return for correction with annotations<br>**Accurate** → Append WHO disclaimer (if DAK) |
 
 {% endraw %}

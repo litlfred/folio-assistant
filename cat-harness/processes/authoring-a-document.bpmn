@@ -116,6 +116,7 @@
       <bpmn:outgoing>D06</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_ProfileClean" name="Within the declared profile?">
+      <bpmn:documentation>Answered by the profile check (step 5): does every block stay within the folio's declared content profile? `violations` sends the author back to step 4 to fix the blocks; `clean` goes on to validation.</bpmn:documentation>
       <bpmn:incoming>D06</bpmn:incoming>
       <bpmn:outgoing>D07</bpmn:outgoing>
       <bpmn:outgoing>D08</bpmn:outgoing>
@@ -145,6 +146,7 @@
       <bpmn:outgoing>D11</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Ready to publish?">
+      <bpmn:documentation>The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish.</bpmn:documentation>
       <bpmn:incoming>D11</bpmn:incoming>
       <bpmn:outgoing>D12</bpmn:outgoing>
       <bpmn:outgoing>D13</bpmn:outgoing>

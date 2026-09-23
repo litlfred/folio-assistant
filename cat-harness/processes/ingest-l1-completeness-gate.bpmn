@@ -73,6 +73,7 @@ artefact present?">
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_Drift" name="Drift or bad
 terminology?">
+      <bpmn:documentation>Answered by the round-trip translation QA: did it flag semantic drift or a terminology miss? `drift` sends the passage to a person to adjudicate, since which reading is right is a human call; `clean` records the verdict directly.</bpmn:documentation>
       <bpmn:incoming>Flow_g3</bpmn:incoming>
       <bpmn:outgoing>Flow_g4</bpmn:outgoing>
       <bpmn:outgoing>Flow_g6</bpmn:outgoing>

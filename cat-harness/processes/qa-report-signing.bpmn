@@ -135,6 +135,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     </bpmn:serviceTask>
 
     <bpmn:exclusiveGateway id="Gateway_SigningRoute" name="Which signing route?">
+      <bpmn:documentation>Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/signing-route.dmn#Decision_SigningRoute" />
       </bpmn:extensionElements>

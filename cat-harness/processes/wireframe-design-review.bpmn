@@ -49,19 +49,25 @@
       <bpmn:documentation>Tool wireframe-check renders every candidate at a web and a mobile viewport. It fails on horizontal overflow at mobile width, on placeholder text, and on a missing viewport, and writes screenshots and a script entry per criterion.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Checks" name="Checks pass?"/>
+    <bpmn:exclusiveGateway id="GW_Checks" name="Checks pass?">
+      <bpmn:documentation>Answered by the mechanical checks at both viewports. `yes` goes to blind review; `no` returns to producing candidates.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="R_Review" name="Blind review per criterion">
       <bpmn:documentation>Criteria: intent-fit, web usability, mobile usability, accessibility, and alternatives considered. A review at one viewport only is incomplete.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Agree" name="Entries agree?"/>
+    <bpmn:exclusiveGateway id="GW_Agree" name="Entries agree?">
+      <bpmn:documentation>Do the blind reviewers' entries agree? `no` goes to adjudication; `yes` goes to choosing a candidate.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_Adjudicate" name="Adjudication" calledElement="Process_Adjudication">
       <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason.</bpmn:documentation>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Choose" name="Choose a candidate" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost.</bpmn:documentation>
     </bpmn:callActivity>
-    <bpmn:exclusiveGateway id="GW_Iterate" name="Revise the intent?"/>
+    <bpmn:exclusiveGateway id="GW_Iterate" name="Revise the intent?">
+      <bpmn:documentation>Asked after a candidate is chosen: should the design intent be revised? `yes` rewrites the intent and starts again; `no` accepts the wireframe.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_WDR" name="Wireframe accepted"/>
     <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_1" sourceRef="Start_WDR" targetRef="D_Intent"/>
     <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_2" sourceRef="D_Intent" targetRef="D_Candidates"/>

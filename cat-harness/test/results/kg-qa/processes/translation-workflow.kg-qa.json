@@ -5,7 +5,7 @@
     "id": "Process_Translation",
     "path": "processes/translation-workflow.bpmn"
   },
-  "source_hash": "sha256:a1535d354ed9e0ff52e1b94ff20838c2476f65b566c34276dcc1531d87b4a00b",
+  "source_hash": "sha256:24df1f963ad6fbcbc90ff797adb24f01e14ad85d1ef82257ba18d8db67ebb314",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,21 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Drift",
-          "detail": "\"Drift or bad terminology?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_PostQA",
-          "detail": "\"QA passed?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_Signoff",
-          "detail": "\"Human sign-off?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -110,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

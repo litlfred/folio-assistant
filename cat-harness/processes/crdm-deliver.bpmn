@@ -92,9 +92,13 @@ the updated content for review.</bpmn:documentation>
 against the acceptance criteria. They do not review code — they test behaviour.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?"/>
+    <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?">
+      <bpmn:documentation>The BA's result from testing the increment's behaviour. `no` returns to implementation; `yes` asks whether the MVP is ready for stakeholders.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="GW_MVPReady" name="MVP ready
-for stakeholders?"/>
+for stakeholders?">
+      <bpmn:documentation>Asked after an increment passes: is the whole MVP ready for stakeholders? `not yet` implements the next increment; `yes` deploys the MVP to staging.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="BA_ShareMVP" name="Share MVP with
 stakeholders">
       <bpmn:documentation>Outer loop: the BA presents the accumulated increments
@@ -106,7 +110,9 @@ in own context">
       <bpmn:documentation>Stakeholders test the delivered feature in their own
 workflow, with their own data. They report what works and what does not.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_StakeholderOK" name="Accepted?"/>
+    <bpmn:exclusiveGateway id="GW_StakeholderOK" name="Accepted?">
+      <bpmn:documentation>The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="BA_TranslateFeedback" name="Translate feedback
 into agent direction">
       <bpmn:documentation>The BA translates stakeholder findings into

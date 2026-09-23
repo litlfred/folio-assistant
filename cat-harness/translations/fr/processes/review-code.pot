@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-code\n"
-"POT-Creation-Date: 2026-09-22T08:18:10.080Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.980Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Code nodes changed"
 msgstr ""
 
-#: processes/review-code.bpmn:99
+#: processes/review-code.bpmn:101
 #. Diagram label
 msgid "Code nodes reviewed"
 msgstr ""
@@ -39,17 +39,17 @@ msgstr ""
 msgid "Code reviewer"
 msgstr ""
 
-#: processes/review-code.bpmn:64
+#: processes/review-code.bpmn:66
 #. Diagram element documentation
 msgid "Does it name skills, and do they resolve? Is the mechanism it advertises the one that actually runs? Are its IRIs minted rather than written out? And the question a covered skill hides: is the COMMAND reachable, or only the skill satisfied? A skill can be served by the neighbours of its mechanism while the mechanism itself is reachable from no node, and check:tools reports it as covered and is right to."
 msgstr ""
 
-#: processes/review-code.bpmn:77
+#: processes/review-code.bpmn:79
 #. Diagram element documentation
 msgid "Does the node declare what KIND of node it is? Does a widened type carry its mirrors? Does a removed field leave a reason behind, so the next author does not re-add it in good faith? And where the node RENDERS to something the site serves — a colour, a glyph, a theme's tokens — does a Tool maintain that artefact, and does the visual fact have only one home? The node decides; the stylesheet reports."
 msgstr ""
 
-#: processes/review-code.bpmn:92
+#: processes/review-code.bpmn:94
 #. Diagram element documentation
 msgid "Findings are advice, not commits — the same separation the generic reviewer lane keeps. Record them where the next reader meets the node."
 msgstr ""
@@ -64,17 +64,17 @@ msgstr ""
 msgid "Judging changed CODE NODES — Tool definitions and schema definition nodes — on whether they are correct NODES, not merely correct code. You are in this process when what changed is a node that happens to be TypeScript. The distinction is the whole reason it is separate from ordinary code review: a file can compile, pass its tests, and still declare the wrong thing, name a skill that does not exist, or advertise a mechanism the pipeline does not actually invoke. The gateway picks by node KIND because the questions differ. A Tool is judged on whether its mechanism is the one that runs; a schema definition node on whether it says what it is and its references resolve."
 msgstr ""
 
-#: processes/review-code.bpmn:91
+#: processes/review-code.bpmn:93
 #. Diagram label
 msgid "Record the verdict on the node"
 msgstr ""
 
-#: processes/review-code.bpmn:76
+#: processes/review-code.bpmn:78
 #. Diagram label
 msgid "Review the schema definition node"
 msgstr ""
 
-#: processes/review-code.bpmn:63
+#: processes/review-code.bpmn:65
 #. Diagram label
 msgid "Review the Tool node"
 msgstr ""
@@ -84,14 +84,19 @@ msgstr ""
 msgid "Run the node audits"
 msgstr ""
 
-#: processes/review-code.bpmn:104
+#: processes/review-code.bpmn:106
 #. Diagram label
 msgid "schema"
 msgstr ""
 
-#: processes/review-code.bpmn:103
+#: processes/review-code.bpmn:105
 #. Diagram label
 msgid "Tool"
+msgstr ""
+
+#: processes/review-code.bpmn:62
+#. Diagram element documentation
+msgid "What kind of node is under review? `Tool` goes to the Tool-node review; `schema` goes to the schema-definition review."
 msgstr ""
 
 #: processes/review-code.bpmn:61

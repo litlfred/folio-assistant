@@ -5,7 +5,7 @@
     "id": "Process_CRDM_DataModel",
     "path": "processes/crdm-data-model.bpmn"
   },
-  "source_hash": "sha256:02ee1c5cf0f6622e927faa9daa20d47bb96702979c9023b828c6440fba6b2a9d",
+  "source_hash": "sha256:3855772b82833dc3225fad6edcb1b348cc5075ad1b274bdb161c3a1bfb1126b9",
   "criteria": {
     "raci-role-resolves": {
       "result": "pass",
@@ -101,13 +101,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Model",
-          "detail": "\"Entities recognised and every cardinality answered?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -123,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 2,
+    "pass": 14,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

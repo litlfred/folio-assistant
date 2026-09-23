@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: materialize-remote\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.505Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.955Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "A copy with no expiry cannot be told from an abandoned one — the same argument bean-blocking makes about a block with no expiry. An ARCHIVAL copy is the exception and it is a specification rather than an omission: freshness() reports it `permanent`, not `no-expiry`."
 msgstr ""
 
-#: processes/materialize-remote.bpmn:148
+#: processes/materialize-remote.bpmn:149
 #. Diagram element documentation
 msgid "A refusal is not a failure of the process — it is the process working. The node stays `referenced`, which means the graph still knows it exists and where, and the refusing gate's basis is recorded so the next caller does not re-litigate it."
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Corpus — L1 source knowledge graph"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:136
+#: processes/materialize-remote.bpmn:137
 #. Diagram label
 msgid "Declare the node `materialized`"
 msgstr ""
@@ -54,14 +54,19 @@ msgstr ""
 msgid "Declare the purpose: working or archival"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:128
+#: processes/materialize-remote.bpmn:129
 #. Diagram label
 msgid "Fetch, and record fixity"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:129
+#: processes/materialize-remote.bpmn:130
 #. Diagram element documentation
 msgid "Fetch, then record sha256 and byte count. Fixity is REQUIRED for an archival copy: an archive that cannot demonstrate it is unchanged is a copy, and it cannot be re-fetched to check, because the thing it would be re-fetched from is what it exists to survive. The data already exists — every structure.json carries sha256 and bytes, and nothing reads them as fixity."
+msgstr ""
+
+#: processes/materialize-remote.bpmn:124
+#. Diagram element documentation
+msgid "Have all five gates been answered, with none refusing? `yes` fetches the copy and records its fixity; `no, or unknown` leaves the source `referenced` and records why. An unanswered gate counts as a refusal."
 msgstr ""
 
 #: processes/materialize-remote.bpmn:42
@@ -69,12 +74,12 @@ msgstr ""
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:146
+#: processes/materialize-remote.bpmn:147
 #. Diagram label
 msgid "Leave it `referenced`, record why"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:156
+#: processes/materialize-remote.bpmn:157
 #. Diagram label
 msgid "Local copy exists, with its five answers"
 msgstr ""
@@ -84,7 +89,7 @@ msgstr ""
 msgid "Materialize remote content — the shared subprocess"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:172
+#: processes/materialize-remote.bpmn:173
 #. Diagram label
 msgid "no, or unknown"
 msgstr ""
@@ -94,7 +99,7 @@ msgstr ""
 msgid "Not hypothetical. The one IRIS record this repository holds carries a handle on iris.wpro.who.int, a regional instance merged into the global one. Only an ARCHIVAL copy of the original bytes discharges this; a working copy cannot, because the derived sections are not the publication."
 msgstr ""
 
-#: processes/materialize-remote.bpmn:160
+#: processes/materialize-remote.bpmn:161
 #. Diagram label
 msgid "Not materialized, and the graph says why"
 msgstr ""
@@ -139,7 +144,7 @@ msgstr ""
 msgid "SOURCE LOSS what survives if the origin goes"
 msgstr ""
 
-#: processes/materialize-remote.bpmn:138
+#: processes/materialize-remote.bpmn:139
 #. Diagram element documentation
 msgid "The node's state moves from `referenced` to `materialized`, carrying purpose, localPath, gates and (archival) fixity. There is NO default state: a node that has not said is invalid, because 'the author did not say' and 'the author said they could not tell' are different facts."
 msgstr ""
@@ -174,7 +179,7 @@ msgstr ""
 msgid "working or archival, and it is asked FIRST because three of the five gates mean different things under each. An archival copy keeps the original bytes, never expires, requires fixity, and is the only thing that discharges sourceLoss; a working copy keeps derived content and discharges none of that. A process that gated first and asked afterwards would be judging a copy whose obligations it did not yet know."
 msgstr ""
 
-#: processes/materialize-remote.bpmn:171
+#: processes/materialize-remote.bpmn:172
 #. Diagram label
 msgid "yes"
 msgstr ""
