@@ -278,6 +278,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_CompareBeforeAfter" name="Compare main vs staging">
       <bpmn:extensionElements>
         <folio:skill ref="staging-review"/>
+        <folio:skill ref="visual-diff"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -285,7 +286,10 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         - Main site: &lt;pages-url&gt;/ (current published state)
         - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/
         The staging banner shows the commit SHA so they can verify
-        what they are reviewing matches the PR.
+        what they are reviewing matches the PR. A changed figure, diagram
+        or table is also pictured before and after on the review page,
+        with the share of changed pixels in words (skill visual-diff,
+        Tool folio-block-screenshots).
       </bpmn:documentation>
       <bpmn:incoming>r1</bpmn:incoming>
       <bpmn:outgoing>r2</bpmn:outgoing>

@@ -2,32 +2,22 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "staging-review",
-    "path": "skills/folio-core/staging-review.md"
+    "id": "visual-diff",
+    "path": "skills/folio-core/visual-diff.md"
   },
-  "source_hash": "2c96065258ea",
+  "source_hash": "dc061165642e",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "skills/folio-core/staging-review.md",
-          "detail": "595 lines; p75 of the skill corpus is 279."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-not-a-document": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "skills/folio-core/staging-review.md",
-          "detail": "595 lines; p90 is 391. At this length it is a document."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -43,8 +33,8 @@
     }
   },
   "totals": {
-    "pass": 2,
-    "fail": 2,
+    "pass": 4,
+    "fail": 0,
     "n/a": 2,
     "unknown": 0
   }

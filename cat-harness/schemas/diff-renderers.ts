@@ -26,6 +26,8 @@
  * - `text`: the block's prose on the sides it has (`changeset-text.json`).
  * - `pages`: a URL for each side (the preview, and `main` from
  *   `staging.json`).
+ * - `screenshots`: a picture of the block on each side, from the
+ *   `folio-block-screenshots` Tool's `visual-diff.json` (bean `0rxe`).
  *
  * A renderer whose input is missing for a block is still LISTED, disabled,
  * with the reason. An option that silently vanishes reads as "this renderer
@@ -33,13 +35,13 @@
  *
  * ## Shipped, and not
  *
- * Word diff, inline rendered diff and side-by-side ship. The DAK structural
- * diff and the pixel diff are child beans, and are NOT listed here: a
+ * Word diff, inline rendered diff, side-by-side and the visual diff ship.
+ * The DAK structural diff is a child bean, and is NOT listed here: a
  * registry entry with nothing behind it is a declared-but-absent Tool.
  */
 import { z } from "zod";
 
-export const DIFF_RENDERER_INPUTS = ["text", "pages"] as const;
+export const DIFF_RENDERER_INPUTS = ["text", "pages", "screenshots"] as const;
 
 export const DiffRendererSchema = z.object({
   /** Stable, and what a viewer's saved choice refers to. */
@@ -51,7 +53,9 @@ export const DiffRendererSchema = z.object({
   needs: z.array(z.enum(DIFF_RENDERER_INPUTS)).min(1),
   /**
    * Block kinds this renderer is the DEFAULT for, from `BLOCK_KINDS`. `*` is
-   * the fallback, and exactly one renderer carries it. A test holds every
+   * the fallback, and exactly one renderer carries it. Two renderers may list
+   * the same kind: order is preference, and the page takes the first one
+   * that can run on the block. A test holds every
    * other entry to a kind that exists, so a renamed kind cannot silently
    * lose its default.
    */
@@ -75,10 +79,20 @@ export const DIFF_RENDERERS: readonly DiffRenderer[] = z.array(DiffRendererSchem
     defaultFor: ["prose", "remark", "definition", "example"],
   },
   {
+    id: "visual",
+    label: "Pictures, before and after",
+    description: "A picture of the block on the published page and on this preview, with a slider between them and a view that marks every changed pixel. For figures, diagrams and tables, whose markup says little.",
+    needs: ["screenshots"],
+    defaultFor: ["table", "figure", "diagram", "equation", "simulator"],
+  },
+  {
     id: "side-by-side",
     label: "Side by side",
     description: "The published page and this preview next to each other, each scrolled to the block. For tables, figures and anything whose layout is the change.",
     needs: ["pages"],
+    // The second choice for the same kinds: the page opens a block on the
+    // FIRST renderer that lists its kind and can run, so a build that
+    // published no pictures opens tables side by side, not on a word diff.
     defaultFor: ["table", "figure", "diagram", "equation", "simulator"],
   },
 ]);
