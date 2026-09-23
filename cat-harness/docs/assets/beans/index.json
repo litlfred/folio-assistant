@@ -2369,14 +2369,14 @@
     {
       "id": "folio-assistant-8suc",
       "title": "PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:54:54Z",
-      "updatedAt": "2026-09-23T13:54:54Z",
+      "updatedAt": "2026-09-23T16:44:46Z",
       "preview": "Found while closing `xeg6` on 2026-09-23, by hitting it.\n\n## The cycle\n\n- **`--promote` refuses** while the `image-descriptions` requirement is unmet.\n  Observed directly on `2602.12670v4`: *\"✗ NOT promoted — 1 requirement(s)\n  unmet: image-descriptions, 7 describable image(s) with no narrative\"*.\n- **Neither narrative writer can reach an unpromoted document.** The only two\n  are `scripts/apply-im",
       "file": "beans/defs/folio-assistant-8suc--promotion-and-descriptions-are-circular-both-narra.md"
     },
