@@ -219,8 +219,11 @@ function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown
     JSON.stringify(
       over.structure ?? {
         _schema: "pdf-structure/v1",
+        doc_id: "doc",
         toc_source: "none",
-        sections: [1, 2],
+        // Real section objects, not `[1, 2]`: `structure` is checked against
+        // pdf-structure/v1 (issue #1112), for the reason the blocks comment below gives.
+        sections: [1, 2].map((n) => ({ id: `s${n}`, number: null, title: `S${n}`, level: 1, page_start: n, page_end: n, n_chars: 1, n_words: 1 })),
         // Bean `nso8`: technical metadata is a CHECKED requirement, so a
         // fixture that stands for "every derivable requirement satisfied" has
         // to carry it. It was `not-derivable` until `_tech_meta.py` existed.
