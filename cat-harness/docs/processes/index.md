@@ -100,11 +100,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | skill | run by |
 |---|---|
 | `activity-log` | `activity-log.bpmn` |
-<<<<<<< HEAD
-| `adjudication` | `adjudication.bpmn`, `criterion-adjudication.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
-=======
-| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
->>>>>>> origin/main
+| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `criterion-adjudication.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
 | `adopt-methodology-from-source` | `methodology-from-source.bpmn` |
 | `bean-blocking` | `kg-to-portal.bpmn` |
 | `bean-coordination` | `bean-lifecycle.bpmn`, `code-change-review.bpmn` |

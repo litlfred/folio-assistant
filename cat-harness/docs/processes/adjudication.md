@@ -17,11 +17,7 @@ A criterion's reviewer entries disagree and no mechanism can settle them: this i
 
 ## How it connects
 
-<<<<<<< HEAD
-- **Called by:** [Criterion adjudication](criterion-adjudication.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Refresh materialized remote content](refresh-materialized.html), [Translation Workflow](translation-workflow.html), [Wireframe design review](wireframe-design-review.html)
-=======
-- **Called by:** [Content Change and Review](content-change-review.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Refresh materialized remote content](refresh-materialized.html), [Narrative review](review-narrative.html), [Translation Workflow](translation-workflow.html), [Voice overlay review](voice-review.html), [Wireframe design review](wireframe-design-review.html)
->>>>>>> origin/main
+- **Called by:** [Content Change and Review](content-change-review.html), [Criterion adjudication](criterion-adjudication.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html), [Refresh materialized remote content](refresh-materialized.html), [Translation Workflow](translation-workflow.html), [Wireframe design review](wireframe-design-review.html)
 - **Calls:** none
 - **Names the `adjudication` skill without calling this process:** [Criterion adjudication](criterion-adjudication.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Skill:** [`adjudication`](../reference/skill-instructions/adjudication.html)
