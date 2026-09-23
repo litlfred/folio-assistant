@@ -57,6 +57,35 @@
   .strip .t { border: 1px solid var(--ink); border-left-width: 4px; font-weight: 700; }
   .restrow { display: flex; gap: 16px; align-items: flex-start; margin: 16px 0; }
   .mbar { display: none; }
+  .screen { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; border: 1px dashed var(--ink); padding: 4px 8px; display: inline-block; }
+  .cut { border: 0; border-top: 3px double var(--ink); margin: 40px 0 16px; }
+  .glass { position: relative; border: 2px solid var(--ink); background: repeating-linear-gradient(135deg, var(--fill) 0 6px, var(--bg) 6px 12px); padding: 56px 12px 0; margin: 12px 0; }
+  .glass .ghandle { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 12px 20px; font-weight: 700; min-height: 44px; }
+  .gcard { background: var(--bg); border: 1px solid var(--ink); width: 288px; max-width: 100%; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+  .gface { display: flex; gap: 10px; align-items: flex-start; }
+  .cover { width: 56px; height: 76px; border: 1px solid var(--ink); display: grid; place-items: center; font-size: 10px; text-align: center; background: var(--fill); flex: none; }
+  .gname { font-weight: 700; text-decoration: underline; }
+  .gtools { display: flex; gap: 4px; justify-content: flex-end; }
+  .gtools span { width: 44px; height: 44px; border: 1px solid var(--line); display: grid; place-items: center; background: var(--bg); }
+  .gnote { background: var(--bg); border: 1px solid var(--ink); padding: 8px 12px; font-size: 13px; max-width: 40rem; margin: 12px auto; }
+  .gpanels { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .gpanel { background: var(--bg); border: 1px solid var(--ink); padding: 10px 12px; flex: 1 1 18rem; min-width: 0; }
+  .gpanel h3 { margin: 0; font-size: 16px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .gpanel h3 span { width: 44px; height: 44px; border: 1px solid var(--line); display: grid; place-items: center; flex: none; }
+  .gpanel ul { list-style: none; padding: 0; margin: 6px 0; font-size: 14px; }
+  .gpanel li { border-top: 1px solid var(--line); padding: 6px 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pull { border: 2px solid var(--ink); background: var(--ink); color: var(--bg); padding: 4px 10px; font-weight: 600; font-size: 13px; min-height: 36px; display: inline-flex; align-items: center; }
+  .gpanel fieldset { border: 1px solid var(--line); margin: 8px 0; padding: 4px 10px; font-size: 14px; }
+  .gpanel legend { font-weight: 700; }
+  .gpanel label { display: block; min-height: 32px; padding: 4px 0; }
+  .gpanel small { color: var(--mute); }
+  .gbtn { display: block; border: 1px solid var(--line); padding: 8px 12px; margin: 6px 0; min-height: 44px; font-size: 14px; }
+  .gstrip { display: flex; gap: 8px; overflow-x: auto; border-top: 3px solid var(--ink); background: var(--bg); margin: 12px -12px 0; padding: 8px 12px; }
+  .gstrip span { flex: 0 0 auto; width: 88px; min-height: 88px; border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; text-align: center; overflow-wrap: anywhere; }
+  .gstrip span.chrome { border: 2px solid var(--ink); font-weight: 700; }
+  .gstrip b { font-size: 20px; font-weight: 400; }
+  .gstrip i { font-style: normal; border: 1px solid var(--line); border-radius: 8px; padding: 0 5px; font-size: 11px; }
+  .gstrip .past { color: var(--mute); border-style: dashed; }
   @media (max-width: 799.98px) {
     .page { display: flex; flex-direction: column; }
     .side { order: 2; border-right: 0; border-bottom: 3px double var(--ink); }
@@ -126,7 +155,7 @@ function go(){
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
 })();</script>
-<div class="wf-meta">As-is wireframe · navbar · covers: cat-harness/docs/_includes/title.html, nav_footer_custom.html, harness_details.html, landing.html, footer_custom.html, cat-harness/docs/index.md, docs-ui.js (icon row, On this page, Folders, action launcher, Folio glass), data from cat-harness/scripts/harness-tiles.ts</div>
+<div class="wf-meta">As-is wireframe · navbar · covers: cat-harness/docs/_includes/title.html, nav_footer_custom.html, harness_details.html, landing.html, footer_custom.html, cat-harness/docs/index.md, docs-ui.js (icon row, On this page, Folders, action launcher, the folio glass with its bottom tile strip, Todos and Settings panels), data from cat-harness/scripts/harness-tiles.ts</div>
 <div class="page">
   <div class="mbar">
     <span class="t"><span class="mk">@</span>C@T Harness</span>
@@ -144,16 +173,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="icons" role="group" aria-label="Harness actions">
       <span class="ib" title="Todos">▤</span><span class="ib" title="Beans">◍</span><span class="ib" title="Processes">⇶</span><span class="ib" title="Knowledge graph">⌘</span><span class="ib" title="More actions">▦</span>
     </div>
-    <details class="box" open>
-      <summary>▾ On this page <span class="cnt">11</span></summary>
-      <ul class="idx">
-        <li>What each harness holds</li>
-        <li class="sub">smart-trust</li><li class="sub">WHO IRIS</li><li class="sub">Folio Assistant</li><li class="sub">C@T Harness</li><li class="sub">Bootstrap</li>
-        <li>Four things, in order</li><li>What is folio-assistant?</li><li>Supported content types</li><li>Where to go next</li><li>Documentation map</li>
-      </ul>
+    <details class="box">
+      <summary>▸ On this page <span class="cnt">11</span></summary>
     </details>
     <details class="box">
-      <summary>▸ Folders <span class="cnt">24</span></summary>
+      <summary>▸ Folders <span class="cnt">25</span></summary>
     </details>
     <ul class="nav">
       <li class="on">Home</li><li>Installation</li><li>Getting started</li><li>Content types</li><li>Agentic harness</li><li>CRDM methodology</li><li>Skills &amp; roles</li><li>Beans and todos</li>
@@ -161,7 +185,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     </ul>
     <p class="wf-mobile-only wf-note">× ☰ — the sidebar's own close and "keep open" labels (nav_footer_custom.html). docs-ui.css has no rule for them below 800 px, and every rule reading the checkbox is inside its ≥ 50rem block.</p>
     <details class="box" open>
-      <summary>▾ Harnesses <span class="cnt">5</span></summary>
+      <summary>▾ Harnesses <span class="cnt">5</span> <span class="wf-mute">arrives folded; drawn opened</span></summary>
       <ul class="tabs">
         <li class="tabitem"><a class="tabbody" href="#h"><span class="m">S</span>smart-trust</a>
           <ul class="graphs"><li><a href="#h">docs</a></li><li><span class="dead">fhir-artifact-index</span> <span class="note">no viewer yet</span></li></ul></li>
@@ -170,7 +194,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <li class="tabitem"><a class="tabbody" href="#h"><span class="m">F</span>Folio Assistant</a>
           <ul class="graphs"><li><a href="#h">uploads</a></li></ul></li>
         <li class="tabitem"><a class="tabbody" href="#h"><span class="m">@</span>C@T Harness</a>
-          <ul class="graphs"><li><a href="#h">beans</a></li><li><a href="#h">cat-harness</a></li><li><span class="dead">code</span> <span class="note">no viewer yet</span></li><li><a href="#h">docs</a></li><li><a href="#h">folio</a></li><li><a href="#h">fsh-guts</a></li><li><a href="#h">glossary</a></li><li><a href="#h">processes</a></li><li><a href="#h">tools</a></li><li class="note">… 15 more of 24</li></ul></li>
+          <ul class="graphs"><li><a href="#h">beans</a></li><li><a href="#h">cat-harness</a></li><li><span class="dead">code</span> <span class="note">no viewer yet</span></li><li><a href="#h">docs</a></li><li><a href="#h">folio</a></li><li><a href="#h">fsh-guts</a></li><li><a href="#h">external-schema</a></li><li><a href="#h">glossary</a></li><li><a href="#h">health</a></li><li class="note">… 16 more of 25</li></ul></li>
         <li class="tabitem floor"><a class="tabbody" href="#h"><span class="m">B</span>Bootstrap</a>
           <ul class="graphs"><li><span class="dead">glossary</span> <span class="note">no viewer by design</span></li><li><span class="dead">models</span> <span class="note">no viewer by design</span></li><li class="note">… 5 more, all "no viewer by design"</li></ul></li>
       </ul>
@@ -183,9 +207,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <main class="content" id="h">
       <div class="restrow">
         <div class="strip" aria-label="The same sidebar at rest, 56 px">
-          <span>@</span><span>☰</span><span>▤</span><span>◍</span><span>⇶</span><span>⌘</span><span>▦</span><span class="t">S</span><span class="t">W</span><span class="t">F</span><span class="t">@</span><span class="t">B</span><span>⌂</span>
+          <span>@</span><span>☰</span><span>▤</span><span>◍</span><span>⇶</span><span>⌘</span><span>▦</span><span>⌂</span>
         </div>
-        <p class="wf-note">Drawn opposite: the sidebar pinned open (☰ "Keep navigation open", 264 px). At rest, at 800 px and wider, it is the 56 px strip on the left: marks only, no labels, opening on hover or focus. The page content starts 56 px from the edge, and the opened sidebar covers it.</p>
+        <p class="wf-note">Drawn opposite: the sidebar pinned open (☰ "Keep navigation open", 264 px). At rest, at 800 px and wider, it is the 56 px strip on the left: marks only, no labels, opening on hover or focus. The harness initials are no longer in it: the Harnesses group arrives folded, and the strip drew them from that list. The page content starts 56 px from the edge, and the opened sidebar covers it.</p>
       </div>
       <details class="sticky"><summary>▣ Stickies <span class="cnt">5</span></summary></details>
       <h1>folio-assistant</h1>
@@ -202,7 +226,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <p>The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.</p>
         <dl><div><dt>declared directories</dt><dd>6</dd></div><div><dt>declared graph kinds</dt><dd>6</dd></div><div><dt>visualisations you can open</dt><dd>4</dd></div></dl>
         <ul><li><a href="#h">catalogue</a></li><li><a href="#h">docs</a></li><li><a href="#h">library</a></li><li><a href="#h">uploads</a></li></ul>
-        <details><summary>▸ Gaps in this instance's declaration (4)</summary></details></section>
+        <details><summary>▸ Gaps in this instance's declaration (3)</summary></details></section>
       <section class="hs"><h3><a href="#h">Folio Assistant</a></h3>
         <p>The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name …</p>
         <dl><div><dt>declared directories</dt><dd>1</dd></div><div><dt>declared graph kinds</dt><dd>1</dd></div><div><dt>visualisations you can open</dt><dd>1</dd></div></dl>
@@ -210,17 +234,64 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <details><summary>▸ Gaps in this instance's declaration (1)</summary></details></section>
       <section class="hs"><h3><a href="#h">C@T Harness</a></h3>
         <p>computable adjudication and agentic test harness caaat-harness ca&amp;at-harness .c&amp;at-harness c@t-harness</p>
-        <dl><div><dt>declared directories</dt><dd>41</dd></div><div><dt>declared graph kinds</dt><dd>24</dd></div><div><dt>visualisations you can open</dt><dd>17</dd></div></dl>
-        <p class="wf-mute">17 viewer links: beans, cat-harness, docs, folio, fsh-guts, glossary, health, issue-marks, library, processes, qa, …</p>
+        <dl><div><dt>declared directories</dt><dd>41</dd></div><div><dt>declared graph kinds</dt><dd>25</dd></div><div><dt>visualisations you can open</dt><dd>19</dd></div></dl>
+        <p class="wf-mute">19 viewer links: beans, cat-harness, docs, external-schema, folio, fsh-guts, glossary, health, issue-marks, library, methodology, processes, qa, …</p>
         <details><summary>▸ Gaps in this instance's declaration (1)</summary></details></section>
       <section class="hs"><h3><a href="#h">Bootstrap</a></h3>
         <p>The graph an agent reads before it knows what this repository is.</p>
-        <dl><div><dt>declared directories</dt><dd>8</dd></div><div><dt>declared graph kinds</dt><dd>7</dd></div><div><dt>visualisations you can open</dt><dd>0</dd></div></dl>
+        <dl><div><dt>declared directories</dt><dd>7</dd></div><div><dt>declared graph kinds</dt><dd>7</dd></div><div><dt>visualisations you can open</dt><dd>0</dd></div></dl>
         <p class="wf-mute">Nothing published to open yet.</p>
         <details><summary>▸ Gaps in this instance's declaration (2)</summary></details></section>
       <h2>Four things, in order</h2>
       <p><b>1. The work plan is where you say what you are doing.</b> … <b>2. Make your first folio.</b> … <b>3. Know which kind of thing you are writing.</b> … <b>4. The documentation you will never read.</b></p>
       <p class="wf-mute">Then: What is folio-assistant? (with a Mermaid flowchart) · Supported content types (table) · Where to go next (12 links) · Documentation map (Mermaid). Footer: "Open notes (3)", the licence line, "deployed dev".</p>
+      <hr class="cut">
+      <p class="screen">Screen 2 · the folio glass, pulled down (every page) · rendered at 1280 and 390</p>
+      <div class="glass" role="region" aria-label="Your folio">
+        <span class="ghandle" aria-label="Put your folio away">▾ Folio</span>
+        <article class="gcard" aria-label="Handbook forGuideline Development 2nd edition">
+          <div class="gface"><span class="cover" aria-hidden="true">WHO cover</span><a class="gname" href="#h">Handbook forGuideline Development 2nd edition</a></div>
+          <div class="gtools"><span aria-label="Move Handbook forGuideline Development 2nd edition around the glass">✥</span><span aria-label="Make it smaller">−</span><span aria-label="Make it larger">+</span><span aria-label="Put it back in the library view — it stays in your folio">×</span></div>
+        </article>
+        <p class="gnote">Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else.</p>
+        <div class="gpanels">
+          <section class="gpanel" aria-label="Todos — pull one onto your glass">
+            <h3>Todos — pull one onto your glass <span aria-label="Close Todos">×</span></h3>
+            <p class="wf-mute">3 todos. Press “Pull out to folio” to put one on your glass.</p>
+            <ul>
+              <li>☑ The human-todos page still says 'Not built yet' — the store now exists <span class="pull">⤴ Pull out to folio</span></li>
+              <li>☑ Decide which roles content-pipeline-navigator and platform-boundary-guard take on <span class="pull">⤴ Pull out to folio</span></li>
+              <li>☑ Decide what 'kick off' means mechanically for the two CI-watcher dispatch points <span class="pull">⤴ Pull out to folio</span></li>
+            </ul>
+            <a href="#h">Open the full todo board</a>
+          </section>
+          <section class="gpanel" aria-label="Folio settings — theme, avatars, opacity">
+            <h3>Folio settings — theme, avatars, opacity <span aria-label="Close Folio settings">×</span></h3>
+            <fieldset><legend>Theme</legend><label>◉ Glass <small>see-through and blurred</small></label><label>○ High contrast <small>black and white, strong outlines</small></label><label>○ Paper <small>light and nearly solid</small></label><label>○ Night <small>dark and nearly solid</small></label></fieldset>
+            <fieldset><legend>Avatars</legend><label>◉ Pictures <small>a book's cover when it has one, otherwise its kind avatar</small></label><label>○ Kind avatars <small>never a picture</small></label><label>○ Text only <small>no pictures at all</small></label></fieldset>
+            <fieldset><legend>Opacity</legend><label>[−] ——●———— [+] <b>20%</b></label><label>☑ Blur what is behind the glass</label></fieldset>
+            <span class="gbtn">Tidy the glass (put every card back in the grid)</span><span class="gbtn">Back to the default glass</span>
+            <p class="wf-mute">Saved in this browser only. No Discarded tile here: the dead fish lives in ▦ Actions → Settings.</p>
+          </section>
+        </div>
+        <p class="wf-note">One panel at a time: the tile that opened it closes it, and Escape closes the panel before the glass. Drawn side by side here only to show both.</p>
+        <nav class="gstrip" aria-label="Folio tiles">
+          <span class="chrome" aria-label="Todos — pull one onto your glass"><b>☑</b>Todos</span>
+          <span class="chrome" aria-label="Folio settings — theme, avatars, opacity"><b>⚙</b>Settings</span>
+          <span><b>☆</b>agent-skills-library<i>4</i></span>
+          <span><b>⚭</b>beans<i>565</i></span>
+          <span><b>☆</b>bootstrap-tools-schemas<i>3</i></span>
+          <span><b>☆</b>Skills — cat-harness</span>
+          <span><b>☆</b>detangle-schemas<i>2</i></span>
+          <span><b>☆</b>Docs — cat-harness</span>
+          <span><b>☆</b>External schemas</span>
+          <span><b>☆</b>folio<i>5</i></span>
+          <span><b>☆</b>folio-assist-core-schemas<i>17</i></span>
+          <span class="past"><b>☆</b>folio-assistant-sci-library<i>1</i></span>
+          <span class="past">… 12 more: glossary, Skills — kg-navigation, large-datasets-schemas, Skills — large-datasets, library, Methodologies, processes, schemas, Tools, translation-sources, uploads, who-iris-library, Skills — who-iris</span>
+        </nav>
+      </div>
+      <p class="wf-mute">The strip is fixed to the viewport's bottom edge, 125 px tall: 25 tiles, 2727 px of content, 11 on screen at 1280 and 2½ at 390, and the rest scroll sideways with no cue. 21 of the 23 declared tiles draw the same outline glyph (☆ here); beans and uploads differ. fsh-guts (staging-only) joins the strip on a STAGING preview only. The page behind is dimmed to a 20 % tint and blurred.</p>
     </main>
   </div>
 </div>

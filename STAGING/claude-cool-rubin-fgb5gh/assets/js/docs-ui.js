@@ -2763,20 +2763,47 @@
     });
 
     /* THE ACCELERATOR, over the top of the path above rather than instead of
-     * it. Everything it can do, the keyboard can already do. */
+     * it. Everything it can do, the keyboard can already do.
+     *
+     * POINTER EVENTS, not mouse events — bean `c132`, owner 2026-09-23: *"tablet
+     * should be like laptops"*. `mousedown` never fires for a finger drag, so on
+     * a touch tablet the surface could not be arranged at all. One listener
+     * set now serves mouse, pen and touch.
+     *
+     * A FINGER MUST STILL SCROLL. A touch that starts on a card's text is the
+     * reader scrolling that text, and taking it for a drag would make long
+     * notes unreadable on a tablet. So a non-mouse pointer drags only from a
+     * declared GRIP (`[data-fa-grip]` — the glass card's face, a sticky's
+     * head) or while the card is in move mode. The CSS gives exactly those
+     * `touch-action: none`, which is what stops the browser claiming the
+     * gesture as a scroll first. */
     var from = null;
-    handle.addEventListener("mousedown", function (e) {
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
       // Not on a control: a drag that started on `[x]` would fight the click
-      // that closes the panel.
-      // Nor on a LINK: a drag that started on an asset's name would swallow
-      // the press a reader meant as "open it".
+      // that closes the panel. Nor on a LINK: a drag that started on an
+      // asset's name would swallow the press a reader meant as "open it".
       if (e.target.closest("[data-fa-control]") || e.target.closest("button") ||
           e.target.closest("a")) return;
-      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
-      e.preventDefault();
+      if (e.pointerType !== "mouse" && panel.getAttribute("data-fa-moving") !== "true" &&
+          !e.target.closest("[data-fa-grip]")) return;
+      from = { x: e.clientX, y: e.clientY, g: geometryOf(panel), id: e.pointerId };
+      // NOT for a mouse. `preventDefault` on `pointerdown` suppresses the
+      // compatibility `mousedown` that follows it, and the board windows RAISE
+      // on `mousedown` — the switch to pointer events broke "selecting any part
+      // raises it" until `board-windows.e2e.ts` said so. A mouse drag's text
+      // selection is stopped on that `mousedown` instead, below, as it was
+      // before. A touch drag is stopped here, where it has no mousedown.
+      if (e.pointerType !== "mouse") {
+        try { handle.setPointerCapture(e.pointerId); } catch (_e) { /* not capturable; document listeners still see it */ }
+        e.preventDefault();
+      }
     });
-    document.addEventListener("mousemove", function (e) {
-      if (!from) return;
+    handle.addEventListener("mousedown", function (e) {
+      if (from) e.preventDefault();
+    });
+    document.addEventListener("pointermove", function (e) {
+      if (!from || e.pointerId !== from.id) return;
       applyGeometry(panel, {
         left: Math.max(0, from.g.left + (e.clientX - from.x)),
         top: Math.max(0, from.g.top + (e.clientY - from.y)),
@@ -2784,10 +2811,13 @@
         height: from.g.height,
       });
     });
-    document.addEventListener("mouseup", function () {
-      if (from) settle();
+    function end(e) {
+      if (!from || (e && e.pointerId !== from.id)) return;
+      settle();
       from = null;
-    });
+    }
+    document.addEventListener("pointerup", end);
+    document.addEventListener("pointercancel", end);
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -4264,7 +4294,7 @@
         tabindex: "-1",
       });
       var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-      var face = el("div", { class: "fa-glass-asset-face" });
+      var face = el("div", { class: "fa-glass-asset-face", "data-fa-grip": "" });
       var ava = glassAvatarFor(a, prefs.avatars);
       if (ava) face.appendChild(ava);
       // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
@@ -4689,6 +4719,24 @@
       handle.focus();
     });
 
+    /* HOW MANY ARE WAITING, on the handle — bean `c132`. On a phone a closed
+     * glass shows nothing over the page (there is no room for a floating card
+     * there), so the handle is where a reader learns their folio holds
+     * something. A data attribute the stylesheet prints, so the handle's text
+     * and accessible name are unchanged on every other screen. Counted from
+     * the DOM because a board sticky floats without touching the folio store. */
+    function countWaiting() {
+      var n = layer.querySelectorAll(".fa-sticky-floating").length +
+        Object.keys(folioAssets()).filter(function (k) { return folioAssets()[k].shown; }).length;
+      if (n > 0) handle.setAttribute("data-fa-count", String(n));
+      else handle.removeAttribute("data-fa-count");
+    }
+    countWaiting();
+    document.addEventListener("fa:folio-changed", countWaiting);
+    if (typeof MutationObserver === "function") {
+      new MutationObserver(countWaiting).observe(layer, { childList: true });
+    }
+
     layer.__faSetGlassOpen = setOpen;
     return layer;
   }
@@ -4852,7 +4900,7 @@
       tabindex: "-1",
     });
     var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
-    card.appendChild(el("h3", { class: "fa-sticky-away-title" }, e.title));
+    card.appendChild(el("h3", { class: "fa-sticky-away-title", "data-fa-grip": "" }, e.title));
     if (e.text) card.appendChild(el("p", { class: "fa-sticky-away-text" }, e.text));
     var href = safeHref(e.href);
     var where = e.label ? "its home panel on “" + e.label + "”" : "its home panel";
@@ -5329,7 +5377,9 @@
         tools.appendChild(moveBtn);
       }
 
-      wireMove(card, card.querySelector(".fa-sticky-head") || card, live, function (g) {
+      var grip = card.querySelector(".fa-sticky-head");
+      if (grip) grip.setAttribute("data-fa-grip", "");
+      wireMove(card, grip || card, live, function (g) {
         pinGeom("todos", todo.id, g);
       });
       layer.appendChild(card);

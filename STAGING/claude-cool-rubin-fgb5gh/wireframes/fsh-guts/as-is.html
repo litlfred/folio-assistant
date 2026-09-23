@@ -70,6 +70,11 @@
   .body { white-space: pre-wrap; font-size: 12px; background: var(--fill); padding: 8px; overflow-wrap: anywhere; }
   .detail dt { color: var(--mute); }
   .detail dd { margin: 0; overflow-wrap: anywhere; }
+  .gstrip { display: flex; gap: 8px; overflow-x: auto; border-top: 3px solid var(--ink); padding: 8px; margin-top: 10px; background: var(--bg); }
+  .gstrip span { flex: 0 0 auto; width: 88px; min-height: 80px; border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; text-align: center; overflow-wrap: anywhere; }
+  .gstrip span.chrome { border: 2px solid var(--ink); font-weight: 700; }
+  .gstrip span.stage { border-style: dashed; }
+  .gstrip b { font-size: 20px; font-weight: 400; }
   @media (max-width: 799.98px) {
     .w3 { min-width: 560px; }
     .panel { max-width: none; }
@@ -126,7 +131,7 @@ function go(){
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
 })();</script>
-<div class="wf-meta">As-is wireframe · fsh-guts · covers: cat-harness/docs/fsh-guts/index.md, the Settings → Discarded viewer in cat-harness/docs/assets/js/docs-ui.js</div>
+<div class="wf-meta">As-is wireframe · fsh-guts · covers: cat-harness/docs/fsh-guts/index.md, the ▦ Actions → Settings → Discarded viewer in cat-harness/docs/assets/js/docs-ui.js, and the folio glass's bottom strip and ⚙ Settings (no fish)</div>
 <div class="page">
   <nav class="strip" aria-label="Site navigation, collapsed">
     <span class="mk" title="C@T Harness">@</span>
@@ -137,11 +142,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <span class="ic" aria-label="Knowledge graph">⌘</span>
     <span class="ic" aria-label="More actions">▦</span>
     <span class="grow"></span>
-    <span class="tab" aria-label="smart-trust">S</span>
-    <span class="tab" aria-label="WHO IRIS">W</span>
-    <span class="tab" aria-label="Folio Assistant">F</span>
-    <span class="tab" aria-label="C@T Harness">C</span>
-    <span class="tab" aria-label="Bootstrap">B</span>
     <span class="sep"></span>
     <span class="ic" aria-label="Home">⌂</span>
   </nav>
@@ -156,7 +156,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <button class="handle" type="button" aria-label="Pull down your folio">▾ Folio</button>
     <div class="mhead"><span class="search">⌕ Search folio-assistant</span></div>
         <main class="content">
-      <p class="screen">Screen 1 of 2 · <code>/fsh-guts/</code> · staging and local builds only</p>
+      <p class="screen">Screen 1 of 3 · <code>/fsh-guts/</code> · staging and local builds only</p>
       <h1>fsh-guts — the trashcan that is kept</h1>
       <p>This page is <b>not on the published site</b>. It is declared <code>publish: "staging-only"</code>, so <code>compose-docs.ts</code> withholds it from the canonical deploy and includes it in a local build or a <code>STAGING/&lt;slug&gt;/</code> preview.</p>
       <p><code>fsh-guts</code> holds content that was <b>relocated rather than deleted</b>. Delete here means relocate, and relocate is reversible.</p>
@@ -190,9 +190,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <p class="wf-mute">6 of 16 rows. Every file link goes off-site to github.com/litlfred/folio-assistant/blob/main/fsh-guts/….</p>
 
       <hr class="cut" id="p">
-      <p class="screen">Screen 2 of 2 · the dead-fish viewer · ▦ Actions → Settings → Discarded (every page)</p>
+      <p class="screen">Screen 2 of 3 · the dead-fish viewer · ▦ Actions → Settings → Discarded (every page)</p>
       <div class="panel" role="region" aria-label="Actions">
-        <div class="phead"><span class="wf-btn">‹ Back</span><b>Settings</b></div>
+        <div class="phead"><span class="wf-btn" aria-label="Back to all actions">‹ All actions</span><b>Settings</b></div>
         <div class="tiles">
           <span class="tile">☾<small>Dark</small></span>
         </div>
@@ -209,7 +209,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       </div>
       <p class="arrow">↓ pressing Discarded swaps the panel to this view</p>
       <div class="panel" role="region" aria-label="Discarded items">
-        <div class="phead"><span class="wf-btn">‹ Back</span><b>Discarded items</b></div>
+        <div class="phead"><span class="wf-btn" aria-label="Back to all actions">‹ All actions</span><b>Discarded items</b></div>
         <ul class="dlist">
           <li><span>`SkillDefinition.roles` — retired</span><em>retired</em></li>
           <li><span>The `roles:` field in SKILL front matter — 288 annotations, no reader, born dangling</span><em>retired-field</em></li>
@@ -234,6 +234,26 @@ repository. Retired at the owner's word, 2026-09-20 …</pre>
           <a href="#p">View the source of this item</a>
         </div>
       </div>
+      <hr class="cut">
+      <p class="screen">Screen 3 of 3 · the folio glass (▾ Folio) · its bottom strip and its own ⚙ Settings</p>
+      <div class="panel" role="region" aria-label="Folio settings — theme, avatars, opacity" style="max-width:none">
+        <div class="phead"><b>Folio settings — theme, avatars, opacity</b><span class="wf-btn" aria-label="Close Folio settings">×</span></div>
+        <p>Theme: ◉ Glass ○ High contrast ○ Paper ○ Night · Avatars: ◉ Pictures ○ Kind avatars ○ Text only · Opacity: [−] 20% [+] · ☑ Blur</p>
+        <p><span class="wf-btn">Tidy the glass (put every card back in the grid)</span> <span class="wf-btn">Back to the default glass</span></p>
+        <p class="wf-mute">No Discarded tile here. The dead fish is only in ▦ Actions → Settings (screen 2).</p>
+        <nav class="gstrip" aria-label="Folio tiles">
+          <span class="chrome"><b>☑</b>Todos</span>
+          <span class="chrome"><b>⚙</b>Settings</span>
+          <span><b>☆</b>agent-skills-library</span>
+          <span><b>⚭</b>beans</span>
+          <span><b>☆</b>detangle-schemas</span>
+          <span><b>☆</b>folio</span>
+          <span class="stage"><b>☆</b>fsh-guts <small>STAGING preview only</small></span>
+          <span><b>☆</b>glossary</span>
+          <span>… 16 more</span>
+        </nav>
+      </div>
+      <p class="wf-mute">fsh-guts is a <code>glass</code>-surface tile, but <code>publish: "staging-only"</code>: rendered with <code>fa-staging</code> empty it is absent from the strip, with it set it is present. The tile opens the page (screen 1), not the viewer.</p>
       <div class="foot">
         <details><summary>▸ Open notes (3)</summary></details>
         <p>folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0.</p>
