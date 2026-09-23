@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-gw2/skills/l2-dak-authoring/output.schema.json",
+  "title": "L2 DAK Authoring Output",
+  "description": "Output schema for L2 DAK authoring.",
+  "type": "object",
+  "required": [
+    "artifacts",
+    "status"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bpmn",
+              "dmn",
+              "spreadsheet",
+              "markdown",
+              "fsh"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready-for-review",
+        "approved"
+      ]
+    },
+    "validationIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-gw2",
+    "sha": "768a3746b460fbff329b77f8855189c1b304424c",
+    "pr": "1116/merge",
+    "run": "35890949692"
+  }
+}
