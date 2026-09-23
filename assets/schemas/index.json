@@ -21268,7 +21268,7 @@
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display text. Not used for matching — {@link RoleDef.lanes} is."
+          "doc": "Display text. Not used for matching: a lane binds by `<folio:role ref>`."
         },
         {
           "name": "description",
@@ -21282,13 +21282,6 @@
           "optional": false,
           "array": true,
           "doc": "Which kinds of actor may take this role on. `external` marks a participant"
-        },
-        {
-          "name": "lanes",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Exact BPMN lane names this role binds, across every diagram."
         },
         {
           "name": "persona",
@@ -21395,12 +21388,6 @@
           "name": "actorKinds",
           "type": "z.array(z.enum(ACTOR_KINDS)).min(1)",
           "optional": false,
-          "array": true
-        },
-        {
-          "name": "lanes",
-          "type": "z.array(z.string()).default([])",
-          "optional": true,
           "array": true
         },
         {

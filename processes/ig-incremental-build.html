@@ -435,28 +435,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790198346">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790199233">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790198346">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790199233">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790198346">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790199233">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790198346">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790199233">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790198346">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790199233">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -473,7 +473,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790198346" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790199233" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -771,32 +771,32 @@
   <tbody>
     <tr>
       <td>FHIR modeller / PR author (person + authoring agent)</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">fhir-modeller</code></td>
       <td>—</td>
     </tr>
     <tr>
       <td>Work plan — beans (shared by humans and agents)</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">work-plan</code></td>
       <td>Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid’s <code class="language-plaintext highlighter-rouge">no</code>, Gateway_QcPass’s <code class="language-plaintext highlighter-rouge">no</code> and Gateway_Restore’s <code class="language-plaintext highlighter-rouge">environment error</code> each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.</td>
     </tr>
     <tr>
       <td>Incremental build (system)</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td>
       <td>Owns everything that stays inside the cone: restore the cache, compute the cone, check it out, compile and re-render only that slice, then merge and rebuild the aggregates — Task_Index never re-derives an artefact on its own, so a missing record is a miss rather than a silent rebuild. What needs the JVM’s warm state, it hands to Lane_Services rather than running itself.</td>
     </tr>
     <tr>
       <td>Publisher + validator services (JVM)</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">ig-publisher-service</code></td>
       <td>Two separate duties rather than one: Task_FullBuild is the complete fallback the diagram takes when Gateway_Restore finds the cache unusable, bypassing the cone machinery and reaching Task_Qa on its own. Task_ContextLoad and Task_Validate are the other duty — holding the loaded dependency packages and expansions warm across runs is what makes validating a handful of cone files cheap, and losing that warm state is the same cache miss that routes to the fallback instead.</td>
     </tr>
     <tr>
       <td>PR reviewer / QC reviewer</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">qc-reviewer</code></td>
       <td>Sees the change’s shape before the build finishes — Task_ConeReport names what will rebuild and whether a shared hub is touched, posted while the checkout is still running — then gates on Task_Qa by reading the cone’s own rows in the aggregate first. On a PR branch it also deploys the preview itself, but never seeds the shared cache: that stays Lane_PubMgr’s, reached only past Gateway_Path on main or a release.</td>
     </tr>
     <tr>
       <td>Publication manager — deploy and seed</td>
-      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">publication-manager</code></td>
       <td>Reached only past Gateway_Path’s main-or-release branch, never for a PR preview — which is what makes this the one lane allowed to touch the shared cache. Task_Seed does not seed on a green build alone: it writes to a -test branch and verifies a restore from a clean clone before promoting, so what licenses the shared cache is the verified restore, not the deploy that came before it.</td>
     </tr>
   </tbody>
@@ -1171,7 +1171,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35921484888"><code>4a6ca2a</code></a> &middot; 2026-09-23T21:19:02Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35923116071"><code>4dcdcf5</code></a> &middot; 2026-09-23T21:33:49Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

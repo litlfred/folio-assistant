@@ -17,10 +17,11 @@
 <div class="tsd-signature tsd-anchor-link" id="roleforlane"><span class="tsd-kind-call-signature">roleForLane</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">graph</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_role-graph.RoleGraph.html" class="tsd-signature-type tsd-kind-interface">RoleGraph</a><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">laneName</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">explicitRef</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_role-graph.RoleDef.html" class="tsd-signature-type tsd-kind-interface">RoleDef</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><a href="#roleforlane" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>The role a BPMN lane binds.</p>
-<p><code>explicitRef</code> — the lane's own <code>&lt;folio:role ref=&quot;…&quot;/&gt;</code> — wins when present,
-because a diagram that has said which role it means must not be second-
-guessed by a string table. Falling back to exact lane-name matching is what
-lets the existing corpus resolve at all.</p>
+<p>Only the lane's own <code>&lt;folio:role ref=&quot;…&quot;/&gt;</code> binds it. There is no fallback
+to matching the lane's display name against the roles: that fallback needed
+a <code>lanes[]</code> on every role, which is a general node naming its users
+(<code>data-modelling</code> step 8, #1168). <code>laneName</code> is kept for callers' sake and
+no longer consulted.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -30,7 +31,7 @@ lets the existing corpus resolve at all.</p>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">explicitRef</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_role-graph.RoleDef.html" class="tsd-signature-type tsd-kind-interface">RoleDef</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4a6ca2a4553ce76b0af2b20cff48bfd66d426c54/cat-harness/schemas/role-graph.ts#L731">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:731</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4dcdcf550340c8c66117ac7243b623ad906cdbfe/cat-harness/schemas/role-graph.ts#L724">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:724</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
