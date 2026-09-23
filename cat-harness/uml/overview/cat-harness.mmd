@@ -1,0 +1,375 @@
+classDiagram
+  direction TB
+  namespace cat_harness__tools {
+    class cat_harness_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+    }
+    class cat_harness_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+    }
+  }
+  namespace cat_harness__external_schemas {
+    class n_cat_harness_external_schemas_external_schema["external-schema: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__schemas {
+    class n_cat_harness_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_cat_harness_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__uml {
+    class n_cat_harness_uml_uml["uml: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__bootstrap_render {
+    class n_cat_harness_bootstrap_render_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__cat_harness {
+    class n_cat_harness_cat_harness_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__scenarios {
+    class cat_harness_scenarios_Role["Role"] {
+      <<json: RoleGraphSchema>>
+    }
+    class cat_harness_scenarios_Actor["Actor"] {
+      <<json: RoleGraphSchema>>
+    }
+    class cat_harness_scenarios_RoleGraph["RoleGraph"] {
+      <<json: RoleGraphSchema>>
+    }
+  }
+  namespace cat_harness__processes {
+    class cat_harness_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+    }
+  }
+  namespace cat_harness__methodology_raci {
+    class n_cat_harness_methodology_raci_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__methodology_crdm {
+    class n_cat_harness_methodology_crdm_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__methodology_crdm_processes {
+    class cat_harness_methodology_crdm_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+    }
+  }
+  namespace cat_harness__methodologies {
+    class n_cat_harness_methodologies_methodology["methodology: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__qa {
+    class cat_harness_qa_qa_shape["qa"] {
+      <<schema: content/pipeline/qa-witness.ts>>
+    }
+  }
+  namespace cat_harness__fsh_guts {
+    class n_cat_harness_fsh_guts_fsh_guts["fsh-guts: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__health {
+    class cat_harness_health_Threshold["Threshold"] {
+      <<json: HealthReportSchema>>
+    }
+    class cat_harness_health_Measurement["Measurement"] {
+      <<json: HealthReportSchema>>
+    }
+    class cat_harness_health_Finding["Finding"] {
+      <<json: HealthReportSchema>>
+    }
+    class cat_harness_health_Check["Check"] {
+      <<json: HealthReportSchema>>
+    }
+    class cat_harness_health_HealthReport["HealthReport"] {
+      <<json: HealthReportSchema>>
+    }
+  }
+  namespace cat_harness__beans {
+    class n_cat_harness_beans_beans["beans: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__todos {
+    class n_cat_harness_todos_todos["todos: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__memory {
+    class cat_harness_memory_AlsoAbout["AlsoAbout"] {
+      <<json: MemoryNodeSchema>>
+    }
+    class cat_harness_memory_MemoryNode["MemoryNode"] {
+      <<json: MemoryNodeSchema>>
+    }
+    class cat_harness_memory_WaiverNode["WaiverNode"] {
+      <<json: WaiverNodeSchema>>
+    }
+  }
+  namespace cat_harness__interaction {
+    class cat_harness_interaction_interaction_shape["interaction"] {
+      <<schema: schemas/harness-config.ts>>
+    }
+  }
+  namespace cat_harness__issue_marks {
+    class cat_harness_issue_marks_issue_marks_shape["issue-marks"] {
+      <<schema: src/issue-watch/seen-comments.ts>>
+    }
+  }
+  namespace cat_harness__uploads {
+    class n_cat_harness_uploads_uploads["uploads: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__library {
+    class n_cat_harness_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__who_iris_library {
+    class n_cat_harness_who_iris_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__agent_skills_library {
+    class n_cat_harness_agent_skills_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__folio_assistant_sci_library {
+    class n_cat_harness_folio_assistant_sci_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__smart_base_library {
+    class n_cat_harness_smart_base_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__translation_sources {
+    class cat_harness_translation_sources_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+    }
+  }
+  namespace cat_harness__folio {
+    class n_cat_harness_folio_folio["folio: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__smart_kg_methodologies {
+    class n_cat_harness_smart_kg_methodologies_methodology["methodology: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__smart_base_methodologies {
+    class n_cat_harness_smart_base_methodologies_methodology["methodology: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__smart_base_processes {
+    class cat_harness_smart_base_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+    }
+  }
+  namespace cat_harness__docs {
+    class n_cat_harness_docs_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__root_docs {
+    class n_cat_harness_root_docs_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__folio_assist_core_schemas {
+    class n_cat_harness_folio_assist_core_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_cat_harness_folio_assist_core_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__kg_navigation {
+    class n_cat_harness_kg_navigation_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__large_datasets_skills {
+    class n_cat_harness_large_datasets_skills_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__who_iris_skills {
+    class n_cat_harness_who_iris_skills_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__large_datasets_schemas {
+    class n_cat_harness_large_datasets_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_cat_harness_large_datasets_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__detangle_schemas {
+    class n_cat_harness_detangle_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_cat_harness_detangle_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__bootstrap_tools_schemas {
+    class n_cat_harness_bootstrap_tools_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_cat_harness_bootstrap_tools_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__glossary {
+    class n_cat_harness_glossary_glossary["glossary: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__cat_harness_scripts {
+    class n_cat_harness_cat_harness_scripts_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__cat_harness_src {
+    class n_cat_harness_cat_harness_src_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__cat_harness_adapters {
+    class n_cat_harness_cat_harness_adapters_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__cat_harness_tests {
+    class n_cat_harness_cat_harness_tests_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
+  cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
+  cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
+  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_kind_external_schema
+  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_undetermined
+  cssClass "n_cat_harness_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_cat_harness_uml_uml" fa_uml_kind_uml
+  cssClass "n_cat_harness_uml_uml" fa_uml_undetermined
+  cssClass "n_cat_harness_bootstrap_render_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_bootstrap_render_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_cat_harness_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_cat_harness_skills" fa_uml_undetermined
+  cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
+  cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
+  cssClass "cat_harness_scenarios_Role" fa_uml_kind_scenarios
+  cssClass "cat_harness_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "cat_harness_scenarios_RoleGraph" fa_uml_kind_scenarios
+  cssClass "cat_harness_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_cat_harness_methodology_raci_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_methodology_raci_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_methodology_crdm_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_methodology_crdm_skills" fa_uml_undetermined
+  cssClass "cat_harness_methodology_crdm_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_cat_harness_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_cat_harness_methodologies_methodology" fa_uml_undetermined
+  cssClass "cat_harness_qa_qa_shape" fa_uml_kind_qa
+  cssClass "n_cat_harness_fsh_guts_fsh_guts" fa_uml_kind_fsh_guts
+  cssClass "n_cat_harness_fsh_guts_fsh_guts" fa_uml_undetermined
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
+  cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
+  cssClass "cat_harness_health_Threshold" fa_uml_kind_health
+  cssClass "cat_harness_health_Measurement" fa_uml_kind_health
+  cssClass "cat_harness_health_Finding" fa_uml_kind_health
+  cssClass "cat_harness_health_Check" fa_uml_kind_health
+  cssClass "cat_harness_health_HealthReport" fa_uml_kind_health
+  cssClass "n_cat_harness_beans_beans" fa_uml_kind_beans
+  cssClass "n_cat_harness_beans_beans" fa_uml_undetermined
+  cssClass "n_cat_harness_todos_todos" fa_uml_kind_todos
+  cssClass "n_cat_harness_todos_todos" fa_uml_undetermined
+  cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
+  cssClass "cat_harness_memory_AlsoAbout" fa_uml_kind_memory
+  cssClass "cat_harness_memory_MemoryNode" fa_uml_kind_memory
+  cssClass "cat_harness_memory_WaiverNode" fa_uml_kind_waiver
+  cssClass "cat_harness_interaction_interaction_shape" fa_uml_kind_interaction
+  cssClass "cat_harness_issue_marks_issue_marks_shape" fa_uml_kind_issue_marks
+  cssClass "n_cat_harness_uploads_uploads" fa_uml_kind_uploads
+  cssClass "n_cat_harness_uploads_uploads" fa_uml_undetermined
+  cssClass "n_cat_harness_library_library" fa_uml_kind_library
+  cssClass "n_cat_harness_library_library" fa_uml_undetermined
+  cssClass "n_cat_harness_who_iris_library_library" fa_uml_kind_library
+  cssClass "n_cat_harness_who_iris_library_library" fa_uml_undetermined
+  cssClass "n_cat_harness_agent_skills_library_library" fa_uml_kind_library
+  cssClass "n_cat_harness_agent_skills_library_library" fa_uml_undetermined
+  cssClass "n_cat_harness_folio_assistant_sci_library_library" fa_uml_kind_library
+  cssClass "n_cat_harness_folio_assistant_sci_library_library" fa_uml_undetermined
+  cssClass "n_cat_harness_smart_base_library_library" fa_uml_kind_library
+  cssClass "n_cat_harness_smart_base_library_library" fa_uml_undetermined
+  cssClass "cat_harness_translation_sources_TranslationConfig" fa_uml_kind_translation_sources
+  cssClass "n_cat_harness_folio_folio" fa_uml_kind_folio
+  cssClass "n_cat_harness_folio_folio" fa_uml_undetermined
+  cssClass "n_cat_harness_smart_kg_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_cat_harness_smart_kg_methodologies_methodology" fa_uml_undetermined
+  cssClass "n_cat_harness_smart_base_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_cat_harness_smart_base_methodologies_methodology" fa_uml_undetermined
+  cssClass "cat_harness_smart_base_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_cat_harness_docs_docs" fa_uml_kind_docs
+  cssClass "n_cat_harness_docs_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_root_docs_docs" fa_uml_kind_docs
+  cssClass "n_cat_harness_root_docs_docs" fa_uml_undetermined
+  cssClass "n_cat_harness_folio_assist_core_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_folio_assist_core_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_folio_assist_core_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_folio_assist_core_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_cat_harness_kg_navigation_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_kg_navigation_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_large_datasets_skills_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_large_datasets_skills_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_who_iris_skills_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_who_iris_skills_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_large_datasets_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_large_datasets_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_large_datasets_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_large_datasets_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_cat_harness_detangle_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_detangle_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_detangle_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_detangle_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_cat_harness_bootstrap_tools_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_cat_harness_bootstrap_tools_schemas_schemas" fa_uml_undetermined
+  cssClass "n_cat_harness_bootstrap_tools_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_cat_harness_bootstrap_tools_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_cat_harness_glossary_glossary" fa_uml_kind_glossary
+  cssClass "n_cat_harness_glossary_glossary" fa_uml_undetermined
+  cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
+  cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined
+  cssClass "n_cat_harness_cat_harness_src_code" fa_uml_kind_code
+  cssClass "n_cat_harness_cat_harness_src_code" fa_uml_undetermined
+  cssClass "n_cat_harness_cat_harness_adapters_code" fa_uml_kind_code
+  cssClass "n_cat_harness_cat_harness_adapters_code" fa_uml_undetermined
+  cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_kind_code
+  cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_undetermined

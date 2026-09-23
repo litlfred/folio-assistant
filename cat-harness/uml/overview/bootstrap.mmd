@@ -1,0 +1,65 @@
+classDiagram
+  direction TB
+  namespace bootstrap__cat_harness {
+    class n_bootstrap_cat_harness_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace bootstrap__schemas {
+    class n_bootstrap_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace bootstrap__scenarios {
+    class bootstrap_scenarios_Role["Role"] {
+      <<json: RoleGraphSchema>>
+    }
+    class bootstrap_scenarios_Actor["Actor"] {
+      <<json: RoleGraphSchema>>
+    }
+    class bootstrap_scenarios_RoleGraph["RoleGraph"] {
+      <<json: RoleGraphSchema>>
+    }
+  }
+  namespace bootstrap__processes {
+    class bootstrap_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+    }
+  }
+  namespace bootstrap__bootstrap_render {
+    class n_bootstrap_bootstrap_render_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace bootstrap__models {
+    class n_bootstrap_models_models["models: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace bootstrap__glossary {
+    class n_bootstrap_glossary_glossary["glossary: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace bootstrap__bootstrap_translations {
+    class bootstrap_bootstrap_translations_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+    }
+  }
+  cssClass "n_bootstrap_cat_harness_skills" fa_uml_kind_skills
+  cssClass "n_bootstrap_cat_harness_skills" fa_uml_undetermined
+  cssClass "n_bootstrap_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_bootstrap_schemas_schemas" fa_uml_undetermined
+  bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
+  bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+  cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
+  cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
+  cssClass "bootstrap_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_bootstrap_bootstrap_render_skills" fa_uml_kind_skills
+  cssClass "n_bootstrap_bootstrap_render_skills" fa_uml_undetermined
+  cssClass "n_bootstrap_models_models" fa_uml_kind_models
+  cssClass "n_bootstrap_models_models" fa_uml_undetermined
+  cssClass "n_bootstrap_glossary_glossary" fa_uml_kind_glossary
+  cssClass "n_bootstrap_glossary_glossary" fa_uml_undetermined
+  cssClass "bootstrap_bootstrap_translations_TranslationConfig" fa_uml_kind_translation_sources

@@ -49,12 +49,12 @@ import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 const HARNESS = resolve(import.meta.dir, "..");
 const REPO = resolve(HARNESS, "..");
 /**
- * Beside the schemas it is drawn from, in THIS instance's declared `schemas`
- * directory — the same lookup `harness-schema-export.ts` makes.
+ * In THIS instance's declared `uml` directory, beside the per-sub-graph
+ * diagrams `gen-uml-overview.ts` writes under `uml/overview/`.
  */
 const OUT = join(
   // declared-path-literal: the conventional fallback when no declaration names the directory
-  instanceDirectoryForGraph(HARNESS, "schemas") ?? join(HARNESS, "schemas"),
+  instanceDirectoryForGraph(HARNESS, "uml") ?? join(HARNESS, "uml"),
   "harness-object-model.puml",
 );
 const DAK_USER_STORY = join(

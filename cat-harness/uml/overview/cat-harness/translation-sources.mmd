@@ -1,0 +1,13 @@
+classDiagram
+  direction TB
+  namespace cat_harness__translation_sources {
+    class cat_harness_translation_sources_TranslationConfig["TranslationConfig"] {
+      <<json: TranslationConfigSchema>>
+      defaultLocale [0..1] string
+      supportedLocales [0..*] string[]
+      translationDir [0..1] string
+      potGranularity [0..1] block | chapter | folio
+      officialRequired [0..1] boolean
+    }
+  }
+  cssClass "cat_harness_translation_sources_TranslationConfig" fa_uml_kind_translation_sources

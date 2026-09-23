@@ -1,0 +1,66 @@
+classDiagram
+  direction TB
+  namespace smart_base__library {
+    class n_smart_base_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace smart_base__methodologies {
+    class n_smart_base_methodologies_methodology["methodology: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace smart_base__voices {
+    class smart_base_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class smart_base_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class smart_base_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class smart_base_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class smart_base_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+    }
+  }
+  namespace smart_base__processes {
+    class smart_base_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      <<ext: omg-bpmn-2.0>>
+    }
+  }
+  namespace smart_base__smart_base_artifact_index {
+    class n_smart_base_smart_base_artifact_index_fhir_artifact_index["fhir-artifact-index: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace smart_base__tools {
+    class smart_base_tools_Maintain["Maintain"] {
+      <<json: ToolDefinitionSchema>>
+    }
+    class smart_base_tools_ToolDefinition["ToolDefinition"] {
+      <<json: ToolDefinitionSchema>>
+    }
+  }
+  cssClass "n_smart_base_library_library" fa_uml_kind_library
+  cssClass "n_smart_base_library_library" fa_uml_undetermined
+  cssClass "n_smart_base_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_smart_base_methodologies_methodology" fa_uml_undetermined
+  smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
+  smart_base_voices_Rule *-- "0..*" smart_base_voices_Pattern : patterns
+  smart_base_voices_Rule *-- "0..*" smart_base_voices_Terminology : terminology
+  smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Rule : rules
+  cssClass "smart_base_voices_Source" fa_uml_kind_voices
+  cssClass "smart_base_voices_Pattern" fa_uml_kind_voices
+  cssClass "smart_base_voices_Terminology" fa_uml_kind_voices
+  cssClass "smart_base_voices_Rule" fa_uml_kind_voices
+  cssClass "smart_base_voices_VoiceProfile" fa_uml_kind_voices
+  cssClass "smart_base_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_smart_base_smart_base_artifact_index_fhir_artifact_index" fa_uml_kind_fhir_artifact_index
+  cssClass "n_smart_base_smart_base_artifact_index_fhir_artifact_index" fa_uml_undetermined
+  smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
+  cssClass "smart_base_tools_Maintain" fa_uml_kind_tools
+  cssClass "smart_base_tools_ToolDefinition" fa_uml_kind_tools

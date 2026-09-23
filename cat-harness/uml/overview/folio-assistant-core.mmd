@@ -1,0 +1,47 @@
+classDiagram
+  direction TB
+  namespace folio_assistant_core__core_schemas {
+    class n_folio_assistant_core_core_schemas_schemas["schemas: no node schema"] {
+      <<could not determine>>
+    }
+    class n_folio_assistant_core_core_schemas_cat_harness["cat-harness: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_core__folios {
+    class n_folio_assistant_core_folios_folio["folio: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_core__voices {
+    class folio_assistant_core_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_core_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_core_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_core_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_core_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+    }
+  }
+  cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_kind_schemas
+  cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_undetermined
+  cssClass "n_folio_assistant_core_core_schemas_cat_harness" fa_uml_kind_cat_harness
+  cssClass "n_folio_assistant_core_core_schemas_cat_harness" fa_uml_undetermined
+  cssClass "n_folio_assistant_core_folios_folio" fa_uml_kind_folio
+  cssClass "n_folio_assistant_core_folios_folio" fa_uml_undetermined
+  folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
+  folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
+  folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
+  folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
+  cssClass "folio_assistant_core_voices_Source" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Pattern" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Terminology" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_Rule" fa_uml_kind_voices
+  cssClass "folio_assistant_core_voices_VoiceProfile" fa_uml_kind_voices

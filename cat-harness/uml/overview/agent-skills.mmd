@@ -1,0 +1,35 @@
+classDiagram
+  direction TB
+  namespace agent_skills__library {
+    class n_agent_skills_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace agent_skills__voices {
+    class agent_skills_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class agent_skills_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class agent_skills_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class agent_skills_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class agent_skills_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+    }
+  }
+  cssClass "n_agent_skills_library_library" fa_uml_kind_library
+  cssClass "n_agent_skills_library_library" fa_uml_undetermined
+  agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Source : sources
+  agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Pattern : patterns
+  agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Terminology : terminology
+  agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Rule : rules
+  cssClass "agent_skills_voices_Source" fa_uml_kind_voices
+  cssClass "agent_skills_voices_Pattern" fa_uml_kind_voices
+  cssClass "agent_skills_voices_Terminology" fa_uml_kind_voices
+  cssClass "agent_skills_voices_Rule" fa_uml_kind_voices
+  cssClass "agent_skills_voices_VoiceProfile" fa_uml_kind_voices

@@ -359,6 +359,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // A Tool node is an authored definition of a mechanism. It says what this
     // instance CAN DO, not what anybody did.
     holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/tool.ts#ToolDefinitionSchema",
     summary: "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
   },
   // Named for the LAYER that defines it, like every other harness concept.
@@ -427,6 +430,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // Two questions, two graphs — see the `workflow-state` skill for why one
     // answer rather than two is the whole point.
     holds: "content",
+    // BPMN's shape is an XSD, not a Zod schema, so there is no validator;
+    // the pinned edition and its operative terms are the external-schema record.
+    schema: "external-schemas/omg-bpmn-2.0.json",
     summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
   },
   scenarios: {
@@ -440,6 +446,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // now is what gives that gap somewhere to be fixed; calling it `roles`
     // would have to be renamed the moment it was.
     holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/role-graph.ts#RoleGraphSchema",
     summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
   },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
@@ -563,6 +572,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // anything is validated against it.
     holds: "content",
     summary: "Schema definitions, self-declared in the smart-base manner.",
+  },
+  // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
+  // per named sub-graph and per instance, both written from one model by
+  // `scripts/gen-uml-overview.ts`. `derived`: regenerated, never authored, so
+  // a finding against one is a finding against the generator or its inputs.
+  uml: {
+    type: termIri("UmlGraph"),
+    renderable: false,
+    holds: "derived",
+    summary:
+      "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas " +
+      "its graph kinds register — PlantUML and Mermaid from one model.",
   },
   // The PUBLISHED PROJECTION of QA verdicts, not the verdicts themselves.
   //
@@ -798,6 +819,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // the `cat-harness` graph. It cannot be read at all without the diagram it
     // references.
     holds: "state",
+    schema: "src/workflow/instance.ts",
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     // The kind's own reader, wired 2026-09-20. `skill` is a property of the
     // KIND rather than of a directory because a `workflow-state` graph is read
@@ -853,6 +875,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("BoardGraph"),
     renderable: false,
     holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/board.ts#BoardSchema",
     // NOT work. A board is a way of LOOKING at work, and `check:graph-kind-work`
     // asks the question because the two are easy to conflate: `beans`, `todos`
     // and `workflow-state` each record something somebody is partway through,
@@ -871,6 +896,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // Written by a running process every time somebody moves a note. It is
     // Diagram Interchange: where things were drawn, not what is true.
     holds: "state",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/board-positions.ts#BoardPositionsSchema",
     // NOT work either, and this is the sharper of the two. It IS `state` —
     // written by a running process — which is exactly what makes the question
     // worth asking: state that records a POSITION IN A PROCESS is work, and
@@ -888,6 +916,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     // As `todos`.
     holds: "state",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/todo.ts#TodoNodeSchema",
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
       "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. " +
@@ -1037,6 +1068,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // An authored rule set. A voice is true whether or not any prose has been
     // written against it.
     holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/voices.ts#VoiceProfileSchema",
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
@@ -1193,6 +1227,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("MemoryGraph"),
     renderable: false,
     holds: "context",
+    // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
+    // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
+    validator: "schemas/memory.ts#MemoryNodeSchema",
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 

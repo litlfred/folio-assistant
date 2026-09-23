@@ -1,0 +1,35 @@
+classDiagram
+  direction TB
+  namespace folio_assistant_sci__library {
+    class n_folio_assistant_sci_library_library["library: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace folio_assistant_sci__voices {
+    class folio_assistant_sci_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_sci_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_sci_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_sci_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class folio_assistant_sci_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+    }
+  }
+  cssClass "n_folio_assistant_sci_library_library" fa_uml_kind_library
+  cssClass "n_folio_assistant_sci_library_library" fa_uml_undetermined
+  folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Source : sources
+  folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
+  folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
+  folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
+  cssClass "folio_assistant_sci_voices_Source" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Pattern" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Terminology" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_Rule" fa_uml_kind_voices
+  cssClass "folio_assistant_sci_voices_VoiceProfile" fa_uml_kind_voices

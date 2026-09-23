@@ -95,6 +95,7 @@
     "todos",
     "tools",
     "translation-sources",
+    "uml",
     "uploads",
     "waiver"
   ],
@@ -1454,12 +1455,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 44
+          "value": 45
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 24
+          "value": 25
         },
         {
           "id": "views",
@@ -1551,6 +1552,9 @@
           "path": "/translation-status/"
         },
         {
+          "kind": "uml"
+        },
+        {
           "kind": "uploads",
           "path": "/uploads/"
         },
@@ -1559,7 +1563,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 7 graph(s) with no published viewer — code, external-schema, interaction, memory, methodology, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, external-schema, interaction, memory, methodology, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1767,6 +1771,9 @@
       {
         "kind": "translation-sources",
         "path": "/translation-status/"
+      },
+      {
+        "kind": "uml"
       },
       {
         "kind": "uploads",

@@ -1,0 +1,28 @@
+classDiagram
+  direction TB
+  namespace who_style_guide__voices {
+    class who_style_guide_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class who_style_guide_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class who_style_guide_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class who_style_guide_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+    }
+    class who_style_guide_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+    }
+  }
+  who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Source : sources
+  who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Pattern : patterns
+  who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Terminology : terminology
+  who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Rule : rules
+  cssClass "who_style_guide_voices_Source" fa_uml_kind_voices
+  cssClass "who_style_guide_voices_Pattern" fa_uml_kind_voices
+  cssClass "who_style_guide_voices_Terminology" fa_uml_kind_voices
+  cssClass "who_style_guide_voices_Rule" fa_uml_kind_voices
+  cssClass "who_style_guide_voices_VoiceProfile" fa_uml_kind_voices

@@ -261,6 +261,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
   },
+  // A CLASS BOX — a title compartment over an attribute compartment, with an
+  // association line leaving it. The one glyph that says "a diagram of shapes"
+  // rather than any shape in particular. `tone: 220` was unused, and sits beside
+  // `external-schema`'s 208 because both are about the shape of things.
+  uml: {
+    glyph: "M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z",
+    tone: 220,
+    reads: "a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand",
+  },
   glossary: {
     glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
     tone: 84,

@@ -457,6 +457,15 @@
       }
     },
     {
+      "id": "uml",
+      "path": "uml/",
+      "dependents": "skip",
+      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which render the Mermaid and link both sources. Owner, 2026-09-23.",
+      "graphKinds": [
+        "uml"
+      ]
+    },
+    {
       "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and bootstrap is not a declared dependency of cat-harness — it is composed under it. So a directory declared only in `bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute bootstrap's rendering exemption are unfetchable from the root — and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
       "id": "bootstrap-render",
       "path": "bootstrap/tools/",
