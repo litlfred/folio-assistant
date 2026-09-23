@@ -59,7 +59,7 @@ prevents is stated beside it.
    behind it, not a taste.
 6. **Offer two orientations from one source.** A tall graph on a wide screen
    and a wide graph on a phone are both unreadable. Derive the second view
-   from the first (`landscapeOf` in `gen-uml-overview.ts`) rather than keeping
+   from the first (`landscapeOf` in `scripts/plantuml-render.ts`) rather than keeping
    two sources that can drift apart. Owner: *"can we have portrait and
    landscape views?"*
 7. **Declare colour once.** Colour a node by its family (for the UML: schema,
@@ -69,8 +69,9 @@ prevents is stated beside it.
 8. **Stamp the output with its source's hash.** A rendering whose staleness
    check needs the renderer is a check CI cannot run: Java, a browser, or a
    font set that measures text a pixel differently. Write the sha256 of the
-   exact source text into the output and compare stamps. The UML SVGs and
-   BPMN renderings do this; the paper and Lean drawings do not yet.
+   exact source text into the output and compare stamps. The UML and
+   block-graph SVGs do this through `scripts/plantuml-render.ts`, which every
+   PlantUML generator shares, with its pinned jar and one JVM for all diagrams.
 9. **Show it in a zoomable figure.** On the site, use the `bpmn-figure`
    markup so `docs-ui.js` adds zoom, reset and full-width controls. A pages
    template missing `layout: default` renders with no site script and so no
@@ -78,7 +79,8 @@ prevents is stated beside it.
 10. **Put the measurement on the drawing.** When a graph is being partitioned,
     show each group's detangle numbers (size, cohesion, links in and out)
     beside the group, so the picture and the metric are read together. The UML
-    overview pages do this from `detangle/results/`. A number shown without its
+    overview pages do this through `detangleResultsDir` (`schemas/detangle-sidecar.ts`),
+    the same function the detangler writes through. A number shown without its
     picture invites arguing about the number.
 
 ## Layout engines
@@ -101,13 +103,24 @@ a different graph.
 |---|---|---|---|---|---|
 | **schemas** | graph-kind registry, Zod schemas | `<instance>/<sub-graph>` | composition; field-carried vs declared elsewhere | `gen-uml-overview.ts`, `gen-object-model-uml.ts` | meets all ten |
 | **processes** | `.bpmn` files | pools and lanes | sequence, message, call | `render-bpmn.ts` (stored layout) | rule 6 (orientation) does not apply: the author placed it |
-| **paper blocks** | `buildContentGraph` in `content/pipeline/content-graph.ts` | chapters | `editorial` (`uses[]`, `interprets`) vs `formal` (Lean, `type`/`value`) | `content-graph-analysis.py` re-parses the sources and has no staleness check | rules 1, 3, 4, 6, 8, 10: bean `o3p3` |
-| **Lean proofs** | `proof-objects.json`, the Lean Atlas cache | modules or chapters | formal dependency; status as colour | `.github/scripts/generate_dependency_graph.py`, run in CI, no staleness check | rules 1, 6, 7, 8: bean `ukfw` |
-| **detangle partition** | `detangle/results/*.detangle.json` | detangle groups | enforced / recorded / prose | numbers only; the UML pages show them (rule 10) | a drawing of the cross-group edges themselves |
+| **paper blocks** and **Lean proofs** | `buildContentGraph` in `content/pipeline/content-graph.ts`; status from `proof-objects.json` | chapters | `editorial` (`uses[]`, `interprets`), solid, vs `formal` (Lean `type` / `value`), dashed purple | `gen-content-graph-uml.ts` (Tool `content-graph-uml`), run from a folio | meets rules 1 to 8. Rule 9 waits on a folio page to show it; rule 10 on detangle scanning a paper |
+| **detangle partition** | the sidecars under `detangleResultsDir` | detangle groups | enforced / recorded / prose | numbers only; the UML pages show them (rule 10) | a drawing of the cross-group edges themselves |
 
 A paper or a Lean project is **content**, and content lives in a folio
 repository, not here. Apply the rules there through the platform's generator,
 and ask the owner before a PR in a mathematics repository.
+
+**Papers and Lean are one drawing, not two.** `buildContentGraph` already holds
+both relations over the same blocks, so `gen-content-graph-uml.ts` draws them
+together and keeps them apart by line style. The two drawings it supersedes
+each re-parsed the sources and drew only one relation:
+`content-graph-analysis.py` (blocks) and `.github/scripts/generate_dependency_graph.py`
+(Lean, still `qou`-specific: it imports `qou_lib`). Neither has been removed:
+`qou` still runs the second in CI, and retiring it is the owner's call.
+
+Status fills come from the same stylesheet as the family colours
+(`--fa-uml-status-*` in `uml.css`). A human review outranks an agentic one,
+which outranks the Lean status: the order the CI graph used.
 
 **Never populate `uses[]` from the formal graph to make a drawing look
 connected.** The editorial relation is authored; see `AGENTS.md` and
