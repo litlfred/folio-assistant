@@ -51,6 +51,7 @@ import {
   JSON_SCHEMA_CONDITIONALS,
 } from "../../bootstrap-tools/schemas/discussion.ts";
 import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const check = process.argv.includes("--check");
@@ -128,6 +129,19 @@ const TARGETS = [
     schema: KnowledgeGraphDeclarationSchema,
     conditionals: [] as readonly unknown[],
     terms: BOOTSTRAP_TERMS as Readonly<Record<string, string>>,
+  },
+  {
+    // The shape of `models/models.json`. Its Zod source moved out of bootstrap
+    // into cat-harness on 2026-09-23 (bean iwtn, FR-7: bootstrap holds no
+    // code); this document is what a reader with nothing installed opens.
+    file: "schemas/model-registry.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+    title: "Model Registry",
+    description:
+      "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
+    schema: ModelRegistrySchema,
+    conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
   },
 ] as const;
 
