@@ -66,4 +66,6 @@ agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Source : sources
 agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Pattern : patterns
 agent_skills_voices_Rule *-- "0..*" agent_skills_voices_Terminology : terminology
 agent_skills_voices_VoiceProfile *-- "1..*" agent_skills_voices_Rule : rules
+' grid: portrait, 1 column(s) — pkg_agent_skills_library pkg_agent_skills_voices
+pkg_agent_skills_library -[hidden]down- pkg_agent_skills_voices
 @enduml

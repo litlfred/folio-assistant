@@ -33,4 +33,6 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
 }
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
+' grid: portrait, 1 column(s) — pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools
+pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_ig_tools
 @enduml

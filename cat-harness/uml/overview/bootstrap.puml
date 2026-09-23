@@ -137,8 +137,10 @@ bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" boo
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_processes
-pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_models
-pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_glossary
-pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_bootstrap_translations
+' grid: portrait, 2 column(s) — pkg_bootstrap_cat_harness pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_glossary pkg_bootstrap_bootstrap_translations
+pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_scenarios
+pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes
+pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_models
+pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_glossary
+pkg_bootstrap_models -[hidden]down- pkg_bootstrap_bootstrap_translations
 @enduml
