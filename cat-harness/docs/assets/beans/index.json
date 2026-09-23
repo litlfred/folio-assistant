@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 641,
+      "count": 642,
       "unit": "beans"
     }
   },
@@ -7889,6 +7889,20 @@
       "updatedAt": "2026-09-22T07:23:02Z",
       "preview": "Found 2026-09-20 while measuring `pha7`, whose corrected form asked which of its\n24 files the five existing translation Tool nodes actually reach. **Two of\ntwenty-four.** Two others are reached by nothing at all.\n\n## The finding\n\n| file | entry point | callers |\n|---|---|---|\n| `content/pipeline/translation-roundtrip.ts` | `import.meta.main` | **none** |\n| `scripts/check-l1-complete.ts` | `import.",
       "file": "beans/defs/folio-assistant-vo9d--orphaned-mechanism-translation-roundtrip-and-check.md"
+    },
+    {
+      "id": "folio-assistant-vq8g",
+      "title": "THIN DECISION RECORDS: the option counter reads one markdown form, so it calls the two best analyses empty and over-counts a third",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T18:00:40Z",
+      "updatedAt": "2026-09-23T18:02:56Z",
+      "preview": "`bean-thin-decision-records` counts an options section's **top-level markdown\nlist items**. That is the detector's own invention: `madr.md` asks for *\"at least\ntwo, every one real\"* and says nothing about markdown. Measured across the 12\ndecision records the store has grown to, the rule is wrong in **both**\ndirections.\n\n## Under-count — and it is the worst kind\n\n`j6t3` and `xgd8` enumerate their o",
+      "file": "beans/defs/folio-assistant-vq8g--thin-decision-records-the-option-counter-reads-one.md"
     },
     {
       "id": "folio-assistant-vsv4",
