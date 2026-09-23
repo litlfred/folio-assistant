@@ -25,7 +25,10 @@ package "detangle/detangle-results" as pkg_detangle_detangle_results <<qa>> {
     proseMentions [1] : number
   }
 }
+package "detangle/detangle-scripts" as pkg_detangle_detangle_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_detangle_detangle_scripts_code
+}
 
-' grid: portrait, 1 column(s) — pkg_detangle_detangle_schemas_local pkg_detangle_detangle_results
-pkg_detangle_detangle_schemas_local -[hidden]down- pkg_detangle_detangle_results
+' grid: portrait, 2 column(s) — pkg_detangle_detangle_schemas_local pkg_detangle_detangle_results pkg_detangle_detangle_scripts
+pkg_detangle_detangle_schemas_local -[hidden]down- pkg_detangle_detangle_scripts
 @enduml

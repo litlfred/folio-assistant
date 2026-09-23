@@ -181,12 +181,15 @@ package "smart-trust/smart-trust-artifact-index" as pkg_smart_trust_smart_trust_
 package "smart-trust/smart-trust-docs" as pkg_smart_trust_smart_trust_docs <<docs>> {
   note "docs: no node schema declared\n(no node here carries a $schema family docs names (10 named): could not determine)" as n_smart_trust_smart_trust_docs_docs
 }
+package "smart-trust/smart-trust-scripts" as pkg_smart_trust_smart_trust_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_smart_trust_smart_trust_scripts_code
+}
 
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
-' grid: portrait, 1 column(s) — pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_docs
-pkg_smart_trust_smart_trust_artifact_index -[hidden]down- pkg_smart_trust_smart_trust_docs
+' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts
+pkg_smart_trust_smart_trust_artifact_index -[hidden]down- pkg_smart_trust_smart_trust_scripts
 @enduml

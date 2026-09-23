@@ -1,7 +1,7 @@
 ---
 # folio-assistant-zkgs
 title: findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read
-status: todo
+status: completed
 type: task
 priority: normal
 parent: folio-assistant-1swy
@@ -195,3 +195,50 @@ answers a different question either way. The two-files half does not.
 migration cost, and the ordering constraint that the 21 literals bypassing
 `DECLARATION_FILENAME` are routed through it first, as a change that is correct
 under either filename.
+
+
+## CLOSED on evidence, 2026-09-23 — resolved by the RENAME, not by A, B or C
+
+This bean listed three candidate fixes and chose none, because *"each changes
+what every pipeline consumer sees"*. None was taken. What resolved it was
+`harness.config.json` → `<name>.config.json` (2026-09-21): every instance now
+carries its own config at its own root, so the walk no longer has to survive
+passing a folio directory.
+
+That is **option C's ending** — the config root resolved separately from the
+content root, declaration-driven — reached by another road. The two-questions
+table now sits in `harness-config.ts` and cites this bean by name.
+
+### The gate, measured
+
+The bean's own condition: *"`readDeclaredFolioProfile()` on this repository
+returns `document` rather than the third state, and a test fails if it
+regresses."*
+
+```
+folio-assistant  -> {"profile":"document","declaredBy":"folio-assistant.config.json contentType: \"document\""}
+cat-harness      -> {"profile":"document","declaredBy":"cat-harness.config.json contentType: \"document\""}
+```
+
+Both roots — the one the walk used to stop at, and the one it used to miss.
+
+### The second half was MISSING and is now built
+
+Every existing `readDeclaredFolioProfile` test builds a throwaway folio, so
+none of them could ever have caught this: a fixture has no `cat-harness/` to
+stop at. Three tests added in `profile-scoping.test.ts` over the REAL tree.
+
+The load-bearing one asserts `declaredBy` names the file, not just that
+`profile` is `document` — an undetermined read and a correct one differ by a
+field nobody looks at, and pinning only the profile would pass on a walk that
+never arrived.
+
+Falsified by removing `contentType` from `folio-assistant.config.json`: 2 of
+the 3 fail, restored 0.
+
+### One thing the new tests broke, and it was theirs
+
+`readDeclaredFolioProfile` walks the real tree. Calling it five times added
+~5s to the file and pushed a PRE-EXISTING end-to-end sweep test past its 5s
+timeout. Reduced to two walks, memoised in the `describe`. **A test that makes
+a sibling fail is still that test's defect**, not the sibling's.

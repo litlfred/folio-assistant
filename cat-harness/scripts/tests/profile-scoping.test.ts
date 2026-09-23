@@ -28,8 +28,9 @@
  *    because a tool could not read its configuration.
  */
 import { describe, test, expect, afterEach } from "bun:test";
+import { repoRootFor } from "../../schemas/cat-harness.js";
 import { mkdtempSync, rmSync, appendFileSync, readFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { tmpdir } from "os";
 import { spawnSync } from "child_process";
 
@@ -270,5 +271,78 @@ describe("the sweep's profile gate, end to end", () => {
     for (const outcome of Object.values(out)) {
       expect(outcome).not.toBe("n/a-wrong-profile");
     }
+  });
+});
+
+/**
+ * `zkgs`'s gate, over THIS REPOSITORY rather than a fixture.
+ *
+ * The bean's condition was stated exactly: *"the gate is that
+ * `readDeclaredFolioProfile()` on this repository returns `document` rather
+ * than the third state, and that a test fails if it regresses."* Every other
+ * test here builds a throwaway folio, so none of them could have caught it —
+ * the defect was in how the REAL tree is walked, and a fixture has no
+ * `cat-harness/` to stop at.
+ *
+ * ## What it was
+ *
+ * `findContentRepoRoot()` walks up to the nearest ancestor declaring a folio
+ * directory. `cat-harness` declares `folio/`, so the walk stopped there while
+ * the configuration sat one level up, and nothing read it. The profile came
+ * back UNDETERMINED on a repository that had declared `document` — and the
+ * third state runs every criterion, so the paper adapter's LaTeX-shaped axes
+ * fired `critical` on prose that never reaches pdflatex. The committed
+ * sidecars proved it was happening.
+ *
+ * ## It was fixed by a RENAME, not by a patch
+ *
+ * The bean listed three candidate fixes and chose none, because each changed
+ * what every pipeline consumer sees. What actually resolved it was
+ * `harness.config.json` → `<name>.config.json` (2026-09-21): every instance
+ * now carries its own config at its own root, so the walk no longer has to
+ * survive passing a folio directory. That is option C's ending — the config
+ * root resolved separately and declaration-driven — reached by another road.
+ *
+ * ## Why reading the live tree is right HERE
+ *
+ * `yag0` this week was a test that derived its EXPECTATION from the data it
+ * was checking, and so passed on broken data. This does the opposite: the
+ * expectation is `document`, pinned here independently, and the subject is
+ * the real walk over the real tree — which is the only thing that can fail
+ * the way `zkgs` failed.
+ */
+describe("readDeclaredFolioProfile over the real repository (bean `zkgs`)", () => {
+  const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
+
+  // WALKED ONCE EACH, not per assertion. `readDeclaredFolioProfile` walks the
+  // real tree, and calling it five times added ~5s to this file — enough to
+  // push the pre-existing end-to-end sweep test below past its 5s timeout.
+  // A test that makes a SIBLING fail is still this test's defect.
+  const atRoot = readDeclaredFolioProfile(REPO);
+  const atCatHarness = readDeclaredFolioProfile(join(REPO, "cat-harness"));
+
+  test("the repository root resolves to `document`, not the third state", () => {
+    expect(atRoot.profile).toBe("document");
+  });
+
+  /**
+   * The assertion that actually catches a regression. `profile` alone is
+   * weak — an undetermined read and a correct one differ by a field nobody
+   * looks at. `declaredBy` names the FILE, so it is only right when the
+   * config was genuinely read.
+   */
+  test("and it says WHICH config it read — the half that proves the walk arrived", () => {
+    expect(atRoot.declaredBy).toContain(".config.json");
+    expect(atRoot.declaredBy).not.toContain("undetermined");
+  });
+
+  /**
+   * The instance one level down must resolve too, and to its OWN config.
+   * This is the pair the defect lived between: the walk stopped here, and
+   * the root above went unread. Both answering is what `zkgs` asked for.
+   */
+  test("`cat-harness/` resolves to its own config, not the root's", () => {
+    expect(atCatHarness.profile).toBe("document");
+    expect(atCatHarness.declaredBy).toContain("cat-harness.config.json");
   });
 });
