@@ -81,6 +81,11 @@ on:
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
+  # The merge queue — bean `nytj`; see code-quality-gates.yml for why. A
+  # merge_group event takes NO `paths:` filter, so in the queue this runs on
+  # every entry: about fifteen seconds, and a required check that did not
+  # report would stall the queue rather than skip.
+  merge_group:
   workflow_dispatch:
 
 permissions:

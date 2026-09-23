@@ -808,6 +808,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints the unaccounted paths with their sizes; `check:undeclared-files:check` is the gating form and is wired",
   },
   {
+    script: "check:merged",
+    kind: "covered-by",
+    reason:
+      "runs the WHOLE gate set on this branch merged with the current base (bean `nytj`), so wiring it into the workflow the gate set is read from would run the gates inside the gates. In CI the same question is answered by the merge queue: `merge_group:` on the gating workflows tests exactly the commit that will land. `check:merged` is the agent's half, run from `/prepare-merge` before asking for a merge",
+  },
+  {
     script: "ingest:ig:check",
     kind: "covered-by",
     reason:

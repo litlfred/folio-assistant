@@ -25,7 +25,9 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
    force-push **with lease**) or merge it in. Resolve conflicts.
 4. **Prove it merges cleanly** — `git merge-base --is-ancestor origin/<base> HEAD`
    (clean fast-forward) or `git merge-tree --write-tree origin/<base> HEAD` (trust
-   the exit code).
+   the exit code). A clean TEXT merge is not a clean STATE: then run
+   `bun run check:merged`, which runs the full gates on the merged tree (bean
+   `nytj`; exit 2 = could not determine, never clean).
 5. **Green check** — run the gates below; do not declare green while sitting on
    pre-existing failures.
 6. **Push** the feature branch: `git push -u origin <branch>` (with lease after a

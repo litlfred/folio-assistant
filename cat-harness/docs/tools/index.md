@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>74</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>75</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>54</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>56</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>57</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 56 |
+| <span class="tg-tag tg-shell">shell</span> | 57 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 69 |
+| `none` | 70 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **54** skills named across **74** tools resolve to a
+Yes — all **54** skills named across **75** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -75,6 +75,7 @@ tool advertising a capability the graph cannot locate.
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `getting-started`<br>`repo-conversion` | 9 in / 1 out |
 | `fsh-cone`<br>FSH dependency cone | Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything. | <span class="tg-tag tg-shell">shell</span> | `fhir-validation` | 4 in / 1 out |
 | `gates`<br>The platform's quality gates | Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces. | <span class="tg-tag tg-shell">shell</span> | `continual-progress`<br>`platform-gates`<br>`prepare-merge` | 2 in / 1 out |
+| `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | `prepare-merge` | 1 in / 1 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`pickup`<br>`prepare-merge-auto`<br>`watch` | 3 in / 1 out |
 | `glossary-build`<br>Glossary build | Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change. | <span class="tg-tag tg-shell">shell</span> | `document-intake` | 2 in / 1 out |
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
