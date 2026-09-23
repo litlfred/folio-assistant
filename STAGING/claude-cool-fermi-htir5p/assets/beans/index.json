@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 610,
+      "count": 616,
       "unit": "beans"
     }
   },
@@ -1767,14 +1767,14 @@
     {
       "id": "folio-assistant-792y",
       "title": "CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:30:19Z",
-      "updatedAt": "2026-09-23T07:34:10Z",
+      "updatedAt": "2026-09-23T10:35:31Z",
       "preview": "Found by bean `zaqn` (prefix = stub).\n\n## What is wrong\n\n`schemas/tabular-csvw.ts` writes four annotation keys as `fac:anchor`, `fac:headerRow`, `fac:extent`, `fac:stub`. A CSVW metadata document may put ONLY `@language` and `@base` in its local `@context` (W3C CSVW Metadata §5.2), so no prefix of ours can be bound there — `fac` expands as a URI scheme, the same defect `zaqn` fixed in the content ",
       "file": "beans/defs/folio-assistant-792y--csvw-keys-dangle-the-tabular-fac-annotation-keys-c.md"
     },
@@ -1833,6 +1833,20 @@
       "updatedAt": "2026-09-20T06:23:14Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also need avator of librarian for knwoledge content specific stuff in\n> folio-asst-core where dubln core skill should be introduced for first time.\n\n## Two things, and they are separable\n\n1. **A librarian avatar** for knowledge-content-specific material in\n   `folio-assist-core`.\n2. **A Dublin Core skill**, introduced there for the first time.\n\n## What ex",
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
+    },
+    {
+      "id": "folio-assistant-7go7",
+      "title": "laneBinding reports every ref-bearing lane as dangling when the role graph cannot be read",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:46:28Z",
+      "updatedAt": "2026-09-23T10:46:28Z",
+      "preview": "schemas/role-graph.ts laneBinding(): with graph undefined, a lane carrying a roleRef returns kind:dangling. One unreadable file therefore renders as a corpus of dangling references — the dh4f shape. Found while building zw4a; NOT changed unilaterally because kg:audit shares the resolver.\n\n## The behaviour\n\n`schemas/role-graph.ts`, `laneBinding()`:\n\n```ts\nconst role = graph ? roleForLane(graph, lan",
+      "file": "beans/defs/folio-assistant-7go7--lanebinding-reports-every-ref-bearing-lane-as-dang.md"
     },
     {
       "id": "folio-assistant-7iog",
@@ -3025,6 +3039,20 @@
       "file": "beans/defs/folio-assistant-c4rz--migrate-the-feedback-store-into-the-declared-todos.md"
     },
     {
+      "id": "folio-assistant-ca4a",
+      "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [ ] stage B merged\n- [ ] claim shapes extended and run over each declared pair kind\n- [ ] not-parsed count reported per run; tests pin each shape",
+      "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
+    },
+    {
       "id": "folio-assistant-ccqg",
       "title": "pdf-structure --json is contaminated by MuPDF's C-level stdout, so the artefact does not parse",
       "status": "completed",
@@ -3079,6 +3107,20 @@
       "updatedAt": "2026-09-19T06:19:44Z",
       "preview": "_2026-09-19T06:19:44Z_ — MEASURED 2026-09-19, on main at d4b9f7479, by appending one comment line to scripts/kg-audit.ts and running `bun run kg:audit`:\n\n  218 sidecars rewritten. Zero verdicts changed.\n\nCause: `auditor.script_hash` was stored in every one of the 214 kg-qa sidecars. That is not 214 facts. `kg-audit.ts` computes `auditorHash` ONCE per run (one line, before any subject is audited) a",
       "file": "beans/defs/folio-assistant-cflw--generated-artefacts-collide-218-sidecars-rewritten.md"
+    },
+    {
+      "id": "folio-assistant-chhd",
+      "title": "flbx stage C: review-task branch for prose and the code it describes, calling adjudication",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [ ] stages B and A merged\n- [ ] review-task gains the branch; skill written; Lean skill re-pointed\n- [ ] kg:audit, render and gates green",
+      "file": "beans/defs/folio-assistant-chhd--flbx-stage-c-review-task-branch-for-prose-and-the.md"
     },
     {
       "id": "folio-assistant-chq5",
@@ -3181,6 +3223,20 @@
       "updatedAt": "2026-09-22T11:55:46Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
+    },
+    {
+      "id": "folio-assistant-cuxx",
+      "title": "flbx stage B: flag declared prose/code pairs where one side changed and the other did not",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-flbx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "Issue #1042, R1 R2 R6 R7. Declared pairs only: <folio:implements workflow> (+ <folio:job>) on BPMN, co-located skill .md/.ts, block .md/lean.ref. Hash each side; a one-sided change since the pair was last reviewed is a minor, advisory finding ('prose not re-reviewed'), recorded as a sidecar in an existing QA family. Asserts nothing about truth, so it cannot cry wolf.\n\n## Done when\n- [x] pair disco",
+      "file": "beans/defs/folio-assistant-cuxx--flbx-stage-b-flag-declared-prosecode-pairs-where-o.md"
     },
     {
       "id": "folio-assistant-cvab",
@@ -3689,6 +3745,20 @@
       "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "Found 2026-09-21 while picking up `tyyc`, which was `in-progress` with all\nfive Done-when boxes ticked and its work fully landed on `main` — gate\nregistered, passing, third states intact. Re-deriving it from a clean\ncheckout cost a session's opening; the claim it carried is what a sibling\nwould have honoured.\n\n## Measured 2026-09-21 on `645dd7dd91`\n\nSix `in-progress` beans have **every** checkbox ",
       "file": "beans/defs/folio-assistant-fkjo--a-bean-can-declare-itself-finished-and-stay-claime.md"
+    },
+    {
+      "id": "folio-assistant-flbx",
+      "title": "NARRATIVE-ASSERTS-CODE: one review axis for 'does the prose say what the artefact does', with Lean as a specialisation",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:55:39Z",
+      "updatedAt": "2026-09-23T10:38:11Z",
+      "preview": "The open item from bean 7pdi (its unchecked 'narrative-asserts-code axis' Done-when). Owner 2026-09-23 chose it as next work (session_01SiFEMuTciyB681XP5WfcbB). CRDM: this bean starts at Phase 1 (needs) — nothing built before the needs statement is confirmed.\n\n## Existing partial answers (measured 2026-09-23)\n- proof-narrative-lean-equivalence (agent skill): paper prose vs .lean. Lean only; nrv8 f",
+      "file": "beans/defs/folio-assistant-flbx--narrative-asserts-code-one-review-axis-for-does-th.md"
     },
     {
       "id": "folio-assistant-flh4",
@@ -6471,6 +6541,20 @@
       "file": "beans/defs/folio-assistant-s0ki--uploads-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-s3p2",
+      "title": "qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T10:52:44Z",
+      "updatedAt": "2026-09-23T10:52:44Z",
+      "preview": "Measured 2026-09-23 on a folio scaffolded by init-folio. Running `qa-sweep.ts folio` wrote `folio/test/results/block-qa/handbook/introduction/overview.qa.json`. That is INSIDE the content graph directory, not `<repo>/test/results/block-qa/…`, which is where `blockQaPath` documents verdicts as living (relative to the instance root).\n\nCause: `findContentRepoRoot(startAbs)` in `cat-harness/content/pi",
+      "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -8539,14 +8623,14 @@
     {
       "id": "folio-assistant-zw4a",
       "title": "PROCESS VIEWER: show the skills bound to each role/swimlane, not just the lane name",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:59:29Z",
-      "updatedAt": "2026-09-23T05:59:29Z",
+      "updatedAt": "2026-09-23T11:00:13Z",
       "preview": "The process viewer renders BPMN lanes but does not surface what the KG already knows about each lane: the role it binds, and that role's skills. Owner's request 2026-09-23.\n\n## What is already true, so this is a rendering gap rather than a modelling one\n\nThe chain the viewer needs is **already declared and already traversed\nelsewhere**. AGENTS.md states it in one sentence: *\"An actor performs a ta",
       "file": "beans/defs/folio-assistant-zw4a--process-viewer-show-the-skills-bound-to-each-roles.md"
     },
