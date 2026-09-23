@@ -90,18 +90,18 @@ action may sit under several.
 
 | folio action | `odrl:includedIn` | was |
 |---|---|---|
-| `folio:visualize` | `odrl:display` | new |
-| `folio:render` | `odrl:derive` | new |
-| `folio:comment` | `odrl:annotate` | `review-comments` |
-| `folio:author` | `odrl:modify` | `content-authoring` |
-| `folio:translate` | `odrl:translate` | `translation` |
-| `folio:administer` | `odrl:modify` | `admin-settings`, `role-management`, told apart by `target` (the settings, the role graph) |
-| `folio:perform` | `odrl:execute` | new: perform a named Task |
-| `folio:approve`, `folio:adjudicate`, `folio:first-pass-review`, `folio:coordinate-smes`, `folio:validate-clinically`, `folio:report-qa`, `folio:govern`, `folio:authorize-release`, `folio:manage-release` | `folio:perform` | the other 9 ids, which are all *kinds of task* |
+| `cat-harness:visualize` | `odrl:display` | new |
+| `cat-harness:render` | `odrl:derive` | new |
+| `cat-harness:comment` | `odrl:annotate` | `review-comments` |
+| `cat-harness:author` | `odrl:modify` | `content-authoring` |
+| `cat-harness:translate` | `odrl:translate` | `translation` |
+| `cat-harness:administer` | `odrl:modify` | `admin-settings`, `role-management`, told apart by `target` (the settings, the role graph) |
+| `cat-harness:perform` | `odrl:execute` | new: perform a named Task |
+| `cat-harness:approve`, `cat-harness:adjudicate`, `cat-harness:first-pass-review`, `cat-harness:coordinate-smes`, `cat-harness:validate-clinically`, `cat-harness:report-qa`, `cat-harness:govern`, `cat-harness:authorize-release`, `cat-harness:manage-release` | `cat-harness:perform` | the other 9 ids, which are all *kinds of task* |
 
 The last row is the simplification. Nine of today's 14 ids are not really
 permissions to touch the graph. They are permission to perform a particular
-kind of task, so they sit under `folio:perform` and are then scoped by
+kind of task, so they sit under `cat-harness:perform` and are then scoped by
 constraints (§2.3) instead of each becoming its own global switch. Two more
 were one action on two targets, and ODRL's `target` says which.
 
@@ -115,20 +115,20 @@ were one action on two targets, and ODRL's `target` says which.
   "uid": "…/policies/folio-defaults",
   "profile": "…/ns/folio-odrl",
   "permission": [
-    { "assignee": "actor:admin", "action": "folio:authorize-release",
-      "constraint": [{ "leftOperand": "folio:process", "operator": "eq",
+    { "assignee": "actor:admin", "action": "cat-harness:authorize-release",
+      "constraint": [{ "leftOperand": "cat-harness:process", "operator": "eq",
                        "rightOperand": "release" }] },
-    { "assignee": "actor:admin", "action": "folio:administer", "target": "graph:roles" },
-    { "assignee": "actor:reviewer-agent", "action": "folio:comment" },
-    { "assignee": "folio:anyone", "action": "folio:visualize" }
+    { "assignee": "actor:admin", "action": "cat-harness:administer", "target": "graph:roles" },
+    { "assignee": "actor:reviewer-agent", "action": "cat-harness:comment" },
+    { "assignee": "cat-harness:anyone", "action": "cat-harness:visualize" }
   ]
 }
 ```
 
 - **Scope is a constraint.** The profile defines three `leftOperand`s:
-  `folio:process`, `folio:task` and `folio:role`. No constraint means
+  `cat-harness:process`, `cat-harness:task` and `cat-harness:role`. No constraint means
   everywhere, which is the owner's rule.
-- **Performing a task needs two things**: a permission for `folio:perform`
+- **Performing a task needs two things**: a permission for `cat-harness:perform`
   whose constraints match the task, **and** the actor holding the lane's role.
   Role eligibility (`roles`) and permission stay separate, as `role-model.md`
   already insists.
@@ -152,7 +152,7 @@ were one action on two targets, and ODRL's `target` says which.
   },
   "prov:actedOnBehalfOf": "actor:admin",                   // an agent working for a person
   "prov:used": ["kg:…"], "prov:generated": ["kg:…"],
-  "folio:underPolicy": "…/policies/folio-defaults"          // the one non-PROV term
+  "cat-harness:underPolicy": "…/policies/folio-defaults"          // the one non-PROV term
 }
 ```
 
@@ -235,8 +235,8 @@ actions and constraints it is written in.
 1. **Where policies live.** `policies/` at the instance root, or a declared
    directory with its own graph kind? A graph kind is recommended, because it
    is how everything else gets a viewer and QA.
-2. **Default for an unauthenticated reader.** `folio:visualize` and
-   `folio:render` only, or nothing?
+2. **Default for an unauthenticated reader.** `cat-harness:visualize` and
+   `cat-harness:render` only, or nothing?
 3. **Enforcement engine.** Evaluate ODRL directly in the data store, or compile
    it to a relationship engine (OpenFGA/Zanzibar) there? The model above is the
    same either way, so this can wait until a data store is built.

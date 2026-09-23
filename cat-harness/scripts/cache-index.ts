@@ -105,7 +105,9 @@ export function cacheRows(records: readonly MaterializedRecord[] = collect()): C
  * `expired` first: its own record says its lifetime is over. Then `no-expiry`
  * working copies: a copy nobody gave a lifetime cannot be told from an
  * abandoned one (`freshness()`'s own note). `permanent` (archival) and
- * `fresh` never appear.
+ * `fresh` never appear, and neither does `input-bound` (a `compiled` copy,
+ * bean `gpdo`): its lifetime is its inputs, and only `compiledValidity()`
+ * with the CURRENT inputs can say it is stale — which this index cannot know.
  */
 export function evictionCandidates(rows: readonly CacheRow[]): EvictionCandidate[] {
   const pick = (f: FreshnessVerdict, reason: string) =>

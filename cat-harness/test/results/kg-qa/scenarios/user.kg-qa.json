@@ -5,7 +5,7 @@
     "id": "user",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:1b065c37c159ca8328f933ccbd3ea77066cb03fd6ecdb5096a0b96cabdfecf7a",
+  "source_hash": "sha256:0e6ee71292f2bfe9f41f7c918e607d497800465485ff99b2dd5f3b9c630cd82c",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -23,7 +23,11 @@
       "result": "pass",
       "findings": []
     },
-    "role-has-story": {
+    "role-declares-voice": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-use-cases": {
       "result": "pass",
       "findings": []
     },
@@ -37,7 +41,7 @@
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 7,
     "fail": 0,
     "n/a": 1,
     "unknown": 0
