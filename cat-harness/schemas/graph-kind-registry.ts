@@ -437,7 +437,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
-    summary: "The harness layer's own knowledge graph, where a directory holds more than one of its parts.",
+    summary: "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
   },
   // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
   //
@@ -600,6 +600,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-translation-status/v1": { writtenBy: "scripts/gen-translation-status.ts" },
       "folio-schema-graph/v1": { writtenBy: "scripts/gen-schema-viz.ts" },
       "folio-library-index/v1": { writtenBy: "scripts/gen-library-viz.ts" },
+      // The per-entry block graph, one file per library entry (bean `7nvr`).
+      // Same writer as the index and deliberately a SEPARATE family: the index
+      // answers "what entries are there" and this answers "what is in one",
+      // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
+      // they are fetched at different times by different questions.
+      "folio-library-entry/v1": { writtenBy: "scripts/gen-library-viz.ts" },
       "folio-voices-index/v1": { writtenBy: "scripts/gen-voices-viz.ts" },
       "folio-graph-projection/v1": { writtenBy: "scripts/gen-folio-viz.ts" },
     },
@@ -663,7 +669,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
-    summary: "Schema definitions, self-declared in the smart-base manner.",
+    summary: "A Subgraph of schema definitions: files that state the shape other files must have.",
   },
   // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
   // per named sub-graph and per instance, both written from one model by

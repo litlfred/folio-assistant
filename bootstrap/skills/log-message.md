@@ -14,9 +14,9 @@ fills in: it receives, records and decides nothing, so it cannot know who acted.
 A line that named the Logger would record that logging happened and nothing
 about what did.
 
-The process is [`workflows/log-message.bpmn`](../workflows/log-message.bpmn).
-It is a **sub-process** — nobody starts there. A task in another process calls
-it, which is why bootstrap still has one process you *start*.
+It is carried out as a **sub-process**: nobody starts there. A task in another
+process calls it, and the calling task's diagram says so; this skill does not
+list its callers or the process that implements it (data-modelling, step 8).
 
 ## The message
 
@@ -26,8 +26,8 @@ Five strings, all required, and one optional markdown body.
 |---|---|---|
 | `timestamp` | when | an ISO-8601 instant, e.g. `2026-09-20T14:03:11Z` |
 | `actor` | who was acting | the acting actor's id — **never the Logger's** |
-| `process` | inside which process | a process id, e.g. `initialize-harness` |
-| `task` | at which step of it | a node id within that process, e.g. `A_Install` |
+| `process` | inside which process | a process id, e.g. `my-process` |
+| `task` | at which step of it | a node id within that process, e.g. `A_DoTheThing` |
 | `message` | what happened | one line, no newline |
 | `body` | the detail, if any | markdown, optional |
 
@@ -47,8 +47,7 @@ element in the diagram: an actor saying what it is doing is always in order.
 
 **Required where a diagram says so**, which it says by drawing the call
 explicitly — a `callActivity` whose `calledElement` is `Process_LogMessage`.
-`initialize-harness` draws two: the start of an install, and each way the
-process fails. If the diagram drew it, logging is a step, not a courtesy.
+If the diagram drew it, logging is a step, not a courtesy.
 
 The difference between the two is only whether the caller drew it. It is the
 same sub-process either way, and it takes the same six fields.

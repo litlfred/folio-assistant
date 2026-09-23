@@ -43,7 +43,10 @@
  *
  * **Three states, not two.** A `.pot` that is absent is STALE; one that
  * differs is STALE; one that cannot be READ is reported as such and fails,
- * never as a pass. "Could not determine" is never rendered green.
+ * never as a pass. "Could not determine" is never rendered green — and a run
+ * in which NO locale gates, so that no template was examined at all, exits 2
+ * rather than 0 (exit codes: 0 fresh, 1 stale/missing/orphaned, 2 nothing
+ * examined or nothing to do).
  *
  * ## What it gates on, and what it only reports
  *
@@ -218,6 +221,20 @@ if (wantCheck) {
   const gating = new Set(
     targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR))),
   );
+
+  // THE THIRD STATE. With no gating locale the loop below examines nothing and
+  // would print "Every diagram has a current .pot" over zero comparisons —
+  // the `dh4f` shape, a clean run over nothing. That is "could not
+  // determine", so it exits 2, neither 0 (a claim of freshness nobody
+  // checked) nor 1 (a staleness nobody found). Bean `0hd6`.
+  if (gating.size === 0) {
+    console.log(
+      `  gating on: (none) — ${targets.join(", ")} carry no ${DIAGRAM_SUBDIR}/ tree, so no template was examined.\n` +
+        `\nNothing was checked. Opt a locale in with --locale <code>, or extract one with\n` +
+        `  bun run translate-bpmn --extract --locale <code>`,
+    );
+    process.exit(2);
+  }
 
   const missing: string[] = [];
   const stale: string[] = [];
