@@ -99,6 +99,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
+import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
@@ -606,7 +607,20 @@ function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach 
   return raw.reach as NetworkReach;
 }
 
-export function readActors(actorsDir: string): LoadedActor[] {
+function grantsFor(grants: ReadonlyMap<string, readonly string[]> | undefined, id: string): string[] | undefined {
+  const g = grants?.get(id);
+  return g ? [...g] : undefined;
+}
+
+/**
+ * Read the actor directory.
+ *
+ * `grants` supplies each actor's permissions from the ODRL policies
+ * ({@link readPolicyGrants} in `schemas/odrl.ts`, issue #1180). An actor file
+ * that still carries its own `permissions` list keeps it: that is an
+ * unmigrated downstream registry, and reading it is better than dropping it.
+ */
+export function readActors(actorsDir: string, grants?: ReadonlyMap<string, readonly string[]>): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
   for (const f of readdirSync(actorsDir).filter((f) => f.endsWith(".json")).sort()) {
@@ -624,7 +638,9 @@ export function readActors(actorsDir: string): LoadedActor[] {
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
-      permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
+      permissions: Array.isArray(raw.permissions)
+        ? (raw.permissions as string[])
+        : grantsFor(grants, String(raw.id ?? f.slice(0, -5))),
       reach: actorReachOf(raw, p),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
@@ -898,6 +914,14 @@ export interface PermissionDef {
   /** Display text and the sentence under it — `schemas/kg-node.ts`, like every node. */
   title: string;
   description: string;
+  /**
+   * The broader actions this one is part of: another action here, or one of
+   * ODRL's common vocabulary (`schemas/odrl.ts#ODRL_ACTIONS`). This is what
+   * makes the vocabulary an ODRL profile (issue #1180): a permission to a
+   * broader action permits every action included in it. Required and
+   * non-empty, so every action has a way up to `odrl:use`.
+   */
+  includedIn: string[];
 }
 
 export interface PermissionVocabulary {
@@ -909,6 +933,7 @@ export const PermissionDefSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  includedIn: z.array(z.string().min(1)).min(1),
 });
 
 export const PermissionVocabularySchema = z.object({
@@ -937,6 +962,15 @@ export function readPermissions(kgRoot: string): PermissionVocabulary | undefine
   for (const perm of parsed.data.permissions) {
     if (ids.has(perm.id)) throw new Error(`${p}: permission id "${perm.id}" is declared twice.`);
     ids.add(perm.id);
+  }
+  // Every `includedIn` resolves, to an action here or to ODRL's own. A dangling
+  // one would cut an action off from everything granted above it.
+  for (const perm of parsed.data.permissions) {
+    for (const up of perm.includedIn) {
+      if (!ids.has(up) && !(up in ODRL_ACTIONS)) {
+        throw new Error(`${p}: "${perm.id}" is includedIn "${up}", which is neither declared here nor an ODRL action.`);
+      }
+    }
   }
   return parsed.data;
 }
