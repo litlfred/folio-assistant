@@ -7056,3 +7056,65 @@ a.fa-harness-tab__body:focus-visible {
   border-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.5));
 }
 .fa-landing-window .fa-board-window-control { color: inherit; border-color: currentColor; }
+
+/* ── HARNESSES CONFIG PANEL — issue #1146, the owner's "Hybrid" ───────────
+ *
+ * The sidebar ⚙ sits BESIDE its tab (a grid of tab + button), and every
+ * target is at least 44px: the declared interaction profile is low-dexterity. */
+.fa-harness-tab { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; column-gap: 2px; }
+.fa-harness-tab > :not(.fa-harness-tab__body):not(.fa-harness-tab__config) { grid-column: 1 / -1; }
+.fa-harness-tab__config {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--fa-tile-ink) 18%, transparent);
+  color: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.fa-harness-tab__config:hover,
+.fa-harness-tab__config:focus-visible { background: color-mix(in oklab, var(--fa-tile-ink) 40%, transparent); }
+
+.fa-hc { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr); gap: 1rem; margin-top: 0.5rem; }
+.fa-hc-group h3, .fa-hc-title { font-size: 0.95rem; margin: 0.5rem 0 0.25rem; }
+.fa-hc-group ul { list-style: none; margin: 0; padding: 0; }
+.fa-hc-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: 0.375rem;
+  margin: 0 0 0.25rem;
+  background: transparent;
+  color: var(--fa-glass-ink);
+  text-align: left;
+  cursor: pointer;
+}
+.fa-hc-item code { color: var(--fa-glass-muted); font-size: 0.8rem; }
+.fa-hc-item[aria-current="true"] { border-width: 2px; font-weight: 600; }
+.fa-hc-back { display: none; min-height: 2.75rem; }
+.fa-hc-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fa-hc-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--fa-glass-ink); text-decoration: underline; overflow-wrap: anywhere; }
+.fa-hc-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.fa-hc-table th, .fa-hc-table td { text-align: left; vertical-align: top; padding: 0.25rem 0.4rem; border-bottom: 1px solid var(--fa-glass-edge); overflow-wrap: anywhere; }
+.fa-hc-skills .fa-hc-link { min-height: 0; }
+.fa-hc-gap, .fa-hc-note { color: var(--fa-glass-muted); }
+.fa-hc-undeclared, .fa-hc-findings { margin-top: 0.5rem; }
+.fa-hc-undeclared > summary, .fa-hc-findings > summary { min-height: 2.75rem; display: flex; align-items: center; cursor: pointer; }
+.fa-hc-detail:empty::before { content: "Choose a harness to see its properties."; color: var(--fa-glass-muted); }
+
+/* A PHONE DRILLS IN: the list, or one harness, never both squeezed. */
+@media (max-width: 40rem) {
+  .fa-hc { grid-template-columns: minmax(0, 1fr); }
+  .fa-hc[data-fa-hc-view="list"] .fa-hc-detail { display: none; }
+  .fa-hc[data-fa-hc-view="detail"] .fa-hc-list { display: none; }
+  .fa-hc-back { display: inline-block; }
+  .fa-hc-table thead { display: none; }
+  .fa-hc-table tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 0.25rem 0; border-bottom: 1px solid var(--fa-glass-edge); }
+  .fa-hc-table th, .fa-hc-table td { border: 0; padding: 0.1rem 0.25rem; }
+}
