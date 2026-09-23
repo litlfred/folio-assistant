@@ -1,11 +1,12 @@
 ---
 # folio-assistant-idl1
 title: 'ADJUDICATION IS DRAWN INLINE: review-narrative and voice-review each redraw it instead of calling Process_Adjudication'
-status: todo
-parent: folio-assistant-ahvw
+status: scrapped
 type: task
+priority: normal
 created_at: 2026-09-23T08:35:04Z
-updated_at: 2026-09-23T08:35:04Z
+updated_at: 2026-09-23T09:18:59Z
+parent: folio-assistant-ahvw
 ---
 
 The shared adjudication process exists and is now expressed against the typed contract, but the two processes that PRODUCE disagreements draw their own adjudicate steps rather than calling it. Owner's prompt 2026-09-23: 'make sure the provide feedback process is defined which would create things to adjudicate.'
@@ -68,3 +69,53 @@ somebody else's review flow, and it wants its own review.
 - [ ] Where they are not, each says in its documentation what it does
       differently and why, so the next reader does not re-open this.
 - [ ] `bun run gates` green.
+
+---
+
+# SCRAPPED 2026-09-23 — THE PREMISE IS FALSE
+
+**This bean's central claim was wrong, and it is scrapped rather than deleted
+so nobody re-derives it.** `bean-coordination`: a scrapped bean stops the next
+agent re-entering a dead end; a deleted one leaves a sibling unable to tell
+abandonment from accident.
+
+## What it claimed, and what is actually true
+
+> "No `callActivity` to it exists anywhere."
+
+**False.** Five processes call `Process_Adjudication`:
+
+| process | call activity |
+|---|---|
+| `voice-review` | `Task_Adjudicate` |
+| `review-narrative` | `Task_AdjudicateVoice` |
+| `refresh-materialized` | `Task_Adjudicate` |
+| `translation-workflow` | `Task_Adjudicate` |
+| `ingest-l1-completeness-gate` | `Task_FlagDrift` |
+
+So `review-narrative` and `voice-review` do **not** redraw adjudication. They
+call it, as the bean said they should. The shared process was already shared.
+
+## How the error was made — worth more than the finding was
+
+`grep -rn "calledElement" cat-harness/processes/*.bpmn | head -8`, and a
+conclusion drawn from the eight lines that came back. The matches are ordered
+by filename, and all five adjudication callers sort after the eight shown. The
+data never contradicted the claim; **it was never asked.**
+
+That is the failure this repository names everywhere and it was committed by
+the agent quoting it: a sweep that passes by not looking. `head` on a grep
+whose output decides a claim is the same defect as a gate that reports clean
+over a corpus it never scanned. The rule it broke is the repo's own — **never
+quote a count from prose, and never draw one from a truncated list.**
+
+The claim reached bean `idl1`, PR #1026's body, and merged commit `38e0442f`'s
+message. The PR carries a correcting comment; the commit message cannot be
+rewritten and is wrong in the permanent record. Noted here because that is
+where an agent will look.
+
+## What replaced it
+
+The check that should have been done first found something real instead — one
+shared process with ONE outcome gateway serving five materially different
+questions. See the successor bean.
