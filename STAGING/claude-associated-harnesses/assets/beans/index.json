@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 663,
+      "count": 666,
       "unit": "beans"
     }
   },
@@ -2801,6 +2801,20 @@
       "file": "beans/defs/folio-assistant-ai9u--check-workflow-paths-trusts-working-directory-as-i.md"
     },
     {
+      "id": "folio-assistant-ajx9",
+      "title": "WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:56:03Z",
+      "updatedAt": "2026-09-23T20:15:41Z",
+      "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
+      "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
+    },
+    {
       "id": "folio-assistant-alox",
       "title": "The landing panel and its onboarding block — what shipped, and what is still judgement",
       "status": "completed",
@@ -3153,14 +3167,14 @@
     {
       "id": "folio-assistant-bvuk",
       "title": "ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:19:05Z",
-      "updatedAt": "2026-09-23T11:28:33Z",
+      "updatedAt": "2026-09-23T18:52:11Z",
       "preview": "Six processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## Two corrections to this bean, both from checking it before building\n\n### It is SIX callers, not five\n\n`wirefr",
       "file": "beans/defs/folio-assistant-bvuk--one-outcome-gateway-five-different-questions-proce.md"
     },
@@ -3205,6 +3219,20 @@
       "updatedAt": "2026-09-23T17:02:35Z",
       "preview": "Owner, 2026-09-23, on the 3 undetermined edges j79e's classifier reported (detangle.json and kg-navigation.json declare no `needs`): *\"Make them visualization of an existing harness\"*, then from the options offered chose **Fold into cat-harness**: move both under cat-harness as declared directories and drop their instance files.\n\nThis reverses the 2026-09-20 ruling that kg-navigation be a top-leve",
       "file": "beans/defs/folio-assistant-byql--fold-detangle-and-kg-navigation-into-cat-harness-v.md"
+    },
+    {
+      "id": "folio-assistant-bzre",
+      "title": "BPMN ARROW CROSSES THE DIAGRAM: document-ingestion's gap-to-derive edge routes under every task instead of back along the lane",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:00:15Z",
+      "updatedAt": "2026-09-23T20:00:15Z",
+      "preview": "Owner, 2026-09-23, on the rendered `document-ingestion` diagram: **\"bad\narrow\"**, then the rule: **\"keep rectilinear if possible, no overlapping.\"**\n\n## What is wrong\n\nThe `gap` flow from *Record the gap as a bean* back to *Derive content from the\nassets* is drawn as ONE LONG DIAGONAL crossing the full width of the process,\npassing beneath every task in the lane. It is an ordinary loop-back and it",
+      "file": "beans/defs/folio-assistant-bzre--bpmn-arrow-crosses-the-diagram-document-ingestions.md"
     },
     {
       "id": "folio-assistant-bzyu",
@@ -5415,6 +5443,20 @@
       "updatedAt": "2026-09-21T20:46:20Z",
       "preview": "Found while doing he0e (PR #691). `1. TOC` at docs/guides/agent-onboarding.md:20 is the list item kramdown REPLACES with the generated table of contents, immediately followed by `{:toc}`. Its text never reaches a reader in any language.\n\npot-extract.ts picks it up as a translatable string anyway, and the Arabic and Russian translators rendered it — ar has جدول المحتويات. That is a sensible human r",
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
+    },
+    {
+      "id": "folio-assistant-lrmo",
+      "title": "KG BROWSER: a block's row shows a narrative STATE, never the content — no way to read what was extracted",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:59:19Z",
+      "updatedAt": "2026-09-23T20:12:56Z",
+      "preview": "Found by the owner on first use of the block browser `7nvr` shipped:\n\n| *\"i expected to be able to see narrative content of extracted node\"*\n| *\"like dropdown expand panel or so\"*\n\nThe row carried a narrative STATE — `draft`, `not-authored` — which says a\ndescription exists without saying what it is. For the arXiv paper whose\ncolourbars were corrected this morning, that means the reader sees `draf",
+      "file": "beans/defs/folio-assistant-lrmo--kg-browser-a-blocks-row-shows-a-narrative-state-ne.md"
     },
     {
       "id": "folio-assistant-lv3j",
