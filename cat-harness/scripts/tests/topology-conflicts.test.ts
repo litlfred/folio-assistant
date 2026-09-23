@@ -2,7 +2,7 @@
  * The topology axes, and the five combinations a declaration may not name.
  *
  * Bean `folio-assistant-g7vb`, issue #363. Its first two criteria were met by
- * `fsh-guts/proposals/deployment-topologies.md` §3–§4: the scenarios are all
+ * `cat-harness/docs/proposals/deployment-topologies.md` §3–§4: the scenarios are all
  * expressible as points in the axis product, and the incompatible pairs are
  * listed with their reasons. The third was not, and it is the one that needs
  * code: *"a declaration naming an incompatible pair is refused, not silently

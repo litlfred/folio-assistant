@@ -112,7 +112,7 @@ An agent pointed at a repository that is not set up yet starts at
 who knows none of the above.
 
 Why it is built this way, and the questions still open:
-[proposals/bootstrap](fsh-guts/proposals/bootstrap.md) — in `fsh-guts/`, which
+[proposals/bootstrap](cat-harness/docs/proposals/bootstrap.md) — in `fsh-guts/`, which
 is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
 

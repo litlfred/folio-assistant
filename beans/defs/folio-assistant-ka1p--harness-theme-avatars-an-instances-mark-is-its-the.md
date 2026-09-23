@@ -106,3 +106,47 @@ unclassified directory is served.
 site root carries its mount"` → `/sibling/...`) on the premise *"everything else
 is at `/<name>/`"*. Updated with the measurement rather than deleted; four new
 specs pin the kind coming from the declaration rather than the string `docs`.
+
+
+## ROUND 3, 2026-09-23 — engineer for root, and the architecture theme is HELD
+
+Owner: *"create architecture theme. engineer for root"*.
+
+**engineer → root is done.** The root instance declares a card naming
+`theme: engineer`, at order 5 so the repository reads ahead of cat-harness's
+10. The art is cat-harness's `landing-engineer` — the root declares no images
+— which is the supplier-is-not-the-subject fallback `bootstrap` already
+relies on. **Every instantiated harness now carries a mark**; none is on an
+initial. All five verified 200 against a MOUNTED build.
+
+**The architecture theme ships PALETTE-ONLY, and the backdrop is withheld.**
+
+The palette is real and measured rather than matched to its neighbours: the
+card was drawn to a canvas and every pixel binned into a 32-step cube, giving
+`#fdfbf0` 35.38 %, `#6a7c73` 33.07 %, `#a6aea8` 3.45 %, `#1a372d` 2.32 %. Ink
+on surface is **12.43:1**, past the AAA 7:1 floor the whole set is held to.
+
+**The art cannot carry a backdrop.** `landing-architecture` declares laptop and
+card and **no mobile**; `resolveThemeBackdrop` refuses a partial set wholesale.
+I wrote the entry WITH a backdrop first and `themes.test.ts` failed it — the
+gate doing precisely its job, and its own comment names this case:
+
+> the architecture art arrived as two layouts of three (**the third upload was
+> a byte-identical copy of the second**), so no `architecture` theme is
+> declared. If somebody adds one before the portrait crop arrives, this fails
+> rather than shipping a theme that serves a landscape crop to a phone.
+
+So the portrait crop was never supplied — it is not a mislaid file. I did not
+derive one: there is no image tooling in this container (no PIL, no
+ImageMagick, no sharp), and cropping a square card to portrait is a
+compositional judgement about the owner's brand art rather than a mechanical
+step.
+
+The scrim is measured anyway and recorded in the entry, so the remaining edit
+is declaring `landing-architecture-mobile` and pasting a four-line block:
+**9.02:1** over pure black at 0.86, 12.52:1 over white, swept rather than
+copied (0.78 already clears the floor at 7.36:1).
+
+- [x] engineer for the root instance
+- [x] architecture theme — id, palette, layouts, all measured
+- [ ] architecture BACKDROP — blocked on a portrait crop that does not exist
