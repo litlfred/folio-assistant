@@ -25,7 +25,7 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>16</b><span>specifications</span></div>
-<div class="xs-stat"><b>93</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
 <div class="xs-stat"><b>35</b><span>declared dependents</span></div>
 <div class="xs-stat"><b>0</b><span>dependents that no longer resolve</span></div>
 </div>
@@ -485,20 +485,25 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/glossary/glossary-ledger.json` | <span class="xs-tag xs-ok">resolves</span> |
 | `bootstrap/glossary/glossary-ledger.json` | <span class="xs-tag xs-ok">resolves</span> |
 
-**Operative terms (9).** The terms this repository acts on —
+**Operative terms (14).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
 | term | what it means here |
 |---|---|
+| `skos:Collection` | A glossary's `members` (folio-glossary/v1): external concepts this folio lists without copying them, emitted by folio-assistant-core/schemas/glossary.ts#toSkos. |
 | `skos:Concept` | A MEANING, and the authoritative object for one. Minted per declared ROLE, never per lane name — 85 lane names resolve to 36 roles, so a concept per name would mint 85 terms for 36 meanings. |
 | `skos:ConceptScheme` | The glossary document IS the scheme; there is no separate `…#scheme` IRI, because that would name a set that already has a name and would not dereference (`blv9`). |
 | `skos:altLabel` | The other names one concept is drawn under. `build-pipeline` is labelled ten ways across the corpus; nine are altLabels, which is what makes "Reviewer / SME" findable as "Reviewer" rather than a rival entry. |
+| `skos:broader` | A glossary term's `broader`: a local term id or an external IRI, emitted as a link (folio-glossary/v1). |
 | `skos:changeNote` | Retirement. A term whose defining role is gone is deprecated and dated in the ledger, never deleted — a derived document has no memory, so the ledger is what makes "reported and never deleted" implementable. |
 | `skos:definition` | What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound. |
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
+| `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
+| `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |
+| `skos:related` | A glossary term's `related`: a local term id or an external IRI. |
 | `skos:scopeNote` | What a lane is accountable for IN ONE PROCESS. Carried on the LaneUsage node, never the concept: of 26 lane names appearing in more than one diagram, 26 of 26 document themselves differently per occurrence, so ten unattributed notes on one concept would read as ten contradictions. Stored verbatim, because the note is a `.pot` msgid. |
 
 ### Web Annotation Vocabulary {#w3c-web-annotation}
