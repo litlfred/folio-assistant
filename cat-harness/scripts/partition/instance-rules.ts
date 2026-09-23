@@ -970,6 +970,9 @@ export const RULES: Rule[] = [
       // tooling below; a core placement made `process-model.ts` import down.
       "schemas/code-list.ts",
       "scripts/code-lists.ts",
+      // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
+      // process, so harness, beside the gates it sits among.
+      "scripts/publish-verify.ts",
       // ── Tooling that the `schemas/` and `content/pipeline/` PREFIXES had
       //    claimed for core, on the content-versus-platform reading this list
       //    predates. The owner's cut, 2026-09-19, is different and sharper:
