@@ -501,14 +501,17 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     expect(m.nodes.get("A_Dispensation")!.relaxable).toBe(false);
   });
 
-  test("the QA callers call the specialisation, not the shared half", async () => {
-    // `wireframe-design-review` joined these on 2026-09-23, and the reason is
-    // a correction: the split LEFT it on the shared half, which no longer runs
-    // A_RecordEntry or A_Dispensation — and its own call documentation says
-    // both happen ("the adjudication leads, the checker's entry is kept, and
-    // the dispensation carries its reason"). For the other three the split
-    // removed steps their question never admitted; for this one it removed
-    // steps the diagram documents, so it was a regression rather than a fix.
+  test("the criterion callers call the specialisation, not the shared half", async () => {
+    // `wireframe-design-review` joined 2026-09-23: reviewers disagreeing on ONE
+    // criterion is a criterion disagreement, and its own documentation already
+    // spoke of "the checker's entry" and "the dispensation".
+    //
+    // It joined as a CORRECTION, which is worth keeping because the PR that
+    // made the split said the opposite. #1074 reported that all four remaining
+    // callers "no longer reach A_ScopeCriterion or A_Dispensation" and framed
+    // that as the intended effect. True for the three below; here it removed
+    // the two steps the diagram documents, so for this one caller it was a
+    // regression rather than a fix.
     for (const [f, id] of [
       ["review-narrative.bpmn", "Task_AdjudicateVoice"],
       ["voice-review.bpmn", "Task_Adjudicate"],
@@ -519,22 +522,21 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     }
   });
 
-  test("the three non-criterion callers reach NO outcome task", async () => {
+  test("the other four call the shared half, reach NO outcome task, and declare their OWN answers", async () => {
     // The defect this closes, asserted as reachability rather than as a name:
-    // before the split every one of these ran A_ScopeCriterion's gateway.
-    //
-    // THREE, not four. `wireframe-design-review` was in this list until
-    // 2026-09-23 and did not belong: its question IS the criterion one, so
-    // removing those steps broke it rather than fixing it. This test is what
-    // caught the repointing, which is the argument for asserting reachability
-    // rather than a caller count.
-    for (const [f, id] of [
-      ["refresh-materialized.bpmn", "Task_Adjudicate"],
-      ["translation-workflow.bpmn", "Task_Adjudicate"],
-      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift"],
+    // before the split every one of these ran A_ScopeCriterion's gateway. And
+    // each now names the answers ITS question admits (owner, 2026-09-23; the
+    // three multi-answer sets are the owner's own design, #1156), so
+    // no caller runs an adjudication whose answers nobody stated.
+    for (const [f, id, codes] of [
+      ["refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
+      ["translation-workflow.bpmn", "Task_Adjudicate", ["accept", "edit", "retranslate"]],
+      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["real", "source-wrong", "spurious"]],
+      ["content-change-review.bpmn", "Call_Adjudication", ["stands", "withdrawn"]],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_Adjudication");
+      expect(m.nodes.get(id)!.adjudication!.codes.slice().sort(), f).toEqual([...codes]);
       const child = m.children.get(id)!;
       expect([...child.nodes.keys()], f).not.toContain("A_ScopeCriterion");
       expect([...child.nodes.keys()], f).not.toContain("A_Dispensation");

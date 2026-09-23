@@ -43,7 +43,7 @@ NO folio:bean on any activity, and isExecutable is false, for the reasons `initi
     </bpmn:startEvent>
 
     <bpmn:task id="A_NarrowCandidates" name="Narrow the candidates from context">
-      <bpmn:documentation>Before asking. A repository that already carries `cat-harness/cat-harness.json` is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</bpmn:documentation>
+      <bpmn:documentation>Before asking. A repository whose root already holds a declaration, `&lt;name&gt;.json`, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="discussion"/>
       </bpmn:extensionElements>

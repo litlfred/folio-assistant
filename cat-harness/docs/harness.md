@@ -116,7 +116,7 @@ a path breaks the moment a directory moves.
 ### Three relations, and they are not interchangeable
 
 Between repositories — as opposed to between layers in one checkout — the
-[KGraph page](kgraph.html#repositories) sets out three relations. Each has its
+[KGraph page](kgraph.html#repositories) sets out three relations, and a fourth, **associated**, needs no order at all. Each has its
 own carrier here:
 
 | relation | runs | carried by |
@@ -124,6 +124,7 @@ own carrier here:
 | **depends** | Content → Content | `needs` — the layer stack, foundation first |
 | **references** | Tool → Content, Test → Content | `remoteGraphs` — a graph this instance knows about and does not hold |
 | **utilizes** | Tool → Tool, Test → Tool, App → Content | `dependencies` in the config — what this instance USES, overlaid |
+| **associated** | Content ↔ Content, any harness | `associatedHarnesses` — a harness this one knows, and where it is published; never loaded or materialized (issue #1146, skill `associate-harness`) |
 
 **Only `depends` fixes an order**, so only `depends` can have a cycle in it,
 and a cycle there is a defect rather than a shape. A Tool repository

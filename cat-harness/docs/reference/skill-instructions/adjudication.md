@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/adjudication.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adjudication.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/adjudication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/adjudication.md){: .fa-edit-source }
 
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts
@@ -280,5 +280,4 @@ This skill has its own process: **[Adjudication](../../processes/adjudication.ht
 | [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
 | [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
 | [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
-| [Wireframe design review](../../processes/wireframe-design-review.html) | Adjudication (calls a sub-process) |
 

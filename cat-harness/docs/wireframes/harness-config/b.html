@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harness config, candidate B: dialog per harness</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display:grid; grid-template-columns:264px minmax(0,1fr); min-height:640px; }
+  .side { border-right:1px solid var(--line); background:var(--fill); padding:10px; }
+  .side h3 { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--mute); margin:14px 0 6px; }
+  .div { display:flex; align-items:center; justify-content:space-between; min-height:44px; border:1px solid var(--line); background:var(--bg); padding:0 8px; margin-bottom:4px; }
+  .gear { border:1px solid var(--ink); min-width:44px; min-height:44px; display:inline-flex; align-items:center; justify-content:center; background:var(--bg); }
+  .main { position:relative; padding:18px; }
+  .dialog { position:absolute; top:24px; left:24px; right:24px; border:2px solid var(--ink); background:var(--bg); box-shadow:0 0 0 9999px rgba(0,0,0,.08); }
+  .dlg-hd { display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--line); padding:10px 14px; }
+  .tabs { display:flex; gap:6px; padding:8px 14px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .tabs [aria-selected="true"] { font-weight:700; border-width:2px; }
+  .dlg-bd { padding:12px 14px; }
+  .prop { border-bottom:1px solid var(--line); padding:8px 0; display:grid; grid-template-columns:200px minmax(0,1fr) 180px 40px; gap:8px; overflow-wrap:anywhere; }
+  .finding { font-weight:700; }
+  @media (max-width:700px) {
+    .page { grid-template-columns:1fr; } .side { display:none; }
+    .main { padding:0; } .dialog { position:static; border-width:0; box-shadow:none; }
+    .prop { grid-template-columns:1fr; gap:2px; }
+  }
+</style></head>
+<body>
+<div class="page">
+  <aside class="side" aria-label="Harnesses">
+    <h3>Harnesses</h3>
+    <div class="div">Bootstrap <button class="gear" aria-label="Configure Bootstrap">⚙</button></div>
+    <div class="div"><b>C@T Harness</b> <button class="gear" aria-label="Configure C@T Harness" aria-expanded="true">⚙</button></div>
+    <div class="div">Folio Assistant <button class="gear" aria-label="Configure Folio Assistant">⚙</button></div>
+    <div class="div">SMART Base <button class="gear" aria-label="Configure SMART Base">⚙</button></div>
+    <div class="div">WHO IRIS <button class="gear" aria-label="Configure WHO IRIS">⚙</button></div>
+    <h3>Associated ↗</h3>
+    <div class="div">iHRIS Knowledge Base <span class="wf-mute">remote</span></div>
+  </aside>
+  <main class="main">
+    <p class="wf-mute">What each harness holds · (page behind the dialog)</p>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dt">
+      <div class="dlg-hd"><h2 id="dt" style="margin:0;font-size:20px">C@T Harness <code>cat-harness</code></h2><span class="wf-mute">instantiated · needs Bootstrap</span><button class="wf-btn" style="margin-left:auto" aria-label="Close">× Close</button></div>
+      <div class="tabs" role="tablist"><span class="wf-btn" role="tab" aria-selected="true">Properties</span><span class="wf-btn" role="tab" aria-selected="false">Graphs (39)</span><span class="wf-btn" role="tab" aria-selected="false">Associated (1)</span></div>
+      <div class="dlg-bd" role="tabpanel">
+        <div class="prop"><span><code>title</code></span><span>C@T Harness</span><a href="#">directory-conventions</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>icon</code>, <code>images</code></span><span>mark · 24 images</span><a href="#">theme-declaration</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>navbarIcons</code></span><span>6 icons</span><a href="#">harness-tiles</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>stickies</code></span><span>1 sticky</span><a href="#">create-sticky-note</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>needs</code></span><span>bootstrap</span><a href="#">directory-conventions</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>canonicalUrl</code>, <code>publication</code></span><span>litlfred.github.io/folio-assistant · github-pages</span><a href="#">document-publishing</a><a href="#" aria-label="Edit source">✎</a></div>
+        <div class="prop"><span><code>folioMount</code></span><span>1 root</span><span class="finding">⚠ no edit skill mapped: QA finding</span><a href="#" aria-label="Edit source">✎</a></div>
+        <p class="wf-mute">The <b>Associated</b> tab lists iHRIS Knowledge Base: <code>url</code> litlfred.github.io/ihris ↗, <code>repository</code> litlfred/ihris, <code>relation</code> folio-of. Its ✎ opens litlfred/ihris. Edited with <a href="#">associate-harness</a>. Remote: nothing fetched.</p>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="wf-meta">Wireframe: harness config, candidate B (dialog per harness)</div>
+</body></html>

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/workflow-state.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/workflow-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/workflow-state.md){: .fa-edit-source }
 
 {% raw %}
 # State in a running process

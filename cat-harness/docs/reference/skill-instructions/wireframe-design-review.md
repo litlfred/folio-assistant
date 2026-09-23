@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/wireframe-design-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/wireframe-design-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/wireframe-design-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/wireframe-design-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/wireframe-design-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/wireframe-design-review.md){: .fa-edit-source }
 
 {% raw %}
 # Wireframe design review
@@ -83,5 +83,5 @@ This skill has its own process: **[Wireframe design review](../../processes/wire
 
 | process | step(s) that name it |
 |---|---|
-| [Wireframe design review](../../processes/wireframe-design-review.html) | Write the design intent; Produce >= 2 candidates, web + mobile; Mechanical checks, both viewports; Blind review per criterion; Adjudication (calls a sub-process) |
+| [Wireframe design review](../../processes/wireframe-design-review.html) | Write the design intent; Produce >= 2 candidates, web + mobile; Mechanical checks, both viewports; Blind review per criterion |
 
