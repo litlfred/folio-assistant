@@ -450,28 +450,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/docs-ui.css?v=1790182320">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/docs-ui.css?v=1790183585">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/work-plan.css?v=1790182320">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/work-plan.css?v=1790183585">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/themes.css?v=1790182320">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/themes.css?v=1790183585">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/uml.css?v=1790182320">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/uml.css?v=1790183585">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/avatars.css?v=1790182320">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/css/avatars.css?v=1790183585">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -488,7 +488,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/js/docs-ui.js?v=1790182320" defer></script>
+<script src="/folio-assistant/STAGING/claude-8suc-staging-verdicts/assets/js/docs-ui.js?v=1790183585" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1332,6 +1332,34 @@ is the gate that refuses, not that script. An <em>orphaned</em> verdict — one 
 an image the sidecar does not have — still fails, in either mode.</p>
 
 <p>Every narrative it writes lands as <code class="language-plaintext highlighter-rouge">draft</code>. Only a person confirms one.</p>
+<h4 id="reading-a-figure-the-text-layer-is-not-the-figure">
+  
+  
+    <a href="#reading-a-figure-the-text-layer-is-not-the-figure" class="anchor-heading" aria-labelledby="reading-a-figure-the-text-layer-is-not-the-figure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading a figure: the text layer is not the figure
+  
+  
+</h4>
+    
+
+<p>Two findings from <code class="language-plaintext highlighter-rouge">xeg6</code>, both of which would have shipped as descriptions:</p>
+
+<p><strong>A diverging axis’s SIGN cannot be read from the text layer.</strong> <code class="language-plaintext highlighter-rouge">get_text</code>
+returned <code class="language-plaintext highlighter-rouge">0.2 0.4 0.6</code> below the zero of a <code class="language-plaintext highlighter-rouge">Delta Pass Rate</code> bar with <strong>no
+sign at any codepoint</strong> — matplotlib draws U+2212 as a vector path, so the
+minus exists in the rendering and not in the text. Rendering the region showed
+<code class="language-plaintext highlighter-rouge">-0.2 -0.4 -0.6</code> plainly. A verdict trusting the extraction would have called
+a <code class="language-plaintext highlighter-rouge">-0.6</code> endpoint <code class="language-plaintext highlighter-rouge">+0.6</code>.</p>
+
+<p><strong>And the direction is a fact about the axis, not about the colours.</strong> The
+recorded inspection said a bar ran <em>“blue low to red high”</em>. Its ticks said
+<code class="language-plaintext highlighter-rouge">Pass Rate</code>, <code class="language-plaintext highlighter-rouge">1.0</code> at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — <strong>worse than no
+description</strong>, because a missing one is visibly missing.</p>
+
+<p>So: render the region and read the ticks. Two images that look alike need the
+same check each — the same record called three bars one repeated legend when
+the third was a different, signed scale, and it had the disconfirming datum
+(5188 bytes against 5167 twice) already written down beside the claim.</p>
 <h3 id="an-xlsx-is-a-zip-and-that-broke-the-archive-routing">
   
   
