@@ -151,10 +151,10 @@ NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has
 never existed, and is not `proof-triage` (that one triages proofs). Left
 uncovered until the skill is written.
 
-The gate contains one adjudication (Task_FlagDrift: `drift` or `false-positive`), and its own Task_Verdict records either answer before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
+The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:link href="document-ingestion.html#the-l1-completeness-gate" />
-        <folio:adjudication accepts="drift false-positive"/>
+        <folio:adjudication accepts="real spurious source-wrong"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>
       <bpmn:outgoing>Flow_i6</bpmn:outgoing>

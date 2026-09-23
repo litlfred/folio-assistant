@@ -40,10 +40,11 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-Every one of the 1 decision(s) is documented.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Drift or bad terminology?**<br>`Gateway_Drift` | Answered by the round-trip translation QA: did it flag semantic drift or a terminology miss? `drift` sends the passage to a person to adjudicate, since which reading is right is a human call; `clean` records the verdict directly. | **drift** → Adjudicate the flagged passage<br>**clean** → Record the L1 completeness verdict |
+| **Which reading was right?**<br>`GW_DriftOutcome` | All three converge on Task_Verdict, and that is deliberate rather than the codes being decoration: this lane adjudicates ONE passage while Lane_0 still owns the completeness verdict as a whole, so the outcome of a passage is a REASON recorded against that verdict, never a different next step. The same shape criterion-adjudication uses, where three outcomes converge on one write because what makes an outcome legitimate is that its reason was recorded. What differs is what gets written and what it obliges. `real` is drift to fix in the translation. `spurious` is a false positive, and recording it is what stops the same passage being re-flagged every run. `source-wrong` points at the SOURCE rather than the translation — the one answer that sends work out of this process entirely, because no amount of re-translating a wrong source produces a right target. | **the drift is real** → Record the L1 completeness verdict<br>**false positive** → Record the L1 completeness verdict<br>**the SOURCE is wrong** → Record the L1 completeness verdict |
 
 {% endraw %}
