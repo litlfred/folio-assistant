@@ -349,6 +349,36 @@ When an author has made content changes on a feature branch:
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
 
+### The review page, and choosing how to see a change
+
+A folio's preview carries `review/index.html`: every changed block, grouped by
+section, with its reviewer comments (the `review-comments` skill). Each
+changed block has a **"Show this change as"** selector (bean `d903`), and one
+at the top applies to every block:
+
+| renderer | shows | the default for | needs |
+|---|---|---|---|
+| **Word diff of the source** | the Markdown with removed words struck and added words marked: exactly what the author typed | any kind not listed below | the block's prose |
+| **Inline, as rendered** | the block as a reader sees it now, with the change marked in place | `prose`, `remark`, `definition`, `example` | the block's prose |
+| **Side by side** | `main` and the preview next to each other, each scrolled to the block | `table`, `figure`, `diagram`, `equation`, `simulator` | a page on either side |
+
+- **Where the data comes from.** The ChangeSet step's `--text-out` writes
+  `changeset-text.json`: the source and rendered prose of each listed block,
+  on each side that has it. With no such file, only side by side is
+  available, and the page says so.
+- **A renderer that cannot run on a block is listed, disabled, with the
+  reason.** For example, a manifest-only change has no prose to diff. If the
+  page-level choice cannot run on a block, that block falls back to one
+  that can.
+- **The page-level choice is remembered** for this viewer in
+  `localStorage`. A private window just gets the defaults.
+- **The renderers and the registry** are `cat-harness/scripts/review-renderers.ts`,
+  `cat-harness/scripts/word-diff.ts` (no diff library; about forty lines,
+  tested) and `cat-harness/schemas/diff-renderers.ts`. To add one, declare it
+  in the registry with what it needs and which kinds it defaults for, add its
+  function to `review-renderers.ts`, and add a case to the page's
+  `renderInto`.
+
 ## Staging retention
 
 **A MERGED pull request's preview goes away. Everything else is retained by
