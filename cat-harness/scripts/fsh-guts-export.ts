@@ -238,6 +238,12 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       body: "schema:text",
       nodeCount: termIri("nodeCount"),
       scans: termIri("scans"),
+      // Declared, with its entries' two keys: a processor dropped the whole
+      // list when it was bare (bean vigi, found by expanding).
+      skipped: {
+        "@id": termIri("skipped"),
+        "@context": { path: termIri("sourcePath"), reason: "rdfs:comment" },
+      },
     },
     "@id": docIri,
     "@type": termIri("FshGutsGraph"),

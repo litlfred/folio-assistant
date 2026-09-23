@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vigi
 title: 'JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T08:50:21Z
-updated_at: 2026-09-22T08:50:42Z
+updated_at: 2026-09-23T21:29:14Z
 parent: folio-assistant-zzmr
 ---
 
@@ -64,14 +64,28 @@ repository.
 
 ## Done when
 
-- [ ] a JSON-LD processor expands every published document in a test
-- [ ] the test fails on a deliberately malformed `@context` — falsified, not
-      assumed
-- [ ] round-trip (expand → compact) is asserted stable for at least one
-      document, since that is what a consumer actually does
-- [ ] the decision to keep generators hand-rolled is recorded, or reversed
-      with reasons
+- [x] a JSON-LD processor expands every published document — in a test AND, per the owner, as the first verifier of a pre-deploy verification sub-process that blocks the deploy
+- [x] the test fails on a deliberately malformed `@context` — falsified, not
+      assumed (an undeclared key, a network context, nothing-to-verify = could-not-tell)
+- [x] round-trip (expand → compact) is asserted stable for at least one
+      document (the glossary), since that is what a consumer actually does
+- [x] the decision to keep generators hand-rolled is recorded, or reversed
+      with reasons — KEPT: jsonld.js is a dev dependency used only by the verifier and its test; generators still emit object literals, and the verifier is what makes them JSON-LD by check rather than by convention
 
 Related: `lqo9` (the ruling-2 analysis that surfaced it), `3190` and `blv9`
 (terms and IRIs that did not resolve — the same class, caught by hand-written
 scans after the fact).
+
+## Reshaped by the owner, 2026-09-23
+
+"vigi should be a set of post processing tools for verification that a failure triggers an alert to the publisher manager (or whatever role is in process already that makes sense). new sub-process" — "before deployment" — and "there is another alert needed for deployment failure. every step post 'push the publish button' should be same".
+
+## Summary of Changes
+
+- `processes/publish-verification.bpmn` (new sub-process): the verifier set over the built tree, before the deploy; pass / fail / could-not-tell.
+- `processes/publish-alert.bpmn` (new sub-process): ONE alert — a `publication-manager`-labelled tracking issue, opened then commented on, triaged by the existing publication-manager role.
+- `processes/docs-site-publish.bpmn`: verify after the export and block on anything but a pass; every failure edge (incomplete export, verification, deploy, lost preview) calls the one alert; a clean publish closes it.
+- `.github/workflows/docs-site.yml`: the verify step before the deploy, the alert step `if: failure()`, the close step `if: success()`, `issues: write`.
+- `scripts/publish-verify.ts` (`publish:verify`): the verifier set — first entry `jsonld-expand` (jsonld.js, network refused, ours-only scope); `publish-verify.test.ts`.
+- Two real defects the processor found, fixed: `ns-export` dropped `layer` on all 159 terms; `fsh-guts-export` dropped `skipped` — both now declared terms.
+- Skill `publish-verification`, bound to the publication-manager and build-pipeline roles.
