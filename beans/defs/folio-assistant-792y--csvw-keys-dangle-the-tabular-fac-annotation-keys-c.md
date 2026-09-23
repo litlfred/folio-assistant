@@ -1,11 +1,11 @@
 ---
 # folio-assistant-792y
 title: 'CSVW KEYS DANGLE: the tabular `fac:` annotation keys cannot be bound in a CSVW context under any prefix — they need absolute IRIs'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T07:30:19Z
-updated_at: 2026-09-23T09:53:04Z
+updated_at: 2026-09-23T10:35:31Z
 parent: folio-assistant-0lmb
 ---
 
@@ -53,3 +53,15 @@ next touched or retired.
 ## Done when
 
 No tabular record claims to be JSON-LD while carrying keys a processor would read as unbound compact IRIs, and a standard CSVW reader is handed a document that carries the CSVW `@context` and only CSVW keys.
+
+## Summary of Changes
+
+PR #1048, merged on the owner's "merge it" (2026-09-23). Issue #1047.
+
+- The `folio-tabular-csvw/v1` record is now **plain JSON**, `tabular.csvw.json`, via one constant `TABULAR_CSVW_FILENAME` used by the rung table, the library reader and the stub check. In a `.json` file `fac:anchor` is a name, not a compact IRI — which is why the extension had to change.
+- `toCsvw()` / `csvwTable()` replace `csvwOnly()`: a real CSVW `TableGroup` with the CSVW `@context` and CSVW keys only, at every level. The old helper never added the context and leaked `datatypeSource` on every column.
+- Tests walk the export against `CSVW_KEYS`; falsified by re-leaking `datatypeSource`.
+- Skill `tabular-metadata`: the false "valid CSVW document" claim replaced; the three options and their costs recorded (full-IRI terms lose the DETERMINED `null` in RDF; an own JSON-LD context is rejected by CSVW readers). `kg-export` and the `csvw` forward reason updated.
+- Gates were run to green BEFORE the first push this time (133/133); CI green first try.
+
+Not fixed, recorded above: `tabular.jsonld` has the same no-`@context` shape (lossy, not dangling; none committed).
