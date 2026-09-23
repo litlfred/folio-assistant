@@ -163,19 +163,6 @@
       "unit": "modules"
     },
     {
-      "id": "cat-harness",
-      "directory": "cat-harness",
-      "title": "Skills — cat-harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
-      "hidden": false
-    },
-    {
       "id": "docs",
       "directory": "docs",
       "title": "Docs — cat-harness",
@@ -357,6 +344,19 @@
       "hidden": false,
       "count": 136,
       "unit": "modules"
+    },
+    {
+      "id": "skills",
+      "directory": "skills",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
+      "hidden": false
     },
     {
       "id": "todos",
@@ -1527,7 +1527,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
         },
         {
           "kind": "todos",
@@ -1555,7 +1555,8 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness/skills: declares visualiser \"Skills — cat-harness\" at \"cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html\", which does not resolve on disk."
       ],
       "navbarIcons": [
         "close",
@@ -1765,7 +1766,7 @@
       },
       {
         "kind": "skills",
-        "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+        "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
       },
       {
         "kind": "todos",
@@ -2521,7 +2522,7 @@
           },
           {
             "key": "directories",
-            "summary": "39: tools, external-schemas, schemas, uml, cat-harness, scenarios, processes, methodologies, …"
+            "summary": "39: tools, external-schemas, schemas, uml, skills, scenarios, processes, methodologies, qa, f…"
           },
           {
             "key": "associatedHarnesses",
@@ -2563,7 +2564,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: cat-harness, schemas, scenarios, processes, models, glossary, bootstrap-translations"
+            "summary": "7: skills, schemas, scenarios, processes, models, glossary, bootstrap-translations"
           },
           {
             "key": "stickies",

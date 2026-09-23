@@ -8,8 +8,8 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
-package "bootstrap/cat-harness" as pkg_bootstrap_cat_harness <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_cat_harness_skills
+package "bootstrap/skills" as pkg_bootstrap_skills <<skills>> {
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_skills_skills
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "KnownRepository" as bootstrap_schemas_discussion_input_schema_json_KnownRepository <<schema: discussion.input.schema.json>> #e9edf3 {
@@ -157,8 +157,8 @@ bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" boots
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-' grid: portrait, 2 column(s) — pkg_bootstrap_cat_harness pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_glossary pkg_bootstrap_bootstrap_translations
-pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_scenarios
+' grid: portrait, 2 column(s) — pkg_bootstrap_skills pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_glossary pkg_bootstrap_bootstrap_translations
+pkg_bootstrap_skills -[hidden]down- pkg_bootstrap_scenarios
 pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes
 pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_models
 pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_glossary

@@ -49,3 +49,9 @@ About 130 in all. Each is either an example naming a Harness above bootstrap (re
 2. **bootstrap's skills Subgraph has the id `cat-harness`.** Subgraph overrides match on id, and the platform's default Subgraph for skills uses that id. Renaming it, to `skills` say, has to change the platform's default at the same time, or the directory resolves twice.
 3. **`renderExemption.reachableAt` points into `cat-harness/docs/`**: where a person is sent to read about bootstrap. Either bootstrap gets a page of its own, or the pointer stays.
 4. **`schemas/model-registry.ts`** is TypeScript inside bootstrap, which breaks FR-7 (no program code). Move it to `bootstrap-tools`, or reword FR-7.
+
+## Round 2, 2026-09-23: ruling 1 answered
+
+#1177 merged (c33dd611). **Ruling 1 (the `folio:` prefix and the `folio-*/v1` ids):** the owner answered that the prefix is the Subgraph that declares the asset, and a nested Subgraph joins its path with dots (`bootstrap.processes:`). The work is staged in bean `12s9`. Rulings 2 to 4 are still open.
+
+**Ruling 2 (the Skills Subgraph id):** the owner answered *"bootstrap is bootstrap, bootstrap/skills is bootstrap.skills … do all the needed renames and fix paths"*. Both declarations (bootstrap's and cat-harness's) and `DEFAULT_DIRECTORIES` now use the id `skills`. Its qualified name is `<harness>.skills`. `RENAMED_DIRECTORY_IDS` reads the old id `cat-harness` as `skills` in both resolvers, so a folio declaration in another repository keeps overriding the entry it meant; a test covers this. The PENDING entry is removed. Rulings 3 (`renderExemption.reachableAt`) and 4 (`model-registry.ts` against FR-7) are still open.
