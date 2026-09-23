@@ -197,6 +197,8 @@
     "kg:locale:check:bootstrap": "bun run cat-harness/scripts/kg-locale-export.ts --check --instance ./bootstrap",
     "kg:schema": "bun run cat-harness/scripts/harness-schema-export.ts",
     "kg:schema:check": "bun run cat-harness/scripts/harness-schema-export.ts --check",
+    "uml:overview": "bun run cat-harness/scripts/gen-uml-overview.ts",
+    "uml:overview:check": "bun run cat-harness/scripts/gen-uml-overview.ts --check",
     "kg:schema:ids": "bun run cat-harness/scripts/harness-schema-export.ts --write-ids",
     "kg:validate": "bun run cat-harness/scripts/kg-validate.ts",
     "kg:viewer": "bun run cat-harness/scripts/kg-viewer.ts",

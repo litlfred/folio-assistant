@@ -1,0 +1,28 @@
+classDiagram
+  direction TB
+  namespace large_datasets__large_datasets_sources {
+    class large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier["Identifier"] {
+      <<json: SourceDescriptorSchema>>
+      name [1] string
+      authoritative [1] boolean
+      example [0..1] string
+      note [0..1] string
+    }
+    class large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1["folio-source-descriptor/v1"] {
+      <<json: SourceDescriptorSchema>>
+      $schema [1] 'folio-source-descriptor/v1'
+      id [1] string
+      title [1] string
+      system [0..1] string
+      baseUrl [0..1] string~uri~
+      nodeKind [1] string
+      subsetStrategies [1..*] list~container | identifier | facet | range | closure~
+      subsetIsSelfContained [1] boolean
+      enumeration [1] object
+      termsUrl [0..1] string~uri~
+      character [1] object
+    }
+  }
+  large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier : identifiers
+  cssClass "large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
+  cssClass "large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas

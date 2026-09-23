@@ -130,10 +130,13 @@ second claimant fails `check:instance-render`. At most one, not exactly one — 
 repository that vendors no bootstrap has nothing to exempt, and failing it
 for that would be asking it to declare something to stay green.
 
-What it owes lives in **`bootstrap/render/`**, a declared subgraph holding
-[`bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/render/bootstrap-graph-emission.md)
+What it owes lives in **`bootstrap/skills/`**, bootstrap's declared skills
+subgraph, as
+[`bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-emission.md)
 and
-[`bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/render/bootstrap-graph-publication.md).
+[`bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md)
+— performed by the `kg-graph-export` Tool and typed by
+`BootstrapGraphDocumentSchema` (bean `n350`).
 Until that directory existed the emission discipline lived in a code comment in
 `kg-export.ts` and a YAML comment in `docs-site.yml` — which is why it was
 rediscovered rather than read, and why one of those comments still called the

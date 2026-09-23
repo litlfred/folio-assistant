@@ -5,7 +5,7 @@
     "id": "Process_ExtractStructure",
     "path": "processes/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:bf098843c9812d8358b2abd0725469c207700c2d4233e2036b7bc464d3f05be1",
+  "source_hash": "sha256:df064d3b797a40b053b32fa51ff6d6a4a57fc40ac9e958e41807247b772b51aa",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,17 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_ExtractText",
-          "detail": "\"Extract the text layer\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Structure",
-          "detail": "\"Write structure.json (TOC, page ranges, metadata)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -90,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

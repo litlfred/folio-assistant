@@ -49,6 +49,7 @@ They do not need to know it is called CRDM.</bpmn:documentation>
     </bpmn:task>
     <bpmn:task id="A_Detect" name="Detect feature request
 (crdm-detect skill)">
+      <bpmn:documentation>Recognise the request as a platform capability change rather than content work, from crdm-detect's signals. Never call it "CRDM" to the person. Mid-content-work, ask whether to pause for requirements now or record a bean for later — do not switch on your own.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-detect"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Feature" name="Feature?"/>

@@ -255,6 +255,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
       <bpmn:outgoing>Flow_25</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_ReviseEdit" name="Revise the proposed change&#10;[content-author]">
+      <bpmn:documentation>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="content-author" />
       </bpmn:extensionElements>

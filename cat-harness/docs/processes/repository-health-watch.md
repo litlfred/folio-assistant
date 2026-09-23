@@ -28,13 +28,13 @@ THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOW
 
 ## Steps
 
-**4** of 4 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 4 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Run the health checks,&#10;keeping the report either way**<br>`Task_Check` | Scheduled log sweep | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | — |
-| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
+| **Run the health checks,&#10;keeping the report either way**<br>`Task_Check` | Scheduled log sweep | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does. |
+| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict. |
+| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. |
+| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on. |
 
 {% endraw %}

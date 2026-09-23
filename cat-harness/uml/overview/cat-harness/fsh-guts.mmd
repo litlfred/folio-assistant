@@ -1,0 +1,16 @@
+classDiagram
+  direction TB
+  namespace cat_harness__fsh_guts {
+    class cat_harness_fsh_guts_FshGutsNode["FshGutsNode"] {
+      <<json: FshGutsNodeSchema>>
+      $schema [1] 'folio-fsh-guts/v1'
+      title [1] string
+      kind [1] string
+      movedOn [0..1] string
+      movedFrom [0..1] string
+      issue [0..1] string | number
+      bean [0..1] string
+      summary [0..1] string
+    }
+  }
+  cssClass "cat_harness_fsh_guts_FshGutsNode" fa_uml_kind_fsh_guts

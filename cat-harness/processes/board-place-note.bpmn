@@ -73,6 +73,7 @@ The rule the diagram holds is in the first activity's own wording: the note goes
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_CreateNote" name="Write the note into the folio — with no coordinate">
+      <bpmn:documentation>A new note: write it into the folio with no x, no y, no board and no position. A folio is complete with no board, and one note may sit on several boards, which a coordinate on the note could not express.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- No `x`, no `y`, no `board`, no `position`, for the same reason
              a BPMN task carries none. One note may then sit on several
@@ -84,6 +85,7 @@ The rule the diagram holds is in the first activity's own wording: the note goes
     </bpmn:task>
 
     <bpmn:task id="A_Place" name="Record x,y for this note on THIS board">
+      <bpmn:documentation>Record the note's x,y in the layout layer for THIS board, naming the note by id. An existing card dragged here only gets a new position — placing is not creating, so no content is duplicated.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-diagram-interchange"/></bpmn:extensionElements>
       <bpmn:incoming>F_Created</bpmn:incoming>
       <bpmn:incoming>F_Existing</bpmn:incoming>
@@ -91,6 +93,7 @@ The rule the diagram holds is in the first activity's own wording: the note goes
     </bpmn:task>
 
     <bpmn:task id="A_SweepOrphans" name="Sweep positions whose note is gone">
+      <bpmn:documentation>Remove every position in this board's layer whose note no longer exists. The sweep edits only the layer — one file, one pass — and never a note a person owns; a stale position must not keep a note alive.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- Swept from the LAYER, which is the easy direction: one file,
              one pass, and nothing edited out of a note a person owns. -->

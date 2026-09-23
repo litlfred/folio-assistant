@@ -5,7 +5,7 @@
     "id": "Process_BoardOpenClose",
     "path": "processes/board-open-close.bpmn"
   },
-  "source_hash": "sha256:2c682445ba75902112c90a6a9dbf5b02cc915553b6cdc2d1dacdd06a7d7e6497",
+  "source_hash": "sha256:5fa982a417c0f95fe16afdde0e92e4ab44e5b53e0b5e8571b242d880da76ef79",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,37 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_RenderAvatars",
-          "detail": "\"Render every card as its avatar\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Open",
-          "detail": "\"Project a window onto the board\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Raise",
-          "detail": "\"Raise the window the reader selected\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Close",
-          "detail": "\"Close the window back to its avatar\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_OfferWayBack",
-          "detail": "\"Leave a reachable way back\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_ResolveThreshold",
-          "detail": "\"Resolve the kind's zoom threshold\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_SwapToAvatar",
-          "detail": "\"Swap cards below the threshold; leave open windows alone\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -110,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

@@ -28,10 +28,10 @@ THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `Atomic
 
 ## Steps
 
-**1** of 1 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 1 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | — |
+| **Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces. |
 
 {% endraw %}

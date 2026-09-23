@@ -271,6 +271,9 @@ export const RULES: Rule[] = [
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
+      "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
+      "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
