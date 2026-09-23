@@ -83,8 +83,7 @@
  *   bun run uploads:viz          # write
  *   bun run uploads:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, join } from "node:path";
 
 import { readLibraryGraph, type UploadItem } from "./library-graph.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
@@ -320,7 +319,8 @@ fetch(SRC).then(function(r){ return r.json(); }).then(function(d){
  * graphs while the index lists this instance's. Both are facts this generator
  * already holds, and neither is parsed back out of a path it just composed.
  */
-const emit = makeEmit({ check, onStale: () => { stale++; } });
+// No plain `emit` here: this generator writes pages and nothing else, so an
+// unused one would be dead code claiming a capability.
 const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {

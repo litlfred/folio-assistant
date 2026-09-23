@@ -43,8 +43,8 @@
  *   bun run voices:viz          # write
  *   bun run voices:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { rmSync } from "node:fs";
+import { basename, join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "./voices-graph.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";

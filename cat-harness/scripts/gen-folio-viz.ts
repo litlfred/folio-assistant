@@ -63,8 +63,8 @@
  *
  * Exit: 0 written or up to date · 1 stale under `--check`.
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { basename, join, relative } from "node:path";
 
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";

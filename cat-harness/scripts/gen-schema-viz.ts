@@ -59,8 +59,8 @@
  *   bun run schema:viz          # write
  *   bun run schema:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative, sep } from "node:path";
+import { rmSync } from "node:fs";
+import { basename, join, relative, sep } from "node:path";
 
 import { readSchemaGraph, schemaRoots, type SchemaGraph } from "./schema-graph.ts";
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";

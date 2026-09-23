@@ -160,13 +160,24 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
   // these pages ARE the handler's viewers, so `harness.json`'s visualisation
   // paths point at the family this page belongs to.
   const site = publishedGraphs(o.built, instance, toRoot);
-  const links: NavItem[] = declaredGraphs(instance, new Map(), site).map((item) =>
-    // WHERE AM I. The row that opens this very page is marked, rather than the
-    // reader having to recognise it. Compared against the resolved href rather
-    // than the kind, because a kind may be published at a path that does not
-    // contain its name.
-    item.href !== undefined && item.href === `${toRoot}${here}` ? { ...item, current: true } : item,
-  );
+  const links: NavItem[] = declaredGraphs(instance, new Map(), site).map((item) => {
+    // WHERE AM I — and the row loses its HREF, not just gains a mark.
+    //
+    // `state-visualizer.test.ts` states the rule this repository already
+    // holds: *"A link to here is a control that does nothing, and a reader who
+    // clicks it learns only that it did nothing. The current row is plain
+    // text."* The first version of this marked the row and kept the link, and
+    // that test is what caught it — on the `/beans/` page, whose rail then
+    // carried `href="../beans/"`. It is the same `l4zi` shape as an action
+    // whose inverse is not reachable: a control that cannot do anything is
+    // not a control.
+    //
+    // Compared against the RESOLVED href rather than the kind, because a kind
+    // may be published at a path that does not contain its name.
+    if (item.href === undefined || item.href !== `${toRoot}${here}`) return item;
+    const { href: _here, ...rest } = item;
+    return { ...rest, current: true };
+  });
 
   const harnesses = instantiatedHarnesses(o.built, toRoot);
   return injectRail(html, {
