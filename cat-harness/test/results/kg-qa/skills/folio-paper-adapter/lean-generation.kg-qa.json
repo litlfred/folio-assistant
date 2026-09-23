@@ -27,12 +27,26 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
+    "pass": 4,
     "fail": 1,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/lean-generation.md",
+      "code": "cat-harness/skills/folio-paper-adapter/lean-generation.ts",
+      "prose_hash": "3026253c1541",
+      "code_hash": "8ff7845b28d8",
+      "by": "baseline"
+    }
+  ]
 }

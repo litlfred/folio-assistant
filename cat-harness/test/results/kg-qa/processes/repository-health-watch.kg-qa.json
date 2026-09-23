@@ -95,12 +95,26 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 10,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/repository-health-watch.bpmn",
+      "code": ".github/workflows/health-check.yml",
+      "prose_hash": "a81280594a53",
+      "code_hash": "a2658837ae85",
+      "by": "baseline"
+    }
+  ]
 }
