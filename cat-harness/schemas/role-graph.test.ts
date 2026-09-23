@@ -3,6 +3,7 @@
  * role's skills" — one test per join, plus the two compositions that are
  * deliberately NOT the same thing.
  */
+import { readPolicyGrants } from "./odrl.ts";
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -315,8 +316,9 @@ describe("permissions are an actor property, not a role property", () => {
   test("a permission genuinely cross-cuts roles — which is why it cannot live on Role", () => {
     // This is the measurement that falsified the obvious design. If a future
     // change makes every permission role-uniform, revisit the model; until
-    // then, moving them to Role reintroduces the 36 conflicts.
-    const actors = readActors(actorsDir);
+    // then, moving them to Role reintroduces the 36 conflicts. The grants are
+    // read from the ODRL policies since issue #1180; the measurement is the same.
+    const actors = readActors(actorsDir, readPolicyGrants(join(import.meta.dir, "..", "policies")));
     const rolesOf = (perm: string) =>
       new Set(actors.filter((a) => (a.permissions ?? []).includes(perm)).flatMap((a) => a.roles ?? []));
     expect(rolesOf("content-authoring").size).toBeGreaterThan(1);

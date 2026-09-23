@@ -47,6 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
+import { readPolicyGrants } from "../schemas/odrl.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
@@ -1011,6 +1012,11 @@ function registryFields(
 
 function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
+  // What an actor may do lives in the ODRL policies since issue #1180, not on
+  // the actor file. Restored here so `permissionName` still says what it held.
+  // declared-path-literal: the convention home of the policies graph kind,
+  // resolved beside the actor registry this function already reads by path.
+  const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
     const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
     if (!existsSync(abs)) continue;
@@ -1019,6 +1025,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
       try {
         const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
         const id = String(d.id ?? d.name ?? f.slice(0, -5));
+        if (group === "actors" && d.permissions === undefined && grants.has(id)) d.permissions = grants.get(id);
 
         // The registry files carry `id` and `type` of their own, and spreading
         // them verbatim put BOTH a keyword and its alias on 71 nodes: `id`
