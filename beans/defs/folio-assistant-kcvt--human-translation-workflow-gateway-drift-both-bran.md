@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kcvt
 title: 'human-translation-workflow Gateway_Drift: both branches go to Task_SMEReview'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-23T16:26:05Z
-updated_at: 2026-09-23T16:42:42Z
+updated_at: 2026-09-23T16:42:50Z
 parent: folio-assistant-1swy
 ---
 
@@ -14,6 +14,6 @@ processes/human-translation-workflow.bpmn: Gateway_Drift ('Drift detected?') has
 Found by the gateway documentation criteria (#1051, bean 6hq4), left open when issue #1044 closed.
 
 ## Done when
-- [ ] decide the intended routing from the translation skill(s) and round-trip QA docs; ask the owner if they do not settle it
-- [ ] fix the flow (or remove the gateway), give it documentation
-- [ ] regenerate render:bpmn / processes:viz / kg:audit; gates green
+- [x] decide the intended routing — settled by the sources: translation-manager says "route drift to a human reviewer", bean ktt2 says which reading is right "is a human call", and the diagram's own lane documentation says a clean round-trip is "evidence for the reviewer, never a bypass of them". Both branches reaching Task_SMEReview was correct; the gateway was redundant
+- [x] gateway removed; F14 (`findings attached`) goes straight to Task_SMEReview, and Task_RoundTripQA's documentation says why no gateway follows
+- [x] regenerate render:bpmn / processes:viz / kg:audit; gates green
