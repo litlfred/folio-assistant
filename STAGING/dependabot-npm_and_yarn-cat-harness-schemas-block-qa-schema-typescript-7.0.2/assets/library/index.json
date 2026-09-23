@@ -1,13 +1,25 @@
 {
   "$schema": "folio-library-index/v1",
   "tile": {
-    "library": {
-      "count": 8,
-      "unit": "entries"
-    },
     "uploads": {
       "count": 20,
       "unit": "waiting"
+    },
+    "agent-skills-library": {
+      "count": 4,
+      "unit": "entries"
+    },
+    "library": {
+      "count": 2,
+      "unit": "entries"
+    },
+    "folio-assistant-sci-library": {
+      "count": 1,
+      "unit": "entry"
+    },
+    "who-iris-library": {
+      "count": 3,
+      "unit": "entries"
     }
   },
   "entries": [
@@ -39,7 +51,14 @@
       "bytes": 59920,
       "upload": "match",
       "uploadInstance": "folio-assistant",
-      "referencedBy": []
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "agent-skills",
+          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
+          "count": 11
+        }
+      ]
     },
     {
       "id": "arxiv-2608.08453v1",
@@ -69,7 +88,14 @@
       "bytes": 96846,
       "upload": "match",
       "uploadInstance": "folio-assistant",
-      "referencedBy": []
+      "referencedBy": [
+        {
+          "kind": "voices",
+          "instance": "agent-skills",
+          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
+          "count": 3
+        }
+      ]
     },
     {
       "id": "rfc2119-key-words-requirement-levels",
@@ -144,6 +170,66 @@
           "count": 2
         }
       ]
+    },
+    {
+      "id": "gurel-tat-2017-swot-analysis",
+      "instance": "cat-harness",
+      "dir": "cat-harness/library/gurel-tat-2017-swot-analysis",
+      "title": "gurel-tat-2017-swot-analysis",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "gurel-tat-2017-swot-analysis",
+      "sourceFile": "gurel-tat-2017-swot-analysis.pdf",
+      "sourceSha256": "e303cb06af559cf5a4d1a35c8971eb634580330a71deefa9aca4f31b851cc941",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 13,
+      "blocks": 21,
+      "images": 22,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 13,
+      "words": 7285,
+      "chars": 50936,
+      "bytes": 2064585,
+      "upload": "match",
+      "uploadInstance": "cat-harness",
+      "referencedBy": []
+    },
+    {
+      "id": "sammut-bonnici-galea-2015-swot-analysis",
+      "instance": "cat-harness",
+      "dir": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis",
+      "title": "sammut-bonnici-galea-2015-swot-analysis",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "sammut-bonnici-galea-2015-swot-analysis",
+      "sourceFile": "sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "sourceSha256": "013951cbb83c3d657f0427cf7e008c61da71a4afee85cc0a04eb743a8dd0bfb5",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 9,
+      "blocks": 9,
+      "images": 4,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 9,
+      "words": 4001,
+      "chars": 27610,
+      "bytes": 62587,
+      "upload": "match",
+      "uploadInstance": "cat-harness",
+      "referencedBy": []
     },
     {
       "id": "milnorlink",
@@ -314,6 +400,18 @@
   ],
   "uploads": [
     {
+      "file": "gurel-tat-2017-swot-analysis.pdf",
+      "kind": "file",
+      "instance": "cat-harness",
+      "path": "cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf",
+      "bytes": 1433047,
+      "ext": "pdf",
+      "ingestedBy": "gurel-tat-2017-swot-analysis",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "milnorlink.pdf",
       "kind": "file",
       "instance": "cat-harness",
@@ -321,6 +419,18 @@
       "bytes": 1419996,
       "ext": "pdf",
       "ingestedBy": "milnorlink",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "kind": "file",
+      "instance": "cat-harness",
+      "path": "cat-harness/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "bytes": 661964,
+      "ext": "pdf",
+      "ingestedBy": "sammut-bonnici-galea-2015-swot-analysis",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -642,7 +752,7 @@
       "kind": "intake",
       "instance": "who-iris",
       "path": "who-iris/uploads/wpr-rdo-2020-003-eng",
-      "bytes": 4595507,
+      "bytes": 4595541,
       "ext": "",
       "ingestedBy": "wpr-rdo-2020-003-eng",
       "docId": "wpr-rdo-2020-003-eng",
@@ -654,8 +764,8 @@
     {
       "instance": "cat-harness",
       "dir": "cat-harness/uploads",
-      "total": 1,
-      "ingested": 1,
+      "total": 3,
+      "ingested": 3,
       "uningested": 0
     },
     {
@@ -674,7 +784,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1443,
+    "filesRead": 1543,
     "unreadable": []
   }
 }
