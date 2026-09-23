@@ -143,8 +143,11 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
       // (bean txut; 7ofc's ruling for the folio visualiser). It imports
-      // nothing; build-document-site (core) calls it, core -> harness.
+      // only harness modules (the diff renderers and their registry, bean
+      // d903); build-document-site (core) calls it, core -> harness.
       "scripts/gen-review-page.ts",
+      "scripts/review-renderers.ts",     // the diff renderers the review page embeds (bean `d903`)
+      "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -338,6 +341,7 @@ export const RULES: Rule[] = [
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
+      "schemas/diff-renderers.ts",           // the review page's diff renderers, declared as data (bean `d903`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
       // twenty lines up, and it arrived the same way: classified core first
       // because a badge is something a reader sees, and `check:partition`

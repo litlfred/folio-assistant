@@ -8,7 +8,7 @@ import { mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync } from "node:
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { ChangeSetSchema, compareSnapshots, computeChangeSet, snapshot } from "./changeset.js";
+import { ChangeSetSchema, ChangeSetTextSchema, compareSnapshots, computeChangeSet, computeWithText, snapshot } from "./changeset.js";
 
 interface Blk {
   slug: string;
@@ -169,5 +169,40 @@ describe("ChangeSet", () => {
     const cs = computeChangeSet({ repoRoot: repo, folio: "folio", base });
     expect(cs.summary).toMatchObject({ added: 1, removed: 0, changed: 0 });
     expect(compareSnapshots(new Map(), snapshot(join(repo, "folio"))).summary.added).toBe(1);
+  });
+});
+
+describe("changeset-text (bean d903): what the diff renderers read", () => {
+  it("carries both sides of a changed block, the head of an added one, the base of a removed one — and nothing unchanged", () => {
+    const f = fixture(LAYOUT, ABC);
+    f.put({ slug: "b", label: "def:b", prose: "Reworded **now**.\n" });
+    f.put({ slug: "z", label: "def:z", prose: "New block.\n" });
+    f.drop("d");
+    f.layout({ "sec:one": ["a", "b", "c", "z"], "sec:two": [] });
+    const base = git(f.repo, "rev-parse", "HEAD");
+    const { changeset, text } = computeWithText({ repoRoot: f.repo, folio: "folio", base, head: "worktree" }, true);
+    expect(ChangeSetTextSchema.safeParse(text).success).toBe(true);
+    const t = text!.blocks;
+    expect(Object.keys(t).sort()).toEqual(changeset.changes.map((c) => c.label).sort());
+    expect(t["def:b"]!.base!.prose).toBe("Prose of def:b.\n");
+    expect(t["def:b"]!.head!.html).toContain("<strong>now</strong>");
+    expect(t["def:z"]).toEqual({ head: { prose: "New block.\n", html: expect.stringContaining("New block.") } });
+    expect(t["def:d"]!.head).toBeUndefined();
+    expect(t["def:a"]).toBeUndefined();
+  });
+
+  it("a renamed block's base text is read under its OLD label and filed under the new one", () => {
+    const f = fixture(LAYOUT, ABC);
+    f.put({ slug: "b", label: "def:bee", renamedFrom: ["def:b"], prose: "Renamed and reworded.\n" });
+    const base = git(f.repo, "rev-parse", "HEAD");
+    const { text } = computeWithText({ repoRoot: f.repo, folio: "folio", base, head: "worktree" }, true);
+    expect(text!.blocks["def:bee"]!.base!.prose).toBe("Prose of def:b.\n");
+    expect(text!.blocks["def:bee"]!.head!.prose).toBe("Renamed and reworded.\n");
+  });
+
+  it("the ChangeSet itself never carries the prose path", () => {
+    const f = fixture(LAYOUT, ABC);
+    f.put({ slug: "b", label: "def:b", prose: "x\n" });
+    expect(JSON.stringify(f.run())).not.toContain("mdPath");
   });
 });
