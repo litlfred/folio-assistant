@@ -5,7 +5,7 @@
     "id": "Process_GraphDetanglement",
     "path": "processes/graph-detanglement.bpmn"
   },
-  "source_hash": "sha256:3e4461c4eac89c1802d8211149215b363403b645443b92b2fc54b45c61432928",
+  "source_hash": "sha256:7964cc1291dcbb30fc1458b3b846253c2a247fe1623fffe022872b7d0df3d8fa",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,21 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Declared",
-          "detail": "\"Declared&#10;in place?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Detangled",
-          "detail": "\"Detangled?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Isolated",
-          "detail": "\"Stands&#10;alone?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +89,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 6,
     "unknown": 0
   }

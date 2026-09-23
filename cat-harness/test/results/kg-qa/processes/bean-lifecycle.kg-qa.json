@@ -5,7 +5,7 @@
     "id": "Process_BeanLifecycle",
     "path": "processes/bean-lifecycle.bpmn"
   },
-  "source_hash": "sha256:a45e2952823adb07ba76c448f1f0d1f3983cb2715b1169031f050fd06b279fac",
+  "source_hash": "sha256:909a4a891e2f9bcf0fb93d893af505fe905066849421b18c61160b5235131b76",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,21 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Exists",
-          "detail": "\"Already exists?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Owner",
-          "detail": "\"Whose bean?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Outcome",
-          "detail": "\"Outcome?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +89,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
+    "pass": 12,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

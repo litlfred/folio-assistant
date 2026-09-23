@@ -39,11 +39,11 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Could we&#10;tell?**<br>`GW_Determined` | — | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
-| **Any&#10;findings?**<br>`GW_Finding` | — | **clean** → Close the&#10;tracking issue<br>**not clean** → Open or EDIT the one&#10;tracking issue |
+| **Could we&#10;tell?**<br>`GW_Determined` | Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one. | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any&#10;findings?**<br>`GW_Finding` | Asked of the same `verdict`. `clean` is verdict == 'clean': the `repo-health` tracking issue is closed. `not clean` is verdict == 'findings': the one tracking issue is opened or edited in place with the report. A finding does not fail the job; only `unknown` does. | **clean** → Close the&#10;tracking issue<br>**not clean** → Open or EDIT the one&#10;tracking issue |
 
 {% endraw %}

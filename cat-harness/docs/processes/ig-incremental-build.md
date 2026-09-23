@@ -58,13 +58,13 @@ Every one of the 18 step(s) is documented.
 
 ## Decisions
 
-**4** of 4 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 4 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Cache usable?**<br>`Gateway_Restore` | — | **yes** → Compute the cone of the change (fsh-cone --changed)<br>**no** → Full publisher build |
-| **Valid?**<br>`Gateway_Valid` | — | **no** → Log findings on the bean<br>**yes** → Re-render the cone's records (fhir_narrative · skip lists) |
-| **QC clean?**<br>`Gateway_QcPass` | — | **no** → File QC findings as beans<br>**yes** → PR branch, or main / release? |
-| **PR branch, or main / release?**<br>`Gateway_Path` | — | **PR branch** → Deploy the preview site<br>**main / release** → Deploy the site [content-publish] |
+| **Cache usable?**<br>`Gateway_Restore` | Answered by the exit code of `ig-cache restore` (Task_Restore): 0 is a usable cache and takes `yes`, into the cone machinery. 1 (a miss) or 3 (present, but the toolchain moved) takes `no`, to the full publisher build, whose outputs become the records the next seed writes. Exit 2 (an environment error) is not routed by either branch in this diagram. | **yes** → Compute the cone of the change (fsh-cone --changed)<br>**no** → Full publisher build |
+| **Valid?**<br>`Gateway_Valid` | Answered by Task_Validate — the cone's resources checked against the warm validator. `yes` goes on to re-render the cone's records. `no` logs the findings on the change's bean and returns them to the author. A validator that could not start is could-not-determine, which Task_Validate's documentation says is never a pass, so it does not take `yes`; and a green cone is not a green IG, since a profile the change did not touch can still be broken by it. | **no** → Log findings on the bean<br>**yes** → Re-render the cone's records (fhir_narrative · skip lists) |
+| **QC clean?**<br>`Gateway_QcPass` | Decided in the reviewer's QC gate (Task_Qa, `quality-control`) over qa.json, the aggregate of per-artefact outcomes, reading the cone's rows first. `no` files each QC finding as a bean, checking for an existing one first, and returns the findings to the author. `yes` goes on to deploy. | **no** → File QC findings as beans<br>**yes** → PR branch, or main / release? |
+| **PR branch, or main / release?**<br>`Gateway_Path` | Answered by the push that started the process. `PR branch` is the review path: deploy the preview, which never seeds the shared cache. `main / release` is the publish path: deploy the site after a human has authorised the release, then seed the cache, which writes to a -test branch, verifies a restore from a clean clone, and only then promotes. Only this branch reaches the lane allowed to touch the shared cache. | **PR branch** → Deploy the preview site<br>**main / release** → Deploy the site [content-publish] |
 
 {% endraw %}

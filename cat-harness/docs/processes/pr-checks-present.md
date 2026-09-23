@@ -40,11 +40,11 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Could we&#10;tell?**<br>`GW_Determined` | — | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
-| **Any head&#10;with no run?**<br>`GW_Finding` | — | **none** → Close the&#10;tracking issue<br>**one or more** → Open or EDIT the one&#10;tracking issue |
+| **Could we&#10;tell?**<br>`GW_Determined` | Asked of the `verdict` output of the `Sweep` step in .github/workflows/pr-checks-present.yml, which runs `check:prs-have-runs --min-age-minutes 15`. Exit 0 is clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is reclassified as could-not-determine, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `pr-no-checks` label. | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any head&#10;with no run?**<br>`GW_Finding` | Asked of the same `verdict`. `none` is verdict == 'clean': every open PR's head older than 15 minutes has a run, and the tracking issue is closed. `one or more` is verdict == 'findings': the one tracking issue is opened or edited in place, and the workflow also comments once on each affected pull request. | **none** → Close the&#10;tracking issue<br>**one or more** → Open or EDIT the one&#10;tracking issue |
 
 {% endraw %}

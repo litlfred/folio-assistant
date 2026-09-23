@@ -5,7 +5,7 @@
     "id": "Process_UpstreamPinWatch",
     "path": "processes/upstream-pin-watch.bpmn"
   },
-  "source_hash": "sha256:1308423041525e51d267abb0ebe19b1b92b364791f5f7ab880b79ee4d963c3a6",
+  "source_hash": "sha256:b46143d9eb07e4c7e98ee7bb08a2f98af20dd7e1109d92001e46e4d82144d1f7",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,17 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Determined",
-          "detail": "\"Could we tell?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Stale",
-          "detail": "\"Behind a release?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -98,8 +89,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 6,
     "unknown": 0
   }

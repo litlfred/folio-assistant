@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:145ef3f79104859f145746faf010362b95c5abd31464ccb01d00040cf9c3734f",
+  "source_hash": "sha256:bfe3c0b4c66c5efd0ce992248b18c3d33241237b97162500ad0ee86bb3c0c406",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,17 +97,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Determined",
-          "detail": "\"Could we&#10;tell?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Finding",
-          "detail": "\"Anything red&#10;on main?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -115,8 +106,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 11,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

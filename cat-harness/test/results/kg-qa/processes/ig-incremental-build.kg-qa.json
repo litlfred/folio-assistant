@@ -5,7 +5,7 @@
     "id": "Process_IgIncremental",
     "path": "processes/ig-incremental-build.bpmn"
   },
-  "source_hash": "sha256:6958f0eb580bdfab17a5b875c9128a9a4e1bbeeff2ee113d3f7502a931c69e47",
+  "source_hash": "sha256:ee596bd59a495ae7f253b60eab94d87fecd2517403072dc52e72262bf44c4ab6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,25 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_Restore",
-          "detail": "\"Cache usable?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_Valid",
-          "detail": "\"Valid?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_QcPass",
-          "detail": "\"QC clean?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_Path",
-          "detail": "\"PR branch, or main / release?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -106,8 +89,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

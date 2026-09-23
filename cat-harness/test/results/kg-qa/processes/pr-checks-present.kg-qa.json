@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:cec39a61cf16170c4ff5159dc85198d0cf78ea69cf31b2141a8fc446b7625b81",
+  "source_hash": "sha256:7735b8cefaf929b6d76c6ab9626d6eae7b2eb83fb28604255652ddf512a86cd0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,17 +101,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Determined",
-          "detail": "\"Could we&#10;tell?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Finding",
-          "detail": "\"Any head&#10;with no run?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -119,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 11,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

@@ -44,12 +44,12 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Already exists?**<br>`GW_Exists` | — | **no** → Create the bean (agent CLI, not an engine op)<br>**yes** → Whose bean? |
-| **Whose bean?**<br>`GW_Owner` | — | **someone else's** → Leave it alone (coordinate instead)<br>**mine / unclaimed** → Claim it (status: in-progress) |
-| **Outcome?**<br>`GW_Outcome` | — | **done** → Complete (no unchecked todos left)<br>**not wanted** → Scrap with reasons NEVER delete<br>**blocked** → Record the blocker and hand back |
+| **Already exists?**<br>`GW_Exists` | Answered by the exact-title check before it (`todo-manager` §'Check before you create'): `beans list --json --search` followed by an exact comparison of titles, since `--search` is fuzzy. `no` (0 exact matches) creates the bean. `yes` (1 or more) does not create a second one — `beans create` mints a fresh id every call and dedupes on nothing — and asks whose the existing bean is. | **no** → Create the bean (agent CLI, not an engine op)<br>**yes** → Whose bean? |
+| **Whose bean?**<br>`GW_Owner` | Answered from the existing bean and its surroundings (`bean-coordination`). `someone else's` means a sibling is mid-flight on it: a claim naming a branch, a recent note, or an open PR. That bean is left alone and the lifecycle ends here. `mine / unclaimed` claims it. A claim is branch-local, so check the bean's status on origin/main and the open PRs naming it, not only the copy on your branch. | **someone else's** → Leave it alone (coordinate instead)<br>**mine / unclaimed** → Claim it (status: in-progress) |
+| **Outcome?**<br>`GW_Outcome` | The performer's judgement on the work, and one of three recorded endings. `done`: complete it only when no todo is unchecked, with a summary of what changed. `not wanted`: set it `scrapped` with a 'Reasons for Scrapping' section — never delete. `blocked`: record what it waits on with `--blocked-by`, say what would unblock it, and return it to `todo`, because an in-progress bean nobody is progressing reads as active work. | **done** → Complete (no unchecked todos left)<br>**not wanted** → Scrap with reasons NEVER delete<br>**blocked** → Record the blocker and hand back |
 
 {% endraw %}

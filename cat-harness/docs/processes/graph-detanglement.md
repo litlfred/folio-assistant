@@ -45,12 +45,12 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Declared&#10;in place?**<br>`GW_Declared` | — | **unknown** → UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean<br>**declared** → 2a &#183; Measure &#8212; unassigned&#10;column FIRST<br>**not yet** → 1 &#183; Declare in place&#10;(nothing moves) |
-| **Detangled?**<br>`GW_Detangled` | — | **unknown** → UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean<br>**keep detangling** → 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong<br>**detangled** → 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact |
-| **Stands&#10;alone?**<br>`GW_Isolated` | — | **not yet** → 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact<br>**isolated** → Report what would move&#10;&#8212; sizes, and what breaks |
+| **Declared&#10;in place?**<br>`GW_Declared` | Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (`readable`), an entry present for the sub-graph, and every declared path exists. Unparseable goes to `unknown`, a fault rather than 'not yet', and stops the process. No entry, or a declared path that does not exist (bean `dh4f`), goes to `not yet`, back to Declare. Otherwise `declared`, on to Measure. | **unknown** → UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean<br>**declared** → 2a &#183; Measure &#8212; unassigned&#10;column FIRST<br>**not yet** → 1 &#183; Declare in place&#10;(nothing moves) |
+| **Detangled?**<br>`GW_Detangled` | Computed from `check:partition`'s counts by decisions/detanglement-gate.dmn (hit policy FIRST). `unassignedEdges > 0` answers `unknown` BEFORE the cross-edge rule is reached, because a zero cross-edge count over an unjudged corpus is not a pass; that stops the process. `crossEdges > 0` answers `keep detangling`: prune, merge, factor, or reclassify, then re-measure. Zero of both is `detangled`, on to Isolate. | **unknown** → UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean<br>**keep detangling** → 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong<br>**detangled** → 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact |
+| **Stands&#10;alone?**<br>`GW_Isolated` | Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers `not yet`, back to Isolate. All three answer `isolated`, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation. | **not yet** → 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact<br>**isolated** → Report what would move&#10;&#8212; sizes, and what breaks |
 
 {% endraw %}
