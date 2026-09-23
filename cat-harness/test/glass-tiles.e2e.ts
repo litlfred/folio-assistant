@@ -65,6 +65,9 @@ const TODOS = {
   ],
 };
 
+/** The folio's DECLARED zoom — the same shape as `assets/semantic-zoom.json`. */
+const ZOOM = { belowPx: 220, byKind: { todo: { belowPx: 300, because: "a todo needs more room" } } };
+
 test.beforeEach(async ({ page }) => {
   await page.route("http://replica.test/**", (route) => {
     const url = new URL(route.request().url());
@@ -74,6 +77,9 @@ test.beforeEach(async ({ page }) => {
     }
     if (url.pathname === "/assets/todos/index.json") {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(TODOS) });
+    }
+    if (url.pathname === "/assets/semantic-zoom.json") {
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(ZOOM) });
     }
     if (url.pathname === COVER) return route.fulfill({ contentType: "image/png", body: PNG });
     return route.fulfill({ status: 404, body: "not found" });
@@ -232,7 +238,7 @@ test.describe("the Settings tile", () => {
     await open(page);
     await page.click('[data-fa-glass-chrome="glass-settings"]');
     await page.check("#fa-glass-theme-paper");
-    await page.click(".fa-glass-reset");
+    await page.click(".fa-glass-defaults");
     await expect(page.locator(layer)).toHaveAttribute("data-fa-glass-theme", "glass");
     await expect(page.locator(".fa-glass-opacity-value")).toHaveText("20%");
   });
@@ -243,5 +249,101 @@ test.describe("the Settings tile", () => {
     await shut(page);
     await open(page);
     await expect(page.locator(".fa-glass-panel")).toBeHidden();
+  });
+});
+
+test.describe("cards on the glass move, resize and zoom — the glass is a surface", () => {
+  const book = '.fa-glass-asset[data-fa-asset="who-iris/book"]';
+  const pull = async (page: Page) => {
+    await page.click('[data-fa-library-item="who-iris/book"] .fa-pullout');
+    await open(page);
+    await expect(page.locator(book)).toBeVisible();
+  };
+  const leftOf = (page: Page) => page.locator(book).evaluate((n) => parseFloat((n as HTMLElement).style.left));
+  const widthOf = (page: Page) => page.locator(book).evaluate((n) => parseFloat((n as HTMLElement).style.width));
+
+  test("the keyboard moves a card: Move, then arrows, then Escape", async ({ page }) => {
+    await pull(page);
+    const before = await leftOf(page);
+    await page.locator(`${book} [data-fa-control="move"]`).click();
+    await expect(page.locator(book)).toHaveAttribute("data-fa-moving", "true");
+    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("ArrowRight");
+    expect(await leftOf(page)).toBe(before + 32);
+    await page.keyboard.press("Escape");
+    await expect(page.locator(book)).toHaveAttribute("data-fa-moving", "false");
+    // Escape left MOVE MODE, not the glass.
+    await expect(page.locator(layer)).toHaveAttribute("data-fa-glass", "open");
+  });
+
+  test("where a card was put survives a reload", async ({ page }) => {
+    await pull(page);
+    const before = await leftOf(page);
+    await page.locator(`${book} [data-fa-control="move"]`).click();
+    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("Escape");
+    await page.reload();
+    await page.waitForSelector(handle, { state: "attached" });
+    await open(page);
+    expect(await leftOf(page)).toBe(before + 16);
+  });
+
+  test("a drag moves it too — the accelerator, over the keyboard path", async ({ page }) => {
+    await pull(page);
+    const box = (await page.locator(`${book} .fa-glass-avatar`).boundingBox())!;
+    // The avatar is INSIDE its own card. A 112px card once drew a 78px cover
+    // over its top edge, clipped, and a press on the cover missed the card.
+    const card = (await page.locator(book).boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(card.y);
+    expect(box.y + box.height).toBeLessThanOrEqual(card.y + card.height);
+    const before = await leftOf(page);
+    await page.mouse.move(box.x + 5, box.y + 5);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 65, box.y + 45, { steps: 4 });
+    await page.mouse.up();
+    expect(await leftOf(page)).toBe(before + 60);
+
+  });
+
+  test("the − button shrinks it, and below the DECLARED width it zooms to its avatar", async ({ page }) => {
+    await pull(page);
+    const card = page.locator(book);
+    await expect(card).toHaveAttribute("data-fa-zoom", "card");
+    await expect(card.locator(".fa-glass-asset-name")).toBeVisible();
+    const w = await widthOf(page);
+    await card.locator('button[aria-label="Make A handbook smaller"]').click();
+    expect(await widthOf(page)).toBe(w - 48);
+    // 288 → 240 → 192: 192 is below the declared 220.
+    await card.locator('button[aria-label="Make A handbook smaller"]').click();
+    await expect(card).toHaveAttribute("data-fa-zoom", "avatar");
+    await expect(card.locator(".fa-glass-asset-name")).toBeHidden();
+    await expect(card.locator(".fa-glass-avatar img")).toBeVisible();
+    // The name is still the card's accessible name.
+    await expect(card).toHaveAttribute("aria-label", "A handbook");
+    await card.locator('button[aria-label="Make A handbook larger"]').click();
+    await expect(card).toHaveAttribute("data-fa-zoom", "card");
+  });
+
+  test("a todo starts wide enough for ITS declared threshold, so it starts with words", async ({ page }) => {
+    await open(page);
+    await page.click('[data-fa-glass-chrome="glass-todos"]');
+    await page.locator('[data-fa-library-item="todo/t-one"] .fa-pullout').click();
+    const card = page.locator('.fa-glass-asset[data-fa-asset="todo/t-one"]');
+    await expect(card).toHaveAttribute("data-fa-zoom", "card");
+    const w = await card.evaluate((n) => parseFloat((n as HTMLElement).style.width));
+    expect(w).toBeGreaterThanOrEqual(300);
+  });
+
+  test("Tidy puts every card back in the grid, and nothing leaves the glass", async ({ page }) => {
+    await pull(page);
+    const home = await leftOf(page);
+    await page.locator(`${book} [data-fa-control="move"]`).click();
+    for (let i = 0; i < 5; i++) await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("Escape");
+    expect(await leftOf(page)).toBe(home + 80);
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
+    await page.click(".fa-glass-tidy");
+    await expect(page.locator(book)).toBeVisible();
+    expect(await leftOf(page)).toBe(home);
   });
 });

@@ -3180,22 +3180,41 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   border-width: 2px;
   box-shadow: none;
 }
+/* THE SHELF IS A SURFACE, not a list: each card carries its own left/top/
+   width/height (set by the script from the reader's saved place, or a grid),
+   and the shelf is as tall as its lowest card so what follows sits below. */
 .fa-glass-shelf {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-  margin: 1rem auto 0;
-  max-width: 60rem;
+  position: relative;
+  margin: 1rem 0 0;
 }
 .fa-glass-asset {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  overflow: auto;
+  border-radius: var(--fa-folio-radius, 0);
+}
+.fa-glass-asset-face {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  width: min(20rem, 100%);
-  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
-  border-radius: var(--fa-folio-radius, 0);
+  min-height: 4.85rem;
+  flex: 1 1 auto;
+  cursor: grab;
 }
+.fa-glass-asset-tools { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+.fa-glass-asset[data-fa-moving="true"] {
+  outline: 3px dashed var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+/* SEMANTIC ZOOM: below the declared width, the avatar alone. The NAME is
+   still the card's accessible name (`aria-label`), so a reader who cannot see
+   the picture loses nothing by the zoom. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-name { display: none; }
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-face { justify-content: center; }
 .fa-glass-avatar {
   flex: 0 0 auto;
   width: 3.5rem;
@@ -3218,7 +3237,7 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   overflow-wrap: anywhere;
 }
 a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; }
-.fa-glass-asset-close,
+.fa-glass-asset-tool,
 .fa-glass-panel-close,
 .fa-glass-step {
   flex: 0 0 auto;
@@ -3317,6 +3336,8 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-opacity input[type="range"] { flex: 1 1 auto; min-width: 6rem; height: 2.75rem; }
 .fa-glass-opacity-value { min-width: 3.5rem; font-variant-numeric: tabular-nums; font-weight: 700; }
 .fa-glass-reset {
+  display: block;
+  margin: 0.5rem 0;
   min-height: 2.75rem;
   padding: 0 1rem;
   border: 1px solid var(--fa-glass-edge);

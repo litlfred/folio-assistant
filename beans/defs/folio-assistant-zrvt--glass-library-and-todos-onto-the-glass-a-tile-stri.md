@@ -49,7 +49,23 @@ So the measurement below was right about the cause, and the default look is the 
 - **Found by a gate:** the lazy `avatars.css` link was an unchecked href. `href-safety.test.ts` caught it, and the link now goes through `safeHref`.
 - **Found by e2e:** a later `.fa-glass-sheet` rule overrode the strip's bottom padding, so the strip covered the settings panel's last control. The padding is now merged into that one rule, with `scroll-padding-bottom`.
 
+## Round 2, 2026-09-23 — the glass is a surface: cards move, resize and zoom
+
+The owner, asked what next: **"Add card moving next"**.
+
+- **One move implementation.** Glass cards call `wireMove`, the same function the board window and the floating sticky use: ✥ enters move mode, arrows move, Shift+arrows resize, Escape or Enter leaves, and drag works on top. `wireMove` gains ONE optional argument, `onSettle(geometry)`. The glass passes a saver; the other two callers pass nothing and keep their session-only geometry.
+- **Position is per reader, saved on the folio entry** (`placeOnGlass`), so an asset and its place cannot disagree about whether the asset exists. Placing a card does NOT announce a change, because a repaint mid-move would rebuild the card under the pointer.
+- **Size has buttons** (−/+) because Shift+arrow is a chord, and the declared profile is low-dexterity.
+- **Zoom is semantic, from the DECLARATION.** Below `semantic-zoom.json`'s width for the card's kind (220px; 300px for a todo), a card shows its avatar only, via `rendersAvatar`. There is no literal in the renderer. A replica page fetches the declaration itself. With no declaration, cards keep their words. A default card starts wide enough for its own kind's threshold, so a todo does not start zoomed out.
+- **Selecting a card raises it**, the owner's 2026-09-20 rule for windows.
+- **Tidy the glass** (in Settings) puts every card back in the grid. Nothing leaves the folio.
+- `wireMove` now also refuses to start a drag on a LINK, so a press on an asset's name opens it.
+
+### Found by a spec, not by reading
+
+The drag spec failed with left 0 → 0. The cause was a real layout defect, not a test problem: the default card was 112px tall, the cover avatar 78px, and the tool row 44px, so the cover drew ABOVE the card's top edge and was clipped. The press landed on the glass behind it. The card is now 152px tall, and the spec asserts the avatar sits inside its card.
+
 ## Not done
 
-- Semantic zoom and drag on glass cards. They are still a flex row, not positioned notes. That is `pv6g`/`624f`'s part.
-- The "cats" avatar option. The existing art avatars are per-THEME sticky backdrops, not per-item pictures. "Kind avatars" is the existing set that applies to an item.
+- The "cats" avatar option. The existing art avatars are per-THEME sticky backdrops, not per-item pictures, and "Kind avatars" is the existing per-item set.
+- `pv6g`'s HOME PANEL for a detached page sticky. That is still open and still waits on `z1ug`. What moves here are the reader's folio ASSETS; the board's floating stickies were already movable.

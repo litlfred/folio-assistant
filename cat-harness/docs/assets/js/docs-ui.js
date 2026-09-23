@@ -2735,7 +2735,15 @@
    * selection, and a reader who cannot select the text of a note cannot quote
    * it.
    */
-  function wireMove(panel, handle, live) {
+  function wireMove(panel, handle, live, onSettle) {
+    // `onSettle(geometry)`, OPTIONAL: told where the panel came to rest, once
+    // per arrow press and once per drag. The board window and the floating
+    // sticky pass nothing and keep their session-only geometry; the GLASS
+    // passes a saver, because an asset on the reader's glass is theirs across
+    // pages (bean `zrvt`). One implementation of moving, and the callers
+    // differ only in whether a position outlives the page.
+    function settle() { if (onSettle) onSettle(geometryOf(panel)); }
+
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
     panel.addEventListener("keydown", function (e) {
@@ -2744,11 +2752,13 @@
         e.preventDefault();
         e.stopPropagation();
         setMoveMode(panel, false, live);
+        panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
       if (nudge(panel, e.key, e.shiftKey)) {
         e.preventDefault();
         e.stopPropagation();
+        settle();
       }
     });
 
@@ -2758,7 +2768,10 @@
     handle.addEventListener("mousedown", function (e) {
       // Not on a control: a drag that started on `[x]` would fight the click
       // that closes the panel.
-      if (e.target.closest("[data-fa-control]") || e.target.closest("button")) return;
+      // Nor on a LINK: a drag that started on an asset's name would swallow
+      // the press a reader meant as "open it".
+      if (e.target.closest("[data-fa-control]") || e.target.closest("button") ||
+          e.target.closest("a")) return;
       from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
       e.preventDefault();
     });
@@ -2771,7 +2784,10 @@
         height: from.g.height,
       });
     });
-    document.addEventListener("mouseup", function () { from = null; });
+    document.addEventListener("mouseup", function () {
+      if (from) settle();
+      from = null;
+    });
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -3799,6 +3815,35 @@
   }
 
   /**
+   * Where an asset sits ON the glass — this reader's, in this browser.
+   *
+   * Stored on the folio entry rather than in a second map, so an asset and
+   * its place cannot disagree about whether the asset exists. DOES NOT
+   * announce: announcing repaints the glass, and a repaint in the middle of
+   * a move would rebuild the card under the reader's pointer and drop their
+   * focus. A position is not a change of state.
+   */
+  function placeOnGlass(key, geom) {
+    var all = folioAssets();
+    if (!all[key]) return;
+    all[key].geom = {
+      left: Math.max(0, Math.round(geom.left)),
+      top: Math.max(0, Math.round(geom.top)),
+      width: Math.round(geom.width),
+      height: Math.round(geom.height),
+    };
+    setFolioAssets(all);
+  }
+
+  /** Forget every position, so the glass lays itself out again. Nothing leaves the folio. */
+  function tidyGlass() {
+    var all = folioAssets();
+    Object.keys(all).forEach(function (k) { delete all[k].geom; });
+    setFolioAssets(all);
+    announceFolio("*", "tidied");
+  }
+
+  /**
    * THE LIBRARY'S HALF: pull an item out onto the glass, and put it back.
    *
    * `board-windows`, R30: *"Putting it back on the glass is a separate act
@@ -4100,6 +4145,22 @@
     var prefs = glassPrefs();
     applyGlassPrefs(layer, prefs);
     ensureAvatarsCss();
+    // THE ZOOM DECLARATION, for pages whose board never asked for it — a
+    // replica page has no board and no `fa-zoom-src` meta. Asked once; absent
+    // stays null, which keeps every card's words (see `zoomState`).
+    if (!zoomState.zoom) {
+      var zm = document.querySelector('meta[name="fa-zoom-src"]');
+      var zurl = (zm && zm.getAttribute("content")) || withBase("/assets/semantic-zoom.json");
+      fetch(zurl)
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          if (doc && typeof doc.belowPx === "number" && !zoomState.zoom) {
+            zoomState.zoom = doc;
+            Array.prototype.forEach.call(layer.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
+          }
+        })
+        .catch(function () { /* absent: every card keeps its words */ });
+    }
 
     // The handle. A BUTTON, not a div with a click: the disclosure, the focus
     // ring and the keyboard path are the browser's, and this instance's
@@ -4135,6 +4196,161 @@
     var notes = el("div", { class: "fa-glass-notes" });
     sheet.appendChild(notes);
 
+    /* ── A card ON the glass: placed, moved, sized, and zoomed ────────────
+     *
+     * The owner asked for the glass to be a SURFACE a note is placed on
+     * (`pv6g`), not a list. So each card carries its own geometry, and moving
+     * it is `wireMove` — the one implementation the board window and the
+     * floating sticky already share: keyboard first (✥ enters move mode,
+     * arrows move, Shift+arrows resize, Escape or Enter leaves), drag as the
+     * accelerator. The −/+ buttons are the low-dexterity path to size, since
+     * Shift+arrow is a chord.
+     *
+     * ZOOM IS SEMANTIC AND AUTOMATIC: below the folio's DECLARED width for
+     * the card's kind (`semantic-zoom.json`, via `rendersAvatar`), a card
+     * shows its avatar alone. No literal here, and no declaration means the
+     * card keeps its words at every size — `board-windows`: semantic zoom is
+     * driven by size, and a person's act is only the size they chose. */
+    var GLASS_CARD_W = 288;
+    // Tall enough for the avatar (4.75rem) AND the tool row (2.75rem) with
+    // padding. At 112 the cover overflowed the card's top edge and was
+    // clipped — measured by the drag spec, whose press landed on the glass
+    // behind a cover that was drawn outside its own card.
+    var GLASS_CARD_H = 152;
+    var GLASS_GAP = 12;
+    var raiseAt = 1;
+
+    function zoomKindOf(a) { return a.kind === "todos" ? "todo" : (a.kind || "library"); }
+
+    /** Where a card with no saved place goes: a grid, in key order. */
+    function defaultGlassGeom(a, i) {
+      var t = zoomThresholdFor(zoomKindOf(a));
+      // A DEFAULT card never starts zoomed out: at least the declared width
+      // plus a step, so the words show until the reader shrinks it.
+      var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
+      var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
+      var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
+      return {
+        left: (i % cols) * (w + GLASS_GAP),
+        top: Math.floor(i / cols) * (GLASS_CARD_H + GLASS_GAP),
+        width: w,
+        height: GLASS_CARD_H,
+      };
+    }
+
+    /** The shelf is as tall as its lowest card, so the notes and panel sit below the cards. */
+    function fitShelf() {
+      var bottom = 0;
+      Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), function (c) {
+        var g = geometryOf(c);
+        bottom = Math.max(bottom, g.top + g.height);
+      });
+      shelf.style.height = bottom ? bottom + GLASS_GAP + "px" : "";
+    }
+
+    function zoomGlassCard(card) {
+      var kind = card.getAttribute("data-fa-zoom-kind");
+      var w = card.getBoundingClientRect().width || parseFloat(card.style.width) || 0;
+      card.setAttribute("data-fa-zoom", rendersAvatar(kind, w) ? "avatar" : "card");
+    }
+
+    function buildGlassCard(key, a) {
+      var card = el("article", {
+        class: "fa-glass-asset",
+        "data-fa-asset": key,
+        "data-fa-asset-kind": a.kind || "library",
+        "data-fa-zoom-kind": zoomKindOf(a),
+        "aria-label": a.title,
+        tabindex: "-1",
+      });
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      var face = el("div", { class: "fa-glass-asset-face" });
+      var ava = glassAvatarFor(a, prefs.avatars);
+      if (ava) face.appendChild(ava);
+      // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
+      // store is `localStorage`, which the reader's own devtools can
+      // rewrite, so a value sanitised on the way in is not a value that is
+      // safe on the way out. The boundary is where the URL reaches an
+      // `href`, and that is here.
+      var href = safeHref(a.href);
+      face.appendChild(href
+        ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
+        : el("span", { class: "fa-glass-asset-name" }, a.title));
+      card.appendChild(face);
+
+      var tools = el("div", { class: "fa-glass-asset-tools" });
+      var moveBtn = el("button", {
+        type: "button",
+        class: "fa-glass-asset-tool",
+        "data-fa-control": "move",
+        "aria-label": "Move " + a.title + " around the glass",
+        "aria-pressed": "false",
+        title: "Move (arrow keys; Shift+arrows resize)",
+      }, CONTROL_GLYPHS.move || "\u271C");
+      moveBtn.addEventListener("click", function () {
+        var on = card.getAttribute("data-fa-moving") !== "true";
+        setMoveMode(card, on, live);
+        moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      card.addEventListener("fa:move-mode", function () {
+        moveBtn.setAttribute("aria-pressed", "false");
+        moveBtn.focus();
+      });
+      function resizeBy(d) {
+        var g = geometryOf(card);
+        var ratio = g.height / g.width;
+        g.width = Math.max(MIN_WINDOW, g.width + d);
+        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
+        applyGeometry(card, g);
+        placeOnGlass(key, g);
+        fitShelf();
+        zoomGlassCard(card);
+        live.textContent = (card.getAttribute("data-fa-zoom") === "avatar"
+          ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
+      }
+      var smaller = el("button", {
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " smaller",
+        title: "Smaller",
+      }, "\u2212");
+      var larger = el("button", {
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
+        title: "Larger",
+      }, "+");
+      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP); });
+      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP); });
+
+      // CLOSE, and the word matters. "Remove" and "delete" both say the
+      // asset stops being the reader's, which is exactly what does NOT
+      // happen -- `board-windows`: closing returns it to the middle state
+      // and never to the first. The label says where it goes.
+      var close = el("button", {
+        type: "button",
+        class: "fa-glass-asset-tool fa-glass-asset-close",
+        "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
+        title: "Back in library view (stays in your folio)",
+      }, "×");
+      close.addEventListener("click", function () { shelveFromGlass(key); });
+      tools.appendChild(moveBtn);
+      tools.appendChild(smaller);
+      tools.appendChild(larger);
+      tools.appendChild(close);
+      card.appendChild(tools);
+      card.appendChild(live);
+
+      // SELECTING ANY PART RAISES IT — the owner's rule for windows,
+      // 2026-09-20, and the same one here: a card the reader is touching is
+      // never under another.
+      function raise() { card.style.zIndex = String(++raiseAt); }
+      card.addEventListener("mousedown", raise);
+      card.addEventListener("focusin", raise);
+
+      wireMove(card, card, live, function (g) {
+        placeOnGlass(key, g);
+        fitShelf();
+      });
+      return card;
+    }
+
     function renderShelf() {
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
       while (notes.firstChild) notes.removeChild(notes.firstChild);
@@ -4142,40 +4358,24 @@
       var keys = Object.keys(all).filter(function (k) { return all[k].shown; });
       keys.sort();
 
-      keys.forEach(function (key) {
+      var placed = [];
+      keys.forEach(function (key, i) {
         var a = all[key];
-        var card = el("article", {
-          class: "fa-glass-asset",
-          "data-fa-asset": key,
-          "data-fa-asset-kind": a.kind || "library",
-        });
-        var ava = glassAvatarFor(a, prefs.avatars);
-        if (ava) card.appendChild(ava);
-        // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
-        // store is `localStorage`, which the reader's own devtools can
-        // rewrite, so a value sanitised on the way in is not a value that is
-        // safe on the way out. The boundary is where the URL reaches an
-        // `href`, and that is here.
-        var href = safeHref(a.href);
-        var name = href
-          ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
-          : el("span", { class: "fa-glass-asset-name" }, a.title);
-        card.appendChild(name);
-
-        // CLOSE, and the word matters. "Remove" and "delete" both say the
-        // asset stops being the reader's, which is exactly what does NOT
-        // happen -- `board-windows`: closing returns it to the middle state
-        // and never to the first. The label says where it goes.
-        var close = el("button", {
-          type: "button",
-          class: "fa-glass-asset-close",
-          "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
-          title: "Back in library view (stays in your folio)",
-        }, "×");
-        close.addEventListener("click", function () { shelveFromGlass(key); });
-        card.appendChild(close);
+        var card = buildGlassCard(key, a);
         shelf.appendChild(card);
+        applyGeometry(card, a.geom || defaultGlassGeom(a, i));
+        placed.push(card);
       });
+      fitShelf();
+      if (typeof ResizeObserver === "function") {
+        if (shelf.__faZoomObs) shelf.__faZoomObs.disconnect();
+        var zo = new ResizeObserver(function (entries) {
+          entries.forEach(function (en) { zoomGlassCard(en.target); });
+        });
+        placed.forEach(function (c) { zo.observe(c); });
+        shelf.__faZoomObs = zo;
+      }
+      placed.forEach(zoomGlassCard);
 
       // WHERE THE WAY BACK IS, said on the surface that cannot offer it.
       // `l4zi` one level out: the inverse of close is reachable from the
@@ -4379,7 +4579,14 @@
       body.appendChild(fs);
       showOpacity();
 
-      var reset = el("button", { type: "button", class: "fa-glass-reset" }, "Back to the default glass");
+      // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
+      // nothing leaves the folio and nothing leaves the glass.
+      var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
+        "Tidy the glass (put every card back in the grid)");
+      tidy.addEventListener("click", tidyGlass);
+      body.appendChild(tidy);
+
+      var reset = el("button", { type: "button", class: "fa-glass-reset fa-glass-defaults" }, "Back to the default glass");
       reset.addEventListener("click", function () {
         prefs = { theme: GLASS_DEFAULTS.theme, avatars: GLASS_DEFAULTS.avatars,
                   opacity: GLASS_DEFAULTS.opacity, blur: GLASS_DEFAULTS.blur };
