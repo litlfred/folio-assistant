@@ -33,6 +33,14 @@
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
     "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
       "@type": "@id"
@@ -264,11 +272,12 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:38:56.790Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/783bb18bebf1f2c7fca85a138df146a7910e81b0",
-  "sourceCommitSha": "783bb18bebf1f2c7fca85a138df146a7910e81b0",
-  "sourceCommitAt": "2026-09-23T07:36:59Z",
+  "generatedAt": "2026-09-23T08:30:01.087Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3e23a9f32d074c473b79255a81bf831638331a3d",
+  "sourceCommitSha": "3e23a9f32d074c473b79255a81bf831638331a3d",
+  "sourceCommitAt": "2026-09-23T08:27:57Z",
   "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 241,
     "Actor": 32,
@@ -280,7 +289,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 69,
-    "Schema": 96,
+    "Schema": 99,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -1314,7 +1323,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/rendered-verification.md",
-      "instructionLines": 172,
+      "instructionLines": 214,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -9618,7 +9627,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the voice findings",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#process/Process_NarrativeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -11454,7 +11463,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the conflict",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#process/Process_RefreshMaterialized",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
       "implementedBy": [
@@ -17627,7 +17636,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate flagged passage (human reviewer)",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#process/Process_Translation",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#role/Human%20reviewer%20/%20adjudicator",
       "implementedBy": [
@@ -19669,7 +19678,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate: prose, scope, or exception",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#process/Process_VoiceReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#role/Narrative%20reviewer",
       "implementedBy": [
@@ -25406,7 +25415,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Adjudicate the flagged passage",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:UserTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#process/Process_L1Gate",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#role/Reviewer%20(SME%20or%20editor)",
       "implementedBy": [
@@ -34821,6 +34830,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/depends-on",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "depends-on",
+      "title": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "module": "schemas/depends-on.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/depends-on"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -35310,6 +35328,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/types"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/version-bump",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "version-bump",
+      "title": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "module": "schemas/version-bump.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/vocabulary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "vocabulary",
@@ -35437,6 +35464,15 @@
       "module": "../folio-assistant-core/schemas/materialization.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#directory/folio-assist-core-schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/review-comment",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "review-comment",
+      "title": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "module": "../folio-assistant-core/schemas/review-comment.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-comment"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-m4xy-vector-figures/cat-harness.jsonld#schema/artifact-store",
@@ -37276,8 +37312,8 @@
   ],
   "staging": {
     "branch": "claude/m4xy-vector-figures",
-    "sha": "abadf57512a7dc94daa74a09808a1433c6c14156",
+    "sha": "f0597fc28e0f2666829f96e4f878754e7a5c137c",
     "pr": "1012/merge",
-    "run": "35832656844"
+    "run": "35837281674"
   }
 }

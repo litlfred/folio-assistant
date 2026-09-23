@@ -2300,6 +2300,81 @@
       "layer": "harness"
     },
     {
+      "@id": "cat:dependsOn",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "dependsOn",
+      "comment": "The instances this publishable instance depends on, as FHIR-shaped {packageId, version, uri} records.",
+      "prefLabel": "dependsOn",
+      "definition": "The instances this publishable instance depends on, as FHIR-shaped {packageId, version, uri} records.",
+      "notation": "cat:dependsOn",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:packageId",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "packageId",
+      "comment": "A dependency's reverse-DNS id — the identity a consumer resolves.",
+      "prefLabel": "packageId",
+      "definition": "A dependency's reverse-DNS id — the identity a consumer resolves.",
+      "notation": "cat:packageId",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:uri",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "uri",
+      "comment": "A dependency's canonical URL, stable across its versions.",
+      "prefLabel": "uri",
+      "definition": "A dependency's canonical URL, stable across its versions.",
+      "notation": "cat:uri",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:dependsOnGaps",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "dependsOnGaps",
+      "comment": "Dependency edges that could NOT become a record, each with which of the four reasons applies — so a reader can tell 'depends on nothing' from 'depends on things none of which is publishable'.",
+      "prefLabel": "dependsOnGaps",
+      "definition": "Dependency edges that could NOT become a record, each with which of the four reasons applies — so a reader can tell 'depends on nothing' from 'depends on things none of which is publishable'.",
+      "notation": "cat:dependsOnGaps",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat:dependsOnUnavailable",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "dependsOnUnavailable",
+      "comment": "Why there is no dependsOn block, when the reason is not an empty dependency set — never rendered as 'depends on nothing'.",
+      "prefLabel": "dependsOnUnavailable",
+      "definition": "Why there is no dependsOn block, when the reason is not an empty dependency set — never rendered as 'depends on nothing'.",
+      "notation": "cat:dependsOnUnavailable",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat:detection",
       "@type": [
         "rdf:Property",
