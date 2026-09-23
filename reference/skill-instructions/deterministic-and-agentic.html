@@ -267,7 +267,7 @@
   visualisations plus `siteLinks`. Nothing about the row is decided in Liquid
   or in JavaScript.
 -->
-<script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","processes","kg","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/"},"folders":[{"kind":"beans","path":"/beans/"},{"kind":"cat-harness","path":"/cat-harness/schemas/cat-harness/"},{"kind":"code"},{"kind":"docs","path":"/cat-harness/docs-auto/index/docs/docs/"},{"kind":"external-schema","path":"/external-schemas/"},{"kind":"folio","path":"/cat-harness/folio/"},{"kind":"fsh-guts","path":"/fsh-guts/"},{"kind":"glossary","path":"/glossary/"},{"kind":"health","path":"/health/"},{"kind":"interaction"},{"kind":"issue-marks","path":"/issue-marks/"},{"kind":"library","path":"/cat-harness/library/cat-harness/"},{"kind":"memory"},{"kind":"methodology","path":"/methodologies/"},{"kind":"processes","path":"/processes/"},{"kind":"qa","path":"/qa/"},{"kind":"scenarios"},{"kind":"schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","path":"/cat-harness/docs-auto/index/skills/cat-harness/"},{"kind":"todos","path":"/todos/"},{"kind":"tools","path":"/tools/"},{"kind":"translation-sources","path":"/translation-status/"},{"kind":"uml"},{"kind":"uploads","path":"/uploads/"},{"kind":"waiver"}]}</script>
+<script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","processes","kg","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/"},"notes":{},"folders":[{"kind":"beans","path":"/beans/"},{"kind":"cat-harness","path":"/cat-harness/schemas/cat-harness/"},{"kind":"code","note":"no viewer yet"},{"kind":"docs","path":"/cat-harness/docs-auto/index/docs/docs/"},{"kind":"external-schema","path":"/external-schemas/"},{"kind":"folio","path":"/cat-harness/folio/"},{"kind":"fsh-guts","path":"/fsh-guts/"},{"kind":"glossary","path":"/glossary/"},{"kind":"health","path":"/health/"},{"kind":"interaction","note":"no viewer yet"},{"kind":"issue-marks","path":"/issue-marks/"},{"kind":"library","path":"/cat-harness/library/cat-harness/"},{"kind":"memory","note":"no viewer yet"},{"kind":"methodology","path":"/methodologies/"},{"kind":"processes","path":"/processes/"},{"kind":"qa","path":"/qa/"},{"kind":"scenarios","note":"no viewer yet"},{"kind":"schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","path":"/cat-harness/docs-auto/index/skills/cat-harness/"},{"kind":"todos","path":"/todos/"},{"kind":"tools","path":"/tools/"},{"kind":"translation-sources","path":"/translation-status/"},{"kind":"uml","note":"no viewer yet"},{"kind":"uploads","path":"/uploads/"},{"kind":"waiver","note":"no viewer yet"}]}</script>
 
 <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/cat-harness/","jsonld":"/folio-assistant/cat-harness.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
 
@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790158680">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790159923">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790158680">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790159923">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790158680">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790159923">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790158680">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790159923">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790158680">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790159923">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790158680" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790159923" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -806,12 +806,20 @@ wrong. <strong>At least three questions are being conflated:</strong></p>
   <li><strong>What happens if the decision is wrong</strong> — refused, noted, or nothing?</li>
   <li><strong>Who enforces</strong> — the agent asking, or a gate that does not care whether
 anyone asked?</li>
+  <li><strong>What the output IS</strong> — the result, or a rule that is validated and then
+executed. Added 2026-09-23; see §”A fourth axis” for why it does not reduce
+to (1).</li>
 </ol>
 
 <p>A step can be agentic on (1) and fully deterministic on (3). The commit
 boundary is exactly that: an agent decides freely, and a hook refuses the write
 regardless. <strong>Any answer to “how much needs to be deterministic” that does not
-say WHICH of the three it means is not an answer.</strong></p>
+say WHICH of these it means is not an answer.</strong></p>
+
+<p><strong>It said “at least three” and listed three until 2026-09-23, and the hedge
+turned out to be doing real work</strong> — a fourth arrived from outside the
+repository. The hedge stays for the same reason: this list is what has been
+noticed, not what exists.</p>
 <h2 id="what-is-measured-today">
   
   
@@ -841,6 +849,81 @@ considerably more than ten. A count in prose is a claim nothing checks.</p>
 the release authorisation, the publish. Somebody has already judged those
 non-negotiable, and that list is a second, differently-derived sample of “must
 not be agentic”.</p>
+<h2 id="a-fourth-axis--what-the-models-output-is">
+  
+  
+    <a href="#a-fourth-axis--what-the-models-output-is" class="anchor-heading" aria-labelledby="a-fourth-axis--what-the-models-output-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A fourth axis — what the model’s output IS
+  
+  
+</h2>
+    
+
+<p><strong>Added 2026-09-23</strong> (bean <code class="language-plaintext highlighter-rouge">kacl</code>), from the one methodology in this graph
+whose primary is actually held: <code class="language-plaintext highlighter-rouge">methodologies/hybrid-llm-deterministic.md</code>,
+rendering Neubauer, Pleiss &amp; Uekermann (arXiv:2508.05192v2).</p>
+
+<p>The first three axes above are about the DECISION. This one is about the
+ARTEFACT, and it is not reducible to them:</p>
+
+<blockquote>
+  <p><strong>Does the model emit the RESULT, or a RULE that is then validated and
+executed?</strong></p>
+</blockquote>
+
+<p><strong>The reason it is a separate axis, tested against this page’s own worked
+case.</strong> The commit boundary is agentic on <em>who decides</em> and deterministic on
+<em>who enforces</em> — and what the agent produces there is a <strong>result</strong>, a commit,
+checked after the fact. The source’s schema-mapping design gives the same two
+answers, and produces a <strong>rule</strong>: an expression, checked for syntax, then run.
+Two designs, identical on all three of the decision axes, and their failure
+profiles are not comparable. A bad result must be caught by inspecting every item; a bad
+rule is caught once, before it runs at any volume.</p>
+
+<p><strong>Hypothesis</strong>, offered because it is testable and cheap to test here:</p>
+
+<blockquote>
+  <p>Judgement is admissible at a point the recoverability criterion (§1) would
+refuse, WHEN the output is a rule — because validation happens before
+execution rather than after.</p>
+</blockquote>
+
+<p>The <code class="language-plaintext highlighter-rouge">relaxable="false"</code> five are already proposed as §1’s test sample. They can
+test this at the same time: ask of each whether its output is a result or a
+rule.</p>
+
+<p><strong>What it does not settle.</strong> Which of the four axes dominates, whether “rule”
+is even well-defined for the judgements this repository makes (a <code class="language-plaintext highlighter-rouge">folio:raci</code>
+annotation is not obviously either), and whether the distinction survives
+contact with a step whose output is prose. <strong>Open.</strong></p>
+<h2 id="why-the-guarding-is-needed-at-all--cited-not-assumed">
+  
+  
+    <a href="#why-the-guarding-is-needed-at-all--cited-not-assumed" class="anchor-heading" aria-labelledby="why-the-guarding-is-needed-at-all--cited-not-assumed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the guarding is needed at all — cited, not assumed
+  
+  
+</h2>
+    
+
+<p>This page argued from the repository’s own incidents. Three measurements from
+outside it now support the premise, <strong>second-hand</strong>: cited by the ingested
+source, not themselves ingested, so each is an attribution to check rather than
+a result this repository holds (<code class="language-plaintext highlighter-rouge">literature-search</code> §”Never fill the gap with
+recall”). Provenance for all three is
+<a href="../../methodologies/hybrid-llm-deterministic.md"><code class="language-plaintext highlighter-rouge">hybrid-llm-deterministic</code></a>:</p>
+
+<ul>
+  <li>LLMs <strong>can be distracted by irrelevant context</strong> — Shi et al., ICML 2023.</li>
+  <li>Accuracy <strong>drops on low-probability inputs even for deterministic tasks</strong> —
+McCoy et al., arXiv:2309.13638.</li>
+  <li>Reasoning <strong>degrades as input length increases, before the context window is
+reached</strong> — Levy et al., arXiv:2402.14848.</li>
+</ul>
+
+<p><strong>The source itself is a tool paper reporting no baseline, no accuracy measure
+and no comparison</strong>, so nothing here rests on a claim about how well its
+approach performs, and its node says so. The three findings above are evidence
+for the PREMISE — that model output needs guarding — and not for any particular
+guard.</p>
 <h2 id="the-three-questions-open">
   
   
@@ -889,10 +972,15 @@ not, the criterion is wrong or incomplete, and finding that out is the point.</p
 above. A better-formed version, and even this is a guess at the right question:</p>
 
 <blockquote>
-  <p>For each of <em>who decides</em>, <em>what happens when it is wrong</em>, and <em>who
-enforces</em>, what is the cheapest mechanism that still refuses the failure
-that matters?</p>
+  <p>For each of <em>who decides</em>, <em>what happens when it is wrong</em>, <em>who enforces</em>,
+and <em>what the output is</em>, what is the cheapest mechanism that still refuses
+the failure that matters?</p>
 </blockquote>
+
+<p><strong>The fourth clause was added 2026-09-23</strong> and it changes the question rather
+than lengthening it: for a step whose output is a rule, the cheapest mechanism
+that refuses the failure may be a validator costing nothing per item, which the
+other three axes cannot express.</p>
 
 <p><strong>Decided</strong> and worth carrying into it: this repository’s answer at the commit
 boundary is <em>refuse by default, and refuse when you cannot tell</em>. A gate that
@@ -924,6 +1012,18 @@ overlay deliberately.</li>
   <li><strong>A comparison that is not the agent’s own report.</strong> A model grading its own
 run is the failure mode this repository already names for QA verdicts.</li>
 </ul>
+
+<p><strong>A confound this question did not know it had.</strong> Second-hand via
+<code class="language-plaintext highlighter-rouge">hybrid-llm-deterministic</code>: Levy et al. report that reasoning degrades with
+input LENGTH, <em>before</em> the context window is reached. So “the same task with
+and without this memory entry” varies two things at once — the entry’s content
+and the prompt’s length — and an overlay comparison that does not hold length
+constant cannot say which produced the difference. The overlay bullet above
+treats context as something to hold or release; length is a third thing, and it
+moves whenever the other two do.</p>
+
+<p><strong>Not a reason to abandon the question</strong>, and not a design for the experiment
+either. It is one variable now named, where before it was absent.</p>
 
 <p><strong>No experiment has been run.</strong> Anyone reading this as a finding is reading it
 wrong.</p>
@@ -1159,7 +1259,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35847862235"><code>87e51a7</code></a> &middot; 2026-09-23T10:17:51Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35849807993"><code>61aacc0</code></a> &middot; 2026-09-23T10:38:37Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

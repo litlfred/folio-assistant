@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 579,
+      "count": 580,
       "unit": "beans"
     }
   },
@@ -2801,6 +2801,20 @@
       "file": "beans/defs/folio-assistant-bvhf--uml-overview-per-named-sub-graph-plantuml-mermaid.md"
     },
     {
+      "id": "folio-assistant-bvuk",
+      "title": "ONE OUTCOME GATEWAY, FIVE DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:19:05Z",
+      "updatedAt": "2026-09-23T09:19:05Z",
+      "preview": "Five processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## The five callers, and what each actually asks\n\nMeasured 2026-09-23 — `grep -rn 'calledElement=\"Process_Adjud",
+      "file": "beans/defs/folio-assistant-bvuk--one-outcome-gateway-five-different-questions-proce.md"
+    },
+    {
       "id": "folio-assistant-bweb",
       "title": "MEMORY MOVE FALLOUT: sweep consumers after 07xs moved skills/memory/ to memory/",
       "status": "completed",
@@ -2845,14 +2859,14 @@
     {
       "id": "folio-assistant-c132",
       "title": "GLASS ON PHONE AND TABLET: a phone gets one linear column, a tablet gets the laptop surface with touch drag",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:19:39Z",
-      "updatedAt": "2026-09-23T09:19:39Z",
+      "updatedAt": "2026-09-23T09:54:09Z",
       "preview": "Owner, 2026-09-23, after #1030 merged:\n\n> Doesn't appear on mobile obviously. Mobile phone is maybe linearized view due to space. But tablet should be like laptops\n\n## Measured before building\n\nScreenshots of the real `docs-ui.css`/`docs-ui.js` at 390x844 (phone) and 820x1180 (tablet); the live site is not reachable from the build container.\n\n- **Phone:** the laptop metaphor runs unchanged and doe",
       "file": "beans/defs/folio-assistant-c132--glass-on-phone-and-tablet-a-phone-gets-one-linear.md"
     },
@@ -3987,14 +4001,14 @@
     {
       "id": "folio-assistant-idl1",
       "title": "ADJUDICATION IS DRAWN INLINE: review-narrative and voice-review each redraw it instead of calling Process_Adjudication",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T08:35:04Z",
-      "updatedAt": "2026-09-23T08:35:04Z",
+      "updatedAt": "2026-09-23T09:18:59Z",
       "preview": "The shared adjudication process exists and is now expressed against the typed contract, but the two processes that PRODUCE disagreements draw their own adjudicate steps rather than calling it. Owner's prompt 2026-09-23: 'make sure the provide feedback process is defined which would create things to adjudicate.'\n\n## The question the owner asked, and the answer\n\n> also make sure the \"provide feedbac",
       "file": "beans/defs/folio-assistant-idl1--adjudication-is-drawn-inline-review-narrative-and.md"
     },
@@ -4481,14 +4495,14 @@
     {
       "id": "folio-assistant-kacl",
       "title": "DETERMINISTIC-AND-AGENTIC: open question 2 now has a cited answer to argue with",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T06:15:42Z",
-      "updatedAt": "2026-09-23T06:15:42Z",
+      "updatedAt": "2026-09-23T10:10:16Z",
       "preview": "skills/workflow/deterministic-and-agentic.md marks 'how much needs to be deterministic?' as open and probably malformed. The newly ingested Neubauer et al. (arXiv:2508.05192v2) proposes a different decomposition that the skill's three questions do not cover.\n\n## What the skill says today\n\n`skills/workflow/deterministic-and-agentic.md` is an **agenda, not a result**,\nand says so. It carries the own",
       "file": "beans/defs/folio-assistant-kacl--deterministic-and-agentic-open-question-2-now-has.md"
     },
@@ -5561,14 +5575,14 @@
     {
       "id": "folio-assistant-pv6g",
       "title": "GLASS: the fixed layer exists as a bottom-right dock, not a surface a note is placed on",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:28:39Z",
-      "updatedAt": "2026-09-23T08:30:36Z",
+      "updatedAt": "2026-09-23T09:54:09Z",
       "preview": "Owner, 2026-09-21: \"stickies can detach from the panel and placed on the 'display window/glass' and dont scroll when the folio/document/page scrolls. when closed tehy returned to their home display panel.\"\n\nCORPUS CHECK. The layer EXISTS and is already fixed — docs-ui.css:2263, '.fa-sticky-layer { position: fixed; inset: auto 1rem 1rem auto; width: min(22rem, calc(100vw - 2rem)) }'. So 'does not s",
       "file": "beans/defs/folio-assistant-pv6g--glass-the-fixed-layer-exists-as-a-bottom-right-doc.md"
     },
@@ -8077,14 +8091,14 @@
     {
       "id": "folio-assistant-zrvt",
       "title": "GLASS: library and todos onto the glass, a tile strip on its bottom edge, book avatars, and a settings tile",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T06:47:06Z",
-      "updatedAt": "2026-09-23T06:47:06Z",
+      "updatedAt": "2026-09-23T09:54:09Z",
       "preview": "Owner, 2026-09-23, looking at `/cat-harness/library/who-iris/` with the glass pulled down:\n\n> how do i get stuff from library onto glass? same w/ todos. where are the todo, fsh guts etc tiles on bottom of glass? check beans and finish feature implemenation. also tile to change folio settings (like background theme=now is glass theme, need usabiltiy themes some may want exisritng new avatars. shoul",
       "file": "beans/defs/folio-assistant-zrvt--glass-library-and-todos-onto-the-glass-a-tile-stri.md"
     },
