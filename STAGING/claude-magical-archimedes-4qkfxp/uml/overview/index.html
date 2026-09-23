@@ -447,28 +447,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790170364">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790170364">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790170364">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/uml.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/uml.css?v=1790170364">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790170364">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -485,7 +485,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790168858" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790170364" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -787,9 +787,19 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><strong>Source:</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-schemas.puml">PlantUML</a> · the full model, with Bean and Todo, is <a href="#the-full-object-model">below</a>.</p>
 
-<figure class="bpmn-figure">
-  <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-schemas.svg" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships." />
-</figure>
+<div class="fa-uml-views">
+  <fieldset class="fa-uml-view-pick">
+    <legend>Layout</legend>
+    <input type="radio" name="fa-uml-harness_schemas" id="fa-uml-harness_schemas-portrait" class="fa-uml-pick-portrait" checked="" /><label for="fa-uml-harness_schemas-portrait">Portrait</label>
+    <input type="radio" name="fa-uml-harness_schemas" id="fa-uml-harness_schemas-landscape" class="fa-uml-pick-landscape" /><label for="fa-uml-harness_schemas-landscape">Landscape</label>
+  </fieldset>
+  <figure class="bpmn-figure fa-uml-portrait">
+    <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-schemas.svg" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships. Portrait layout." />
+  </figure>
+  <figure class="bpmn-figure fa-uml-landscape">
+    <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-schemas.landscape.svg" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships. Landscape layout." />
+  </figure>
+</div>
 <h2 id="the-full-object-model">
   
   
@@ -803,9 +813,19 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><strong>Source:</strong> <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-object-model.puml">PlantUML</a></p>
 
-<figure class="bpmn-figure">
-  <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-object-model.svg" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships." />
-</figure>
+<div class="fa-uml-views">
+  <fieldset class="fa-uml-view-pick">
+    <legend>Layout</legend>
+    <input type="radio" name="fa-uml-harness_object_model" id="fa-uml-harness_object_model-portrait" class="fa-uml-pick-portrait" checked="" /><label for="fa-uml-harness_object_model-portrait">Portrait</label>
+    <input type="radio" name="fa-uml-harness_object_model" id="fa-uml-harness_object_model-landscape" class="fa-uml-pick-landscape" /><label for="fa-uml-harness_object_model-landscape">Landscape</label>
+  </fieldset>
+  <figure class="bpmn-figure fa-uml-portrait">
+    <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-object-model.svg" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships. Portrait layout." />
+  </figure>
+  <figure class="bpmn-figure fa-uml-landscape">
+    <img src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/img/uml/harness-object-model.landscape.svg" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships. Landscape layout." />
+  </figure>
+</div>
 <h2 id="per-harness">
   
   

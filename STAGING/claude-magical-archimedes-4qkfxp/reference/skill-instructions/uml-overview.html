@@ -450,28 +450,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790170364">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790170364">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790170364">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/uml.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/uml.css?v=1790170364">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790168858">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790170364">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -488,7 +488,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790168858" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790170364" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -901,6 +901,36 @@ Mermaid pages take them from CSS directly. The <code class="language-plaintext h
 colour onto each class, read from that stylesheet by <code class="language-plaintext highlighter-rouge">scripts/uml-palette.ts</code>,
 because PlantUML’s SVG has no CSS hooks and ELK drops package colours. To
 recolour a kind, edit <code class="language-plaintext highlighter-rouge">uml.css</code>, never a diagram.</p>
+<h2 id="portrait-and-landscape-views">
+  
+  
+    <a href="#portrait-and-landscape-views" class="anchor-heading" aria-labelledby="portrait-and-landscape-views"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Portrait and landscape views
+  
+  
+</h2>
+    
+
+<p>Every figure is rendered twice, and the page has a <strong>Portrait / Landscape</strong>
+switch above it: radio buttons and CSS in <code class="language-plaintext highlighter-rouge">uml.css</code>, no script, with portrait
+as the default. Owner, 2026-09-23: “can we have portrait and landscape
+views?”.</p>
+
+<ul>
+  <li><strong>The committed <code class="language-plaintext highlighter-rouge">.puml</code> is the portrait view.</strong> The landscape view is
+derived from it by <code class="language-plaintext highlighter-rouge">landscapeOf</code> in <code class="language-plaintext highlighter-rouge">gen-uml-overview.ts</code> and rendered to
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.landscape.svg</code>. It is not committed as a second source, so the two
+views cannot say different things.</li>
+  <li><strong>ELK ignores direction.</strong> <code class="language-plaintext highlighter-rouge">left to right direction</code> and arrow hints left
+its output byte-identical (measured). So landscape comes two ways:
+    <ul>
+      <li>a grid of unconnected packages (an overview page) stays on ELK with more
+columns. The <code class="language-plaintext highlighter-rouge">' grid:</code> comment line in the <code class="language-plaintext highlighter-rouge">.puml</code> names the packages;</li>
+      <li>a diagram with edges between classes switches to Graphviz, left to
+right, with orthogonal edges. Graphviz can route an edge across a box,
+which is why ELK stays the portrait default.</li>
+    </ul>
+  </li>
+</ul>
 <h2 id="regenerating">
   
   
