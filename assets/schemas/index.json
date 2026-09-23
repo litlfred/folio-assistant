@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 145,
+      "count": 147,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -466,6 +466,21 @@
       "name": "health-report",
       "graphNode": "schema",
       "summary": "Repository health reports — what the daily sweep under `test/health/` wrote.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/ig-chrome.test.ts",
+      "instance": "cat-harness",
+      "name": "ig-chrome.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "instance": "cat-harness",
+      "name": "ig-chrome",
+      "graphNode": "schema",
+      "summary": "ig-chrome.ts — a FHIR IG's published CHROME, as data.",
       "isTest": false
     },
     {
@@ -15215,6 +15230,334 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChrome",
+      "name": "IgChrome",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeConflict",
+      "name": "IgChromeConflict",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema",
+      "name": "IgChromeConflictSchema",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "zod-object",
+      "doc": "A defect in the mirrored source, RECORDED rather than resolved.",
+      "fields": [
+        {
+          "name": "token",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.enum([\"shape\", \"malformed\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`shape` — the layers agree the token exists and disagree about what KIND"
+        },
+        {
+          "name": "detail",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sites",
+          "type": "z.array(z.object({ package: z.string().min(1), value: z.string().min(1) })).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Where it was seen. `min(1)` rather than `min(2)`: a `shape` conflict needs"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeLayer",
+      "name": "IgChromeLayer",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema",
+      "name": "IgChromeLayerSchema",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "zod-object",
+      "doc": "One template package in the chain, and where its bytes were read.",
+      "fields": [
+        {
+          "name": "package",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The `fhir.template` package name, e.g. `who.template.root`."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Its declared version, e.g. `0.5.0`."
+        },
+        {
+          "name": "of",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "The repository the bytes were read from."
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(7)",
+          "optional": false,
+          "array": false,
+          "doc": "The commit they were read at. Provenance."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The stylesheet within that repository."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().min(4)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeRule",
+      "name": "IgChromeRule",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema",
+      "name": "IgChromeRuleSchema",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "zod-object",
+      "doc": "A named rule mirrored whole, because it is not expressible as a token.",
+      "fields": [
+        {
+          "name": "selector",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The selector, verbatim, e.g. `#ig-status.ig-status-draft`."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The package the rule was read from."
+        },
+        {
+          "name": "declarations",
+          "type": "z.array(z.object({ property: z.string().min(1), value: z.string().min(1) })).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema",
+      "name": "IgChromeSchema",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_CHROME_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Its `canonical`."
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Its `status` — what selects the watermark. `draft` here."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "layers",
+          "type": "z.array(IgChromeLayerSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "The chain, BASE FIRST, so index order is override order."
+        },
+        {
+          "name": "tokens",
+          "type": "z.array(IgChromeTokenSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "rules",
+          "type": "z.array(IgChromeRuleSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "conflicts",
+          "type": "z.array(IgChromeConflictSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema",
+        "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema",
+        "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema",
+        "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_CHROME_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeToken",
+      "name": "IgChromeToken",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema",
+      "name": "IgChromeTokenSchema",
+      "module": "cat-harness/schemas/ig-chrome.ts",
+      "kind": "zod-object",
+      "doc": "One resolved CSS custom property, and which layer won it.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().regex(/^--[\\w-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The custom property, including its leading `--`."
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The winning value, verbatim."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The package whose declaration wins."
+        },
+        {
+          "name": "overrides",
+          "type": "z.array(z.object({ package: z.string().min(1), value: z.string().min(1) }))",
+          "optional": false,
+          "array": true,
+          "doc": "Lower layers this shadows, nearest first. Empty when only one declared it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -38108,6 +38451,38 @@
       "from": "cat-harness/schemas/health-report.ts#HealthReportSchema",
       "to": "cat-harness/schemas/health-report.ts#HealthCheckResultSchema",
       "via": "checks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema",
+      "to": "cat-harness/schemas/ig-chrome.ts#IgChromeConflictSchema",
+      "via": "conflicts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema",
+      "to": "cat-harness/schemas/ig-chrome.ts#IgChromeLayerSchema",
+      "via": "layers",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema",
+      "to": "cat-harness/schemas/ig-chrome.ts#IgChromeRuleSchema",
+      "via": "rules",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/ig-chrome.ts#IgChromeSchema",
+      "to": "cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema",
+      "via": "tokens",
       "kind": "field",
       "optional": false,
       "array": true

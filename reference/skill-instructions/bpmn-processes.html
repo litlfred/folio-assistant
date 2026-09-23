@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790194902">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790195776">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790194902">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790195776">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790194902">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790195776">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790194902">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790195776">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790194902">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790195776">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790194902" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790195776" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -777,6 +777,45 @@ the exemptions for the legitimate cases are <em>declarations</em>, not silence �
 
 <p>Lanes bind roles, not people. A lane is the role; an actor <strong>takes it on</strong> for
 the duration. <a href="../folio-core/role-model.md"><code class="language-plaintext highlighter-rouge">role-model</code></a> carries that model.</p>
+<h2 id="edge-routing-rectilinear-and-never-over-a-task">
+  
+  
+    <a href="#edge-routing-rectilinear-and-never-over-a-task" class="anchor-heading" aria-labelledby="edge-routing-rectilinear-and-never-over-a-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Edge routing: rectilinear, and never over a task
+  
+  
+</h2>
+    
+
+<p>Owner, 2026-09-23, on <code class="language-plaintext highlighter-rouge">document-ingestion</code>’s rendered diagram: <strong>“keep
+rectilinear if possible, no overlapping.”</strong> Two rules, and the second is the
+one that actually bites.</p>
+
+<p><strong>Rectilinear.</strong> A sequence flow turns at right angles. A diagonal reads as a
+different kind of edge to anybody who has seen a BPMN diagram before, and the
+notation has no such kind — so the reader spends attention deciding whether
+the difference means something. It does not.</p>
+
+<p><strong>Never over a task, a lane label or another edge.</strong> The case that prompted
+this: the <code class="language-plaintext highlighter-rouge">gap</code> flow from <em>Record the gap as a bean</em> back to <em>Derive content
+from the assets</em> was drawn as one long diagonal crossing the full width of the
+process, passing under every task in the lane. It is a perfectly ordinary
+loop-back and it was the hardest edge on the page to follow.</p>
+
+<p>A loop-back belongs in the <strong>channel below the lane’s tasks</strong> — out of the row,
+back along it, and up into its target. That is where a reader already looks for
+one, and it crosses nothing.</p>
+
+<p><strong>This is about the DIAGRAM, not the process.</strong> <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> carries where a
+thing was drawn and the process carries what is true, so a routing fix changes
+no semantics and needs no re-validation of the flow — the same split
+<code class="language-plaintext highlighter-rouge">board-diagram-interchange</code> draws one level up. What it changes is whether
+somebody can read the thing.</p>
+
+<p><strong>Check it by looking at the rendered SVG, not the XML.</strong> Waypoints that look
+orderly in source can still emit a diagonal, and <code class="language-plaintext highlighter-rouge">render:bpmn</code> is what a reader
+sees. The rendered page is the artefact under review — <code class="language-plaintext highlighter-rouge">preview:site</code> exists
+for exactly this reason, after a generator shipped 22 headings with one anchor
+and every gate was green across it.</p>
 <h2 id="running-one-the-engine-refuses-work-claimed-out-of-order">
   
   
@@ -1102,7 +1141,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35915300345"><code>1043080</code></a> &middot; 2026-09-23T20:21:37Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35916948604"><code>6b99bd6</code></a> &middot; 2026-09-23T20:36:11Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
