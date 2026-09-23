@@ -24,7 +24,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Determine the harness and repositories](discussion.html) | 5 | — |
 | [Initialize a harness](initialize-harness.html) | 9 | — |
 | [Log a message](log-message.html) | 2 | — |
-| [Agent activity log](activity-log.html) | 8 | 8 |
+| [Agent activity log](activity-log.html) | 8 | — |
 | [Actor and role administration](actor-role-administration.html) | 6 | — |
 | [Adjudication](adjudication.html) | 6 | — |
 | [Is AtomicMass.lean still in sync with its data table?](atomic-mass-drift-check.html) | 1 | 1 |
