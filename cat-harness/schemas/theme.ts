@@ -125,6 +125,8 @@
  */
 import { z } from "zod";
 
+import { nodeKind } from "./node-kind.js";
+
 /**
  * The three layouts a theme must define.
  *
@@ -863,6 +865,12 @@ export const ThemedTodoFieldsSchema = z
   })
   .strict();
 export type ThemedTodoFields = z.infer<typeof ThemedTodoFieldsSchema>;
+
+/**
+ * `themed` as a mixin node kind: a parent a kind declares to carry a `theme`.
+ * No `$schema` of its own; it is a layer, not a file type (bean `a1lq`).
+ */
+export const ThemedKind = nodeKind("themed", [], ThemedTodoFieldsSchema.shape);
 
 /**
  * Every user-facing string a theme contributes, for extraction.
