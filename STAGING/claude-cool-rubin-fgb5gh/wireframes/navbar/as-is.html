@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: navbar — the LHS sidebar, harness dividers and landing page</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 264px 1fr; min-height: 100vh; }
+  .side { border-right: 1px solid var(--line); background: var(--fill); display: flex; flex-direction: column; font-size: 14px; }
+  .shead { display: flex; align-items: center; gap: 6px; padding: 8px; border-bottom: 1px solid var(--line); }
+  .mk { width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--bg); flex: none; }
+  .ttl { font-weight: 700; flex: 1; }
+  .ib { width: 32px; height: 32px; border: 1px solid var(--line); background: var(--bg); display: grid; place-items: center; font-size: 15px; flex: none; }
+  .icons { display: flex; gap: 6px; padding: 8px; border-bottom: 1px solid var(--line); }
+  .icons .ib { width: 40px; height: 40px; }
+  details.box { border-bottom: 1px solid var(--line); padding: 4px 8px; }
+  details.box > summary { font-weight: 600; min-height: 36px; display: flex; align-items: center; gap: 6px; cursor: default; }
+  .cnt { border: 1px solid var(--ink); border-radius: 10px; padding: 0 6px; font-size: 11px; font-weight: 600; }
+  .idx { list-style: none; margin: 0 0 6px; padding: 0 0 0 8px; font-size: 13px; }
+  .idx li { padding: 2px 0; }
+  .idx .sub { padding-left: 12px; }
+  .nav { list-style: none; margin: 0; padding: 6px 8px; border-bottom: 1px solid var(--line); flex: 1; overflow: hidden; }
+  .nav li { padding: 5px 6px; }
+  .nav li.on { background: var(--bg); border-left: 3px solid var(--ink); font-weight: 600; }
+  .nav .more { color: var(--mute); font-size: 12px; }
+  .tabs { list-style: none; padding: 0; margin: 0; }
+  .tabitem { margin: 4px 0; }
+  .tabbody { display: flex; align-items: center; gap: 8px; border: 1px solid var(--ink); border-left-width: 6px; padding: 5px 8px; background: var(--bg); min-height: 40px; }
+  .tabbody .m { width: 24px; height: 24px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .graphs { list-style: none; margin: 2px 0 6px 20px; padding: 0; font-size: 12px; display: flex; flex-wrap: wrap; gap: 2px 10px; }
+  .graphs .dead { color: var(--mute); text-decoration: none; }
+  .graphs .note { color: var(--mute); font-style: italic; }
+  .floor .tabbody { border-style: double; border-width: 3px 3px 3px 6px; }
+  .home { display: flex; align-items: center; gap: 8px; padding: 10px 8px; border-top: 1px solid var(--ink); font-weight: 600; min-height: 44px; }
+  .inset { position: absolute; }
+  .main { min-width: 0; position: relative; }
+  .mhead { display: flex; align-items: center; gap: 8px; padding: 8px 24px; border-bottom: 1px solid var(--line); }
+  .search { flex: 1; max-width: 520px; border: 1px solid var(--line); padding: 10px 12px; color: var(--mute); min-height: 44px; }
+  .handle { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 12px 24px; min-height: 44px; z-index: 3; border: 0; font: inherit; font-weight: 700; }
+  .content { padding: 20px 32px 40px; max-width: 800px; }
+  .sticky { border: 1px solid var(--ink); padding: 8px 12px; display: flex; gap: 8px; align-items: center; margin: 44px 0 16px; min-height: 44px; }
+  h1 { font-size: 40px; margin: 8px 0; }
+  .lede { font-size: 19px; font-weight: 300; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 24px; }
+  .btns .wf-btn:first-child { background: var(--ink); color: var(--bg); }
+  h2 { font-size: 22px; margin: 24px 0 8px; }
+  .hs { border: 1px solid var(--line); border-left: 6px solid var(--ink); padding: 10px 12px; margin: 10px 0; }
+  .hs h3 { margin: 0 0 4px; font-size: 17px; }
+  .hs dl { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  .hs dl div { border: 1px solid var(--line); padding: 4px 8px; font-size: 12px; }
+  .hs dd { margin: 0; font-weight: 700; font-size: 16px; }
+  .hs ul { margin: 4px 0; padding-left: 18px; font-size: 14px; }
+  .hs summary { font-size: 13px; min-height: 32px; display: flex; align-items: center; }
+  .strip { width: 56px; border: 1px solid var(--ink); background: var(--fill); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; font-size: 13px; }
+  .strip span { width: 36px; height: 30px; border: 1px solid var(--line); display: grid; place-items: center; background: var(--bg); }
+  .strip .t { border: 1px solid var(--ink); border-left-width: 4px; font-weight: 700; }
+  .restrow { display: flex; gap: 16px; align-items: flex-start; margin: 16px 0; }
+  .mbar { display: none; }
+  @media (max-width: 799.98px) {
+    .page { display: flex; flex-direction: column; }
+    .side { order: 2; border-right: 0; border-bottom: 3px double var(--ink); }
+    .main { display: contents; }
+    .mbar { order: 1; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--fill); }
+    .mbar .t { font-weight: 700; flex: 1; display: flex; align-items: center; gap: 8px; }
+    .mbar .b { min-width: 44px; min-height: 44px; border: 1px solid var(--line); background: var(--bg); display: grid; place-items: center; font-size: 17px; }
+    .mbar .b.on { border: 2px solid var(--ink); }
+    .shead { display: none; }
+    .mhead { order: 3; padding: 8px 12px; }
+    .search { max-width: none; }
+    .content { order: 4; padding: 12px 16px 32px; }
+    h1 { font-size: 30px; }
+    .restrow { display: none; }
+    .ib { width: 44px; height: 44px; }
+    .icons .ib { width: 44px; height: 44px; }
+  }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+<div class="wf-meta">As-is wireframe · navbar · covers: cat-harness/docs/_includes/title.html, nav_footer_custom.html, harness_details.html, landing.html, footer_custom.html, cat-harness/docs/index.md, docs-ui.js (icon row, On this page, Folders, action launcher, Folio glass), data from cat-harness/scripts/harness-tiles.ts</div>
+<div class="page">
+  <div class="mbar">
+    <span class="t"><span class="mk">@</span>C@T Harness</span>
+    <span class="b" aria-label="Colour scheme">◐</span>
+    <span class="b" aria-label="Language">⊕</span>
+    <span class="b" aria-label="Actions">▦</span>
+    <span class="b on" aria-label="Menu, open">☰</span>
+  </div>
+  <nav class="side" aria-label="Site navigation">
+    <div class="shead">
+      <span class="mk" aria-hidden="true">@</span><span class="ttl">C@T Harness</span>
+      <span class="ib" aria-label="Colour scheme">◐</span><span class="ib" aria-label="Language">⊕</span><span class="ib" aria-label="Actions">▦</span>
+      <span class="ib" aria-label="Close navigation">×</span>
+    </div>
+    <div class="icons" role="group" aria-label="Harness actions">
+      <span class="ib" title="Todos">▤</span><span class="ib" title="Beans">◍</span><span class="ib" title="Processes">⇶</span><span class="ib" title="Knowledge graph">⌘</span><span class="ib" title="More actions">▦</span>
+    </div>
+    <details class="box" open>
+      <summary>▾ On this page <span class="cnt">11</span></summary>
+      <ul class="idx">
+        <li>What each harness holds</li>
+        <li class="sub">smart-trust</li><li class="sub">WHO IRIS</li><li class="sub">Folio Assistant</li><li class="sub">C@T Harness</li><li class="sub">Bootstrap</li>
+        <li>Four things, in order</li><li>What is folio-assistant?</li><li>Supported content types</li><li>Where to go next</li><li>Documentation map</li>
+      </ul>
+    </details>
+    <details class="box">
+      <summary>▸ Folders <span class="cnt">24</span></summary>
+    </details>
+    <ul class="nav">
+      <li class="on">Home</li><li>Installation</li><li>Getting started</li><li>Content types</li><li>Agentic harness</li><li>CRDM methodology</li><li>Skills &amp; roles</li><li>Beans and todos</li>
+      <li class="more">… 19 more: Publication workflow … Subgraph viewers, The tool graph, Proposals, Tools (the nav region scrolls)</li>
+    </ul>
+    <p class="wf-mobile-only wf-note">× ☰ — the sidebar's own close and "keep open" labels (nav_footer_custom.html). docs-ui.css has no rule for them below 800 px, and every rule reading the checkbox is inside its ≥ 50rem block.</p>
+    <details class="box" open>
+      <summary>▾ Harnesses <span class="cnt">5</span></summary>
+      <ul class="tabs">
+        <li class="tabitem"><a class="tabbody" href="#h"><span class="m">S</span>smart-trust</a>
+          <ul class="graphs"><li><a href="#h">docs</a></li><li><span class="dead">fhir-artifact-index</span> <span class="note">no viewer yet</span></li></ul></li>
+        <li class="tabitem"><a class="tabbody" href="#h"><span class="m">W</span>WHO IRIS</a>
+          <ul class="graphs"><li><a href="#h">catalogue</a></li><li><a href="#h">docs</a></li><li><a href="#h">library</a></li><li><span class="dead">skills</span> <span class="note">no viewer yet</span></li><li><span class="dead">themes</span> <span class="note">no viewer yet</span></li><li><a href="#h">uploads</a></li></ul></li>
+        <li class="tabitem"><a class="tabbody" href="#h"><span class="m">F</span>Folio Assistant</a>
+          <ul class="graphs"><li><a href="#h">uploads</a></li></ul></li>
+        <li class="tabitem"><a class="tabbody" href="#h"><span class="m">@</span>C@T Harness</a>
+          <ul class="graphs"><li><a href="#h">beans</a></li><li><a href="#h">cat-harness</a></li><li><span class="dead">code</span> <span class="note">no viewer yet</span></li><li><a href="#h">docs</a></li><li><a href="#h">folio</a></li><li><a href="#h">fsh-guts</a></li><li><a href="#h">glossary</a></li><li><a href="#h">processes</a></li><li><a href="#h">tools</a></li><li class="note">… 15 more of 24</li></ul></li>
+        <li class="tabitem floor"><a class="tabbody" href="#h"><span class="m">B</span>Bootstrap</a>
+          <ul class="graphs"><li><span class="dead">glossary</span> <span class="note">no viewer by design</span></li><li><span class="dead">models</span> <span class="note">no viewer by design</span></li><li class="note">… 5 more, all "no viewer by design"</li></ul></li>
+      </ul>
+    </details>
+    <a class="home" href="#h"><span aria-hidden="true">⌂</span>C@T Harness</a>
+  </nav>
+  <div class="main">
+    <button class="handle" type="button" aria-label="Pull down your folio">▾ Folio</button>
+    <div class="mhead"><span class="search">⌕ Search folio-assistant</span></div>
+    <main class="content" id="h">
+      <div class="restrow">
+        <div class="strip" aria-label="The same sidebar at rest, 56 px">
+          <span>@</span><span>☰</span><span>▤</span><span>◍</span><span>⇶</span><span>⌘</span><span>▦</span><span class="t">S</span><span class="t">W</span><span class="t">F</span><span class="t">@</span><span class="t">B</span><span>⌂</span>
+        </div>
+        <p class="wf-note">Drawn opposite: the sidebar pinned open (☰ "Keep navigation open", 264 px). At rest, at 800 px and wider, it is the 56 px strip on the left: marks only, no labels, opening on hover or focus. The page content starts 56 px from the edge, and the opened sidebar covers it.</p>
+      </div>
+      <details class="sticky"><summary>▣ Stickies <span class="cnt">5</span></summary></details>
+      <h1>folio-assistant</h1>
+      <p class="lede">A content-agnostic agent skills framework for authoring rigorous content with a large language model — scientific papers and books, WHO SMART Guidelines, and FHIR Implementation Guides — backed by an MCP server, role-based access control, and a typed content-object model.</p>
+      <div class="btns"><span class="wf-btn">Get started</span><span class="wf-btn">Install</span><span class="wf-btn">View on GitHub</span></div>
+      <h2>What each harness holds</h2>
+      <p class="wf-mute">One section per instantiated harness, in the same order as the dividers in the sidebar — the floor last.</p>
+      <section class="hs"><h3><a href="#h">smart-trust</a></h3>
+        <p>WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.</p>
+        <dl><div><dt>declared directories</dt><dd>2</dd></div><div><dt>declared graph kinds</dt><dd>2</dd></div><div><dt>visualisations you can open</dt><dd>1</dd></div></dl>
+        <ul><li><a href="#h">docs</a></li></ul>
+        <details><summary>▸ Gaps in this instance's declaration (3)</summary></details></section>
+      <section class="hs"><h3><a href="#h">WHO IRIS</a></h3>
+        <p>The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.</p>
+        <dl><div><dt>declared directories</dt><dd>6</dd></div><div><dt>declared graph kinds</dt><dd>6</dd></div><div><dt>visualisations you can open</dt><dd>4</dd></div></dl>
+        <ul><li><a href="#h">catalogue</a></li><li><a href="#h">docs</a></li><li><a href="#h">library</a></li><li><a href="#h">uploads</a></li></ul>
+        <details><summary>▸ Gaps in this instance's declaration (4)</summary></details></section>
+      <section class="hs"><h3><a href="#h">Folio Assistant</a></h3>
+        <p>The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name …</p>
+        <dl><div><dt>declared directories</dt><dd>1</dd></div><div><dt>declared graph kinds</dt><dd>1</dd></div><div><dt>visualisations you can open</dt><dd>1</dd></div></dl>
+        <ul><li><a href="#h">uploads</a></li></ul>
+        <details><summary>▸ Gaps in this instance's declaration (1)</summary></details></section>
+      <section class="hs"><h3><a href="#h">C@T Harness</a></h3>
+        <p>computable adjudication and agentic test harness caaat-harness ca&amp;at-harness .c&amp;at-harness c@t-harness</p>
+        <dl><div><dt>declared directories</dt><dd>41</dd></div><div><dt>declared graph kinds</dt><dd>24</dd></div><div><dt>visualisations you can open</dt><dd>17</dd></div></dl>
+        <p class="wf-mute">17 viewer links: beans, cat-harness, docs, folio, fsh-guts, glossary, health, issue-marks, library, processes, qa, …</p>
+        <details><summary>▸ Gaps in this instance's declaration (1)</summary></details></section>
+      <section class="hs"><h3><a href="#h">Bootstrap</a></h3>
+        <p>The graph an agent reads before it knows what this repository is.</p>
+        <dl><div><dt>declared directories</dt><dd>8</dd></div><div><dt>declared graph kinds</dt><dd>7</dd></div><div><dt>visualisations you can open</dt><dd>0</dd></div></dl>
+        <p class="wf-mute">Nothing published to open yet.</p>
+        <details><summary>▸ Gaps in this instance's declaration (2)</summary></details></section>
+      <h2>Four things, in order</h2>
+      <p><b>1. The work plan is where you say what you are doing.</b> … <b>2. Make your first folio.</b> … <b>3. Know which kind of thing you are writing.</b> … <b>4. The documentation you will never read.</b></p>
+      <p class="wf-mute">Then: What is folio-assistant? (with a Mermaid flowchart) · Supported content types (table) · Where to go next (12 links) · Documentation map (Mermaid). Footer: "Open notes (3)", the licence line, "deployed dev".</p>
+    </main>
+  </div>
+</div>
+</body>
+</html>
