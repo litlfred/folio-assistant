@@ -4742,6 +4742,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the folder list with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -4764,7 +4767,10 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-nav-folders__link {
-  display: block;
+  /* See the target-size block above `.fa-doc-index__link`. */
+  display: flex;
+  align-items: center;
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -4985,6 +4991,9 @@ button.fa-nav-icon {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  /* The 24px floor — the disclosure a reader opens the index with, and it sat at 23. See the
+     target-size block above `.fa-doc-index__link`. */
+  min-height: 1.5rem;
   padding: 0.25rem var(--fa-nav-pad);
   cursor: pointer;
   user-select: none;
@@ -5006,8 +5015,64 @@ button.fa-nav-icon {
   list-style: none;
 }
 
+/* ═══ EVERY ROW IN THIS NAVBAR IS A TARGET ═════════════════════════════════
+ *
+ * `ui-accessibility`: *"Targets are at least 24x24 CSS px (SC 2.5.8), and aim
+ * higher: 32px for rows in a list … Density is cheaper than a missed target."*
+ * This instance's declared interaction profile is low-dexterity
+ * (`interaction/interaction.json`), so that is the binding constraint here
+ * rather than a nicety.
+ *
+ * THREE ROWS WERE UNDER IT, measured in a browser at 1400x900 rather than read
+ * off this file:
+ *
+ * | row | was | why it was missed |
+ * |---|---|---|
+ * | `.fa-doc-index__link` | 23px | `0.1875rem` padding on a 16.8px line — one pixel short |
+ * | `.fa-nav-folders__link` | 23px | the same rule, copied |
+ * | `.fa-harness-graph__link` | **13px** | an inline `<a>`, so its box IS its text |
+ *
+ * The repository already holds this floor in two places — the KG viewer's
+ * `a11y.e2e.ts` and the language bar — and the navbar was in neither, which is
+ * why three rows drifted under it unnoticed. `navbar-row.e2e.ts` now sweeps
+ * every interactive element in `.side-bar`, so the next row added is measured
+ * rather than trusted.
+ *
+ * `min-height` rather than more padding on the two block rows: padding alone
+ * would push the text off-centre in a row whose height is set by its line, and
+ * the point is the BOX a pointer has to hit. The inline one has to become
+ * `inline-block` before a height applies to it at all.
+ *
+ * ## 1.75rem on the two primary rows, not 1.5
+ *
+ * The skill asks for the floor AND a margin above it — *"a target that is
+ * barely legal is a target that is hard to hit … aim higher: 32px for rows in
+ * a list"* — and `a11y.e2e.ts`'s own note says the suite holds the floor *"so
+ * the comfort margin can be spent without silence"*. 24px exactly is the
+ * legal minimum and nothing more.
+ *
+ * So the document index and the folder list, which are the navigation a
+ * reader actually clicks, get **28px**. Measured cost, in a browser rather
+ * than arithmetic: the folder list's 24 rows make it **772px** tall, inside a
+ * region that already scrolls. That is the trade `ui-accessibility` names in
+ * one line — *"density is cheaper than a missed target"*. (An earlier draft of
+ * this paragraph computed 24 x 28 = 672 and wrote it as a measurement; the
+ * list has margins the arithmetic did not.)
+ *
+ * The per-harness graph sub-links stay at the 24px floor plus their padding
+ * (26px). They nest under a `.fa-harness-tab__body` that is already 40px, so
+ * the reader reaching for a harness is not reaching for these; spending the
+ * margin on six sub-rows per harness would push the fixed bottom past its cap
+ * and cost the avatars the owner asked to keep.
+ * ───────────────────────────────────────────────────────────────────────── */
+
 .fa-doc-index__link {
-  display: block;
+  display: flex;
+  align-items: center;
+  /* 1.75rem — the floor plus the margin the skill asks for; see the block
+     above. `flex` + `align-items` keeps the text centred in a box that is now
+     taller than its own line. */
+  min-height: 1.75rem;
   padding: 0.1875rem var(--fa-nav-pad);
   overflow: hidden;
   color: inherit;
@@ -5297,6 +5362,17 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-harness-graph__link {
+  /* THE WORST OF THE THREE, at 26x13: an inline `<a>`, so its box was exactly
+   * its text and no height applied to it. `inline-block` is what makes the
+   * floor reachable at all; the padding is what a pointer aims at. See the
+   * target-size block above `.fa-doc-index__link`. */
+  display: inline-block;
+  min-height: 1.5rem;
+  /* WIDTH TOO, and it is the half a height fix leaves behind: SC 2.5.8 is
+     24x24, and once the height was right this row was 20x32 because its text
+     is the word "docs". Found by the sweep, not by looking. */
+  min-width: 1.5rem;
+  padding: 0.25rem 0;
   color: inherit;
   opacity: 0.72;
   text-decoration: none;

@@ -132,6 +132,15 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
   .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
   .site-title { flex: 1; }
   .site-nav { width: 100%; overflow-y: auto; }
+  /* THE THEME'S OWN NAV LINK, copied from a real build rather than written
+     from memory: padding 4px 32px, line-height 24px, so 32px tall. The theme
+     sizes this element, not us, and a fixture that left it as a bare anchor
+     measured 17px and reported the THEME as failing the target floor. Same
+     rule action-tiles.e2e.ts states for its search markup.
+     NO BACKTICKS HERE -- this comment is inside the page template literal, and
+     one ends the string. It did, and the suite reported "No tests found"
+     rather than a syntax error (bean bmr0). */
+  .site-nav a { display: block; padding: 4px 32px; font-size: 14px; line-height: 24px; }
   ${CSS}
 </style></head><body>
   ${script}
@@ -663,5 +672,71 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.hover(".side-bar");
     await page.waitForTimeout(250);
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
+  });
+});
+
+/**
+ * THE TARGET FLOOR, over the whole navbar.
+ *
+ * `ui-accessibility`: *"Targets are at least 24x24 CSS px (SC 2.5.8), and aim
+ * higher: 32px for rows in a list … Density is cheaper than a missed target."*
+ * This instance's declared interaction profile is low-dexterity, so it is a
+ * binding constraint rather than a nicety.
+ *
+ * ## Why this test did not exist, and what its absence cost
+ *
+ * The repository already holds this floor in two places — the KG viewer's
+ * `a11y.e2e.ts` and the language bar — and the NAVBAR was in neither. Three
+ * rows had drifted under it unnoticed, measured at 1400x900 on a built site:
+ * `.fa-doc-index__link` and `.fa-nav-folders__link` at **23px** (one pixel
+ * short, from a padding rule copied between them) and `.fa-harness-graph__link`
+ * at **26x13** — an inline `<a>`, so its box was exactly its text.
+ *
+ * So the assertion is a SWEEP rather than three named selectors. Naming them
+ * would pass the day a fourth row is added, which is exactly how these three
+ * got here.
+ */
+test.describe("every row in the navbar is a target", () => {
+  test("nothing interactive in the sidebar is under 24px", async ({ page }) => {
+    await load(page, CUSTOM);
+    // Opened and every disclosure expanded: a row inside a closed `<details>`
+    // has no box to measure, and a sweep that skipped them would report clean
+    // over the rows most likely to be wrong.
+    await page.hover(".side-bar");
+    for (const heading of [".fa-doc-index__heading", ".fa-nav-folders__heading", ".fa-harness-tabs__heading"]) {
+      const h = page.locator(".side-bar " + heading);
+      if (await h.count()) await h.click();
+    }
+    await page.waitForTimeout(300);
+
+    const small = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const e of Array.from(
+        document.querySelectorAll('.side-bar a[href], .side-bar button, .side-bar summary, .side-bar [role="button"]'),
+      )) {
+        const r = e.getBoundingClientRect();
+        // A zero box is hidden, not small — the theme's skip link is 1x1 until
+        // it takes focus, and reporting it would be reporting a control that
+        // is correct.
+        if (r.width === 0 || r.height === 0) continue;
+        if (r.height < 24 || r.width < 24) {
+          out.push(`${(e.className || e.tagName).toString().split(" ")[0]} ${Math.round(r.width)}x${Math.round(r.height)}`);
+        }
+      }
+      return out;
+    });
+    expect(small).toEqual([]);
+  });
+
+  test("...and the sweep actually found something to measure", async ({ page }) => {
+    // `dh4f` in a test: a selector that matched nothing would make the
+    // assertion above pass over an empty set, which is indistinguishable from
+    // a navbar with no defects.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const n = await page
+      .locator('.side-bar a[href], .side-bar button, .side-bar summary')
+      .evaluateAll((ns) => ns.filter((e) => e.getBoundingClientRect().height > 0).length);
+    expect(n).toBeGreaterThan(5);
   });
 });
