@@ -61,7 +61,53 @@ export type NodeKind = "start" | "end" | "activity" | "exclusive" | "parallel";
  * deliberately — the lane already carries it. See {@link ProcessNode.raci}.
  */
 export const RACI_INVOLVEMENTS = ["accountable", "consulted", "informed"] as const;
-export type RaciInvolvement = (typeof RACI_INVOLVEMENTS)[number];
+
+/**
+ * RASCI — RACI plus **S**upportive: a role that does work on the activity
+ * without owning the deliverable.
+ *
+ * ## Why `supportive` is declarable when `responsible` is not
+ *
+ * The obvious objection, and it was the first answer given to the owner: in a
+ * lane-derived model S and R collapse, because a party that does work on the
+ * activity is a lane participant. **That is wrong, and the reason is
+ * structural.** A BPMN activity sits in EXACTLY ONE lane, so the lane is a
+ * discriminator rather than a description: R is the owning lane, S is a
+ * declared role that is not it. There is no case where both could apply.
+ *
+ * Checked against the corpus before this was added (2026-09-23): no activity
+ * anywhere declares `involvement="responsible"`, and all declared
+ * involvements used the three legal values. So the premise R-is-the-lane holds
+ * corpus-wide and `supportive` inherits no ambiguity from it.
+ *
+ * It also buys expressiveness rather than a letter for its own sake: BPMN
+ * **cannot place one activity in two lanes**, so before this there was no way
+ * to say "this role also does the work here".
+ */
+export const RASCI_INVOLVEMENTS = [...RACI_INVOLVEMENTS, "supportive"] as const;
+
+/**
+ * The involvement vocabularies a process may declare, by name.
+ *
+ * **Parallel, not cumulative**, and the distinction is the whole reason this
+ * is a choice rather than a superset always in force. `methodology-adoption`:
+ * *"Two or more methodologies may answer the same question. Do not blend
+ * them… pick one per decision, name it, and follow it."* A process that has
+ * chosen four letters has chosen them, and a fifth appearing in it is a defect
+ * to report — not a convenience to absorb.
+ *
+ * The same shape bean `5vo9` needs for adjudication: a declared enum that a
+ * step's value is validated against. One mechanism, two users.
+ */
+export const INVOLVEMENT_VOCABULARIES = {
+  raci: RACI_INVOLVEMENTS,
+  rasci: RASCI_INVOLVEMENTS,
+} as const satisfies Record<string, readonly string[]>;
+
+export type InvolvementVocabulary = keyof typeof INVOLVEMENT_VOCABULARIES;
+
+/** Every letter any vocabulary admits — the union, for typing only. */
+export type RaciInvolvement = (typeof RASCI_INVOLVEMENTS)[number];
 
 export interface ProcessNode {
   id: string;
@@ -102,6 +148,23 @@ export interface ProcessNode {
    * a process to one participant.
    */
   raci: { role: string; involvement: RaciInvolvement }[];
+  /**
+   * Declared `folio:raci` entries whose `involvement` is NOT in the process's
+   * vocabulary — a typo, or a `supportive` in a four-letter process.
+   *
+   * **These used to be dropped with no trace, and the comment at the filter
+   * said `check:raci` reported them. It did not.** The filter runs inside
+   * `loadProcessModel`, so by the time `raci-chart.ts` sees a node the
+   * rejected entries are gone; there was nothing left to report and nothing
+   * ever had. Measured 2026-09-23 — `process-model.ts` is the only reader of
+   * the raw element, so no other consumer could have caught them either.
+   *
+   * They are still **not coerced**, which was the right half of the original
+   * decision: a typo read as `informed` would put somebody on a notification
+   * list who was meant to be consulted. Not-coerced and not-recorded are
+   * different things, and only the first was ever intended.
+   */
+  raciUnknown: { role: string; involvement: string }[];
   /**
    * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
    *
@@ -321,6 +384,16 @@ export interface ProcessModel {
    * judgement about its domain applies.
    */
   enforcement: "strict" | "advisory";
+  /**
+   * `<folio:involvement vocabulary="…"/>` — which involvement methodology's
+   * letters this diagram is written in. Absent in the diagram means `raci`.
+   *
+   * Exposed so a consumer can say WHICH vocabulary a finding is against:
+   * `supportive` is a defect in a four-letter process and correct in a
+   * five-letter one, and a report that could not name the vocabulary would be
+   * asserting the same value is both.
+   */
+  involvementVocabulary: InvolvementVocabulary;
   /**
    * `<folio:precondition>` elements on the process — what must hold BEFORE the
    * start event, bean `lv3j`.
@@ -566,6 +639,8 @@ interface ModdleElement {
       enforcement?: string;
       capture?: string;
       involvement?: string;
+      /** `<folio:involvement vocabulary="…"/>` on the process. */
+      vocabulary?: string;
       relaxable?: string;
       /** `<folio:precondition>` — bean `lv3j`. */
       id?: string;
@@ -737,6 +812,29 @@ export async function loadProcessModel(
     .filter((v) => v.$type === CONVENTION_EXT && v.ref)
     .map((v) => v.ref!);
 
+  // `<folio:involvement vocabulary="raci|rasci"/>` on the process — which
+  // methodology's letters this diagram is written in.
+  //
+  // THROWS on a name no vocabulary defines, the same way `folio:policy` and
+  // `folio:bean op` do. A diagram asking for letters the engine does not have
+  // must not load and quietly fall back to four, because the fallback would
+  // be indistinguishable from having chosen four.
+  //
+  // Absent means `raci`, and that default is what makes this change inert for
+  // every existing diagram: nothing already written changes meaning, and a
+  // process opts in to the fifth letter deliberately.
+  const declaredVocabulary = (proc.extensionElements?.values ?? []).find(
+    (v) => v.$type === "folio:involvement",
+  )?.vocabulary;
+  if (declaredVocabulary !== undefined && !(declaredVocabulary in INVOLVEMENT_VOCABULARIES)) {
+    throw new UnsupportedBpmn(
+      `${basename(bpmnPath)}: folio:involvement vocabulary="${declaredVocabulary}" is not a ` +
+        `declared vocabulary. Use one of: ${Object.keys(INVOLVEMENT_VOCABULARIES).join(", ")}.`,
+    );
+  }
+  const involvementVocabulary = (declaredVocabulary ?? "raci") as InvolvementVocabulary;
+  const vocabulary = INVOLVEMENT_VOCABULARIES[involvementVocabulary];
+
   const nodes = new Map<string, ProcessNode>();
   const flows = new Map<string, ProcessFlow>();
 
@@ -752,15 +850,19 @@ export async function loadProcessModel(
       laneId: laneIdOf.get(el.id),
       roleRef: roleRefOf.get(el.id),
       skills: ext.filter((v) => v.$type === "folio:skill" && v.ref).map((v) => v.ref!),
+      // An unrecognised `involvement` is never COERCED — a typo silently read
+      // as `informed` would put somebody on a notification list who was meant
+      // to be consulted, and the difference between those two is the whole
+      // point of the model. It is now also never dropped silently: the
+      // rejects land in `raciUnknown` and `check:raci` fails on them.
       raci: ext
         .filter((v) => v.$type === "folio:raci" && v.ref)
-        // An unrecognised `involvement` is DROPPED rather than coerced. A
-        // typo silently read as `informed` would put somebody on a
-        // notification list who was meant to be consulted, and the
-        // difference between those two is the whole point of the model.
-        // `check:raci` reports what this drops.
-        .filter((v) => (RACI_INVOLVEMENTS as readonly string[]).includes(v.involvement ?? ""))
+        .filter((v) => (vocabulary as readonly string[]).includes(v.involvement ?? ""))
         .map((v) => ({ role: v.ref!, involvement: v.involvement as RaciInvolvement })),
+      raciUnknown: ext
+        .filter((v) => v.$type === "folio:raci" && v.ref)
+        .filter((v) => !(vocabulary as readonly string[]).includes(v.involvement ?? ""))
+        .map((v) => ({ role: v.ref!, involvement: v.involvement ?? "(absent)" })),
       conventions: conventionsInForce({
         process: processConventions,
         lane: laneConventionsOf.get(el.id),
@@ -938,6 +1040,7 @@ export async function loadProcessModel(
     source: bpmnPath,
     dir: dirname(bpmnPath),
     enforcement,
+    involvementVocabulary,
     logCapture,
     preconditions,
     nodes,
