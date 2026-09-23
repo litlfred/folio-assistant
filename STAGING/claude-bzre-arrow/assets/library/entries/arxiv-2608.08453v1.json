@@ -1,0 +1,342 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2608.08453v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Abstract",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-abstract.md",
+      "narrative": null,
+      "content": "Under the current standard, Agent Skills are SKILL.md files\nthat combine instructions with supporting resources, en-\nabling Large Language Model (LLM) agents to reuse proce-\ndures beyond a single conversation. Yet many public skills\nappear to originate from a single task, repository, or conver-\nsation, even when they are shared as reusable components.\nWe analyze this gap across 138,133 public SKILL.md files\nfrom 20,556 repositories using a two-tier defect taxonomy\ngrounded in the official specification and best-practice guid-\nance. We find that 91.8% of skills contain at least one de-\ntected d",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Recently, AI skills have become a practical way to extend\nLarge Language Model (LLM) agents beyond the immediate\nprompt [6]. Under the Agent Skills standard, a skill is pack-\naged as a SKILL.md file: frontmatter tells the agent when to\nload it, the body gives instructions, and optional files provide\nscripts, references, or assets [2]. In this form, skills turn task\nexperience into reusable software artifacts.\nThat promise depends on a basic assumption: a published\nskill should still work outside the task, repository, platform,\nor conversation that produced it. Our crawl contains 138,133\npublic",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "What Keeps Agent Skills from Being Reusable?\nEvidence from 138K SKILL.md Files\nChi Zhang\nThe Graduate Center, City University of New York\nNew York, NY, USA\nCHI.ZHANG06@gc.cuny.edu\nYimin Liu\nThe Ohio State University\nColumbus, OH, USA\nyiminliu.career@gmail.com\nXinze Chen\nThe Graduate Center, City University of New York\nNew York, NY, USA\nxinze.chen95@gc.cuny.edu\nPing Ji\nHunter College, City University of New York\nNew York, NY, USA\nping.Ji@hunter.cuny.edu",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-22-related-work.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Defect Taxonomy",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-32-defect-taxonomy.md",
+      "narrative": null,
+      "content": "validation, and routing stress test. Section 4 answers the four\nresearch questions. Sections 5 and 6 discuss implications and\nlimitations, and Section 7 concludes.\n2",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Background and Related Work",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-004-2-background-and-related-work.md",
+      "narrative": null,
+      "content": "2.1",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Agent Skills and the SKILL.md Format",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-21-agent-skills-and-the-skillmd-format.md",
+      "narrative": null,
+      "content": "An Agent Skill is a directory containing a SKILL.md file with\ntwo parts: YAML (Yet Another Markup Language) frontmat-\nter for structured metadata and a Markdown body for in-\nstructions. The frontmatter must include a name (max 64\ncharacters, lowercase alphanumeric and hyphens) and a\ndescription (max 1,024 characters) that specifies what the\nskill does and when to use it [2]. The description serves as the\nprimary routing mechanism: agents load skill descriptions\nat startup to decide which skill to activate for a given task.\nThe body contains instructions the agent follows when the\nskill is invo",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-3-methodology.md",
+      "narrative": null,
+      "content": "3.1",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data Collection",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-007-31-data-collection.md",
+      "narrative": null,
+      "content": "To study reuse rather than isolated benchmark performance,\nwe build the dataset from places where skills are actually\npublished and copied. We collected SKILL.md files through\nGitHub code search, repository cloning, and the agentskills.in\nregistry API. GitHub search used 40+ sharded queries to by-\npass the 1,000-result-per-query limit; repository cloning ex-\ntracted all case-insensitive SKILL.md files from known and\ndiscovered skill repositories; registry collection fetched raw\nGitHub content for indexed skills.\nThe final SHA-256-deduplicated dataset contains 138,133\nunique skills from 20,556",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Routing Stress Test",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-34-routing-stress-test.md",
+      "narrative": null,
+      "content": "(Section 3.4) and the exemplar analysis (RQ4) to avoid letting\none repository dominate. A small enterprise or private-repo\nbias is unavoidable; we address its external-validity implica-\ntions in Section 6.\nWe also collected GitHub issues from 12 major agent plat-\nform repositories using 28 skill-related queries; filtering 6,233\nissues yielded 761 relevant issues classified by defect cate-\ngory.\n3.2\nDefect Taxonomy\nWe organize defects around the lifecycle of reuse. A skill\nmust first be selected, then loaded, then supported by exter-\nnal resources, then executed safely in an environment that\nma",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Detector Validation",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-33-detector-validation.md",
+      "narrative": null,
+      "content": "We validate detectors with mutation-style SKILL.md fixtures\nand threshold sensitivity checks. Each of the 31 detectors\nhas a positive fixture that isolates the target defect and a\npaired negative fixture; all detectors fire only on the posi-\ntive case. For numeric thresholds (description length, body\nlength, inline-code ratio, code-block count, monolithic-body\nlength), lenient, baseline, and strict settings on a determin-\nistic 10,000-skill sample preserve the headline result: 88.8–\n94.6% of skills contain at least one detected defect, and the\ntop three categories remain R1 Routing, R2 Body, a",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-4-results.md",
+      "narrative": null,
+      "content": "4.1",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ecosystem Overview",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-011-41-ecosystem-overview.md",
+      "narrative": null,
+      "content": "Before examining quality, we first ask what kind of ecosys-\ntem these public files represent. The answer matters because\na reuse problem has different implications in a small cu-\nrated registry than in a large, heterogeneous collection of\nrepository-local artifacts.\nWe infer platforms from file paths. Claude Code is the\nlargest identifiable platform (18.7%), while generic skills/\ndirectories dominate overall (58.3%). Skills primarily target\ndevelopment workflow automation: debugging (53.1%), doc-\numentation (51.0%), API development (48.0%), testing (42.2%),\nand code review (31.4%). Claude is m",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ1: What reusability defects are prevalent in public skills?",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-012-42-rq1-what-reusability-defects-are-prevalent-in.md",
+      "narrative": null,
+      "content": "public skills?\nThe first step is prevalence: if detected defects are rare,\nreusable-skill quality is mainly an edge-case problem; if they\nare common, quality control must become part of the skill\ngeneration and publication workflow. Of 138,133 skills an-\nalyzed, 89.3% trigger at least one Tier 1 detector derived\nfrom the official Agent Skills specification, and 91.8% have\nat least one detected defect of any tier. The average skill\ncontains 2.5 detected defects (median: 2). Figure 2 shows\nprevalence by category. This prevalence result should be\nread as an ecosystem-level quality signal: some de",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ2: How do these defects limit skill reuse?",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-013-43-rq2-how-do-these-defects-limit-skill-reuse.md",
+      "narrative": null,
+      "content": "Routing defects reduce discovery quality. Prevalence\nalone does not show whether a defect matters operationally.\nThe most direct reuse failure is that an otherwise useful\nskill is never selected. Because R1 is both prevalent and\ntied to startup selection, we test this discovery-stage reuse\nrisk in Table 1. When queries are derived from repository\nmetadata, R1-clean skills achieve 88.5% hit@1 and 0.906 MRR,\ncompared with 82.6% hit@1 and 0.855 MRR for R1-defective\nskills. The same direction holds under the stricter name/path-\nonly query proxy (26.7% vs. 24.3% hit@1).\nWhat the stress test does an",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "RQ3: Which platform and provenance signals are associated with reusable skill quality?",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-014-44-rq3-which-platform-and-provenance-signals-are.md",
+      "narrative": null,
+      "content": "associated with reusable skill quality?\nCross-platform quality. If defects reflect only individual\nauthor mistakes, platform-level patterns should be weak. In-\nstead, the data suggest that platform conventions and prove-\nnance signals travel with different skill-quality profiles. Fig-\nure 3 reveals statistically significant quality variation across\nplatforms (Kruskal–Wallis 𝐻= 594.17, 𝑝< 10−125). Cursor\nskills are highest quality (avg 1.55 defects, 13.5% defect-free),\nwhile OpenClaw marketplace skills are lowest (avg 2.29,\n3.1% defect-free). Cursor differs significantly from Generic,\nOpenCla",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evidence-Based Authoring Guidelines",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-46-evidence-based-authoring-guidelines.md",
+      "narrative": null,
+      "content": "Based on prevalence, platform variation, issue corroboration,\nand exemplar analysis, we derive twelve guidelines (G1–\nG12). Table 2 maps each guideline to target defects and the\npercentage of skills affected.\n5",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-016-5-discussion.md",
+      "narrative": null,
+      "content": "The conversation-first provenance hypothesis. Why\nare detected defect rates so high despite a clear specifica-\ntion? A reusable skill is not merely a saved prompt; it is a\nrouted, progressively disclosed, executable capability. We\npropose—and label explicitly as a hypothesis rather than a\nmeasured finding—that many public skills are instead ex-\ntracted from problem-solving conversations: a developer\nsolves a task interactively, then saves the conversation as\nSKILL.md. This would explain the recurring co-occurrence\nof routing metadata weakness, name-as-heading duplica-\ntion, install instruction",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Threats to Validity",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-017-6-threats-to-validity.md",
+      "narrative": null,
+      "content": "Construct validity. Our defect detectors use regex-based\nheuristics, which may produce false positives or false nega-\ntives. We mitigate implementation risk through mutation-\nstyle fixture tests and threshold sensitivity analysis, but these\nchecks do not capture every semantic context in which a skill\nmay be used. The risk is highest for the two most context-\ndependent categories. R5.3 (prompt injection) catches lexical\npatterns that can appear legitimately inside security-auditing\nor red-team skills that deliberately discuss injection prompts.\nR7.1 (persona redefinition) catches second-person",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-018-7-conclusion.md",
+      "narrative": null,
+      "content": "We studied what keeps public Agent Skills from becoming\nreusable agent capabilities. Across 138,133 public SKILL.md\nfiles, 89.3% violate at least one official-specification rule and\n91.8% contain at least one detected reusability defect under\nour baseline detector, with the finding stable under lenient\nand strict thresholds. Routing is the clearest functional bot-\ntleneck we isolate: skills with clean routing metadata are\nretrieved more reliably than those with routing defects from\nthe startup description surface under a BM25 lexical baseline;\nan LLM-based selector may compress this gap, and w",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2608.08453v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-019-references.md",
+      "narrative": null,
+      "content": "[1] agent-sh. 2026. agnix: The missing linter and LSP for AI coding assis-\ntants. Retrieved May 4, 2026 from https://github.com/agent-sh/agnix\n[2] Agent Skills. [n. d.]. Specification - Agent Skills.\nRetrieved May 4,\n2026 from https://agentskills.io/specification\n[3] Anthropic. [n. d.]. Extend Claude with skills. Retrieved May 4, 2026\nfrom https://code.claude.com/docs/en/skills\n[4] Yudong Gao, Zongjie Li, Yuanyuanyuan, Zimo Ji, Pingchuan Ma,\nand Shuai Wang. 2026. SkillReducer: Optimizing LLM Agent Skills\nfor Token Efficiency.\nhttps://doi.org/10.48550/arXiv.2603.29919\narXiv:2603.29919 [cs.SE]\nA",
+      "truncated": true,
+      "provenance": "ingested"
+    }
+  ]
+}
