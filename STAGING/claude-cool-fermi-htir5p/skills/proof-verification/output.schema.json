@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/skills/proof-verification/output.schema.json",
+  "title": "Proof Verification Output",
+  "description": "Output schema for the proof-verification skill.",
+  "type": "object",
+  "required": [
+    "verified",
+    "sorryCount"
+  ],
+  "properties": {
+    "verified": {
+      "type": "boolean"
+    },
+    "sorryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sorries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "line",
+          "obligation"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "obligation": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/cool-fermi-htir5p",
+    "sha": "9f538f8b5e40bc68bd38c588bc32682ef6d83749",
+    "pr": "1062/merge",
+    "run": "35852607807"
+  }
+}
