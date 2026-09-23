@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "bootstrap-tools-schemas": {
-      "count": 3,
+      "count": 5,
       "unit": "modules"
     },
     "schemas": {
@@ -48,6 +48,22 @@
       "name": "discussion",
       "graphNode": "schema",
       "summary": "The two documents the `discussion` process carries, as Zod.",
+      "isTest": false
+    },
+    {
+      "module": "bootstrap-tools/schemas/graph.test.ts",
+      "instance": "bootstrap-tools",
+      "name": "graph.test",
+      "graphNode": "undeclared",
+      "summary": "bootstrap defines its own terms, and nothing in it points above it",
+      "isTest": true
+    },
+    {
+      "module": "bootstrap-tools/schemas/graph.ts",
+      "instance": "bootstrap-tools",
+      "name": "graph",
+      "graphNode": "schema",
+      "summary": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
       "isTest": false
     },
     {
@@ -1838,6 +1854,143 @@
         },
         {
           "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph.ts#AssetSchema",
+      "name": "AssetSchema",
+      "module": "bootstrap-tools/schemas/graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "src",
+          "type": "z.string().min(1).describe(\"The file, relative to the declaration.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1).describe(\"The part the file plays, such as `instance-readme`.\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph.ts#BootstrapTerm",
+      "name": "BootstrapTerm",
+      "module": "bootstrap-tools/schemas/graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "name": "KnowledgeGraphDeclarationSchema",
+      "module": "bootstrap-tools/schemas/graph.ts",
+      "kind": "zod-object",
+      "doc": "The shape every `<name>.json` shares. Loose on purpose: a Harness above bootstrap adds fields.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1).describe(\"The Knowledge Graph's name. The declaration file is `<name>.json`.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z.array(SubgraphSchema).optional().describe(\"Its Subgraphs: zero or more.\")",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "assets",
+          "type": "z.array(AssetSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "bootstrap-tools/schemas/graph.ts#AssetSchema",
+        "bootstrap-tools/schemas/graph.ts#SubgraphSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
+      "name": "SubgraphSchema",
+      "module": "bootstrap-tools/schemas/graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1).describe(\"The Subgraph's name, unique within its Knowledge Graph.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1).describe(\"The directory, relative to the declaration.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "z.array(z.string().min(1)).min(1).describe(\"The Graph Kinds it holds.\")",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "description",
           "type": "z.string().optional()",
           "optional": true,
           "array": false
@@ -35710,6 +35863,22 @@
       "kind": "extends",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "bootstrap-tools/schemas/graph.ts#AssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
+      "via": "directories",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/actor-reach.ts#ReachConflict",
