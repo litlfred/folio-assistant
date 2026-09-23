@@ -4361,6 +4361,44 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   overscroll-behavior: contain;
 }
 
+/* THE BACKDROP SCROLLS WITH THE WORDS — bean `624f`, owner 2026-09-23.
+ *
+ * Owner, 2026-09-21: *"if the content shape is not square and overruns, then
+ * you can scroll contents and background will scrll accoringing"*. Offered
+ * four readings on 2026-09-23 — scroll together, keep the art still, repeat
+ * it, stretch it — they chose **"scrolls with text"**: *"picture and words
+ * move together as one surface. The picture stays whole, and text past its
+ * end continues on the plain theme colour."*
+ *
+ * THE CARD IS THE SCROLLER, NOT THE TEXT BOX. Before this, the text box
+ * scrolled inside a still card, so the words slid over a fixed cat. Now the
+ * text box grows to its content and the CARD scrolls; the `<picture>` and the
+ * scrim are absolutely positioned against the card's scroll origin, so they
+ * move with the content — which is what makes it one surface.
+ *
+ * THE PICTURE STAYS WHOLE, because `object-fit: contain` above is unchanged:
+ * *"show full sticky image, not cropped"* (owner, earlier) is not traded
+ * away. So it covers exactly the first square, and a long note continues
+ * below it on `.fa-sticky`'s own themed surface. That is the honest
+ * consequence of "whole and unrepeated", and it is what the owner chose.
+ *
+ * DOCKED ONLY. On the glass (`.fa-sticky-floating`) a sticky is shaped to its
+ * content (the other half of this bean), so there is nothing to overrun. */
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) > .fa-landing-sticky__text {
+  /* At least the declared cloud, so a short note still sits where the art
+   * put it; taller when the words need it, which is what overflows the CARD. */
+  height: auto;
+  min-height: calc(var(--fa-th, 0.84) * 100%);
+  overflow: visible;
+  /* Room below the last line, so it never sits flush on the card's edge. */
+  padding-bottom: 0.75em;
+}
+
 /* A sticky with no art keeps the old flow behaviour exactly: no fixed shape, no
  * absolute box. `--fixed` is only added when art resolved, so this is the
  * third-state case the template already distinguishes. */

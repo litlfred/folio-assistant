@@ -1,11 +1,11 @@
 ---
 # folio-assistant-624f
 title: 'STICKY SHAPE: square in the dock, content-shaped only on the glass, and the backdrop scrolls with the overflow'
-status: todo
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-21T19:23:39Z
-updated_at: 2026-09-21T19:23:39Z
+updated_at: 2026-09-23T10:49:00Z
 parent: folio-assistant-6lb8
 ---
 
@@ -116,3 +116,33 @@ are only that the background scrolls accordingly.
 
 Left for the owner rather than decided, because every available answer
 trades against a ruling they have already made once.
+
+## Owner ruling, 2026-09-23 — "scrolls with text"
+
+The four readings were put to the owner: scroll together; keep the art still (close with no change); repeat the art; stretch it. They chose **"Scrolls with text"**:
+
+> Picture and words move together as one surface. The picture stays whole, and text past its end continues on the plain theme colour.
+
+That resolves the conflict this bean recorded. It keeps the earlier *"show full sticky image, not cropped"* ruling (`object-fit: contain` is unchanged) and accepts its consequence: whole, unrepeated art is a fixed amount of picture.
+
+## Built 2026-09-23 — 2 and 3, the backdrop half
+
+- **The CARD is the scroller, not the text box.** For a docked fixed sticky (`.fa-landing-sticky--fixed:not(.fa-sticky-floating)`), the card scrolls. The text box grows to its content (`min-height` is the declared cloud, so a short note still sits where the art put it). The `<picture>` and scrim are absolutely positioned against the card's scroll origin, so they move with the content.
+- **The picture stays whole:** one square, `contain`. A long note continues below it on `.fa-sticky`'s themed surface.
+- **On the glass nothing changes.** A floating sticky is shaped to its content, so it has nothing to overrun.
+
+### Verified
+
+- `sticky-shape.e2e.ts` has 5 new specs:
+  - the card scrolls and the text box does not
+  - art and words move by the SAME 120px
+  - the picture is one square, `contain`
+  - a short note does not scroll and starts at its declared cloud
+  - the glass is excluded
+- Removing the rule fails the two core specs.
+- A screenshot with the real engineer card art confirms the picture moves with the text, and the note continues on the cream theme colour.
+- Full e2e 533/533. Gates 135/135.
+
+## Summary of Changes
+
+All four halves are done: 1 and 4 (shape by place) on 2026-09-22, and 2 and 3 (the backdrop scrolls with the words, the owner's chosen reading) here.
