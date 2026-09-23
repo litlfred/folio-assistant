@@ -25,8 +25,8 @@ it.&quot;</em></p>
 <p><code>schemas/content-type.ts</code> reads a root and nothing else, on purpose: the
 dependency resolver lives in THIS module, and importing it there would make
 the type registry depend on the thing that should depend on it. So closure
-is composed at the layer that already owns the walk — <code>resolveDependencyTree</code>
-is three functions up — rather than the walk being pushed down.</p>
+is composed at the layer that already owns the walk — <code>resolveInstanceGraph</code>
+is above it — rather than the walk being pushed down.</p>
 <h2 id="membership-is-attributed-never-merged" class="tsd-anchor-link">Membership is ATTRIBUTED, never merged<a href="#membership-is-attributed-never-merged" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The result is a list rather than a set, and every entry says which instance
 carried the marker. A union would answer &quot;is this tree a DAK?&quot; and lose &quot;is
@@ -48,7 +48,7 @@ positive that would get the check switched off within a week.</p>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">registry</span>: <a href="../classes/schemas_content-type.ContentTypeRegistry.html" class="tsd-signature-type tsd-kind-class">ContentTypeRegistry</a></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_folio-config.ClosedRepositoryDescription.html" class="tsd-signature-type tsd-kind-interface">ClosedRepositoryDescription</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L1067">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:1067</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L1131">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:1131</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

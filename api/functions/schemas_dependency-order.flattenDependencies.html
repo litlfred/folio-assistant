@@ -8,27 +8,26 @@
 <div class="col-content">
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb" aria-label="Breadcrumb">
-<li><a href="../modules/schemas_folio-config.html">schemas/folio-config</a></li>
+<li><a href="../modules/schemas_dependency-order.html">schemas/dependency-order</a></li>
 <li><a href="" aria-current="page">flattenDependencies</a></li></ul>
 <h1>Function flattenDependencies</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures">
 <li class="">
-<div class="tsd-signature tsd-anchor-link" id="flattendependencies"><span class="tsd-kind-call-signature">flattenDependencies</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">tree</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span><a href="#flattendependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-signature tsd-anchor-link" id="flattendependencies"><span class="tsd-kind-call-signature">flattenDependencies</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">steps</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <a href="../interfaces/schemas_dependency-order.OrderedStep.html" class="tsd-signature-type tsd-kind-interface">OrderedStep</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_dependency-order.FlattenResult.html" class="tsd-signature-type tsd-kind-interface">FlattenResult</a><a href="#flattendependencies" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Flatten the dependency tree into a depth-first ordered list.</p>
-<p>Transitive dependencies appear before the dependency that declared
-them, so the overlay order is: deepest first, root last — meaning
-the root's files override everything, which is the desired behavior
-for skills and content overlay.</p>
+<div class="tsd-comment tsd-typography"><p>Flatten a hierarchy into the order its dependencies imply.</p>
+<p>Kahn's algorithm with a stable queue, which is rule 2: the queue is drained
+in declaration order, so the output changes only when the DECLARATIONS
+change.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
-<li><span><span class="tsd-kind-parameter">tree</span>: <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span></span></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_folio-config.ResolvedDependency.html" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
+<li><span><span class="tsd-kind-parameter">steps</span>: <span class="tsd-signature-keyword">readonly</span> <a href="../interfaces/schemas_dependency-order.OrderedStep.html" class="tsd-signature-type tsd-kind-interface">OrderedStep</a><span class="tsd-signature-symbol">[]</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_dependency-order.FlattenResult.html" class="tsd-signature-type tsd-kind-interface">FlattenResult</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L760">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:760</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/dependency-order.ts#L102">work/folio-assistant/folio-assistant/cat-harness/schemas/dependency-order.ts:102</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

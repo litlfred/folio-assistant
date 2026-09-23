@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 127,
+      "count": 131,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -321,6 +321,23 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/dependency-order.test.ts",
+      "instance": "cat-harness",
+      "name": "dependency-order.test",
+      "graphNode": "undeclared",
+      "summary": "The four rules of {@link flattenDependencies}, each tested as a rule rather",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "instance": "cat-harness",
+      "name": "dependency-order",
+      "graphNode": "none",
+      "reason": "an ordering function library: it defines no schema",
+      "summary": "dependency-order.ts — flatten a dependency hierarchy into ONE ordered list,",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/document-image.ts",
       "instance": "cat-harness",
       "name": "document-image",
@@ -536,6 +553,23 @@
       "name": "narrative",
       "graphNode": "schema",
       "summary": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/node-kind.test.ts",
+      "instance": "cat-harness",
+      "name": "node-kind.test",
+      "graphNode": "undeclared",
+      "summary": "Node-kind multiple inheritance (bean a1lq). Each refusal is tested as a rule:",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/node-kind.ts",
+      "instance": "cat-harness",
+      "name": "node-kind",
+      "graphNode": "none",
+      "reason": "a composition function over other modules' schemas, not a schema",
+      "summary": "Node kinds with more than one parent, composed by the platform's one",
       "isTest": false
     },
     {
@@ -10078,6 +10112,186 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "name": "FlattenResult",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "order",
+          "type": "OrderedStep[]",
+          "optional": false,
+          "array": true,
+          "doc": "The flattened run order — empty when any problem was found."
+        },
+        {
+          "name": "problems",
+          "type": "OrderProblem[]",
+          "optional": false,
+          "array": true,
+          "doc": "Everything wrong with the graph. NON-EMPTY MEANS `order` IS EMPTY: a"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/dependency-order.ts#OrderProblem",
+        "cat-harness/schemas/dependency-order.ts#OrderedStep"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#InheritanceConflict",
+      "name": "InheritanceConflict",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "doc": "Two layers define one key and neither reaches the other.",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ids",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Every definer none of the others reaches. Always two or more."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "name": "OrderedStep",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "doc": "One node of a dependency hierarchy, before it is flattened.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "needs",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "Ids this step must run after. Absent or empty means it may run first."
+        },
+        {
+          "name": "fatal",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "Does a failure here end the run?"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Free-text, carried through to the report so a reader is not left guessing."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#OrderProblem",
+      "name": "OrderProblem",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "name": "RunRecord",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "step",
+          "type": "OrderedStep",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outcome",
+          "type": "StepOutcome",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blockedBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why it was skipped: the id whose failure reached it."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/dependency-order.ts#OrderedStep",
+        "cat-harness/schemas/dependency-order.ts#StepOutcome"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/dependency-order.ts#StepOutcome",
+      "name": "StepOutcome",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "type-alias",
+      "doc": "What happened to one step once the flattened order was run.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "ran",
+        "failed",
+        "skipped"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
       "name": "CaptureBasis",
       "module": "cat-harness/schemas/document-image.ts",
@@ -13278,6 +13492,50 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "name": "InstanceGraph",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "order",
+          "type": "ResolvedDependency[]",
+          "optional": false,
+          "array": true,
+          "doc": "Every dependency the root reaches, EACH ONCE, deepest first and the root's"
+        },
+        {
+          "name": "problems",
+          "type": "InstanceGraphProblem[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+        "cat-harness/schemas/harness-config.ts#ResolvedDependency"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+      "name": "InstanceGraphProblem",
+      "module": "cat-harness/schemas/harness-config.ts",
+      "kind": "type-alias",
+      "doc": "Something wrong with an instance's dependency graph.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
       "name": "ResolvedDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -13306,11 +13564,11 @@
           "doc": "The dependency's own harness config (if present)."
         },
         {
-          "name": "transitive",
-          "type": "ResolvedDependency[]",
+          "name": "needs",
+          "type": "string[]",
           "optional": false,
           "array": true,
-          "doc": "Transitive dependencies (resolved recursively)."
+          "doc": "Absolute roots of this dependency's OWN dependencies. Edges, not a"
         }
       ],
       "extendsNames": [],
@@ -15627,6 +15885,159 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.test.ts#base",
+      "name": "base",
+      "module": "cat-harness/schemas/node-kind.test.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#AsShape",
+      "name": "AsShape",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Composed",
+      "name": "Composed",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "doc": "The type-level mirror of the runtime rule: parents' fields, then own fields over them.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Flat",
+      "name": "Flat",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#Inherited",
+      "name": "Inherited",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#NodeKind",
+      "name": "NodeKind",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "interface",
+      "doc": "A node kind: its declared parents, its own fields, and the composed schema.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "parents",
+          "type": "readonly NodeKind[]",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "own",
+          "type": "z.ZodRawShape",
+          "optional": false,
+          "array": false,
+          "doc": "The fields this layer itself declares."
+        },
+        {
+          "name": "overrides",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false,
+          "doc": "Inherited fields this layer redefines, on purpose."
+        },
+        {
+          "name": "order",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false,
+          "doc": "Every ancestor and then this kind, deepest first: the composition order."
+        },
+        {
+          "name": "schema",
+          "type": "z.ZodObject<S>",
+          "optional": false,
+          "array": false,
+          "doc": "Every field, composed in {@link order}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#ShapeOf",
+      "name": "ShapeOf",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/node-kind.ts#UnionToIntersection",
+      "name": "UnionToIntersection",
+      "module": "cat-harness/schemas/node-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/note-anchor.ts#AlsoAbout",
@@ -23837,52 +24248,39 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/todo.ts#TodoNodeKind",
+      "name": "TodoNodeKind",
+      "module": "cat-harness/schemas/todo.ts",
+      "kind": "zod-object",
+      "doc": "A todo — one person's outstanding work.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/todo.ts#TodoNodeSchema",
       "name": "TodoNodeSchema",
       "module": "cat-harness/schemas/todo.ts",
       "kind": "zod-object",
-      "doc": "A todo — one person's outstanding work.",
-      "fields": [
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoStatus` from `types.ts`, not re-enumerated here."
-        },
-        {
-          "name": "priority",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoPriority` from `types.ts`."
-        },
-        {
-          "name": "origin",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "`TodoOrigin` from `types.ts`."
-        },
-        {
-          "name": "$schema",
-          "type": "z.literal(\"folio-todo/v1\")",
-          "optional": false,
-          "array": false,
-          "doc": "What this file IS, declared inside it."
-        }
-      ],
+      "doc": "The composed schema: carried note, then themed, then the todo's own fields.",
+      "fields": [],
       "extendsNames": [
-        "CarriedNoteSchema"
+        "TodoNodeKind"
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/carried-note.ts#CarriedNoteSchema"
+        "cat-harness/schemas/todo.ts#TodoNodeKind"
       ],
       "unresolved": [],
-      "external": [
-        "z"
-      ],
+      "external": [],
       "exported": true
     },
     {
@@ -34190,6 +34588,38 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "via": "order",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#FlattenResult",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderProblem",
+      "via": "problems",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "to": "cat-harness/schemas/dependency-order.ts#OrderedStep",
+      "via": "step",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/dependency-order.ts#RunRecord",
+      "to": "cat-harness/schemas/dependency-order.ts#StepOutcome",
+      "via": "outcome",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -34676,6 +35106,22 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "to": "cat-harness/schemas/harness-config.ts#InstanceGraphProblem",
+      "via": "problems",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/harness-config.ts#InstanceGraph",
+      "to": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
+      "via": "order",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#ResolvedDependency",
@@ -36087,7 +36533,7 @@
     },
     {
       "from": "cat-harness/schemas/todo.ts#TodoNodeSchema",
-      "to": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
+      "to": "cat-harness/schemas/todo.ts#TodoNodeKind",
       "via": "",
       "kind": "extends",
       "optional": false,

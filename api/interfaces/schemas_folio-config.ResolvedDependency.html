@@ -14,9 +14,9 @@
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Resolved dependency — a dependency that has been located on disk.</p>
 </div></section>
-<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">ResolvedDependency</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#config">config</a><span class="tsd-signature-symbol">:</span> <a href="schemas_folio-config.HarnessConfig.html" class="tsd-signature-type tsd-kind-interface">HarnessConfig</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#dependency">dependency</a><span class="tsd-signature-symbol">:</span> <a href="schemas_folio-config.FolioAssistantDependency.html" class="tsd-signature-type tsd-kind-interface">FolioAssistantDependency</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rootpath">rootPath</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#transitive">transitive</a><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">ResolvedDependency</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#config">config</a><span class="tsd-signature-symbol">:</span> <a href="schemas_folio-config.HarnessConfig.html" class="tsd-signature-type tsd-kind-interface">HarnessConfig</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#dependency">dependency</a><span class="tsd-signature-symbol">:</span> <a href="schemas_folio-config.FolioAssistantDependency.html" class="tsd-signature-type tsd-kind-interface">FolioAssistantDependency</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#needs">needs</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rootpath">rootPath</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L399">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:399</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L400">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:400</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -26,8 +26,8 @@
 <h3 class="tsd-index-heading tsd-anchor-link" id="properties">Properties<a href="#properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-index-list"><a href="#config" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>config</span></a>
 <a href="#dependency" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>dependency</span></a>
+<a href="#needs" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>needs</span></a>
 <a href="#rootpath" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>root<wbr/>Path</span></a>
-<a href="#transitive" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transitive</span></a>
 </div></section></div></details></section></section>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="properties-1">Properties<a href="#properties-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
@@ -38,28 +38,30 @@
 <div class="tsd-comment tsd-typography"><p>The dependency's own harness config (if present).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L405">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:405</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L406">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:406</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="dependency"><span>dependency</span><a href="#dependency" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">dependency</span><span class="tsd-signature-symbol">:</span> <a href="schemas_folio-config.FolioAssistantDependency.html" class="tsd-signature-type tsd-kind-interface">FolioAssistantDependency</a></div>
 <div class="tsd-comment tsd-typography"><p>The original dependency declaration.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L401">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:401</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L402">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:402</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="needs"><span>needs</span><a href="#needs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">needs</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+<div class="tsd-comment tsd-typography"><p>Absolute roots of this dependency's OWN dependencies. Edges, not a
+subtree: a diamond's shared node is one object reached twice, and a
+nested copy of it under each branch was how the old walk lost it.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L412">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:412</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rootpath"><span>root<wbr/>Path</span><a href="#rootpath" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rootPath</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Absolute path to the dependency root.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L403">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:403</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member">
-<h3 class="tsd-anchor-link" id="transitive"><span>transitive</span><a href="#transitive" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">transitive</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-interface">ResolvedDependency</a><span class="tsd-signature-symbol">[]</span></div>
-<div class="tsd-comment tsd-typography"><p>Transitive dependencies (resolved recursively).</p>
-</div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L407">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:407</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L404">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:404</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -76,7 +78,7 @@
 <h3>On This Page</h3></summary>
 <div class="tsd-accordion-details">
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Properties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Properties</summary>
-<div><a href="#config"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>config</span></a><a href="#dependency"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>dependency</span></a><a href="#rootpath"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>root<wbr/>Path</span></a><a href="#transitive"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>transitive</span></a></div></details></div></details></div>
+<div><a href="#config"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>config</span></a><a href="#dependency"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>dependency</span></a><a href="#needs"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>needs</span></a><a href="#rootpath"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Property"><use href="../assets/icons.svg#icon-1024"></use></svg><span>root<wbr/>Path</span></a></div></details></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

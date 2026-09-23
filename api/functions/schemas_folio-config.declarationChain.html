@@ -19,14 +19,14 @@
 <div class="tsd-comment tsd-typography"><p>The declaration chain for an instance: deepest dependency first, root last.</p>
 <p>This is the argument <code>resolveDirectories</code> in <code>schemas/cat-harness.ts</code> asks
 for and documents (&quot;callers usually get this from
-<code>flattenDependencies(resolveDependencyTree(root))</code> plus the root itself&quot;) and
+<code>orderedDependencies(root)</code> plus the root itself&quot;) and
 which, until now, nothing built — <code>resolveDirectories</code> had no caller outside
 its own tests, the same gap <code>resolveSkillDirs</code> carries and this file's own
 status table records. A resolver with no caller is a declaration nobody
 reads, which is how <code>uploads/</code> and <code>library/</code> came to be described in three
 documents and declared in none.</p>
 <p>Root LAST so a root redeclaring an inherited id wins, matching the overlay
-order <code>flattenDependencies</code> documents and <code>resolveDirectories</code> relies on.</p>
+order <code>orderedDependencies</code> documents and <code>resolveDirectories</code> relies on.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -34,7 +34,7 @@ order <code>flattenDependencies</code> documents and <code>resolveDirectories</c
 <li><span><span class="tsd-kind-parameter">folioRoot</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">own</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">root</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/47629383973fef47af42e5e2caec44f1603fd709/cat-harness/schemas/harness-config.ts#L786">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:786</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0effcb05fb1b1e53c0b2977bf35642db5cd8bb36/cat-harness/schemas/harness-config.ts#L851">work/folio-assistant/folio-assistant/cat-harness/schemas/harness-config.ts:851</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
