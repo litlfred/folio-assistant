@@ -28,14 +28,14 @@ A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING
 
 ## Steps
 
-**5** of 5 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min**<br>`Task_Sweep` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Comment ONCE per&#10;(PR, head sha)**<br>`Task_Comment` | Scheduled log sweep | [`issue-working`](../reference/skill-instructions/issue-working.html) | — |
+| **Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min**<br>`Task_Sweep` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine. |
+| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict. |
+| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. |
+| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. |
+| **Comment ONCE per&#10;(PR, head sha)**<br>`Task_Comment` | Scheduled log sweep | [`issue-working`](../reference/skill-instructions/issue-working.html) | Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped. |
 
 {% endraw %}

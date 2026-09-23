@@ -51,6 +51,7 @@
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Build" name="Build the docs site&#10;Jekyll · TypeDoc · KG export">
+      <bpmn:documentation>Build the preview from the PR's head: regenerate the generated docs, trim what this preview does not need, render the BPMN diagrams, then Jekyll, TypeDoc and the knowledge-graph export, with the staging banner and SEO identity claims stripped.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="feature-staging"/>
       </bpmn:extensionElements>
@@ -74,6 +75,7 @@
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Comment" name="Comment the preview&#10;URL on the PR">
+      <bpmn:documentation>Post, or update in place, one comment on the PR giving the preview URL (STAGING/&lt;slug&gt;/) and the commit it was built from. Pull-request events only.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="staging-review"/>
       </bpmn:extensionElements>
@@ -90,6 +92,7 @@
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Slug" name="Derive the slug&#10;from the head ref">
+      <bpmn:documentation>Derive the slug from the PR's head ref: every character outside [a-zA-Z0-9._-] becomes '-', runs of '-' collapse, and leading or trailing '-' is trimmed. It must be one safe path segment, checked by value.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="feature-staging"/>
       </bpmn:extensionElements>
@@ -122,6 +125,7 @@
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Notice" name="Post the retention&#10;notice on the PR">
+      <bpmn:documentation>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="staging-review"/>
       </bpmn:extensionElements>
@@ -161,6 +165,7 @@
       <bpmn:outgoing>Flow_17</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_RemoveDisp" name="Remove it AND append&#10;`removed` — one commit">
+      <bpmn:documentation>Say what is going — size and file count — then remove STAGING/&lt;slug&gt;/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>

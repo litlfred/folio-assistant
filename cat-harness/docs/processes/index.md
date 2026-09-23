@@ -34,9 +34,9 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Board: open and close content](board-open-close.html) | 7 | — |
 | [Board: place a note](board-place-note.html) | 3 | 3 |
 | [Board: relocate content to the trashcan](board-relocate.html) | 5 | 5 |
-| [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | 4 |
+| [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 6 | 5 |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 6 | — |
 | [Content acquisition](content-acquisition.html) | 6 | — |
 | [Content Change and Review](content-change-review.html) | 23 | — |
 | [Content lifecycle](content-lifecycle.html) | 8 | 1 |
@@ -49,12 +49,12 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | 1 |
 | [CRDM requirements](crdm-requirements.html) | 9 | 1 |
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | 1 |
-| [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 5 | 5 |
+| [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 5 | — |
 | [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 9 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | 1 |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
-| [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | 5 |
+| [Staging a feature branch preview, and taking it down](feature-staging.html) | 12 | — |
 | [Getting started](getting-started.html) | 12 | — |
 | [A sub-graph wants to leave](graph-detanglement.html) | 8 | 2 |
 | [Human Translation Workflow](human-translation-workflow.html) | 16 | — |
@@ -70,10 +70,10 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [L3 FHIR IG pipeline](l3-fhir-pipeline.html) | 8 | 5 |
 | [Materialize remote content — the shared subprocess](materialize-remote.html) | 9 | — |
 | [Options analysis](options-analysis.html) | 5 | — |
-| [Which open pull requests have no CI run on their head?](pr-checks-present.html) | 5 | 5 |
+| [Which open pull requests have no CI run on their head?](pr-checks-present.html) | 5 | — |
 | [QA report signing](qa-report-signing.html) | 5 | — |
 | [Refresh materialized remote content](refresh-materialized.html) | 5 | — |
-| [Is the repository itself healthy?](repository-health-watch.html) | 4 | 4 |
+| [Is the repository itself healthy?](repository-health-watch.html) | 4 | — |
 | [Code node review](review-code.html) | 4 | — |
 | [Narrative review](review-narrative.html) | 6 | — |
 | [Review task](review-task.html) | 5 | — |
