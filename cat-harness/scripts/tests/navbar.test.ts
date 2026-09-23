@@ -405,8 +405,8 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "who-iris",
       new Map([["docs", "../docs/who-iris/"]]),
       new Map([
-        ["catalogue", "no viewer yet"],
-        ["themes", "staging only"],
+        ["catalogue", { note: "no viewer yet" }],
+        ["themes", { note: "staging only" }],
       ]),
     );
     expect(got.find((i) => i.label === "catalogue")?.note).toBe("no viewer yet");
@@ -426,9 +426,41 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     const got = declaredGraphs(
       "who-iris",
       new Map([["docs", "../docs/who-iris/"]]),
-      new Map([["docs", "no viewer yet"]]),
+      new Map([["docs", { note: "no viewer yet" }]]),
     );
     expect(got.find((i) => i.label === "docs")?.note).toBeUndefined();
+  });
+
+  it("links a kind whose viewer the HANDLER published — `pk2s`", () => {
+    // The defect: who-iris's `catalogue` drew as a grey row over a page that
+    // exists. `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes on
+    // `gh-pages`, measured 2026-09-23 — the rail was losing a working link.
+    //
+    // The mount table cannot see it. `mountable()` requires an `index.html`
+    // in the instance's own directory, and `who-iris/catalogue/` holds DATA.
+    // The page that renders it is the cat-harness HANDLER's, and a handler's
+    // viewer is never a mount.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["catalogue", { href: "../cat-harness/catalogue/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.href).toBe("../cat-harness/catalogue/who-iris/");
+    // And it is a LINK, so it owes no explanation.
+    expect(got.find((i) => i.label === "catalogue")?.note).toBeUndefined();
+  });
+
+  it("the MOUNT TABLE wins where it has an answer — the owner's order, not a tie-break", () => {
+    // *"cliking shoud go to folio view, not the schema viweer."* A mount is
+    // the instance presenting itself; the handler's viewer is cat-harness's
+    // default rendering of the same graph. Both exist for `library`, and the
+    // instance's own route is the one a reader gets.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["library", "../who-iris/"]]),
+      new Map([["library", { href: "../cat-harness/library/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "library")?.href).toBe("../who-iris/");
   });
 
   it("returns EMPTY for an instance that declares nothing readable", () => {
