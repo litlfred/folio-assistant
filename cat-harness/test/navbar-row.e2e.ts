@@ -740,3 +740,55 @@ test.describe("every row in the navbar is a target", () => {
     expect(n).toBeGreaterThan(5);
   });
 });
+
+/**
+ * A GLYPH PAINTS WITH `currentColor`, OR IT PAINTS BLACK.
+ *
+ * Owner, 2026-09-23, with a screenshot of the dark-mode navbar: *"exploding
+ * icon hard to see in dark mode"*. It was not hard to see — it was black. An
+ * SVG shape with no `fill` takes the initial value, which is black, and the
+ * element's `color` never reaches it.
+ *
+ * ## Why no contrast check would have caught it
+ *
+ * The icon's own computed `color` is a perfectly good `rgb(230,225,232)` and
+ * its effective opacity is 0.8, so a contrast check that reads the ELEMENT
+ * reports **7.99:1** — on an icon rendering at about **1.4:1**. The only way
+ * it shows is to walk the painted shapes, which is what this does.
+ *
+ * Two of the five glyphs were wrong and the other three were fine for a reason
+ * worth keeping: the three are strokes, wrapped in `fill="none"
+ * stroke="currentColor"`, and only the two FILLED ones had nothing saying what
+ * colour to fill with. So this is a sweep rather than two named glyphs — the
+ * next filled glyph added is the next one to get this wrong.
+ */
+test.describe("every glyph in the navbar paints with the text colour", () => {
+  test("no shape falls back to the initial black", async ({ page }) => {
+    await load(page, LIVE);
+    const black = await page.evaluate(() => {
+      const out: string[] = [];
+      const shapes = ".fa-nav-icons svg rect, .fa-nav-icons svg circle, .fa-nav-icons svg ellipse, " +
+        ".fa-nav-icons svg path, .fa-nav-icons svg polygon, .fa-nav-icons svg polyline, .fa-nav-icons svg line";
+      for (const sh of Array.from(document.querySelectorAll(shapes))) {
+        const cs = getComputedStyle(sh);
+        // Black fill AND no stroke: nothing else is carrying the colour, so
+        // this shape is painted with the initial value on whatever is behind
+        // it. A black fill WITH a stroke is a filled-and-outlined shape and is
+        // a judgement, not a fallback.
+        if (cs.fill === "rgb(0, 0, 0)" && (cs.stroke === "none" || cs.stroke === "")) {
+          out.push((sh.closest("[aria-label]")?.getAttribute("aria-label") ?? "?") + " <" + sh.tagName + ">");
+        }
+      }
+      return out;
+    });
+    expect(black).toEqual([]);
+  });
+
+  test("...and the sweep found shapes to look at", async ({ page }) => {
+    // `dh4f`: a selector that matched nothing would pass the assertion above
+    // over an empty set, which is what a navbar with no icons also looks like.
+    await load(page, LIVE);
+    const n = await page.locator(".fa-nav-icons svg *").count();
+    expect(n).toBeGreaterThan(5);
+  });
+});
