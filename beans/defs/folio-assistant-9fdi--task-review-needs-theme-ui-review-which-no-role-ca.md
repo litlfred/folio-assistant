@@ -1,10 +1,10 @@
 ---
 # folio-assistant-9fdi
 title: Task_Review needs theme-ui-review, which NO role carries — and the ruling to re-lane it contradicts the diagram's own no-call reason
-status: todo
+status: completed
 type: bug
 created_at: 2026-09-23T16:30:53Z
-updated_at: 2026-09-23T16:30:53Z
+updated_at: 2026-09-23T11:30:00Z
 parent: folio-assistant-zzmr
 ---
 
@@ -76,3 +76,76 @@ different things that want different roles.
 
 *Raised by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
 
+## Summary of Changes — settled 2026-09-23 by the owner, and it was none of A, B or C
+
+This bean offered three ways out and said none was an agent's to pick. The owner
+picked a fourth, and it is better than the three because it answers the question
+the three were arguing around:
+
+> theme review to ingestion of graphical assets in context of website or app
+> design and determining graphical assets/UI
+>
+> — owner, 2026-09-23
+
+### Why that dissolves the contradiction rather than choosing a side
+
+The bean framed the tension as *one skill id doing duty for an automated check
+and a human review*, and treated that as a defect to be resolved by splitting or
+re-homing. **It is not a defect.** There are genuinely two moments, over two
+different objects, and the skill is legitimately used at both:
+
+| moment | the object under review | where |
+|---|---|---|
+| **at ingestion** | the **arriving art** | `ingest-theme.bpmn` `Task_Review`, in the unattended engine |
+| **post-MVP** | **what actually renders** | `theme-ui-review.bpmn`, from `crdm-deliver.bpmn` |
+
+The ingestion moment asks what the post-MVP one **cannot**: *what are the
+graphical assets and the UI going to be?* By the time something renders, that is
+already decided. Determining an asset is ingestion work — which is exactly why
+it runs unattended, and why the `no-call` note's fear was misplaced.
+
+### The `no-call` note was right about its own half and wrong about the other
+
+It said: *"Calling it would put a human gate into an automated ingest."* True of
+`theme-ui-review.bpmn`, which inventories what renders and has a human judgement
+step — calling that process from inside ingest would run a post-build review over
+something not yet built.
+
+But the note's first clause called this step *"one automated check … out of the
+post-MVP theme-ui-review"*, as though the ingest-time review were an offcut. That
+framing is what left `theme-ui-review` **carried by no role at all** and this
+activity failing `role-carries-activity-skill`. The note now carries both halves.
+
+### Applied
+
+- `ingestion-agent` carries **`theme-ui-review`** — literally *"theme review to
+  ingestion"*. With `theme-art-intake` bound earlier, **all six**
+  `role-carries-activity-skill` findings are closed: `ingest-theme.kg-qa.json`
+  and `document-ingestion.kg-qa.json` both report **pass**.
+- `Task_Review`'s `<folio:documentation>` and `<folio:no-call reason>` carry the
+  ruling and the two-moment distinction, in the diagram rather than only here.
+- `skills/folio-core/theme-ui-review.md` opens with the two moments. Its old
+  first heading — *"Post-MVP, because there is nothing to check before there is a
+  render"* — now reads as the second row of that table rather than as the whole
+  skill, and the file says so, because a heading that contradicts the ruling is
+  worse than one that never mentioned it.
+
+### One thing this does NOT do, and it is a question rather than an omission
+
+`theme-ui-review.bpmn` **stays exactly where it is**, called from
+`crdm-deliver.bpmn` at stakeholder acceptance. Nothing in the ruling moves the
+post-build review into ingestion, and folding it in would leave a wired process
+with no caller while running a rendered-result review over an unbuilt thing.
+
+If the intent was that theme review happens **only** at ingestion, that is a
+different and larger change — and it is the owner's, not an agent's. Recorded
+here rather than assumed either way.
+
+### Not closed by this, and not this bean's
+
+`ingest-theme.kg-qa.json` still fails **`gateway-documented`** on
+`Gateway_Layouts` — pre-existing, unrelated to roles or skills, and already
+tracked by `t3ad` in PR #1111 as one of 70. Named so a reader of this bean does
+not take `role-carries-activity-skill: pass` for a clean sidecar.
+
+*Settled by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

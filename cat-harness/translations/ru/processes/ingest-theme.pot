@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-theme\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.492Z\n"
+"POT-Creation-Date: 2026-09-23T17:00:24.128Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: processes/ingest-theme.bpmn:120
 #. Diagram element documentation
-msgid "A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (\"Never red with green, never blue with yellow\")."
+msgid "A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (\"Never red with green, never blue with yellow\"). THIS IS THEME REVIEW AT INGESTION, and it is a different moment from the post-MVP one. Owner, 2026-09-23: \"theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI.\" What is under review here is the ARRIVING ART, and the question is what the graphical assets and the UI are going to be. That is why it sits inside the unattended engine: determining an asset is ingestion work, not a gate somebody stands at. What renders from those assets later is reviewed by theme-ui-review.bpmn, which cannot run yet because nothing has been built."
 msgstr ""
 
 #: processes/ingest-theme.bpmn:108
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Map values onto the shared palette ROLES"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:138
+#: processes/ingest-theme.bpmn:142
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Review contrast and non-colour signal"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:131
+#: processes/ingest-theme.bpmn:135
 #. Diagram label
 msgid "served — a deployment"
 msgstr ""
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Served, or stated?"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:132
+#: processes/ingest-theme.bpmn:136
 #. Diagram label
 msgid "stated — a style guide"
 msgstr ""
@@ -124,7 +124,7 @@ msgstr ""
 msgid "The ONE difference between the two paths. A deployed site SERVES its theme as a compiled stylesheet; a style guide STATES its rules as prose and swatches. Everything after the join is shared."
 msgstr ""
 
-#: processes/ingest-theme.bpmn:127
+#: processes/ingest-theme.bpmn:131
 #. Diagram label
 msgid "Theme node"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Theme source in hand"
 msgstr ""
 
-#: processes/ingest-theme.bpmn:137
+#: processes/ingest-theme.bpmn:141
 #. Diagram label
 msgid "yes"
 msgstr ""

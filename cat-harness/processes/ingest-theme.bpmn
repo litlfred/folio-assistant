@@ -117,10 +117,14 @@ present?">
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Review" name="Review contrast and
 non-colour signal">
-      <bpmn:documentation>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees ("Never red with green, never blue with yellow").</bpmn:documentation>
+      <bpmn:documentation>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees ("Never red with green, never blue with yellow").
+
+THIS IS THEME REVIEW AT INGESTION, and it is a different moment from the post-MVP one. Owner, 2026-09-23: "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI."
+
+What is under review here is the ARRIVING ART, and the question is what the graphical assets and the UI are going to be. That is why it sits inside the unattended engine: determining an asset is ingestion work, not a gate somebody stands at. What renders from those assets later is reviewed by theme-ui-review.bpmn, which cannot run yet because nothing has been built.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="theme-ui-review" />
-      <folio:no-call reason="One automated check (no colour-only signal) out of the post-MVP theme-ui-review, which adds branding, locales and a human judgement. Calling it would put a human gate into an automated ingest."/></bpmn:extensionElements>
+      <folio:no-call reason="TWO MOMENTS, ONE SKILL ID -- and the owner settled which one this is, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;. So this step is theme review AT INGESTION: the graphical assets are being reviewed as they arrive, in order to determine what the assets and the UI ARE. theme-ui-review.bpmn is the OTHER moment -- it inventories what actually renders, after a build, called from crdm-deliver.bpmn on the edge out of stakeholder acceptance. Calling that process from here would run a post-build review over something not yet built, and would put its human judgement step into an automated ingest. The earlier version of this reason said only the second half; it read as if the ingest-time review were a lesser offcut of the post-MVP one, which is what left `theme-ui-review` carried by no role at all and this activity failing role-carries-activity-skill. Bean `9fdi`."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_t8</bpmn:incoming>
       <bpmn:outgoing>Flow_t10</bpmn:outgoing>
     </bpmn:serviceTask>

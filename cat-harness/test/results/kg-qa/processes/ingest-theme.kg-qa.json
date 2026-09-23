@@ -5,7 +5,7 @@
     "id": "Process_IngestTheme",
     "path": "processes/ingest-theme.bpmn"
   },
-  "source_hash": "sha256:105eac8d3e4a5d7322dd7e40157d049d99cef7bd50768f8f9580de5964bc7f94",
+  "source_hash": "sha256:78e69e95b496eac3854c5be0d9352c1cdba47e6e7f93273809f7e051428ec7ac",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,13 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Review",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"ingestion-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -107,8 +102,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 2,
+    "pass": 12,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

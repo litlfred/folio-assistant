@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Post-MVP, because there is nothing to check before there is a render'
+title: 'Two moments, and this skill is used at both'
 parent: Skill instructions
 ---
 
@@ -10,6 +10,35 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/theme-ui-review.md){: .fa-edit-source }
 
 {% raw %}
+# Two moments, and this skill is used at both
+
+**Owner, 2026-09-23**, settling bean `9fdi`:
+
+> theme review to ingestion of graphical assets in context of website or app
+> design and determining graphical assets/UI
+
+So theme review happens **twice**, over two different objects, and reading this
+skill as post-MVP *only* is what left it carried by no role at all:
+
+| moment | what is under review | where |
+|---|---|---|
+| **at ingestion** | the **arriving art** — is this a usable graphical asset, does a signal survive without its colour | `ingest-theme.bpmn` `Task_Review`, inside the unattended engine |
+| **post-MVP** | **what actually renders** — inventory, accessibility, branding, every declared locale | `theme-ui-review.bpmn`, called from `crdm-deliver.bpmn` on the edge out of stakeholder acceptance |
+
+The ingestion moment is not a weaker version of the other one. It asks a
+question the post-MVP review **cannot** ask, because by then the answer is
+already baked in: *what are the graphical assets and the UI going to be?*
+Determining an asset is ingestion work. That is why it runs unattended and why
+`ingestion-agent` carries this skill.
+
+The post-MVP moment asks the question the ingestion one cannot: *what did this
+turn into?* Nothing about accepting a crop tells you how it reads at 320px in
+Arabic over a photograph.
+
+**Neither replaces the other, and the rest of this file is the post-MVP half.**
+The paragraphs below were written when that was the only half, so where they say
+"post-MVP" they mean the second row of the table, not the whole skill.
+
 # Post-MVP, because there is nothing to check before there is a render
 
 The owner, 2026-09-20: theme choice is *"authoring (human/agentic)
