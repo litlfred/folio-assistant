@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 258,
+      "count": 259,
       "unit": "beans"
     }
   },
@@ -1289,14 +1289,14 @@
     {
       "id": "folio-assistant-bzre",
       "title": "BPMN ARROW CROSSES THE DIAGRAM: document-ingestion's gap-to-derive edge routes under every task instead of back along the lane",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T20:00:15Z",
-      "updatedAt": "2026-09-23T20:00:15Z",
+      "updatedAt": "2026-09-23T20:41:46Z",
       "preview": "Owner, 2026-09-23, on the rendered `document-ingestion` diagram: **\"bad\narrow\"**, then the rule: **\"keep rectilinear if possible, no overlapping.\"**\n\n## What is wrong\n\nThe `gap` flow from *Record the gap as a bean* back to *Derive content from the\nassets* is drawn as ONE LONG DIAGONAL crossing the full width of the process,\npassing beneath every task in the lane. It is an ordinary loop-back and it",
       "file": "beans/defs/folio-assistant-bzre--bpmn-arrow-crosses-the-diagram-document-ingestions.md"
     },
@@ -2665,6 +2665,20 @@
       "updatedAt": "2026-09-23T10:36:15Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/uploads/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **The lead number is not what the list leads with.** The badge that leads is \"22 waiting\", but the default sort is `State` ascending, and `\"ingested\" < \"waiting",
       "file": "beans/defs/folio-assistant-s0ki--uploads-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-s36s",
+      "title": "SWEEP COVERAGE: a corpus sweep that silently under-matches reports a clean corpus — found while sweeping for exactly that",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:14:41Z",
+      "updatedAt": "2026-09-23T22:14:57Z",
+      "preview": "Four findings this session had prescribed actions that could not clear them —\n`o5qj`, `thux`, `vq8g`, `7umv`. Four is a class, so `generalise-the-fix` Move 1.2\nsays to sweep for siblings rather than stop at the fourth instance.\n\n## The sweep\n\nEvery `action:` in `cat-harness/test/health/checks.ts`, asked one question: **can\nthe mechanism this names reach the subject this finding can have?**\n\n**Resu",
+      "file": "beans/defs/folio-assistant-s36s--sweep-coverage-a-corpus-sweep-that-silently-under.md"
     },
     {
       "id": "folio-assistant-s4sp",

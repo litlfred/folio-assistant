@@ -81,7 +81,6 @@
     "external-schema",
     "folio",
     "fsh-guts",
-    "glossary",
     "health",
     "interaction",
     "issue-marks",
@@ -94,6 +93,7 @@
     "scenarios",
     "schemas",
     "skills",
+    "swimlane-glossary",
     "todos",
     "tools",
     "translation-sources",
@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 258,
+      "count": 259,
       "unit": "beans"
     },
     {
@@ -263,19 +263,6 @@
       "publish": "staging-only"
     },
     {
-      "id": "glossary",
-      "directory": "glossary",
-      "title": "glossary",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/glossary/glossary/",
-      "hidden": false
-    },
-    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -359,6 +346,19 @@
       "hidden": false,
       "count": 136,
       "unit": "modules"
+    },
+    {
+      "id": "swimlane-glossary",
+      "directory": "swimlane-glossary",
+      "title": "swimlane-glossary",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/glossary/glossary/",
+      "hidden": false
     },
     {
       "id": "todos",
@@ -1333,17 +1333,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
@@ -1358,6 +1358,10 @@
         {
           "kind": "folio",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "glossary",
+          "path": "/glossary/"
         },
         {
           "kind": "schemas",
@@ -1488,10 +1492,6 @@
           "stagingOnly": true
         },
         {
-          "kind": "glossary",
-          "path": "/glossary/"
-        },
-        {
           "kind": "health",
           "path": "/health/"
         },
@@ -1540,6 +1540,10 @@
           "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
         },
         {
+          "kind": "swimlane-glossary",
+          "path": "/swimlane-glossary/"
+        },
+        {
           "kind": "todos",
           "path": "/todos/"
         },
@@ -1565,7 +1569,8 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness/swimlane-glossary: declares visualiser \"swimlane-glossary\" at \"cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html\", which does not resolve on disk."
       ],
       "navbarIcons": [
         "close",
@@ -1641,10 +1646,6 @@
       ],
       "visualisations": [
         {
-          "kind": "glossary",
-          "note": "no viewer by design"
-        },
-        {
           "kind": "models",
           "note": "no viewer by design"
         },
@@ -1665,12 +1666,16 @@
           "note": "no viewer by design"
         },
         {
+          "kind": "swimlane-glossary",
+          "note": "no viewer by design"
+        },
+        {
           "kind": "translation-sources",
           "note": "no viewer by design"
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 7 graph(s) render no viewer — models, processes, scenarios, schemas, skills, swimlane-glossary, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
@@ -1734,10 +1739,6 @@
         "stagingOnly": true
       },
       {
-        "kind": "glossary",
-        "path": "/glossary/"
-      },
-      {
         "kind": "health",
         "path": "/health/"
       },
@@ -1784,6 +1785,10 @@
       {
         "kind": "skills",
         "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+      },
+      {
+        "kind": "swimlane-glossary",
+        "path": "/swimlane-glossary/"
       },
       {
         "kind": "todos",
@@ -2477,7 +2482,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: core-schemas, folios, voices, core-tools, core-scripts"
+            "summary": "6: core-schemas, folios, glossary, voices, core-tools, core-scripts"
           },
           {
             "key": "stickies",
@@ -2581,7 +2586,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: cat-harness, schemas, scenarios, processes, models, glossary, bootstrap-translations"
+            "summary": "7: cat-harness, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translat…"
           },
           {
             "key": "stickies",
