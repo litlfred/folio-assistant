@@ -482,6 +482,47 @@
             "additionalProperties": false
           }
         },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
+            ],
+            "additionalProperties": false
+          }
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -682,8 +723,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-codelists/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-codelists",
-    "sha": "0f96741f40ed817d32d42e73c62bf60845d14512",
+    "sha": "857c074893c1b26323efe572fb7edee80a12c954",
     "pr": "1171/merge",
-    "run": "35918461892"
+    "run": "35920662966"
   }
 }
