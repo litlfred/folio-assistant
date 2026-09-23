@@ -1578,3 +1578,54 @@ async function loadDecisions(
 export function isActivity(node: ProcessNode): boolean {
   return node.kind === "activity";
 }
+
+/**
+ * Whether a node is a DECISION: an exclusive gateway with more than one way
+ * out. A converging exclusive gateway, a parallel fork and a parallel join
+ * decide nothing — the BPMN symbol is their whole meaning — so the
+ * documentation-completeness criteria (`gateway-documented`,
+ * `gateway-branches-named`) ask nothing of them.
+ */
+export function isDecision(node: ProcessNode): boolean {
+  return node.kind === "exclusive" && node.outgoing.length > 1;
+}
+
+/** One way out of a decision, as a reader sees it. */
+export interface DecisionBranch {
+  flowId: string;
+  /** The flow's label — the answer that selects it — if it has one. */
+  label?: string;
+  /** Id of the node the branch leads to. */
+  to: string;
+}
+
+/** The ways out of a node, in document order. */
+export function branchesOf(model: Pick<ProcessModel, "flows">, node: ProcessNode): DecisionBranch[] {
+  return node.outgoing.map((id) => {
+    const f = model.flows.get(id);
+    return { flowId: id, label: f?.name, to: f?.to ?? "" };
+  });
+}
+
+/**
+ * Branches of a decision a reader cannot tell apart: one with no label, or
+ * one whose label (case- and whitespace-insensitively) repeats a sibling's.
+ * Every branch in a repeated pair is reported, since neither one is the
+ * "right" holder of the label. Empty for a node that is not a decision.
+ */
+export function indistinctBranches(
+  model: Pick<ProcessModel, "flows">,
+  node: ProcessNode,
+): Array<DecisionBranch & { problem: "unnamed" | "duplicate" }> {
+  if (!isDecision(node)) return [];
+  const branches = branchesOf(model, node);
+  const key = (l: string): string => l.replace(/\s+/g, " ").trim().toLowerCase();
+  const seen = new Map<string, number>();
+  for (const b of branches) if (b.label) seen.set(key(b.label), (seen.get(key(b.label)) ?? 0) + 1);
+  const out: Array<DecisionBranch & { problem: "unnamed" | "duplicate" }> = [];
+  for (const b of branches) {
+    if (!b.label) out.push({ ...b, problem: "unnamed" });
+    else if ((seen.get(key(b.label)) ?? 0) > 1) out.push({ ...b, problem: "duplicate" });
+  }
+  return out;
+}

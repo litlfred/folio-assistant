@@ -39,4 +39,14 @@ Every one of the 6 step(s) is documented.
 | **Adjudicate: prose, scope, or exception**<br>`Task_Adjudicate` | Narrative reviewer | calls [Criterion adjudication](criterion-adjudication.html)<br>[`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html)<br>[`adjudication`](../reference/skill-instructions/adjudication.html) | The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why). |
 | **Record on the block's QA sidecar**<br>`Task_RecordOnSidecar` | Narrative reviewer | [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Any voice activated?**<br>`GW_AnyActive` | — | **none** → No voice — nothing to review<br>**one or more** → Load the active voices |
+| **Does the quote support the rule?**<br>`GW_QuoteSupports` | — | **no** → The RULE is the defect — bean it<br>**yes** → Adjudicate: prose, scope, or exception |
+| **Another active voice?**<br>`GW_MoreVoices` | — | **yes** → Run the rule's mechanical half<br>**no** → Record on the block's QA sidecar |
+
 {% endraw %}

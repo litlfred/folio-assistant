@@ -42,4 +42,12 @@ Every one of the 7 step(s) is documented.
 | **Cross the axes into SO, WO, ST, WT**<br>`A_Cross` | Business analyst | [`swot-analysis`](../reference/skill-instructions/swot-analysis.html) | The TOWS matching step, and the only step that produces anything actionable. Strengths and weaknesses across, opportunities and threats down, and each cell names the strategy the pairing implies: SO — achieve opportunities that greatly match the strengths; WO — overcome weaknesses to attain opportunities; ST — use strengths to reduce vulnerability to threats; WT — prevent weaknesses, to avoid becoming more susceptible to threats. A SWOT that stops at four lists is the failure the source names as its central one. This step is what the process exists to reach. It produces CANDIDATE strategies, not a chosen one, and they are not ranked — see the process documentation on why no scoring activity exists. |
 | **Hand the candidates to a decision methodology**<br>`A_HandOff` | Business analyst | [`methodology-adoption`](../reference/skill-instructions/methodology-adoption.html) | The candidate strategies go to `options-analysis`, which selects the decision methodology by context and applies it. SWOT does not make that selection and does not make the decision. What is handed over includes the ambiguities from A_RecordAmbiguous and the fact that the candidates are UNRANKED. A receiving methodology that assumed an ordered list would be reading a priority SWOT never established. |
 
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Does a decision follow?**<br>`GW_DecisionFollows` | Is this scan feeding a choice that has to be made now, or is it standing situation analysis? DELIBERATELY NOT DMN-BACKED. Whether a decision follows is a fact about the caller's intent, not a function of the analysis's contents, so there is nothing recurring for a table to compute. `dmn`'s own test — would the same inputs have to produce the same branch next month — fails here, and a table would assert a repeatability this does not have. Both branches are completed runs. Neither is a skipped step. | **yes** → Hand the candidates to a decision methodology<br>**no** → Situation recorded; no decision in play |
+
 {% endraw %}

@@ -59,4 +59,14 @@ Every one of the 23 step(s) is documented.
 | **Rebuild main site**<br>`Task_RebuildMain` | CI/CD Pipeline | [`content-publish`](../reference/skill-instructions/content-publish.html) | docs-site.yml triggers on the merge commit to main, rebuilding the root of gh-pages with the accepted changes. The build SHA stamp now reflects the merged state. |
 | **Note the main-branch watch**<br>`Task_WatchMainCI` | CI/CD Pipeline | [`watch`](../reference/skill-instructions/watch.html)<br>[`todo-manager`](../reference/skill-instructions/todo-manager.html) | Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Satisfied with changes?**<br>`GW_AuthorSatisfied` | — | **No** → Request further revisions<br>**Yes** → Submit to review committee |
+| **Changes approved?**<br>`GW_Approved` | — | **No** → Request changes<br>**Yes** → Approve and merge |
+| **PR merged?**<br>`GW_Merged` | — | **Yes** → Remove STAGING/<slug>/<br>**No (iterate)** → Deployment complete |
+
 {% endraw %}

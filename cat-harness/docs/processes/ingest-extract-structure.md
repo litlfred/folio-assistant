@@ -38,4 +38,12 @@ Every one of the 5 step(s) is documented.
 | **Write structure.json (TOC, page ranges, metadata)**<br>`Task_Structure` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one. |
 | **Extract claim candidates**<br>`Task_Candidates` | Ingestion Engine (agent, runs unattended) | [`document-intake`](../reference/skill-instructions/document-intake.html) | candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Embedded text layer?**<br>`Gateway_HasText` | — | **yes** → Extract the text layer<br>**no — scanned** → OCR to ocr/page-*.txt |
+
 {% endraw %}

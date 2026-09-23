@@ -46,4 +46,13 @@ Every one of the 10 step(s) is documented.
 | **Record the evidence gap**<br>`Task_RecordGap` | Work plan — beans (shared) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Insufficient evidence is a RESULT. It is recorded as such -- an honest gap the guideline can state -- rather than being closed by weakening the recommendation until the available evidence supports it. |
 | **Attach the evidence to the recommendation**<br>`Task_AttachEvidence` | Author / guideline developer (person) | [`content-author`](../reference/skill-instructions/content-author.html) | The PICO, the graded body of evidence, each verified citation and its resolved authority record are written onto the recommendation block, so a reader can retrace the whole chain from the sentence back to the source. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Authority confirmed?**<br>`Gateway_Authoritative` | — | **no** → Open a bean for the unverified citation<br>**yes** → Appraise and grade the body of evidence |
+| **Sufficient for a recommendation?**<br>`Gateway_Sufficient` | — | **no** → Record the evidence gap<br>**yes** → Attach the evidence to the recommendation |
+
 {% endraw %}

@@ -44,4 +44,14 @@ Every one of the 9 step(s) is documented.
 | **Write the root README, if it is not there**<br>`A_WriteRootReadme` | Initiator | [`root-readme`](../reference/skill-instructions/root-readme.html) | The repository now IS an instance of something, and nothing at its root says so. A person landing on the checkout — or an agent that arrives before it has found any declaration — reads README.md first, and until this step there was no guarantee one existed. It carries two things and no more: a LINK to the harness that was installed, and the OVERALL install status across every location A_Install touched. Not one line per location buried in a log — the status a reader wants is "is this repository set up, and as what". WHEN ABSENT, never replacing. A repository that already has a README has one somebody wrote, and overwriting it would destroy authored content to state a fact that belongs in a generated region. Where a README is already there, the link and status go in a marker pair the harness's own readme_sync maintains. WRITING IT IS NOT A PROCESS WRITE. `instance-readme` declares `layer: context` — read at session start, never written by a running process — and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being. See the harness's content-context-and-state-graphs, which states it. |
 | **Log the failure**<br>`A_LogFailure` | Initiator | calls [Log a message](log-message.html)<br>[`log-message`](../reference/skill-instructions/log-message.html) | Both failure paths pass through here, so "logged as failed" is a step somebody performs rather than an adjective on an end event. The end event said the process ended logged; nothing said who logged it or with what. The two ways in are the reason it is ONE call rather than two: what differs between them is the message, which is an input, not the mechanism. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **One harness?**<br>`GW_HarnessChosen` | — | **none** → Log the failure<br>**one** → Read what each location already is |
+| **Already initialized?**<br>`GW_AlreadyInitialized` | — | **already an instance** → Log the failure<br>**not yet** → Read the harness's declaration and instructions |
+| **Instructions there?**<br>`GW_InstructionsFound` | — | **no** → Log the failure<br>**yes** → Log the start of the install |
+
 {% endraw %}

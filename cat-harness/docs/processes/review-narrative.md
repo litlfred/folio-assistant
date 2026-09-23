@@ -39,4 +39,12 @@ Every one of the 6 step(s) is documented.
 | **Review the translation**<br>`Task_ReviewTranslation` | Narrative reviewer | [`translation-manager`](../reference/skill-instructions/translation-manager.html) | Coverage, preserved terms and echoes are mechanical. A semantic round trip needs a back-translator that has not seen the original; where none has run, the criterion carries no verdict and that is the honest state. |
 | **Record findings as advice**<br>`Task_RecordFindings` | Narrative reviewer | [`content-feedback`](../reference/skill-instructions/content-feedback.html) | A reviewer cannot accept a change — that is the editor's lane — so the output is findings on the sidecar, not a commit. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Translated?**<br>`GW_Translated` | — | **yes** → Review the translation<br>**no** → GW_Join |
+
 {% endraw %}

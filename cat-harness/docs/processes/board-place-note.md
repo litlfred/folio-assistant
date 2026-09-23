@@ -37,4 +37,12 @@ Every one of the 3 step(s) is documented.
 | **Record x,y for this note on THIS board**<br>`A_Place` | Layout layer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | Record the note's x,y in the layout layer for THIS board, naming the note by id. An existing card dragged here only gets a new position — placing is not creating, so no content is duplicated. |
 | **Sweep positions whose note is gone**<br>`A_SweepOrphans` | Layout layer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | Remove every position in this board's layer whose note no longer exists. The sweep edits only the layer — one file, one pass — and never a note a person owns; a stale position must not keep a note alive. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Does the note exist already?**<br>`GW_Exists` | — | **new sticky** → Write the note into the folio — with no coordinate<br>**an existing card, dragged** → Record x,y for this note on THIS board |
+
 {% endraw %}

@@ -104,18 +104,30 @@
       "result": "pass",
       "findings": []
     },
-    "prose-reviewed-since-code-changed": {
+    "gateway-documented": {
       "result": "fail",
       "findings": [
         {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+          "where": "GW_Hard",
+          "detail": "\"Any HARD&#10;gate red?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
         }
       ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 12,
     "fail": 2,
     "n/a": 8,
     "unknown": 0
@@ -126,8 +138,9 @@
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
       "prose_hash": "af4c4a06c6be",
-      "code_hash": "e97855730413",
-      "by": "baseline"
+      "code_hash": "ee3939965cde",
+      "by": "agent",
+      "reason": "Re-read after main added five check:* lines inside the typescript job (uml-overview, methodologies:viz, external-schemas:viz, source-licence, wireframes). Task_TypeScript documents 'the repository gates …' with bun run gates deriving its list from this job, so the diagram still holds; no new job or branch to draw."
     }
   ]
 }

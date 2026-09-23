@@ -9,10 +9,416 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>> {
-  class "JSON Schema draft-07" as cat_harness_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> #e9edf3 {
+  class "BPMN Authoring Input" as cat_harness_schemas_skills_bpmn_authoring_input_schema_json_BPMN_Authoring_Input <<schema: skills/bpmn-authoring/input.schema.json>> #e9edf3 {
+    processName [1] : string
+    sourceWorkflow [0..1] : string
+    existingBpmn [0..1] : string
+    participants [0..*] : string[]
   }
-  class "JSON Schema 2020-12" as cat_harness_schemas_https___json_schema_org_draft_2020_12_schema <<ext: JSON Schema 2020-12>> #e9edf3 {
+  class "BPMN Authoring Output" as cat_harness_schemas_skills_bpmn_authoring_output_schema_json_BPMN_Authoring_Output <<schema: skills/bpmn-authoring/output.schema.json>> #e9edf3 {
+    bpmnFile [1] : string
+    diagramFile [0..1] : string
+    taskCount [0..1] : integer
+    gatewayCount [0..1] : integer
+    participantCount [0..1] : integer
+  }
+  class "Content Author Input" as cat_harness_schemas_skills_content_author_input_schema_json_Content_Author_Input <<schema: skills/content-author/input.schema.json>> #e9edf3 {
+    contentType [1] : document | fhir-ig | lean-proof | bpmn | data-dictionary
+    sourceRef [0..1] : string
+    outputDir [0..1] : string
+  }
+  class "Artifact" as cat_harness_schemas_skills_content_author_output_schema_json_Artifact <<schema: skills/content-author/output.schema.json>> #e9edf3 {
+    path [1] : string
+    type [1] : string
+    status [0..1] : draft | ready-for-validation
+  }
+  class "Content Author Output" as cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output <<schema: skills/content-author/output.schema.json>> #e9edf3 {
+    artifacts [0..*] : Artifact[]
+  }
+  class "FeedbackItem" as cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem <<schema: skills/content-feedback/input.schema.json>> #e9edf3 {
+    description [1] : string
+    severity [0..1] : critical | major | minor | enhancement
+    component [0..1] : string
+    reporter [0..1] : string
+  }
+  class "Content Feedback Input" as cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input <<schema: skills/content-feedback/input.schema.json>> #e9edf3 {
+    source [1] : github-issues | survey | implementation-report | clinical-review
+    publishedVersion [0..1] : string
+    feedbackItems [0..*] : FeedbackItem[]
+  }
+  class "TriagedItem" as cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem <<schema: skills/content-feedback/output.schema.json>> #e9edf3 {
+    id [1] : string
+    priority [1] : P0 | P1 | P2 | P3
+    disposition [1] : backlog | next-sprint | wont-fix | duplicate | needs-info
+    assignee [0..1] : string
+    linkedIssue [0..1] : string
+  }
+  class "Content Feedback Output" as cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output <<schema: skills/content-feedback/output.schema.json>> #e9edf3 {
+    triagedItems [0..*] : TriagedItem[]
+    summary [0..1] : object
+  }
+  class "Content Plan Input" as cat_harness_schemas_skills_content_plan_input_schema_json_Content_Plan_Input <<schema: skills/content-plan/input.schema.json>> #e9edf3 {
+    projectName [1] : string
+    scope [0..1] : string
+    targetDate [0..1] : string<date>
+    teamSize [0..1] : integer
+    sprintDuration [0..1] : 1w | 2w | 3w | 4w
+  }
+  class "Content Plan Output" as cat_harness_schemas_skills_content_plan_output_schema_json_Content_Plan_Output <<schema: skills/content-plan/output.schema.json>> #e9edf3 {
+    plan [1] : object
+  }
+  class "Content Publish Input" as cat_harness_schemas_skills_content_publish_input_schema_json_Content_Publish_Input <<schema: skills/content-publish/input.schema.json>> #e9edf3 {
+    versionIncrement [1] : major | minor | patch
+    releaseNotes [0..1] : string
+    target [0..1] : github-release | npm | fhir-registry | arxiv
+  }
+  class "Content Publish Output" as cat_harness_schemas_skills_content_publish_output_schema_json_Content_Publish_Output <<schema: skills/content-publish/output.schema.json>> #e9edf3 {
+    version [1] : string
+    status [1] : published | failed
+    publishedUrl [0..1] : string
+    releaseTag [0..1] : string
+  }
+  class "Content Review Input" as cat_harness_schemas_skills_content_review_input_schema_json_Content_Review_Input <<schema: skills/content-review/input.schema.json>> #e9edf3 {
+    reviewType [1] : l2-to-l3-gate | l3-to-publish-gate | change-assessment | final-signoff
+    contentRef [1] : string
+    previousVersion [0..1] : string
+    validationReport [0..1] : string
+  }
+  class "Finding" as cat_harness_schemas_skills_content_review_output_schema_json_Finding <<schema: skills/content-review/output.schema.json>> #e9edf3 {
+    id [1] : string
+    subject [1] : string
+    criterion [0..1] : string
+    reviewer [1] : object
+    severity [0..1] : critical | major | minor
+    weight [0..1] : blocking | suggestion | praise
+    detail [1] : string
+    evidence [0..*] : any[]
+    raised_at [0..1] : string<date-time>
+  }
+  class "Note" as cat_harness_schemas_skills_content_review_output_schema_json_Note <<schema: skills/content-review/output.schema.json>> #e9edf3 {
+    id [1] : string
+    author [1] : object
+    rationale [1] : string
+    cites [1..*] : any[]
+    proposed_by [0..1] : string
+    written_at [0..1] : string<date-time>
+  }
+  class "Content Review Output" as cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output <<schema: skills/content-review/output.schema.json>> #e9edf3 {
+    findings [0..*] : Finding[]
+    decision [1] : object
+    notes [0..*] : Note[]
+  }
+  class "Content Test Input" as cat_harness_schemas_skills_content_test_input_schema_json_Content_Test_Input <<schema: skills/content-test/input.schema.json>> #e9edf3 {
+    targetPath [1] : string
+    testPlan [0..1] : string
+    testData [0..1] : string
+    regressionBaseline [0..1] : string
+  }
+  class "TestResult" as cat_harness_schemas_skills_content_test_output_schema_json_TestResult <<schema: skills/content-test/output.schema.json>> #e9edf3 {
+    testId [1] : string
+    status [1] : pass | fail | skipped
+    message [0..1] : string
+    duration [0..1] : number
+  }
+  class "Content Test Output" as cat_harness_schemas_skills_content_test_output_schema_json_Content_Test_Output <<schema: skills/content-test/output.schema.json>> #e9edf3 {
+    overallStatus [1] : pass | fail
+    testResults [0..*] : TestResult[]
+    coverage [0..1] : object
+  }
+  class "Content Validate Input" as cat_harness_schemas_skills_content_validate_input_schema_json_Content_Validate_Input <<schema: skills/content-validate/input.schema.json>> #e9edf3 {
+    targetPath [1] : string
+    validationRules [0..*] : string[]
+    schemaRefs [0..*] : string[]
+  }
+  class "Result" as cat_harness_schemas_skills_content_validate_output_schema_json_Result <<schema: skills/content-validate/output.schema.json>> #e9edf3 {
+    rule [1] : string
+    status [1] : pass | fail | warning | skipped
+    message [0..1] : string
+    location [0..1] : string
+  }
+  class "Content Validate Output" as cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output <<schema: skills/content-validate/output.schema.json>> #e9edf3 {
+    overallStatus [1] : pass | warnings | errors
+    results [0..*] : Result[]
+  }
+  class "InputVariable" as cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable <<schema: skills/dmn-authoring/input.schema.json>> #e9edf3 {
+    name [1] : string
+    type [1] : string | integer | boolean | date | codeable-concept
+  }
+  class "DMN Authoring Input" as cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input <<schema: skills/dmn-authoring/input.schema.json>> #e9edf3 {
+    decisionName [1] : string
+    inputVariables [0..*] : InputVariable[]
+    sourceLogic [0..1] : string
+  }
+  class "DMN Authoring Output" as cat_harness_schemas_skills_dmn_authoring_output_schema_json_DMN_Authoring_Output <<schema: skills/dmn-authoring/output.schema.json>> #e9edf3 {
+    dmnFile [1] : string
+    decisionTableCount [0..1] : integer
+    ruleCount [0..1] : integer
+    hitPolicy [0..1] : UNIQUE | FIRST | PRIORITY | ANY | COLLECT | RULE ORDER
+  }
+  class "Document Authoring Input" as cat_harness_schemas_skills_document_authoring_input_schema_json_Document_Authoring_Input <<schema: skills/document-authoring/input.schema.json>> #e9edf3 {
+    document [1] : string
+    chapter [1] : string
+    section [1] : string
+    kind [1] : enum(8)
+    label [1] : string
+    title [0..1] : string
+    uses [0..*] : string[]
+    body [0..1] : string
+  }
+  class "Document Authoring Output" as cat_harness_schemas_skills_document_authoring_output_schema_json_Document_Authoring_Output <<schema: skills/document-authoring/output.schema.json>> #e9edf3 {
+    label [1] : string
+    filesWritten [0..*] : string[]
+    listedInSection [1] : boolean
+    validation [0..1] : object
+  }
+  class "Document Publishing Input" as cat_harness_schemas_skills_document_publishing_input_schema_json_Document_Publishing_Input <<schema: skills/document-publishing/input.schema.json>> #e9edf3 {
+    document [1] : string
+    format [1] : md | html | pdf
+    pdfEngine [0..1] : auto | weasyprint | prince | wkhtmltopdf
+    css [0..1] : string
+    toc [0..1] : boolean
+  }
+  class "Issue" as cat_harness_schemas_skills_document_publishing_output_schema_json_Issue <<schema: skills/document-publishing/output.schema.json>> #e9edf3 {
+    level [0..1] : error | warn
+    message [0..1] : string
+  }
+  class "Document Publishing Output" as cat_harness_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output <<schema: skills/document-publishing/output.schema.json>> #e9edf3 {
+    outputPath [1] : string
+    engine [0..1] : string
+    blockCount [1] : integer
+    chapterCount [0..1] : integer
+    issues [0..*] : Issue[]
+  }
+  class "Document Structure Input" as cat_harness_schemas_skills_document_structure_input_schema_json_Document_Structure_Input <<schema: skills/document-structure/input.schema.json>> #e9edf3 {
+    document [1] : string
+    operation [1] : add-chapter | add-section | reorder-chapters | reorder-sections
+    chapter [0..1] : string
+    title [0..1] : string
+    position [0..1] : integer
+    order [0..*] : string[]
+  }
+  class "Document Structure Output" as cat_harness_schemas_skills_document_structure_output_schema_json_Document_Structure_Output <<schema: skills/document-structure/output.schema.json>> #e9edf3 {
+    manifestsChanged [0..*] : string[]
+    chapters [0..*] : string[]
+    forwardReferences [0..*] : string[]
+  }
+  class "FHIR Validation Input" as cat_harness_schemas_skills_fhir_validation_input_schema_json_FHIR_Validation_Input <<schema: skills/fhir-validation/input.schema.json>> #e9edf3 {
+    igRoot [1] : string
+    validationLevel [0..1] : sushi-only | publisher-qa | full
+    targetProfiles [0..*] : string[]
+  }
+  class "ConformanceResult" as cat_harness_schemas_skills_fhir_validation_output_schema_json_ConformanceResult <<schema: skills/fhir-validation/output.schema.json>> #e9edf3 {
+    resource [0..1] : string
+    profile [0..1] : string
+    status [0..1] : conformant | non-conformant
+    issues [0..*] : string[]
+  }
+  class "FHIR Validation Output" as cat_harness_schemas_skills_fhir_validation_output_schema_json_FHIR_Validation_Output <<schema: skills/fhir-validation/output.schema.json>> #e9edf3 {
+    overallStatus [1] : pass | warnings | errors
+    sushiResult [0..1] : object
+    publisherResult [0..1] : object
+    conformanceResults [0..*] : ConformanceResult[]
+  }
+  class "IG Publication Input" as cat_harness_schemas_skills_ig_publication_input_schema_json_IG_Publication_Input <<schema: skills/ig-publication/input.schema.json>> #e9edf3 {
+    igRoot [1] : string
+    versionIncrement [1] : major | minor | patch
+    releaseNotes [0..1] : string
+    publicationTarget [0..1] : github-pages | smart-who-int | both
+  }
+  class "IG Publication Output" as cat_harness_schemas_skills_ig_publication_output_schema_json_IG_Publication_Output <<schema: skills/ig-publication/output.schema.json>> #e9edf3 {
+    version [1] : string
+    publishedUrl [1] : string
+    releaseTag [0..1] : string
+    releaseBranch [0..1] : string
+    publicationRequestPath [0..1] : string
+    buildStatus [0..1] : success | failed
+  }
+  class "L2 DAK Authoring Input" as cat_harness_schemas_skills_l2_dak_authoring_input_schema_json_L2_DAK_Authoring_Input <<schema: skills/l2-dak-authoring/input.schema.json>> #e9edf3 {
+    dakComponent [1] : enum(9)
+    sourceGuideline [1] : string
+    existingContent [0..1] : string
+    sprintNumber [0..1] : integer
+  }
+  class "Artifact" as cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_Artifact <<schema: skills/l2-dak-authoring/output.schema.json>> #e9edf3 {
+    path [1] : string
+    type [1] : bpmn | dmn | spreadsheet | markdown | fsh
+    description [0..1] : string
+  }
+  class "ValidationIssue" as cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_ValidationIssue <<schema: skills/l2-dak-authoring/output.schema.json>> #e9edf3 {
+    severity [0..1] : error | warning | info
+    message [0..1] : string
+    location [0..1] : string
+  }
+  class "L2 DAK Authoring Output" as cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_L2_DAK_Authoring_Output <<schema: skills/l2-dak-authoring/output.schema.json>> #e9edf3 {
+    artifacts [0..*] : Artifact[]
+    status [1] : draft | ready-for-review | approved
+    validationIssues [0..*] : ValidationIssue[]
+  }
+  class "L3 FHIR Authoring Input" as cat_harness_schemas_skills_l3_fhir_authoring_input_schema_json_L3_FHIR_Authoring_Input <<schema: skills/l3-fhir-authoring/input.schema.json>> #e9edf3 {
+    artifactType [1] : enum(10)
+    l2Source [1] : string
+    fshOutputDir [0..1] : string
+    igRoot [0..1] : string
+  }
+  class "FshFile" as cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_FshFile <<schema: skills/l3-fhir-authoring/output.schema.json>> #e9edf3 {
+    path [1] : string
+    resourceType [1] : string
+    resourceId [0..1] : string
+  }
+  class "GeneratedResource" as cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_GeneratedResource <<schema: skills/l3-fhir-authoring/output.schema.json>> #e9edf3 {
+    path [0..1] : string
+    resourceType [0..1] : string
+    url [0..1] : string
+  }
+  class "L3 FHIR Authoring Output" as cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_L3_FHIR_Authoring_Output <<schema: skills/l3-fhir-authoring/output.schema.json>> #e9edf3 {
+    fshFiles [0..*] : FshFile[]
+    sushiResult [1] : object
+    generatedResources [0..*] : GeneratedResource[]
+  }
+  class "LaTeX Authoring Input" as cat_harness_schemas_skills_latex_authoring_input_schema_json_LaTeX_Authoring_Input <<schema: skills/latex-authoring/input.schema.json>> #e9edf3 {
+    documentClass [1] : article | book | report | beamer
+    mainFile [1] : string
+    bibliographyFile [0..1] : string
+    outputFormat [0..1] : pdf | dvi | ps
+  }
+  class "LaTeX Authoring Output" as cat_harness_schemas_skills_latex_authoring_output_schema_json_LaTeX_Authoring_Output <<schema: skills/latex-authoring/output.schema.json>> #e9edf3 {
+    outputFile [1] : string
+    buildStatus [1] : success | warnings | errors
+    warnings [0..*] : string[]
+    pageCount [0..1] : integer
+  }
+  class "Lean Formalization Input" as cat_harness_schemas_skills_lean_formalization_input_schema_json_Lean_Formalization_Input <<schema: skills/lean-formalization/input.schema.json>> #e9edf3 {
+    sourceFile [1] : string
+    targetModule [1] : string
+    proofStrategy [0..1] : tactic | term | mixed
+    dependencies [0..*] : string[]
+  }
+  class "LeanFile" as cat_harness_schemas_skills_lean_formalization_output_schema_json_LeanFile <<schema: skills/lean-formalization/output.schema.json>> #e9edf3 {
+    path [1] : string
+    module [1] : string
+    sorryCount [0..1] : integer
+  }
+  class "Diagnostic" as cat_harness_schemas_skills_lean_formalization_output_schema_json_Diagnostic <<schema: skills/lean-formalization/output.schema.json>> #e9edf3 {
+    file [0..1] : string
+    line [0..1] : integer
+    severity [0..1] : error | warning | info
+    message [0..1] : string
+  }
+  class "Lean Formalization Output" as cat_harness_schemas_skills_lean_formalization_output_schema_json_Lean_Formalization_Output <<schema: skills/lean-formalization/output.schema.json>> #e9edf3 {
+    leanFiles [0..*] : LeanFile[]
+    buildStatus [1] : success | warnings | errors
+    diagnostics [0..*] : Diagnostic[]
+  }
+  class "Normative Statement Input" as cat_harness_schemas_skills_normative_statements_input_schema_json_Normative_Statement_Input <<schema: skills/normative-statements/input.schema.json>> #e9edf3 {
+    label [1] : string
+    title [0..1] : string
+    statement [1] : string
+    force [1] : must | should | may | good-practice | research-priority
+    grading [0..1] : string
+    publishedNumber [0..1] : string
+    uses [0..*] : string[]
+  }
+  class "Normative Statement Output" as cat_harness_schemas_skills_normative_statements_output_schema_json_Normative_Statement_Output <<schema: skills/normative-statements/output.schema.json>> #e9edf3 {
+    label [1] : string
+    kind [1] : 'prose'
+    anchor [0..1] : string
+    citedBy [0..*] : string[]
+  }
+  class "Proof Verification Input" as cat_harness_schemas_skills_proof_verification_input_schema_json_Proof_Verification_Input <<schema: skills/proof-verification/input.schema.json>> #e9edf3 {
+    projectRoot [1] : string
+    targetFiles [0..*] : string[]
+    trackSorries [0..1] : boolean
+  }
+  class "Sorry" as cat_harness_schemas_skills_proof_verification_output_schema_json_Sorry <<schema: skills/proof-verification/output.schema.json>> #e9edf3 {
+    file [1] : string
+    line [1] : integer
+    obligation [1] : string
+    reference [0..1] : string
+  }
+  class "Error" as cat_harness_schemas_skills_proof_verification_output_schema_json_Error <<schema: skills/proof-verification/output.schema.json>> #e9edf3 {
+    file [0..1] : string
+    line [0..1] : integer
+    message [0..1] : string
+  }
+  class "Proof Verification Output" as cat_harness_schemas_skills_proof_verification_output_schema_json_Proof_Verification_Output <<schema: skills/proof-verification/output.schema.json>> #e9edf3 {
+    verified [1] : boolean
+    sorryCount [1] : integer
+    sorries [0..*] : Sorry[]
+    errors [0..*] : Error[]
+  }
+  class "Quality Control Input" as cat_harness_schemas_skills_quality_control_input_schema_json_Quality_Control_Input <<schema: skills/quality-control/input.schema.json>> #e9edf3 {
+    checkType [1] : qa-report | publication-checklist | conformance-validation | functionality-test | cross-component-consistency
+    targetPath [1] : string
+    checklistSections [0..*] : list<L1 | L2 | L3 | L4 | global>
+  }
+  class "Finding" as cat_harness_schemas_skills_quality_control_output_schema_json_Finding <<schema: skills/quality-control/output.schema.json>> #e9edf3 {
+    severity [1] : error | warning | info
+    category [1] : string
+    message [1] : string
+    location [0..1] : string
+    remediation [0..1] : string
+  }
+  class "Quality Control Output" as cat_harness_schemas_skills_quality_control_output_schema_json_Quality_Control_Output <<schema: skills/quality-control/output.schema.json>> #e9edf3 {
+    overallResult [1] : pass | pass-with-warnings | fail
+    findings [0..*] : Finding[]
+    checklistResults [0..1] : map<pass | fail | not-applicable>
+  }
+  class "Terminology Management Input" as cat_harness_schemas_skills_terminology_management_input_schema_json_Terminology_Management_Input <<schema: skills/terminology-management/input.schema.json>> #e9edf3 {
+    operation [1] : create-codesystem | create-valueset | create-conceptmap | validate-bindings | map-to-standard
+    targetStandard [0..1] : ICD-11 | SNOMED-CT | LOINC | IPS | WHO-FIC | WHO-ATC
+    inputFile [0..1] : string
+  }
+  class "Resource" as cat_harness_schemas_skills_terminology_management_output_schema_json_Resource <<schema: skills/terminology-management/output.schema.json>> #e9edf3 {
+    path [1] : string
+    resourceType [1] : CodeSystem | ValueSet | ConceptMap
+    url [0..1] : string
+    conceptCount [0..1] : integer
+  }
+  class "Terminology Management Output" as cat_harness_schemas_skills_terminology_management_output_schema_json_Terminology_Management_Output <<schema: skills/terminology-management/output.schema.json>> #e9edf3 {
+    resources [0..*] : Resource[]
+    unmappedConcepts [0..*] : string[]
+  }
+  class "BlockQaReport" as cat_harness_schemas_block_qa_schema_schema_block_qa_schema_json_BlockQaReport <<schema: block-qa-schema/schema/block-qa.schema.json>> #e9edf3 {
+    $schema [1] : 'block-qa/v1'
+    label [1] : string
+    kind [1] : string
+    paths [1] : object
+    source_hashes [1] : any
+    criteria [1] : map<any[]>
+    updated_at [1] : string
+  }
+  class "QaScriptSidecar" as cat_harness_schemas_block_qa_schema_schema_qa_script_schema_json_QaScriptSidecar <<schema: block-qa-schema/schema/qa-script.schema.json>> #e9edf3 {
+    $schema [1] : 'qa-script/v1'
+    criterion_id [1] : string
+    source_file [1] : string
+    script_hash [1] : string
+    script_commit_sha [1] : string
+    extra_inputs [0..*] : string[]
+    deps_hash [0..1] : string
+    last_run_at [1] : string
+    last_run_sha [1] : string
+    engine_version [0..1] : string
   }
 }
 
+cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
+cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
+cat_harness_schemas_skills_content_feedback_output_schema_json_Content_Feedback_Output *-- "0..*" cat_harness_schemas_skills_content_feedback_output_schema_json_TriagedItem : triagedItems
+cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output *-- "0..*" cat_harness_schemas_skills_content_review_output_schema_json_Finding : findings
+cat_harness_schemas_skills_content_review_output_schema_json_Content_Review_Output *-- "0..*" cat_harness_schemas_skills_content_review_output_schema_json_Note : notes
+cat_harness_schemas_skills_content_test_output_schema_json_Content_Test_Output *-- "0..*" cat_harness_schemas_skills_content_test_output_schema_json_TestResult : testResults
+cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output *-- "0..*" cat_harness_schemas_skills_content_validate_output_schema_json_Result : results
+cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input *-- "0..*" cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable : inputVariables
+cat_harness_schemas_skills_document_publishing_output_schema_json_Document_Publishing_Output *-- "0..*" cat_harness_schemas_skills_document_publishing_output_schema_json_Issue : issues
+cat_harness_schemas_skills_fhir_validation_output_schema_json_FHIR_Validation_Output *-- "0..*" cat_harness_schemas_skills_fhir_validation_output_schema_json_ConformanceResult : conformanceResults
+cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_L2_DAK_Authoring_Output *-- "0..*" cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_Artifact : artifacts
+cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_L2_DAK_Authoring_Output *-- "0..*" cat_harness_schemas_skills_l2_dak_authoring_output_schema_json_ValidationIssue : validationIssues
+cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_L3_FHIR_Authoring_Output *-- "0..*" cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_FshFile : fshFiles
+cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_L3_FHIR_Authoring_Output *-- "0..*" cat_harness_schemas_skills_l3_fhir_authoring_output_schema_json_GeneratedResource : generatedResources
+cat_harness_schemas_skills_lean_formalization_output_schema_json_Lean_Formalization_Output *-- "0..*" cat_harness_schemas_skills_lean_formalization_output_schema_json_LeanFile : leanFiles
+cat_harness_schemas_skills_lean_formalization_output_schema_json_Lean_Formalization_Output *-- "0..*" cat_harness_schemas_skills_lean_formalization_output_schema_json_Diagnostic : diagnostics
+cat_harness_schemas_skills_proof_verification_output_schema_json_Proof_Verification_Output *-- "0..*" cat_harness_schemas_skills_proof_verification_output_schema_json_Sorry : sorries
+cat_harness_schemas_skills_proof_verification_output_schema_json_Proof_Verification_Output *-- "0..*" cat_harness_schemas_skills_proof_verification_output_schema_json_Error : errors
+cat_harness_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" cat_harness_schemas_skills_quality_control_output_schema_json_Finding : findings
+cat_harness_schemas_skills_terminology_management_output_schema_json_Terminology_Management_Output *-- "0..*" cat_harness_schemas_skills_terminology_management_output_schema_json_Resource : resources
 @enduml

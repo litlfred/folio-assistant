@@ -46,4 +46,12 @@ Every one of the 8 step(s) is documented.
 | **File feedback as beans**<br>`Task_FeedbackBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html)<br>[`content-feedback`](../reference/skill-instructions/content-feedback.html) | Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for. |
 | **Retire or archive**<br>`Task_Retire` | Programme manager | [`content-retire`](../reference/skill-instructions/content-retire.html) | No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **More content?**<br>`Gateway_NextCycle` | — | **yes** → Editing and HCI validation<br>**no** → Retire or archive |
+
 {% endraw %}
