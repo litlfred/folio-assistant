@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153276">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153276">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153276">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153276">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790152931" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153276" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -811,7 +811,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p><strong>7</strong> of 7 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 7 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -827,43 +827,43 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Render every card as its avatar</strong><br /><code class="language-plaintext highlighter-rouge">A_RenderAvatars</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Render every card as its avatar — the starting state. Each content kind controls its own avatar; the board decides only that nothing starts open.</td>
     </tr>
     <tr>
       <td><strong>Project a window onto the board</strong><br /><code class="language-plaintext highlighter-rouge">A_Open</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls.</td>
     </tr>
     <tr>
       <td><strong>Raise the window the reader selected</strong><br /><code class="language-plaintext highlighter-rouge">A_Raise</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write.</td>
     </tr>
     <tr>
       <td><strong>Close the window back to its avatar</strong><br /><code class="language-plaintext highlighter-rouge">A_Close</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>[x] closes the window back to its avatar. Only a person’s [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader.</td>
     </tr>
     <tr>
       <td><strong>Leave a reachable way back</strong><br /><code class="language-plaintext highlighter-rouge">A_OfferWayBack</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on &lt;body&gt; and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi).</td>
     </tr>
     <tr>
       <td><strong>Resolve the kind’s zoom threshold</strong><br /><code class="language-plaintext highlighter-rouge">A_ResolveThreshold</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Resolve the semantic-zoom threshold for each card’s kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default.</td>
     </tr>
     <tr>
       <td><strong>Swap cards below the threshold; leave open windows alone</strong><br /><code class="language-plaintext highlighter-rouge">A_SwapToAvatar</code></td>
       <td>Board renderer</td>
       <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
-      <td>—</td>
+      <td>Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated.</td>
     </tr>
   </tbody>
 </table></div>

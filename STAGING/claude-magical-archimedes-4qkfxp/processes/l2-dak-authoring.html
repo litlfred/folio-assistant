@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153276">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153276">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153276">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153276">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790152931" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153276" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -827,7 +827,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p><strong>7</strong> of 10 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 10 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -849,37 +849,37 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Seed the work plan</strong><br /><code class="language-plaintext highlighter-rouge">Task_SeedBeans</code></td>
       <td>Work plan — beans (shared by humans and agents)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>—</td>
+      <td>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</td>
     </tr>
     <tr>
       <td><strong>Personas and scenarios</strong><br /><code class="language-plaintext highlighter-rouge">Task_Personas</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
-      <td>—</td>
+      <td>Author the DAK’s personas and the user journeys (scenarios) they appear in. These are the DAK’s own actors, not this harness’s scenarios/roles.json — the two vocabularies must not be conflated.</td>
     </tr>
     <tr>
       <td><strong>Business processes · BPMN 2.0</strong><br /><code class="language-plaintext highlighter-rouge">Task_Bpmn</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
-      <td>—</td>
+      <td>Author the DAK’s L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.</td>
     </tr>
     <tr>
       <td><strong>Decision logic · DMN tables</strong><br /><code class="language-plaintext highlighter-rouge">Task_Dmn</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
-      <td>—</td>
+      <td>Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.</td>
     </tr>
     <tr>
       <td><strong>Data dictionary and core data elements</strong><br /><code class="language-plaintext highlighter-rouge">Task_DataDict</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
-      <td>—</td>
+      <td>Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.</td>
     </tr>
     <tr>
       <td><strong>Indicators and requirements</strong><br /><code class="language-plaintext highlighter-rouge">Task_Indicators</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
-      <td>—</td>
+      <td>Author the component’s indicators and its functional and non-functional requirements. These are the DAK’s requirements, distinct from skills/requirements/*.json, which are this harness’s own conformance obligations.</td>
     </tr>
     <tr>
       <td><strong>Terminology bindings</strong><br /><code class="language-plaintext highlighter-rouge">Task_Terminology</code></td>
@@ -897,7 +897,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Assemble and validate the DAK</strong><br /><code class="language-plaintext highlighter-rouge">Task_AssembleDak</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
-      <td>—</td>
+      <td>Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.</td>
     </tr>
   </tbody>
 </table></div>

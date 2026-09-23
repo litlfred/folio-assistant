@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153276">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153276">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153276">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790152931">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153276">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790152931" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153276" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -831,7 +831,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p><strong>7</strong> of 18 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 18 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -877,7 +877,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>SUSHI on the restricted tank</strong><br /><code class="language-plaintext highlighter-rouge">Task_Sushi</code></td>
       <td>Incremental build (system)</td>
       <td><a href="../reference/skill-instructions/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
-      <td>—</td>
+      <td>Compile the restricted checkout with SUSHI — the cone’s FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it.</td>
     </tr>
     <tr>
       <td><strong>Load or reuse the warm context (fhir_context_load)</strong><br /><code class="language-plaintext highlighter-rouge">Task_ContextLoad</code></td>
@@ -889,13 +889,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Validate the cone (fhir_validate)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Validate</code></td>
       <td>Publisher + validator services (JVM)</td>
       <td><a href="../reference/skill-instructions/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
-      <td>—</td>
+      <td>Validate the cone’s resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it.</td>
     </tr>
     <tr>
       <td><strong>Log findings on the bean</strong><br /><code class="language-plaintext highlighter-rouge">Task_LogFindings</code></td>
       <td>Work plan — beans (shared by humans and agents)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>—</td>
+      <td>Validation failed: record the findings on the change’s bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent.</td>
     </tr>
     <tr>
       <td><strong>Re-render the cone’s records (fhir_narrative · skip lists)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Render</code></td>
@@ -907,7 +907,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Merge restored and rebuilt records</strong><br /><code class="language-plaintext highlighter-rouge">Task_Merge</code></td>
       <td>Incremental build (system)</td>
       <td><a href="../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>—</td>
+      <td>Combine the restored per-artefact records with the cone’s freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact’s record and never re-derives one.</td>
     </tr>
     <tr>
       <td><strong>Rebuild the meta-index (ig_metaindex_rebuild)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Index</code></td>
@@ -919,7 +919,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Assemble the site (template · Jekyll)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Site</code></td>
       <td>Incremental build (system)</td>
       <td><a href="../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>—</td>
+      <td>Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists.</td>
     </tr>
     <tr>
       <td><strong>QC gates on the aggregate QA</strong><br /><code class="language-plaintext highlighter-rouge">Task_Qa</code></td>
@@ -931,7 +931,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>File QC findings as beans</strong><br /><code class="language-plaintext highlighter-rouge">Task_QcBeans</code></td>
       <td>Work plan — beans (shared by humans and agents)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>—</td>
+      <td>QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one.</td>
     </tr>
     <tr>
       <td><strong>Deploy the preview site</strong><br /><code class="language-plaintext highlighter-rouge">Task_DeployPreview</code></td>
@@ -943,7 +943,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Deploy the site [content-publish]</strong><br /><code class="language-plaintext highlighter-rouge">Task_Deploy</code></td>
       <td>Publication manager — deploy and seed</td>
       <td><a href="../reference/skill-instructions/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a><br /><a href="../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>—</td>
+      <td>Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site.</td>
     </tr>
     <tr>
       <td><strong>Seed the cache from the green build (ig-cache seed · verify · promote)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Seed</code></td>
