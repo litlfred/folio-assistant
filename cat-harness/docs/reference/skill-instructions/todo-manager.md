@@ -545,7 +545,7 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
 | [Getting started](../../processes/getting-started.html) | Seed the work plan |
-| [Incremental IG build](../../processes/ig-incremental-build.html) | Log findings on the bean; File QC findings as beans |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 | [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
 

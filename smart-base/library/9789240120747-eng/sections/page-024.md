@@ -7,7 +7,7 @@ pages: 24-24
 pdf_page: 24
 source_pdf: 9789240120747-eng.pdf
 source_sha256: c710f7cf4a432221
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 12

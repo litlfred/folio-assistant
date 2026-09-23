@@ -144,3 +144,37 @@ shared baseline has.
       content), so declaring it needs the split settled first — `repo-partition`
 - [ ] `<stub>/src` written down as the convention for new instances
 - [ ] the QA axis reporting the two questions SEPARATELY
+
+
+## Round 2, 2026-09-23 — the four remaining `scripts/` directories
+
+`check:declared-dirs`: **86 declared directories across 19 instances, 0
+findings.**
+
+| instance | declared | what was invisible |
+|---|---|---|
+| `detangle` | `detangle-scripts` | it declared its `schemas/` and its `results/` and left the thing that WRITES the results undeclared |
+| `folio-assistant-core` | `core-scripts` | the review-comment Tool, invoked by path from `folio-staging.yml` |
+| `smart-trust` | `smart-trust-scripts` | the generator between two declared graphs — index in, 681 docs out |
+| `who-iris` | `who-iris-scripts` | `gen-iris-pages.ts`, which `wjfu` cites as the precedent for every instance-local generator here |
+
+That last one is the sharpest form of this bean's defect: **a directory can be
+the corpus's own worked example and still be invisible to every consumer that
+walks declarations.**
+
+### `tools/` was already covered, and checking saved four wrong declarations
+
+`fhir-harness`, `folio-assistant-core` and `smart-base` all hold `tools/`, and
+all three already declare it under the `tools` graph kind. Declaring those as
+`code` would have given one directory two kinds. The measurement that caught
+it was reading each instance's declarations rather than trusting the
+present-on-disk list.
+
+### It changed the navbar, and the test that pinned the old answer
+
+`who-iris` now declares **seven** kinds, not six, so
+`navbar.test.ts`'s pinned list failed. Updated rather than worked around: the
+test's title is *"lists every kind the instance declares"*, so a list that
+cannot grow was an assertion about 2026-09-22 rather than about the
+declaration. `code` appears in the navbar declared-and-unlinked, which is the
+state `harness-tiles` keeps visible rather than hides.

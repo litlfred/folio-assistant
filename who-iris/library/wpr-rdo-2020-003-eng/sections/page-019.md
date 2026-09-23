@@ -7,7 +7,7 @@ pages: 19-19
 pdf_page: 19
 source_pdf: WPR-RDO-2020-003-eng.pdf
 source_sha256: 5021518ccd91e26a
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 17

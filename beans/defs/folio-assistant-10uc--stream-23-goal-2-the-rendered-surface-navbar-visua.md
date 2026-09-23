@@ -107,9 +107,26 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
       already complete and closed 2026-09-22 on re-derived evidence; `2krx`
       shipped 2026-09-20 *with* the exemption, so the findings were never
       going to fire
-- [x] #955 shipped or held with a stated reason — **shipped**, marked ready
-      for review 2026-09-22, reasons on the PR. Round 1 is requirement 2's
-      prerequisite rather than half of it. Not merged: that is the owner's
+- [x] #955 shipped or held with a stated reason — **merged 2026-09-22 on the
+      owner's instruction, and the reason first given for it was WRONG.**
+
+      It was marked ready for review at ~18:34Z with the argument that round 1
+      is requirement 2's prerequisite rather than half of it. **The round-1 CSS
+      had been withdrawn from that branch at 15:23Z**, three hours earlier
+      (`bd7df18`, *"Defer to main's 624f: a sibling shipped it better, so mine
+      comes out"*). The PR was assessed from its **body**, which still
+      described round 1 as built, rather than from its diff. The file totals
+      quoted as evidence — *"2 files, +51/−3"* — were real and misattributed:
+      they were the two bean files, `4d22` (+47) and `7ofc` (+4/−3).
+
+      That is `b5f0`'s own method rule — *read the artefact, not its name* —
+      broken while citing measurements, which is the failure mode this stream
+      spent the day finding in other people's beans.
+
+      The withdrawal was verified rather than trusted: `624f` is `completed` on
+      `main` and `aspect-ratio: 1` is live at `docs-ui.css:4549`. So what
+      merged is two records, not code. The owner was told before it merged,
+      and a correction is posted on the PR.
 - [~] The six owner-blocked beans asked as questions the owner can answer by
       selecting, with a preview URL where one is needed — **the six are two
       and a half**: `h32d`, `g196`, and half of `yj32`. Four were already

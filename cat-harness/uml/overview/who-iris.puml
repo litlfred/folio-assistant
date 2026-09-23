@@ -136,6 +136,9 @@ package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
 package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
   note "docs: no node schema declared\n(no node here carries a $schema family docs names (10 named): could not determine)" as n_who_iris_who_iris_docs_docs
 }
+package "who-iris/who-iris-scripts" as pkg_who_iris_who_iris_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_scripts_code
+}
 
 who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
 who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Field : fields
@@ -144,9 +147,10 @@ who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
-' grid: portrait, 2 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs
+' grid: portrait, 2 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_skills
 pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_themes
 pkg_who_iris_who_iris_skills -[hidden]down- pkg_who_iris_who_iris_docs
+pkg_who_iris_who_iris_themes -[hidden]down- pkg_who_iris_who_iris_scripts
 @enduml

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-itka
 title: 'check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:59:36Z
-updated_at: 2026-09-22T11:46:10Z
+updated_at: 2026-09-23T16:34:05Z
 parent: folio-assistant-1xhc
 ---
 
@@ -150,3 +150,11 @@ has is this bean's own defect one layer up.
 
 **"is a epic".** The message built an article into a template. It reports
 `` has type `epic` `` instead, so there is no article to get wrong.
+
+## Summary of Changes
+
+Closed 2026-09-23 **on evidence, not authorship**, during a "close beans and check for more" sweep the owner asked for. Every Done-when item is ticked, and the owner's ruling has shipped on `main`:
+
+- `PARENT_TYPES` is `{milestone, epic, feature}` (`cat-harness/scripts/check-bean-parents.ts:114`).
+- The epic rule is stated positively, `p.type !== "milestone"` (`:199`).
+- `bun run check:bean-parents` is green. Its one outstanding line is `d308`, which is baselined for its owner, as item 3 intended.

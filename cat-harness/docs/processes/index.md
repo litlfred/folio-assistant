@@ -59,7 +59,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Getting started](getting-started.html) | 12 | — |
 | [A sub-graph wants to leave](graph-detanglement.html) | 8 | — |
 | [Human Translation Workflow](human-translation-workflow.html) | 16 | — |
-| [Incremental IG build](ig-incremental-build.html) | 18 | — |
+| [Incremental IG build](ig-incremental-build.html) | 19 | — |
 | [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html) | 5 | — |
 | [Ingestion subprocess — derive content from the assets](ingest-derive-content.html) | 6 | — |
 | [Ingestion subprocess — extract structure](ingest-extract-structure.html) | 5 | — |
@@ -96,7 +96,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**95** distinct skill(s) are named by an activity.
+**96** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -191,6 +191,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `uploads-watch` | `content-acquisition.bpmn` |
 | `upstream-version-adoption` | `upstream-pin-watch.bpmn`, `upstream-version-adoption.bpmn` |
 | `uses-editorial-review` | `review-narrative.bpmn` |
+| `visual-diff` | `content-change-review.bpmn` |
 | `voice-editorial-review` | `review-narrative.bpmn` |
 | `voice-overlay-review` | `review-narrative.bpmn`, `voice-review.bpmn` |
 | `watch` | `code-change-review.bpmn`, `content-change-review.bpmn` |

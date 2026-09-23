@@ -7,7 +7,7 @@ pages: 20-20
 pdf_page: 20
 source_pdf: WHO-RHR-18.06-eng.pdf
 source_sha256: 44be3640bb1730da
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Dr. Garrett Mehl | mehlg@who.int
