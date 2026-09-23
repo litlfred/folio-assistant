@@ -963,6 +963,12 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
+      // adjudication's codes against, and the loader `namespaces.ts` sits
+      // beside. Needed to RUN a process, so harness — the same test as the
+      // tooling below; a core placement made `process-model.ts` import down.
+      "schemas/code-list.ts",
+      "scripts/code-lists.ts",
       // ── Tooling that the `schemas/` and `content/pipeline/` PREFIXES had
       //    claimed for core, on the content-versus-platform reading this list
       //    predates. The owner's cut, 2026-09-19, is different and sharper:
