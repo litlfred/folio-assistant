@@ -1592,6 +1592,15 @@
         // collapsed behind the icon — that IS the point of sending it there.
         searchHome.setAttribute("data-open", corner ? "false" : "true");
         cornerIcon.setAttribute("aria-expanded", "false");
+        /* THE GLYPH IS SHOWN IN BOTH STATES (owner, 2026-09-23: *"maginfyingglass
+         * avatar/braadning should be visibile always"*), so it means two
+         * different things and must SAY so. In the corner it reveals a field
+         * that is not on screen; in the navbar the field is already there and
+         * it moves the cursor into it. One label for both would be wrong in
+         * one of them, and a control whose name does not match what it does is
+         * worse than no control. */
+        cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
+        cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
         slide.setAttribute("aria-label",
           corner ? "Dock search back into the navbar" : "Slide search out to the corner");
         slide.setAttribute("title", slide.getAttribute("aria-label"));
@@ -1619,7 +1628,20 @@
        * fallbacks exist because a theme that renamed the container may also
        * have renamed the header, and search in the wrong place beats search
        * nowhere. */
-      var navbar = firstMatch([".main-header", "#main-header", ".main-content-wrap"]);
+      /* NOT `.main-header` ANY MORE, and the reason is measured. The theme
+       * sets `.main-header { display: none }` below its own nav breakpoint, so
+       * at 700px the whole search home -- field, chevron AND the glyph that is
+       * the only way back to it -- computed to 0x0. Search was not merely
+       * awkward to reach on a narrow screen, it was unreachable from the
+       * display panel at all, which is the owner's *"takes way too many
+       * clicks"* at its worst.
+       *
+       * `.main-content-wrap` is the panel's own content column and the theme
+       * never hides it, so homing here is what *"full top of display panel"*
+       * actually means. `.main-header` stays in the fallback list: a theme that
+       * renamed the wrap may still have the header, and search in the wrong
+       * place beats search nowhere. */
+      var navbar = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
       if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
       else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
