@@ -278,10 +278,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T20:14:52.044Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0443f73f777e077e04c825eec8788997cb28ae3",
-  "sourceCommitSha": "d0443f73f777e077e04c825eec8788997cb28ae3",
-  "sourceCommitAt": "2026-09-23T20:12:24Z",
+  "generatedAt": "2026-09-23T20:49:44.677Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/abc651a76502cbcd68679adc71dd8454aa68e2a6",
+  "sourceCommitSha": "abc651a76502cbcd68679adc71dd8454aa68e2a6",
+  "sourceCommitAt": "2026-09-23T20:47:19Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -300,7 +300,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "root-readme",
       "title": "The root README, and the one fact it must carry",
-      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. The last thing initialize-harness does before it ends installed.",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.",
       "instructionsPath": "skills/root-readme.md",
       "instructionLines": 82,
       "hasInstructions": true,
@@ -369,7 +369,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "confirm-harness",
       "title": "Which harness, and where",
-      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. The only step of initialize-harness that needs a person.",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
       "instructionsPath": "skills/confirm-harness.md",
       "instructionLines": 59,
       "hasInstructions": true,
@@ -385,7 +385,7 @@
       "title": "Logging what you are doing",
       "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
       "instructionsPath": "skills/log-message.md",
-      "instructionLines": 93,
+      "instructionLines": 92,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1401,7 +1401,7 @@
       "name": "schemas",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SchemaGraph",
       "renderable": false,
-      "summary": "Schema definitions, self-declared in the smart-base manner."
+      "summary": "A Subgraph of schema definitions: files that state the shape other files must have."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
@@ -1606,8 +1606,8 @@
   ],
   "staging": {
     "branch": "claude/cool-fermi-htir5p",
-    "sha": "379059691d736e644b752b4e784493ba7848fa83",
+    "sha": "245756c2cbac739803f0a83f7c31ab489391d37b",
     "pr": "1173/merge",
-    "run": "35914426356"
+    "run": "35918293810"
   }
 }
