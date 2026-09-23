@@ -207,3 +207,19 @@ deliberately stops short of it.
 - `schemas/block-qa.ts` — the reviewer kinds, and why a model's own claim is
   not the same kind of evidence as a person's.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Adjudication](../../processes/adjudication.html)**.
+
+<img src="../../assets/img/workflows/adjudication.svg" alt="BPMN diagram: Adjudication" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Adjudication](../../processes/adjudication.html) | Judge the disagreement; Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
+| [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Adjudicate the flagged passage (calls a sub-process) |
+| [Refresh materialized remote content](../../processes/refresh-materialized.html) | Adjudicate the conflict (calls a sub-process) |
+| [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
+| [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
+| [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
+

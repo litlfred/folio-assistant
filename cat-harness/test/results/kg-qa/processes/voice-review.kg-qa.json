@@ -5,7 +5,7 @@
     "id": "Process_VoiceReview",
     "path": "processes/voice-review.bpmn"
   },
-  "source_hash": "sha256:64134e6d97df5af6851a9754c6b8f6dcb1b3f1a816e69ad54efa7b10b1a7b26d",
+  "source_hash": "sha256:289abe1a5feb9684c811db392d1895e7d8d19cf731bbe564ab679cdcc1b041c6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,26 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 11,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   }
 }

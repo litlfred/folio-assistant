@@ -126,7 +126,7 @@ Tool: translation_validate MCP tool</documentation>
     <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?" />
 
     <!-- ── Human adjudication ─────────────────────────────────── -->
-    <userTask id="Task_Adjudicate" name="Adjudicate flagged passage&#10;(human reviewer)">
+    <callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate flagged passage&#10;(human reviewer)">
       <documentation>A human SME or editor reviews the flagged passage.
 They may:
 - Accept the translation as-is (false positive)
@@ -139,7 +139,7 @@ right is a human call.</documentation>
         <folio:skill ref="translation-manager" />
         <folio:skill ref="adjudication" />
       </extensionElements>
-    </userTask>
+    </callActivity>
 
     <!-- ── Converge after QA ──────────────────────────────────── -->
     <exclusiveGateway id="Gateway_PostQA" name="QA passed?" />

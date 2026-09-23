@@ -284,3 +284,14 @@ auto-dischargeable — they rename things and ripple through every reference.
 - `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
   of the above was recorded first.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[A sub-graph wants to leave](../../processes/graph-detanglement.html)**.
+
+<img src="../../assets/img/workflows/graph-detanglement.svg" alt="BPMN diagram: A sub-graph wants to leave" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 &#183; Declare in place&#10;(nothing moves); 2a &#183; Measure &#8212; unassigned&#10;column FIRST; 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong; 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact; 4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift |
+

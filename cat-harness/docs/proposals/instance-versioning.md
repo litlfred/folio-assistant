@@ -132,11 +132,36 @@ and a version nobody consumes is a version nobody checks.
 `publishable` is *undecided*, never *false*, and a gate reports it — the same
 rule `publication.host` already follows.
 
+**Implemented 2026-09-23.** `CatHarnessDeclaration.publishable`, with
+`bun run check:publishable` as the census. Every instance reports *undecided*,
+which is Q1 below still open rather than an unfinished implementation — and the
+report says in that many words that an all-undecided census is not a pass. The
+two rules a per-declaration parse structurally cannot hold are cross-instance
+and live in the gate: a duplicate `id`, and an unreadable declaration, whose
+publishability is **unknown** rather than undecided. *Undecided is a fact about
+the repository; unknown is a fact about the run.*
+
 ### 3.2 A publishable instance declares `id` and `version`
 
 - **`id`** — reverse-DNS, stable forever, never reused. It is the identity.
 - **`version`** — a semver triple. No range syntax anywhere, ever (rule 2).
 - **`canonicalUrl`** already exists and plays the `uri` role (rule 6).
+
+**Implemented 2026-09-23**, as a `superRefine` on the declaration rather than a
+discriminated union — a union on a two-valued discriminant cannot express
+*undecided*, which is the state every instance is in. All three are **required**
+under `publishable: true` and **refused** otherwise: an `id` on something
+nothing outside may depend on reads, to any consumer of the export, exactly like
+a published package.
+
+`canonicalUrl` became an obligation rather than a remark, which is an
+interpretation of this section and is flagged as one. The argument is §3.4's:
+its record is `{packageId, version, uri}`, so a publishable instance without one
+cannot be *expressed* as a dependency by anything that depends on it.
+
+`ExactVersionSchema` moved down into `schemas/cat-harness.ts` and is re-exported
+from `harness-config.ts`. Two fields in two modules carry the no-ranges rule;
+defining it twice would make it hold on whichever half somebody remembered.
 
 ### 3.3 Two tiers: a SHA stages, a version publishes
 
@@ -178,6 +203,24 @@ because it is the one that can be written against today's data. It is
 dependency. An external consumer then reads this instance's dependency set the
 same way it reads a FHIR IG's, which is what "align downstream" means in
 practice.
+
+**Implemented 2026-09-23** — `schemas/depends-on.ts`, emitted by `kg-export` and
+checked by `check:published-refs`'s third carrier, which carried this as a
+declared gap until now.
+
+**The part worth stating is what it emits INSTEAD.** Most instances here are not
+publishable and §3.1 says that is correct, so most edges out of a publishable
+instance go to something with no `id` and no `version`. `dependsOn: []` would
+state that the instance depends on nothing, which is false; a partial record
+with an empty `version` would be worse, since a consumer resolves it and fails.
+So each such edge becomes a gap carrying **which of four reasons** applies —
+`undecided`, `internal`, `unresolved`, `unreadable` — because the remedy differs
+for each, and `undecided` and `internal` are precisely the distinction §3.1
+spent a third state on.
+
+An instance that is not publishable emits no block at all and says why, in
+`dependsOnUnavailable`. Today every export carries that field, which is the
+honest reading of the repository rather than a silence over it.
 
 ## 4. What a version MEANS, and what makes it go up
 
@@ -221,6 +264,38 @@ are positional, or generated nodes whose count varies — then the computed bump
 is noise and every release reads as major. Measure the surface diff across the
 last twenty commits on `main` before committing to this.
 
+#### The falsifier was run, 2026-09-23. It does not fire.
+
+Over the last 20 commits on `main`, following `--first-parent`:
+**18 patch, 1 minor, 1 major.** Both non-patch calls are correct on inspection:
+
+| commit | Δ | bump | what it was |
+|---|---|---|---|
+| `cd014bfe` | +28 −3 | major | added the SWOT process, two skills and a schema; removed three `Directory` nodes |
+| `10e42ec1` | +5 −0 | minor | added a call activity and a gateway to `Process_Ingestion` |
+
+So §4 was built: `schemas/version-bump.ts` and `bun run check:version-bump`.
+
+**The FIRST run of this measurement said the opposite, and that is recorded
+because it would have killed the section.** `git log -21 origin/main` without
+`--first-parent` interleaves sibling branch tips, so consecutive entries are
+not parent→child. It read **3 major / 5 minor / 12 patch** — 40 % non-patch, a
+clear fail — and every bit of that signal was one branch's five nodes
+oscillating in and out of the comparison. Anyone re-running this must walk the
+mainline.
+
+**One known characteristic, reported rather than hidden.** A *rename* reads as
+major: the old id is removed and a new one added. That is the conservative
+direction and it is honest — a consumer resolving the old id does break — but it
+means a major does not imply that capability was withdrawn. The diff carries
+`added` and `removed` separately so a reader can see a rename for what it is.
+
+**Four states, and only one is a pass**: `ok`, `under`, `unreleased` (publishable
+but never tagged — no baseline exists), and `undetermined` (the baseline could
+not be exported, or a version is a pseudo-version with no triple). `--strict`
+fails on `undetermined` as well as `under`: a comparison that could not be made
+is the state a strict gate most needs to stop.
+
 ## 5. What this depends on, and what it does not
 
 **Depends on:** `kg-export` being stable enough to diff (§4.1's falsifier).
@@ -231,10 +306,16 @@ and §3.3 leaves it alone.
 
 ## 6. Open questions
 
-1. **Which instances are publishable?** The answer decides the size of
-   everything above. `cat-harness` plainly is. `who-iris` and
-   `who-style-guide` probably are, given WHO consumers. The rest are unclear
-   and should be declared rather than inferred.
+1. **Which instances are publishable?** — **STILL OPEN, and deliberately so.**
+   The answer decides the size of everything above. `cat-harness` plainly is.
+   `who-iris` and `who-style-guide` probably are, given WHO consumers. The rest
+   are unclear and should be declared rather than inferred.
+
+   §3.1 shipped 2026-09-23 with **nothing declaring it**: all 19 instances
+   report *undecided*. Inferring the answer would be the thing the third state
+   exists to prevent, so `check:publishable` prints the list as a worklist and
+   `check:version-bump` reports that it has no publishable instance to score —
+   a stated nothing rather than a clean run.
 2. **Where do released packages live?** FHIR's answer is `packages.fhir.org`.
    This repository's nearest existing thing is GitHub Releases, which is
    tarball-shaped rather than FHIR-package-shaped. Aligning the *rules*

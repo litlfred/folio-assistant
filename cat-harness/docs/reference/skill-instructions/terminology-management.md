@@ -68,3 +68,10 @@ run over a toolchain that was never present.
 
 Validation of the resulting artefacts is `fhir-validation`, not this skill.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Terminology bindings |
+

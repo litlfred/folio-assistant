@@ -5,7 +5,7 @@
     "id": "Process_Translation",
     "path": "processes/translation-workflow.bpmn"
   },
-  "source_hash": "sha256:03e8d79ea380c2f8d318d228ec10b0e9ba27aa523324763f5bcca9edaa8230cf",
+  "source_hash": "sha256:a1535d354ed9e0ff52e1b94ff20838c2476f65b566c34276dcc1531d87b4a00b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,26 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 12,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 6,
     "unknown": 0
   }
 }

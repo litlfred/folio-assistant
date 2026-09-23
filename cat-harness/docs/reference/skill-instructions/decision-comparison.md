@@ -118,3 +118,10 @@ doing, say why the obvious alternative loses, and proceed.
 **one in full and give a count for the rest**. A full comparison is what "in
 full" means. The rest get a number, never a row from a table they cannot see.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phase 4a: Compare the viable options |
+

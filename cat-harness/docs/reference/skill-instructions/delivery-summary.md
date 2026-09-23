@@ -148,3 +148,11 @@ After pushing changes to `claude/feature-xyz`:
 >
 > **Full diff:** [main...claude/feature-xyz](https://github.com/<owner>/<repo>/compare/main...claude/feature-xyz)
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Post summary to issue |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Post the MVP evidence staging URL + gate results |
+

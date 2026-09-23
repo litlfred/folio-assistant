@@ -218,3 +218,14 @@ jumping straight to a branch.
 5. **Going straight to `folio_init` because the request seemed obvious.** Every
    one of the five requests seems obvious to the person making it.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Getting started](../../processes/getting-started.html)**.
+
+<img src="../../assets/img/workflows/getting-started.svg" alt="BPMN diagram: Getting started" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Getting started](../../processes/getting-started.html) | Read the repository facts; Choose from the offered options; Scaffold the folio (folio_init); Start the Pages build and derive the URL; Hand over the live link; Say where it will be; Say it could not be confirmed |
+
