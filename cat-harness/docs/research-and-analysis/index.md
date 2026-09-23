@@ -24,4 +24,4 @@ the skill it governs, and this page keeps the evidence.
 
 | page | question |
 |---|---|
-| [Prior art](prior-art.html) | Are other open-source projects taking a similar approach? Twelve projects across skills, work plans, roles and processes, and Lean-backed documents, each checked against its own repository on 2026-09-23. **None combines all of it**; the nearest per axis are Superpowers, Beads, BMAD-METHOD, Camunda and leanblueprint. Includes the beans ↔ Beads health comparison behind bean `b91x` |
+| [Prior art](prior-art.html) | Are other open-source projects taking a similar approach? Eighteen projects across skills, work plans, roles and processes, agent frameworks, and documents with and without formal backing, each checked against its own repository on 2026-09-23. **None combines all of it**; the nearest per axis are Superpowers, Beads, BMAD-METHOD, Camunda and leanblueprint. Includes the beans ↔ Beads health comparison behind bean `b91x` |

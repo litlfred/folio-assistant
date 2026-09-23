@@ -3,7 +3,7 @@ title: "Prior art — open-source projects taking a similar approach"
 kind: research
 bean: folio-assistant-vq8o
 summary: >-
-  Who else combines agent skills, a committed work plan, role-based processes and Lean-backed documents? Twelve projects checked against their own repositories on 2026-09-23; none combines all of it. Includes a health comparison of beans and Beads.
+  Who else combines agent skills, a committed work plan, role-based processes and Lean-backed documents? Eighteen projects checked against their own repositories on 2026-09-23; none combines all of it. Includes a health comparison of beans and Beads.
 ---
 
 # Prior art
@@ -49,6 +49,12 @@ No single project found does what folio-assistant does. Most overlap on
 | [leanblueprint](#leanblueprint) | LaTeX ↔ Lean links + dependency graph | Apache-2.0 |
 | [Verso](#verso) | documents with checked Lean | Apache-2.0 |
 | [Basic Memory](#basic-memory) | markdown knowledge graph over MCP | AGPL-3.0 |
+| [LangGraph](#langgraph) | stateful agent graphs with checkpoints | MIT |
+| [CrewAI](#crewai) | role-based agents; deterministic Flows | MIT |
+| [AutoGen](#autogen) | multi-agent conversation (maintenance mode) | MIT / CC-BY-4.0 |
+| [Letta](#letta) | persistent agent memory | Apache-2.0 |
+| [MyST (mystmd)](#myst-mystmd) | typed document AST, many outputs | MIT |
+| [Quarto](#quarto) | executable technical documents | MIT |
 
 ## Agent instructions and skills
 
@@ -225,9 +231,76 @@ directory declares the *kind* of graph it holds and whether a process
 produces, reads or writes it
 ([content, context and state graphs](../reference/skill-instructions/content-context-and-state-graphs.html)).
 
+## General agent frameworks
+
+Added 2026-09-23, same session, on the owner's request. These overlap more
+loosely: each is an agent **runtime** you build on, where folio-assistant is a
+harness around coding agents that already exist.
+
+### LangGraph
+
+[langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) — agents
+as a directed graph of nodes and edges written in code, with state saved at
+checkpoints and **interrupts** for a person to inspect or change it mid-run.
+About 42k stars.
+
+**Closest of the frameworks to an executable process:** a checkpointed graph
+with human interrupts is structurally near a BPMN instance with a user task.
+**Difference:** the graph is code in one application, not a diagram in a
+standard notation that several agents and a person read; there are no lanes,
+so no roles.
+
+### CrewAI
+
+[crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) — agents defined by
+*role*, *goal* and *backstory*. **Crews** delegate among themselves; **Flows**
+are event-driven and deterministic. About 59k stars.
+
+**Difference:** the Crew/Flow split is the same trade folio-assistant makes
+between an agent's judgement and an engine that refuses a step — but a CrewAI
+role is still a persona the agent *is*, as in BMAD.
+
+### AutoGen
+
+[microsoft/autogen](https://github.com/microsoft/autogen) — multi-agent
+conversation framework. **In maintenance mode**: no new features; Microsoft
+points new users at its successor, Microsoft Agent Framework. About 61k stars.
+
+**Relevance:** historical. Not a candidate to borrow from.
+
+### Letta
+
+[letta-ai/letta](https://github.com/letta-ai/letta) — formerly MemGPT: agents
+with **core memory blocks** in context and **archival memory** retrieved on
+demand. Apache-2.0, about 25k stars. That repository now archives the retired
+V1 server; active development is in `letta-ai/letta-code`.
+
+**Difference:** Letta's memory is a service the agent calls. Here memory
+entries are files committed under `memory/`, reviewed like content, and
+classed as `context` — read, never written by a running process.
+
+## Document toolchains without formal backing
+
+### MyST (mystmd)
+
+[jupyter-book/mystmd](https://github.com/jupyter-book/mystmd) — MyST Markdown
+parsed to a **specified AST**, with cross-references, citations and directives,
+rendered to HTML, LaTeX/PDF (templates for 400+ journals), Word and JATS. MIT.
+
+**Closest to the document content type:** a typed, machine-readable block tree
+from which many outputs are rendered. **Difference:** no formal claims, no
+QA-verdict sidecars, no Lean.
+
+### Quarto
+
+[quarto-dev/quarto-cli](https://github.com/quarto-dev/quarto-cli) — a
+Pandoc-based publishing system: Markdown with executable Python, R, Julia or
+JavaScript cells, cross-references, websites and books. MIT.
+
+**Difference:** Quarto checks that code *runs*; a paper folio's `.lean`
+siblings check that a claim is *proved*. Different guarantees.
+
 ## Not covered
 
-Generic agent frameworks (LangGraph, CrewAI, AutoGen), memory services such as
-Letta, and document toolchains without formal backing (MyST / Jupyter Book,
-Quarto) overlap more loosely and were not verified for this page. They are
-candidates for a later pass, not omissions by judgement.
+Nothing named on this page is unverified. Microsoft Agent Framework (AutoGen's
+successor) and `letta-code` were noticed while checking and **not** examined.
