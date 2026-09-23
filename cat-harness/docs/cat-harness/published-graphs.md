@@ -56,10 +56,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 1 published.
+0 of 5 published.
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+- detangle — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- smart-trust — *declared, not published*
+- WHO IRIS — *declared, not published*
 
 ### `docs`
 

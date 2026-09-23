@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: human-translation-workflow\n"
-"POT-Creation-Date: 2026-09-22T08:18:10.036Z\n"
+"POT-Creation-Date: 2026-09-23T16:32:54.773Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,27 +14,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/human-translation-workflow.bpmn:172
+#: processes/human-translation-workflow.bpmn:171
 #. Diagram element documentation
 msgid "A subject-matter expert reviews the injected translated markdown for: - Clinical/technical accuracy of terminology - Preservation of meaning from the source - Cultural appropriateness for the target locale - Consistency with the domain glossary For WHO content: the SME verifies that normative statements (\"SHALL\", \"SHOULD\", \"MAY\") are translated with the correct force in the target language."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:72
+#: processes/human-translation-workflow.bpmn:71
 #. Diagram element documentation
 msgid "A translation coordinator identifies one or more content nodes that require human translation into a target locale."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:334
+#: processes/human-translation-workflow.bpmn:336
 #. Diagram label
 msgid "Accurate"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:277
+#: processes/human-translation-workflow.bpmn:281
 #. Diagram label
 msgid "Append WHO disclaimer (if DAK)"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:87
+#: processes/human-translation-workflow.bpmn:86
 #. Diagram label
 msgid "Assign to qualified human translator"
 msgstr ""
@@ -44,52 +44,42 @@ msgstr ""
 msgid "Automated Pipeline"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:269
+#: processes/human-translation-workflow.bpmn:268
 #. Diagram element documentation
-msgid "Bean: folio-assistant-ktt2 Back-translates target-language .md to source language and compares meaning. Distinguishes semantic drift from terminology misses. Tool: translation_validate MCP tool"
+msgid "Bean: folio-assistant-ktt2 Back-translates target-language .md to source language and compares meaning. Distinguishes semantic drift from terminology misses. Tool: translation_validate MCP tool No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:103
+#: processes/human-translation-workflow.bpmn:102
 #. Diagram label
 msgid "Check translation completeness"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:328
-#. Diagram label
-msgid "Clean"
-msgstr ""
-
-#: processes/human-translation-workflow.bpmn:322
+#: processes/human-translation-workflow.bpmn:326
 #. Diagram label
 msgid "Complete"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:116
+#: processes/human-translation-workflow.bpmn:115
 #. Diagram label
 msgid "Complete enough?"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:275
-#. Diagram label
-msgid "Drift detected?"
-msgstr ""
-
-#: processes/human-translation-workflow.bpmn:327
-#. Diagram label
-msgid "Drift found"
-msgstr ""
-
-#: processes/human-translation-workflow.bpmn:223
+#: processes/human-translation-workflow.bpmn:222
 #. Diagram label
 msgid "Extract POT (translatable strings)"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:282
+#: processes/human-translation-workflow.bpmn:330
+#. Diagram label
+msgid "findings attached"
+msgstr ""
+
+#: processes/human-translation-workflow.bpmn:286
 #. Diagram element documentation
 msgid "For WHO SMART Guidelines content, automatically appends the WHO legal disclaimer: - Translation not created by WHO - English edition is authoritative original - WHO not responsible for translation accuracy Only applies when folio contentType includes WHO/DAK content."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:242
+#: processes/human-translation-workflow.bpmn:241
 #. Diagram element documentation
 msgid "Generates or retrieves the domain glossary for the target locale. Sources: 1. Root folio's translations/ glossary 2. Folio-assistant dependency translations (depth-first walk) 3. WHO standard terminology (from smart-base) 4. Previous translations of related content"
 msgstr ""
@@ -109,29 +99,29 @@ msgstr ""
 msgid "Human Translator"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:76
+#: processes/human-translation-workflow.bpmn:75
 #. Diagram label
 msgid "Identify content and target locale"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:320
+#: processes/human-translation-workflow.bpmn:324
 #. Diagram label
 msgid "Incomplete"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:250
+#: processes/human-translation-workflow.bpmn:249
 #. Diagram label
 msgid "Inject PO → translated Markdown"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:332
+#: processes/human-translation-workflow.bpmn:334
 #. Diagram label
 msgid "Needs correction"
 msgstr ""
 
 #: processes/human-translation-workflow.bpmn:58
 #. Diagram element documentation
-msgid "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it."
+msgid "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it."
 msgstr ""
 
 #: processes/human-translation-workflow.bpmn:35
@@ -139,52 +129,52 @@ msgstr ""
 msgid "Owns the completeness gate, Gateway_Complete, a different question from the accuracy Lane_Reviewer judges later: this lane can send work back to the translator for missing or fuzzy strings before a single sentence has been checked for meaning."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:255
+#: processes/human-translation-workflow.bpmn:254
 #. Diagram element documentation
 msgid "Post-processes the completed .po file: 1. Substitutes msgstr for msgid in source markdown 2. Unshields placeholder tokens back to original content 3. Validates structural integrity (paragraph count, heading levels) 4. Validates completeness (flags empty msgstr) 5. Runs linting (doubled punctuation, orphaned placeholders) Tool: translation_inject MCP tool"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:228
+#: processes/human-translation-workflow.bpmn:227
 #. Diagram element documentation
 msgid "Pre-processes source markdown: 1. Segments prose by paragraph 2. Shields non-translatable content (math, code, labels) as placeholders 3. Normalizes whitespace 4. Extracts metadata (titles, alt text, captions) Produces .pot file(s) at the configured granularity. Tool: translation_extract MCP tool"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:237
+#: processes/human-translation-workflow.bpmn:236
 #. Diagram label
 msgid "Prepare domain glossary"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:129
+#: processes/human-translation-workflow.bpmn:128
 #. Diagram label
 msgid "Receive assignment and materials"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:118
+#: processes/human-translation-workflow.bpmn:117
 #. Diagram label
 msgid "Request completion of remaining strings"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:191
+#: processes/human-translation-workflow.bpmn:190
 #. Diagram label
 msgid "Return for correction with annotations"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:123
+#: processes/human-translation-workflow.bpmn:122
 #. Diagram element documentation
 msgid "Return to the translator with a list of untranslated or fuzzy strings that need attention."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:171
+#: processes/human-translation-workflow.bpmn:170
 #. Diagram label
 msgid "Review translation for accuracy"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:264
+#: processes/human-translation-workflow.bpmn:263
 #. Diagram label
 msgid "Round-trip translation QA"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:204
+#: processes/human-translation-workflow.bpmn:203
 #. Diagram label
 msgid "Sign off translation as official"
 msgstr ""
@@ -194,7 +184,7 @@ msgstr ""
 msgid "Subject-Matter Expert / Reviewer"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:156
+#: processes/human-translation-workflow.bpmn:155
 #. Diagram label
 msgid "Submit completed .po file"
 msgstr ""
@@ -204,12 +194,12 @@ msgstr ""
 msgid "Task_TranslateInTool is where both loops in this process land — an incompleteness request from the coordinator and a correction from the reviewer — so nothing in the task itself says which one sent the work back; only the annotations that travel with each loop carry that distinction."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:92
+#: processes/human-translation-workflow.bpmn:91
 #. Diagram element documentation
 msgid "The coordinator assigns the translation to a qualified translator, ideally a domain SME for the content area. For WHO content, the translator should be familiar with WHO SMART Guidelines terminology. The assignment includes: - The .pot file(s) from extraction - The domain glossary - Context notes (block kind, chapter, content area) - The deadline"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:81
+#: processes/human-translation-workflow.bpmn:80
 #. Diagram element documentation
 msgid "The coordinator selects: - Which content nodes need translation (block, section, chapter, or folio) - The target locale (one of the supportedLocales in <name>.config.json) - The priority and deadline"
 msgstr ""
@@ -224,37 +214,37 @@ msgstr ""
 msgid "The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:196
+#: processes/human-translation-workflow.bpmn:195
 #. Diagram element documentation
 msgid "The reviewer annotates specific passages that need correction and returns to the translator with detailed feedback. Each annotation includes: - The passage in question - What is wrong (terminology, meaning, style) - The suggested correction or reference"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:209
+#: processes/human-translation-workflow.bpmn:208
 #. Diagram element documentation
 msgid "The reviewer signs off the translation, making it official. This records: - signedOffBy: the reviewer's identity - signedOffAt: the current timestamp - sourceHash: SHA-256 of the source .md - level: block | section | chapter | folio Tool: translation_signoff MCP tool"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:130
+#: processes/human-translation-workflow.bpmn:129
 #. Diagram element documentation
 msgid "The translator receives: - .pot file with source strings (msgid) - Domain glossary with approved term translations - Context notes per string - Style guide and WHO terminology references Tools: Poedit, Weblate, Crowdin, or direct .po editing."
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:157
+#: processes/human-translation-workflow.bpmn:156
 #. Diagram element documentation
 msgid "The translator submits the completed .po file back to the pipeline. This may happen via: - Git commit + push - Weblate/Crowdin sync - File upload to the coordinator"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:145
+#: processes/human-translation-workflow.bpmn:144
 #. Diagram element documentation
 msgid "The translator works through each msgid, producing msgstr translations. They: - Follow the domain glossary for technical terms - Preserve placeholder tokens ({1}, {2}) in position - Mark uncertain translations as #fuzzy - Note any source ambiguities for the coordinator"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:144
+#: processes/human-translation-workflow.bpmn:143
 #. Diagram label
 msgid "Translate strings in preferred tool"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:189
+#: processes/human-translation-workflow.bpmn:188
 #. Diagram label
 msgid "Translation accurate?"
 msgstr ""
@@ -264,27 +254,27 @@ msgstr ""
 msgid "Translation Coordinator"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:219
+#: processes/human-translation-workflow.bpmn:218
 #. Diagram label
 msgid "Translation is official"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:71
+#: processes/human-translation-workflow.bpmn:70
 #. Diagram label
 msgid "Translation needed for content node(s)"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:108
+#: processes/human-translation-workflow.bpmn:107
 #. Diagram element documentation
 msgid "Verify that all msgid entries have msgstr translations. Partial translations are acceptable for initial submissions but must be flagged for follow-up. The coordinator checks: - % of strings translated - Any fuzzy-flagged entries - Missing critical sections"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:291
+#: processes/human-translation-workflow.bpmn:295
 #. Diagram label
 msgid "Write status.json (official)"
 msgstr ""
 
-#: processes/human-translation-workflow.bpmn:296
+#: processes/human-translation-workflow.bpmn:300
 #. Diagram element documentation
 msgid "Writes translations/<locale>/status.json with the official sign-off metadata and source hash for staleness detection."
 msgstr ""

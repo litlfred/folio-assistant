@@ -6,9 +6,9 @@
  * - `scripts/pdf-structure.py` writes the whole artefact: `source`, `metadata`,
  *   `toc`, `toc_source`, `sections` and `diagnostics`.
  * - `scripts/pdf-pages.py`, the no-outline rung, MERGES into whatever is there.
- *   It sets `granularity: "page"`, a top-level `text_source` and a
- *   `structure_note`, rewrites `sections` at page granularity, and adds `source`
- *   only when it is absent (`setdefault`, bean `nso8`).
+ *   It sets `granularity: "page"`, `source.text_source` and a `structure_note`,
+ *   rewrites `sections` at page granularity, and adds the rest of `source` only
+ *   when it is absent (`setdefault`, bean `nso8`).
  *
  * So the fields a page-granularity entry carries depend on whether
  * `pdf-structure` ran on it first. That is why `metadata`, `toc` and
@@ -22,13 +22,13 @@
  * {@link PdfSectionSchema} is therefore `.strict()`. A second spelling of a
  * field is exactly the drift this schema exists to catch.
  *
- * ## Recorded, not fixed: the text origin has two spellings
+ * ## The text origin: one field, one vocabulary
  *
- * `source.text_source` (`pdf-structure.py`) is `"embedded" | "ocr"`. The top-level
- * `text_source` (`pdf-pages.py`) is `"text-layer" | "ocr"`. They answer one
- * question in two vocabularies. The schema accepts each where it is written
- * today, so no committed file changes. Unifying them is a producer change,
- * recorded in its own bean rather than folded in here.
+ * Where the section text came from is `source.text_source`: `"embedded"` (the
+ * PDF's own text layer) or `"ocr"`. Until issue #1121, `pdf-pages.py` wrote it
+ * as a top-level `text_source` spelled `"text-layer" | "ocr"`, which is one question
+ * in two vocabularies. The committed files were migrated, and a top-level
+ * `text_source` is now rejected (the object is `.strict()`).
  *
  * Measured 2026-09-23: all 22 committed `structure.json` files conform
  * (scripts/tests/pdf-structure-schema.test.ts).
@@ -87,8 +87,8 @@ const Sha256 = z.string().regex(/^[0-9a-f]{64}$/);
  * The file the artefact was built from. `file`, `sha256`, `bytes`, `mtime` and
  * the SNIFFED mimetype are `_tech_meta.py`'s vocabulary (bean `nso8`). The
  * mimetype is `null` with `mimetype_source: "unrecognised"` when the leading
- * bytes are not recognised, and never guessed from the extension. `pages`,
- * `text_source` and `extractor` are written by `pdf-structure.py` only.
+ * bytes are not recognised, and never guessed from the extension. `pages` and
+ * `extractor` are written by `pdf-structure.py` only; `text_source` by both rungs.
  */
 export const PdfSourceSchema = z
   .object({
@@ -141,8 +141,6 @@ export const PdfStructureSchema = z
     diagnostics: PdfDiagnosticsSchema.optional(),
     /** Written by `pdf-pages.py`: the entry was ingested one section per page. */
     granularity: z.literal("page").optional(),
-    /** `pdf-pages.py`'s spelling of the text origin; see the module doc. */
-    text_source: z.enum(["text-layer", "ocr"]).optional(),
     /** What a rung did NOT claim. Required by check-l1-complete when there are no sections. */
     structure_note: z.string().optional(),
   })

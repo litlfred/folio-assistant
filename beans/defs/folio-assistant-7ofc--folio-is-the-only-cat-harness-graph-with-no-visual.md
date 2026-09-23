@@ -1,11 +1,12 @@
 ---
 # folio-assistant-7ofc
 title: folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness
-status: todo
+status: completed
 type: feature
-parent: folio-assistant-6lb8
+priority: normal
 created_at: 2026-09-22T10:48:40Z
-updated_at: 2026-09-22T10:48:40Z
+updated_at: 2026-09-22T11:39:16Z
+parent: folio-assistant-6lb8
 ---
 
 Owner, 2026-09-22: *"folio must be in cat-harness and visualizer owned by it. transations too... there should be visualizer."*

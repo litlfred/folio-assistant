@@ -101,9 +101,9 @@ of declaring one: navigable without being held.
 2026-09-19 over the four entries in `library/`:
 
 - `toc_source: outline` → `pdf-structure` (`9789241548960-eng`, 250 sections)
-- `toc_source: none`, `text_source: text-layer` → `pdf-pages` (`milnorlink`,
+- `toc_source: none`, `source.text_source: embedded` → `pdf-pages` (`milnorlink`,
   `wpr-rdo-2020-003-eng`)
-- `toc_source: none`, `text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
+- `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
 
 ## An inferred chapter tree is refused, not guessed
@@ -132,8 +132,8 @@ is never rendered as one that was.
 ```
 library/<bib-slug>/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
-                     granularity, text_source, sections[], structure_note,
-                     source{} (see below)
+                     granularity, sections[], structure_note,
+                     source{} (see below; source.text_source says embedded|ocr)
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
@@ -151,7 +151,9 @@ Every rung writes `source` on `structure.json`, from the single definition in
 `scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
 SOURCE's, UTC to the second — not the ingest time, because what tells you a
 re-fetch got something new is the file changing), `mimetype_sniffed` and
-`mimetype_source`. `pdf-structure` adds `pages`, `text_source` and `extractor`.
+`mimetype_source`. Both rungs add `text_source`, `embedded` or `ocr`: ONE field and ONE
+vocabulary for where the section text came from (issue #1121; `pdf-pages` used to write a
+top-level `text-layer`). `pdf-structure` also adds `pages` and `extractor`.
 
 **The mimetype is sniffed from the leading bytes and never falls back to the
 extension.** An extension is a claim by whoever named the file; the magic bytes

@@ -471,6 +471,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
   },
   {
+    // The same reason (bean `0rxe`): the visual diff pictures a FOLIO's
+    // changed figures on that folio's published main site and staging build.
+    // The platform has no folio. The pixel compare is unit-tested, and the
+    // whole Tool runs in Chromium in `block-screenshots.e2e.ts`.
+    match: "block-screenshots.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's published site and staging build; the platform carries no folio. " +
+      "Covered by block-screenshots.test.ts in `bun test` and block-screenshots.e2e.ts in the e2e job",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:

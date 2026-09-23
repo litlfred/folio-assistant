@@ -167,6 +167,16 @@ export interface BeanEvidence {
    * above does: a missing measurement is not a measured zero.
    */
   doneWhen?: DoneWhenState;
+  /**
+   * The bean this one is a child of, from its `parent:` front matter.
+   *
+   * `undefined` means a ROOT bean — one nothing parents — which is a real and
+   * common answer, not a missing measurement. Nothing here distinguishes it
+   * from a probe that predates the field, and nothing needs to: the only
+   * consumer asks whether a bean HAS live children, and a bean with no
+   * children answers that the same either way.
+   */
+  parent?: string;
 }
 
 export interface TodoEvidence {
@@ -1066,7 +1076,20 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "72 hours because a claim is meant to become visible at the FIRST commit " +
       "(`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days " +
       "spans a weekend without firing on one. It is deliberately far below the 14-day abandonment " +
-      "threshold and answers a different question, so both are reported.",
+      "threshold and answers a different question, so both are reported. " +
+      "ONE PART OF THE OFFLINE HALF WAS ALSO WRONG, and bean `thux` fixed it: a bean worked through " +
+      "its CHILDREN is quiet on its own file by design, because nothing touches the parent while they " +
+      "move — so it accrued hours for doing exactly what it is for, and the finding named no action a " +
+      "person could take, since refreshing it means editing a file for no reason (`o5qj` one check " +
+      "over). A claim with a child whose own file moved inside this window is therefore excused, and " +
+      "counted under `bean-quiet-claims-parenting-live-work` rather than dropped. Measured 2026-09-23 " +
+      "on the real store: 39 quiet claims became 31, with 8 excused. It is keyed on PARENTHOOD rather " +
+      "than on `type: epic` — the relation carries the argument, and `type` is a label a bean sets " +
+      "about itself while `parent` is a fact another bean asserts about it. A parent ALL of whose " +
+      "children are also quiet still fires, which is the discrimination: `bzyu` had 8 open children " +
+      "and none moving. The UPPER BOUND sentence above still stands for the network half, which this " +
+      "check still cannot see; a sweep of all 298 unmerged branches and 20 open pull requests the same " +
+      "day found 7 more of the 39 live that way, and none of that is computable from the store.",
   },
   {
     metric: "bean-resolved-inline",
@@ -1158,12 +1181,68 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
   // excluded so one bean does not produce two findings saying the same thing
   // at two timescales; the 14-day finding is the stronger claim and wins.
+  //
+  // AN EPIC IS ALIVE THROUGH ITS CHILDREN — bean `thux`, measured 2026-09-23.
+  //
+  // This check reads one signal, `updated_at` on the bean's own file, and for
+  // a task that is the right signal. For an EPIC it is the wrong one: an epic
+  // is worked by its children, and nothing touches the parent's file while
+  // they move. So an epic accrued quiet hours for doing exactly what an epic
+  // does, and the finding had no action a person could take — refreshing it
+  // means editing a file for no reason, which is `o5qj`'s shape one check
+  // over.
+  //
+  // Measured on the real store the day this landed: of 39 quiet claims, FIVE
+  // were epics with children carrying a live signal — `1xhc` with 8 of them
+  // while reported quiet for 100 hours, `ahvw` with 8, `1swy` and `0lmb` with
+  // 2 each, `8jt6` with 1. `bzyu` was the one epic genuinely quiet (8 open
+  // children, none live) and it still reports, which is the discrimination
+  // this exists for.
+  //
+  // A CHILD IS "MOVING" BY THE SAME CLOCK, and deliberately so. The network
+  // signals — an open pull request naming the bean, an unmerged branch
+  // touching it — are the ones this check has never had and still does not:
+  // `bean-quiet-claims`' own basis calls its count an UPPER BOUND for exactly
+  // that reason, and that sentence stays true. What is removed here is only
+  // the part answerable from the store itself.
+  //
+  // KEYED ON PARENTHOOD, NOT ON `type: epic`. The relation is what carries the
+  // argument — a bean worked through its children is quiet for a reason,
+  // whatever it calls itself — and `type` is a label a bean sets about itself
+  // while `parent` is a fact another bean asserts about it. Keying on the
+  // label would also have to decide what `feature` means, which this check has
+  // no business ruling on. Measured consequence: the network sweep that
+  // motivated this found FIVE epics with live children, and this store-local
+  // rule excuses EIGHT claimed beans. The two numbers answer different
+  // questions and neither corrects the other — network liveness of a child
+  // against a child's file having moved.
+  const movedRecently = (b: BeanEvidence): boolean => {
+    const h = hoursBetween(ctx.now, b.updatedAt);
+    return h !== undefined && h <= BEAN_QUIET_HOURS;
+  };
+  const liveChildren = new Set(
+    beans.filter((b) => b.parent !== undefined && movedRecently(b)).map((b) => b.parent!),
+  );
   const quiet = claimed
     .map((b) => ({ bean: b, hours: hoursBetween(ctx.now, b.updatedAt) }))
     .filter(
       (x): x is { bean: BeanEvidence; hours: number } =>
-        x.hours !== undefined && x.hours > BEAN_QUIET_HOURS && !stale.some((s) => s.bean.id === x.bean.id),
+        x.hours !== undefined &&
+        x.hours > BEAN_QUIET_HOURS &&
+        !stale.some((s) => s.bean.id === x.bean.id) &&
+        !liveChildren.has(x.bean.id),
     );
+  // REPORTED, NEVER SILENTLY SUBTRACTED. Without this, "no claim went quiet"
+  // and "the quiet ones were all parents of moving work" read identically —
+  // `dh4f`, and the same argument `bean-duplicate-title-groups-adjudicated`
+  // makes above. It counts CLAIMED beans only, so it is a subset of the
+  // denominator the finding already prints.
+  const quietButParenting = claimed.filter(
+    (b) =>
+      liveChildren.has(b.id) &&
+      !stale.some((s) => s.bean.id === b.id) &&
+      (hoursBetween(ctx.now, b.updatedAt) ?? 0) > BEAN_QUIET_HOURS,
+  );
 
   // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
   //
@@ -1201,6 +1280,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     // from 43.
     { metric: "bean-claimed", value: claimed.length, unit: "count", command: cmd },
     { metric: "bean-quiet-claims", value: quiet.length, unit: "count", command: cmd },
+    {
+      metric: "bean-quiet-claims-parenting-live-work",
+      value: quietButParenting.length,
+      unit: "count",
+      command: cmd,
+    },
     // REPORTED EVEN THOUGH NOTHING THRESHOLDS IT, and that is the point. The
     // finding below can only fire on a bean this count includes, so a detector
     // that stops matching — a heading respelled, the regex narrowed — shows up

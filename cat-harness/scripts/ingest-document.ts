@@ -20,8 +20,8 @@
  * Read off the four entries already in `library/`, not invented:
  *
  *   toc_source: outline                       -> pdf-structure
- *   toc_source: none, text_source: text-layer -> pdf-pages
- *   toc_source: none, text_source: ocr        -> pdf-ocr, then pdf-pages --from-ocr
+ *   toc_source: none, source.text_source: embedded -> pdf-pages
+ *   toc_source: none, source.text_source: ocr      -> pdf-ocr, then pdf-pages --from-ocr
  *
  * **An inferred chapter tree is refused rather than guessed** -- `6xaz` records
  * two documents where inference was confidently wrong and the output did not
