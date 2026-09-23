@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 147,
+      "count": 149,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -767,6 +767,22 @@
       "name": "precision-scalar",
       "graphNode": "schema",
       "summary": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/property-skills.test.ts",
+      "instance": "cat-harness",
+      "name": "property-skills.test",
+      "graphNode": "undeclared",
+      "summary": "The edit-skill map is TOTAL (issue #1146). Owner: *\"it is a QA in and of",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/property-skills.ts",
+      "instance": "cat-harness",
+      "name": "property-skills",
+      "graphNode": "schema",
+      "summary": "Which skill edits which declaration property: the \"edit skills\" column of the",
       "isTest": false
     },
     {
@@ -1614,7 +1630,7 @@
         },
         {
           "name": "candidates",
-          "type": "z .array(z.string()) .optional() .describe( \"Harnesses the agent has already narrowed to from context — a repository ca…",
+          "type": "z .array(z.string()) .optional() .describe( \"Harnesses the agent has already narrowed to from context — a repository wh…",
           "optional": true,
           "array": true
         },
@@ -1672,7 +1688,7 @@
         },
         {
           "name": "harness",
-          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or a derivative such as `ca…",
+          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or any Harness built on it.…",
           "optional": true,
           "array": false
         },
@@ -5911,6 +5927,129 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
+      "name": "AssociatedHarness",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "A HARNESS this instance is associated with: another instance, with its own",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The associated harness's instance name, as ITS declaration gives it. Unique within this list."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Human title, as its declaration gives it."
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Where a reader goes: the harness's own published site."
+        },
+        {
+          "name": "repository",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Its source repository, where edits to it are made."
+        },
+        {
+          "name": "declarationUrl",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Its declaration file, when published at a stable URL."
+        },
+        {
+          "name": "relation",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "How it relates to this harness, in a few words: e.g. `folio-of` (a folio on this platform)."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "One sentence a reader of the panel sees."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#AssociatedHarnessSchema",
+      "name": "AssociatedHarnessSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().regex(INSTANCE_NAME)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "declarationUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "relation",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "INSTANCE_NAME",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "name": "CatHarnessDeclaration",
       "module": "cat-harness/schemas/cat-harness.ts",
@@ -6002,6 +6141,13 @@
           "doc": "Graphs known but not held — {@link RemoteGraph}."
         },
         {
+          "name": "associatedHarnesses",
+          "type": "AssociatedHarness[]",
+          "optional": true,
+          "array": true,
+          "doc": "Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146."
+        },
+        {
           "name": "stickies",
           "type": "StickyContribution[]",
           "optional": true,
@@ -6049,6 +6195,7 @@
       ],
       "values": [],
       "refs": [
+        "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
         "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
@@ -6146,6 +6293,13 @@
           "doc": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}."
         },
         {
+          "name": "associatedHarnesses",
+          "type": "z .array(AssociatedHarnessSchema) .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: \"associ…",
+          "optional": true,
+          "array": true,
+          "doc": "Harnesses this one is associated with — see {@link AssociatedHarness}."
+        },
+        {
           "name": "stickies",
           "type": "z.array(StickyContributionSchema).optional()",
           "optional": true,
@@ -6189,6 +6343,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/cat-harness.ts#AssociatedHarnessSchema",
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
@@ -18781,6 +18936,33 @@
       "name": "PrecisionScalarOrNumber",
       "module": "cat-harness/schemas/precision-scalar.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/property-skills.ts#DeclarationProperty",
+      "name": "DeclarationProperty",
+      "module": "cat-harness/schemas/property-skills.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/property-skills.ts#PropertySkills",
+      "name": "PropertySkills",
+      "module": "cat-harness/schemas/property-skills.ts",
+      "kind": "type-alias",
+      "doc": "One declaration property's edit route.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -36809,6 +36991,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
+      "via": "associatedHarnesses",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
       "via": "directories",
       "kind": "field",
@@ -36883,6 +37073,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/sticky-contribution.ts#StickyContribution",
       "via": "stickies",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#AssociatedHarnessSchema",
+      "via": "associatedHarnesses",
       "kind": "field",
       "optional": true,
       "array": true
