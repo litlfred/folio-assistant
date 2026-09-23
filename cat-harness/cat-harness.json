@@ -505,7 +505,7 @@
       "id": "scenarios",
       "path": "scenarios/",
       "dependents": "skip",
-      "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
+      "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`, and the User Stories told as them, in `stories.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need and the Actor kinds that may play it; a lane names its Role, and a story names the Role it is told as, so the Role lists neither (#1168). SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path.",
       "graphKinds": [
         "scenarios"
       ]

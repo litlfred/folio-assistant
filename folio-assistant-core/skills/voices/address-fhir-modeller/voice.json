@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-voice/v1",
+  "id": "address-fhir-modeller",
+  "title": "Addressing the FHIR modeller",
+  "description": "How to write for a reader acting as FHIR modeller. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+  "provenance": "house",
+  "sources": [
+    {
+      "title": "Role `fhir-modeller` — its persona, in the cat-harness role graph",
+      "instance": "cat-harness",
+      "kgRef": "scenarios/roles.json"
+    }
+  ],
+  "activeIn": {
+    "roles": [
+      {
+        "instance": "cat-harness",
+        "role": "fhir-modeller"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "id": "address-fhir-modeller-register",
+      "title": "Specification register",
+      "description": "Specification register. Cardinalities, invariants, must-support. Assume the standard is known.",
+      "category": "register",
+      "severity": "minor",
+      "judgementOnly": true,
+      "source": {
+        "instance": "cat-harness",
+        "kgRef": "scenarios/roles.json",
+        "quote": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
+      }
+    }
+  ]
+}

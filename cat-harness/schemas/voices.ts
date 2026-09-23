@@ -56,6 +56,7 @@
  * @graphNode schema
  */
 
+import { RoleRefSchema } from "./role-graph";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolveHarnessConfigPath } from "./harness-config";
 import { join, relative, resolve } from "node:path";
@@ -385,16 +386,20 @@ export const VoiceApplicabilitySchema = z
      */
     processes: z.array(z.string().min(1)).min(1).optional(),
     /**
-     * Declared role ids from `scenarios/roles.json` — the SWIMLANE, which
-     * `AGENTS.md` names as what a role is. "Nothing *is* a reviewer";
-     * somebody acts as one inside a process, and a voice bound to a lane
-     * applies for exactly that duration.
+     * The roles this voice addresses — the reader it is written FOR.
+     *
+     * The voice points at the role, never the other way (#1168, B2): until
+     * then each role carried a one-sentence `voice` of its own, so adding a
+     * voice meant editing the role, and a role could hold only one. A role is
+     * the swimlane, so a voice bound here applies for exactly the duration
+     * somebody acts in it. `check:voices` resolves each against the named
+     * instance's role graph.
      */
-    lanes: z.array(z.string().min(1)).min(1).optional(),
+    roles: z.array(RoleRefSchema).min(1).optional(),
     /**
      * User scenarios or requirement ids this voice serves.
      *
-     * FREE TEXT, deliberately, where `processes` and `lanes` resolve against
+     * FREE TEXT, deliberately, where `processes` and `roles` resolve against
      * declared objects. A scenario is the thing that has not been formalised
      * yet — it is what a requirement looks like before CRDM turns it into a
      * process — so demanding a declared id here would mean no voice could be
@@ -998,21 +1003,25 @@ export function explainVoiceFailure(f: VoiceResolveFailure): string {
 }
 
 /**
- * Is this voice in force for the process, lane and scenario at hand?
+ * Is this voice in force for the process, role and scenario at hand?
  *
  * ABSENT MEANS EVERYWHERE, per {@link VoiceApplicabilitySchema} — so a voice
  * with no `activeIn` answers true for every context, including one that names
  * nothing.
  *
+ * `role` is the id of the role whose lane the work is in. It matches a
+ * declared {@link RoleRefSchema} by role id; two instances declaring a role of
+ * the same id are not told apart here.
+ *
  * Each declared list is an OR within itself and an AND across the three: a
- * voice naming two processes and one lane is in force in either process, but
- * only while acting in that lane. That is the CRDM shape — an activity sits in
+ * voice naming two processes and one role is in force in either process, but
+ * only while acting in that role's lane. That is the CRDM shape — an activity sits in
  * one lane of one process — rather than a free-for-all union, which would put
  * a lane-scoped voice in force anywhere its process ran.
  */
 export function voiceActiveIn(
   voice: { activeIn?: VoiceApplicability },
-  context: { process?: string; lane?: string; scenario?: string },
+  context: { process?: string; role?: string; scenario?: string },
 ): boolean {
   const a = voice.activeIn;
   if (!a) return true;
@@ -1020,7 +1029,7 @@ export function voiceActiveIn(
     declared === undefined || (actual !== undefined && declared.includes(actual));
   return (
     holds(a.processes, context.process) &&
-    holds(a.lanes, context.lane) &&
+    holds(a.roles?.map((r) => r.role), context.role) &&
     holds(a.scenarios, context.scenario)
   );
 }
