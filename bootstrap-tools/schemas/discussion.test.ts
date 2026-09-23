@@ -213,8 +213,19 @@ describe("the generated bootstrap schemas", () => {
       ["ExchangeEntrySchema", ExchangeEntrySchema],
       ["DiscussionOutputObjectSchema", DiscussionOutputObjectSchema],
     ] as const) {
-      expect({ [name]: (schema as { _def: { unknownKeys?: string } })._def.unknownKeys }).toEqual({
-        [name]: "strict",
+      // Asserted BEHAVIOURALLY — parse an object carrying a key the schema
+      // does not declare, and require an `unrecognized_keys` issue — rather
+      // than by reading `_def.unknownKeys`.
+      //
+      // That internal was a zod 3 shape. Under zod 4 it reads `undefined`,
+      // and this test went red on the upgrade while every schema was still
+      // strict: it was testing the LIBRARY'S INTERNALS, not the property its
+      // own comment describes. A behavioural assertion cannot break on an
+      // internals rename, and it fails for the reason it exists if somebody
+      // ever drops `.strict()`.
+      const issues = schema.safeParse({ __unrecognised_key_for_this_test__: 1 }).error?.issues ?? [];
+      expect({ [name]: issues.some((i) => i.code === "unrecognized_keys") }).toEqual({
+        [name]: true,
       });
     }
   });
