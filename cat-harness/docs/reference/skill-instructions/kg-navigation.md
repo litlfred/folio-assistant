@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../kg-navigation/skills/kg-navigation.md) — do not edit here.
+> Generated from [`kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/kg-navigation/skills/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name

@@ -176,7 +176,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "todo-manager",
       label: "Session Task Manager (folio-core)",
-      repoPrefix: "skills/folio-core",
+      repoPrefix: "cat-harness/skills/folio-core",
       canonical: true,
     },
     {
@@ -205,7 +205,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "bean-coordination",
       label: "Bean Coordination (folio-core)",
-      repoPrefix: "skills/folio-core",
+      repoPrefix: "cat-harness/skills/folio-core",
       canonical: true,
     },
     {
@@ -364,9 +364,28 @@ function discoverGroups(): Group[] {
   // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
+  /* REPO-relative, not INSTANCE-relative — bean `oe98`.
+   *
+   * `repoPrefix` becomes `blob/main/<prefix>/<file>` and
+   * `edit/main/<prefix>/<file>` below, and those are paths from the
+   * REPOSITORY root. Measuring them from `INSTANCE_ROOT` (`cat-harness/`)
+   * dropped the stub, so every page linked `skills/folio-core/x.md` when the
+   * file is at `cat-harness/skills/folio-core/x.md` — 480 dead links across
+   * 240 of 244 pages, every one of them the "Edit this page's source"
+   * affordance a reader uses to contribute.
+   *
+   * The two roots were the SAME directory until the `wggr` stub inversion
+   * moved the instance into `cat-harness/`, which is why this read correctly
+   * for as long as it did and broke without any edit to this file.
+   *
+   * `relative()` rather than a composed prefix: composing is what put the two
+   * cases out of step, and a computed path cannot drift from where the
+   * declaration actually points.
+   */
+  const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
   for (const decl of kgDirectories(INSTANCE_ROOT)) {
     const skillsRoot = decl.absPath;
-    const rel = relative(INSTANCE_ROOT, skillsRoot);
+    const rel = relative(REPO_ROOT, skillsRoot);
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
       if (direct === undefined) undeclared.push(decl.id);

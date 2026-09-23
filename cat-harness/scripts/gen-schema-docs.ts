@@ -19,8 +19,8 @@
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
-import { join, resolve } from "path";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { join, relative, resolve } from "path";
+import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -52,6 +52,19 @@ const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const EDIT_GLYPH = "\u270E";
 
 const SKILLS_DIR = join(schemasRoot(INSTANCE_ROOT), "skills");
+
+/* The same repo-relative prefix `gen-skill-docs.ts` computes, and for the same
+ * reason — bean `oe98`. The four links below are `blob/main/<prefix>/…` and
+ * `edit/main/<prefix>/…`, which are REPOSITORY-root paths; this file spelled
+ * them `schemas/skills/…` while the directory is at
+ * `cat-harness/schemas/skills/…`, so all 88 links across 22 pages were dead.
+ *
+ * DERIVED FROM `SKILLS_DIR` rather than written out, because a literal is
+ * exactly what went stale: `oe98`'s own measurement missed this generator
+ * entirely, having looked only at the directory the other one writes. Two
+ * generators, one hardcoded assumption each, and the second was found only
+ * because the first was fixed by computing instead of composing. */
+const SKILLS_REPO_PREFIX = relative(repoRootFor(INSTANCE_ROOT), SKILLS_DIR);
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skills");
 
 /**
@@ -239,8 +252,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(input, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/input.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/input.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
@@ -252,8 +265,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(output, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/output.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/output.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
