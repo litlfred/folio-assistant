@@ -158,6 +158,7 @@
     "eval:crdm-detect": "bun run cat-harness/scripts/eval-crdm-detect.ts",
     "external-schemas": "bun run cat-harness/scripts/external-schemas.ts",
     "code-lists:check": "bun run cat-harness/scripts/code-lists.ts --check",
+    "publish:verify": "bun run cat-harness/scripts/publish-verify.ts",
     "external-schemas:check": "bun run cat-harness/scripts/external-schemas.ts --check",
     "external-schemas:viz": "bun run cat-harness/scripts/gen-external-schemas-viz.ts",
     "external-schemas:viz:check": "bun run cat-harness/scripts/gen-external-schemas-viz.ts --check",
@@ -329,6 +330,7 @@
     "csl-json": "^0.1.0",
     "eslint": "^10.8.0",
     "fast-xml-parser": "^5.10.1",
+    "jsonld": "8",
     "typescript-eslint": "^8.66.0",
     "yaml": "^2.9.1"
   },

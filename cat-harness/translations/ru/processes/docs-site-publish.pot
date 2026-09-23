@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: docs-site-publish\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.864Z\n"
+"POT-Creation-Date: 2026-09-23T21:29:14.595Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,14 +14,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/docs-site-publish.bpmn:71
+#: processes/docs-site-publish.bpmn:127
 #. Diagram element documentation
-msgid "Answered by the export: is every maintained artefact present? `something is missing` refuses and publishes nothing, because a full replace would ship the gap; `complete` goes on to restore the open PRs' staging previews."
+msgid "A clean publish resolves whatever the last failure raised: close the open publication-manager tracking issue with a comment naming this run."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:96
+#: processes/docs-site-publish.bpmn:135
+#. Diagram label
+msgid "Alert the publication manager [publish-verification]"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:115
 #. Diagram element documentation
-msgid "Asked after the full-replace publish: are the open PRs' previews still there? `yes` ends published; `no, or could not tell` fails the job, because a preview that cannot be confirmed is treated as deleted."
+msgid "Answered by the deploy step itself. `no` goes to the alert: a failed deploy after the publish button is exactly the failure the owner asked to be told about. `yes` checks the previews survived."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:79
+#. Diagram element documentation
+msgid "Answered by the export: is every maintained artefact present? `something is missing` goes to the alert and publishes nothing, because a full replace would ship the gap; `complete` goes on to verify the export."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:91
+#. Diagram element documentation
+msgid "Answered by the verification sub-process's end: `yes` only when every in-scope document passed. `no, or could not tell` blocks the deploy and alerts — an unverified release is not a verified one."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:121
+#. Diagram element documentation
+msgid "Asked after the full-replace publish: are the open PRs' previews still there? `yes` closes any open alert and ends published; `no, or could not tell` goes to the alert, because a preview that cannot be confirmed is treated as deleted."
 msgstr ""
 
 #: processes/docs-site-publish.bpmn:26
@@ -29,9 +49,9 @@ msgstr ""
 msgid "Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:54
+#: processes/docs-site-publish.bpmn:60
 #. Diagram label
-msgid "Build the Jekyll site&#10;and the API reference"
+msgid "Build the Jekyll site and the API reference"
 msgstr ""
 
 #: processes/docs-site-publish.bpmn:25
@@ -39,59 +59,84 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:112
+#: processes/docs-site-publish.bpmn:126
+#. Diagram label
+msgid "Close the publication manager's alert, if open"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:152
 #. Diagram label
 msgid "complete"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:55
+#: processes/docs-site-publish.bpmn:62
 #. Diagram element documentation
 msgid "Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:80
+#: processes/docs-site-publish.bpmn:98
 #. Diagram element documentation
 msgid "Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:95
+#: processes/docs-site-publish.bpmn:114
 #. Diagram label
-msgid "Did the previews&#10;survive?"
+msgid "Did the deploy succeed?"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:63
+#: processes/docs-site-publish.bpmn:120
+#. Diagram label
+msgid "Did the previews survive?"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:69
+#. Diagram label
+msgid "Export the knowledge graph and its schema"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:71
 #. Diagram element documentation
 msgid "Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:62
+#: processes/docs-site-publish.bpmn:78
 #. Diagram label
-msgid "Export the knowledge graph&#10;and its schema"
+msgid "Is every maintained artefact present?"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:70
+#: processes/docs-site-publish.bpmn:144
 #. Diagram label
-msgid "Is every maintained&#10;artefact present?"
+msgid "Job RED — publication manager alerted"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:104
+#: processes/docs-site-publish.bpmn:159
 #. Diagram label
-msgid "Job RED &#8212; a preview&#10;was deleted"
+msgid "no"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:116
+#: processes/docs-site-publish.bpmn:155
 #. Diagram label
 msgid "no, or could not tell"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:88
+#: processes/docs-site-publish.bpmn:136
 #. Diagram element documentation
-msgid "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
+msgid "Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:87
+#: processes/docs-site-publish.bpmn:85
+#. Diagram element documentation
+msgid "Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking."
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:105
 #. Diagram label
-msgid "Publish to gh-pages&#10;(FULL REPLACE)"
+msgid "Publish to gh-pages (FULL REPLACE)"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:107
+#. Diagram element documentation
+msgid "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived."
 msgstr ""
 
 #: processes/docs-site-publish.bpmn:10
@@ -101,45 +146,50 @@ msgstr ""
 
 #: processes/docs-site-publish.bpmn:13
 #. Diagram element documentation
-msgid "PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.&#10;&#10;That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted.&#10;&#10;BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean.&#10;&#10;`Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have.&#10;&#10;Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one."
+msgid "PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.&#10;&#10;That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted.&#10;&#10;BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean.&#10;&#10;`Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have.&#10;&#10;Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one. VERIFIED AND ALERTED (bean vigi, owner 2026-09-23): the export is verified BEFORE the deploy and blocks it on anything but a pass; and every step after the publish button that fails — an incomplete export, a verification failure, a failed deploy, a lost preview — goes through one alert to the publication manager. A clean publish closes that alert."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:40
+#: processes/docs-site-publish.bpmn:44
 #. Diagram label
-msgid "Push to main,&#10;or dispatch"
+msgid "Push to main, or dispatch"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:76
+#: processes/docs-site-publish.bpmn:51
 #. Diagram label
-msgid "Refused &#8212;&#10;nothing published"
+msgid "Regenerate every derived reference from its source"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:47
+#: processes/docs-site-publish.bpmn:53
 #. Diagram element documentation
 msgid "Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale."
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:46
+#: processes/docs-site-publish.bpmn:96
 #. Diagram label
-msgid "Regenerate every derived&#10;reference from its source"
+msgid "Restore the OPEN PRs' staging previews"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:79
+#: processes/docs-site-publish.bpmn:132
 #. Diagram label
-msgid "Restore the OPEN PRs'&#10;staging previews"
+msgid "Site published, previews intact"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:101
-#. Diagram label
-msgid "Site published,&#10;previews intact"
-msgstr ""
-
-#: processes/docs-site-publish.bpmn:111
+#: processes/docs-site-publish.bpmn:151
 #. Diagram label
 msgid "something is missing"
 msgstr ""
 
-#: processes/docs-site-publish.bpmn:115
+#: processes/docs-site-publish.bpmn:90
+#. Diagram label
+msgid "Verified?"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:84
+#. Diagram label
+msgid "Verify the export [publish-verification]"
+msgstr ""
+
+#: processes/docs-site-publish.bpmn:154
 #. Diagram label
 msgid "yes"
 msgstr ""
