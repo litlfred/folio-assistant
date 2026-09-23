@@ -314,6 +314,7 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      "scripts/harness-panel.ts",            // every harness → its config panel row (issue #1146)
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -344,6 +345,7 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
       "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
