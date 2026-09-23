@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yz3w
 title: 'ig-incremental-build Gateway_Restore: exit 2 (environment error) has no route'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T16:26:05Z
-updated_at: 2026-09-23T16:42:50Z
+updated_at: 2026-09-23T16:45:19Z
 parent: folio-assistant-1swy
 ---
 
@@ -17,3 +17,7 @@ Found by the gateway documentation criteria (#1051, bean 6hq4), left open when i
 - [x] check what the implementing workflow/script really does on exit 2 — **nothing implements it yet**: `ig-cache` is named in the diagram's header as a tool the proposal asks for and no skill wraps, and no file in this repo defines its exit codes beyond Task_Restore's documentation
 - [x] add a branch — `environment error` → Task_LogEnvError (work-plan lane, bean note) → EndEvent_EnvError. Chosen over falling back to the full build: an unreadable cache says nothing about whether it is usable, and a silent fallback hides a broken store behind a slow green run; matches the lane rule that every failure branch leaves a record
 - [x] regenerate render:bpmn / processes:viz / kg:audit; gates green
+
+## Summary of Changes
+
+Fixed in PR #1116 — see the checked items above for what changed and why.
