@@ -431,25 +431,25 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790153669">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/docs-ui.css?v=1790154008">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790153669">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/work-plan.css?v=1790154008">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790153669">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/themes.css?v=1790154008">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790153669">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/css/avatars.css?v=1790154008">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -466,7 +466,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790153669" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/assets/js/docs-ui.js?v=1790154008" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -826,7 +826,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p><strong>5</strong> of 8 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
+<p>Every one of the 8 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -848,25 +848,25 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Author FSH profiles</strong><br /><code class="language-plaintext highlighter-rouge">Task_AuthorFsh</code></td>
       <td>FHIR modeller</td>
       <td><a href="../reference/skill-instructions/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
-      <td>—</td>
+      <td>Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2.</td>
     </tr>
     <tr>
       <td><strong>SUSHI compile → FHIR JSON</strong><br /><code class="language-plaintext highlighter-rouge">Task_Sushi</code></td>
       <td>Build pipeline — SUSHI · validator · IG Publisher</td>
       <td><a href="../reference/skill-instructions/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
-      <td>—</td>
+      <td>Compile the FSH to FHIR JSON with SUSHI. Compiling is not conformance: a green SUSHI result goes on to validation and never stands in for it.</td>
     </tr>
     <tr>
       <td><strong>Validate against profiles</strong><br /><code class="language-plaintext highlighter-rouge">Task_Validate</code></td>
       <td>Build pipeline — SUSHI · validator · IG Publisher</td>
       <td><a href="../reference/skill-instructions/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
-      <td>—</td>
+      <td>Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring.</td>
     </tr>
     <tr>
       <td><strong>QC gates</strong><br /><code class="language-plaintext highlighter-rouge">Task_QcGates</code></td>
       <td>QC reviewer</td>
       <td><a href="../reference/skill-instructions/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
-      <td>—</td>
+      <td>The QC reviewer rules on the aggregate QA against the publication gates. Emitting the QA report is mechanical; ruling on it is a decision, which is why it sits in the reviewer’s lane rather than the build’s.</td>
     </tr>
     <tr>
       <td><strong>File QC findings as beans</strong><br /><code class="language-plaintext highlighter-rouge">Task_QcBeans</code></td>
@@ -878,7 +878,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>IG Publisher build</strong><br /><code class="language-plaintext highlighter-rouge">Task_IgPublisher</code></td>
       <td>Build pipeline — SUSHI · validator · IG Publisher</td>
       <td><a href="../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>—</td>
+      <td>Run the IG Publisher: it renders output/, writes each resource’s JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion.</td>
     </tr>
     <tr>
       <td><strong>Publish the IG site</strong><br /><code class="language-plaintext highlighter-rouge">Task_PublishIg</code></td>
