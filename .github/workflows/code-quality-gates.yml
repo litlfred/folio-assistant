@@ -891,6 +891,11 @@ jobs:
           # WITHOUT A WORD, so the declaration reads as if it carried one
           # while no consumer ever saw it (bean `7syd`).
           bun run check:asset-roles
+          # Every instance's dependency graph resolves: no missing dependency,
+          # no cycle. At runtime a missing one only WARNS (owner, bean
+          # `a1lq`), because a partial checkout looks the same; CI has the
+          # whole checkout, so here it fails.
+          bun run check:instance-graph
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error
