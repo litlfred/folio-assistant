@@ -823,6 +823,11 @@ jobs:
           # Gated for the reason every generated page here is: a stale viewer
           # is a page that reports a corpus that no longer exists.
           bun run methodologies:viz:check
+          # The external-schemas index renders the registry AND resolves every
+          # `usedBy` path in it, so it goes stale when a record is added, an
+          # edition bumps, or a file a record names is renamed. The last of
+          # those is the one nothing else would notice.
+          bun run external-schemas:viz:check
           bun run processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact

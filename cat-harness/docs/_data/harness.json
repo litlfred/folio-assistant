@@ -216,6 +216,19 @@
       "hidden": false
     },
     {
+      "id": "external-schemas",
+      "directory": "external-schemas",
+      "title": "External schemas",
+      "ref": "cat-harness/docs/external-schemas/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/external-schemas/",
+      "hidden": false
+    },
+    {
       "id": "folio",
       "directory": "folio",
       "title": "folio",
@@ -1571,7 +1584,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 18
+          "value": 19
         }
       ],
       "visualisations": [
@@ -1593,7 +1606,7 @@
         },
         {
           "kind": "external-schema",
-          "note": "no viewer yet"
+          "path": "/external-schemas/"
         },
         {
           "kind": "folio",
@@ -1673,7 +1686,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, external-schema, interaction, memory, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 5 graph(s) with no published viewer — code, interaction, memory, scenarios, waiver. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -1823,7 +1836,8 @@
         "path": "/cat-harness/docs-auto/index/docs/docs/"
       },
       {
-        "kind": "external-schema"
+        "kind": "external-schema",
+        "path": "/external-schemas/"
       },
       {
         "kind": "folio",
