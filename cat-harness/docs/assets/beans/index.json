@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 256,
+      "count": 257,
       "unit": "beans"
     }
   },
@@ -105,6 +105,20 @@
       "updatedAt": "2026-09-19T11:43:44Z",
       "preview": "The block kinds and adapters an author actually writes against.\n\n`55ao` is the one with the largest blast radius — a real `recommendation` kind\nmeans a builder, a Zod schema, a label prefix, viewer registration, constraint\nrows and QA criteria, about thirty files — and it is tracked rather than\nhalf-done for exactly that reason. `cz17` brings the DAK type in properly.\n\n`6xaz` and `bqrg` are the au",
       "file": "beans/defs/folio-assistant-0lmb--content-model-block-kinds-adapters-and-the-authori.md"
+    },
+    {
+      "id": "folio-assistant-0ytk",
+      "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:29:49Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
+      "preview": "Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagrams as bare strings: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset. can we use existing tools for new Skills?\" Chosen: all of adjudication answers, JSON-LD namespaces (2j09), our own namespaces; published through the exi",
+      "file": "beans/defs/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md"
     },
     {
       "id": "folio-assistant-10uc",
@@ -237,14 +251,14 @@
     {
       "id": "folio-assistant-2j09",
       "title": "The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T11:48:29Z",
-      "updatedAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-23T19:29:49Z",
       "preview": "Split out of the 2026-09-22 fix to `external-schemas.ts`, deliberately not taken there because it is a much larger decision than the bug beside it.\n\n## The fix that was taken\n\n`unusedNamespaces` was reporting Dublin Core — 43 real uses, live in the glossary's own `@context` — as *\"a record outliving its dependency\"*, because `namespacesInUse()` reads **only** `processes/*.bpmn|dmn`. A vocabulary c",
       "file": "beans/defs/folio-assistant-2j09--the-undeclared-namespace-check-reads-only-bpmn-xml.md"
     },
@@ -391,7 +405,7 @@
     {
       "id": "folio-assistant-4d22",
       "title": "A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-ahvw",
@@ -1247,7 +1261,7 @@
     {
       "id": "folio-assistant-byql",
       "title": "Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
