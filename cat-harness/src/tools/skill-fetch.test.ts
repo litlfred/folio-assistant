@@ -86,9 +86,11 @@ describe("the live table", () => {
     // The subject was `src/skills/` until #760 folded it into
     // `skills/folio-core/`. THE TEST'S CLAIM IS UNCHANGED, which is the point:
     // the rule was never about that directory, so it is asserted here on a
-    // live subject instead. `kg-navigation/skills/` is basenamed `skills` and
-    // takes its instance's name, exactly as `src/skills/` did.
-    expect(discoverLocalPackages(ROOT)["kg-navigation"]).toContain("kg-navigation/skills");
+    // live subject instead. `bootstrap/skills/` is basenamed `skills` and
+    // takes its instance's name, exactly as `src/skills/` did. (The subject was
+    // `kg-navigation/skills/` until bean `byql` folded that instance into
+    // cat-harness as an ordinary `skills/kg-navigation/` package.)
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/skills");
   });
 });
 
