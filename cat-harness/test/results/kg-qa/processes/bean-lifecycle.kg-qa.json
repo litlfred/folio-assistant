@@ -78,11 +78,32 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Exists",
+          "detail": "\"Already exists?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Owner",
+          "detail": "\"Whose bean?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Outcome",
+          "detail": "\"Outcome?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 0,
+    "pass": 11,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

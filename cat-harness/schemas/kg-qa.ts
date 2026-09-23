@@ -651,6 +651,40 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
       "records that it uses the skill for one slice rather than running its whole process.",
   },
+  // ── Documentation completeness past activities (bean `6hq4`, issue #1044) ─
+  //
+  // Measured 2026-09-23 over all 62 diagrams: 123 gateways — 102 diverging
+  // exclusive (DECISIONS), 9 converging exclusive, 6 parallel forks, 6 joins,
+  // no inclusive (the model refuses them). 104 of 123 had no documentation, 83
+  // of them decisions. Of 220 branches out of a decision, 0 were unnamed and 0
+  // repeated a sibling's label; of 174 start/end events, 0 were unnamed — so
+  // there is no event criterion, and lanes are `check:lane-documentation`'s.
+  {
+    id: "gateway-documented",
+    applies: ["process"],
+    // `minor` and not gated, like `activity-documented`: 83 is a backlog, and
+    // a well-named question with well-named branches often reads without
+    // prose. Only DECISIONS are asked — a merge, fork or join decides nothing,
+    // and its BPMN symbol already says everything true of it.
+    severity: "minor",
+    summary:
+      "A decision (an exclusive gateway with more than one way out) carries no `<bpmn:documentation>`, so its page " +
+      "shows the question and not what answers it: who decides, from what evidence, and what each branch commits " +
+      "the process to. A DMN table or a `<folio:judgement reason>` is not a substitute — it says how the answer is " +
+      "reached, not what is being asked.",
+  },
+  {
+    id: "gateway-branches-named",
+    applies: ["process"],
+    // `minor`, and it reads 0 on the day it was added: it holds a line the
+    // corpus already meets rather than opening a backlog. Not `major`, because
+    // an engine routes an unnamed branch correctly — what is lost is the
+    // READER's ability to say which answer leads where.
+    severity: "minor",
+    summary:
+      "A branch out of a decision has no name, or repeats a sibling's label, so a reader cannot tell which answer " +
+      "takes it. Every branch of a decision needs a label distinct from the others on the same gateway.",
+  },
   {
     id: "role-skills-resolve",
     applies: ["role"],

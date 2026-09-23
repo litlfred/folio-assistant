@@ -38,4 +38,13 @@ Every one of the 5 step(s) is documented.
 | **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. |
 | **Comment ONCE per&#10;(PR, head sha)**<br>`Task_Comment` | Scheduled log sweep | [`issue-working`](../reference/skill-instructions/issue-working.html) | Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we&#10;tell?**<br>`GW_Determined` | — | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any head&#10;with no run?**<br>`GW_Finding` | — | **none** → Close the&#10;tracking issue<br>**one or more** → Open or EDIT the one&#10;tracking issue |
+
 {% endraw %}

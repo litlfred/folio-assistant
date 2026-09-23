@@ -41,4 +41,12 @@ Every one of the 5 step(s) is documented.
 | **Sign as release authority**<br>`Task_HumanSign` | Human signer | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route. |
 | **Record which route signed it**<br>`Task_RecordAttestation` | Validation and QA (mechanical + agents) | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | The attestation records the route, not only the signature. A reader who cannot tell an API signature from a human one cannot tell which trust assumption they are relying on. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which signing route?**<br>`Gateway_SigningRoute` | — | **api** → Sign over the API<br>**human** → Sign as release authority |
+
 {% endraw %}

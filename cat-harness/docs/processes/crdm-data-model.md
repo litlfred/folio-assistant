@@ -41,4 +41,12 @@ Every one of the 5 step(s) is documented.
 | **Confirm the cardinalities**<br>`S_ConfirmCardinality` | Stakeholders | [`crdm-data-model`](../reference/skill-instructions/crdm-data-model.html) | An operational question, asked of the people who run the process because they know where the exceptions are. |
 | **Declare the model where a tool can read it**<br>`A_Declare` | Agent | [`crdm-data-model`](../reference/skill-instructions/crdm-data-model.html) | A model in prose is a proposal; a model in the declaration is a model. Ship a reader in the same change — everything here that was only documentation went inert within weeks. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Entities recognised and every cardinality answered?**<br>`GW_Model` | — | **revise** → Identify entities from the BPA and requirements<br>**yes** → Declare the model where a tool can read it |
+
 {% endraw %}

@@ -48,4 +48,13 @@ Every one of the 10 step(s) is documented.
 | **Move the pin and open the PR**<br>`A_ApplyPin` | Agent | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | The pin literal moves in the one file `upstream-pins.json` declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict. |
 | **Record the hold or the decline**<br>`A_RecordOutcome` | Agent | [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | A HOLD is a block with an expiry and a revisit trigger: a hold with neither cannot be told from abandoned work, and the next watcher run re-raises the same pin with no memory of why it was left. A DECLINE is a scrapped bean carrying its reasons — what stops the next agent re-entering the same dead end. Either way the decision is written down before the process ends, and the bean is resolved from here: a run that stops at "we looked and said no" is as finished as one that moved the pin. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Findings we can fix?**<br>`GW_Findings` | — | **yes** → Impact analysis what of ours binds it<br>**no** → Options analysis adopt · hold · decline |
+| **Adopt?**<br>`GW_Adopt` | — | **yes** → Move the pin and open the PR<br>**no** → Record the hold or the decline |
+
 {% endraw %}

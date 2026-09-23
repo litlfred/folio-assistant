@@ -42,4 +42,14 @@ Every one of the 8 step(s) is documented.
 | **Scrap with reasons NEVER delete**<br>`Task_Scrap` | Agent (this session) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | `status: scrapped`, plus a "Reasons for Scrapping" section. This is what "disable" means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though `beans delete` exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end. |
 | **Record the blocker and hand back**<br>`Task_RecordBlocker` | Agent (this session) | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | Blocked is not scrapped. Set `--blocked-by`, say in the body what would unblock it, and return it to `todo` so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work. |
 
+## Decisions
+
+**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Already exists?**<br>`GW_Exists` | — | **no** → Create the bean (agent CLI, not an engine op)<br>**yes** → Whose bean? |
+| **Whose bean?**<br>`GW_Owner` | — | **someone else's** → Leave it alone (coordinate instead)<br>**mine / unclaimed** → Claim it (status: in-progress) |
+| **Outcome?**<br>`GW_Outcome` | — | **done** → Complete (no unchecked todos left)<br>**not wanted** → Scrap with reasons NEVER delete<br>**blocked** → Record the blocker and hand back |
+
 {% endraw %}

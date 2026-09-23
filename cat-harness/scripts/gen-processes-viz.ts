@@ -74,7 +74,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
 import { workflowFiles } from "./known-skills.js";
-import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
+import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -128,6 +128,21 @@ export interface ProcessRow {
   laneDetails: { id: string; name: string; roleRef?: string; documentation?: string }[];
   /** Every activity, in document order — what the per-process page lists. */
   steps: ProcessStep[];
+  /**
+   * Every DECISION (an exclusive gateway with more than one way out), in
+   * document order. Merges, forks and joins decide nothing and are omitted —
+   * the same line `gateway-documented` draws.
+   */
+  decisions: ProcessDecision[];
+}
+
+/** One decision, as its process page shows it. */
+export interface ProcessDecision {
+  id: string;
+  name: string;
+  documentation?: string;
+  /** Each way out: its label (absent when unnamed) and the step it leads to. */
+  branches: { label?: string; to: string }[];
 }
 
 /** One activity, as its process page shows it. */
@@ -255,6 +270,15 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
           ...(n.calledElement ? { calledElement: n.calledElement } : {}),
           ...(n.documentation ? { documentation: n.documentation } : {}),
         })),
+        decisions: [...m.nodes.values()].filter(isDecision).map((n) => ({
+          id: n.id,
+          name: n.name.replace(/\s+/g, " ").trim() || n.id,
+          ...(n.documentation ? { documentation: n.documentation } : {}),
+          branches: branchesOf(m, n).map((b) => ({
+            ...(b.label ? { label: b.label.replace(/\s+/g, " ").trim() } : {}),
+            to: (m.nodes.get(b.to)?.name ?? b.to).replace(/\s+/g, " ").trim() || b.to,
+          })),
+        })),
       });
     } catch (e) {
       rows.push({
@@ -274,6 +298,7 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
         stem: basename(abs, ".bpmn"),
         laneDetails: [],
         steps: [],
+        decisions: [],
         loadError: e instanceof Error ? e.message : String(e),
       });
     }
@@ -557,6 +582,27 @@ export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillP
     L.push(`| **${esc(st.name)}**<br>\`${st.id}\` | ${cell(st.lane)} | ${how} | ${cell(st.documentation)} |`);
   }
   L.push("");
+
+  // Only when there is one: a linear process has no decision to show, and an
+  // empty table would read as a section somebody forgot to fill.
+  if (row.decisions.length > 0) {
+    L.push("## Decisions");
+    L.push("");
+    const undocDec = row.decisions.filter((d) => !d.documentation).length;
+    L.push(
+      undocDec === 0
+        ? `Every one of the ${row.decisions.length} decision(s) is documented.`
+        : `**${undocDec}** of ${row.decisions.length} decision(s) carry no documentation — \`gateway-documented\` lists them.`,
+    );
+    L.push("");
+    L.push("| decision | what decides it | branches |");
+    L.push("|---|---|---|");
+    for (const d of row.decisions) {
+      const branches = d.branches.map((b) => `${b.label ? `**${esc(b.label)}**` : "_(unnamed)_"} → ${esc(b.to)}`).join("<br>");
+      L.push(`| **${esc(d.name)}**<br>\`${d.id}\` | ${cell(d.documentation)} | ${branches} |`);
+    }
+    L.push("");
+  }
   L.push("{% endraw %}");
   return `${L.join("\n")}\n`;
 }

@@ -40,4 +40,13 @@ Every one of the 6 step(s) is documented.
 | **Pick up the stale pin claim a bean**<br>`A_PickUp` | Agent | [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | The hand-off from the mechanical lane to the one that can exercise judgement. Claiming the bean here is what stops two sessions adopting the same bump. |
 | **Adopt the version bump**<br>`Call_Adopt` | Agent | calls [Adopting an upstream version bump](upstream-version-adoption.html)<br>[`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | The reusable subprocess. Every pinned dependency enters it the same way, so a new tenant is a registry row and a call — never a second diagram saying the same thing in different words. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we tell?**<br>`GW_Determined` | — | **no** → Unknown — issue untouched, job red<br>**yes** → Behind a release? |
+| **Behind a release?**<br>`GW_Stale` | — | **no** → Close the tracking issue<br>**yes** → Open or EDIT the one tracking issue |
+
 {% endraw %}

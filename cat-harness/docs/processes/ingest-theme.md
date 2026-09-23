@@ -38,4 +38,13 @@ Every one of the 5 step(s) is documented.
 | **Record contradictions IN the source**<br>`Task_Contradictions` | Ingestion Engine (agent, runs unattended) | [`theme-art-intake`](../reference/skill-instructions/theme-art-intake.html) | A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice. |
 | **Review contrast and non-colour signal**<br>`Task_Review` | Ingestion Engine (agent, runs unattended) | [`theme-ui-review`](../reference/skill-instructions/theme-ui-review.html) | A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees ("Never red with green, never blue with yellow"). |
 
+## Decisions
+
+**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Served, or stated?**<br>`Gateway_Kind` | The ONE difference between the two paths. A deployed site SERVES its theme as a compiled stylesheet; a style guide STATES its rules as prose and swatches. Everything after the join is shared. | **served — a deployment** → Read the served stylesheet's declarations<br>**stated — a style guide** → Read the guide's own stated rules |
+| **Every layout present?**<br>`Gateway_Layouts` | — | **yes** → Review contrast and non-colour signal<br>**no** → Refused — incomplete |
+
 {% endraw %}

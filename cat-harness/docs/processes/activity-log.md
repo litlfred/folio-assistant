@@ -45,4 +45,13 @@ Every one of the 8 step(s) is documented.
 | **Discard one entry by id**<br>`A_EmptyOne` | Log operator (human) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Remove one entry by its stable id, with emptyLog({ id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory. |
 | **Discard all entries, or a whole session**<br>`A_EmptyAll` | Log operator (human) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Remove every entry, one session's, or those before a date — emptyLog with { all }, { session } or { before }; there is no default selector. A file that will not parse is kept, and the result must say what was refused and why, not only what was removed. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Capture enabled?**<br>`Gateway_Capture` | — | **on** → Persist the log to the data store<br>**off or unknown** → Report the capture state |
+| **One entry or all?**<br>`Gateway_EmptyScope` | — | **one** → Discard one entry by id<br>**all / periodic** → Discard all entries, or a whole session |
+
 {% endraw %}

@@ -37,4 +37,13 @@ Every one of the 4 step(s) is documented.
 | **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. |
 | **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we&#10;tell?**<br>`GW_Determined` | — | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any&#10;findings?**<br>`GW_Finding` | — | **clean** → Close the&#10;tracking issue<br>**not clean** → Open or EDIT the one&#10;tracking issue |
+
 {% endraw %}

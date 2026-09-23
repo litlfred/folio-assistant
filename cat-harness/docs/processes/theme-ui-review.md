@@ -42,4 +42,12 @@ Every one of the 6 step(s) is documented.
 | **Judge the rendered result**<br>`R_Judge` | Reviewer | — | A person looks at it. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking. |
 | **Raise findings against the authoring**<br>`A_RaiseFindings` | Agent | [`theme-ui-review`](../reference/skill-instructions/theme-ui-review.html) | Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Findings?**<br>`GW_Findings` | — | **yes** → Raise findings against the authoring<br>**none** → Reviewed |
+
 {% endraw %}

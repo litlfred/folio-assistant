@@ -36,4 +36,12 @@ Every one of the 3 step(s) is documented.
 | **Ask BA to create or link issue**<br>`A_AskCreate` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent. |
 | **Link to existing issue**<br>`A_LinkIssue` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Issue found?**<br>`GW_Issue` | — | **no** → Ask BA to create or link issue<br>**yes** → Link to existing issue |
+
 {% endraw %}

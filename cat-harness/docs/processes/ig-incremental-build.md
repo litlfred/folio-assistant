@@ -56,4 +56,15 @@ Every one of the 18 step(s) is documented.
 | **Deploy the site [content-publish]**<br>`Task_Deploy` | Publication manager — deploy and seed | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site. |
 | **Seed the cache from the green build (ig-cache seed · verify · promote)**<br>`Task_Seed` | Publication manager — deploy and seed | [`ig-publication`](../reference/skill-instructions/ig-publication.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes. |
 
+## Decisions
+
+**4** of 4 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Cache usable?**<br>`Gateway_Restore` | — | **yes** → Compute the cone of the change (fsh-cone --changed)<br>**no** → Full publisher build |
+| **Valid?**<br>`Gateway_Valid` | — | **no** → Log findings on the bean<br>**yes** → Re-render the cone's records (fhir_narrative · skip lists) |
+| **QC clean?**<br>`Gateway_QcPass` | — | **no** → File QC findings as beans<br>**yes** → PR branch, or main / release? |
+| **PR branch, or main / release?**<br>`Gateway_Path` | — | **PR branch** → Deploy the preview site<br>**main / release** → Deploy the site [content-publish] |
+
 {% endraw %}

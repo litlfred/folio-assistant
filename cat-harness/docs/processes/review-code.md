@@ -37,4 +37,12 @@ Every one of the 4 step(s) is documented.
 | **Review the schema definition node**<br>`Task_ReviewSchema` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html)<br>[`site-presentation-assets`](../reference/skill-instructions/site-presentation-assets.html) | Does the node declare what KIND of node it is? Does a widened type carry its mirrors? Does a removed field leave a reason behind, so the next author does not re-add it in good faith? And where the node RENDERS to something the site serves — a colour, a glyph, a theme's tokens — does a Tool maintain that artefact, and does the visual fact have only one home? The node decides; the stylesheet reports. |
 | **Record the verdict on the node**<br>`Task_RecordVerdict` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | Findings are advice, not commits — the same separation the generic reviewer lane keeps. Record them where the next reader meets the node. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which node kind?**<br>`GW_NodeKind` | — | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
+
 {% endraw %}
