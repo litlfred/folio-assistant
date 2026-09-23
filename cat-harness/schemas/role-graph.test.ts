@@ -83,6 +83,14 @@ describe("readRoleGraph", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  test("a role carrying `voice` or `useCases` is refused — each points at the role now (#1168)", () => {
+    for (const key of ["voice", "useCases"]) {
+      const root = withKg({ name: "t", roles: [{ ...ROLE_A, [key]: key === "voice" ? "Plain." : ["x"] }] });
+      expect(() => readRoleGraph(root)).toThrow(new RegExp(`${key}|not a valid role graph`));
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
   test("an unknown key on a ROLE is refused, not stripped", () => {
     // Bean `ghx3`. A plain `z.object` drops what it does not recognise, so a
     // field an author wrote parses, type-checks, and reaches no graph — bean

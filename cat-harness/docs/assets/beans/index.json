@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 669,
+      "count": 671,
       "unit": "beans"
     }
   },
@@ -1667,15 +1667,15 @@
     {
       "id": "folio-assistant-6hf2",
       "title": "A: data-modelling guidance — dependents point at the general node; references are typed KG refs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T19:53:34Z",
-      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [ ] gates green, PR open",
+      "updatedAt": "2026-09-23T20:12:11Z",
+      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [x] gates green, PR open\n\n## Summary of Changes\n\nMerged in #1172 (aabdc87): data-modelling.md steps 8 (dependents point at the general node; the g",
       "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
     },
     {
@@ -2169,6 +2169,20 @@
       "updatedAt": "2026-09-20T20:00:00Z",
       "preview": "Owner, 2026-09-19:\n\n> under cat-harness i want to add a logging skill. the will live in\n> fsh-guts/logs/ by default. an agent whenever it starts or ends a task or\n> has a log message, they should add an entry to a log entry in the trash.\n> define skills, i/o, bpmn and connect it to existing agentic processes. by\n> default commit audit log to git data store is turned off - need explict\n> like (cpat",
       "file": "beans/defs/folio-assistant-7uff--logging-agents-log-task-startend-to-fsh-gutslogs-o.md"
+    },
+    {
+      "id": "folio-assistant-7umv",
+      "title": "ORPHAN CLEANUP: the finding's action names the label first, and the label provably cannot reach an orphan",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:59:52Z",
+      "updatedAt": "2026-09-23T21:01:56Z",
+      "preview": "The owner applied `staging:cleanup` to both orphaned slugs, as\n`staging-preview-orphans` told them to. **Nothing happened.** 201.2 MB stayed\nexactly where it was.\n\n## Why the label cannot work, in the workflow's own words\n\n`feature-staging.yml`, on its dispatch inputs:\n\n> the label path cannot reach the previews the health sweep reports: `cleanup`\n> below fires on `pull_request_target: closed`, an",
+      "file": "beans/defs/folio-assistant-7umv--orphan-cleanup-the-findings-action-names-the-label.md"
     },
     {
       "id": "folio-assistant-7vhe",
@@ -2673,6 +2687,20 @@
       "updatedAt": "2026-09-20T11:24:49Z",
       "preview": "`ec24133a` (\"excise directoryForGraph — and it took a silently-dead CI gate\nwith it\") removed this, on the owner's instruction \"excise singulsar\":\n\n```ts\nexport function directoryForGraph(root, graph, registry = defaultGraphKinds) {\n  return resolveDirectories([{ name: \"(local)\", root, own: true }], registry)\n    .find((d) => d.graphs.includes(graph))?.absPath;\n}\n```\n\n## Correction: `[0]` was DELI",
       "file": "beans/defs/folio-assistant-a02m--sole-directory-excising-directoryforgraph-relocate.md"
+    },
+    {
+      "id": "folio-assistant-a0s3",
+      "title": "B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:12:05Z",
+      "updatedAt": "2026-09-23T21:12:05Z",
+      "preview": "Mechanical sweep from the string-to-reference analysis (#1168 comment 5803006038). SkillNameSchema / ProcessIdSchema / TaskRefSchema / BeanIdSchema / BLOCK_KINDS enum / ThemeRefSchema / KgRefSchema on the listed fields; kg-export ActorDef.roles and role toJsonLd skills as @id links; resolve memory roles/agents. Delete SkillDefinition.roles (inverse of RoleDef.skills, 0 instances) and skill front-m",
+      "file": "beans/defs/folio-assistant-a0s3--b8-1168-string-to-reference-sweep-typed-refs-on-25.md"
     },
     {
       "id": "folio-assistant-a1lq",
@@ -7075,14 +7103,14 @@
     {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T20:12:11Z",
       "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
       "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
     },

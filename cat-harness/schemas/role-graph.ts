@@ -103,6 +103,7 @@ import { z } from "zod";
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
 import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
+import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -278,26 +279,11 @@ export interface RoleDef {
    * that contradicts its lane is worse than none — it looks authoritative.
    */
   persona?: string;
-  /**
-   * The voice to address this reader in.
-   *
-   * Named here rather than inferred, because it does not follow from the
-   * persona: the same reader is addressed differently in a normative standard
-   * and in a tutorial. The authoring agent picks the voice from here; the QA
-   * agent judges against the same string rather than against its own taste,
-   * which is what makes a voice finding reviewable instead of an opinion.
-   */
-  voice?: string;
-  /**
-   * What this reader is actually trying to do — the cases the content has to
-   * serve.
-   *
-   * Guides both agents in the direction a persona alone cannot: an author
-   * knows which questions to answer, and a QA reviewer can ask whether the
-   * page answers them. "Is this well written" is unanswerable; "does this let
-   * a reviewer find what changed since they last looked" is not.
-   */
-  useCases?: string[];
+  // No `voice` and no `useCases` (#1168, B2). Both are DEPENDENTS of the
+  // role: a voice is addressed TO a reader, and a story is told AS one. Each
+  // now points here — a voice profile by `activeIn.roles`, a user story by
+  // `role` in `scenarios/stories.json` — so the role names neither, and a new
+  // voice or story is added without editing the role (data-modelling step 8).
   /** Skills available to an actor in this role, before inheritance. */
   skills: string[];
   /** Roles this one IS-A. Skills are unioned transitively; cycles rejected. */
@@ -362,8 +348,6 @@ export const RoleDefSchema = z.object({
   // accepts and Zod strips is written by an author, type-checks, and vanishes
   // (bean `zdrf`).
   persona: z.string().optional(),
-  voice: z.string().optional(),
-  useCases: z.array(z.string()).optional(),
   id: z.string().min(1),
   // Required here, though `kgNodeLabelShape` makes both optional in general: a
   // role nobody can name or describe is a lane nobody can fill, and `kg-audit`
@@ -377,7 +361,7 @@ export const RoleDefSchema = z.object({
    *
    * @ref SkillDefinitionSchema
    */
-  skills: z.array(z.string()).default([]),
+  skills: z.array(SkillNameSchema).default([]),
   /**
    * Roles this one IS-A, outermost last. Static composition, not the scoped
    * subprocess stack.
@@ -409,6 +393,25 @@ export const RoleDefSchema = z.object({
   // declaration that silently means less than it says is worse than one that
   // refuses to load and names the key.
 }).strict();
+
+/**
+ * A pointer AT a role, from whatever depends on one — a voice addressed to
+ * that reader, a user story told as them.
+ *
+ * The dependent holds this; the role holds nothing back (data-modelling step
+ * 8). `instance` is the declared NAME of the instance whose role graph
+ * declares the role, absent for the pointer's own instance — a name, never a
+ * path, as `VoiceRuleSourceSchema.instance` spells it.
+ *
+ * @ref RoleDefSchema
+ */
+export const RoleRefSchema = z
+  .object({
+    instance: z.string().min(1).optional(),
+    role: z.string().min(1),
+  })
+  .strict();
+export type RoleRef = z.infer<typeof RoleRefSchema>;
 
 export const RoleGraphSchema = z.object({
   name: z.string().min(1),
