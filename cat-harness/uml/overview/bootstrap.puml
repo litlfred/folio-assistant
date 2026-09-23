@@ -12,7 +12,37 @@ package "bootstrap/cat-harness" as pkg_bootstrap_cat_harness <<skills>> {
   note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_cat_harness_skills
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
-  class "JSON Schema draft-07" as bootstrap_schemas_http___json_schema_org_draft_07_schema_ <<ext: JSON Schema draft-07>> #e9edf3 {
+  class "KnownRepository" as bootstrap_schemas_discussion_input_schema_json_KnownRepository <<schema: discussion.input.schema.json>> #e9edf3 {
+    url [1] : string
+    role [1] : read-from | written-to
+    note [0..1] : string
+  }
+  class "Discussion Input" as bootstrap_schemas_discussion_input_schema_json_Discussion_Input <<schema: discussion.input.schema.json>> #e9edf3 {
+    open [1..*] : list<harness | repositories>
+    askedOf [1] : object
+    candidates [0..*] : string[]
+    knownRepositories [0..*] : KnownRepository[]
+    context [0..1] : string
+  }
+  class "Repository" as bootstrap_schemas_discussion_output_schema_json_Repository <<schema: discussion.output.schema.json>> #e9edf3 {
+    url [1] : string
+    role [1] : read-from | written-to
+    note [0..1] : string
+  }
+  class "Exchange" as bootstrap_schemas_discussion_output_schema_json_Exchange <<schema: discussion.output.schema.json>> #e9edf3 {
+    asked [1] : string
+    answered [0..1] : string
+    at [0..1] : string<date-time>
+  }
+  class "Discussion Output" as bootstrap_schemas_discussion_output_schema_json_Discussion_Output <<schema: discussion.output.schema.json>> #e9edf3 {
+    outcome [1] : settled | unsettled
+    harness [0..1] : string
+    repositories [0..*] : Repository[]
+    determinedBy [0..1] : asked | assumed
+    assumption [0..1] : string
+    answeredBy [1] : object
+    exchange [1..*] : Exchange[]
+    stillOpen [0..*] : list<harness | repositories>
   }
 }
 package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
@@ -39,6 +69,8 @@ package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
   }
   class "RoleGraph" as bootstrap_scenarios_RoleGraph <<json: RoleGraphSchema>> #e8f0ee {
     name [1] : string
+    roles [0..*] : Role[]
+    actors [0..*] : Actor[]
   }
 }
 package "bootstrap/processes" as pkg_bootstrap_processes <<processes>> {
@@ -79,6 +111,7 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
   }
   class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> #e8f0ee {
     $schema [1] : 'folio-model-registry/v1'
+    models [0..*] : Model[]
   }
 }
 package "bootstrap/glossary" as pkg_bootstrap_glossary <<glossary>> {
@@ -98,7 +131,14 @@ package "bootstrap/bootstrap-translations" as pkg_bootstrap_bootstrap_translatio
   }
 }
 
+bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
+bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "0..*" bootstrap_schemas_discussion_output_schema_json_Repository : repositories
+bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" bootstrap_schemas_discussion_output_schema_json_Exchange : exchange
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
+pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_processes
+pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_models
+pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_glossary
+pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_bootstrap_translations
 @enduml

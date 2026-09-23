@@ -38,4 +38,13 @@ Every one of the 5 step(s) is documented.
 | **Restore the OPEN PRs'&#10;staging previews**<br>`Task_Restore` | CI/CD Pipeline | [`feature-staging`](../reference/skill-instructions/feature-staging.html) | Copy every OPEN pull request's STAGING/<slug>/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried. |
 | **Publish to gh-pages&#10;(FULL REPLACE)**<br>`Task_Publish` | CI/CD Pipeline | — | Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Is every maintained&#10;artefact present?**<br>`GW_Complete` | — | **something is missing** → Refused &#8212;&#10;nothing published<br>**complete** → Restore the OPEN PRs'&#10;staging previews |
+| **Did the previews&#10;survive?**<br>`GW_Survived` | — | **yes** → Site published,&#10;previews intact<br>**no, or could not tell** → Job RED &#8212; a preview&#10;was deleted |
+
 {% endraw %}

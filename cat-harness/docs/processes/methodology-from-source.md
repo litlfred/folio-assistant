@@ -42,4 +42,12 @@ The general process an agent follows when someone shares a paper, book or standa
 | **Every skill and tool used becomes a Tool**<br>`A_Tools` | Agent | [`adopt-methodology-from-source`](../reference/skill-instructions/adopt-methodology-from-source.html) | Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema. |
 | **Review the adoption**<br>`O_Review` | Owner | — | — |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Adopted?**<br>`GW_Decision` | — | **yes** → Adopted<br>**no** → Declined, with the reason recorded<br>**changes** → Render the method: adopted vs refused |
+
 {% endraw %}

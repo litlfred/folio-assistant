@@ -25,6 +25,7 @@ package "smart-base/tools" as pkg_smart_base_tools <<tools>> {
     alternativeTo [0..*] : string[]
     selection [0..1] : object
     requires [0..1] : object
+    maintains [0..*] : Maintain[]
   }
 }
 

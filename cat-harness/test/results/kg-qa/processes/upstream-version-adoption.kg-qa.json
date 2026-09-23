@@ -79,15 +79,36 @@
       "result": "pass",
       "findings": []
     },
+    "gateway-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Findings",
+          "detail": "\"Findings we can fix?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        },
+        {
+          "where": "GW_Adopt",
+          "detail": "\"Adopt?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
+        }
+      ]
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 0,
-    "n/a": 7,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 8,
     "unknown": 0
   }
 }

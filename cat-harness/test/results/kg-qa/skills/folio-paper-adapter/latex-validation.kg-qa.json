@@ -26,13 +26,38 @@
     "prose-reviewed-since-code-changed": {
       "result": "pass",
       "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "export-bibtex",
+          "detail": "script: not a script in this repository's package.json — which package.json the prose means is not declared"
+        },
+        {
+          "where": "validate-refs",
+          "detail": "script: not a script in this repository's package.json — which package.json the prose means is not declared"
+        },
+        {
+          "where": "validate-refs",
+          "detail": "script: not a script in this repository's package.json — which package.json the prose means is not declared"
+        },
+        {
+          "where": "latex-preflight:seed",
+          "detail": "script: not a script in this repository's package.json — which package.json the prose means is not declared"
+        },
+        {
+          "where": "latex-preflight:seed",
+          "detail": "script: not a script in this repository's package.json — which package.json the prose means is not declared"
+        }
+      ]
     }
   },
   "totals": {
     "pass": 5,
     "fail": 0,
     "n/a": 0,
-    "unknown": 0
+    "unknown": 1
   },
   "pair_attestations": [
     {

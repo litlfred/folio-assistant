@@ -18,10 +18,12 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     schema [0..1] : string
     element [1] : string
     qualifier [0..1] : string
+    values [1..*] : Value[]
   }
   class "folio-dublin-core/v1" as who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 <<json: DublinCoreRecordSchema>> #f4f4f1 {
     $schema [1] : 'folio-dublin-core/v1'
     id [1] : string
+    fields [1..*] : Field[]
     provenance [1] : object
   }
   class "MaskedRegion" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion <<json: CatalogueNodeSchema>> #f4f4f1 {
@@ -38,6 +40,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     mediaType [0..1] : string
     pixelWidth [0..1] : integer
     pixelHeight [0..1] : integer
+    maskedRegions [1..*] : MaskedRegion[]
     materialization [1] : object
   }
   class "folio-catalogue-node/v1" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 <<json: CatalogueNodeSchema>> #f4f4f1 {
@@ -50,6 +53,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     childCountUpstream [0..1] : integer
     libraryId [0..1] : string
     metadataRef [0..1] : string
+    bitstreams [0..*] : Bitstream[]
     materialization [1] : object
   }
   class "folio-catalogue/v1" as who_iris_who_iris_catalogue_folio_catalogue_v1_folio_catalogue_v1 <<json: CatalogueSchema>> #f4f4f1 {

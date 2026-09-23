@@ -149,6 +149,7 @@ export const RULES: Rule[] = [
       "scripts/review-renderers.ts",     // the diff renderers the review page embeds (bean `d903`)
       "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/review-heat.ts",          // the review page heat map, embedded by toString (bean `qbfi`)
+      "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
@@ -888,6 +889,8 @@ export const RULES: Rule[] = [
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
+      // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
+      "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the

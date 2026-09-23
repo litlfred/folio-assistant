@@ -31,10 +31,12 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     schema [0..1] : string
     element [1] : string
     qualifier [0..1] : string
+    values [1..*] : Value[]
   }
   class "folio-dublin-core/v1" as who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 <<json: DublinCoreRecordSchema>> #f4f4f1 {
     $schema [1] : 'folio-dublin-core/v1'
     id [1] : string
+    fields [1..*] : Field[]
     provenance [1] : object
   }
   class "MaskedRegion" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion <<json: CatalogueNodeSchema>> #f4f4f1 {
@@ -51,6 +53,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     mediaType [0..1] : string
     pixelWidth [0..1] : integer
     pixelHeight [0..1] : integer
+    maskedRegions [1..*] : MaskedRegion[]
     materialization [1] : object
   }
   class "folio-catalogue-node/v1" as who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 <<json: CatalogueNodeSchema>> #f4f4f1 {
@@ -63,6 +66,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     childCountUpstream [0..1] : integer
     libraryId [0..1] : string
     metadataRef [0..1] : string
+    bitstreams [0..*] : Bitstream[]
     materialization [1] : object
   }
   class "folio-catalogue/v1" as who_iris_who_iris_catalogue_folio_catalogue_v1_folio_catalogue_v1 <<json: CatalogueSchema>> #f4f4f1 {
@@ -100,8 +104,11 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
     capturedAt [0..1] : string
     producer [0..1] : string
     readAt [1] : string
+    assets [0..*] : Asset[]
+    omitted [0..*] : Omitted[]
   }
   class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> #f4f4f1 {
+    //no schema declared, shape is whatever scripts/library-graph.ts writes//
   }
 }
 package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
@@ -123,6 +130,7 @@ package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
     palette [0..1] : object
     backdrop [0..1] : object
     layouts [0..1] : object
+    overrides [0..*] : Override[]
   }
 }
 package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
@@ -136,4 +144,7 @@ who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1 *-- 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
+pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_skills
+pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_themes
+pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_docs
 @enduml

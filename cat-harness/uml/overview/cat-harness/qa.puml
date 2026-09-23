@@ -24,6 +24,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     source_hash [1] : string | null
     criteria [1] : map<object>
     totals [1] : map<number>
+    pair_attestations [0..*] : Pair_attestation[]
   }
   class "block-qa/v1" as cat_harness_qa_block_qa_v1_block_qa_v1 <<json: BlockQaReport>> #f4e6e6 {
     $schema [1] : 'block-qa/v1'
@@ -80,6 +81,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     updated_at [1] : string
   }
   class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4e6e6 {
+    //no schema declared, shape is whatever scripts/gen-docs-pages.ts writes//
   }
 }
 

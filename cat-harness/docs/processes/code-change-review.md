@@ -46,4 +46,13 @@ Every one of the 11 step(s) is documented.
 | **Run the gates against the merge of head into base**<br>`Task_RunCI` | CI/CD pipeline | — | CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent's tree and the merge result are different trees, and the difference is invisible from a checkout. |
 | **Review the change**<br>`Task_Review` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **CI green?**<br>`GW_CIGreen` | — | **green** → Review the change<br>**red** → Root-cause the failure |
+| **Review clear?**<br>`GW_ReviewClear` | — | **findings** → Address the review<br>**clear** → Prepare the merge, and watch it through |
+
 {% endraw %}

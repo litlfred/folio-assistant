@@ -34,4 +34,12 @@ Every one of the 1 step(s) is documented.
 |---|---|---|---|
 | **Regenerate the context, block,&#10;library and site graphs &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Did anything&#10;change?**<br>`GW_Drift` | — | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+
 {% endraw %}

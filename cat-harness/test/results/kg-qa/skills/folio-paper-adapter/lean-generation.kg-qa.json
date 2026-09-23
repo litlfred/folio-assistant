@@ -31,13 +31,30 @@
     "prose-reviewed-since-code-changed": {
       "result": "pass",
       "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "key in content/schema/references.ts",
+          "detail": "location: content/schema/references.ts is not in this repository (a folio's file?)"
+        },
+        {
+          "where": "key in content/schema/references.ts",
+          "detail": "location: content/schema/references.ts is not in this repository (a folio's file?)"
+        },
+        {
+          "where": "pipeline/prune-transitive-deps.ts",
+          "detail": "file-run: pipeline/prune-transitive-deps.ts is not in this repository"
+        }
+      ]
     }
   },
   "totals": {
     "pass": 4,
     "fail": 1,
     "n/a": 0,
-    "unknown": 0
+    "unknown": 1
   },
   "pair_attestations": [
     {

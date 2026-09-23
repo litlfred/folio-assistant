@@ -19,6 +19,7 @@ classDiagram
       alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
+      maintains [0..*] Maintain[]
     }
   }
   folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
