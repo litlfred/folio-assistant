@@ -1114,7 +1114,35 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     if (bucket) bucket.push(b);
     else byTitle.set(key, [b]);
   }
-  const dupGroups = [...byTitle.values()].filter((g) => g.length > 1);
+  // A DUPLICATE IS A GROUP WITH MORE THAN ONE **LIVE** MEMBER — bean `o5qj`.
+  //
+  // This used to keep any bucket with two members in it, whatever their status,
+  // which made the finding UNCLEARABLE BY ITS OWN ACTION. That action says to
+  // set the loser to `scrapped` and never to delete it; a scrapped bean was
+  // still a member, so the group survived the remedy. Measured: `qa1p` was
+  // scrapped at 2026-09-22T08:58:46Z naming `2yyh` as the survivor, and the
+  // 2026-09-23T06:58:47Z sweep — 22 hours later — reported the pair unchanged.
+  // The only state that WOULD have cleared it is `beans delete`, which the
+  // action forbids and `deletion-requires-confirmation` forbids again, so the
+  // check asked for a state it treated as unchanged and rejected the one state
+  // that satisfied it. `major` with no tolerance band, on #860, which closes
+  // only when every check is clean — so one unclearable finding pins that issue
+  // open and every other finding on it goes stale with it (`1xhc`).
+  //
+  // `scrapped` ADJUDICATES; `completed` DOES NOT. What the threshold's basis is
+  // about is accidental duplicates polluting the plan — the `qou` re-run that
+  // made 14,688 of them. A bean scrapped with a note naming its survivor is a
+  // duplicate somebody RULED ON, and is the record the skill asks for. An open
+  // bean duplicating finished work is still a real duplicate, so a `completed`
+  // member keeps counting.
+  const live = (b: BeanEvidence): boolean => b.status !== "scrapped";
+  const titleGroups = [...byTitle.values()].filter((g) => g.length > 1);
+  const dupGroups = titleGroups.filter((g) => g.filter(live).length > 1);
+  // REPORTED, NEVER SILENTLY DROPPED. Without this measurement "no duplicate
+  // was ever created" and "every duplicate was adjudicated" read identically,
+  // which is `dh4f` — and it is the same argument `bean-claimed` makes below
+  // for a count nothing thresholds.
+  const adjudicatedDupGroups = titleGroups.filter((g) => g.filter(live).length <= 1);
   const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status));
   const resolved = beans.filter((b) => RESOLVED_BEAN_STATUSES.has(b.status));
   // `undefined` means NO options section, which is a bean recording work rather
@@ -1160,6 +1188,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     { metric: "bean-open", value: open.length, unit: "count", command: cmd },
     { metric: "bean-resolved-inline", value: resolved.length, unit: "count", command: cmd },
     { metric: "bean-duplicate-title-groups", value: dupGroups.length, unit: "count", command: cmd },
+    {
+      metric: "bean-duplicate-title-groups-adjudicated",
+      value: adjudicatedDupGroups.length,
+      unit: "count",
+      command: cmd,
+    },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
     // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
     // nothing without it; "12 of 60 claimed" is a finding a person can act on,
@@ -1211,10 +1245,19 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
+    // THE LIVE ONES, because those are what the action touches. Listing a
+    // scrapped sibling here would send a reader to adjudicate a bean somebody
+    // already adjudicated; its existence is said separately, so the group's
+    // history is not lost either.
+    const alive = g.filter(live);
+    const settled = g.length - alive.length;
     findings.push({
       metric: "bean-duplicate-title-groups",
       severity: "major",
-      summary: `${g.length} beans share the title "${g[0].title}": ${g.map((b) => b.id).join(", ")}.`,
+      summary:
+        `${alive.length} beans share the title "${g[0].title}": ` +
+        `${alive.map((b) => b.id).join(", ")}` +
+        (settled > 0 ? ` (${settled} more already \`scrapped\`).` : "."),
       action:
         "Keep the earliest, and set each of the others to `scrapped` with a note naming the one that " +
         "survives. Never `beans delete` — a scrapped bean records a considered rejection, a deleted one " +

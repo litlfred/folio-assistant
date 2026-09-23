@@ -590,6 +590,82 @@ describe("bean-store", () => {
     expect(r.findings[0].action).toContain("Never `beans delete`");
   });
 
+  // ── Bean `o5qj`: the finding must be clearable BY ITS OWN ACTION ──────
+  //
+  // The action says to scrap the loser and never to delete it. Before `o5qj`
+  // a scrapped bean stayed in its title group, so following the action left
+  // the `major` finding exactly as it was — measured on the real store:
+  // `qa1p` scrapped 2026-09-22T08:58:46Z naming `2yyh`, and the sweep 22 hours
+  // later reported the pair unchanged. The only state that cleared it was
+  // `beans delete`, which the action forbids.
+
+  it("STOPS firing once the loser is `scrapped` — the action is the remedy", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm", status: "scrapped" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+  });
+
+  it("but an adjudicated group is still COUNTED — `dh4f`", () => {
+    // "No duplicate was ever created" and "every duplicate was resolved" must
+    // not read the same. Nothing thresholds this; it exists to be legible.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm", status: "scrapped" }),
+          bean({ id: "cccc", title: "Something else" }),
+        ],
+      },
+    }));
+    const m = r.measurements.find((x) => x.metric === "bean-duplicate-title-groups-adjudicated");
+    expect(m?.value).toBe(1);
+    expect(r.measurements.find((x) => x.metric === "bean-duplicate-title-groups")?.value).toBe(0);
+  });
+
+  it("`completed` is NOT adjudication — an open bean duplicating finished work still fires", () => {
+    // The threshold's basis is accidental duplicates polluting the plan. Work
+    // re-raised after it was done is exactly that, and `scrapped` is the one
+    // status that records somebody having RULED on the duplication.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm", status: "completed" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-duplicate-title-groups"]);
+  });
+
+  it("a HALF-adjudicated group fires on what is left, and says the rest was settled", () => {
+    // Three created, one scrapped: two still need a ruling. Naming the scrapped
+    // one among them would send a reader to adjudicate a bean already
+    // adjudicated; dropping it silently would lose the group's history.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm" }),
+          bean({ id: "cccc", title: "DRAIN THE EXPOSITION SWARM", status: "scrapped" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-duplicate-title-groups"]);
+    expect(r.findings[0].summary).toContain("aaaa, bbbb");
+    expect(r.findings[0].summary).not.toContain("cccc");
+    expect(r.findings[0].summary).toContain("1 more already `scrapped`");
+  });
+
   it("fires on a decision record listing ONE option — MADR's refusal, made checkable", () => {
     // `madr.md`: "never fewer than two considered options — one option is not a
     // choice". THE FALSIFIER FOR THE WHOLE CRITERION: over the real store this
