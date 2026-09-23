@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hpax
 title: 'MATERIALIZE REMOTE CONTENT: one subprocess, shared by catalogue import and harness bootstrap, plus its refresh'
-status: todo
+status: completed
 type: task
 priority: critical
 created_at: 2026-09-20T08:04:11Z
-updated_at: 2026-09-20T08:04:11Z
+updated_at: 2026-09-23T19:24:03Z
 parent: folio-assistant-kupb
 ---
 
@@ -31,3 +31,14 @@ AND REFRESH IS NOT RE-IMPORT. It needs: what changed upstream, what was modified
 - `processes/materialize-remote.bpmn` and `refresh-materialized.bpmn` exist as CALLABLE subprocesses in cat-harness.
 - `sample-import.bpmn` calls them. `bootstrap`'s initialisation calls them, or a bean records exactly why it cannot yet.
 - One skill covers both callers; neither has its own copy of the four gates.
+
+---
+
+## Summary of Changes — 2026-09-23
+
+| Done-when item | Evidence |
+|---|---|
+| `materialize-remote.bpmn` and `refresh-materialized.bpmn` are callable subprocesses in cat-harness | `Process_MaterializeRemote`, `Process_RefreshMaterialized` |
+| `sample-import.bpmn` calls them | `Call_Materialize` and `Call_Refresh` (bean `hfwl`, same PR) |
+| bootstrap calls them, **or** a bean records exactly why it cannot yet | **It cannot.** `bootstrap` is the floor (`needs: []`) and these processes live in cat-harness, which needs bootstrap. A call from bootstrap up is an edge `schemas/layer-direction.ts` (bean `j79e`) reports as **wrong-direction**. Recorded here and in `skills/content-lifecycle/sample-import.md` §"Why bootstrap does not call this". Bootstrap's `initialize-harness.bpmn` today calls only `Process_LogMessage`. |
+| one skill covers both callers, and neither has its own copy of the gates | `materialize-remote` is the only statement of the gates. `sample-import` calls it and branches on its outcome. |

@@ -359,6 +359,98 @@ function instanceOf(absDir: string, repoRoot: string): string {
  * with no corpus simply has none, and a consumer rendering the two alike
  * reports a clean run over something it never opened.
  */
+/**
+ * One block of an entry's graph, as a viewer needs it — bean `7nvr`.
+ *
+ * NOT the whole `.jsonld`. The corpus holds 1715 blocks over roughly a
+ * megabyte of JSON-LD against a 44 KB index, so projecting every field of
+ * every block into one file is how a viewer stops loading. What a reader
+ * wants of a block is what it IS, where it sits and whether anybody has
+ * described it; the prose itself is a `.md` the entry already carries and the
+ * viewer does not render.
+ *
+ * `types` keeps BOTH — a block is dual-typed
+ * (`["folio-assistant-core:Figure", "doco:Figure"]`) so a DoCO reader gets
+ * something meaningful without knowing our vocabulary, and collapsing that to
+ * one would throw away the half this project did not invent.
+ */
+export interface LibraryBlock {
+  id: string;
+  /** Both of them. See above. */
+  types: string[];
+  kind: string;
+  title: string;
+  pageStart: number | null;
+  pageEnd: number | null;
+  /** The section `.md` or image this block points at, entry-relative. */
+  target: string | null;
+  /** `not-authored` | `draft` | `confirmed` | `rejected`, or null where a kind carries none. */
+  narrative: string | null;
+  provenance: string;
+}
+
+/**
+ * Read ONE entry's blocks, in page order.
+ *
+ * Separate from {@link readLibraryGraph} on purpose. That one runs over every
+ * declared library on every call — `check:l1-complete`, the narrative queue,
+ * `gen-library-jsonld` and the MCP graph roots all use it — and reading 1715
+ * files to answer "how many blocks" would make every one of them slower for a
+ * number they already have. The index counts; this reads, and only when
+ * somebody opens an entry.
+ *
+ * ## The order is NOT the manifest's, because the manifest does not have one
+ *
+ * The obvious source is `manifest.contains`, and the first draft of this
+ * function used it. Measured on `arxiv-2602.12670v4`: `contains` holds **82
+ * entries, all of them sections, and names no block at all** — while the
+ * entry has 85 block files. So every block fell through to the alphabetical
+ * tail, which sorts `figure-img-p025-1` ahead of `prose-sec-000` and presents
+ * the document opening with a colourbar from page 25.
+ *
+ * **A manifest links DOWN to its sections; blocks link UP to the manifest**
+ * (`derivedFrom`, `sourceDocument`). There is no downward edge to a block, so
+ * there is no manifest order to take. That asymmetry is a property of the
+ * graph, not of this reader, and it is left as it is — bean `7nvr` reports it
+ * rather than inventing the missing edge.
+ *
+ * So the order is `pageStart`, then id: derivable from what a block actually
+ * carries, and it IS document order. A block with no page sorts last rather
+ * than first, because an unplaced block is an oddity and burying it at the
+ * top of the list is how it goes unnoticed.
+ */
+export function readEntryBlocks(dir: string): LibraryBlock[] {
+  const blocksDir = join(dir, "blocks");
+  const files = filesIn(blocksDir).filter((f) => f.endsWith(".jsonld"));
+
+  const byId = new Map<string, LibraryBlock>();
+  for (const f of files) {
+    const d = readJson<Record<string, unknown>>(join(blocksDir, f));
+    if (!d) continue;
+    const id = typeof d["@id"] === "string" ? (d["@id"] as string) : f.replace(/\.jsonld$/, "");
+    const t = d["@type"];
+    const nar = d.narrative as { state?: unknown } | undefined;
+    byId.set(id, {
+      id,
+      types: Array.isArray(t) ? (t as string[]) : typeof t === "string" ? [t] : [],
+      kind: typeof d.kind === "string" ? d.kind : "",
+      title: typeof d.title === "string" ? d.title : "",
+      pageStart: typeof d.pageStart === "number" ? d.pageStart : null,
+      pageEnd: typeof d.pageEnd === "number" ? d.pageEnd : null,
+      // `text` on prose, `file` on a figure — one field for the viewer, and
+      // which one it came from is already said by `kind`.
+      target: typeof d.text === "string" ? d.text : typeof d.file === "string" ? d.file : null,
+      narrative: typeof nar?.state === "string" ? nar.state : null,
+      provenance: typeof d.provenance === "string" ? d.provenance : "",
+    });
+  }
+
+  // `?? Infinity` rather than `?? 0`: an unplaced block sorts LAST. See above.
+  return [...byId.values()].sort(
+    (a, b) => (a.pageStart ?? Infinity) - (b.pageStart ?? Infinity) || a.id.localeCompare(b.id),
+  );
+}
+
 export function readLibraryGraph(roots: string[]): LibraryGraph | null {
   const repoRoot = repoRootFor(roots[0] ?? ".");
   const libDirs = new Set<string>();

@@ -53,6 +53,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Content Testing](content-test.html) | `content-test` | [schema](../skills/content-test.html) | End-to-end testing of content artifacts in realistic scenarios. |
 | [Content Validation](content-validate.html) | `content-validate` | [schema](../skills/content-validate.html) | Validate authored content against schemas, standards, and clinical accuracy. |
 | [Evidence Appraisal](evidence-appraisal.html) | `evidence-appraisal` | — | Appraise and grade a **body of evidence** against the grading system the folio |
+| [Sample import](sample-import.html) | `sample-import` | — | The SDLC for trying out a remote source before committing to it: take a |
 
 ## CRDM requirements methodology (skills/crdm)
 
