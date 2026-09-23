@@ -153,13 +153,6 @@ describe("the corpus it is actually run against", () => {
     }
   });
 
-  test("a lane binding that names a lane no diagram contains is DANGLING, separately", () => {
-    // `fd6i`. Distinct from a role whose lane exists but holds no task, which
-    // is not a defect — an `actedUpon` lane holds none by construction.
-    for (const d of report.danglingLaneBindings) {
-      expect(report.undrawn).toContain(d.role);
-    }
-  });
 });
 
 describe("bootstrap — the instance with the one varying performer", () => {

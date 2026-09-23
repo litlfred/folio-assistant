@@ -292,6 +292,17 @@ export interface LibraryGraph {
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
+/** A file's text, or null — the third state, never an empty string. */
+function readText(path: string): string | null {
+  try {
+    return readFileSync(path, "utf-8");
+  } catch {
+    // Absent or unreadable. The caller renders "no content" rather than an
+    // empty document, which are different facts.
+    return null;
+  }
+}
+
 function readJson<T>(path: string): T | undefined {
   if (!existsSync(path)) return undefined;
   try {
@@ -359,6 +370,150 @@ function instanceOf(absDir: string, repoRoot: string): string {
  * with no corpus simply has none, and a consumer rendering the two alike
  * reports a clean run over something it never opened.
  */
+/**
+ * One block of an entry's graph, as a viewer needs it — bean `7nvr`.
+ *
+ * NOT the whole `.jsonld`. The corpus holds 1715 blocks over roughly a
+ * megabyte of JSON-LD against a 44 KB index, so projecting every field of
+ * every block into one file is how a viewer stops loading. What a reader
+ * wants of a block is what it IS, where it sits and whether anybody has
+ * described it; the prose itself is a `.md` the entry already carries and the
+ * viewer does not render.
+ *
+ * `types` keeps BOTH — a block is dual-typed
+ * (`["folio-assistant-core:Figure", "doco:Figure"]`) so a DoCO reader gets
+ * something meaningful without knowing our vocabulary, and collapsing that to
+ * one would throw away the half this project did not invent.
+ */
+export interface LibraryBlock {
+  id: string;
+  /** Both of them. See above. */
+  types: string[];
+  kind: string;
+  title: string;
+  pageStart: number | null;
+  pageEnd: number | null;
+  /** The section `.md` or image this block points at, entry-relative. */
+  target: string | null;
+  /** `not-authored` | `draft` | `confirmed` | `rejected`, or null where a kind carries none. */
+  narrative: string | null;
+  /**
+   * What the block actually SAYS — bean `lrmo`.
+   *
+   * A row showing only a narrative STATE tells a reader that a description
+   * exists and not what it is, which is the gap the owner hit on first use:
+   * *"i expected to be able to see narrative content of extracted node"*.
+   *
+   * Two sources, because the two kinds carry content differently. A FIGURE's
+   * is `narrative.text` — an authored description, ours, short: 404 of them
+   * total 128 KB, so it is carried whole. A PROSE block's is the section
+   * markdown it points at, and those total **3.25 MB** with one entry at
+   * 508 KB, so carrying them whole would make opening one entry cost half a
+   * megabyte. Prose is excerpted.
+   */
+  content: string | null;
+  /**
+   * True when {@link content} is an excerpt rather than the whole thing.
+   *
+   * Stated rather than inferred from length. A reader who cannot tell a short
+   * section from a truncated one is being shown a claim about the document
+   * that the data does not support, and silent truncation is the same defect
+   * as a silent skip everywhere else in this repository.
+   */
+  truncated: boolean;
+  provenance: string;
+}
+
+/**
+ * Read ONE entry's blocks, in page order.
+ *
+ * Separate from {@link readLibraryGraph} on purpose. That one runs over every
+ * declared library on every call — `check:l1-complete`, the narrative queue,
+ * `gen-library-jsonld` and the MCP graph roots all use it — and reading 1715
+ * files to answer "how many blocks" would make every one of them slower for a
+ * number they already have. The index counts; this reads, and only when
+ * somebody opens an entry.
+ *
+ * ## The order is NOT the manifest's, because the manifest does not have one
+ *
+ * The obvious source is `manifest.contains`, and the first draft of this
+ * function used it. Measured on `arxiv-2602.12670v4`: `contains` holds **82
+ * entries, all of them sections, and names no block at all** — while the
+ * entry has 85 block files. So every block fell through to the alphabetical
+ * tail, which sorts `figure-img-p025-1` ahead of `prose-sec-000` and presents
+ * the document opening with a colourbar from page 25.
+ *
+ * **A manifest links DOWN to its sections; blocks link UP to the manifest**
+ * (`derivedFrom`, `sourceDocument`). There is no downward edge to a block, so
+ * there is no manifest order to take. That asymmetry is a property of the
+ * graph, not of this reader, and it is left as it is — bean `7nvr` reports it
+ * rather than inventing the missing edge.
+ *
+ * So the order is `pageStart`, then id: derivable from what a block actually
+ * carries, and it IS document order. A block with no page sorts last rather
+ * than first, because an unplaced block is an oddity and burying it at the
+ * top of the list is how it goes unnoticed.
+ */
+/**
+ * How much of a prose section travels in the projection.
+ *
+ * 600 characters is a paragraph or so — enough to tell one section from
+ * another while browsing, which is what this view is for. Reading the section
+ * is a different act and the file is right there.
+ *
+ * Derived rather than picked: 1311 prose blocks at this bound add roughly
+ * 790 KB across 27 entries, against 3.25 MB for the whole corpus and a 508 KB
+ * worst entry. The largest single entry stays well under what one on-demand
+ * fetch should cost.
+ */
+const PROSE_EXCERPT = 600;
+
+export function readEntryBlocks(dir: string): LibraryBlock[] {
+  const blocksDir = join(dir, "blocks");
+  const files = filesIn(blocksDir).filter((f) => f.endsWith(".jsonld"));
+
+  const byId = new Map<string, LibraryBlock>();
+  for (const f of files) {
+    const d = readJson<Record<string, unknown>>(join(blocksDir, f));
+    if (!d) continue;
+    const id = typeof d["@id"] === "string" ? (d["@id"] as string) : f.replace(/\.jsonld$/, "");
+    const t = d["@type"];
+    const nar = d.narrative as { state?: unknown; text?: unknown } | undefined;
+    // A figure's description is authored and short — carried whole. A prose
+    // block's is the section file, excerpted. See `content` on the interface.
+    let content: string | null = typeof nar?.text === "string" ? (nar.text as string) : null;
+    let truncated = false;
+    if (content === null && typeof d.text === "string") {
+      const md = readText(join(blocksDir, d.text as string));
+      if (md !== null) {
+        const body = md.replace(/^---[\s\S]*?---\n/, "").trim();
+        truncated = body.length > PROSE_EXCERPT;
+        content = truncated ? body.slice(0, PROSE_EXCERPT).trimEnd() : body;
+      }
+    }
+    byId.set(id, {
+      id,
+      types: Array.isArray(t) ? (t as string[]) : typeof t === "string" ? [t] : [],
+      kind: typeof d.kind === "string" ? d.kind : "",
+      title: typeof d.title === "string" ? d.title : "",
+      pageStart: typeof d.pageStart === "number" ? d.pageStart : null,
+      pageEnd: typeof d.pageEnd === "number" ? d.pageEnd : null,
+      // `text` on prose, `file` on a figure — one field for the viewer, and
+      // which one it came from is already said by `kind`.
+      target: typeof d.text === "string" ? d.text : typeof d.file === "string" ? d.file : null,
+      narrative: typeof nar?.state === "string" ? nar.state : null,
+      content,
+      truncated,
+      provenance: typeof d.provenance === "string" ? d.provenance : "",
+    });
+  }
+
+  // `?? Infinity` rather than `?? 0`: an unplaced block sorts LAST. See above.
+  return [...byId.values()].sort(
+    (a, b) => (a.pageStart ?? Infinity) - (b.pageStart ?? Infinity) || a.id.localeCompare(b.id),
+  );
+}
+
 export function readLibraryGraph(roots: string[]): LibraryGraph | null {
   const repoRoot = repoRootFor(roots[0] ?? ".");
   const libDirs = new Set<string>();

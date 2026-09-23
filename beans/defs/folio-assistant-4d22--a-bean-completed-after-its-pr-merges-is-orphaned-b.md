@@ -3,10 +3,9 @@
 title: A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session
 status: completed
 type: bug
-priority: normal
-created_at: 2026-09-22T11:49:49Z
-updated_at: 2026-09-23T21:10:04Z
 parent: folio-assistant-ahvw
+created_at: 2026-09-22T11:49:49Z
+updated_at: 2026-09-22T11:49:49Z
 ---
 
 Measured 2026-09-22, twice, on this branch.
@@ -47,18 +46,26 @@ doing it correctly is the one who gets bitten.
 
 - [x] the orphan is impossible, or is reported rather than silent
 
-## Summary of Changes
+---
 
-Closed 2026-09-23. The owner chose **"Rule + check"** when this bean was put to them.
+## Summary of Changes — 2026-09-23
 
-- **The rule**, in `bean-coordination` §"Complete the bean in the PR that lands it" (STRICT), and in lifecycle step 4: complete the bean in the PR's own last commit, before the merge.
-- **The check**, `bun run check:bean-orphans` (`scripts/check-bean-orphans.ts`). It reads the fetched `origin/claude/*` refs and reports each bean completed on a branch, open on `main`, and completed after `main`'s copy last changed. A branch whose only changes are under `beans/` is flagged as a likely orphan. It reports rather than fails, and exits 2 when no branch was read.
+Owner's pick: **"close in PR"**, which is the first of the fixes listed above, made the rule. The third one comes along as a report.
 
-Two false findings from its first real run were fixed, and each is now a test:
+- **The rule**: `skills/folio-core/bean-coordination.md` §"Complete it in the
+  PR's own last commit". Complete the bean in the last commit of the PR that
+  does its work, with the Done-when ticked and its evidence. A bean not yet
+  done stays open with a note. Practised for eight beans on 2026-09-23 with no
+  orphan.
+- **The report**: `bun run beans:landed` (`cat-harness/scripts/beans-landed.ts`)
+  lists open, non-epic beans named in a merged PR's title on `main`:
+  `done-ticked` first, then `partly-ticked`, then `no-checklist`. It says
+  "could not determine" when no merge history is visible, rather than
+  reporting clean. It closes nothing. 6 tests.
+- **Measured on first run** (30 days, 369 merges): 1 done-ticked (`ajx9`,
+  another session's), 23 partly-ticked, 7 no-checklist.
+- **One of its findings was this session's own**: `byql` (#1123) was left
+  `in-progress` with two boxes unticked. It was re-derived and closed in the
+  same PR.
 
-- **Keyed by FILE, not id.** `t3n8` is two different beans on `main`.
-- **Dates compared.** `5a3l` was reopened on `main` after old branches closed it, so those branches are behind rather than orphaned.
-
-The real run read 339 branches and found 0 likely orphans, and 11 completions inside PR work. One is worth a look: `54rk`, completed on `claude/charming-curie-n04agq`, whose PR #1123 has merged.
-
-Verified: `bean-orphans.test.ts` passes 5/5.
+So the orphan is not impossible, but it is now **reported rather than silent**.

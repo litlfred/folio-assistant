@@ -14,6 +14,16 @@
  * PROSE as well as their fields, since a description is part of the contract
  * a generated JSON Schema publishes.
  *
+ * ## Beside bean `iwtn`'s test, not instead of it
+ *
+ * `bootstrap-tools/schemas/graph.test.ts` holds ALL of `bootstrap/` to a
+ * stricter list — no layer above it may be named either (`cat-harness`,
+ * `folio`), because bootstrap is self-definitional. That list cannot apply to
+ * `bootstrap-tools/`, which is the bridge and names cat-harness by design. This
+ * check covers the narrower rule — no OUTSIDE concept — across the declared
+ * schema directories of BOTH instances, so the tooling layer's schemas are
+ * held to it too. Where the two overlap (`bootstrap/schemas/`), they agree.
+ *
  * ## Which directories
  *
  * READ FROM THE DECLARATIONS, not hardcoded: every directory that a bootstrap
@@ -56,7 +66,9 @@ function filesUnder(dir: string): string[] {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) out.push(...filesUnder(p));
-    else if (/\.(ts|json)$/.test(name)) out.push(p);
+    // A TEST is not a schema, and one that lists the forbidden names in order
+    // to forbid them (`bootstrap-tools/schemas/graph.test.ts`) is not a leak.
+    else if (/\.(ts|json)$/.test(name) && !/\.test\.ts$/.test(name)) out.push(p);
   }
   return out;
 }

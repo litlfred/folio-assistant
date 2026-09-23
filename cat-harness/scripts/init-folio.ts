@@ -388,8 +388,8 @@ folio/${o.slug}/          the document
   <chapter>/<chapter>.ts   a chapter manifest — sections, in reading order
   <chapter>/<root>.ts      a block manifest
   <chapter>/<root>.md      that block's prose
-  <chapter>/<root>.qa.json QA sidecar (machine-written — never hand-edit)
 folio/schema/            re-export shim for the platform's builders
+test/results/block-qa/     QA verdicts, one per block, mirroring folio/ (machine-written — never hand-edit)
 library/                   ingested source documents (read-only reference)
 uploads/                   source PDFs, for offline citation verification
 ${assistant}/              the platform
@@ -401,7 +401,21 @@ beans/                    the work plan
 \`\`\`sh
 bun run ${platformDir(assistant)}/src/index.ts --stdio --repo .   # the MCP server
 bun run ${platformDir(assistant)}/src/index.ts --check-deps       # what's installed
+bun run ${platformDir(assistant)}/content/pipeline/qa-sweep.ts folio  # QA every block
 \`\`\`
+
+## QA — every block is checked from the first commit
+
+\`qa-sweep\` runs every criterion a script can check against each block, and
+writes one verdict file per block under \`test/results/block-qa/\`. **Commit
+those files with the edit they are about**: a verdict is keyed on the block's
+content hash, so one that is older than its block reads as stale, never as
+passing.
+
+The staging preview sweeps each pull request as well (\`.github/workflows/staging.yml\`),
+so the review page's QA column reports that build. Criteria that need an
+agent's judgement (voice, exposition, adversarial review) are not run by the
+sweep; they stay unaudited until an agent records them.
 
 ## Work plan — use \`beans\`
 

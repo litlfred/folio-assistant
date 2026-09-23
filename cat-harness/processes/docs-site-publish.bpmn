@@ -10,7 +10,7 @@
     <bpmn:participant id="Participant_Process_DocsSite" name="Publishing the docs site, and keeping the previews alive" processRef="Process_DocsSite"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_DocsSite" name="Publishing the docs site, and keeping the previews alive" isExecutable="false">
-    <bpmn:documentation>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.&amp;#10;&amp;#10;That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted.&amp;#10;&amp;#10;BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean.&amp;#10;&amp;#10;`Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have.&amp;#10;&amp;#10;Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one.</bpmn:documentation>
+    <bpmn:documentation>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.&amp;#10;&amp;#10;That is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted.&amp;#10;&amp;#10;BOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean.&amp;#10;&amp;#10;`Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have.&amp;#10;&amp;#10;Mechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one. VERIFIED AND ALERTED (bean vigi, owner 2026-09-23): the export is verified BEFORE the deploy and blocks it on anything but a pass; and every step after the publish button that fails — an incomplete export, a verification failure, a failed deploy, a lost preview — goes through one alert to the publication manager. A clean publish closes that alert.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- STRICT, and declared (bean `30hn`). Publishing is a FULL REPLACE, and
            the two steps either side of it are the gate: restore the open PRs'
@@ -24,26 +24,35 @@
     <bpmn:laneSet id="LaneSet_Process_DocsSite">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Push</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Regenerate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Export</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Complete</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_Refused</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Verify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Verified</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Publish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Deployed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Survived</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CloseAlert</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Published</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>End_Lost</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Alert</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Failed</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_Push" name="Push to main,&amp;#10;or dispatch">
+    <bpmn:startEvent id="Start_Push" name="Push to main,&#10;or dispatch">
+
+
       <bpmn:extensionElements>
         <folio:job name="build-and-deploy"/>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Task_Regenerate" name="Regenerate every derived&amp;#10;reference from its source">
+    <bpmn:task id="Task_Regenerate" name="Regenerate every derived&#10;reference from its source">
+
+
       <bpmn:documentation>Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="Five independent generators run from their own sources. Each is documented where it lives; there is no single procedure for &quot;regenerate everything&quot;, and inventing one here would name a skill nobody could open."/>
@@ -51,7 +60,9 @@
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Build" name="Build the Jekyll site&amp;#10;and the API reference">
+    <bpmn:task id="Task_Build" name="Build the Jekyll site&#10;and the API reference">
+
+
       <bpmn:documentation>Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
@@ -59,7 +70,9 @@
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Export" name="Export the knowledge graph&amp;#10;and its schema">
+    <bpmn:task id="Task_Export" name="Export the knowledge graph&#10;and its schema">
+
+
       <bpmn:documentation>Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
@@ -67,24 +80,37 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Complete" name="Is every maintained&amp;#10;artefact present?">
-      <bpmn:documentation>Answered by the export: is every maintained artefact present? `something is missing` refuses and publishes nothing, because a full replace would ship the gap; `complete` goes on to restore the open PRs' staging previews.</bpmn:documentation>
+    <bpmn:exclusiveGateway id="GW_Complete" name="Is every maintained&#10;artefact present?">
+      <bpmn:documentation>Answered by the export: is every maintained artefact present? `something is missing` goes to the alert and publishes nothing, because a full replace would ship the gap; `complete` goes on to verify the export.</bpmn:documentation>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="End_Refused" name="Refused &amp;#8212;&amp;#10;nothing published">
-      <bpmn:incoming>Flow_4</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:task id="Task_Restore" name="Restore the OPEN PRs'&amp;#10;staging previews">
+    <bpmn:callActivity id="Call_Verify" name="Verify the export&#10;[publish-verification]" calledElement="Process_PublishVerification">
+      <bpmn:documentation>Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_V1</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_Verified" name="Verified?">
+      <bpmn:documentation>Answered by the verification sub-process's end: `yes` only when every in-scope document passed. `no, or could not tell` blocks the deploy and alerts — an unverified release is not a verified one.</bpmn:documentation>
+      <bpmn:incoming>Flow_V1</bpmn:incoming>
+      <bpmn:outgoing>Flow_V2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_V3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Restore" name="Restore the OPEN PRs'&#10;staging previews">
+
+
       <bpmn:documentation>Copy every OPEN pull request's STAGING/&lt;slug&gt;/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="feature-staging"/>
       <folio:no-call reason="Re-deploys EVERY open PR's preview after a publish — a loop over many previews. A call runs feature-staging once, for one PR, from its first start event."/></bpmn:extensionElements>
-      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:incoming>Flow_V2</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Publish" name="Publish to gh-pages&amp;#10;(FULL REPLACE)">
+    <bpmn:task id="Task_Publish" name="Publish to gh-pages&#10;(FULL REPLACE)">
+
+
       <bpmn:documentation>Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="A mechanical actor force-pushes the built tree. The DECISIONS around it are the two tasks either side — what to carry across the replace, and whether it survived — and those carry the skill. This step is the push itself."/>
@@ -92,110 +118,93 @@
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Survived" name="Did the previews&amp;#10;survive?">
-      <bpmn:documentation>Asked after the full-replace publish: are the open PRs' previews still there? `yes` ends published; `no, or could not tell` fails the job, because a preview that cannot be confirmed is treated as deleted.</bpmn:documentation>
+    <bpmn:exclusiveGateway id="GW_Deployed" name="Did the deploy&#10;succeed?">
+      <bpmn:documentation>Answered by the deploy step itself. `no` goes to the alert: a failed deploy after the publish button is exactly the failure the owner asked to be told about. `yes` checks the previews survived.</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_D1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_D2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="GW_Survived" name="Did the previews&#10;survive?">
+      <bpmn:documentation>Asked after the full-replace publish: are the open PRs' previews still there? `yes` closes any open alert and ends published; `no, or could not tell` goes to the alert, because a preview that cannot be confirmed is treated as deleted.</bpmn:documentation>
+      <bpmn:incoming>Flow_D1</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="End_Published" name="Site published,&amp;#10;previews intact">
+    <bpmn:task id="Task_CloseAlert" name="Close the publication&#10;manager's alert, if open">
+      <bpmn:documentation>A clean publish resolves whatever the last failure raised: close the open publication-manager tracking issue with a comment naming this run.</bpmn:documentation>
+      <bpmn:extensionElements><folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_C1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Published" name="Site published,&#10;previews intact">
+      <bpmn:incoming>Flow_C1</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="End_Lost" name="Job RED &amp;#8212; a preview&amp;#10;was deleted">
+    <bpmn:callActivity id="Call_Alert" name="Alert the publication&#10;manager [publish-verification]" calledElement="Process_PublishAlert">
+      <bpmn:documentation>Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_V3</bpmn:incoming>
+      <bpmn:incoming>Flow_D2</bpmn:incoming>
       <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_A1</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="End_Failed" name="Job RED — publication&#10;manager alerted">
+      <bpmn:incoming>Flow_A1</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Push" targetRef="Task_Regenerate"/>
     <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Regenerate" targetRef="Task_Build"/>
     <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Build" targetRef="Task_Export"/>
     <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_Export" targetRef="GW_Complete"/>
-    <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_Complete" targetRef="End_Refused" name="something is missing"/>
-    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_Complete" targetRef="Task_Restore" name="complete"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_Complete" targetRef="Call_Alert" name="something is missing"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_Complete" targetRef="Call_Verify" name="complete"/>
+    <bpmn:sequenceFlow id="Flow_V1" sourceRef="Call_Verify" targetRef="GW_Verified"/>
+    <bpmn:sequenceFlow id="Flow_V2" sourceRef="GW_Verified" targetRef="Task_Restore" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_V3" sourceRef="GW_Verified" targetRef="Call_Alert" name="no, or could not tell"/>
     <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Restore" targetRef="Task_Publish"/>
-    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Publish" targetRef="GW_Survived"/>
-    <bpmn:sequenceFlow id="Flow_8" sourceRef="GW_Survived" targetRef="End_Published" name="yes"/>
-    <bpmn:sequenceFlow id="Flow_9" sourceRef="GW_Survived" targetRef="End_Lost" name="no, or could not tell"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Publish" targetRef="GW_Deployed"/>
+    <bpmn:sequenceFlow id="Flow_D1" sourceRef="GW_Deployed" targetRef="GW_Survived" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_D2" sourceRef="GW_Deployed" targetRef="Call_Alert" name="no"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="GW_Survived" targetRef="Task_CloseAlert" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="GW_Survived" targetRef="Call_Alert" name="no, or could not tell"/>
+    <bpmn:sequenceFlow id="Flow_C1" sourceRef="Task_CloseAlert" targetRef="End_Published"/>
+    <bpmn:sequenceFlow id="Flow_A1" sourceRef="Call_Alert" targetRef="End_Failed"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_DocsSite">
     <bpmndi:BPMNPlane id="Plane_Process_DocsSite" bpmnElement="Collaboration_Process_DocsSite">
-      <bpmndi:BPMNShape id="Shape_Participant_Process_DocsSite" bpmnElement="Participant_Process_DocsSite" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="2390" height="350"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="2360" height="240"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Start_Push" bpmnElement="Start_Push">
-        <dc:Bounds x="122" y="92" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Regenerate" bpmnElement="Task_Regenerate">
-        <dc:Bounds x="300" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Build" bpmnElement="Task_Build">
-        <dc:Bounds x="550" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Export" bpmnElement="Task_Export">
-        <dc:Bounds x="800" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_GW_Complete" bpmnElement="GW_Complete">
-        <dc:Bounds x="1115" y="85" width="50" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_End_Refused" bpmnElement="End_Refused">
-        <dc:Bounds x="1122" y="212" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Restore" bpmnElement="Task_Restore">
-        <dc:Bounds x="1300" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Task_Publish" bpmnElement="Task_Publish">
-        <dc:Bounds x="1550" y="70" width="180" height="80"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_GW_Survived" bpmnElement="GW_Survived">
-        <dc:Bounds x="1865" y="85" width="50" height="50"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_End_Published" bpmnElement="End_Published">
-        <dc:Bounds x="2122" y="92" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_End_Lost" bpmnElement="End_Lost">
-        <dc:Bounds x="1872" y="212" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
-        <di:waypoint x="158" y="110"/>
-        <di:waypoint x="300" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
-        <di:waypoint x="480" y="110"/>
-        <di:waypoint x="550" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
-        <di:waypoint x="730" y="110"/>
-        <di:waypoint x="800" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
-        <di:waypoint x="980" y="110"/>
-        <di:waypoint x="1115" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
-        <di:waypoint x="1140" y="135"/>
-        <di:waypoint x="1140" y="212"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
-        <di:waypoint x="1165" y="110"/>
-        <di:waypoint x="1300" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
-        <di:waypoint x="1480" y="110"/>
-        <di:waypoint x="1550" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
-        <di:waypoint x="1730" y="110"/>
-        <di:waypoint x="1865" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
-        <di:waypoint x="1915" y="110"/>
-        <di:waypoint x="2122" y="110"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
-        <di:waypoint x="1890" y="135"/>
-        <di:waypoint x="1890" y="212"/>
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Process_DocsSite" bpmnElement="Participant_Process_DocsSite" isHorizontal="true"><dc:Bounds x="60" y="60" width="3000" height="170"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true"><dc:Bounds x="90" y="60" width="2970" height="170"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Push" bpmnElement="Start_Push"><dc:Bounds x="227" y="127" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="175" y="169" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Regenerate" bpmnElement="Task_Regenerate"><dc:Bounds x="380" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Build" bpmnElement="Task_Build"><dc:Bounds x="600" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Export" bpmnElement="Task_Export"><dc:Bounds x="820" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Complete" bpmnElement="GW_Complete" isMarkerVisible="true"><dc:Bounds x="1100" y="120" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1055" y="176" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Verify" bpmnElement="Call_Verify"><dc:Bounds x="1260" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Verified" bpmnElement="GW_Verified" isMarkerVisible="true"><dc:Bounds x="1540" y="120" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="1495" y="176" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Restore" bpmnElement="Task_Restore"><dc:Bounds x="1700" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Publish" bpmnElement="Task_Publish"><dc:Bounds x="1920" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Deployed" bpmnElement="GW_Deployed" isMarkerVisible="true"><dc:Bounds x="2200" y="120" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2155" y="176" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Survived" bpmnElement="GW_Survived" isMarkerVisible="true"><dc:Bounds x="2420" y="120" width="50" height="50"/><bpmndi:BPMNLabel><dc:Bounds x="2375" y="176" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_CloseAlert" bpmnElement="Task_CloseAlert"><dc:Bounds x="2580" y="105" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Published" bpmnElement="End_Published"><dc:Bounds x="2867" y="127" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="2815" y="169" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Alert" bpmnElement="Call_Alert"><dc:Bounds x="1920" y="165" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Failed" bpmnElement="End_Failed"><dc:Bounds x="2427" y="187" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="2375" y="229" width="140" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0"><di:waypoint x="263" y="145"/><di:waypoint x="380" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1"><di:waypoint x="550" y="145"/><di:waypoint x="600" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2"><di:waypoint x="770" y="145"/><di:waypoint x="820" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3"><di:waypoint x="990" y="145"/><di:waypoint x="1100" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4"><di:waypoint x="1125" y="170"/><di:waypoint x="1125" y="205"/><di:waypoint x="1920" y="205"/><bpmndi:BPMNLabel><dc:Bounds x="1131" y="209" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5"><di:waypoint x="1150" y="145"/><di:waypoint x="1260" y="145"/><bpmndi:BPMNLabel><dc:Bounds x="1156" y="121" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_V1" bpmnElement="Flow_V1"><di:waypoint x="1430" y="145"/><di:waypoint x="1540" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_V2" bpmnElement="Flow_V2"><di:waypoint x="1590" y="145"/><di:waypoint x="1700" y="145"/><bpmndi:BPMNLabel><dc:Bounds x="1596" y="121" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_V3" bpmnElement="Flow_V3"><di:waypoint x="1565" y="170"/><di:waypoint x="1565" y="205"/><di:waypoint x="1920" y="205"/><bpmndi:BPMNLabel><dc:Bounds x="1571" y="209" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6"><di:waypoint x="1870" y="145"/><di:waypoint x="1920" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7"><di:waypoint x="2090" y="145"/><di:waypoint x="2200" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_D1" bpmnElement="Flow_D1"><di:waypoint x="2250" y="145"/><di:waypoint x="2420" y="145"/><bpmndi:BPMNLabel><dc:Bounds x="2256" y="121" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_D2" bpmnElement="Flow_D2"><di:waypoint x="2225" y="170"/><di:waypoint x="2225" y="205"/><di:waypoint x="1920" y="205"/><bpmndi:BPMNLabel><dc:Bounds x="2231" y="209" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8"><di:waypoint x="2470" y="145"/><di:waypoint x="2580" y="145"/><bpmndi:BPMNLabel><dc:Bounds x="2476" y="121" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9"><di:waypoint x="2445" y="170"/><di:waypoint x="2445" y="205"/><di:waypoint x="1920" y="205"/><bpmndi:BPMNLabel><dc:Bounds x="2451" y="209" width="130" height="20"/></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_C1" bpmnElement="Flow_C1"><di:waypoint x="2750" y="145"/><di:waypoint x="2867" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_A1" bpmnElement="Flow_A1"><di:waypoint x="2090" y="205"/><di:waypoint x="2427" y="205"/></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

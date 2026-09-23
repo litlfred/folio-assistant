@@ -453,7 +453,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
-    summary: "The harness layer's own knowledge graph, where a directory holds more than one of its parts.",
+    summary: "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
   },
   // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
   //
@@ -520,6 +520,24 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     validator: "schemas/role-graph.ts#RoleGraphSchema",
     summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
+  },
+  // ── What an Actor may do: W3C ODRL 2.2 policies — issue #1180 ──────────
+  //
+  // Owner, 2026-09-23: permissions are *"W3C ODRL 2.2"*, and policies are
+  // their own graph kind rather than a file inside `scenarios`. A policy is
+  // authored, and is true whether or not anything reads it, so it `holds`
+  // content like the role graph beside it: it owes no viewer.
+  policies: {
+    type: termIri("PolicyGraph"),
+    renderable: false,
+    holds: "content",
+    skill: "role-model",
+    schema: "schemas/odrl.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/odrl.ts#OdrlPolicySchema",
+    summary:
+      "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role " +
+      "constraints. Actions are the folio profile in skills/permissions/permissions.json.",
   },
   // ── Judgement methodologies, one sub-graph each ───────────────────────
   //
@@ -623,6 +641,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-translation-status/v1": { writtenBy: "scripts/gen-translation-status.ts" },
       "folio-schema-graph/v1": { writtenBy: "scripts/gen-schema-viz.ts" },
       "folio-library-index/v1": { writtenBy: "scripts/gen-library-viz.ts" },
+      // The per-entry block graph, one file per library entry (bean `7nvr`).
+      // Same writer as the index and deliberately a SEPARATE family: the index
+      // answers "what entries are there" and this answers "what is in one",
+      // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
+      // they are fetched at different times by different questions.
+      "folio-library-entry/v1": { writtenBy: "scripts/gen-library-viz.ts" },
       "folio-voices-index/v1": { writtenBy: "scripts/gen-voices-viz.ts" },
       "folio-graph-projection/v1": { writtenBy: "scripts/gen-folio-viz.ts" },
     },
@@ -696,6 +720,23 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "The specifications this instance depends on — one record per specification, pinning the " +
       "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
   },
+  // Code lists — a closed set of codes, each with a label, a definition and a
+  // source, published as a SKOS concept scheme (schemas/code-list.ts). Owner,
+  // 2026-09-23: "list of codes and corresponding narrative desc and source
+  // should be part of a node/asset". `content`, by the same argument
+  // `external-schema` makes: the subject matter is a DECISION — which answers
+  // an adjudication may give, which namespaces are ours — and a person makes
+  // it. Diagrams and `schemas/namespaces.ts` READ these; nothing writes them.
+  "code-list": {
+    type: termIri("CodeListGraph"),
+    renderable: false,
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    validator: "schemas/code-list.ts#CodeListSchema",
+    summary:
+      "Closed sets of codes — adjudication answers, the namespaces this project mints — one file " +
+      "per list, every code carrying its definition and source, published as SKOS.",
+  },
   schemas: {
     type: termIri("SchemaGraph"),
     renderable: false,
@@ -708,7 +749,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
-    summary: "Schema definitions, self-declared in the smart-base manner.",
+    summary: "A Subgraph of schema definitions: files that state the shape other files must have.",
   },
   // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
   // per named sub-graph and per instance, both written from one model by
@@ -1235,6 +1276,14 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // folding the menu into the index would give one file two answers to
       // "where did this come from" (bean `0818`).
       "folio-ig-menu/v1": { validator: "cat-harness:schemas/ig-menu.ts#IgMenuSchema" },
+      // The IG's own CHROME — its palette, its status watermark, its publish
+      // box — resolved from the `fhir.template` chain its `ig.ini` names. A
+      // THIRD family in this directory because it comes from a third SOURCE,
+      // and this one is not even a single source: the index is harvested from
+      // the IG's published output, the menu from its `sushi-config.yaml`, and
+      // the chrome from separate template repositories the IG merely depends
+      // on. Three provenances, three documents (bean `ajx9`).
+      "folio-ig-chrome/v1": { validator: "cat-harness:schemas/ig-chrome.ts#IgChromeSchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:

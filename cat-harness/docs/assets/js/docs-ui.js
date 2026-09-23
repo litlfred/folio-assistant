@@ -1592,6 +1592,15 @@
         // collapsed behind the icon — that IS the point of sending it there.
         searchHome.setAttribute("data-open", corner ? "false" : "true");
         cornerIcon.setAttribute("aria-expanded", "false");
+        /* THE GLYPH IS SHOWN IN BOTH STATES (owner, 2026-09-23: *"maginfyingglass
+         * avatar/braadning should be visibile always"*), so it means two
+         * different things and must SAY so. In the corner it reveals a field
+         * that is not on screen; in the navbar the field is already there and
+         * it moves the cursor into it. One label for both would be wrong in
+         * one of them, and a control whose name does not match what it does is
+         * worse than no control. */
+        cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
+        cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
         slide.setAttribute("aria-label",
           corner ? "Dock search back into the navbar" : "Slide search out to the corner");
         slide.setAttribute("title", slide.getAttribute("aria-label"));
@@ -1619,7 +1628,20 @@
        * fallbacks exist because a theme that renamed the container may also
        * have renamed the header, and search in the wrong place beats search
        * nowhere. */
-      var navbar = firstMatch([".main-header", "#main-header", ".main-content-wrap"]);
+      /* NOT `.main-header` ANY MORE, and the reason is measured. The theme
+       * sets `.main-header { display: none }` below its own nav breakpoint, so
+       * at 700px the whole search home -- field, chevron AND the glyph that is
+       * the only way back to it -- computed to 0x0. Search was not merely
+       * awkward to reach on a narrow screen, it was unreachable from the
+       * display panel at all, which is the owner's *"takes way too many
+       * clicks"* at its worst.
+       *
+       * `.main-content-wrap` is the panel's own content column and the theme
+       * never hides it, so homing here is what *"full top of display panel"*
+       * actually means. `.main-header` stays in the fallback list: a theme that
+       * renamed the wrap may still have the header, and search in the wrong
+       * place beats search nowhere. */
+      var navbar = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
       if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
       else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
@@ -4892,6 +4914,13 @@
       body.appendChild(fs);
       showOpacity();
 
+      // THE HARNESSES PANEL (issue #1146): each harness's properties and the
+      // skill that edits each. A Settings view, as candidate H drew it.
+      var hc = el("button", { type: "button", class: "fa-glass-reset fa-glass-harnesses" },
+        "Harnesses — properties, and the skill that edits each");
+      hc.addEventListener("click", function () { openHarnesses(null); });
+      body.appendChild(hc);
+
       // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
       // nothing leaves the folio and nothing leaves the glass.
       var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
@@ -5159,6 +5188,196 @@
     chromeTile("glass-filter", "Filter", "\u25BD", "Filter your glass \u2014 by kind, by where it came from, or item by item", buildFilter);
 
     chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings);
+
+    /* ── HARNESSES — the config panel, issue #1146 ────────────────────────
+     *
+     * Owner, 2026-09-23: *"add to cat-harness harness visualize a config
+     * panel/popup which shows properties of cat-harness and other instances.
+     * add in to render appropraite edit skills as well."* The design is the
+     * owner's pick from `docs/wireframes/harness-config/`, **Hybrid**: this
+     * glass panel, grouped Instantiated here / In this checkout / Associated
+     * ↗ remote, with a property table and the skills that edit each property;
+     * and a ⚙ on every sidebar divider that opens it with that harness chosen.
+     *
+     * Every value is GENERATED (`harness-panel.ts` → `_data/harness.json` →
+     * `assets/harness/config.json`). This decides nothing but layout. */
+    var harnessConfigData = null;
+    function harnessConfig(done) {
+      if (harnessConfigData) return done(harnessConfigData);
+      fetch(withBase("/assets/harness/config.json"))
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (c) { harnessConfigData = c && Array.isArray(c.harnesses) ? c : null; done(harnessConfigData); })
+        .catch(function (e) {
+          console.warn("docs-ui: the harness config could not be read (" + e.message + ").");
+          done(null);
+        });
+    }
+
+    function buildHarnesses(body, selected) {
+      var status = el("p", { class: "fa-glass-panel-status" }, "Loading…");
+      body.appendChild(status);
+      harnessConfig(function (c) {
+        if (!c) {
+          status.textContent = "The harness configuration could not be read. That is not the same as there being none.";
+          return;
+        }
+        status.textContent = c.harnesses.length + " harnesses here, " + c.associated.length + " associated.";
+        var wrap = el("div", { class: "fa-hc", "data-fa-hc-view": selected ? "detail" : "list" });
+        var list = el("div", { class: "fa-hc-list" });
+        var detail = el("div", { class: "fa-hc-detail", "aria-live": "polite" });
+        wrap.appendChild(list);
+        wrap.appendChild(detail);
+        body.appendChild(wrap);
+        var skillsFor = {};
+        c.properties.forEach(function (p) { skillsFor[p.key] = p; });
+        var buttons = [];
+
+        function link(href, text, label) {
+          var a = el("a", { href: safeHref(href), class: "fa-hc-link" }, text);
+          if (label) a.setAttribute("aria-label", label);
+          if (/^https?:/.test(href)) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); }
+          return a;
+        }
+        function skillCell(key) {
+          var td = el("td", { class: "fa-hc-skills" });
+          var p = skillsFor[key];
+          if (!p) return td;
+          if (p.gap) td.appendChild(el("span", { class: "fa-hc-gap" }, "no skill yet"));
+          p.skills.forEach(function (s, i) {
+            if (i > 0) td.appendChild(document.createTextNode(" "));
+            td.appendChild(s.path ? link(withBase(s.path), s.name) : el("span", {}, s.name));
+          });
+          return td;
+        }
+        function table(rows) {
+          var t = el("table", { class: "fa-hc-table" });
+          var hr = el("tr", {});
+          ["Property", "Value", "Edit with"].forEach(function (h) { hr.appendChild(el("th", { scope: "col" }, h)); });
+          var th = el("thead", {}); th.appendChild(hr); t.appendChild(th);
+          var tb = el("tbody", {});
+          rows.forEach(function (r) {
+            var tr = el("tr", {});
+            var k = el("th", { scope: "row" });
+            k.appendChild(el("code", {}, r.key));
+            tr.appendChild(k);
+            var v = el("td", {});
+            if (r.node) v.appendChild(r.node); else v.textContent = r.value;
+            tr.appendChild(v);
+            tr.appendChild(skillCell(r.key));
+            tb.appendChild(tr);
+          });
+          t.appendChild(tb);
+          return t;
+        }
+
+        function show(kind, item, btn) {
+          buttons.forEach(function (b) { b.setAttribute("aria-current", b === btn ? "true" : "false"); });
+          while (detail.firstChild) detail.removeChild(detail.firstChild);
+          wrap.setAttribute("data-fa-hc-view", "detail");
+          var back = el("button", { type: "button", class: "fa-hc-back" }, "← Harnesses");
+          back.addEventListener("click", function () {
+            wrap.setAttribute("data-fa-hc-view", "list");
+            if (btn) btn.focus();
+          });
+          detail.appendChild(back);
+          var h = el("h3", { class: "fa-hc-title", tabindex: "-1" }, item.title + " ");
+          h.appendChild(el("code", {}, item.name));
+          detail.appendChild(h);
+          var acts = el("p", { class: "fa-hc-actions" });
+          if (kind === "associated") {
+            acts.appendChild(link(item.url, "Open ↗", "Open " + item.title + " (its own site)"));
+            if (item.editHref) acts.appendChild(link(item.editHref, "✎ Its repository", "Edit " + item.title + " in its own repository"));
+            detail.appendChild(acts);
+            var rows = [
+              { key: "name", value: item.name },
+              { key: "url", value: item.url },
+            ];
+            if (item.repository) rows.push({ key: "repository", value: item.repository });
+            if (item.relation) rows.push({ key: "relation", value: item.relation });
+            if (item.note) rows.push({ key: "note", value: item.note });
+            rows.push({ key: "declared by", value: item.declaredBy.join(", ") });
+            var t = table(rows);
+            // The rows of an association are edited where it is DECLARED.
+            Array.prototype.forEach.call(t.querySelectorAll("tbody td.fa-hc-skills"), function (td) {
+              td.appendChild(link(withBase("/reference/skill-instructions/associate-harness.html"), "associate-harness"));
+            });
+            detail.appendChild(t);
+            detail.appendChild(el("p", { class: "fa-hc-note" },
+              "Associated: referenced, never loaded. Nothing here builds or copies it."));
+          } else {
+            if (item.editHref) acts.appendChild(link(item.editHref, "✎ Edit " + item.declaredIn, "Edit " + item.title + "'s declaration, " + item.declaredIn));
+            else acts.appendChild(el("span", { class: "fa-hc-note" }, item.declaredIn));
+            detail.appendChild(acts);
+            var declared = {};
+            item.declared.forEach(function (d) { declared[d.key] = d.summary; });
+            detail.appendChild(table(item.declared.map(function (d) { return { key: d.key, value: d.summary }; })));
+            var rest = c.properties.filter(function (p) { return !(p.key in declared); });
+            if (rest.length) {
+              var more = el("details", { class: "fa-hc-undeclared" });
+              more.appendChild(el("summary", {}, rest.length + " properties not declared (inherited or default)"));
+              more.appendChild(table(rest.map(function (p) { return { key: p.key, value: "—" }; })));
+              detail.appendChild(more);
+            }
+          }
+          h.focus();
+        }
+
+        var groups = [
+          { id: "instantiated", label: "Instantiated here", items: c.harnesses.filter(function (x) { return x.group === "instantiated"; }) },
+          { id: "checkout", label: "In this checkout", items: c.harnesses.filter(function (x) { return x.group === "checkout"; }) },
+          { id: "associated", label: "Associated ↗ remote", items: c.associated },
+        ];
+        var chosen = null;
+        groups.forEach(function (g) {
+          var sec = el("section", { class: "fa-hc-group", "data-fa-hc-group": g.id });
+          var hid = "fa-hc-g-" + g.id;
+          sec.appendChild(el("h3", { id: hid }, g.label + " (" + g.items.length + ")"));
+          var ul = el("ul", { "aria-labelledby": hid });
+          if (g.items.length === 0) ul.appendChild(el("li", { class: "fa-hc-note" }, "none"));
+          g.items.forEach(function (item) {
+            var li = el("li", {});
+            var b = el("button", { type: "button", class: "fa-hc-item", "aria-current": "false" }, item.title);
+            if (item.title !== item.name) b.appendChild(el("code", {}, item.name));
+            var kind = g.id === "associated" ? "associated" : "local";
+            b.addEventListener("click", function () { show(kind, item, b); });
+            buttons.push(b);
+            li.appendChild(b);
+            ul.appendChild(li);
+            if (selected && item.name === selected && !chosen) chosen = [kind, item, b];
+          });
+          sec.appendChild(ul);
+          list.appendChild(sec);
+        });
+        if (c.findings && c.findings.length) {
+          var f = el("details", { class: "fa-hc-findings" });
+          f.appendChild(el("summary", {}, c.findings.length + " findings"));
+          var ful = el("ul", {});
+          c.findings.forEach(function (s) { ful.appendChild(el("li", {}, s)); });
+          f.appendChild(ful);
+          list.appendChild(f);
+        }
+        if (chosen) show(chosen[0], chosen[1], chosen[2]);
+        else wrap.setAttribute("data-fa-hc-view", "list");
+      });
+    }
+    var HARNESSES_TITLE = "Harnesses — each one's properties, and the skill that edits each";
+    // NOT A STRIP TILE. Owner, 2026-09-23: *"too many tiles!"* — the strip is
+    // the glass's four. The panel is reached from Settings (candidate H drew it
+    // as a Settings view) and from the ⚙ on each sidebar divider.
+    function openHarnesses(name) {
+      if (openPanelId === "glass-harnesses") closePanel();
+      openPanel("glass-harnesses", HARNESSES_TITLE, function (b) { buildHarnesses(b, name); });
+    }
+    // THE SIDEBAR'S ⚙ — one per divider, rendered by `nav_footer_custom.html`.
+    // Delegated, because the sidebar is drawn by Jekyll and knows no script.
+    document.addEventListener("click", function (ev) {
+      var t = ev.target && ev.target.closest ? ev.target.closest("[data-fa-harness-config]") : null;
+      if (!t) return;
+      ev.preventDefault();
+      var name = t.getAttribute("data-fa-harness-config");
+      setOpen(true);
+      openHarnesses(name);
+    });
 
     /* ── MORE, not twenty tiles — owner, 2026-09-23: *"too many tiles!"* ──
      *

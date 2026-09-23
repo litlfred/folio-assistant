@@ -449,6 +449,18 @@
       }
     },
     {
+      "id": "code-lists",
+      "path": "code-lists/",
+      "dependents": "skip",
+      "description": "Closed sets of codes, one `\"$schema\": \"folio-code-list/v1\"` file per list, each code carrying a label, a definition, a source and, where it stands for one, a value. Owner, 2026-09-23: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset\", and SKOS as the published form. Two consumers today: adjudication steps name the list their `codes` come from (`<folio:adjudication list=\"\u2026\">`, checked when a diagram loads), and `schemas/namespaces.ts` reads every namespace this project mints from `own-namespaces.json` instead of carrying them as constants. Exported as SKOS concept schemes to `_kg/<stub>-code-lists.jsonld` by `scripts/glossary-export.ts`, beside the swimlane glossary. `dependents: skip` \u2014 a dependent INHERITS these through the dependency overlay (`codeListDirs`), and declares its own directory only when it has a list of its own.",
+      "graphKinds": [
+        "code-list"
+      ],
+      "coverage": {
+        "skill": "code-lists"
+      }
+    },
+    {
       "id": "schemas",
       "path": "schemas/",
       "dependents": "skip",
@@ -496,6 +508,15 @@
       "description": "Scenarios \u2014 the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
       "graphKinds": [
         "scenarios"
+      ]
+    },
+    {
+      "id": "policies",
+      "path": "policies/",
+      "dependents": "skip",
+      "description": "What an Actor may DO, as W3C ODRL 2.2 policies (issue #1180, owner 2026-09-23). `folio-defaults.jsonld` is the instance's odrl:Set: the permissions each actor file used to list, migrated one rule per (actor, action), plus the owner's floor for an unauthenticated reader (visualize and render only). Actions are the folio ODRL profile in `skills/permissions/permissions.json`; roles stay in `scenarios/`, and identity (which login is which actor) stays in the data store, never here. `dependents: skip` because a downstream instance writes its own policies and inherits these through ODRL's `inheritFrom`, rather than getting a copy.",
+      "graphKinds": [
+        "policies"
       ]
     },
     {
@@ -983,5 +1004,16 @@
   "needs": [
     "bootstrap"
   ],
-  "_cat_bootstrap_comment": "NO `bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance \u2014 so bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, bootstrap's skills are published through `bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader."
+  "_cat_bootstrap_comment": "NO `bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance \u2014 so bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, bootstrap's skills are published through `bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader.",
+  "_associatedHarnesses_comment": "Issue #1146. Owner, 2026-09-23: \"i dont want to publish at /folio-assistant/ihris/; that's a platform change, certainly not a materialized publish, but we need a good mechanism for \\\"assocaiated\\\" harnesssed KGs.\" An associated harness is REFERENCED, never loaded: it is not in `needs`, nothing here builds or copies it, and it is published from its own repository at its own site. The Harnesses panel lists it under \"Associated \u2197 remote\" and its \u270e goes to its own repository. Skill: associate-harness.",
+  "associatedHarnesses": [
+    {
+      "name": "ihris",
+      "title": "iHRIS Knowledge Base",
+      "url": "https://litlfred.github.io/ihris/",
+      "repository": "https://github.com/litlfred/ihris",
+      "relation": "folio-of",
+      "note": "The iHRIS folio: a knowledge base on this platform, published from its own repository."
+    }
+  ]
 }

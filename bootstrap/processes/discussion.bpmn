@@ -23,6 +23,7 @@ NO folio:bean on any activity, and isExecutable is false, for the reasons `initi
     <bpmn:laneSet id="LaneSet_Process_Discussion">
       <bpmn:lane id="Lane_Initiator" name="Initiator">
         <bpmn:documentation>Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no folio:decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="initiator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Discussion</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_NarrowCandidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_PutQuestion</bpmn:flowNodeRef>
@@ -34,6 +35,7 @@ NO folio:bean on any activity, and isExecutable is false, for the reasons `initi
       </bpmn:lane>
       <bpmn:lane id="Lane_Requestor" name="Requestor">
         <bpmn:documentation>Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into "unsettled" rather than forcing a guess.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="requestor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Answer</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -43,7 +45,7 @@ NO folio:bean on any activity, and isExecutable is false, for the reasons `initi
     </bpmn:startEvent>
 
     <bpmn:task id="A_NarrowCandidates" name="Narrow the candidates from context">
-      <bpmn:documentation>Before asking. A repository that already carries `cat-harness/cat-harness.json` is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</bpmn:documentation>
+      <bpmn:documentation>Before asking. A repository whose root already holds a declaration, `&lt;name&gt;.json`, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="discussion"/>
       </bpmn:extensionElements>

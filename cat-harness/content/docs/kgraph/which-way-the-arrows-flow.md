@@ -6,10 +6,9 @@ be followed mechanically rather than inferred:
 |---|---|---|
 | Actor | `roles` | Role |
 | Role | `skills` | Skill |
-| Role | `lanes` | a BPMN lane, by name |
 | Role | `voice` | Voice |
 | Workflow activity | `<folio:skill ref>` | Skill |
-| Workflow lane | lane binding | Role |
+| Workflow lane | `<folio:role ref>` | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Test | exercises | Skill |

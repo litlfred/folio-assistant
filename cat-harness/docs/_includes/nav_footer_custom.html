@@ -225,6 +225,16 @@
       </span>
       {%- endif -%}
       {%- comment -%}
+        THE ⚙ — opens the glass's Harnesses panel with THIS harness chosen
+        (issue #1146, the owner's "Hybrid"). A button beside the tab, never
+        inside it: the tab is a link, and a control nested in a link is two
+        targets a keyboard cannot tell apart. `docs-ui.js` handles it by
+        delegation. With no script it does nothing, and the tab still works.
+      {%- endcomment -%}
+      <button type="button" class="fa-harness-tab__config"
+              data-fa-harness-config="{{ t.name }}"
+              aria-label="Configuration of {{ t.label | default: t.title }}">&#x2699;&#xFE0E;</button>
+      {%- comment -%}
         WHAT THE HARNESS HOLDS, reachable from the sidebar.
 
         Owner, 2026-09-22: *"also missing the doc/, librayr/ etc."* — the

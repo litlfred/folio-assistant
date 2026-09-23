@@ -18,7 +18,7 @@ WireGen (methodologies/wiregen) made executable: a written design intent, at lea
 ## How it connects
 
 - **Called by:** no call activity names this process
-- **Calls:** [Adjudication](adjudication.html), [Options analysis](options-analysis.html)
+- **Calls:** [Criterion adjudication](criterion-adjudication.html), [Options analysis](options-analysis.html)
 - **Skill:** [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html)
 
 ## Lanes — who acts
@@ -39,7 +39,7 @@ Every one of the 6 step(s) is documented.
 | **Produce >= 2 candidates, web + mobile**<br>`D_Candidates` | Designer | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Mid-fidelity HTML: monochrome, real folio content, semantic icons, no placeholder text. Each candidate has both a web layout and a mobile layout. |
 | **Mechanical checks, both viewports**<br>`D_Check` | Designer | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Tool wireframe-check renders every candidate at a web and a mobile viewport. It fails on horizontal overflow at mobile width, on placeholder text, and on a missing viewport, and writes screenshots and a script entry per criterion. |
 | **Blind review per criterion**<br>`R_Review` | Feedback providers | [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | Criteria: intent-fit, web usability, mobile usability, accessibility, and alternatives considered. A review at one viewport only is incomplete. |
-| **Adjudication**<br>`Call_Adjudicate` | Adjudicator | calls [Adjudication](adjudication.html) | folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. |
+| **Adjudication**<br>`Call_Adjudicate` | Adjudicator | calls [Criterion adjudication](criterion-adjudication.html) | folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. |
 | **Choose a candidate**<br>`Call_Choose` | Adjudicator | calls [Options analysis](options-analysis.html) | A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost. |
 
 ## Decisions

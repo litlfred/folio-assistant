@@ -1,5 +1,5 @@
 /**
- * A REQUIREMENT — what a harness, a folio or a feature must do, said so it
+ * A REQUIREMENT — what a harness, or something built with one, must do, said so it
  * can be checked.
  *
  * @module bootstrap/schemas/requirement
@@ -10,7 +10,7 @@
  * schema names **no outside concept**, not even in a quotation
  * (`check:bootstrap-concepts` holds it to that). Asked where it lives, the
  * owner chose **"1 + 2"**: a base here, which every harness gets, and the
- * existing `cat-harness` requirement built on it.
+ * requirement of each harness built above this one extends it.
  *
  * ## Why this lives in bootstrap
  *
@@ -43,7 +43,7 @@
  *
  * ## Tests point HERE, not the other way
  *
- * A test run lists the statements it checks (`folio-test-run/v1`'s
+ * A test run lists the statements it checks (the test-run schema's
  * `requirements`, by {@link requirementRef}). The requirement does not list
  * its tests: a test is added far more often than a requirement changes, and a
  * back-reference kept by hand is the first thing to go stale.

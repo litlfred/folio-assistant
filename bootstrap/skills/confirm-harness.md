@@ -2,8 +2,8 @@
 name: confirm-harness
 description: >
   Narrow the harnesses and locations this could be, then have the Requestor
-  settle it. Takes a list; returns at most ONE harness. The only step of
-  initialize-harness that needs a person.
+  settle it. Takes a list; returns at most ONE harness. It needs a person:
+  the Requestor settles it, never the agent.
 ---
 
 # Which harness, and where
@@ -26,10 +26,9 @@ Zero is a real outcome, not a failure to try again: it ends the process, logged.
 ## Building the list you go in with
 
 **Harnesses.** The default is **bootstrap itself**. Add any the context
-already names — *"please initialize litlfred/folio-assistant"* in a discussion
-is one; a derivative such as `cat-harness`, `folio-assistant` or
-`smart-guidelines` is another. Adding a candidate costs nothing; inventing one
-costs a wrong repository.
+already names: *"please set up `<owner>/<repo>` here"* in a discussion names
+one, and so does any Harness built on bootstrap that the Requestor mentions.
+Adding a candidate costs nothing; inventing one costs a wrong repository.
 
 **Locations.** Is this already a git repository? Were one or more URLs to
 repositories supplied? Both are Knowledge Graph Data Stores and the difference

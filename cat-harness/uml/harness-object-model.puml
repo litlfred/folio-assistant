@@ -31,7 +31,6 @@ package scenario {
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
-    lanes [0..*] : string[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -157,6 +156,7 @@ package test {
     process.hash [1] : string
     process.inputs [1..*] : string[]
     outcome [1] : map<any>
+    requirements [0..*] : string[]
     updated_at [1] : string
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {

@@ -416,6 +416,13 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes `--site ./_site`: it resolves links in the BUILT site, which Jekyll produces in CI",
   },
   {
+    match: "publish-verify.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
+      "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
@@ -728,12 +735,6 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
-    script: "check:bean-orphans",
-    kind: "report",
-    reason:
-      "CI CANNOT OBTAIN ITS INPUT, and its findings are not failures. It reads every fetched `origin/claude/*` branch, which a CI checkout does not have, and with none it exits **2** (`could not determine`), never a silent 0. And a bean completed on an OPEN PR's branch is the owner's rule being FOLLOWED (bean `4d22`: complete the bean in the PR that lands it), so it reports the likely orphans rather than failing. Run it at session start after fetching the sibling branches, as `bean-coordination` says",
-  },
-  {
     script: "schema:viz:check",
     kind: "covered-by",
     reason:
@@ -762,6 +763,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
+  },
+  {
+    script: "ingest:ig-chrome:check",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT, and here it needs THREE checkouts rather than one. It compares the committed `chrome.json` against the `fhir.template` chain the IG's `ig.ini` names — `fhir.base.template` and `who.template.root`, which are separate repositories (`HL7/ig-template-base`, `WorldHealthOrganization/smart-ig-template`) that this checkout does not contain and a runner cannot fetch. Same wall as `ingest:ig-menu:check`, one layer worse: an IG's appearance is declared in no file the IG owns. Built so a skip CANNOT be mistaken for a pass — with no `--ig`/`--layer` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed chrome's EFFECT: `smart-trust:pages:check` regenerates all 681 pages from it and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-chrome/v1`. Run this one by hand after cloning the IG and its templates, or from `/prepare-merge`. Bean `ajx9`",
   },
   {
     script: "check:session-staleness",

@@ -1,0 +1,162 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+  "images": [
+    {
+      "id": "img-p002-1",
+      "file": "images/img-p002-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the architecture diagram — agent configuration on the left, its virtual machine on the right",
+        "page": 2
+      },
+      "narrative": {
+        "text": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill — skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p003-1",
+      "file": "images/img-p003-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the SKILL.md anatomy diagram — same figure as the platform docs, name: pdf",
+        "page": 3
+      },
+      "narrative": {
+        "text": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p004-1",
+      "file": "images/img-p004-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the bundling diagram — SKILL.md linking out to reference.md and forms.md",
+        "page": 4
+      },
+      "narrative": {
+        "text": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p004-2",
+      "file": "images/img-p004-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "a TABLE rendered as an image — the three progressive-disclosure levels",
+        "page": 4
+      },
+      "narrative": {
+        "text": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files — text files, scripts, data — loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p005-1",
+      "file": "images/img-p005-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the context-window walkthrough — how a Skill enters and is read",
+        "page": 5
+      },
+      "narrative": {
+        "text": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present — the body and the bundled files are read on demand.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    },
+    {
+      "id": "img-p006-1",
+      "file": "images/img-p006-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-23",
+        "saw": "the executable-script diagram — forms.md linking to extract_fields.py",
+        "page": 6
+      },
+      "narrative": {
+        "text": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-23"
+      }
+    }
+  ]
+}

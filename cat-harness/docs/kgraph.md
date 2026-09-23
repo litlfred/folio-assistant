@@ -256,10 +256,9 @@ be followed mechanically rather than inferred:
 |---|---|---|
 | Actor | `roles` | Role |
 | Role | `skills` | Skill |
-| Role | `lanes` | a BPMN lane, by name |
 | Role | `voice` | Voice |
 | Workflow activity | `<folio:skill ref>` | Skill |
-| Workflow lane | lane binding | Role |
+| Workflow lane | `<folio:role ref>` | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Test | exercises | Skill |
@@ -379,6 +378,9 @@ declaration — they had simply never been named as one set of three:
 | **depends** | Content → Content | `needs` in the declaration — the layer stack, foundation first |
 | **references** | Tool → Content, Test → Content | `remoteGraphs` — a graph this instance knows about and does not hold |
 | **utilizes** | Tool → Tool, Test → Tool, App → Content, App → Test | `dependencies` in the config — what this instance USES, overlaid |
+| **associated** | any harness ↔ any harness | `associatedHarnesses` — a harness this one knows, and where it is published; never loaded or materialized (issue #1146, skill `associate-harness`) |
+
+**Associated is a fourth, and it fixes no order**: it is how a folio in another repository, such as `ihris`, is listed without being built here.
 
 **The three answer different questions**, which is why collapsing them loses
 information a consumer needs. *Depends* is about layering: it fixes an order, so

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-gpdo
 title: 'COMPILED-ARTEFACT CACHING: .olean for mathlib, and the same shape for sushi/FHIR -> AST'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
@@ -42,3 +42,18 @@ about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 **Nothing about this bean's own work changed** — not its status, not its
 Done-when, not a line of its body above this note. Only the question *"whose
 goal does finishing this serve?"* is answered differently.
+
+---
+
+## Summary of Changes — 2026-09-23
+
+Owner's pick: **"Third purpose"** (over a new node kind).
+
+| Done-when item | Evidence |
+|---|---|
+| a third purpose covering compiled artefacts (decided, not defaulted) | `MATERIALIZATION_PURPOSES` gains `compiled` in `folio-assistant-core/schemas/materialization.ts` |
+| validity expressed against INPUTS | `CompiledInputsSchema`: `toolchain` and `sourceRevision` required, `inputDigest` (sha256) optional. Required on a compiled copy and refused on any other. A compiled copy cannot discharge `sourceLoss`. |
+| a stale cache is DETECTED, before use, not on a schedule | `compiledValidity(record, current)` returns `valid`, `stale-inputs` (naming each differing input) or `cannot-tell`, which is never a pass. `freshness()` reports a compiled copy as `input-bound`, so `cache:index` never lists it as a no-expiry candidate. |
+| `lake-cache-refresh` read, and adopted or superseded | **Adopted.** `skills/folio-paper-adapter/lean-cache-restore.md` §"This cache is a `compiled` materialization" maps: branch toolchain → `inputs.toolchain`, Lake root commit → `sourceRevision`, `.trace` → per-module digests, keep-2 → retention. sushi/FHIR is recorded as the second instance. |
+
+Tests: `materialization-compiled.test.ts` has 13 tests, and `cache-index.test.ts` gained 1. Existing materialization, remote-content and fixity tests are unchanged and pass.

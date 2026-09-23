@@ -182,9 +182,8 @@ what makes them the shared substrate.
 3. **Work** — keep the bean current; append status notes as you go. Do not fork
    it into a parallel `todos/*.json` queue — link to any bulk queue from the
    bean instead.
-4. **Hand off or finish** — close the bean **in the PR that lands it**, before
-   the merge (§"Complete the bean in the PR that lands it"), and update any
-   cross-repo ownership note. **If you stop mid-flight, leave the bean `in-progress` with a
+4. **Hand off or finish** — on landing, close the bean and update any cross-repo
+   ownership note. **If you stop mid-flight, leave the bean `in-progress` with a
    note saying where you got to**, so the next session resumes instead of
    re-deriving. A bean abandoned silently is indistinguishable from one nobody
    started.
@@ -193,33 +192,37 @@ An **unclaimed** bean is fair game for any session; a claimed one is not.
 Respect sibling claims. Agents create and set `in-progress`; they do not take
 over the work another session is mid-flight on.
 
-## Complete the bean in the PR that lands it (STRICT)
+### Complete it in the PR's own last commit (bean `4d22`)
 
-Bean `4d22`, measured twice in one session: a PR merges; the agent marks the
-bean `completed` and pushes that to the same branch; the agent re-branches from
-the merged `main`. **The completion is now on the remote branch only.** No PR
-carries it, `main` still reads `todo`, and the next session is offered finished
-work. The agent doing each step "correctly" is the one who loses it.
+**Mark the bean `completed` in the last commit of the PR that does its work.**
+Do not wait for the merge.
 
-The owner's ruling, 2026-09-23: **a rule and a check.**
+The natural order loses it. The PR merges, the agent then commits the bean's
+completion to the branch, then re-branches from the new `main`
+(`git checkout -B <branch> origin/main`). That completion commit was never in
+any PR, so it is orphaned: the bean still reads open on `main`, and the next
+session's ready-list offers finished work. Measured twice on 2026-09-22
+(`ebvl`, `7ofc`), each caught only because somebody noticed.
 
-- **The rule.** Mark the bean `completed`, with its `## Summary of Changes`, in
-  the PR's **own** last commit, before the merge. It is asserted a few minutes
-  before it is true, and that is the accepted cost. If review then changes the
-  PR, update the summary in the same PR. Never commit a completion to a branch
-  whose PR has already merged. If one is found late, open a bean-only PR for it.
-- **The check.** `bun run check:bean-orphans` reads every fetched
-  `origin/claude/*` branch. It lists each bean that is `completed` there, open
-  on `main`, and completed **after** `main`'s copy last changed. A branch whose
-  only commits beyond `main` touch `beans/` is flagged `LIKELY ORPHAN`. Any
-  other branch is listed as a PR's work, which is fine while that PR is open.
-  It reports rather than fails, because a completion inside an open PR is this
-  rule being followed. Zero branches read is "could not determine" (exit 2),
-  never clean.
+The completion cannot ride its own PR *after* the merge, because then there is
+no PR left to carry it. So it rides the PR *before*, as its last commit,
+asserting `completed` a few minutes before the merge makes it true. That is the
+lesser error: if the PR is abandoned, the bean reads done on a branch that never
+lands, and `main` never saw it. Practised on 2026-09-23 for eight beans in a
+row with no orphan.
 
-Run it at session start, after `git fetch origin
-'refs/heads/claude/*:refs/remotes/origin/claude/*'`, and before trusting a
-ready-list.
+Two things that follow:
+
+- The `## Done when` items are ticked in that same commit, with the evidence,
+  so the bean on `main` shows *why* it is complete, not just that it is.
+- A bean whose Done-when is not yet all met **stays open** in that commit, with
+  a note saying what is left. Completing it to avoid an orphan would be the
+  opposite error.
+
+`bun run beans:landed` reports what slipped through: open, non-epic beans named
+in a merged PR's title on `main`, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.
 
 ## Closing a bean whose work has already landed (STRICT)
 
