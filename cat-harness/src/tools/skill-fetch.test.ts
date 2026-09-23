@@ -279,9 +279,12 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // The subject was `src/skills/` until #760 removed it. A title naming the
     // expected STRING goes stale on a move that is not a behaviour change; one
     // naming the RULE does not — which is why only the subject moved here.
-    // `bootstrap/tools/` is directly-held and not basenamed `skills`, so
-    // it reaches the same answer by rule 2 rather than rule 1: the sole
-    // directly-held directory takes its instance's name.
-    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/tools");
+    // The subject moved again with bean `n350`: `bootstrap/tools/` is gone
+    // (its two skills joined `bootstrap/skills/`, which the root declares
+    // NEITHER half of, by the `pve3` ruling), so bootstrap is rightly absent
+    // from this table. `kg-navigation/skills/` is directly held by the
+    // `kg-navigation` instance and is named after it.
+    expect(discoverLocalPackages(ROOT)["kg-navigation"]).toContain("kg-navigation/skills");
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toBeUndefined();
   });
 });

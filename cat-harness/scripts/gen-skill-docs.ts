@@ -284,7 +284,6 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // emission ARE the substitute. Its own heading, because a reader meeting
   // "how bootstrap emits its graph" under "read before anything else is
   // known" would reasonably conclude they have to read it first. Bean `hfkl`.
-  "bootstrap-render": "CatBootstrap rendering (bootstrap/tools)",
   // Two top-level named subgraphs, staged ahead of the split (#223) and both
   // keyed by DECLARED ID for the reason the comment above gives: their paths
   // will change at the `cat-harness/` move and their ids will not.

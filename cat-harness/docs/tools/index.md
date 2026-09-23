@@ -26,7 +26,7 @@ to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
 <div class="tg-stat"><b>69</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>49</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>51</b><span>skills satisfied</span></div>
 <div class="tg-stat"><b>51</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
@@ -49,7 +49,7 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **49** skills named across **69** tools resolve to a
+Yes — all **51** skills named across **69** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -78,7 +78,7 @@ tool advertising a capability the graph cannot locate.
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `kg-audit`<br>Knowledge-graph audit | Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes "unbound since it was drawn" distinguishable from "broken in the commit under review". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 2 in / 2 out |
-| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 2 out |
+| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `bootstrap-graph-emission`<br>`bootstrap-graph-publication`<br>`kg-export` | 2 in / 2 out |
 | `kg-validate`<br>Validate a node in the graph | Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest. | <span class="tg-tag tg-shell">shell</span> | `kg-navigation` | 2 in / 1 out |
 | `l1-complete-check`<br>L1 source completeness | Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 1 in / 1 out |
 | `latex-overfull`<br>LaTeX overfull-box report | Turn a pdflatex log's Overfull \hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 4 in / 1 out |

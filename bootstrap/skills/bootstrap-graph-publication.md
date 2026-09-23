@@ -109,7 +109,8 @@ exist, while the `@id` went unguarded.
 
 That sentence read *"no prose file under `bootstrap/` mentions this document
 at all"* until `dyd3`, and it had stopped being true: `bootstrap/render/`
-landed with bean `hfkl`, and **this file names the document throughout**. The
+landed with bean `hfkl` (these two skills have lived in `bootstrap/skills/`
+since `n350`), and **this file names the document throughout**. The
 claim it was making — that the cited cold-start route does not exist — is
 unaffected, because naming a path in a publication contract is not instructing
 a reader to fetch it. Narrowed rather than deleted, since the narrow version

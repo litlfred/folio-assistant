@@ -2,11 +2,11 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "bootstrap-tools-schemas": {
-      "count": 2,
+      "count": 3,
       "unit": "modules"
     },
     "schemas": {
-      "count": 122,
+      "count": 125,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 11,
+      "count": 13,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -30,6 +30,14 @@
     "large-datasets/schemas"
   ],
   "modules": [
+    {
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "instance": "bootstrap-tools",
+      "name": "bootstrap-graph",
+      "graphNode": "schema",
+      "summary": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
+      "isTest": false
+    },
     {
       "module": "bootstrap-tools/schemas/discussion.test.ts",
       "instance": "bootstrap-tools",
@@ -223,6 +231,14 @@
       "graphNode": "schema",
       "summary": "These schemas provide runtime validation and are used by the",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/content-axes.test.ts",
+      "instance": "cat-harness",
+      "name": "content-axes.test",
+      "graphNode": "undeclared",
+      "summary": "The four axes stay four, and each keeps the property that makes it useful.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/content-type.test.ts",
@@ -585,6 +601,22 @@
       "name": "python-deps",
       "graphNode": "schema",
       "summary": "The Python packages this repository's scripts need — declared once.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/qa-report.test.ts",
+      "instance": "cat-harness",
+      "name": "qa-report.test",
+      "graphNode": "undeclared",
+      "summary": "A report in the shape the upstream `QAReporter` writes, plus the wrapper",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/qa-report.ts",
+      "instance": "cat-harness",
+      "name": "qa-report",
+      "graphNode": "schema",
+      "summary": "QA reports — what a pipeline TOOL recorded about its own run.",
       "isTest": false
     },
     {
@@ -1054,6 +1086,22 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/changeset.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "changeset.test",
+      "graphNode": "undeclared",
+      "summary": "ChangeSet against a real git fixture: one chapter, two sections, and each",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "instance": "folio-assistant-core",
+      "name": "changeset",
+      "graphNode": "schema",
+      "summary": "A ChangeSet: what changed in a folio between two git refs, block by block.",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/dublin-core.test.ts",
       "instance": "folio-assistant-core",
       "name": "dublin-core.test",
@@ -1151,6 +1199,148 @@
     }
   ],
   "decls": [
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocument",
+      "name": "BootstrapGraphDocument",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "name": "BootstrapGraphDocumentSchema",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Must equal the path the document is published at (bootstrap-graph-publication)."
+        },
+        {
+          "name": "@type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's declared name."
+        },
+        {
+          "name": "omitted",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools"
+        },
+        {
+          "name": "problems",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sources that could not be read, counted rather than silently dropped."
+        },
+        {
+          "name": "counts",
+          "type": "z.record(z.string(), z.number().int().nonnegative()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommit",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitSha",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceTreeDirty",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "@graph",
+          "type": "z.array(BootstrapGraphNodeSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "name": "BootstrapGraphNodeSchema",
+      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "doc": "One node of the graph. Only the two keys every node carries are required.",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
     {
       "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInput",
       "name": "DiscussionInput",
@@ -3846,6 +4036,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/block-kinds.ts#ContentInteractivity",
+      "name": "ContentInteractivity",
+      "module": "cat-harness/schemas/block-kinds.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/block-kinds.ts#ContentProfile",
       "name": "ContentProfile",
       "module": "cat-harness/schemas/block-kinds.ts",
@@ -5351,6 +5554,13 @@
           "doc": "The id of the {@link images} entry to use as the browser icon."
         },
         {
+          "name": "navbarIcons",
+          "type": "NavbarIcon[]",
+          "optional": true,
+          "array": true,
+          "doc": "Which icons this instance's navbar row shows — see `NavbarIconsSchema`."
+        },
+        {
           "name": "name",
           "type": "string",
           "optional": false,
@@ -5434,6 +5644,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
         "cat-harness/schemas/cat-harness.ts#RemoteGraph",
         "cat-harness/schemas/cat-harness.ts#RenderExemption",
@@ -5477,6 +5688,13 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "navbarIcons",
+          "type": "NavbarIconsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which icons this instance's navbar row shows."
         },
         {
           "name": "stub",
@@ -5545,6 +5763,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+        "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
         "cat-harness/schemas/cat-harness.ts#RenderExemptionSchema",
@@ -5579,6 +5798,20 @@
           "optional": true,
           "array": false,
           "doc": "What makes this subgraph reachable — a renderer, a documentation entry,"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "This directory holds MATERIALIZED content: readable, and not editable here."
+        },
+        {
+          "name": "readOnlyBasis",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why — required whenever {@link readOnly} is declared, either value. See the schema field."
         },
         {
           "name": "theme",
@@ -5635,6 +5868,27 @@
           "array": false
         },
         {
+          "name": "visualisedAs",
+          "type": "z.enum(VISUALISER_KINDS).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "HOW this graph is shown, and what can be done to it."
+        },
+        {
+          "name": "readOnly",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory holds MATERIALIZED content: readable, and not editable here."
+        },
+        {
+          "name": "readOnlyBasis",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHY, and required whenever `readOnly` is declared — either value."
+        },
+        {
           "name": "instanceRoot",
           "type": "z.boolean().optional()",
           "optional": true,
@@ -5667,6 +5921,7 @@
       ],
       "unresolved": [],
       "external": [
+        "VISUALISER_KINDS",
         "z"
       ],
       "exported": false
@@ -5853,6 +6108,13 @@
           "type": "z.array(z.string().min(1)).min(1)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "absent",
+          "type": "z .object({ reason: z.string().min(1, \"an absent directory's reason cannot be empty\") }) .optional()",
+          "optional": true,
+          "array": false,
+          "doc": "This directory is DECLARED and deliberately not on disk, with the reason."
         }
       ],
       "extendsNames": [],
@@ -5934,6 +6196,32 @@
       "name": "ModelProvenance",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#NavbarIcon",
+      "name": "NavbarIcon",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
+      "name": "NavbarIconsSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-array",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -6544,6 +6832,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/cat-harness.ts#VisualiserKind",
+      "name": "VisualiserKind",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/constraints.ts#AlgorithmSchema",
       "name": "AlgorithmSchema",
       "module": "cat-harness/schemas/constraints.ts",
@@ -6656,6 +6957,13 @@
           "type": "z.array(z.string()).optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "renamedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Former labels — see `BlockBase.renamedFrom` in `schemas/types.ts`."
         },
         {
           "name": "foreshadows",
@@ -9639,7 +9947,7 @@
       "name": "DakComponentEntries",
       "module": "cat-harness/schemas/dak.ts",
       "kind": "type-alias",
-      "doc": "One component's contents, as read from a `dak.json`.",
+      "doc": "One component's contents, as read from a `dak.config.json`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -9653,7 +9961,7 @@
       "name": "DakDeclaration",
       "module": "cat-harness/schemas/dak.ts",
       "kind": "interface",
-      "doc": "A `dak.json`, as much of it as is settled.",
+      "doc": "A `dak.config.json`, as much of it as is settled.",
       "fields": [
         {
           "name": "name",
@@ -12565,7 +12873,6 @@
       "name": "GraphKindDef",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "kind": "interface",
-      "doc": "What a declared directory's graph kind means.",
       "fields": [
         {
           "name": "type",
@@ -12623,6 +12930,13 @@
           "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
         },
         {
+          "name": "nodeSchemas",
+          "type": "Readonly<Record<string, NodeSchemaRef>>",
+          "optional": true,
+          "array": false,
+          "doc": "One entry per `$schema` family a node of this kind may carry, keyed by"
+        },
+        {
           "name": "declarationFile",
           "type": "string",
           "optional": true,
@@ -12633,7 +12947,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer"
+        "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
+        "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef"
       ],
       "unresolved": [],
       "external": [],
@@ -12653,6 +12968,20 @@
         "state",
         "derived"
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "name": "NodeSchemaRef",
+      "module": "cat-harness/schemas/graph-kind-registry.ts",
+      "kind": "type-alias",
+      "doc": "Where ONE `$schema` family of a graph kind is defined. Bean `rdkm`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -12845,6 +13174,13 @@
           "doc": "Content type — \"document\" or \"paper\"."
         },
         {
+          "name": "interactivity",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Static, interactive, or undetermined — the FOURTH axis (issue #764, O1)."
+        },
+        {
           "name": "adapter",
           "type": "string",
           "optional": true,
@@ -12949,6 +13285,13 @@
           "type": "z.string().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "interactivity",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Is this folio's content static, or does it carry interfaces?"
         },
         {
           "name": "adapter",
@@ -14506,6 +14849,54 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/kind-validator.ts#NodeSchemaResolution",
+      "name": "NodeSchemaResolution",
+      "module": "cat-harness/schemas/kind-validator.ts",
+      "kind": "type-alias",
+      "doc": "One `$schema` family of a kind, resolved. Four states, and the two in the",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kind-validator.ts#ShapeField",
+      "name": "ShapeField",
+      "module": "cat-harness/schemas/kind-validator.ts",
+      "kind": "interface",
+      "doc": "One field of a TypeScript shape, read from source — never executed.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "optional",
+          "type": "boolean",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The type as written in the source."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/kind-validator.ts#ValidatorRef",
       "name": "ValidatorRef",
       "module": "cat-harness/schemas/kind-validator.ts",
@@ -14513,11 +14904,18 @@
       "doc": "A validator reference, split from its `module#Export` form.",
       "fields": [
         {
+          "name": "instance",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance the module belongs to, by its DECLARED NAME, when that is not"
+        },
+        {
           "name": "module",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Instance-relative module path."
+          "doc": "Module path, relative to {@link ValidatorRef.instance}'s root, or to the resolving one."
         },
         {
           "name": "exportName",
@@ -15797,6 +16195,454 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "name": "DetailsShape",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "successes",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "warnings",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "errors",
+          "type": "z.array(QaReportEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_processed",
+          "type": "z.array(QaReportFileSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_expected",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "files_missing",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+        "cat-harness/schemas/qa-report.ts#QaReportFileSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReport",
+      "name": "QaReport",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportEntry",
+      "name": "QaReportEntry",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "name": "QaReportEntrySchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "One narrative entry — a success, a warning or an error.",
+      "fields": [
+        {
+          "name": "message",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Free-form, because upstream's is. Carried through rather than parsed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportFile",
+      "name": "QaReportFile",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportFileSchema",
+      "name": "QaReportFileSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "One file the tool touched, with what happened to it.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Upstream uses `success`, `error`, `skipped_existing`, `updated`, … — an OPEN set, so a string. Narrowing it here would reject a real report the day upstream adds a case."
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportProducer",
+      "name": "QaReportProducer",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+      "name": "QaReportProducerSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-enum",
+      "doc": "Which tool produced the report.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "dak-script",
+        "ig-publisher"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "name": "QaReportSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "A QA report, as a `qa-report/v1` document.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(QA_REPORT_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "QaReportProducerSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "QaReportSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toolchain",
+          "type": "QaReportToolchainSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "phase",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Upstream's own field: `preprocessing`, `postprocessing`, or a build phase."
+        },
+        {
+          "name": "timestamp",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "QaReportStatusSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "SummaryShape",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "details",
+          "type": "DetailsShape",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/qa-report.ts#DetailsShape",
+        "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+        "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+        "cat-harness/schemas/qa-report.ts#SummaryShape"
+      ],
+      "unresolved": [],
+      "external": [
+        "QA_REPORT_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+      "name": "QaReportSourceSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "Where the report came from. OURS, not upstream's — upstream records no provenance.",
+      "fields": [
+        {
+          "name": "tool",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The script or binary, as invoked. `generate_valueset_schemas.py`, `publisher.jar`."
+        },
+        {
+          "name": "repository",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The repository the run happened in, if known."
+        },
+        {
+          "name": "commit",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The commit under test, if known."
+        },
+        {
+          "name": "runUrl",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A URL for the run, if one exists."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportStatus",
+      "name": "QaReportStatus",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+      "name": "QaReportStatusSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "running"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+      "name": "QaReportToolchainSchema",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "doc": "What produced the result, version by version.",
+      "fields": [
+        {
+          "name": "publisher",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sushi",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fhirVersion",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/qa-report.ts#SummaryShape",
+      "name": "SummaryShape",
+      "module": "cat-harness/schemas/qa-report.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "total_successes",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "total_warnings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "total_errors",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_processed_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_expected_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files_missing_count",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "completion_timestamp",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/qa-review.ts#AuditNote",
@@ -21945,6 +22791,13 @@
           "optional": true,
           "array": false,
           "doc": "The quiet interior a sticky's words sit in, in fractions of this image."
+        },
+        {
+          "name": "avatarRegion",
+          "type": "{ x: number; y: number; w: number; h: number } | undefined",
+          "optional": true,
+          "array": false,
+          "doc": "The part of this image that IS the avatar, in fractions of it — `603s`."
         }
       ],
       "extendsNames": [],
@@ -25314,6 +26167,13 @@
           "optional": false,
           "array": false,
           "doc": "Label following project convention (e.g. \"def:quantum-universe\")."
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Labels this block was previously known by, oldest first."
         },
         {
           "name": "title",
@@ -29477,6 +30337,330 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/changeset.test.ts#Blk",
+      "name": "Blk",
+      "module": "folio-assistant-core/schemas/changeset.test.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "slug",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prose",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockAt",
+      "name": "BlockAt",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema",
+      "name": "BlockAtSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "doc": "Where a block sits on one side of the comparison.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "Manifest path relative to the folio root."
+        },
+        {
+          "name": "kind",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "section",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The section listing it: `<manifest dir>::<section label | title | #n>`."
+        },
+        {
+          "name": "index",
+          "type": "z.number().int().nonnegative().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Zero-based position within that section."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockChange",
+      "name": "BlockChange",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+      "name": "BlockChangeSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "change",
+        "added",
+        "removed",
+        "changed"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeAspect",
+      "name": "ChangeAspect",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSet",
+      "name": "ChangeSet",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "name": "ChangeSetSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CHANGESET_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "folio",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "Folio root, relative to the repository root."
+        },
+        {
+          "name": "base",
+          "type": "RefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "head",
+          "type": "RefSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z.object({ added: z.number().int(), removed: z.number().int(), changed: z.number().int(), unchanged: z.number().int(), …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "changes",
+          "type": "z.array(BlockChangeSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Every block that differs, in head reading order, then removed blocks."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+        "folio-assistant-core/schemas/changeset.ts#RefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CHANGESET_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#ComputeOptions",
+      "name": "ComputeOptions",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "repoRoot",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Repository holding the folio."
+        },
+        {
+          "name": "folio",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Folio root, relative to `repoRoot`."
+        },
+        {
+          "name": "base",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Default `origin/main`."
+        },
+        {
+          "name": "head",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "A ref, or {@link WORKTREE} (the default) for the files on disk."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "name": "RefSchema",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "ref",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "What was asked for — `origin/main`, a branch, or `worktree`."
+        },
+        {
+          "name": "commit",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The commit it resolved to; `null` for the uncommitted working tree."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/changeset.ts#Snap",
+      "name": "Snap",
+      "module": "folio-assistant-core/schemas/changeset.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "manifestHash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "proseHash",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "string[]",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [
+        "BlockAt"
+      ],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/changeset.ts#BlockAt"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/dublin-core.ts#DcField",
       "name": "DcField",
       "module": "folio-assistant-core/schemas/dublin-core.ts",
@@ -30955,11 +32139,11 @@
           "array": false
         },
         {
-          "name": "of",
-          "type": "z.string().min(1)",
+          "name": "provenance",
+          "type": "ProvenanceSchema",
           "optional": false,
           "array": false,
-          "doc": "The remote thing. A URI, always — never a path, never a bare name."
+          "doc": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}."
         },
         {
           "name": "localPath",
@@ -31027,14 +32211,15 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "Why the state is `unknown`, where it is. An unexplained `unknown` is indistinguishable from an unfilled field."
+          "doc": "Why the record cannot say more than it does."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/materialization.ts#FixitySchema",
-        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema",
+        "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -31056,6 +32241,116 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#Provenance",
+      "name": "Provenance",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "name": "ProvenanceSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "WHERE THIS CAME FROM — a pointer pair, not a flag.",
+      "fields": [
+        {
+          "name": "upstream",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
+        },
+        {
+          "name": "local",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The original **in this repository** this was taken from."
+        },
+        {
+          "name": "signature",
+          "type": "SignatureSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/materialization.ts#SignatureSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#Signature",
+      "name": "Signature",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
+      "name": "SignatureSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "A digital signature over the materialized bytes.",
+      "fields": [
+        {
+          "name": "format",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How to interpret `value` — a media type or a named scheme."
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The signature itself, or a URI that resolves to it."
+        },
+        {
+          "name": "signer",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who signed, as a key identifier."
+        },
+        {
+          "name": "verifiedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -31371,6 +32666,14 @@
     }
   ],
   "edges": [
+    {
+      "from": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "to": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "via": "@graph",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
     {
       "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
       "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
@@ -32013,6 +33316,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#NavbarIcon",
+      "via": "navbarIcons",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#Publication",
       "via": "publication",
       "kind": "field",
@@ -32082,6 +33393,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
+      "via": "navbarIcons",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
@@ -33364,6 +34683,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
+      "to": "cat-harness/schemas/graph-kind-registry.ts#NodeSchemaRef",
+      "via": "nodeSchemas",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/harness-config.ts#ClosedContentType",
       "to": "cat-harness/schemas/content-type.ts#ContentTypeMembership",
       "via": "",
@@ -33751,6 +35078,86 @@
       "from": "cat-harness/schemas/panel-chrome.ts#PanelControl",
       "to": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
       "via": "needs",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "errors",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "successes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportEntrySchema",
+      "via": "warnings",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportFileSchema",
+      "via": "files_processed",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#DetailsShape",
+      "via": "details",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportProducerSchema",
+      "via": "producer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#QaReportToolchainSchema",
+      "via": "toolchain",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/qa-report.ts#QaReportSchema",
+      "to": "cat-harness/schemas/qa-report.ts#SummaryShape",
+      "via": "summary",
       "kind": "field",
       "optional": false,
       "array": false
@@ -35636,6 +37043,38 @@
       "array": false
     },
     {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#BlockChangeSchema",
+      "via": "changes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "via": "base",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#ChangeSetSchema",
+      "to": "folio-assistant-core/schemas/changeset.ts#RefSchema",
+      "via": "head",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/changeset.ts#Snap",
+      "to": "folio-assistant-core/schemas/changeset.ts#BlockAt",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "folio-assistant-core/schemas/dublin-core.ts#DcFieldSchema",
       "to": "folio-assistant-core/schemas/dublin-core.ts#DcValueSchema",
       "via": "values",
@@ -35847,6 +37286,22 @@
       "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
       "via": "gates",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "via": "provenance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
+      "via": "signature",
       "kind": "field",
       "optional": true,
       "array": false

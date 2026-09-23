@@ -47,41 +47,6 @@ classDiagram
       <<schema: scripts/gen-uml-overview.ts>>
     }
   }
-  namespace cat_harness__bootstrap_render {
-    class cat_harness_bootstrap_render_folio_voice_v1_Source["Source"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_v1_Pattern["Pattern"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_v1_Terminology["Terminology"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_v1_Rule["Rule"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_skill_v1_Source["Source"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern["Pattern"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology["Terminology"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_skill_v1_Rule["Rule"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class cat_harness_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
-      <<json: KgQaManifestSchema>>
-    }
-  }
   namespace cat_harness__cat_harness {
     class cat_harness_cat_harness_folio_voice_v1_Source["Source"] {
       <<json: VoiceProfileSchema>>
@@ -645,25 +610,6 @@ classDiagram
   cssClass "cat_harness_schemas_folio_source_descriptor_v1_Identifier" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas
   cssClass "cat_harness_uml_uml_shape" fa_uml_kind_uml
-  cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Source : sources
-  cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Pattern : patterns
-  cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Terminology : terminology
-  cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Rule : rules
-  cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Source : sources
-  cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern : patterns
-  cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology : terminology
-  cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Rule : rules
-  cssClass "cat_harness_bootstrap_render_folio_voice_v1_Source" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_v1_Pattern" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_v1_Terminology" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_v1_Rule" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_skill_v1_Source" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_skill_v1_Rule" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
-  cssClass "cat_harness_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
   cat_harness_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_cat_harness_folio_voice_v1_Source : sources
   cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Pattern : patterns
   cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Terminology : terminology
@@ -902,7 +848,6 @@ classDiagram
 | `cat-harness/external-schemas` | `cat-harness/external-schemas` | external-schema | `ExternalSchemaSchema` |
 | `cat-harness/schemas` | `cat-harness/schemas` | schemas, cat-harness | `ext: JSON Schema draft-07`; `ext: JSON Schema 2020-12`; `SourceDescriptorSchema` |
 | `cat-harness/uml` | `cat-harness/uml` | uml | `schema: scripts/gen-uml-overview.ts` |
-| `cat-harness/bootstrap-render` | `cat-harness/bootstrap/tools` | skills | `VoiceProfileSchema`; `VoiceSkillSchema`; `KgQaManifestSchema` |
 | `cat-harness/cat-harness` | `cat-harness/skills` | skills | `VoiceProfileSchema`; `VoiceSkillSchema`; `KgQaManifestSchema` |
 | `cat-harness/scenarios` | `cat-harness/scenarios` | scenarios | `RoleGraphSchema` |
 | `cat-harness/processes` | `cat-harness/processes` | processes | `ext: omg-bpmn-2.0` |
@@ -950,7 +895,6 @@ classDiagram
 - [cat-harness/external-schemas](cat-harness/external-schemas.html)
 - [cat-harness/schemas](cat-harness/schemas.html)
 - [cat-harness/uml](cat-harness/uml.html)
-- [cat-harness/bootstrap-render](cat-harness/bootstrap-render.html)
 - [cat-harness/cat-harness](cat-harness/cat-harness.html)
 - [cat-harness/scenarios](cat-harness/scenarios.html)
 - [cat-harness/processes](cat-harness/processes.html)

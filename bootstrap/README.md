@@ -222,22 +222,22 @@ and it is not this file.
 | [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the answer, as data — **the artefact that finishes the task** |
 | [`scenarios/roles.json`](scenarios/roles.json) | the four personas of §1 |
 | [`skills/package-manifest.json`](skills/package-manifest.json) | the skills package declaration |
-| **tools** | |
-| [`tools/bootstrap-graph-emission.md`](tools/bootstrap-graph-emission.md) | emitting this instance's own graph |
-| [`tools/bootstrap-graph-publication.md`](tools/bootstrap-graph-publication.md) | publishing it |
-| [`tools/package-manifest.json`](tools/package-manifest.json) | the render package declaration |
+| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | emitting this instance's own graph |
+| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | publishing it |
 
-**Why `tools/` is here at all**, given an Initiator runs nothing: bootstrap is
-the one layer **exempt** from having a visualiser, and what it owes instead is
-its own `.json`/`.jsonld` — *that is its existence*. A layer that cannot emit
-its own graph has not shown it is a graph. The two skills above are that
-exemption's substitute, which is why they are reachable from here.
+**Why graph emission is here at all**, given an Initiator runs nothing:
+bootstrap is the one layer **exempt** from having a visualiser, and what it
+owes instead is its own `.json`/`.jsonld` — *that is its existence*. A layer
+that cannot emit its own graph has not shown it is a graph. The two skills
+above are that exemption's substitute.
 
-This directory was `render/` until 2026-09-22. It holds SKILLS, not Tool
-nodes — the package is still `bootstrap-render`, because an id names what
-something is and survives a move. bootstrap declares no `tools` graph: its
-Tool nodes live in `cat-harness/tools/`, deliberately, since an Initiator has
-no MCP server and that constraint is the role.
+They lived in their own `render/` package, then `tools/`, until 2026-09-23
+(bean `n350`), when the owner consolidated it by what each part IS: the two
+skills joined `skills/`; the Tool that performs the emission is cat-harness's
+`kg-graph-export`, which `satisfies` both; and the document they describe is
+typed by `BootstrapGraphDocumentSchema` in `bootstrap-tools/schemas/`.
+bootstrap declares no `tools` graph, deliberately: an Initiator has no MCP
+server and that constraint is the role.
 
 ---
 

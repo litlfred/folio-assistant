@@ -466,25 +466,6 @@
       ]
     },
     {
-      "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and bootstrap is not a declared dependency of cat-harness — it is composed under it. So a directory declared only in `bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute bootstrap's rendering exemption are unfetchable from the root — and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
-      "id": "bootstrap-render",
-      "path": "bootstrap/tools/",
-      "dependents": "skip",
-      "scope": "repository",
-      "graphKinds": [
-        "skills"
-      ],
-      "description": "MOVED from `render/` to `tools/` on 2026-09-22 on the owner's instruction. The ID is UNCHANGED: `bootstrap-render` names what this package IS — the skills governing bootstrap's own graph emission — and ids are stable across a relocation while paths are not, which is the same rule that kept the discussion schemas' published `$id`s fixed when they moved. graphKinds stays `[\"skills\"]` and does NOT become `[\"tools\"]`: the `tools` graph holds Tool nodes authored as TypeScript through `defineTool`, and these are two markdown skill bodies. `hfkl` records the owner's original words for this content — *\"as subgraph of skill related to renering .jsonld/.json\"*, and *\"maybe in wrong place\"*, which is what this move answers. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
-            "title": "Skills — bootstrap rendering"
-          }
-        ]
-      }
-    },
-    {
       "id": "cat-harness",
       "path": "skills/",
       "dependents": "skip",

@@ -26,10 +26,22 @@ required at `cat-harness` and above. The exemption is declared in
 field naming this document. **An exemption with no substitute is a hole**; the
 `owes` field is what stops it being one.
 
-## The generator
+## The generator, the Tool, and the schema
+
+Three different things, kept apart on purpose (bean `n350`):
+
+- **This skill** says what the document must be.
+- **The Tool that performs it** is cat-harness's `kg-graph-export`
+  (`bun run kg:export --instance ./bootstrap`), which `satisfies` this skill
+  and [`bootstrap-graph-publication`](bootstrap-graph-publication.md). It is
+  the one publisher.
+- **The shape** is `BootstrapGraphDocumentSchema` in
+  `bootstrap-tools/schemas/bootstrap-graph.ts`, and the tests parse every build
+  against it.
 
 `cat-harness/scripts/gen-bootstrap-graph.ts`, exposed as
-`bun run bootstrap:graph`. It resolves the directories to scan **from the
+`bun run bootstrap:graph`, is the generator the properties below are tested
+against. It resolves the directories to scan **from the
 declaration**, never by walking the tree — which is the axis
 `scripts/tests/bootstrap-graph.test.ts` defends on purpose: the disk side
 of each assertion *names* the directory, the exporter *resolves* it, and a
@@ -70,8 +82,8 @@ first as the second once failed the repository root on that message alone.
 
 ## Adding a skill here
 
-Drop the `.md` in `bootstrap/skills/` or `bootstrap/render/`, add its
-name to that directory's `package-manifest.json`, and the export picks it up —
+Drop the `.md` in `bootstrap/skills/`, add its name to that directory's
+`package-manifest.json`, and the export picks it up —
 no edit to the generator. `isSkillMd` decides by **declaration over location**:
 a front matter carrying `$schema:` says the file is some other node kind, so
 `README.md` and `AGENTS.md`, which declare neither, stay out by being declared

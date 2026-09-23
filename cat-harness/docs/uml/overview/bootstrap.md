@@ -77,41 +77,6 @@ classDiagram
       <<ext: omg-bpmn-2.0>>
     }
   }
-  namespace bootstrap__bootstrap_render {
-    class bootstrap_bootstrap_render_folio_voice_v1_Source["Source"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_v1_Pattern["Pattern"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_v1_Terminology["Terminology"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_v1_Rule["Rule"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
-      <<json: VoiceProfileSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_skill_v1_Source["Source"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_skill_v1_Pattern["Pattern"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_skill_v1_Terminology["Terminology"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_skill_v1_Rule["Rule"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1["folio-voice-skill/v1"] {
-      <<json: VoiceSkillSchema>>
-    }
-    class bootstrap_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
-      <<json: KgQaManifestSchema>>
-    }
-  }
   namespace bootstrap__models {
     class bootstrap_models_Model["Model"] {
       <<json: ModelRegistrySchema>>
@@ -160,25 +125,6 @@ classDiagram
   cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
   cssClass "bootstrap_processes_omg_bpmn_2_0" fa_uml_kind_processes
-  bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_v1_Source : sources
-  bootstrap_bootstrap_render_folio_voice_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_v1_Pattern : patterns
-  bootstrap_bootstrap_render_folio_voice_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_v1_Terminology : terminology
-  bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_v1_Rule : rules
-  bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Source : sources
-  bootstrap_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Pattern : patterns
-  bootstrap_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Terminology : terminology
-  bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" bootstrap_bootstrap_render_folio_voice_skill_v1_Rule : rules
-  cssClass "bootstrap_bootstrap_render_folio_voice_v1_Source" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_v1_Pattern" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_v1_Terminology" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_v1_Rule" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_skill_v1_Source" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_skill_v1_Pattern" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_skill_v1_Terminology" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_skill_v1_Rule" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1" fa_uml_kind_skills
-  cssClass "bootstrap_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
@@ -192,7 +138,6 @@ classDiagram
 | `bootstrap/schemas` | `bootstrap/schemas` | schemas | `ext: JSON Schema draft-07`; `ext: JSON Schema 2020-12`; `SourceDescriptorSchema` |
 | `bootstrap/scenarios` | `bootstrap/scenarios` | scenarios | `RoleGraphSchema` |
 | `bootstrap/processes` | `bootstrap/processes` | processes | `ext: omg-bpmn-2.0` |
-| `bootstrap/bootstrap-render` | `bootstrap/tools` | skills | `VoiceProfileSchema`; `VoiceSkillSchema`; `KgQaManifestSchema` |
 | `bootstrap/models` | `bootstrap/models` | models | `ModelRegistrySchema` |
 | `bootstrap/glossary` | `bootstrap/glossary` | glossary | `ts: Ledger` |
 | `bootstrap/bootstrap-translations` | `bootstrap/translations` | translation-sources | `TranslationConfigSchema` |
@@ -203,7 +148,6 @@ classDiagram
 - [bootstrap/schemas](bootstrap/schemas.html)
 - [bootstrap/scenarios](bootstrap/scenarios.html)
 - [bootstrap/processes](bootstrap/processes.html)
-- [bootstrap/bootstrap-render](bootstrap/bootstrap-render.html)
 - [bootstrap/models](bootstrap/models.html)
 - [bootstrap/glossary](bootstrap/glossary.html)
 - [bootstrap/bootstrap-translations](bootstrap/bootstrap-translations.html)

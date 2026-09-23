@@ -34,30 +34,6 @@ package "cat-harness/uml" as pkg_cat_harness_uml <<uml>> {
   class "uml" as cat_harness_uml_uml_shape <<schema: scripts/gen-uml-overview.ts>> {
   }
 }
-package "cat-harness/bootstrap-render" as pkg_cat_harness_bootstrap_render <<skills>> {
-  class "Source" as cat_harness_bootstrap_render_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
-  }
-  class "Pattern" as cat_harness_bootstrap_render_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> {
-  }
-  class "Terminology" as cat_harness_bootstrap_render_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> {
-  }
-  class "Rule" as cat_harness_bootstrap_render_folio_voice_v1_Rule <<json: VoiceProfileSchema>> {
-  }
-  class "folio-voice/v1" as cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> {
-  }
-  class "Source" as cat_harness_bootstrap_render_folio_voice_skill_v1_Source <<json: VoiceSkillSchema>> {
-  }
-  class "Pattern" as cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern <<json: VoiceSkillSchema>> {
-  }
-  class "Terminology" as cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology <<json: VoiceSkillSchema>> {
-  }
-  class "Rule" as cat_harness_bootstrap_render_folio_voice_skill_v1_Rule <<json: VoiceSkillSchema>> {
-  }
-  class "folio-voice-skill/v1" as cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 <<json: VoiceSkillSchema>> {
-  }
-  class "kg-qa-manifest/v1" as cat_harness_bootstrap_render_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> {
-  }
-}
 package "cat-harness/cat-harness" as pkg_cat_harness_cat_harness <<skills>> {
   class "Source" as cat_harness_cat_harness_folio_voice_v1_Source <<json: VoiceProfileSchema>> {
   }
@@ -448,14 +424,6 @@ package "cat-harness/cat-harness-tests" as pkg_cat_harness_cat_harness_tests <<c
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
 cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
 cat_harness_schemas_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" cat_harness_schemas_folio_source_descriptor_v1_Identifier : identifiers
-cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Source : sources
-cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Pattern : patterns
-cat_harness_bootstrap_render_folio_voice_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_v1_Terminology : terminology
-cat_harness_bootstrap_render_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_v1_Rule : rules
-cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Source : sources
-cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Pattern : patterns
-cat_harness_bootstrap_render_folio_voice_skill_v1_Rule *-- "0..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Terminology : terminology
-cat_harness_bootstrap_render_folio_voice_skill_v1_folio_voice_skill_v1 *-- "1..*" cat_harness_bootstrap_render_folio_voice_skill_v1_Rule : rules
 cat_harness_cat_harness_folio_voice_v1_folio_voice_v1 *-- "1..*" cat_harness_cat_harness_folio_voice_v1_Source : sources
 cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Pattern : patterns
 cat_harness_cat_harness_folio_voice_v1_Rule *-- "0..*" cat_harness_cat_harness_folio_voice_v1_Terminology : terminology
