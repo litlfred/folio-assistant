@@ -9,7 +9,7 @@
  * | changed | blocks in the section the ChangeSet lists | how much text changed; a one-word edit counts 1 |
  * | open | review comments not yet closed (`open` or `addressed`); defects counted apart | how bad the section is; one comment may cover a whole section |
  * | stale | open comments whose block changed AFTER the comment was made | wrong; it means "re-read before replying" |
- * | coverage | NOT MEASURED YET | "every comment resolved". Coverage needs a per-block reviewer verdict, which nothing records until bean en2d's process does. Resolved comments are not approval. |
+ * | coverage | changed (added or changed) blocks with a reviewer VERDICT on their CURRENT hash, of those needing one (bean px0t) | "every comment resolved": resolved comments are not a verdict. A verdict on an older version does not count |
  * | qa | the section's blocks whose latest QA verdicts FAIL, and those whose verdicts are STALE (older than the block), from `block-qa.json` | a pass when it is empty of failures: stale and unaudited blocks are counted and said, never read as passing |
  *
  * A column with no data is SAID, per row, never shown as 0 or blank. Zero
@@ -36,35 +36,55 @@ export interface HeatRow {
   qaUnaudited: number;
   /** Blocks in the section the QA summary covers. */
   qaBlocks: number;
+  /** Added or changed blocks, which each need a verdict; and those that have one on their current hash. */
+  needReview: number;
+  reviewed: number;
 }
 
 export interface HeatInput {
-  changes: Array<{ label: string; head?: { section?: string }; base?: { section?: string } }>;
+  changes: Array<{ label: string; change?: string; head?: { section?: string }; base?: { section?: string } }>;
   /** `review-comments.json`'s comments, or null when there is no such file. */
   comments: Array<{ targetLabel: string; status: string; review: { kind: string; blockHash: string | null; orphaned?: boolean } }> | null;
   /** `blocks.json`: each head block's current hash and section, or null. */
   blocks: Record<string, { hash: string; section?: string }> | null;
   /** `block-qa.json`'s `blocks`, or null when the build published none. */
   qa?: Record<string, { state: string; worst: string | null }> | null;
+  /** `review-comments.json`'s `verdicts`, or null when there is no such file. */
+  verdicts?: Array<{ targetLabel: string; blockHash: string }> | null;
 }
 
-export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: boolean; hasBlocks: boolean; hasQa: boolean } {
+export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: boolean; hasBlocks: boolean; hasQa: boolean; hasVerdicts: boolean } {
   const NONE = "(listed in no section)";
   const rows = new Map<string, HeatRow>();
   const row = (s: string | undefined) => {
     const k = s || NONE;
     let r = rows.get(k);
     if (!r) {
-      r = { section: k, changed: 0, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0 };
+      r = { section: k, changed: 0, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 };
       rows.set(k, r);
     }
     return r;
   };
+  // Coverage needs both the verdicts and each block's current hash: a
+  // verdict counts only on the version it was given on.
+  const hasVerdicts = !!input.verdicts && input.blocks !== null;
+  const current: Record<string, boolean> = {};
+  if (hasVerdicts) {
+    for (const v of input.verdicts!) {
+      const b = input.blocks![v.targetLabel];
+      if (b && b.hash === v.blockHash) current[v.targetLabel] = true;
+    }
+  }
   const sectionOf = new Map<string, string | undefined>();
   for (const c of input.changes) {
     const s = (c.head || c.base || {}).section;
     sectionOf.set(c.label, s);
-    row(s).changed++;
+    const r = row(s);
+    r.changed++;
+    if (c.change === "added" || c.change === "changed") {
+      r.needReview++;
+      if (current[c.label]) r.reviewed++;
+    }
   }
   for (const c of input.comments || []) {
     if (c.status !== "open" && c.status !== "addressed") continue;
@@ -102,7 +122,7 @@ export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: b
   const rest = [...rows.keys()].filter((k) => !order.includes(k)).sort();
   const all = [...order, ...rest].filter((k) => k !== NONE);
   if (rows.has(NONE)) all.push(NONE);
-  return { rows: all.map((k) => rows.get(k)!), hasComments: input.comments !== null, hasBlocks: input.blocks !== null, hasQa: qa !== null };
+  return { rows: all.map((k) => rows.get(k)!), hasComments: input.comments !== null, hasBlocks: input.blocks !== null, hasQa: qa !== null, hasVerdicts };
 }
 
 /** 0 → no fill; otherwise the tertile of the column's maximum, 1–3. */
@@ -122,10 +142,11 @@ export function heatBucket(v: number, max: number): number {
 export function renderHeat(
   doc: Document,
   h: {
-    rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number; qaFailing: number; qaWorst: string | null; qaStale: number; qaUnaudited: number; qaBlocks: number }>;
+    rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number; qaFailing: number; qaWorst: string | null; qaStale: number; qaUnaudited: number; qaBlocks: number; needReview: number; reviewed: number }>;
     hasComments: boolean;
     hasBlocks: boolean;
     hasQa: boolean;
+    hasVerdicts: boolean;
   },
   bucket: (v: number, max: number) => number,
   jump: (section: string) => void,
@@ -140,7 +161,7 @@ export function renderHeat(
     ["Changed blocks", "blocks the ChangeSet lists"],
     ["Open comments", "open or addressed; defects in brackets"],
     ["Stale comments", "the block changed after the comment was made: re-read before replying"],
-    ["Review coverage", "not measured yet"],
+    ["Review coverage", "changed blocks with a reviewer verdict on their current version; resolved comments do not count"],
     ["QA", "blocks whose latest QA verdicts fail; stale and unaudited blocks are counted, never read as passing"],
   ];
   const head = doc.createElement("thead");
@@ -155,7 +176,7 @@ export function renderHeat(
   head.appendChild(hr);
   t.appendChild(head);
   const max = (k: "changed" | "open" | "stale" | "qaFailing") => Math.max(0, ...h.rows.map((r) => r[k]));
-  const mx = { changed: max("changed"), open: max("open"), stale: max("stale"), qa: max("qaFailing") };
+  const mx = { changed: max("changed"), open: max("open"), stale: max("stale"), qa: max("qaFailing"), unreviewed: Math.max(0, ...h.rows.map((r) => r.needReview - r.reviewed)) };
   const body = doc.createElement("tbody");
   const cell = (text: string, b: number, title: string, muted = false) => {
     const td = doc.createElement("td");
@@ -186,7 +207,15 @@ export function renderHeat(
     } else {
       tr.appendChild(cell("no data", 0, "Needs review-comments.json and blocks.json", true));
     }
-    tr.appendChild(cell("not measured yet", 0, "Coverage needs a per-block reviewer verdict, which nothing records yet (bean en2d). Resolved comments are not approval.", true));
+    if (!h.hasVerdicts) {
+      tr.appendChild(cell("no data", 0, "Needs review-comments.json (with its verdicts) and blocks.json", true));
+    } else if (!r.needReview) {
+      tr.appendChild(cell("nothing to review", 0, "No block here was added or changed", true));
+    } else {
+      // Shaded by what is still UNREVIEWED: the darker, the more reading left.
+      const left = r.needReview - r.reviewed;
+      tr.appendChild(cell(r.reviewed + " of " + r.needReview + " reviewed", bucket(left, mx.unreviewed), left + " changed block(s) with no verdict on their current version"));
+    }
     if (!h.hasQa) {
       tr.appendChild(cell("not published", 0, "This build published no block-qa.json (or no blocks.json to place it by section)", true));
     } else {

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: review-task\n"
-"POT-Creation-Date: 2026-09-22T08:18:10.083Z\n"
+"POT-Creation-Date: 2026-09-23T12:22:35.053Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -14,57 +14,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/review-task.bpmn:98
+#: processes/review-task.bpmn:109
 #. Diagram label
 msgid "Accept, or send back"
 msgstr ""
 
-#: processes/review-task.bpmn:61
+#: processes/review-task.bpmn:62
 #. Diagram label
 msgid "Change to review"
 msgstr ""
 
-#: processes/review-task.bpmn:63
+#: processes/review-task.bpmn:64
 #. Diagram label
 msgid "Classify what changed"
 msgstr ""
 
-#: processes/review-task.bpmn:81
+#: processes/review-task.bpmn:84
 #. Diagram label
 msgid "Code node review"
 msgstr ""
 
-#: processes/review-task.bpmn:111
+#: processes/review-task.bpmn:122
 #. Diagram label
 msgid "code nodes"
 msgstr ""
 
-#: processes/review-task.bpmn:90
+#: processes/review-task.bpmn:101
 #. Diagram label
 msgid "Consolidate findings"
 msgstr ""
 
-#: processes/review-task.bpmn:106
+#: processes/review-task.bpmn:117
 #. Diagram label
 msgid "Decision recorded"
 msgstr ""
 
-#: processes/review-task.bpmn:82
+#: processes/review-task.bpmn:85
 #. Diagram element documentation
 msgid "Descend into Process_CodeReview. The actor takes on the `code-reviewer` lane for this call path only."
 msgstr ""
 
-#: processes/review-task.bpmn:75
+#: processes/review-task.bpmn:92
+#. Diagram element documentation
+msgid "Descend into Process_NarrativeCodeReview: judge what the pair checks could not settle (a stale pair, a false or undetermined claim), and send a disagreement with a checker to adjudication. Issue #1042, stage C."
+msgstr ""
+
+#: processes/review-task.bpmn:78
 #. Diagram element documentation
 msgid "Descend into Process_NarrativeReview. The actor takes on the `narrative-reviewer` lane for this call path only."
 msgstr ""
 
-#: processes/review-task.bpmn:55
+#: processes/review-task.bpmn:56
 #. Diagram label
 msgid "Editors + authoring agents"
 msgstr ""
 
-#: processes/review-task.bpmn:56
+#: processes/review-task.bpmn:57
 #. Diagram element documentation
 msgid "Kept a separate lane on purpose, holding the one activity this diagram gives it: the reviewer who classified and judged the change is never the party that accepts it, so consolidated findings cross a lane boundary before anything is decided on them."
 msgstr ""
@@ -74,27 +79,37 @@ msgstr ""
 msgid "Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other."
 msgstr ""
 
-#: processes/review-task.bpmn:74
+#: processes/review-task.bpmn:77
 #. Diagram label
 msgid "Narrative review"
 msgstr ""
 
-#: processes/review-task.bpmn:91
+#: processes/review-task.bpmn:102
 #. Diagram element documentation
 msgid "One report from however many subprocesses ran. Findings are advice: a reviewer cannot accept the change."
 msgstr ""
 
-#: processes/review-task.bpmn:110
+#: processes/review-task.bpmn:121
 #. Diagram label
 msgid "prose"
 msgstr ""
 
-#: processes/review-task.bpmn:64
+#: processes/review-task.bpmn:91
+#. Diagram label
+msgid "Prose and the code it describes"
+msgstr ""
+
+#: processes/review-task.bpmn:123
+#. Diagram label
+msgid "prose and the code it describes"
+msgstr ""
+
+#: processes/review-task.bpmn:65
 #. Diagram element documentation
 msgid "Prose, code nodes, or both. This is the only decision the generic lane makes on its own: everything after it is made inside a subprocess by the role that lane binds."
 msgstr ""
 
-#: processes/review-task.bpmn:72
+#: processes/review-task.bpmn:73
 #. Diagram label
 msgid "Prose, code, or both?"
 msgstr ""
@@ -109,12 +124,17 @@ msgstr ""
 msgid "Reviewer / SME"
 msgstr ""
 
-#: processes/review-task.bpmn:99
+#: processes/review-task.bpmn:110
 #. Diagram element documentation
 msgid "The editor's lane, kept separate on purpose: the reviewer who judged the change is not the position that accepts it."
 msgstr ""
 
 #: processes/review-task.bpmn:37
 #. Diagram element documentation
-msgid "The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back. You are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both goes through both. The accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes \"who decided\" answerable."
+msgid "The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back. You are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both — prose and the code it describes — takes a branch of its own, which reviews the two against each other; the gateway is exclusive and takes exactly one branch, so the earlier wording, that such a change goes through both, described a route the diagram could not take (issue #1042). The accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes \"who decided\" answerable."
+msgstr ""
+
+#: processes/review-task.bpmn:74
+#. Diagram element documentation
+msgid "What changed decides which review it gets, from Task_ClassifyChange's scoping. Prose alone goes to narrative review and code nodes alone to code node review. A change touching BOTH SIDES OF A DECLARED PAIR — a diagram and the workflow it implements, a skill and the code beside it — goes to the pair review, which is the only branch that reads the two against each other. Exclusive, so exactly one branch is taken."
 msgstr ""

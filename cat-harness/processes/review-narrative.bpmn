@@ -56,13 +56,13 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
       <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_Adjudication" name="Adjudicate the voice findings">
+    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_CriterionAdjudication" name="Adjudicate the voice findings">
       <bpmn:documentation>
         Three outcomes, all legitimate: the register is wrong for this genre;
         the criterion does not belong in this genre and should carry `profiles`;
         or the block is a stated exception and a reviewer entry records why.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
 
     <bpmn:callActivity id="Call_VoiceOverlay" name="Voice overlay review" calledElement="Process_VoiceReview">

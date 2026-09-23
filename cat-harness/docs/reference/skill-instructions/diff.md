@@ -96,6 +96,13 @@ review page never disagree:
     and the `id-stable` QA criterion fails it. Point that out; do not
     paper over it.
 
+**Once the branch is pushed, link the review page as well.** The folio's
+staging preview publishes this same ChangeSet as `changeset.json` and renders
+it at `STAGING/<slug>/review/`: before and after for every block, the heat
+map, and the outline. Give that URL next to the table. It is the one a
+reviewer can open without a local server, and it shows the same changes in
+the same words, because it reads the same file.
+
 Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
 Report them separately from `rendered[]` hashes, as before.
 

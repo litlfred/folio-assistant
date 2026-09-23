@@ -297,7 +297,13 @@ For each bean:
    | Landing | [main](…) | [staging](…) | Added badge |
    ```
 6. **Iterate on PR feedback** — code review is on the PR; visual review
-   uses the staging preview URLs
+   uses the staging preview URLs. When the change touches a **folio's
+   blocks**, the page a reviewer opens is the preview's **review page**,
+   `STAGING/<slug>/review/`: every changed block before and after, with the
+   heat map and outline. The review itself runs through
+   `content-change-review.bpmn`. The review coordinator slices the change and
+   assigns the slices, reviewers work them in `review-task`, disagreements go
+   to `adjudication`, and the coverage gate must pass before sign-off.
 7. **Ask user for explicit confirmation before merging to main**
 8. **Update documentation** — the OWNING instance's `docs/` pages and the
    workflow BPMNs. If Phase 5's offer chose a `docs/` destination, this is

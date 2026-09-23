@@ -80,9 +80,10 @@
  *
  * Moving to an item announces where it is (document, chapter, section,
  * block) in the live status line. `n` and `p` jump to the next and previous
- * block with open comments, each with a button twin. "Next unreviewed" is NOT
- * offered: nothing records a review verdict yet (bean `en2d`), and a button
- * that guessed would send a reviewer past blocks nobody has looked at. The
+ * block with open comments, and `u` to the next changed block with no
+ * reviewer verdict on its CURRENT version (bean `px0t`), each with a button
+ * twin. Every changed block says in words whether it has a verdict, and
+ * whose. A verdict on an older version is shown, and does not count. The
  * pieces are `scripts/review-nav.ts`, embedded with `toString()`. The owner's
  * ruling puts the outline here and nowhere else.
  *
@@ -214,6 +215,18 @@ const SCRIPT = `
 
   document.getElementById("next").addEventListener("click", function () { focusItem(at + 1); });
   document.getElementById("prev").addEventListener("click", function () { focusItem(at - 1); });
+  // Next changed block with no verdict on its current version (px0t), wrapping.
+  function focusUnreviewed() {
+    var n = items.length;
+    var start = at < 0 ? -1 : at;
+    for (var k = 1; k <= n; k++) {
+      var j = (start + k) % n;
+      if (items[j].getAttribute("data-reviewed") === "no") { focusItem(j); return; }
+    }
+    status.textContent = VERDICTS ? "Every changed block has a verdict on its current version." : "No verdict data on this build.";
+  }
+  var VERDICTS = false;
+  document.getElementById("nextu").addEventListener("click", focusUnreviewed);
   document.getElementById("nextc").addEventListener("click", function () { focusCommented(1); });
   document.getElementById("prevc").addEventListener("click", function () { focusCommented(-1); });
   document.addEventListener("keydown", function (e) {
@@ -225,6 +238,7 @@ const SCRIPT = `
     else if (e.key === "k") { focusItem(at - 1); e.preventDefault(); }
     else if (e.key === "n") { focusCommented(1); e.preventDefault(); }
     else if (e.key === "p") { focusCommented(-1); e.preventDefault(); }
+    else if (e.key === "u") { focusUnreviewed(); e.preventDefault(); }
   });
 
   // One comment as a line of words: kind, status, who, what — never colour alone.
@@ -366,6 +380,11 @@ const SCRIPT = `
       var txt = both[2];
       var byLabel = {};
       var shown = {};
+      // Verdicts by label (px0t). Counted only on the block's current hash.
+      // A file written before verdicts existed has no field at all: "no data", never "none given".
+      VERDICTS = !!(rc && Array.isArray(rc.verdicts) && blocksFile);
+      var verdictsBy = {};
+      ((rc && rc.verdicts) || []).forEach(function (v) { (verdictsBy[v.targetLabel] = verdictsBy[v.targetLabel] || []).push(v); });
       ((rc && rc.comments) || []).forEach(function (c) {
         if (c.review && c.review.orphaned) return;
         (byLabel[c.targetLabel] = byLabel[c.targetLabel] || []).push(c);
@@ -406,6 +425,20 @@ const SCRIPT = `
           li.setAttribute("data-open", String((byLabel[c.label] || []).filter(function (x) { return x.status === "open" || x.status === "addressed"; }).length));
           li.appendChild(el("span", kindWords(c).join(", "), "kind"));
           li.appendChild(el("span", c.label, "label"));
+          if (VERDICTS && c.change !== "removed") {
+            var cur = blocksFile[c.label] ? blocksFile[c.label].hash : null;
+            var vs = verdictsBy[c.label] || [];
+            var now = vs.filter(function (v) { return v.blockHash === cur; });
+            var old = vs.length - now.length;
+            li.setAttribute("data-reviewed", now.length ? "yes" : "no");
+            var vd = el("div", null, now.length ? "verdict" : "verdict muted");
+            vd.appendChild(el("span", now.length ? "Reviewed: " : "No verdict on this version yet", "kind"));
+            if (now.length) vd.appendChild(el("span", now.map(function (v) {
+              return (v.verdict === "waived" ? "waived (" + v.reason + ")" : v.verdict) + " by " + v.reviewer + " as " + v.role;
+            }).join("; ")));
+            if (old) vd.appendChild(el("span", " (" + old + " verdict" + (old > 1 ? "s" : "") + " on an earlier version, not counted)", "muted"));
+            li.appendChild(vd);
+          }
           if (c.from) li.appendChild(el("span", " (was " + c.from + ")", "muted"));
           var links = el("div", null, "links");
           var after = c.change !== "removed" ? href("../", c.head, c.label) : null;
@@ -429,6 +462,11 @@ const SCRIPT = `
             var t = el("div", null, "muted");
             t.appendChild(el("span", "To comment, start a pull-request comment with "));
             t.appendChild(el("code", "block: " + c.label, "tagline"));
+            t.appendChild(el("span", ". To record that you reviewed it, add the line "));
+            t.appendChild(el("code", "verdict: ok", "tagline"));
+            t.appendChild(el("span", " (or "));
+            t.appendChild(el("code", "verdict: changes", "tagline"));
+            t.appendChild(el("span", ")"));
             if (st.prUrl) { t.appendChild(el("span", " ")); var p = el("a", "open the pull request"); p.href = st.prUrl; t.appendChild(p); }
             li.appendChild(t);
           }
@@ -464,7 +502,7 @@ const SCRIPT = `
       if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only side by side is available.";
       applyView(viewAll.value);
       // The heat map (qbfi), above the list it indexes.
-      var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile, qa: qaFile ? qaFile.blocks : null });
+      var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile, qa: qaFile ? qaFile.blocks : null, verdicts: rc && Array.isArray(rc.verdicts) ? rc.verdicts : null });
       if (heat.rows.length) {
         var wrap = document.getElementById("heat");
         wrap.appendChild(renderHeat(document, heat, heatBucket, function (sec) {
@@ -472,7 +510,7 @@ const SCRIPT = `
             list.querySelector('h2[data-section="(unchanged)"]');
           if (t) { t.focus(); t.scrollIntoView({ block: "start" }); }
         }));
-        wrap.appendChild(el("p", "Review coverage is not measured yet: it needs a per-block reviewer verdict, which nothing records until the review process does, and resolved comments are not approval. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
+        wrap.appendChild(el("p", "Review coverage counts a changed block as reviewed only when a reviewer recorded a verdict on its current version: an edit after the verdict reopens it, and resolved comments are not a verdict. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
       }
       // Navigation pane (eb4l): outline and minimap, when the build published an outline.
       var navPane = document.getElementById("navpane");
@@ -534,6 +572,7 @@ export function reviewPageHtml(): string {
   <button type="button" id="next">Next (j)</button>
   <button type="button" id="prevc">Previous with comments (p)</button>
   <button type="button" id="nextc">Next with comments (n)</button>
+  <button type="button" id="nextu">Next unreviewed (u)</button>
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>

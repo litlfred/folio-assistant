@@ -174,6 +174,7 @@ const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
   todos: "core",
   "todo-items": "core",
   "todo-feedback": "core",
+  "review-verdicts": "core",
 };
 
 /** The graph kinds' own summaries — read, never restated. */

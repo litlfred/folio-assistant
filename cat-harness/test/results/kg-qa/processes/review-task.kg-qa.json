@@ -5,7 +5,7 @@
     "id": "Process_Review",
     "path": "processes/review-task.bpmn"
   },
-  "source_hash": "sha256:0e91ee2a3f06bd0dd743928c4c77a72cc8e91b2e2b443ad03ffe5a9399c3b37f",
+  "source_hash": "sha256:60a47a2d24a73986abb2b35723179cf733122c3d7d4e41875a84d0c1a91149e3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,13 +80,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Kind",
-          "detail": "\"Prose, code, or both?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -102,8 +97,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 13,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

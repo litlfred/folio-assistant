@@ -571,6 +571,10 @@ jobs:
  * new folio stops with "declares no directory of graph kind todo-feedback",
  * so a folio gets it from the start.
  *
+ * `verdicts` (graph kind `review-verdicts`) is where the review coordinator
+ * commits reviewers' per-block verdicts (`folio-review-coverage --commit`,
+ * bean `px0t`). Declared from the start for the same reason.
+ *
  * No `defaultTheme`: a folio's own theme is the folio's to choose, and a
  * literal here would impose one on every new folio.
  */
@@ -591,6 +595,13 @@ function todosGraph(slug: string): string {
           graphKinds: ["todo-feedback"],
           description:
             "Todos raised against a specific block. Review comments land here as `folio-review-comment/v1` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
+        },
+        {
+          id: "verdicts",
+          path: "verdicts",
+          graphKinds: ["review-verdicts"],
+          description:
+            "Reviewers' per-block verdicts, one `folio-review-verdict/v1` JSON each, pinned to the block's hash and committed on the edit-set's feature branch by the review coordinator (`folio-review-coverage --commit`).",
         },
       ],
     },
@@ -757,6 +768,7 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write("todos/todos.json", todosGraph(o.slug));
   write("todos/items/.gitkeep", "");
   write("todos/feedback/.gitkeep", "");
+  write("todos/verdicts/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
   // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.
