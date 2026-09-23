@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 617,
+      "count": 620,
       "unit": "beans"
     }
   },
@@ -331,6 +331,20 @@
       "updatedAt": "2026-09-21T07:36:38Z",
       "preview": "FOUND 2026-09-21 while sweeping `a6kl`.\n\n`cat-harness/schemas/cat-harness.ts:2495` exports:\n\n    /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */\n    export function instanceRootFor(start: string): string\n\n`cat-harness/scripts/check-l1-complete.ts:718` declares its own:\n\n    export function instanceRootFor(cwd: string): string | undefined\n\nThey are genuinely different f",
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
+    },
+    {
+      "id": "folio-assistant-19cc",
+      "title": "UML generators as Tool nodes, with a uml-overview skill",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:57:43Z",
+      "updatedAt": "2026-09-23T09:57:43Z",
+      "preview": "Owner, 2026-09-23: 'make sure tools/skills are updated'. gen-uml-overview.ts and gen-object-model-uml.ts shipped in #991 as scripts only: no Tool node exercises them and no skill says when to run them or how to read the output.\n\n## Todo\n- [x] skill uml-overview in skills/folio-core, in the package manifest\n- [x] Tool nodes uml-overview and uml-object-model satisfying it\n- [ ] gates green, PR",
+      "file": "beans/defs/folio-assistant-19cc--uml-generators-as-tool-nodes-with-a-uml-overview-s.md"
     },
     {
       "id": "folio-assistant-1dfh",
@@ -1579,6 +1593,20 @@
       "updatedAt": "2026-09-20T19:59:52Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
+    },
+    {
+      "id": "folio-assistant-6hq4",
+      "title": "QA: gateway documentation-completeness criteria (decisions and their branches)",
+      "status": "completed",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:56:25Z",
+      "updatedAt": "2026-09-23T10:40:00Z",
+      "preview": "Extend the documentation-completeness QA control (issue #1007, bean `ooq3`)\npast activities, to the decision points of a diagram. Issue #1044, PR #1051,\nbranch `claude/magical-archimedes-4qkfxp-gateways`.\n\n## Measurement (2026-09-23, all 62 diagrams `kg-audit` loads, 0 load failures)\n\n- Gateways: 123 — 111 exclusive (102 diverging, 9 converging), 12 parallel\n  (6 fork, 6 join), 0 inclusive (the mo",
+      "file": "beans/defs/folio-assistant-6hq4--qa-gateway-documentation-completeness-criteria-dec.md"
     },
     {
       "id": "folio-assistant-6lb8",
@@ -4351,14 +4379,14 @@
     {
       "id": "folio-assistant-iumj",
       "title": "e2e fixtures read the live QA corpus, so adjudicating a finding turns CI red",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:17:56Z",
-      "updatedAt": "2026-09-19T01:34:39Z",
+      "updatedAt": "2026-09-23T09:58:54Z",
       "preview": "## What happened\n\n`main` went red at `78a399ee5` on `End-to-end + accessibility (hard)` — two\nspecs in `tests/qa-panel.e2e.ts`. Fixed on `claude/ecstatic-goldberg-eroyaz`\n(PR #314); this bean is the general defect that fix does not close.\n\nA composition failure. #317 added the e2e job, green against the corpus as it\nthen stood. #302 adjudicated all 26 `voice-*` findings to zero — correctly —\nand w",
       "file": "beans/defs/folio-assistant-iumj--e2e-fixtures-read-the-live-qa-corpus-so-adjudicati.md"
     },
@@ -6187,6 +6215,20 @@
       "updatedAt": "2026-09-20T09:16:26Z",
       "preview": "**Measured 2026-09-19** while triaging `folio-assistant-y1w9`. Found by a\nhypothesis failing, which is the useful kind: I expected skills to declare\nwho performs them, so that binding them to roles would be evidence-backed\nrather than invented. 89 of 112 unbound skills DO declare `roles:` — and\nonly **2** name an actual swimlane role.\n\n## The measurement\n\nAcross 178 skill files with front matter, ",
       "file": "beans/defs/folio-assistant-qif9--skill-front-matter-roles-carries-two-vocabularies.md"
+    },
+    {
+      "id": "folio-assistant-qivo",
+      "title": "SPOKEN COUNT: the glass handle's accessible name says how many items wait on the folio",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:27:15Z",
+      "updatedAt": "2026-09-23T11:27:15Z",
+      "preview": "Owner, 2026-09-23: \"do the spoken count on phone next\".\n\n`c132` (#1039) drew the phone handle's `· N` with `::after` and recorded it as Not done: a screen reader reads the handle's `aria-label`, which replaces its content, so the number was visible and silent.\n\n## Done when\n\n- [x] while the glass is closed, the accessible name carries the count: \"Pull down your folio — 2 items on it\", singular for",
+      "file": "beans/defs/folio-assistant-qivo--spoken-count-the-glass-handles-accessible-name-say.md"
     },
     {
       "id": "folio-assistant-qmjh",
@@ -8147,14 +8189,14 @@
     {
       "id": "folio-assistant-xwi8",
       "title": "91 ORPHANED LIBRARY BLOCK FILES: committed .jsonld no section references — keep or prune?",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:30:19Z",
-      "updatedAt": "2026-09-23T07:34:11Z",
+      "updatedAt": "2026-09-23T11:48:23Z",
       "preview": "Found by bean `zaqn`. `gen-library-jsonld` reports 91 orphaned block files (\"referenced by no section … Remove with --prune, once you have looked\"):\n\n| document | files |\n|---|---|\n| smart-base/library/9789240093362-eng | 47 |\n| agent-skills/library/arxiv-2608.08453v1 | 20 |\n| agent-skills/library/arxiv-2607.25032v1 | 12 |\n| cat-harness/library/arxiv-2508.05192v2 | 12 |\n\nAbout 364 KB total; last t",
       "file": "beans/defs/folio-assistant-xwi8--91-orphaned-library-block-files-committed-jsonld-n.md"
     },

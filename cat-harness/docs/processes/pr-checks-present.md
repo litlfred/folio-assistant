@@ -38,4 +38,13 @@ Every one of the 5 step(s) is documented.
 | **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. |
 | **Comment ONCE per&#10;(PR, head sha)**<br>`Task_Comment` | Scheduled log sweep | [`issue-working`](../reference/skill-instructions/issue-working.html) | Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped. |
 
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we&#10;tell?**<br>`GW_Determined` | Asked of the `verdict` output of the `Sweep` step in .github/workflows/pr-checks-present.yml, which runs `check:prs-have-runs --min-age-minutes 15`. Exit 0 is clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is reclassified as could-not-determine, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `pr-no-checks` label. | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any head&#10;with no run?**<br>`GW_Finding` | Asked of the same `verdict`. `none` is verdict == 'clean': every open PR's head older than 15 minutes has a run, and the tracking issue is closed. `one or more` is verdict == 'findings': the one tracking issue is opened or edited in place, and the workflow also comments once on each affected pull request. | **none** → Close the&#10;tracking issue<br>**one or more** → Open or EDIT the one&#10;tracking issue |
+
 {% endraw %}

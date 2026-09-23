@@ -75,7 +75,9 @@ idle-backlog policy of signal and collided with 15 real ids.</bpmn:documentation
       <bpmn:extensionElements><folio:skill ref="todo-manager"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Exists" name="Already exists?"/>
+    <bpmn:exclusiveGateway id="GW_Exists" name="Already exists?">
+      <bpmn:documentation>Answered by the exact-title check before it (`todo-manager` §'Check before you create'): `beans list --json --search` followed by an exact comparison of titles, since `--search` is fuzzy. `no` (0 exact matches) creates the bean. `yes` (1 or more) does not create a second one — `beans create` mints a fresh id every call and dedupes on nothing — and asks whose the existing bean is.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_Create" name="Create the bean&#10;(agent CLI, not an engine op)">
       <bpmn:documentation>`beans create &quot;&lt;title&gt;&quot;`. This is the AGENT's call.
@@ -84,7 +86,9 @@ resolve, all of which act on an instance's existing bean.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="todo-manager"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Owner" name="Whose bean?"/>
+    <bpmn:exclusiveGateway id="GW_Owner" name="Whose bean?">
+      <bpmn:documentation>Answered from the existing bean and its surroundings (`bean-coordination`). `someone else's` means a sibling is mid-flight on it: a claim naming a branch, a recent note, or an open PR. That bean is left alone and the lifecycle ends here. `mine / unclaimed` claims it. A claim is branch-local, so check the bean's status on origin/main and the open PRs naming it, not only the copy on your branch.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_LeaveAlone" name="Leave it alone&#10;(coordinate instead)">
       <bpmn:documentation>Never resolve, scrap or delete a bean another session
@@ -116,7 +120,9 @@ bean whose body is a title is a placeholder, not a plan.</bpmn:documentation>
       </bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Outcome" name="Outcome?"/>
+    <bpmn:exclusiveGateway id="GW_Outcome" name="Outcome?">
+      <bpmn:documentation>The performer's judgement on the work, and one of three recorded endings. `done`: complete it only when no todo is unchecked, with a summary of what changed. `not wanted`: set it `scrapped` with a 'Reasons for Scrapping' section — never delete. `blocked`: record what it waits on with `--blocked-by`, say what would unblock it, and return it to `todo`, because an in-progress bean nobody is progressing reads as active work.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_Complete" name="Complete&#10;(no unchecked todos left)">
       <bpmn:documentation>Only once nothing is unchecked, and with a summary of

@@ -894,6 +894,44 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They are siblings rather than alternatives: one renders theme tokens and
     // the other avatar glyphs, and a caller wanting either is not served by the
     // other.
+    // The two UML generators (bean `19cc`). Siblings rather than alternatives:
+    // one draws every declared sub-graph from the registry, the other draws
+    // the harness object model with its relationships, and neither covers
+    // the other.
+    defineTool({
+      id: "uml-overview",
+      title: "UML overview per named sub-graph",
+      description:
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      install: { none: true },
+      invoke: { shell: "bun run uml:overview" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram, SVG or page is stale or orphaned, instead of writing." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "uml-object-model",
+      title: "Harness object model as PlantUML",
+      description:
+        "Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-object-model-uml.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed diagram is stale. Needs the beans CLI; without it the result is could-not-check (exit 2)." },
+        ],
+        outputs: [{ name: "diagram", schema: t("RepoPath"), description: "The object-model diagram, in the instance's declared uml directory." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     defineTool({
       id: "themes-css",
       title: "Theme stylesheet",

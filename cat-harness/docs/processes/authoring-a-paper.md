@@ -47,4 +47,13 @@ Every one of the 9 step(s) is documented.
 | **8 · Review and feedback**<br>`Task_Review` | Reviewer / SME | [`content-review`](../reference/skill-instructions/content-review.html) | Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path. |
 | **9 · Publish**<br>`Task_Publish` | Build pipeline — validate · render · publish | [`content-publish`](../reference/skill-instructions/content-publish.html) | See draft-to-publication.bpmn for the review and release path this expands into. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Build green, no sorries?**<br>`Gateway_LeanGreen` | — | **not yet** → 5 · Formalise in Lean<br>**green** → 6 · Validate |
+| **Ready to publish?**<br>`Gateway_ReviewOutcome` | — | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
+
 {% endraw %}

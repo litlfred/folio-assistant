@@ -40,4 +40,12 @@ Every one of the 5 step(s) is documented.
 | **Review requirements and impact analysis**<br>`BA_ReviewReqs` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA reviews the formal requirements and the impact analysis the agent produced. |
 | **Approve requirements**<br>`S_ApproveReqs` | Stakeholders | — | Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **BA approves?**<br>`GW_Reqs` | — | **revise** → Phases 3–4: Define requirements + impact<br>**yes** → Phase complete |
+
 {% endraw %}

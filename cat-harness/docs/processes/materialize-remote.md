@@ -46,4 +46,12 @@ Every one of the 9 step(s) is documented.
 | **Declare the node `materialized`**<br>`Task_Declare` | Corpus — L1 source knowledge graph | [`materialize-remote`](../reference/skill-instructions/materialize-remote.html) | The node's state moves from `referenced` to `materialized`, carrying purpose, localPath, gates and (archival) fixity. There is NO default state: a node that has not said is invalid, because 'the author did not say' and 'the author said they could not tell' are different facts. |
 | **Leave it `referenced`, record why**<br>`Task_StayRef` | Corpus — L1 source knowledge graph | [`materialize-remote`](../reference/skill-instructions/materialize-remote.html) | A refusal is not a failure of the process — it is the process working. The node stays `referenced`, which means the graph still knows it exists and where, and the refusing gate's basis is recorded so the next caller does not re-litigate it. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **All five answered, none refused?**<br>`Gateway_Gates` | — | **yes** → Fetch, and record fixity<br>**no, or unknown** → Leave it `referenced`, record why |
+
 {% endraw %}

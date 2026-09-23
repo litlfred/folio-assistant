@@ -52,6 +52,7 @@
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Determined" name="Could we&amp;#10;tell?">
+      <bpmn:documentation>Asked of the `verdict` output of the `Sweep` step in .github/workflows/pr-checks-present.yml, which runs `check:prs-have-runs --min-age-minutes 15`. Exit 0 is clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is reclassified as could-not-determine, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `pr-no-checks` label.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -68,6 +69,7 @@
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Finding" name="Any head&amp;#10;with no run?">
+      <bpmn:documentation>Asked of the same `verdict`. `none` is verdict == 'clean': every open PR's head older than 15 minutes has a run, and the tracking issue is closed. `one or more` is verdict == 'findings': the one tracking issue is opened or edited in place, and the workflow also comments once on each affected pull request.</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
