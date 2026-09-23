@@ -44,8 +44,8 @@ A "go" on the session's work is not consent for this. It is the one step in the 
 
 ## Done when
 - [x] the remaining two sha256 comparisons are made
-- [ ] the owner has said whether to remove the seven, and separately what to do with `Home _ folio-assistant.pdf`
-- [ ] if yes: a commit in `litlfred/qou`, not here
+- [x] the owner has said whether to remove the seven, and separately what to do with `Home _ folio-assistant.pdf`
+- [x] if yes: a commit in `litlfred/qou`, not here — for the ONE file that was a yes
 
 ## The verification is complete, 2026-09-22 — and all SEVEN were re-run, not two
 
@@ -97,3 +97,39 @@ rather than as free text.
 
 *Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
 
+## Both decisions taken, 2026-09-22 — and they went opposite ways
+
+Put to the owner by stream 3/3 of the #956 consolidation as two **separate**
+selectable questions, which is what this bean's own Done-when demanded. The
+answers differ, which is the vindication of insisting they be separate:
+
+| | ruling |
+|---|---|
+| the **seven** WHO publications, 16.84 MB, all seven sha256-verified byte-identical | **KEEP them here for now** |
+| **`Home _ folio-assistant.pdf`**, 7.00 MB, never ingested | **remove it, do not ingest it** |
+
+**A single question would have got one of these wrong.** The verification pass
+established that removing the seven loses no bytes, and that is exactly the
+evidence that makes a combined "remove them all" feel obvious. The owner declined
+it for the seven anyway — a completed verification is not an instruction — while
+approving removal of the one file the verification could say nothing about.
+
+### Done, in `litlfred/qou` and not here
+
+- **Issue [litlfred/qou#7450](https://github.com/litlfred/qou/issues/7450)** — what
+  would go, with size, sha256 and the reason this file is not like the other seven.
+- **PR [litlfred/qou#7451](https://github.com/litlfred/qou/pull/7451)** — removes
+  that one file and nothing else.
+
+**Not merged.** `deletion-requires-confirmation` governs, and `qou` is stricter
+still: `/prepare-merge` plus an explicit *"merge it"* from the author for every
+merge to `main`. The PR is the proposal; the merge is the owner's.
+
+Built with git plumbing against `main` @ `7aafd8d` — no checkout, so no blobs were
+fetched — and the resulting tree was verified to contain no `Home*` entry under
+`uploads/` **before** the commit was written. Blob `3a83ab4` stays reachable in
+history: this is a `git rm`, not a history rewrite, so the decision is reversible
+and that is stated rather than assumed.
+
+The seven remain in `qou/uploads/` untouched, with their verification recorded
+above so the next session need not redo it.
