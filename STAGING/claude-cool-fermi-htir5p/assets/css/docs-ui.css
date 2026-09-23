@@ -6493,7 +6493,35 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
-.fa-search-home[data-place="navbar"] .fa-search-peek { display: none; }
+
+/* THE FIELD FILLS THE DISPLAY PANEL. Owner, 2026-09-23: *"it should start open
+   full top of display panel"*.
+
+   `width: 100%` on `.fa-search-home` was never the constraint. MEASURED at
+   1280px, walking the box chain up from the input: `.fa-search-home` 1224,
+   `.fa-search-holder` 1190, `.search` 1190 -- and then the theme's own
+   `.search-input-wrap` at **536px with `max-width: 536px`**, sized for the
+   header just-the-docs renders it in rather than for a panel this wide. So the
+   field was 44% of the space it was given, and every declaration above it was
+   already correct. */
+.fa-search-home[data-place="navbar"] .search-input-wrap {
+  max-width: none;
+  width: 100%;
+}
+
+/* THE GLYPH IS ALWAYS THERE. Owner, same message: *"maginfyingglass
+   avatar/braadning should be visibile always."*
+
+   It used to be `display: none` in this state, on the reasoning that the field
+   is present so the control that reveals it is redundant. That is true of it
+   AS A REVEAL and misses what the owner is asking for: a fixed mark that says
+   "search is here", in the same place in both states, so the eye has one
+   target rather than two.
+
+   It keeps a real job rather than becoming decoration -- clicking it focuses
+   the field. A visible glyph that did nothing would be `gjli`: an inert thing
+   that reads as a control. */
+.fa-search-home[data-place="navbar"] .fa-search-peek { display: inline-flex; }
 
 /* CORNER — fixed, upper right.
  *
