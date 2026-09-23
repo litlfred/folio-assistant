@@ -824,6 +824,28 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun", "chromium"], network: false },
     }),
 
+    // Wireframes (issue #1023): the mechanical half of `wireframe-design-review`.
+    // It records per-viewport pass/fail entries and never a score, because the
+    // `wiregen` methodology adopts the structure of its source's rating and
+    // refuses the arithmetic.
+    defineTool({
+      id: "wireframe-check",
+      title: "Wireframe check at web and mobile viewports",
+      description:
+        "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
+      install: { none: true },
+      invoke: { shell: "bun run wireframe:check" },
+      io: {
+        inputs: [
+          { name: "candidates", schema: t("RepoPath"), required: true, repeated: true, arg: { positional: 0 }, description: "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where screenshots and report.json go; default .build/wireframes." },
+        ],
+        outputs: [{ name: "report", schema: t("RepoPath"), description: "report.json: per candidate, per viewport, per criterion. The screenshots are beside it." }],
+      },
+      satisfies: ["wireframe-design-review"],
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
     //
     // These two were blocked rather than missing. Both are committed, published,

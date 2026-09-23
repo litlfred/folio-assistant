@@ -1,10 +1,11 @@
 ---
 # folio-assistant-c132
 title: 'GLASS ON PHONE AND TABLET: a phone gets one linear column, a tablet gets the laptop surface with touch drag'
-status: in-progress
+status: completed
 type: feature
+priority: normal
 created_at: 2026-09-23T09:19:39Z
-updated_at: 2026-09-23T09:19:39Z
+updated_at: 2026-09-23T09:54:09Z
 parent: folio-assistant-6lb8
 ---
 
@@ -48,3 +49,11 @@ Screenshots of the real `docs-ui.css`/`docs-ui.js` at 390x844 (phone) and 820x11
 ## Not done
 
 - The `· N` count is visual only. A screen-reader user on a phone hears "Pull down your folio" without the number. The accessible name was left unchanged so it stays one name on every screen. Worth a follow-up if the owner wants the count spoken.
+
+## Summary of Changes
+
+Merged in #1039 (issue #1031):
+- Phone: the glass is one linear column, and the handle shows "Folio · N".
+- Tablet: the laptop surface, with pointer-event touch drag from a grip or in move mode.
+- The board-window raise regression was caught and fixed before merge.
+- Still open: the "· N" count isn't spoken by screen readers.

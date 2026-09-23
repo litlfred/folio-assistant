@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  id="Definitions_Process_WireframeDesignReview" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_WireframeDesignReview">
+    <bpmn:participant id="Participant_Process_WireframeDesignReview" name="Wireframe design review" processRef="Process_WireframeDesignReview"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_WireframeDesignReview" name="Wireframe design review" isExecutable="false">
+    <bpmn:documentation>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. A wireframe is part of the design process for adjudication (owner, 2026-09-23). Operating skill: wireframe-design-review. Issue #1023.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_WireframeDesignReview">
+      <bpmn:lane id="Lane_Designer" name="Designer">
+        <bpmn:documentation>Writes the intent, produces candidates with real content, and runs the mechanical checks. Does not review its own candidates.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_WDR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>D_Intent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>D_Candidates</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>D_Check</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Checks</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reviewers" name="Feedback providers">
+        <bpmn:documentation>One or more reviewers (agent and human) who see candidates shuffled, without their author, and record pass, warn or fail per criterion with a reason. There are no scores and no averages.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="feedback-provider"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>R_Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Agree</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Adjudicator" name="Adjudicator">
+        <bpmn:documentation>Reached only when entries for one criterion disagree. Settles the disagreement with a reason, and decides between surviving candidates through options analysis.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="adjudicator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Call_Adjudicate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Choose</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Iterate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_WDR</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_WDR" name="A UI needs designing"/>
+    <bpmn:task id="D_Intent" name="Write the design intent">
+      <bpmn:documentation>A short statement of who the screen is for, what they need to do, and what it must show. It is the criterion every candidate is judged against.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="D_Candidates" name="Produce &gt;= 2 candidates, web + mobile">
+      <bpmn:documentation>Mid-fidelity HTML: monochrome, real folio content, semantic icons, no placeholder text. Each candidate has both a web layout and a mobile layout.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:task id="D_Check" name="Mechanical checks, both viewports">
+      <bpmn:documentation>Tool wireframe-check renders every candidate at a web and a mobile viewport. It fails on horizontal overflow at mobile width, on placeholder text, and on a missing viewport, and writes screenshots and a script entry per criterion.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Checks" name="Checks pass?"/>
+    <bpmn:task id="R_Review" name="Blind review per criterion">
+      <bpmn:documentation>Criteria: intent-fit, web usability, mobile usability, accessibility, and alternatives considered. A review at one viewport only is incomplete.</bpmn:documentation>
+      <bpmn:extensionElements><folio:skill ref="wireframe-design-review"/></bpmn:extensionElements>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Agree" name="Entries agree?"/>
+    <bpmn:callActivity id="Call_Adjudicate" name="Adjudication" calledElement="Process_Adjudication">
+      <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason.</bpmn:documentation>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Choose" name="Choose a candidate" calledElement="Process_OptionsAnalysis">
+      <bpmn:documentation>A one-off choice between surviving candidates. Rejected candidates are kept, with the reason each lost.</bpmn:documentation>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_Iterate" name="Revise the intent?"/>
+    <bpmn:endEvent id="End_WDR" name="Wireframe accepted"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_1" sourceRef="Start_WDR" targetRef="D_Intent"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_2" sourceRef="D_Intent" targetRef="D_Candidates"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_3" sourceRef="D_Candidates" targetRef="D_Check"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_4" sourceRef="D_Check" targetRef="GW_Checks"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_5" name="yes" sourceRef="GW_Checks" targetRef="R_Review"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_6" name="no" sourceRef="GW_Checks" targetRef="D_Candidates"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_7" sourceRef="R_Review" targetRef="GW_Agree"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_8" name="no" sourceRef="GW_Agree" targetRef="Call_Adjudicate"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_9" name="yes" sourceRef="GW_Agree" targetRef="Call_Choose"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_10" sourceRef="Call_Adjudicate" targetRef="Call_Choose"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_11" sourceRef="Call_Choose" targetRef="GW_Iterate"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_12" name="yes" sourceRef="GW_Iterate" targetRef="D_Intent"/>
+    <bpmn:sequenceFlow id="SF_Process_WireframeDesignReview_13" name="no" sourceRef="GW_Iterate" targetRef="End_WDR"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_WireframeDesignReview">
+    <bpmndi:BPMNPlane id="Plane_Process_WireframeDesignReview" bpmnElement="Collaboration_Process_WireframeDesignReview">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_WireframeDesignReview" bpmnElement="Participant_Process_WireframeDesignReview" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2270" height="510" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Designer" bpmnElement="Lane_Designer" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2240" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Reviewers" bpmnElement="Lane_Reviewers" isHorizontal="true">
+        <dc:Bounds x="190" y="250" width="2240" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Adjudicator" bpmnElement="Lane_Adjudicator" isHorizontal="true">
+        <dc:Bounds x="190" y="420" width="2240" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_WDR" bpmnElement="Start_WDR">
+        <dc:Bounds x="302" y="147" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_D_Intent" bpmnElement="D_Intent">
+        <dc:Bounds x="440" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_D_Candidates" bpmnElement="D_Candidates">
+        <dc:Bounds x="630" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_D_Check" bpmnElement="D_Check">
+        <dc:Bounds x="820" y="125" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Checks" bpmnElement="GW_Checks" isMarkerVisible="true">
+        <dc:Bounds x="1055" y="140" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_R_Review" bpmnElement="R_Review">
+        <dc:Bounds x="1200" y="295" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Agree" bpmnElement="GW_Agree" isMarkerVisible="true">
+        <dc:Bounds x="1435" y="310" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Adjudicate" bpmnElement="Call_Adjudicate">
+        <dc:Bounds x="1580" y="465" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Choose" bpmnElement="Call_Choose">
+        <dc:Bounds x="1770" y="465" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Iterate" bpmnElement="GW_Iterate" isMarkerVisible="true">
+        <dc:Bounds x="2005" y="480" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_WDR" bpmnElement="End_WDR">
+        <dc:Bounds x="2202" y="487" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_1" bpmnElement="SF_Process_WireframeDesignReview_1">
+        <di:waypoint x="338" y="165" />
+        <di:waypoint x="440" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_2" bpmnElement="SF_Process_WireframeDesignReview_2">
+        <di:waypoint x="580" y="165" />
+        <di:waypoint x="630" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_3" bpmnElement="SF_Process_WireframeDesignReview_3">
+        <di:waypoint x="770" y="165" />
+        <di:waypoint x="820" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_4" bpmnElement="SF_Process_WireframeDesignReview_4">
+        <di:waypoint x="960" y="165" />
+        <di:waypoint x="1055" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_5" bpmnElement="SF_Process_WireframeDesignReview_5">
+        <di:waypoint x="1105" y="165" />
+        <di:waypoint x="1175" y="165" />
+        <di:waypoint x="1175" y="335" />
+        <di:waypoint x="1200" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_6" bpmnElement="SF_Process_WireframeDesignReview_6">
+        <di:waypoint x="1080" y="190" />
+        <di:waypoint x="1080" y="238" />
+        <di:waypoint x="700" y="238" />
+        <di:waypoint x="700" y="205" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_7" bpmnElement="SF_Process_WireframeDesignReview_7">
+        <di:waypoint x="1340" y="335" />
+        <di:waypoint x="1435" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_8" bpmnElement="SF_Process_WireframeDesignReview_8">
+        <di:waypoint x="1485" y="335" />
+        <di:waypoint x="1555" y="335" />
+        <di:waypoint x="1555" y="505" />
+        <di:waypoint x="1580" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_9" bpmnElement="SF_Process_WireframeDesignReview_9">
+        <di:waypoint x="1485" y="335" />
+        <di:waypoint x="1745" y="335" />
+        <di:waypoint x="1745" y="505" />
+        <di:waypoint x="1770" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_10" bpmnElement="SF_Process_WireframeDesignReview_10">
+        <di:waypoint x="1720" y="505" />
+        <di:waypoint x="1770" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_11" bpmnElement="SF_Process_WireframeDesignReview_11">
+        <di:waypoint x="1910" y="505" />
+        <di:waypoint x="2005" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_12" bpmnElement="SF_Process_WireframeDesignReview_12">
+        <di:waypoint x="2030" y="530" />
+        <di:waypoint x="2030" y="578" />
+        <di:waypoint x="510" y="578" />
+        <di:waypoint x="510" y="205" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_WireframeDesignReview_13" bpmnElement="SF_Process_WireframeDesignReview_13">
+        <di:waypoint x="2055" y="505" />
+        <di:waypoint x="2202" y="505" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

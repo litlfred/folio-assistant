@@ -251,17 +251,44 @@ const allHarnesses = harnessTiles(
  * literal is a join nobody can test.
  */
 function navbarRow(
-  harnesses: readonly { name: string; navbarIcons?: string[]; visualisations?: { kind: string; path?: string | null }[] }[],
+  harnesses: readonly {
+    name: string;
+    navbarIcons?: string[];
+    visualisations?: { kind: string; path?: string | null; note?: string }[];
+  }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
-): { icons: string[]; hrefs: Record<string, string>; folders: { kind: string; path?: string }[] } | null {
+): {
+  icons: string[];
+  hrefs: Record<string, string>;
+  /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
+  notes: Record<string, string>;
+  folders: { kind: string; path?: string; note?: string }[];
+} | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
   // none" are different answers and the template must be able to tell them
   // apart; `[]` here would report every un-migrated instance as deliberate.
   if (!mine || mine.navbarIcons === undefined) return null;
   const byKind = new Map((mine.visualisations ?? []).map((v) => [v.kind, v.path ?? undefined]));
+  const noteByKind = new Map(
+    (mine.visualisations ?? []).flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])),
+  );
   const hrefs: Record<string, string> = {};
+  /**
+   * WHY a declared icon has no destination, in the words a reader sees.
+   *
+   * SEPARATE FROM `hrefs` because they are answers to different questions and
+   * an icon has exactly one of them: a slot either goes somewhere or owes an
+   * explanation. Merging them into one map keyed by id would make "no entry"
+   * mean both "resolved to nothing" and "was never declared".
+   *
+   * The wording is `harness-tiles.ts`'s, carried rather than composed — see
+   * `HarnessVisualisation.note`, which computes it where the FOUR inert states
+   * are already told apart. A string minted here would be the fifth wording
+   * for four states, which is the defect that type's docstring already names.
+   */
+  const notes: Record<string, string> = {};
   for (const icon of mine.navbarIcons) {
     // `kg` is a SITE link rather than a graph of its own -- it is the viewer
     // over the whole instance, which is why `siteLinks` owns it and the
@@ -280,6 +307,13 @@ function navbarRow(
     // converting one path is two answers, and the one further from the source
     // is the one that goes stale.
     if (at) hrefs[icon] = at;
+    else {
+      const why = icon === "kg" ? undefined : noteByKind.get(icon);
+      // `close` and `launcher` drive controls on the page and are MEANT to have
+      // no href, so they owe no explanation. An entry for them would make the
+      // client render "no viewer yet" on a working button.
+      if (why && icon !== "close" && icon !== "launcher") notes[icon] = why;
+    }
   }
   // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is
   // is library docs/ and other controlled folders"*. Resolved here beside the
@@ -291,10 +325,20 @@ function navbarRow(
   // is a finding, and dropping it answers "where is qa" with silence.
   // Paths come through as `harness-tiles.ts` minted them -- see the note
   // above on why this no longer rewrites anything.
+  //
+  // AND WITH ITS NOTE. Owner ruling, recorded in #1036: a declared graph with
+  // no viewer is SHOWN, inert and LABELLED, and the label says WHICH case it
+  // is — `flh4` separates "declares none" from "declares one that does not
+  // resolve", and `inertNote` words four states in all.
+  //
+  // This row carried none of that until 2026-09-23. A reader got `opacity:
+  // 0.35`, a strikethrough and a `title` tooltip reading "declared, with no
+  // published viewer" — one wording for four states, in a channel a keyboard
+  // or screen-reader user never reaches. `gjli`: the state belongs in TEXT.
   const folders = (mine.visualisations ?? []).map((v) =>
-    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind },
+    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind, ...(v.note ? { note: v.note } : {}) },
   );
-  return { icons: [...mine.navbarIcons], hrefs, folders };
+  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
 
 const payload = {
