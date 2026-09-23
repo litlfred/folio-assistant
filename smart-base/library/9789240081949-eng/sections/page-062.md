@@ -7,7 +7,7 @@ pages: 62-62
 pdf_page: 62
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 References for services and application types

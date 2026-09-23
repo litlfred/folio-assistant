@@ -1,12 +1,12 @@
 ---
 # folio-assistant-zkgs
 title: findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read
-status: todo
+status: completed
 type: task
 priority: normal
-parent: folio-assistant-1swy
 created_at: 2026-09-20T13:54:01Z
-updated_at: 2026-09-20T13:54:01Z
+updated_at: 2026-09-23T14:52:07Z
+parent: folio-assistant-1swy
 ---
 
 
@@ -195,3 +195,19 @@ answers a different question either way. The two-files half does not.
 migration cost, and the ordering constraint that the 21 literals bypassing
 `DECLARATION_FILENAME` are routed through it first, as a change that is correct
 under either filename.
+
+## Re-measured 2026-09-23 — the symptom was already fixed; the regression test was not
+
+Measured from three working directories (repo root, `cat-harness/`, `cat-harness/content/pipeline`):
+
+- `findContentRepoRoot()` → `cat-harness/` (unchanged) — but `resolveHarnessConfigPath` now walks OUTWARD from the instance root and finds `cat-harness.config.json` at the repository root. The fix arrived incidentally, with per-instance config names (`<instance>.config.json`; `harness.config.json` no longer exists).
+- `readDeclaredFolioProfile(root)` → `document`, declared by `cat-harness.config.json` — not the third state.
+- `folioOptionalAxes()` reads `expectedInstanceConfigPath(root)` = the same existing file; `[]` because no `qaAxes` is declared, which is a legitimate answer now rather than an unreachable one.
+- The 122 committed sidecars carrying `detangler-archimedean-wall` all record `n/a` ("criterion applies to the paper profile; this folio is document") — correctly scoped; nothing to re-sweep.
+
+What remained was the bean's own gate — "something fails if they stop agreeing". No test ran the REAL resolution on the REAL repository; the existing ones use fixtures, which is how the original defect survived.
+
+## Summary of Changes
+
+- New `cat-harness/scripts/tests/repo-config-agreement.test.ts`: on this repository, the content root resolves to a config that exists, the declared profile is `document` (never the third state), and the optional-axes reader points at that same existing file. Falsified: moving `cat-harness.config.json` aside fails all three.
+- No resolver change: fixes A/B/C were overtaken by the per-instance config naming.

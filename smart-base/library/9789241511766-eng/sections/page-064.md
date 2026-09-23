@@ -7,7 +7,7 @@ pages: 64-64
 pdf_page: 64
 source_pdf: 9789241511766-eng.pdf
 source_sha256: 934bdf1193c16ee5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 54	

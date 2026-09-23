@@ -3991,7 +3991,17 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   font-variant: small-caps;
 }
 
+/* TARGET SIZE, measured rather than assumed. At 0.72rem with 0.2rem padding
+ * this button drew 95.6 × 18.4px — under the 24px SC 2.5.8 floor, on the one
+ * control that leads back out of an opened item. Nothing measured it, because
+ * `a11y.e2e.ts` never has a document to open (bean `7vhe`'s last Done-when
+ * item). 1.75rem is 28px: past the floor with room, for the low-dexterity
+ * profile this instance declares. The source link below is the same shape
+ * and gets the same floor. */
 .fa-discarded-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
   border: 0;
   background: transparent;
   color: inherit;
@@ -4050,7 +4060,9 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-discarded-source {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
   margin-top: 0.6rem;
   font-size: 0.72rem;
 }

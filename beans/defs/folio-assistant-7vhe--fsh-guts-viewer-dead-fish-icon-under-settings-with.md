@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7vhe
 title: 'FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T10:48:10Z
-updated_at: 2026-09-19T13:24:17Z
+updated_at: 2026-09-23T16:34:05Z
 parent: folio-assistant-o3xy
 ---
 
@@ -42,11 +42,11 @@ not "dead fish".
 
 ## Done when
 
-- [ ] the icon appears only under settings, and carries a live count
-- [ ] the dialog is keyboard-operable and screen-reader legible
-- [ ] it renders each node kind, or says plainly that it cannot render that
+- [x] the icon appears only under settings, and carries a live count
+- [x] the dialog is keyboard-operable and screen-reader legible
+- [x] it renders each node kind, or says plainly that it cannot render that
       kind — never a blank pane
-- [ ] contrast is checked, not assumed
+- [x] contrast is checked, not assumed
 
 ## Depends on
 
@@ -61,3 +61,13 @@ work — and which `check-bean-parents` correctly refuses: a feature cannot
 parent a feature, and the roadmap needs an epic. The relationship is recorded
 here because the hierarchy can no longer carry it: **this depends on `t0i3`,
 which is where the store and its JSON-LD endpoint live.**
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner asked to "close beans and check for more". The viewer had shipped already: the dead-fish control under Settings, the count in its accessible name, the list, and the detail view, all covered by `cat-harness/test/discarded-items.e2e.ts`. Three of the four Done-when items were met by that spec. The fourth was not.
+
+**"Contrast is checked, not assumed" was not true until today.** `a11y.e2e.ts` opens Settings, but its page publishes no `fa-fsh-guts-src`, so the control it measures is the "no document" branch. Neither the list nor an opened item was ever on screen for axe. Four axe specs now cover both views in both schemes, with the document stubbed.
+
+**They found a real defect.** Contrast passed, but the opened item failed SC 2.5.8: the Back button measured **95.6 × 18.4px**. It was the only control leading back out of an item, and it was under the 24px floor on a site whose declared profile is low-dexterity. The Back button and the source link, which has the same shape, now have `min-height: 1.75rem` (28px).
+
+Verified: `discarded-items.e2e.ts` passes 15/15. The two opened-item specs fail before the CSS change and pass after it.

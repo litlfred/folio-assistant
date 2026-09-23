@@ -7,7 +7,7 @@ pages: 1-1
 pdf_page: 1
 source_pdf: Skills in OpenAI API.pdf
 source_sha256: 2d261aeb7a6af6ab
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 7) Request a local shell call (optional, live API request).
