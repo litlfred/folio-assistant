@@ -98,7 +98,8 @@ describe("the README tells an agent the same path the code computes", () => {
     // A presence check over prose is satisfied incidentally; this reads the
     // one place the README actually makes the claim.
     const readme = readFileSync(join(REPO_ROOT, "bootstrap", "README.md"), "utf-8");
-    const fenced = [...readme.matchAll(/```\n([^`]*)\n```/g)].map((m) => m[1]!.trim());
+    // A fence may be indented, as it is inside the README's numbered steps.
+    const fenced = [...readme.matchAll(/^[ \t]*```\n([^`]*?)\n[ \t]*```/gm)].map((m) => m[1]!.trim());
     expect(fenced).toContain(`<name>/docs/${CAT_BOOTSTRAP_INIT_DOC}`);
   });
 
