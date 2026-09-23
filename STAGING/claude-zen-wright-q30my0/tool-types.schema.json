@@ -101,6 +101,12 @@
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
       "description": "A git branch name"
     },
+    "RepoFullName": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A forge repository's full name, owner/name"
+    },
     "ChangeProposalNumber": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "integer",
@@ -333,8 +339,8 @@
   },
   "staging": {
     "branch": "claude/zen-wright-q30my0",
-    "sha": "edf5445697f1731e13f46dd6f1ec6b628f443bce",
+    "sha": "1df1104099cefddef24a91dc0289d6db45d2e651",
     "pr": "1010/merge",
-    "run": "35837346185"
+    "run": "35838460898"
   }
 }

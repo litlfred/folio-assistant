@@ -272,14 +272,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T08:31:21.302Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c44ac58474244abd80a2e06517cf55d4dd1c759b",
-  "sourceCommitSha": "c44ac58474244abd80a2e06517cf55d4dd1c759b",
-  "sourceCommitAt": "2026-09-23T08:23:34Z",
+  "generatedAt": "2026-09-23T08:42:59.107Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/75c196214d3c2f1fa12573d7f4154d2bfd675136",
+  "sourceCommitSha": "75c196214d3c2f1fa12573d7f4154d2bfd675136",
+  "sourceCommitAt": "2026-09-23T08:40:23Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 241,
+    "Skill": 242,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -289,7 +289,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 69,
-    "Schema": 99,
+    "Schema": 100,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -2495,6 +2495,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#directory/cat-harness",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/prepare-merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/review-comments",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "review-comments",
+      "title": "Review comments — from a PR comment to a structured todo",
+      "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `folio-review-comment/v1` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/review-comments.md",
+      "instructionLines": 231,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#directory/cat-harness",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/kg-contribution-offer",
@@ -5728,6 +5745,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/swimlane-glossary",
@@ -35394,6 +35412,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#schema/adjudication",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "adjudication",
+      "title": "The adjudication contract — what a judgement is ASKED and what it ANSWERS.",
+      "module": "../folio-assistant-core/schemas/adjudication.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adjudication"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#schema/catalogue",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "catalogue",
@@ -37312,8 +37339,8 @@
   ],
   "staging": {
     "branch": "claude/zen-wright-q30my0",
-    "sha": "edf5445697f1731e13f46dd6f1ec6b628f443bce",
+    "sha": "1df1104099cefddef24a91dc0289d6db45d2e651",
     "pr": "1010/merge",
-    "run": "35837346185"
+    "run": "35838460898"
   }
 }
