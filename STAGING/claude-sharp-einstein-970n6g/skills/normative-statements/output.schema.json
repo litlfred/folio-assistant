@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/skills/normative-statements/output.schema.json",
+  "title": "Normative Statement Output",
+  "type": "object",
+  "required": [
+    "label",
+    "kind"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "const": "prose",
+      "description": "Always prose today. There is no first-class recommendation kind: adding one means a builder, schema, label prefix, viewer registration, constraint rows and QA criteria, and it is tracked separately rather than half-done. A prose block converts by changing one builder call."
+    },
+    "anchor": {
+      "type": "string",
+      "description": "The HTML anchor emitted for this block, equal to its label."
+    },
+    "citedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] names this statement."
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-einstein-970n6g",
+    "sha": "a7884df12eea180f92e08959d87b7d7c2fa35e73",
+    "pr": "1092/merge",
+    "run": "35868061935"
+  }
+}

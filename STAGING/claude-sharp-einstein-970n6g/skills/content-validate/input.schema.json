@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-einstein-970n6g",
+    "sha": "a7884df12eea180f92e08959d87b7d7c2fa35e73",
+    "pr": "1092/merge",
+    "run": "35868061935"
+  }
+}
