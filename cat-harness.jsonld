@@ -268,14 +268,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T11:46:01.589Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d40f97e10f3cdd481fb9b8767902a1899d089770",
-  "sourceCommitSha": "d40f97e10f3cdd481fb9b8767902a1899d089770",
-  "sourceCommitAt": "2026-09-23T13:43:08+02:00",
+  "generatedAt": "2026-09-23T11:51:56.161Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/440ab83b52bddac8f522d7dd6e908dfeed9d25b1",
+  "sourceCommitSha": "440ab83b52bddac8f522d7dd6e908dfeed9d25b1",
+  "sourceCommitAt": "2026-09-23T13:49:28+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 244,
+    "Skill": 245,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -284,7 +284,7 @@
     "SequenceFlow": 823,
     "Role": 144,
     "ProcessNode": 784,
-    "Tool": 72,
+    "Tool": 74,
     "Schema": 102,
     "GraphKind": 30,
     "Directory": 40,
@@ -1739,6 +1739,22 @@
       ],
       "instructionsPath": "skills/folio-core/theme-ui-review.md",
       "instructionLines": 98,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "uml-overview",
+      "title": "UML overview: generated from declarations and schemas, never drawn",
+      "description": "Read, regenerate or extend the UML class diagrams of a harness: one per harness and one per named sub-graph it declares, plus the harness object model. Every box is generated from a declaration and a schema, never drawn by hand, so a wrong diagram is fixed at the declaration or the schema, and a dashed \"could not determine\" box is a finding about the registry.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/uml-overview.md",
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5577,7 +5593,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adopt-methodology-from-source",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/related-work-coordination",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
@@ -31066,6 +31083,90 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/uml-overview",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "uml-overview",
+      "title": "UML overview per named sub-graph",
+      "description": "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run uml:overview"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if any diagram, SVG or page is stale or orphaned, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "diagrams",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/uml-object-model",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "uml-object-model",
+      "title": "Harness object model as PlantUML",
+      "description": "Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/gen-object-model-uml.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if the committed diagram is stale. Needs the beans CLI; without it the result is could-not-check (exit 2).",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "diagram",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The object-model diagram, in the instance's declared uml directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uml-overview"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/themes-css",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "themes-css",
@@ -35794,7 +35895,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/uml"
       ],
-      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which render the Mermaid and link both sources. Owner, 2026-09-23.",
+      "description": "UML class diagrams of every named sub-graph a harness declares — uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd — written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which show the PlantUML rendering (docs/assets/img/uml/overview/, stamped with its source's hash) with the Mermaid beneath it, and link both sources. Owner, 2026-09-23.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uml"
     },
     {
@@ -36210,8 +36311,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "d40f97e10f3cdd481fb9b8767902a1899d089770",
+    "sha": "440ab83b52bddac8f522d7dd6e908dfeed9d25b1",
     "pr": "main",
-    "run": "35856165450"
+    "run": "35856780380"
   }
 }
