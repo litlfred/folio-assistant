@@ -50,8 +50,18 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
 - `uml/overview/<instance>.puml|.mmd`: every sub-graph of one harness, stacked
   vertically, with every data field.
 - `uml/overview/<instance>/<sub-graph>.puml|.mmd`: one sub-graph.
-- `docs/uml/overview/…`: the pages. They render the Mermaid through
-  just-the-docs and link both source files. Published at
+- `docs/assets/img/uml/overview/…svg`: the PlantUML rendering of each
+  `.puml`, laid out by ELK. This is the figure each page shows, in the same
+  `bpmn-figure` markup as the BPMN diagrams, so it gets the same zoom and
+  full-width controls. An overview with more than three sub-graphs is folded
+  into a near-square grid by hidden links between packages, because ELK
+  otherwise lays unconnected packages in one row. Owner, 2026-09-23: "make the
+  UML more condensed, more like the original one … need controls like in bpmn
+  diagrams".
+- `docs/uml/overview/…`: the pages. Each shows the SVG, then a table of its
+  sub-graphs, then the same model drawn by Mermaid, and links both source
+  files. Every page carries `layout: default`: without it the local build
+  rendered the page bare, with no site script and so no zoom controls. Published at
   `<site>/uml/overview/<instance>.html`; the index is
   `<site>/uml/overview/index.html`. The site menu has a **UML overview** entry
   with one child per harness. The sub-graph pages stay out of the menu and are
@@ -69,11 +79,18 @@ recolour a kind, edit `uml.css`, never a diagram.
 ## Regenerating
 
 ```sh
-bun run uml:overview           # write every overview diagram and page
+bun run uml:overview           # write every overview diagram, page and SVG
 bun run uml:overview:check     # CI: fail if any is stale or orphaned
 bun run cat-harness/scripts/gen-object-model-uml.ts           # the object model
 bun run cat-harness/scripts/gen-object-model-uml.ts --check   # needs the beans CLI
 ```
+
+**The SVGs need Java,** and the generator fetches the pinned PlantUML jar
+(checked against its sha256) into `~/.cache/folio-assistant/`, or uses
+`PLANTUML_JAR`. Without Java it writes everything else and exits 2. The check
+needs no Java: each SVG is stamped with the sha256 of the `.puml` it was drawn
+from, and `--check` compares stamps. Comparing SVG bytes would fail on any
+runner whose fonts measure text a pixel differently.
 
 Run `uml:overview` after changing a declaration's `directories[]`, a graph
 kind's `nodeSchemas`, `validator` or `schema`, or any schema those point at.

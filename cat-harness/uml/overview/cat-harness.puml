@@ -512,4 +512,38 @@ cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations
 cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Item : items
+pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_methodologies
+pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_qa
+pkg_cat_harness_schemas -[hidden]down- pkg_cat_harness_fsh_guts
+pkg_cat_harness_uml -[hidden]down- pkg_cat_harness_health
+pkg_cat_harness_cat_harness -[hidden]down- pkg_cat_harness_beans
+pkg_cat_harness_scenarios -[hidden]down- pkg_cat_harness_todos
+pkg_cat_harness_processes -[hidden]down- pkg_cat_harness_memory
+pkg_cat_harness_methodologies -[hidden]down- pkg_cat_harness_interaction
+pkg_cat_harness_qa -[hidden]down- pkg_cat_harness_issue_marks
+pkg_cat_harness_fsh_guts -[hidden]down- pkg_cat_harness_uploads
+pkg_cat_harness_health -[hidden]down- pkg_cat_harness_library
+pkg_cat_harness_beans -[hidden]down- pkg_cat_harness_who_iris_library
+pkg_cat_harness_todos -[hidden]down- pkg_cat_harness_agent_skills_library
+pkg_cat_harness_memory -[hidden]down- pkg_cat_harness_folio_assistant_sci_library
+pkg_cat_harness_interaction -[hidden]down- pkg_cat_harness_smart_base_library
+pkg_cat_harness_issue_marks -[hidden]down- pkg_cat_harness_translation_sources
+pkg_cat_harness_uploads -[hidden]down- pkg_cat_harness_folio
+pkg_cat_harness_library -[hidden]down- pkg_cat_harness_smart_kg_methodologies
+pkg_cat_harness_who_iris_library -[hidden]down- pkg_cat_harness_smart_base_methodologies
+pkg_cat_harness_agent_skills_library -[hidden]down- pkg_cat_harness_smart_base_processes
+pkg_cat_harness_folio_assistant_sci_library -[hidden]down- pkg_cat_harness_docs
+pkg_cat_harness_smart_base_library -[hidden]down- pkg_cat_harness_root_docs
+pkg_cat_harness_translation_sources -[hidden]down- pkg_cat_harness_folio_assist_core_schemas
+pkg_cat_harness_folio -[hidden]down- pkg_cat_harness_kg_navigation
+pkg_cat_harness_smart_kg_methodologies -[hidden]down- pkg_cat_harness_large_datasets_skills
+pkg_cat_harness_smart_base_methodologies -[hidden]down- pkg_cat_harness_who_iris_skills
+pkg_cat_harness_smart_base_processes -[hidden]down- pkg_cat_harness_large_datasets_schemas
+pkg_cat_harness_docs -[hidden]down- pkg_cat_harness_detangle_schemas
+pkg_cat_harness_root_docs -[hidden]down- pkg_cat_harness_bootstrap_tools_schemas
+pkg_cat_harness_folio_assist_core_schemas -[hidden]down- pkg_cat_harness_glossary
+pkg_cat_harness_kg_navigation -[hidden]down- pkg_cat_harness_cat_harness_scripts
+pkg_cat_harness_large_datasets_skills -[hidden]down- pkg_cat_harness_cat_harness_src
+pkg_cat_harness_who_iris_skills -[hidden]down- pkg_cat_harness_cat_harness_adapters
+pkg_cat_harness_large_datasets_schemas -[hidden]down- pkg_cat_harness_cat_harness_tests
 @enduml

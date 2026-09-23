@@ -873,14 +873,14 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "uml-overview",
       title: "UML overview per named sub-graph",
       description:
-        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema. A kind with none is drawn as could-not-determine, never as an empty box.",
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
       install: { none: true },
       invoke: { shell: "bun run uml:overview" },
       io: {
         inputs: [
-          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram or page is stale or orphaned, instead of writing." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram, SVG or page is stale or orphaned, instead of writing." },
         ],
-        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "uml/overview/ (.puml and .mmd) and the docs/uml/overview/ pages that render them." }],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them." }],
       },
       satisfies: ["uml-overview"],
       requires: { runtime: ["bun"], network: false },
