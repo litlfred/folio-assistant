@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 257,
+      "count": 258,
       "unit": "beans"
     }
   },
@@ -387,6 +387,20 @@
       "updatedAt": "2026-09-23T07:10:03Z",
       "preview": "Owner: *\"and then manage review comments etc.\"*\n\n**The real obstacle, measured.** `docs-ui.js` states it outright: *\"A\npublished page cannot write back to the repo\"* (lines 2077 and 2592). The\nreview page is static on gh-pages, so \"manage comments\" needs a WRITE PATH,\nand choosing it is the owner's decision:\n\n| option | anchors to | cost |\n|---|---|---|\n| A. GitHub PR review comments | a line of a",
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
+    },
+    {
+      "id": "folio-assistant-46nf",
+      "title": "B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:20:00Z",
+      "updatedAt": "2026-09-23T22:20:00Z",
+      "preview": "Part of s4sp (plan B). The 35 role voice sentences become one-rule voice profiles in folio-assistant-core (activeIn.roles to the cat-harness role); the 107 useCases become scenarios/stories.json UserStory nodes pointing at their role. Role.skills typed SkillNameSchema. kg-audit role-declares-voice and role-has-use-cases replaced by role-has-story and story-role-resolves; check:voices resolves acti",
+      "file": "beans/defs/folio-assistant-46nf--b2-1168-voices-and-user-stories-point-at-their-rol.md"
     },
     {
       "id": "folio-assistant-4ccr",

@@ -814,9 +814,9 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   // to write for and to review against. `summary` says what the role DOES,
   // which is enough to draw a swimlane and not enough to author against.
   //
-  // All three are `n/a` for an `actedUpon` role — the corpus and the work plan
-  // are lanes because tasks act ON them, and asking what voice to address the
-  // corpus in is not a question.
+  // Both are `n/a` for an `actedUpon` role — the corpus and the work plan
+  // are lanes because tasks act ON them, and asking who the corpus is or what
+  // it came to do is not a question.
   {
     id: "role-has-persona",
     applies: ["role"],
@@ -825,21 +825,17 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A role an author writes for carries no `persona` — nothing says what this reader already knows, " +
       "what they came to find out, or what would make the page useless to them.",
   },
+  // No `role-declares-voice` (#1168, B2): a voice points at the role it
+  // addresses, from a dependent instance this audit cannot see, so the
+  // coverage is `check:voices`'s — reported from the side that can see both.
   {
-    id: "role-declares-voice",
+    id: "role-has-story",
     applies: ["role"],
     severity: "minor",
     summary:
-      "A role carries no `voice`. Without it the authoring agent picks a register by taste and the QA " +
-      "agent judges it by a different one, so a voice finding is an opinion rather than a check.",
-  },
-  {
-    id: "role-has-use-cases",
-    applies: ["role"],
-    severity: "minor",
-    summary:
-      "A role declares no `useCases` — what this reader is trying to do. 'Is this well written' is " +
-      "unanswerable; 'does this let them do the thing they came for' is not.",
+      "No user story is told as this role — nothing says what this reader is trying to do. 'Is this well " +
+      "written' is unanswerable; 'does this let them do the thing they came for' is not. Stories point at " +
+      "their role from `scenarios/stories.json`; the role names none.",
   },
   {
     id: "decision-outcomes-used",
@@ -1057,6 +1053,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     severity: "minor",
     summary:
       "An entry in the actor registry carries `inherits` — it is modelling a role lattice, not an actor. Migration debt.",
+  },
+  {
+    id: "story-role-resolves",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A user story in `scenarios/stories.json` is told as a role the role graph does not declare — a story " +
+      "told as nobody, which no author can write for and no reviewer can check against.",
   },
 ] as const;
 
