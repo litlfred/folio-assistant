@@ -96,7 +96,7 @@ task run
 
 <ul>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 7 terms) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
-<li><strong>Swimlane roles</strong> (bootstrap, 5 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/glossary/' | relative_url }}">rendered here</a> · <code>bootstrap/glossary/glossary-ledger.json</code></li>
+<li><strong>Swimlane roles</strong> (bootstrap, 6 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/glossary/' | relative_url }}">rendered here</a> · <code>bootstrap/glossary/glossary-ledger.json</code></li>
 <li><strong>Swimlane roles</strong> (cat-harness, 47 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
 </ul>
 
