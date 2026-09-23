@@ -567,7 +567,10 @@ jobs:
       - name: TypeDoc generate
         working-directory: cat-harness
         run: |
-          bun install || npm install
+          # Pinned 2026-09-23 with `u9r9`, same reasoning as the twin step in
+          # `discoverability-docs.yml`: the npm half was a runtime fallback after
+          # `setup-bun` had already installed bun, and it resolved unpinned.
+          bun install --frozen-lockfile
           npx --yes typedoc@0.28.20 --out ../schema-docs \
             --entryPointStrategy expand \
             --readme none --hideGenerator \

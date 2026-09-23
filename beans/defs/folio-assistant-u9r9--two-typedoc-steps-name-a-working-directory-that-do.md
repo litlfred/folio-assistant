@@ -302,3 +302,30 @@ owner ruled on the path. This is recorded for its own decision.
       it changes published output**
 - [ ] Not dispatched, by ruling. Whoever dispatches first should know all three
       jobs push to `gh-pages`
+
+### 2026-09-23, stream 4 (`kpcl`) — the two install lines are pinned, and the baseline shrank
+
+§"While it stands, the two install lines inside those steps are baselined" said
+they would come out when this resolved. It has, so they have.
+
+Both steps ran an unpinned install with an npm fallback. `setup-bun` has already
+installed bun in each of them, so that fallback was a **runtime** degradation
+rather than the documented presence guard the baseline exists for — it resolved
+unpinned, silently, with a green step. Both are now
+`bun install --frozen-lockfile` with **no** fallback: a pin that falls back
+swallows the failure it exists to raise, and `check:lockfile-pinning` fails that
+shape outright rather than baselining it.
+
+`lockfile-pinning-baseline.json`: **6 → 4**. The four that remain ARE the
+presence guard. `check:lockfile-pinning` now reports **23 pinned, 4 behind a
+presence guard, 4 deliberately unpinned**, green.
+
+**The repair carried the defect in its own explanation.** The first draft of the
+new comment *quoted* the old command to say what had been removed, and the gate
+keys on command text — so it reported a **NEW unpinned install on the line that
+removed one**. That is #957's *"the stale chain is not quoted in the repair"* in
+a second artefact, and the third time this repository has hit the shape. The
+comment now describes the old command and says why, in place.
+
+The dead `adapters/paper/schemas/` entry point measured above is **untouched** —
+it is the owner's, because repointing it changes published output.

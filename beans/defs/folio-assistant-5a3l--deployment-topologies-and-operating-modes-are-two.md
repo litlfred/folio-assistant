@@ -190,3 +190,42 @@ baseline is its file to keep honest.
 
 **Nothing was closed, scrapped or deleted.** Only this epic's own claim about
 itself is corrected.
+## 2026-09-23 — the 12 open children reviewed on the owner's ruling, and NONE closes
+
+The owner was given this epic's contradiction as a selectable choice by stream 4
+(`kpcl`) and answered **"review the 12 and close what is done"**. The epic
+itself had already been re-opened on main as `in-progress` (#970), so the two
+rulings compose: the epic is honest again, and this is the second half.
+
+**Reviewed all 16 children — 4 already `completed`, 12 open — by reading each
+body rather than by counting its boxes.** Nothing closes. The table is what was
+found, so the next reader does not repeat the pass:
+
+| bean | status | boxes | why it stays open |
+|---|---|---|---|
+| `0hi8` | in-progress | 4/6 | the one real candidate, and its open box is **deliberate**: *"at least two tools satisfy it — NOT done, and deliberately"*. The second candidate fails `compound-extension-wins`, and declaring a Caddy config nobody installed would assert conformance nobody measured |
+| `1lfx` | todo | 0/3 | explicitly **depends on** the parent's publication-host axis: *"until the set of hosts is agreed there is nothing for the declaration to range over"* |
+| `81vy` | todo | 0/4 | four unstarted clauses, one of which is *whether these are capabilities or declared facts is settled, not assumed* |
+| `amom` `vljz` `vm6m` `2ngl` `4y2i` `61tg` `6qk5` `wp49` | todo | 0/3 or 0/0 | topology, mode and test-data design work, none of it begun |
+| `mkqf` | todo | 0/4 | **queued stream C** — a queue entry that claims itself before a session exists is the defect stream 4 is fixing, so `todo` is correct |
+
+**The count moved and the owner's number was right.** 16 children now, 4 of them
+`completed`, leaving exactly the 12 open that `check:bean-rollup` reported.
+
+### What this finding is worth
+
+It is the useful half of a negative result. `5a3l` reading `completed` over 12
+open children was an instrument lying in the *quiet* direction — the roadmap
+said deployment was finished, and #956 duly listed it among the 49
+*"deliberately parked"*, which is where an area lands when it reads done. Had
+any of the 12 been silently finished, the epic's closure would have been partly
+defensible. **None is**, so the re-open was the whole of the correct repair and
+there is no second half to it.
+
+### Noticed, not touched
+
+`5mg5` is `completed` with **10 of 11** boxes ticked. A closed bean's unticked
+box misleads nobody about what to do next — its `status` dominates, which is why
+`check:bean-bodies` counts the shape on closed beans and never fails it. Flagged
+rather than edited: it is not this pass's bean, and ticking somebody's box is a
+judgement about what they did.
