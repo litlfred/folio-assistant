@@ -138,16 +138,16 @@ is gone.
 Two of the eight teach something transferable, so the lesson is written into prose
 rather than left implicit in a script nobody will open:
 
-- **[`migrate-cluster-phase.md`](../../fsh-guts/scripts/migrate-cluster-phase.md)**
+- **[`migrate-cluster-phase.md`](../../../fsh-guts/scripts/migrate-cluster-phase.md)**
   — the four-step recipe in its fixed order, and why the order is the content
   (`git mv` so `--follow` works; co-move witnesses by `scriptFile` not by
   adjacency; inject the bridge; `HERE.parent` last, because step 3 changes what
   step 4 looks for).
-- **[`split-docs-page.md`](../../fsh-guts/scripts/split-docs-page.md)** — derive
+- **[`split-docs-page.md`](../../../fsh-guts/scripts/split-docs-page.md)** — derive
   node ids with **the renderer's own slug rule** so existing anchors keep
   resolving, then **pin** them so a heading edit does not move a URL. A missing
   anchor scrolls to the top rather than erroring, so getting this wrong is silent.
-- **[`computations-refactor-fixers.md`](../../fsh-guts/scripts/computations-refactor-fixers.md)**
+- **[`computations-refactor-fixers.md`](../../../fsh-guts/scripts/computations-refactor-fixers.md)**
   — one record for the other six, because what they share is the finding: four of
   them are corrections to corrections.
 

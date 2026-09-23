@@ -37,7 +37,7 @@ group in the first place.
 The repository's content types already include WHO SMART Guideline IGs, so this
 has a real home. But the platform must not acquire one guideline's methodology
 as a built-in — read
-[`domain-fencing`](../../cat-harness/skills/graph-management/domain-fencing.md)
+[`domain-fencing`](../../../cat-harness/skills/graph-management/domain-fencing.md)
 first, and apply its three questions to every rule this would add. A folio's
 methodology is a folio's, correctly located, and the honest move is to fence it
 and say so.
