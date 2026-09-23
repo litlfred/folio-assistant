@@ -466,17 +466,60 @@ function puml(name: string, pageUrl: string, sections: Section[], withAttrs: boo
     for (const c of s.compositions) L.push(`${c.from} *-- "${c.mult}" ${c.to} : ${c.label}`);
   }
   // A grid, not a strip. Sub-graphs share no edges, so ELK lays them all in
-  // one row (bootstrap: 3303 x 491). A hidden link from each package to the
-  // one a row below folds them into a near-square grid (1807 x 1210), which
-  // is the compact look the owner asked for, 2026-09-23: "more like the
-  // original one". Hidden, so it draws nothing and asserts no relation.
-  if (sections.length > 3) {
-    const pkgs = sections.map((s) => safeId(`pkg_${s.instance}_${s.id}`));
-    const cols = Math.ceil(Math.sqrt(pkgs.length));
-    for (let i = 0; i + cols < pkgs.length; i++) L.push(`${pkgs[i]} -[hidden]down- ${pkgs[i + cols]}`);
+  // one row (bootstrap: 3303 x 491). Hidden links fold them into a grid:
+  // this file is the PORTRAIT view, few columns; `landscapeOf` rebuilds the
+  // same links with more. Hidden, so they draw nothing and assert nothing.
+  if (sections.length > 1) {
+    L.push(...gridLinks(sections.map((s) => safeId(`pkg_${s.instance}_${s.id}`)), "portrait"));
   }
   L.push("@enduml");
   return L.join("\n") + "\n";
+}
+
+// ── Portrait and landscape ────────────────────────────────────────────────
+//
+// Owner, 2026-09-23: "can we have portrait and landscape views?". Every
+// diagram is rendered twice. The committed `.puml` is the portrait view;
+// the landscape view is DERIVED from it by `landscapeOf`, so the two cannot
+// say different things, and it is not committed as a second source.
+//
+// ELK lays every graph out top to bottom and ignores `left to right
+// direction` and arrow hints (measured: identical output). So landscape is
+// made two ways, by what the diagram is:
+//
+// - a grid of unconnected packages (an overview): ELK again, more columns;
+// - anything with edges between classes: Graphviz, left to right, with
+//   orthogonal edges. Graphviz can route an edge across a box, which is why
+//   ELK stays the portrait default.
+
+type Orientation = "portrait" | "landscape";
+
+const GRID_MARK = "' grid:";
+
+/** Hidden links folding `pkgs` into rows: few columns for portrait, many for landscape. */
+function gridLinks(pkgs: string[], o: Orientation): string[] {
+  const n = pkgs.length;
+  const cols = Math.max(1, Math.ceil(o === "portrait" ? Math.sqrt(n / 2) : Math.sqrt(n * 2)));
+  const L = [`${GRID_MARK} ${o}, ${cols} column(s) — ${pkgs.join(" ")}`];
+  for (let i = 0; i + cols < n; i++) L.push(`${pkgs[i]} -[hidden]down- ${pkgs[i + cols]}`);
+  return L;
+}
+
+/** The landscape view of a portrait `.puml`. */
+function landscapeOf(text: string): string {
+  const lines = text.split("\n");
+  const at = lines.findIndex((l) => l.startsWith(GRID_MARK));
+  if (at >= 0) {
+    const pkgs = lines[at].split(" — ")[1]!.split(" ");
+    const rest = lines.filter((l, i) => i < at || (i > at && !l.includes(" -[hidden]down- ")));
+    const end = rest.lastIndexOf("@enduml");
+    rest.splice(end, 0, ...gridLinks(pkgs, "landscape"));
+    return rest.join("\n");
+  }
+  return lines
+    .filter((l) => l.trim() !== "!pragma layout elk")
+    .flatMap((l) => (l.startsWith("@startuml") ? [l, "left to right direction", "skinparam linetype ortho"] : [l]))
+    .join("\n");
 }
 
 // ── Mermaid ───────────────────────────────────────────────────────────────
@@ -526,6 +569,34 @@ function mmd(sections: Section[], withAttrs: boolean): string {
 
 // ── Pages ─────────────────────────────────────────────────────────────────
 
+/**
+ * Both views of one diagram, with a Portrait / Landscape switch. Radio
+ * buttons and CSS (`uml.css`, `.fa-uml-views`), no script: the switch works
+ * before docs-ui.js loads and without it. Each view is its own
+ * `bpmn-figure`, so each gets the BPMN zoom and full-width controls.
+ */
+function views(svg: string, alt: string): string[] {
+  const id = safeId(svg.replace(/^.*\/uml\//, "").replace(/\.svg$/, ""));
+  const pick = (o: Orientation, label: string, checked: boolean) =>
+    `    <input type="radio" name="fa-uml-${id}" id="fa-uml-${id}-${o}" class="fa-uml-pick-${o}"${checked ? " checked" : ""}><label for="fa-uml-${id}-${o}">${label}</label>`;
+  const fig = (o: Orientation, src: string) => [
+    `  <figure class="bpmn-figure fa-uml-${o}">`,
+    `    <img src="{{ '${src}' | relative_url }}" alt="${alt} ${o === "portrait" ? "Portrait" : "Landscape"} layout.">`,
+    "  </figure>",
+  ];
+  return [
+    `<div class="fa-uml-views">`,
+    `  <fieldset class="fa-uml-view-pick">`,
+    "    <legend>Layout</legend>",
+    pick("portrait", "Portrait", true),
+    pick("landscape", "Landscape", false),
+    "  </fieldset>",
+    ...fig("portrait", svg),
+    ...fig("landscape", svg.replace(/\.svg$/, ".landscape.svg")),
+    "</div>",
+  ];
+}
+
 function page(opts: {
   title: string;
   lead: string;
@@ -559,9 +630,7 @@ function page(opts: {
     // so docs-ui.js gives it the same zoom and full-width controls. PlantUML
     // with ELK is the compact layout; Mermaid's dagre drew the same model as
     // a column three times taller. Owner, 2026-09-23.
-    `<figure class="bpmn-figure">`,
-    `  <img src="{{ '${opts.svg}' | relative_url }}" alt="UML class diagram of ${opts.title}: one package per named sub-graph, one class per node schema, with its data fields.">`,
-    "</figure>",
+    ...views(opts.svg, `UML class diagram of ${opts.title}: one package per named sub-graph, one class per node schema, with its data fields.`),
     "",
     "| sub-graph | directory | graph kinds | node schema |",
     "|---|---|---|---|",
@@ -658,9 +727,7 @@ async function build(): Promise<Map<string, string>> {
     "",
     `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model, with Bean and Todo, is [below](#the-full-object-model).`,
     "",
-    `<figure class="bpmn-figure">`,
-    `  <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships.">`,
-    "</figure>",
+    ...views("/assets/img/uml/harness-schemas.svg", "UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships."),
     "",
     "## The full object model",
     "",
@@ -668,9 +735,7 @@ async function build(): Promise<Map<string, string>> {
     "",
     `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, OBJECT_MODEL_PUML)})`,
     "",
-    `<figure class="bpmn-figure">`,
-    `  <img src="{{ '/assets/img/uml/harness-object-model.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships.">`,
-    "</figure>",
+    ...views("/assets/img/uml/harness-object-model.svg", "UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships."),
     "",
     "## Per harness",
     "",
@@ -729,8 +794,23 @@ async function plantumlJar(): Promise<string | null> {
  * is copied under a numbered name because PlantUML names its output after
  * `@startuml <name>`, not after the file.
  */
-async function renderSvgs(pumls: [string, string][]): Promise<{ rendered: number; skipped: string | null }> {
-  const todo = pumls.filter(([p, text]) => svgStamp(svgFor(p)) !== sha256(text));
+interface RenderJob {
+  /** The committed `.puml` this view is drawn from. */
+  source: string;
+  text: string;
+  svg: string;
+}
+
+/** Both views of every `.puml`: the file itself, and {@link landscapeOf} it. */
+function jobsFor(pumls: [string, string][]): RenderJob[] {
+  return pumls.flatMap(([p, text]) => [
+    { source: p, text, svg: svgFor(p) },
+    { source: p, text: landscapeOf(text), svg: svgFor(p).replace(/\.svg$/, ".landscape.svg") },
+  ]);
+}
+
+async function renderSvgs(jobs: RenderJob[]): Promise<{ rendered: number; skipped: string | null }> {
+  const todo = jobs.filter((j) => svgStamp(j.svg) !== sha256(j.text));
   if (todo.length === 0) return { rendered: 0, skipped: null };
   if (spawnSync("java", ["-version"]).status !== 0) return { rendered: 0, skipped: "no java on PATH" };
   const jar = await plantumlJar();
@@ -738,24 +818,24 @@ async function renderSvgs(pumls: [string, string][]): Promise<{ rendered: number
 
   const work = mkdtempSync(join(tmpdir(), "uml-svg-"));
   try {
-    const inputs = todo.map(([, text], i) => {
+    const inputs = todo.map(({ text }, i) => {
       const f = join(work, `u${i}.puml`);
       writeFileSync(f, text.replace(/^@startuml .*$/m, `@startuml u${i}`));
       return f;
     });
     const run = spawnSync("java", ["-jar", jar, "-charset", "UTF-8", "-tsvg", "-o", work, ...inputs], { encoding: "utf8" });
     if (run.status !== 0) throw new Error(`PlantUML failed (${run.status}): ${run.stderr}`);
-    todo.forEach(([p, text], i) => {
+    todo.forEach(({ source: p, text, svg: target }, i) => {
       const out = join(work, `u${i}.svg`);
-      if (!existsSync(out)) throw new Error(`PlantUML wrote nothing for ${relative(REPO, p)}`);
+      if (!existsSync(out)) throw new Error(`PlantUML wrote nothing for ${relative(REPO, target)}`);
       // After the root element's opening tag: a comment before an XML
       // declaration is not well-formed, and docs-ui.js parses this file.
       const svg = readFileSync(out, "utf8").replace(
         /(<svg\b[^>]*>)/,
-        `$1<!-- GENERATED from ${relative(REPO, p)} by ${GENERATOR} (PlantUML ${PLANTUML.version}) --><!-- puml-sha256: ${sha256(text)} -->`,
+        `$1<!-- GENERATED from ${relative(REPO, p)}${target.endsWith(".landscape.svg") ? " (landscape view, landscapeOf)" : ""} by ${GENERATOR} (PlantUML ${PLANTUML.version}) --><!-- puml-sha256: ${sha256(text)} -->`,
       );
-      mkdirSync(dirname(svgFor(p)), { recursive: true });
-      writeFileSync(svgFor(p), svg);
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, svg);
     });
     return { rendered: todo.length, skipped: null };
   } finally {
@@ -783,14 +863,15 @@ async function main(): Promise<void> {
   const pumls = [...files].filter(([p]) => p.endsWith(".puml"));
   if (!existsSync(OBJECT_MODEL_PUML)) throw new Error(`${relative(REPO, OBJECT_MODEL_PUML)} is missing: run gen-object-model-uml.ts`);
   pumls.push([OBJECT_MODEL_PUML, readFileSync(OBJECT_MODEL_PUML, "utf8")]);
-  const svgs = new Set(pumls.map(([p]) => svgFor(p)));
+  const jobs = jobsFor(pumls);
+  const svgs = new Set(jobs.map((j) => j.svg));
   const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT), ...walk(SVG_ROOT)];
   // Only this generator's own kinds of output count as orphans.
   const orphans = existing.filter((p) => !files.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
 
   if (check) {
     const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
-    for (const [p, text] of pumls) if (svgStamp(svgFor(p)) !== sha256(text)) stale.push(svgFor(p));
+    for (const j of jobs) if (svgStamp(j.svg) !== sha256(j.text)) stale.push(j.svg);
     if (stale.length || orphans.length) {
       for (const p of stale) console.error(`stale: ${relative(REPO, p)}`);
       for (const p of orphans) console.error(`orphan: ${relative(REPO, p)}`);
@@ -805,7 +886,7 @@ async function main(): Promise<void> {
       writeFileSync(p, text);
     }
     console.log(`wrote ${files.size} file(s) under ${relative(REPO, UML_ROOT)} and ${relative(REPO, DOCS_ROOT)}${orphans.length ? `; removed ${orphans.length} orphan(s)` : ""}`);
-    const r = await renderSvgs(pumls);
+    const r = await renderSvgs(jobs);
     if (r.skipped) {
       // Not a pass: the pages would show stale pictures, and --check says so.
       console.error(`SVGs NOT rendered (${r.skipped}); set PLANTUML_JAR or install java, then re-run`);

@@ -507,7 +507,9 @@ smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_art
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
 smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_base_smart_base_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
 smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains
-pkg_smart_base_library -[hidden]down- pkg_smart_base_processes
-pkg_smart_base_methodologies -[hidden]down- pkg_smart_base_smart_base_artifact_index
-pkg_smart_base_voices -[hidden]down- pkg_smart_base_tools
+' grid: portrait, 2 column(s) — pkg_smart_base_library pkg_smart_base_methodologies pkg_smart_base_voices pkg_smart_base_processes pkg_smart_base_smart_base_artifact_index pkg_smart_base_tools
+pkg_smart_base_library -[hidden]down- pkg_smart_base_voices
+pkg_smart_base_methodologies -[hidden]down- pkg_smart_base_processes
+pkg_smart_base_voices -[hidden]down- pkg_smart_base_smart_base_artifact_index
+pkg_smart_base_processes -[hidden]down- pkg_smart_base_tools
 @enduml

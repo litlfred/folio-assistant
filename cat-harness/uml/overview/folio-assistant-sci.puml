@@ -71,4 +71,6 @@ folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_So
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
+' grid: portrait, 1 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_voices
+pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_voices
 @enduml

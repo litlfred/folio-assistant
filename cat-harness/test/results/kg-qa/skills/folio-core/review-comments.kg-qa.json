@@ -5,15 +5,20 @@
     "id": "review-comments",
     "path": "skills/folio-core/review-comments.md"
   },
-  "source_hash": "65725943c538",
+  "source_hash": "ff0c699f550c",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/review-comments.md",
+          "detail": "320 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -33,8 +38,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 0,
+    "pass": 3,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   }

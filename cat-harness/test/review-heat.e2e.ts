@@ -86,9 +86,9 @@ test.describe("review page: heat map (qbfi)", () => {
   test("one row per section in reading order, a comment on an unchanged block in its own section", async ({ page }) => {
     await open(page);
     expect(await rows(page)).toEqual([
-      ["doc/ch › sec:one", "2", "2 (1 defect)", "1", "not measured yet", "not published"],
-      ["doc/ch › sec:two", "1", "0", "0", "not measured yet", "not published"],
-      ["doc/ch › sec:three", "0", "1", "0", "not measured yet", "not published"],
+      ["doc/ch › sec:one", "2", "2 (1 defect)", "1", "no data", "not published"],
+      ["doc/ch › sec:two", "1", "0", "0", "no data", "not published"],
+      ["doc/ch › sec:three", "0", "1", "0", "no data", "not published"],
     ]);
   });
 

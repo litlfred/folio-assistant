@@ -106,10 +106,17 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    the PR body, in the gate's own terms:
    - **open defects**: review comments of kind `defect` still `open` or
      `addressed`, from the preview's `review-comments.json`;
-   - **changed blocks with neither a verdict nor a waiver**: nothing records
-     a per-block verdict yet (bean `px0t`), so write **"not measured"**.
-     Never write 0, and never count resolved comments as coverage. A
-     resolved comment is not a reviewer's verdict on the block.
+   - **changed blocks with neither a verdict nor a waiver** on their current
+     version.
+
+   Both come from one command, the `folio-review-coverage` Tool (bean
+   `px0t`), run on the preview's published files:
+   `bun run <platform>/folio-assistant-core/scripts/review-coverage.ts
+   --changeset changeset.json --blocks blocks.json --comments
+   review-comments.json`. Quote its stderr summary. **If the preview has no
+   `review-comments.json`, or one with no `verdicts` field, write "not
+   measured"**, never 0. And never count resolved comments as coverage: a
+   resolved comment is not a reviewer's verdict on the block.
 
    This REPORTS; it does not merge or refuse. The gate belongs to the review
    process, and the committee decides the outcome. A prepare-merge that

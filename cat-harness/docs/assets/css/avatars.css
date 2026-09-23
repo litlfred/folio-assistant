@@ -157,6 +157,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="review-verdicts"] {
+  /* a page with a tick — somebody read this version and judged it */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 4h14v16H5zM8 12l3 3 5-6' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="tools"] {
   /* a spanner — a Tool definition, the thing that does the work */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -358,6 +365,7 @@
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
+  .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
@@ -405,6 +413,7 @@
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 46% 34%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 46% 34%); }
+    .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 46% 34%); }
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 46% 34%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 46% 34%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 46% 34%); }
@@ -453,6 +462,7 @@
   .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
   .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
+  .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
   .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
   .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
   .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
@@ -500,6 +510,7 @@
     .fa-avatar[data-fa-kind="todos"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-items"] { background-color: hsl(48 42% 72%); }
     .fa-avatar[data-fa-kind="todo-feedback"] { background-color: hsl(320 42% 72%); }
+    .fa-avatar[data-fa-kind="review-verdicts"] { background-color: hsl(200 42% 72%); }
     .fa-avatar[data-fa-kind="tools"] { background-color: hsl(250 42% 72%); }
     .fa-avatar[data-fa-kind="schemas"] { background-color: hsl(156 42% 72%); }
     .fa-avatar[data-fa-kind="qa"] { background-color: hsl(140 42% 72%); }
@@ -550,6 +561,7 @@
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
+  .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
@@ -596,6 +608,7 @@
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 16% 52%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 16% 52%); }
+    .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 16% 52%); }
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 16% 52%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 16% 52%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 16% 52%); }
@@ -642,6 +655,7 @@
   .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
   .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }
+  .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
   .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
   .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
   .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
@@ -688,6 +702,7 @@
     .fa-avatar[data-fa-kind="todos"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-items"][data-fa-trash="true"] { background-color: hsl(48 14% 56%); }
     .fa-avatar[data-fa-kind="todo-feedback"][data-fa-trash="true"] { background-color: hsl(320 14% 56%); }
+    .fa-avatar[data-fa-kind="review-verdicts"][data-fa-trash="true"] { background-color: hsl(200 14% 56%); }
     .fa-avatar[data-fa-kind="tools"][data-fa-trash="true"] { background-color: hsl(250 14% 56%); }
     .fa-avatar[data-fa-kind="schemas"][data-fa-trash="true"] { background-color: hsl(156 14% 56%); }
     .fa-avatar[data-fa-kind="qa"][data-fa-trash="true"] { background-color: hsl(140 14% 56%); }
