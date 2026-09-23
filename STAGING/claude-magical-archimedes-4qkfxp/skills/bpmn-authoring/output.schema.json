@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp/skills/bpmn-authoring/output.schema.json",
+  "title": "BPMN Authoring Output",
+  "description": "Output schema for BPMN 2.0 business process authoring.",
+  "type": "object",
+  "required": [
+    "bpmnFile"
+  ],
+  "properties": {
+    "bpmnFile": {
+      "type": "string",
+      "description": "Path to the generated/updated BPMN file."
+    },
+    "diagramFile": {
+      "type": "string",
+      "description": "Path to the rendered diagram (SVG/PNG)."
+    },
+    "taskCount": {
+      "type": "integer"
+    },
+    "gatewayCount": {
+      "type": "integer"
+    },
+    "participantCount": {
+      "type": "integer"
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp",
+    "sha": "33660756af6557220f98e350d2f669f709ea73e0",
+    "pr": "1086/merge",
+    "run": "35862335972"
+  }
+}
