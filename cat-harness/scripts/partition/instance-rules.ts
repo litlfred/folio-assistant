@@ -896,6 +896,8 @@ export const RULES: Rule[] = [
       // content vocabulary.
       "scripts/check-bootstrap-concepts.ts",
       "scripts/check-requirements.ts",
+      // Bean `4d22`: a completion on a branch that main never received.
+      "scripts/check-bean-orphans.ts",
       "scripts/kg-audit.ts",
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.

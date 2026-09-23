@@ -728,6 +728,12 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:bean-orphans",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT, and its findings are not failures. It reads every fetched `origin/claude/*` branch, which a CI checkout does not have, and with none it exits **2** (`could not determine`), never a silent 0. And a bean completed on an OPEN PR's branch is the owner's rule being FOLLOWED (bean `4d22`: complete the bean in the PR that lands it), so it reports the likely orphans rather than failing. Run it at session start after fetching the sibling branches, as `bean-coordination` says",
+  },
+  {
     script: "schema:viz:check",
     kind: "covered-by",
     reason:
