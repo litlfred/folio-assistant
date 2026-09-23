@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790170496">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790170496">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790170496">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790170496">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790170496">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790169931" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790170496" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -886,10 +886,19 @@ literal by declaration: its inner keys are data, not properties. That is the
 right home for a nested structure that is ours rather than linked data, and
 <strong>the only way its nulls survive</strong> — the three-state rule lives in them.</p>
 
-<p><strong>A path is a literal, never an <code class="language-plaintext highlighter-rouge">@id</code>.</strong> A block-relative path coerced to
-<code class="language-plaintext highlighter-rouge">@id</code> resolves against the context’s <code class="language-plaintext highlighter-rouge">@base</code>, not against the block, and so
-names a location the file is not at. <code class="language-plaintext highlighter-rouge">file</code> on a figure block is a literal for
-that reason; <code class="language-plaintext highlighter-rouge">text</code> on a prose block still has the defect (bean <code class="language-plaintext highlighter-rouge">589f</code>).</p>
+<p><strong>A path is a literal, never an <code class="language-plaintext highlighter-rouge">@id</code>.</strong> A document-relative path coerced to
+<code class="language-plaintext highlighter-rouge">@id</code> resolves against the context’s <code class="language-plaintext highlighter-rouge">@base</code>, not against the document, and so
+names a location the file is not at. <code class="language-plaintext highlighter-rouge">text</code> did exactly that on all 1,323
+committed prose blocks — <code class="language-plaintext highlighter-rouge">../sections/x.md</code> became a well-formed link to
+nowhere — until bean <code class="language-plaintext highlighter-rouge">589f</code> made it, <code class="language-plaintext highlighter-rouge">leanSource</code> and <code class="language-plaintext highlighter-rouge">file</code> literals.
+<code class="language-plaintext highlighter-rouge">check:context-emission</code> now fails if a file path sits under any <code class="language-plaintext highlighter-rouge">@id</code> term.</p>
+
+<p><strong>The upgrade rule</strong> (owner, 2026-09-23, chosen for the least drift): a path
+term becomes a link — <code class="language-plaintext highlighter-rouge">@type: @id</code> with ABSOLUTE IRIs minted by the one
+function that mints block IRIs — when, and only when, the files it names are
+SERVED at a URL an instance declares. Until then a link is a promise nothing
+keeps, and a literal is the honest record: one reading, resolved by our tools
+against the file that carries it.</p>
 <h2 id="a-prefix-is-the-stub--and-a-prefix-that-is-spoken-must-be-bound">
   
   
@@ -1551,7 +1560,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35866839245"><code>9a2dc8b</code></a> &middot; 2026-09-23T13:25:27Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35867919831"><code>efe8570</code></a> &middot; 2026-09-23T13:34:52Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

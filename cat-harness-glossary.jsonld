@@ -972,6 +972,7 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator"
       ]
     },
@@ -983,6 +984,15 @@
       "label": "Adjudicator",
       "scopeNote": "Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, \"a human or agentic decision, never a merge rule\" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.\n\nA_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.",
       "source": "cat-harness/processes/adjudication.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "label": "Adjudicator",
+      "scopeNote": "One lane, because every step here is the adjudicator's: asking the question, choosing among the answers, and writing the entry. The feedback provider's lane is in `adjudication.bpmn`, where stating a finding happens — a provider has no entitlement to settle what it reported, and drawing it here would suggest otherwise.\n\nThe role admits person and agent. `refresh-materialized` already gives the reason in its own words — \"a human or agentic decision, never a merge rule\" — and the steps are plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.",
+      "source": "cat-harness/processes/criterion-adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",

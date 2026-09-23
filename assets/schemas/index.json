@@ -31344,7 +31344,7 @@
       "name": "AdjudicationAssetSchema",
       "module": "folio-assistant-core/schemas/adjudication.ts",
       "kind": "zod-object",
-      "doc": "One thing the judge is shown.",
+      "doc": "One thing the adjudicator is shown.",
       "fields": [
         {
           "name": "ref",
@@ -31403,7 +31403,7 @@
       "name": "AdjudicationOutcomeSchema",
       "module": "folio-assistant-core/schemas/adjudication.ts",
       "kind": "zod-object",
-      "doc": "What a judge answers.",
+      "doc": "What an adjudicator answers.",
       "fields": [
         {
           "name": "$schema",
@@ -31430,7 +31430,7 @@
           "type": "z.array(z.string().min(1)).min(2)",
           "optional": false,
           "array": true,
-          "doc": "The enum in force when this was judged."
+          "doc": "The enum in force when this was adjudicated."
         },
         {
           "name": "reasoning",
@@ -31441,10 +31441,10 @@
         },
         {
           "name": "by",
-          "type": "z .object({ id: z.string().min(1), kind: z.enum(ADJUDICATOR_KINDS), /** An `agent` judge must name its model, so a verd…",
+          "type": "z .object({ id: z.string().min(1), kind: z.enum(ADJUDICATOR_KINDS), /** An `agent` adjudicator must name its model, so …",
           "optional": false,
           "array": false,
-          "doc": "Who judged, and of which kind. An outcome with no judge is"
+          "doc": "Who adjudicated, and of which kind. An outcome with no adjudicator is"
         },
         {
           "name": "at",
@@ -31482,7 +31482,7 @@
       "name": "AdjudicationRequestSchema",
       "module": "folio-assistant-core/schemas/adjudication.ts",
       "kind": "zod-object",
-      "doc": "What a judge is given.",
+      "doc": "What an adjudicator is given.",
       "fields": [
         {
           "name": "$schema",
@@ -31502,7 +31502,7 @@
           "type": "z.array(AdjudicationAssetSchema)",
           "optional": false,
           "array": true,
-          "doc": "Everything the judge is shown, and **nothing else is**."
+          "doc": "Everything the adjudicator is shown, and **nothing else is**."
         },
         {
           "name": "prompt",
@@ -31563,7 +31563,7 @@
       "name": "JudgementCodeSchema",
       "module": "folio-assistant-core/schemas/adjudication.ts",
       "kind": "zod-object",
-      "doc": "One answer the judge is allowed to give.",
+      "doc": "One answer the adjudicator is allowed to give.",
       "fields": [
         {
           "name": "code",

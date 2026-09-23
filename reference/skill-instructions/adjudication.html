@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790170496">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790170496">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790170496">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790170496">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790169931">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790170496">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790169931" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790170496" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -824,6 +824,95 @@ is the record, not the choice.”</em></p>
 only by somebody already reading that diagram. <strong>The gap was never vocabulary.
 It was that nothing generalised the one statement of it</strong>, so each new subject
 restated it and the eighth would have restated it again.</p>
+<h2 id="one-judgement-six-questions--and-the-split-that-followed">
+  
+  
+    <a href="#one-judgement-six-questions--and-the-split-that-followed" class="anchor-heading" aria-labelledby="one-judgement-six-questions--and-the-split-that-followed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One judgement, six questions — and the split that followed
+  
+  
+</h2>
+    
+
+<p><strong>Measured 2026-09-23</strong> (bean <code class="language-plaintext highlighter-rouge">bvuk</code>, <a href="https://github.com/litlfred/folio-assistant/issues/1073">#1073</a>), and it changes how you call this process.</p>
+
+<p><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code> used to hold two things: the judgement, and three outcomes
+done about it — the finding stands, the criterion is scoped, a dispensation is
+granted. Six diagrams called it. <strong>Only two asked a question those three
+answer</strong>: the <code class="language-plaintext highlighter-rouge">review-narrative</code> and <code class="language-plaintext highlighter-rouge">voice-review</code> rows above. The other four
+ask whether a drift is real, whether a passage is acceptable, whether two
+entries agree, and <em>which side wins a conflict</em>. None of those has a criterion
+to scope or a dispensation to grant — and a <code class="language-plaintext highlighter-rouge">callActivity</code> runs the whole
+subprocess, so all four ran the outcome half anyway.</p>
+
+<p><strong>Two things worth carrying, because both were established by checking rather
+than reasoning:</strong></p>
+
+<ul>
+  <li><strong>No caller branched on the outcome, and none could.</strong> Every one of the six
+call activities has exactly one outgoing flow, and the process had one
+settled end event: all three branches reconverged on <code class="language-plaintext highlighter-rouge">A_RecordEntry</code>. So the
+mismatch was invisible in the callers’ shape — a diagram asking “which side
+wins” and one asking “does this finding stand” looked identical.</li>
+  <li><strong>Passing each caller its own codes could not fix it.</strong> That was the first
+proposal. The codes selected three different TASKS, so a caller handed
+<code class="language-plaintext highlighter-rouge">local-wins</code> would have had it pointing at <code class="language-plaintext highlighter-rouge">A_ScopeCriterion</code>. <strong>The branches
+had to move, not the enum.</strong></li>
+</ul>
+
+<p>So the split is <strong>at the judgement</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>what</th>
+      <th>where it lives</th>
+      <th>why there</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>entry condition, untainted dispatch, person-or-agent restriction</td>
+      <td><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></td>
+      <td>it must not vary, and restating it per caller is how it drifts</td>
+    </tr>
+    <tr>
+      <td>the three QA-criterion outcomes, <code class="language-plaintext highlighter-rouge">A_RecordEntry</code>, the dispensation</td>
+      <td><code class="language-plaintext highlighter-rouge">criterion-adjudication.bpmn</code></td>
+      <td>it depends on what was asked</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="what-that-means-when-you-call-it">
+  
+  
+    <a href="#what-that-means-when-you-call-it" class="anchor-heading" aria-labelledby="what-that-means-when-you-call-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What that means when you call it
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">A_Adjudicate</code> declares <code class="language-plaintext highlighter-rouge">&lt;folio:adjudication defers="caller"/&gt;</code> — it IS an
+adjudication and the permitted answers are yours. Declared rather than left as
+a missing <code class="language-plaintext highlighter-rouge">codes</code>, so a marker lost by accident and a deferral on purpose do
+not parse the same.</p>
+
+<ul>
+  <li><strong>Asking the QA-criterion question?</strong> Call <code class="language-plaintext highlighter-rouge">Process_CriterionAdjudication</code>
+and declare <code class="language-plaintext highlighter-rouge">&lt;folio:adjudication accepts="stands scope dispensation"/&gt;</code>. The
+engine compares your list with what that process actually offers.</li>
+  <li><strong>Asking something else?</strong> Call <code class="language-plaintext highlighter-rouge">Process_Adjudication</code> and declare
+<code class="language-plaintext highlighter-rouge">&lt;folio:adjudication codes="…"/&gt;</code> on your own call activity, with your own
+gateway coding the same set. The engine refuses a mismatch between the two,
+and refuses a partly-coded gateway, which reads as complete.</li>
+  <li><strong>Declaring nothing</strong> is legal and <strong>reported</strong> by <code class="language-plaintext highlighter-rouge">check:workflow-refs</code> —
+the four callers above are in that state on purpose. What each should ask is
+open, and guessing would make an undecided thing look checked.</li>
+</ul>
+
+<p>Whatever you ask, <code class="language-plaintext highlighter-rouge">A_RecordEntry</code>’s rule follows the outcome: <strong>a judgement
+nobody wrote down is indistinguishable from a checker that was never run.</strong> It
+is <code class="language-plaintext highlighter-rouge">relaxable="false"</code> wherever it lands, which is now with the caller that
+records, because the entry written depends on what was adjudicated.</p>
 <h2 id="two-senses-of-the-word-and-only-one-is-this">
   
   
@@ -1121,11 +1210,15 @@ not the same kind of evidence as a person’s.</li>
   <tbody>
     <tr>
       <td><a href="../../processes/adjudication.html">Adjudication</a></td>
-      <td>Judge the disagreement; Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker’s beneath it</td>
+      <td>Adjudicate the disagreement</td>
     </tr>
     <tr>
       <td><a href="../../processes/content-change-review.html">Content Change and Review</a></td>
       <td>Adjudicate the disagreement (calls a sub-process)</td>
+    </tr>
+    <tr>
+      <td><a href="../../processes/criterion-adjudication.html">Criterion adjudication</a></td>
+      <td>Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker’s beneath it</td>
     </tr>
     <tr>
       <td><a href="../../processes/ingest-l1-completeness-gate.html">Ingestion subprocess — the L1 completeness gate</a></td>
@@ -1340,7 +1433,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35866839245"><code>9a2dc8b</code></a> &middot; 2026-09-23T13:25:27Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35867919831"><code>efe8570</code></a> &middot; 2026-09-23T13:34:52Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
