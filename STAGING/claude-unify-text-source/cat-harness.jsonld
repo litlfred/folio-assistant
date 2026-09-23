@@ -272,10 +272,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T16:59:27.655Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a67e6c1e2c2713a257b3a4b8316f66f04065c885",
-  "sourceCommitSha": "a67e6c1e2c2713a257b3a4b8316f66f04065c885",
-  "sourceCommitAt": "2026-09-23T16:57:16Z",
+  "generatedAt": "2026-09-23T17:10:26.386Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dd4b6dd9eae2735825727569b5ba4227d3a37d01",
+  "sourceCommitSha": "dd4b6dd9eae2735825727569b5ba4227d3a37d01",
+  "sourceCommitAt": "2026-09-23T17:07:53Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -287,7 +287,7 @@
     "Process": 67,
     "SequenceFlow": 850,
     "Role": 146,
-    "ProcessNode": 807,
+    "ProcessNode": 808,
     "Tool": 75,
     "Schema": 105,
     "GraphKind": 30,
@@ -10816,8 +10816,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Start_TranslationNeeded"
       ],
-      "nodeCount": 21,
-      "flowCount": 23,
+      "nodeCount": 20,
+      "flowCount": 21,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation"
     },
@@ -10943,31 +10943,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F14",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "findings attached",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_RoundTripQA",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Gateway_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_SMEReview",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/flow/F14"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F15",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "Drift found",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Gateway_Drift",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_SMEReview",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/flow/F15"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F16",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "Clean",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Gateway_Drift",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_SMEReview",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/flow/F16"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F17",
@@ -11277,8 +11258,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F15",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F16"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F14"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F17"
@@ -11456,27 +11436,6 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_RoundTripQA"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Gateway_Drift",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Drift detected?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#role/Automated%20Pipeline",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F14"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F15",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/flow/F16"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/node/Gateway_Drift"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_AppendDisclaimer",
@@ -31331,8 +31290,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/StartEvent_SourceChanged"
       ],
-      "nodeCount": 27,
-      "flowCount": 27,
+      "nodeCount": 29,
+      "flowCount": 29,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental"
     },
@@ -31373,6 +31332,25 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Task_FullBuild",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/flow/F04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04E",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "environment error",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Gateway_Restore",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Task_LogEnvError",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/flow/F04E"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04F",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Task_LogEnvError",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/EndEvent_EnvError",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/flow/F04F"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F05",
@@ -31678,10 +31656,52 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F03",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04E"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/node/Gateway_Restore"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Task_LogEnvError",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log the environment error on the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04E"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04F"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/node/Task_LogEnvError"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/EndEvent_EnvError",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Build stopped: environment error",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#role/FHIR%20modeller%20/%20PR%20author%20(person%20+%20authoring%20agent)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/flow/F04F"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental/node/EndEvent_EnvError"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental/node/Task_FullBuild",
@@ -39560,8 +39580,8 @@
   ],
   "staging": {
     "branch": "claude/unify-text-source",
-    "sha": "ecfdddf61cb8f3283f1e7c4d9c484aa19b3ae0bd",
+    "sha": "1031e1e809f00e029a52b683265ab2c718c15e00",
     "pr": "1126/merge",
-    "run": "35892333293"
+    "run": "35893520726"
   }
 }

@@ -1706,7 +1706,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_HumanTranslation",
       "label": "Automated Pipeline",
-      "scopeNote": "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.",
+      "scopeNote": "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.",
       "source": "cat-harness/processes/human-translation-workflow.bpmn"
     },
     {
@@ -2104,7 +2104,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#role/work-plan",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-unify-text-source/cat-harness.jsonld#process/Process_IgIncremental",
       "label": "Work plan — beans (shared by humans and agents)",
-      "scopeNote": "Where both failure branches land before the process ends rather than just stopping: Gateway_Valid's `no` and Gateway_QcPass's `no` each write their findings here — Task_LogFindings, Task_QcBeans — before either EndEvent_Findings or EndEvent_FindingsQc, so a run that stops short always leaves a record of why rather than only a red check.",
+      "scopeNote": "Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.",
       "source": "cat-harness/processes/ig-incremental-build.bpmn"
     },
     {
