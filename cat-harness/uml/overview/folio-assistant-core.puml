@@ -79,13 +79,17 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     maintains [0..*] : Maintain[]
   }
 }
+package "folio-assistant-core/core-scripts" as pkg_folio_assistant_core_core_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_scripts_code
+}
 
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
-' grid: portrait, 2 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools
+' grid: portrait, 2 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_voices
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_tools
+pkg_folio_assistant_core_voices -[hidden]down- pkg_folio_assistant_core_core_scripts
 @enduml
