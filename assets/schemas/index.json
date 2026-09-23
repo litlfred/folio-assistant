@@ -10,7 +10,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 19,
+      "count": 20,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -1371,6 +1371,15 @@
       "name": "masked-region.test",
       "graphNode": "undeclared",
       "summary": "`maskedRegions` — the rules, each against the mistake it exists for.",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/materialization-compiled.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "materialization-compiled.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The `compiled` purpose: valid against its INPUTS, checked before use — bean `gpdo`.",
       "isTest": true
     },
     {
@@ -34754,6 +34763,71 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledInputs",
+      "name": "CompiledInputs",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
+      "name": "CompiledInputsSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "What a COMPILED copy was built from. Its validity is a statement about",
+      "fields": [
+        {
+          "name": "toolchain",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`."
+        },
+        {
+          "name": "sourceRevision",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The revision of the source the artefact was built from, e.g. a commit sha."
+        },
+        {
+          "name": "inputDigest",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/, \"a sha256 digest is 64 lowercase hex characters\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A sha256 over the build inputs, where the builder can produce one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledValidity",
+      "name": "CompiledValidity",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "doc": "Is a COMPILED copy still valid for the inputs we have now? Call it BEFORE",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/materialization.ts#Fixity",
       "name": "Fixity",
       "module": "folio-assistant-core/schemas/materialization.ts",
@@ -34815,6 +34889,7 @@
         "expired",
         "no-expiry",
         "permanent",
+        "input-bound",
         "not-materialized"
       ],
       "refs": [],
@@ -35045,6 +35120,13 @@
           "doc": "Required when `purpose` is `archival` or `both`."
         },
         {
+          "name": "inputs",
+          "type": "CompiledInputsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Required when `purpose` is `compiled`, and only allowed then. See {@link CompiledInputsSchema}."
+        },
+        {
           "name": "materializedAt",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -35075,6 +35157,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
         "folio-assistant-core/schemas/materialization.ts#FixitySchema",
         "folio-assistant-core/schemas/materialization.ts#GatesSchema",
         "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema"
@@ -41214,6 +41297,14 @@
       "via": "sourceLoss",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
+      "via": "inputs",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
