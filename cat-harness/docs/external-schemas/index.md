@@ -24,9 +24,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>15</b><span>specifications</span></div>
-<div class="xs-stat"><b>79</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>33</b><span>declared dependents</span></div>
+<div class="xs-stat"><b>16</b><span>specifications</span></div>
+<div class="xs-stat"><b>93</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>35</b><span>declared dependents</span></div>
 <div class="xs-stat"><b>0</b><span>dependents that no longer resolve</span></div>
 </div>
 
@@ -41,6 +41,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
+| **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
 | **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
 | **[RDF 1.1 Concepts and Abstract Syntax](#w3c-rdf)**<br>`w3c-rdf` | W3C | [2014-02-25](https://www.w3.org/TR/rdf11-concepts/) | `conforms` — this repository's artefacts are valid against it |
@@ -61,7 +62,7 @@ the same way a dangling citation does one graph over.
 a note after it names something this cannot open and is written that way on
 purpose; reporting it as broken would teach a reader to ignore the column.
 
-Every one of the **27** entries spelled as a path
+Every one of the **29** entries spelled as a path
 resolves in this checkout. **6** name a set or
 carry a note and were not checked.
 
@@ -76,7 +77,7 @@ repository writes and has said nothing about.
 
 - `https://litlfred.github.io/folio-assistant/bpmn`
 
-**16 declared and not in use.** Not a defect on its own: a
+**17 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -94,6 +95,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
 - `http://www.w3.org/ns/oa#`
+- `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
 - `https://schema.org/`
 
@@ -335,6 +337,46 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
+
+### ODRL Information Model 2.2
+
+<a id="w3c-odrl"></a>
+
+`w3c-odrl` — W3C, edition [2018-02-15](https://www.w3.org/TR/odrl-model/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/odrl/2/`
+
+**Note.** Added when the bean 2j09 JSON-LD scan found ODRL bound in cat-harness/policies/folio-defaults.jsonld (#1181) with no record. `conforms`: that file is an ODRL policy document, by the rule the owner approved 2026-09-23 for namespaces this instance's documents are written in.
+
+**What depends on it.**
+
+| entry | |
+|---|---|
+| `cat-harness/policies/folio-defaults.jsonld` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/odrl.ts` | <span class="xs-tag xs-ok">resolves</span> |
+
+**Operative terms (14).** The terms this repository acts on —
+derived by the tooling from the corpus, never hand-listed, and deliberately
+a subset of the edition rather than a transcription of it.
+
+| term | what it means here |
+|---|---|
+| `odrl:annotate` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:derive` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:display` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:eq` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:execute` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:invalid` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:isAnyOf` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:isNoneOf` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:modify` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:neq` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:perm` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:prohibit` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:translate` | derived from the corpus; what this repository does with it is not yet described |
+| `odrl:use` | derived from the corpus; what this repository does with it is not yet described |
 
 ### OWL 2 Web Ontology Language Document Overview (Second Edition)
 

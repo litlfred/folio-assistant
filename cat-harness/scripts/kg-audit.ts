@@ -85,6 +85,7 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
+import { ANYONE, ODRL_ACTIONS, readPolicies, readPolicyGrants } from "../schemas/odrl.js";
 import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
 import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
@@ -163,6 +164,9 @@ const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
 // reasoning as `WORKFLOW_DIR` — the role graph moved out of the skills tree
 // on 2026-09-21 and a path-less subject needs a sidecar home.
 const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
+// declared-path-literal: the convention fallback, at the call site, as for
+// `SCENARIO_DIR`. The ODRL policies (issue #1180) are their own graph kind.
+const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -1052,11 +1056,9 @@ function auditRoles(
   const hash = sha256(readFileSync(graphPath, "utf-8"));
   const rel = relative(root, graphPath);
 
-  const corpusLanes = new Set<string>();
   const explicitRefs = new Set<string>();
   for (const p of processes) {
     for (const lane of p.model?.lanes ?? []) {
-      if (lane.name) corpusLanes.add(lane.name);
       if (lane.roleRef) explicitRefs.add(lane.roleRef);
     }
   }
@@ -1070,11 +1072,12 @@ function auditRoles(
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
-    const usedLanes = r.lanes.filter((l) => corpusLanes.has(l));
-    const bindsSomething = usedLanes.length > 0 || explicitRefs.has(r.id);
+    // A lane binds a role by its own `<folio:role ref>`; the role lists no lanes
+    // (data-modelling step 8, #1168).
+    const bindsSomething = explicitRefs.has(r.id);
     const laneFindings: KgFinding[] = bindsSomething
       ? []
-      : [{ where: r.id, detail: `role "${r.id}" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead.` }];
+      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
 
     const criteria: Record<string, KgCriterionEntry> = {
       "role-skills-resolve": entry(badSkills),
@@ -1575,6 +1578,27 @@ function auditGraph(
 
   const declaredPerms = new Set((readPermissions(KG_ROOT)?.permissions ?? []).map((p) => p.id));
   const badPerms: KgFinding[] = [];
+  // The ODRL side (issue #1180): every rule's action is declared (or ODRL's
+  // own), and every assignee is an actor or `folio:anyone`. A rule naming an
+  // actor that does not exist grants nothing, silently; a rule naming an
+  // undeclared action cannot be placed in the includedIn graph at all.
+  const actorIds = new Set(actors.map((a) => a.id));
+  for (const policy of readPolicies(POLICY_DIR).values()) {
+    for (const rule of [...policy.permission, ...policy.prohibition]) {
+      if (!declaredPerms.has(rule.action) && !(rule.action in ODRL_ACTIONS)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} names action "${rule.action}", which skills/permissions/permissions.json does not declare.`,
+        });
+      }
+      if (rule.assignee !== ANYONE && !actorIds.has(rule.assignee)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} assigns "${rule.action}" to "${rule.assignee}", which is not a declared actor.`,
+        });
+      }
+    }
+  }
   for (const a of actors) {
     for (const perm of a.permissions ?? []) {
       if (!declaredPerms.has(perm)) {
@@ -1732,7 +1756,7 @@ const asJson = args.includes("--json");
 
 const auditorHash = sha256(readFileSync(join(root, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root);
-const actors = readActors(ACTOR_DIR);
+const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;

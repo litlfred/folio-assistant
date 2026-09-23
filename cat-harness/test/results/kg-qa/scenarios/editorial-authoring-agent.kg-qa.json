@@ -5,7 +5,7 @@
     "id": "editorial-authoring-agent",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:54484d4352a12a9a4b59ac5590c3b1d0fea4f93f6d774c059c0753a20a40c405",
+  "source_hash": "sha256:b48c0a00e67353161d37b284dc18c4fcb8a1341f8a167e5f266da771bd96c8ff",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -20,7 +20,7 @@
       "findings": [
         {
           "where": "editorial-authoring-agent",
-          "detail": "role \"editorial-authoring-agent\" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead."
+          "detail": "role \"editorial-authoring-agent\" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
         }
       ]
     },

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: log-message\n"
-"POT-Creation-Date: 2026-09-21T22:56:11.124Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:15.312Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -24,27 +24,27 @@ msgstr ""
 msgid "Actor"
 msgstr ""
 
-#: processes/log-message.bpmn:52
+#: processes/log-message.bpmn:53
 #. Diagram label
 msgid "All five present?"
 msgstr ""
 
-#: processes/log-message.bpmn:45
+#: processes/log-message.bpmn:46
 #. Diagram label
 msgid "An actor has something to record"
 msgstr ""
 
-#: processes/log-message.bpmn:62
+#: processes/log-message.bpmn:63
 #. Diagram element documentation
 msgid "An incomplete message is NOT logged and the actor says it could not log. A log line missing its actor or its task reads as a record while answering nothing, and a reader cannot tell it from a complete one. Silence is recoverable; a misleading entry is not."
 msgstr ""
 
-#: processes/log-message.bpmn:47
+#: processes/log-message.bpmn:48
 #. Diagram label
 msgid "Compose the message"
 msgstr ""
 
-#: processes/log-message.bpmn:48
+#: processes/log-message.bpmn:49
 #. Diagram element documentation
 msgid "Five required strings — timestamp, actor, process, task, message — and one optional markdown body. The five are required because each answers a question a reader of the log will otherwise have to guess, and a guessed answer in a log is worse than a missing one."
 msgstr ""
@@ -59,27 +59,27 @@ msgstr ""
 msgid "Logger"
 msgstr ""
 
-#: processes/log-message.bpmn:67
+#: processes/log-message.bpmn:68
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/log-message.bpmn:61
+#: processes/log-message.bpmn:62
 #. Diagram label
 msgid "Not recorded — say so"
 msgstr ""
 
-#: processes/log-message.bpmn:56
+#: processes/log-message.bpmn:57
 #. Diagram element documentation
 msgid "Performed by the Logger, which records and decides nothing. In bootstrap the one available destination is the discussion the human actor is already in."
 msgstr ""
 
-#: processes/log-message.bpmn:54
+#: processes/log-message.bpmn:55
 #. Diagram label
 msgid "Record it where a person can read it"
 msgstr ""
 
-#: processes/log-message.bpmn:60
+#: processes/log-message.bpmn:61
 #. Diagram label
 msgid "Recorded"
 msgstr ""
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all."
 msgstr ""
 
-#: processes/log-message.bpmn:68
+#: processes/log-message.bpmn:69
 #. Diagram label
 msgid "yes"
 msgstr ""

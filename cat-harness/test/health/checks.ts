@@ -592,7 +592,11 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
         `of GitHub's 1 GB Pages limit — the main site shares that budget.`,
       action:
         "Ask which previews are still under review, then have the owner add `staging:cleanup` to the " +
-        "PRs whose previews are finished with. Do not remove any preview without that label.",
+        "OPEN PRs whose previews are finished with — the label is read from the " +
+        "`pull_request_target: closed` payload, so it works only while the PR can still close with it " +
+        "attached (bean `7umv`). A preview whose PR is already closed is removed by a " +
+        "`feature-staging.yml` dispatch instead; `staging-preview-orphans` lists those with the exact " +
+        "inputs. Do not remove any preview without one of the two.",
     });
   } else if (total > STAGING_WARN_BYTES) {
     findings.push({
@@ -608,7 +612,8 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
         `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
       action:
         "Report the list below to the owner and ask which are finished with. Removal is by adding " +
-        "`staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative.",
+        "`staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once " +
+        "it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative.",
     });
   }
   return settle(id, summary, STAGING_SIZE_THRESHOLDS, measurements, findings);
@@ -872,11 +877,30 @@ export function stagingOrphanCheck(ctx: HealthContext): HealthCheckResult {
     summary:
       `\`STAGING/${j.preview.slug}\` (${formatBytes(j.preview.bytes)}, ${j.preview.files} files) — ` +
       `${j.liveness.evidence}.`,
+    // THE LABEL CANNOT REACH AN ORPHAN, so it is not offered here — bean
+    // `7umv`. `feature-staging.yml` says why, in its own words: `cleanup`
+    // fires on `pull_request_target: closed` and reads the labels from THAT
+    // event's payload, and "being findable as an orphan REQUIRES the pull
+    // request to be closed already — so the event has fired, the job has run,
+    // and the label was absent. Labelling afterwards fires nothing" (bean
+    // `w2g5`). The condition that puts a preview in THIS list is the same
+    // condition that has already spent its one chance to read a label.
+    //
+    // This action used to name the label FIRST and the dispatch as an
+    // alternative. Measured cost, 2026-09-23: the owner read it, applied
+    // `staging:cleanup` to both orphaned slugs, and nothing happened —
+    // 201.2 MB still on the publish branch. An action whose first option
+    // cannot work for the finding it is attached to is the `o5qj` shape, and
+    // this one spends somebody else's effort rather than just failing to
+    // clear.
     action:
       `Ask the owner whether the review of \`${j.preview.slug}\` is finished. Nothing here removes it. ` +
-      "Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, " +
-      `or a \`workflow_dispatch\` with \`cleanup_slug: ${j.preview.slug}\` and \`cleanup_confirm: ${j.preview.slug}\`, ` +
-      "which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a " +
+      "Removal is a `feature-staging.yml` `workflow_dispatch` with " +
+      `\`cleanup_slug: ${j.preview.slug}\` and \`cleanup_confirm: ${j.preview.slug}\`, ` +
+      "which re-runs these same liveness signals and refuses if any of them has come back. " +
+      "THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the " +
+      "`pull_request_target: closed` payload, and a preview is only findable as an orphan once that " +
+      "event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a " +
       "valid answer.",
   }));
   return settle(id, summary, ORPHAN_THRESHOLDS, measurements, findings);

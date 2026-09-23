@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: editing-hci-validation\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.879Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.048Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,112 +14,112 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/editing-hci-validation.bpmn:241
+#: processes/editing-hci-validation.bpmn:248
 #. Diagram element documentation
 msgid "A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:172
+#: processes/editing-hci-validation.bpmn:179
 #. Diagram element documentation
 msgid "A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:317
+#: processes/editing-hci-validation.bpmn:324
 #. Diagram label
 msgid "accept"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:249
+#: processes/editing-hci-validation.bpmn:256
 #. Diagram label
 msgid "Accept, revise or discard?"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:171
+#: processes/editing-hci-validation.bpmn:178
 #. Diagram label
 msgid "Agent review of the change [content-review]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:192
+#: processes/editing-hci-validation.bpmn:199
 #. Diagram label
 msgid "All checks reported"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:59
+#: processes/editing-hci-validation.bpmn:61
 #. Diagram label
 msgid "Authoring agent (system)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:112
+#: processes/editing-hci-validation.bpmn:119
 #. Diagram element documentation
 msgid "Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded. This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:142
+#: processes/editing-hci-validation.bpmn:149
 #. Diagram element documentation
 msgid "Block schema, label prefixes, required fields, constraint rules."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:157
+#: processes/editing-hci-validation.bpmn:164
 #. Diagram label
 msgid "Build and QA gates [content-test]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:267
+#: processes/editing-hci-validation.bpmn:274
 #. Diagram label
 msgid "Change discarded"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:287
+#: processes/editing-hci-validation.bpmn:294
 #. Diagram label
 msgid "Change is in the corpus"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:102
+#: processes/editing-hci-validation.bpmn:109
 #. Diagram label
 msgid "Claim or open the bean [todo-manager]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:54
+#: processes/editing-hci-validation.bpmn:55
 #. Diagram element documentation
 msgid "Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:199
+#: processes/editing-hci-validation.bpmn:206
 #. Diagram label
 msgid "Collate findings into a report"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:270
+#: processes/editing-hci-validation.bpmn:277
 #. Diagram label
 msgid "Commit into the corpus"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:85
+#: processes/editing-hci-validation.bpmn:91
 #. Diagram label
 msgid "Corpus (versioned store)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:94
+#: processes/editing-hci-validation.bpmn:101
 #. Diagram label
 msgid "Describe the intended change"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:316
+#: processes/editing-hci-validation.bpmn:323
 #. Diagram label
 msgid "discard"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:166
+#: processes/editing-hci-validation.bpmn:173
 #. Diagram element documentation
 msgid "Does this change need a judgement call? `no` goes to agent review; `yes` goes to a human or SME. The question is about the change, not about who is available."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:121
+#: processes/editing-hci-validation.bpmn:128
 #. Diagram label
 msgid "Draft the block edit [content-author]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:91
+#: processes/editing-hci-validation.bpmn:98
 #. Diagram label
 msgid "Edit requested"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Editor / author (person)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:180
+#: processes/editing-hci-validation.bpmn:187
 #. Diagram element documentation
 msgid "Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement."
 msgstr ""
@@ -144,12 +144,12 @@ msgstr ""
 msgid "Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:103
+#: processes/editing-hci-validation.bpmn:110
 #. Diagram element documentation
 msgid "Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:210
+#: processes/editing-hci-validation.bpmn:217
 #. Diagram element documentation
 msgid "Findings are appended to the bean, so the next agent or human sees what is outstanding."
 msgstr ""
@@ -164,197 +164,197 @@ msgstr ""
 msgid "folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:67
+#: processes/editing-hci-validation.bpmn:70
 #. Diagram element documentation
 msgid "Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:111
+#: processes/editing-hci-validation.bpmn:118
 #. Diagram label
 msgid "Gather and verify the evidence [evidence-retrieval]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:66
+#: processes/editing-hci-validation.bpmn:69
 #. Diagram label
 msgid "HCI validation pipeline (system)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:179
+#: processes/editing-hci-validation.bpmn:186
 #. Diagram label
 msgid "Human / SME review [content-review]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:165
+#: processes/editing-hci-validation.bpmn:172
 #. Diagram label
 msgid "Judgement call?"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:158
+#: processes/editing-hci-validation.bpmn:165
 #. Diagram element documentation
 msgid "Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:209
+#: processes/editing-hci-validation.bpmn:216
 #. Diagram label
 msgid "Log findings on the bean [todo-manager]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:296
+#: processes/editing-hci-validation.bpmn:303
 #. Diagram label
 msgid "mechanical"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:200
+#: processes/editing-hci-validation.bpmn:207
 #. Diagram element documentation
 msgid "Mechanical results and review findings are merged into one report against the proposed change."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:72
+#: processes/editing-hci-validation.bpmn:76
 #. Diagram label
 msgid "Mechanical validation (system)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:300
+#: processes/editing-hci-validation.bpmn:307
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:299
+#: processes/editing-hci-validation.bpmn:306
 #. Diagram label
 msgid "non-mechanical"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:78
+#: processes/editing-hci-validation.bpmn:83
 #. Diagram label
 msgid "Non-mechanical validation (review agent or SME)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:230
+#: processes/editing-hci-validation.bpmn:237
 #. Diagram element documentation
 msgid "On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -> `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision` is a `userTask` in `Lane_Editor` that already names `decision-audit`, and `Process_OptionsAnalysis` ends with its own `decision-audit` note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:271
+#: processes/editing-hci-validation.bpmn:278
 #. Diagram element documentation
 msgid "Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:229
+#: processes/editing-hci-validation.bpmn:236
 #. Diagram label
 msgid "Options analysis accept &#183; revise &#183; discard"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:60
+#: processes/editing-hci-validation.bpmn:62
 #. Diagram element documentation
 msgid "Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:129
+#: processes/editing-hci-validation.bpmn:136
 #. Diagram label
 msgid "Proposed change ready"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:315
+#: processes/editing-hci-validation.bpmn:322
 #. Diagram label
 msgid "re-validate"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:86
+#: processes/editing-hci-validation.bpmn:92
 #. Diagram element documentation
 msgid "Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:240
+#: processes/editing-hci-validation.bpmn:247
 #. Diagram label
 msgid "Record the decision and its audit note [decision-audit]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:278
+#: processes/editing-hci-validation.bpmn:285
 #. Diagram label
 msgid "Resolve or re-open the bean [todo-manager]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:279
+#: processes/editing-hci-validation.bpmn:286
 #. Diagram element documentation
 msgid "Resolved when the change landed clean; left open with the residue when it did not."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:218
+#: processes/editing-hci-validation.bpmn:225
 #. Diagram label
 msgid "Review the findings"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:314
+#: processes/editing-hci-validation.bpmn:321
 #. Diagram label
 msgid "revise"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:259
+#: processes/editing-hci-validation.bpmn:266
 #. Diagram label
 msgid "Revise the proposed change [content-author]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:134
+#: processes/editing-hci-validation.bpmn:141
 #. Diagram label
 msgid "Run HCI validation"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:73
+#: processes/editing-hci-validation.bpmn:77
 #. Diagram element documentation
 msgid "Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:141
+#: processes/editing-hci-validation.bpmn:148
 #. Diagram label
 msgid "Schema and constraint checks [content-validate]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:79
+#: processes/editing-hci-validation.bpmn:84
 #. Diagram element documentation
 msgid "Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:149
+#: processes/editing-hci-validation.bpmn:156
 #. Diagram label
 msgid "Syntax, spelling and links [content-validate]"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:150
+#: processes/editing-hci-validation.bpmn:157
 #. Diagram element documentation
 msgid "Syntax, spelling, cross-references, citation and link resolution."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:122
+#: processes/editing-hci-validation.bpmn:129
 #. Diagram element documentation
 msgid "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:260
+#: processes/editing-hci-validation.bpmn:267
 #. Diagram element documentation
 msgid "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:95
+#: processes/editing-hci-validation.bpmn:102
 #. Diagram element documentation
 msgid "The editor states the change in natural language; no content has moved yet."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:250
+#: processes/editing-hci-validation.bpmn:257
 #. Diagram element documentation
 msgid "The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:219
+#: processes/editing-hci-validation.bpmn:226
 #. Diagram element documentation
 msgid "THE GATE: the editor sees every finding BEFORE anything reaches the corpus."
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:53
+#: processes/editing-hci-validation.bpmn:54
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/editing-hci-validation.bpmn:301
+#: processes/editing-hci-validation.bpmn:308
 #. Diagram label
 msgid "yes"
 msgstr ""
