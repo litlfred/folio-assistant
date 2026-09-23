@@ -29,12 +29,12 @@ The CRDM requirements process, decomposed. Each phase is a real subprocess in it
 
 ## Steps
 
-**1** of 9 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 9 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Describe the need (chat, issue, discussion)**<br>`BA_Submit` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA describes the capability gap in their own words. They do not need to know it is called CRDM. |
-| **Detect feature request (crdm-detect skill)**<br>`A_Detect` | Agent | [`crdm-detect`](../reference/skill-instructions/crdm-detect.html) | — |
+| **Detect feature request (crdm-detect skill)**<br>`A_Detect` | Agent | [`crdm-detect`](../reference/skill-instructions/crdm-detect.html) | Recognise the request as a platform capability change rather than content work, from crdm-detect's signals. Never call it "CRDM" to the person. Mid-content-work, ask whether to pause for requirements now or record a bean for later — do not switch on your own. |
 | **Link the work to an issue**<br>`Call_Issue` | Agent | calls [CRDM — link the work to an issue](crdm-issue-linking.html)<br>[`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad. |
 | **Phase 1 Needs**<br>`Call_Needs` | Agent | calls [CRDM Phase 1 — needs](crdm-needs.html)<br>[`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement. |
 | **Phases 2–4 BPA + requirements**<br>`Call_Requirements` | Agent | calls [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html)<br>[`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal. |

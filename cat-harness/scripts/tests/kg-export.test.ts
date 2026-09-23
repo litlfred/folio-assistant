@@ -23,7 +23,7 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { join, resolve } from "node:path";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
@@ -769,63 +769,46 @@ describe("a package's id is declared, not derived from its path", () => {
     expect(ids.length).toBe(new Set(ids).size);
   });
 
-  // WITNESS RETARGETED 2026-09-21, from `bootstrap` to
-  // `bootstrap-render`, and the reason is worth more than the change.
+  // WITNESS RETARGETED TWICE, and the second time is the lesson landing.
   //
-  // These three guarded `packageIdFor`'s rule — an id comes from the
-  // manifest's `name`, never from the directory basename — by asserting it of
-  // the one package in the corpus that exercised it. The owner's `pve3`
-  // ruling ("neither") removed `bootstrap/skills/` from this instance's
-  // declared directories, so that package is no longer in this graph and the
-  // witness went with it.
+  // These three guard `packageIdFor`'s rule — an id comes from the manifest's
+  // `name`, never from the directory basename — against the real corpus. The
+  // witness was `bootstrap` until the `pve3` ruling removed it from this
+  // graph, then `bootstrap-render` (directory `tools/`) until bean `n350`
+  // consolidated that package into `bootstrap/skills/` on 2026-09-23.
   //
-  // Deleting them would have deleted a live contamination guard along with
-  // the witness. `bootstrap/tools/` is still declared here and has the
-  // same shape — basename `tools`, manifest `bootstrap-render` — so the
-  // RULE is still witnessed against the real corpus rather than a fixture.
-  //
-  // The directory was `render/` until 2026-09-22 and the witness SURVIVED the
-  // move, which is the point the paragraph above is making: the rule is
-  // "manifest over basename", and it is now witnessed by a basename that
-  // suggests an entirely different graph kind. A stronger example than the
-  // one it replaced, and it cost nothing because the id did not move.
-  //
-  // The lesson, since this is the second time a corpus witness has been lost
-  // to a declaration change: a test that asserts a RULE through one named
-  // example dies with that example. Where `packageIdFor` can be called
-  // directly against a root, prefer that.
-  test("`bootstrap-render` is named by its manifest, not by its directory", () => {
-    // Its directory is `bootstrap/tools/`, basename `tools`. The
-    // manifest says `bootstrap-render`. Exactly the case the basename rule
-    // got wrong.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"));
+  // It is now `kg-navigation`: directory `kg-navigation/skills/`, basename
+  // `skills`, manifest `kg-navigation`. Same shape, and a witness the root
+  // graph carries for its own reasons rather than by a declaration made for
+  // one package. The members are READ from its manifest rather than listed,
+  // so adding a skill there is not a test edit.
+  const WITNESS = "kg-navigation";
+  const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
+
+  test("a package is named by its manifest, not by its directory", () => {
+    const p = witness();
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
-    expect(p!["name"]).toBe("bootstrap-render");
-    expect(String(p!["path"])).toContain("bootstrap/tools");
+    expect(p!["name"]).toBe(WITNESS);
+    expect(String(p!["path"])).toContain("kg-navigation/skills");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
-    expect(p!["name"]).not.toBe("tools");
+    expect(p!["name"]).not.toBe("skills");
   });
 
   test("its members are that package's own skills and nothing else", () => {
-    // Listed rather than counted, because what the collision produced was a
-    // member from ANOTHER package — a count would have gone on passing while
-    // one name was swapped for another.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
-    expect(membersOf(String(p["@id"])).sort()).toEqual([
-      "skill/bootstrap-graph-emission",
-      "skill/bootstrap-graph-publication",
-    ]);
+    // Against the manifest, because what the collision produced was a member
+    // from ANOTHER package — a count would have gone on passing while one
+    // name was swapped for another.
+    const manifest = JSON.parse(
+      readFileSync(join(import.meta.dir, "../../..", "kg-navigation", "skills", "package-manifest.json"), "utf8"),
+    ) as { skills: string[] };
+    expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
   });
 
   test("`corpus-grep` is NOT among them — the contamination the merge caused", () => {
     // The sharpest assertion here, because it is the one that was false and
-    // that every other signal called healthy. `corpus-grep` lived in
-    // `src/skills/`, which declared no package at all; since #760 it lives in
-    // `skills/folio-core/` and is listed in that package's manifest. Either
-    // way it is not bootstrap's, which is what this pins.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
-    expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
+    // that every other signal called healthy. `corpus-grep` is folio-core's.
+    expect(membersOf(String(witness()!["@id"]))).not.toContain("skill/corpus-grep");
   });
 
   test("a directory with NO manifest falls back to its basename, and says so", () => {

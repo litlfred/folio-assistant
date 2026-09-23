@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>70</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>50</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>52</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>71</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>52</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>53</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 52 |
+| <span class="tg-tag tg-shell">shell</span> | 53 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 65 |
+| `none` | 66 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **50** skills named across **70** tools resolve to a
+Yes — all **52** skills named across **71** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -68,6 +68,7 @@ tool advertising a capability the graph cannot locate.
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
 | `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
+| `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | `feature-staging` | 3 in / 1 out |
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `getting-started`<br>`repo-conversion` | 9 in / 1 out |
@@ -78,7 +79,7 @@ tool advertising a capability the graph cannot locate.
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `kg-audit`<br>Knowledge-graph audit | Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes "unbound since it was drawn" distinguishable from "broken in the commit under review". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 2 in / 2 out |
-| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 2 out |
+| `kg-graph-export`<br>Knowledge-graph export | Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it. | <span class="tg-tag tg-shell">shell</span> | `bootstrap-graph-emission`<br>`bootstrap-graph-publication`<br>`kg-export` | 2 in / 2 out |
 | `kg-validate`<br>Validate a node in the graph | Check one file against the schema for its graph kind. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest. | <span class="tg-tag tg-shell">shell</span> | `kg-navigation` | 2 in / 1 out |
 | `l1-complete-check`<br>L1 source completeness | Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 1 in / 1 out |
 | `latex-overfull`<br>LaTeX overfull-box report | Turn a pdflatex log's Overfull \hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 4 in / 1 out |

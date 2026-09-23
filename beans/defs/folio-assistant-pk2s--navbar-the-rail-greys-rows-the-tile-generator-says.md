@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pk2s
 title: 'NAVBAR: the rail greys rows the tile generator says are PUBLISHED — mount table and harness.json disagree'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T05:12:12Z
-updated_at: 2026-09-23T06:05:22Z
+updated_at: 2026-09-23T06:28:23Z
 parent: folio-assistant-yj32
 ---
 

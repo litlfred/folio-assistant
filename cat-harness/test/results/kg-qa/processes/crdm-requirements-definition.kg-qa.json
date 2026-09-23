@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Requirements",
     "path": "processes/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:76a6160cf26faf969f689a11faa082e97fd3fefed0f3900046a28e3528b494b5",
+  "source_hash": "sha256:9acbd484e904e48ed58c8282c96e89356aa971950057e41bd13928e5376efc2a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -77,13 +77,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_ApproveReqs",
-          "detail": "\"Approve requirements\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -91,8 +86,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

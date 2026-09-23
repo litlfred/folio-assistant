@@ -446,6 +446,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by changeset.test.ts in `bun test`",
   },
   {
+    // Same reason as the ChangeSet above (bean `423d`): the review-comments
+    // Tool ingests a FOLIO's pull-request comments against that folio's
+    // blocks, in the folio's staging job and in its comment-triggered
+    // refresh. The platform has no folio and no such pull request to run it
+    // on here. Its logic is not exempt: `review-comments.test.ts` (the Tool,
+    // including the command run offline exactly as both jobs call it) and
+    // `review-comment.test.ts` (the kind) are in `bun test`.
+    match: "review-comments.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging and comment-refresh jobs over that folio's PR and blocks; the platform carries no folio. " +
+      "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:

@@ -36,22 +36,22 @@ beforeAll(() => {
   // `thm:main` never says "widget"; it only USES the thing that does. That is
   // the whole point of expanding — a lexical search cannot reach it.
   node(CONTENT, "def-widget", {
-    "@id": "b/def-widget", "@type": ["folio:Definition"],
+    "@id": "b/def-widget", "@type": ["folio-assistant-core:Definition"],
     label: "def:widget", kind: "definition", title: "A widget",
     tags: ["algebra"], provenance: "authored",
   });
   node(CONTENT, "thm-main", {
-    "@id": "b/thm-main", "@type": ["folio:Theorem"],
+    "@id": "b/thm-main", "@type": ["folio-assistant-core:Theorem"],
     label: "thm:main", kind: "theorem", title: "Main theorem",
     uses: ["b/def-widget"], provenance: "authored",
   });
   node(CONTENT, "cor-far", {
-    "@id": "b/cor-far", "@type": ["folio:Corollary"],
+    "@id": "b/cor-far", "@type": ["folio-assistant-core:Corollary"],
     label: "cor:far", kind: "corollary", uses: ["b/thm-main"],
     provenance: "authored",
   });
   node(LIBRARY, "rec-7", {
-    "@id": "l/rec-7", "@type": ["folio:Recommendation"],
+    "@id": "l/rec-7", "@type": ["folio-assistant-core:Recommendation"],
     title: "Screening for widget deficiency", provenance: "ingested",
   });
 

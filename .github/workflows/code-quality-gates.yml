@@ -807,6 +807,9 @@ jobs:
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators
+          # The UML overview is drawn from the declarations and the kind
+          # validators just checked, so it goes stale when either changes.
+          bun run uml:overview:check
           bun run check:artifact-index
           bun run smart-trust:pages:check
           # The fsh-guts index is generated from the graph, so it goes stale the
@@ -817,6 +820,17 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The methodologies index renders the `methodology` graph across
+          # EVERY instance that declares one, so it goes stale when any of them
+          # adopts a method, ingests a source, or changes an `applies-when`.
+          # Gated for the reason every generated page here is: a stale viewer
+          # is a page that reports a corpus that no longer exists.
+          bun run methodologies:viz:check
+          # The external-schemas index renders the registry AND resolves every
+          # `usedBy` path in it, so it goes stale when a record is added, an
+          # edition bumps, or a file a record names is renamed. The last of
+          # those is the one nothing else would notice.
+          bun run external-schemas:viz:check
           bun run processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact
@@ -884,6 +898,22 @@ jobs:
           # enough to hold.
           bun run check:subgraph-coverage
           bun run check:published-refs
+          # The publishability CENSUS, and it is expected to report every
+          # instance as UNDECIDED — §6 Q1 of `instance-versioning.md` is open,
+          # and absence there means "nobody has said", never "internal". So
+          # this runs for the list rather than for a verdict, and its own
+          # report says in that many words that an all-undecided census is not
+          # a pass. Advisory; `--strict` fails only on the two CROSS-INSTANCE
+          # rules a per-declaration parse cannot hold (a duplicate id, an
+          # unreadable declaration).
+          bun run check:publishable
+          # §4's bump, computed from the exported-surface diff rather than
+          # claimed by a commit message. §4.1's falsifier was run before this
+          # was built — 18 patch / 1 minor / 1 major over 20 commits on main —
+          # and it reports "no publishable instance" today, which is a stated
+          # nothing rather than a clean run. Advisory until an instance
+          # declares `publishable`.
+          bun run check:version-bump
           bun run check:graph-kind-work
           # One place says what an asset ROLE is — purpose, layer and
           # delivery. A per-asset restatement of any of the three is a

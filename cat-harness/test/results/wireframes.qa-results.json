@@ -8,11 +8,11 @@
     "kind": "corpus",
     "id": "harness-visualiser-wireframes"
   },
-  "updated_at": "2026-09-23T09:33:17.825Z",
+  "updated_at": "2026-09-23T09:51:15.956Z",
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 32,
+      "count": 31,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -37,10 +37,6 @@
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/who-iris-docs/index.html",
           "wireframe": "docs-index"
-        },
-        {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
-          "wireframe": "skills-index"
         },
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
@@ -161,14 +157,26 @@
     },
     "uncovered": {
       "summary": "A declared visualiser that no wireframe covers.",
-      "count": 0,
-      "entries": []
+      "count": 2,
+      "entries": [
+        {
+          "ref": "cat-harness/docs/external-schemas/index.md"
+        },
+        {
+          "ref": "cat-harness/docs/methodologies/index.md"
+        }
+      ]
     },
     "unknown-ref": {
       "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "wireframe": "skills-index",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html"
+        }
+      ]
     }
   },
-  "total": 32
+  "total": 34
 }

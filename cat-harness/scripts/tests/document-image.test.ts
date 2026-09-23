@@ -228,7 +228,7 @@ describe("figures reach the manifest as blocks", () => {
     expect(f).toBeDefined();
     const node = JSON.parse(f!.content);
     expect(node.kind).toBe("figure");
-    expect(node["@type"]).toEqual(["folio:Figure", "doco:Figure"]);
+    expect(node["@type"]).toEqual(["folio-assistant-core:Figure", "doco:Figure"]);
     // Relative to the BLOCK, as prose's `text` already is.
     expect(node.file).toBe("../images/img-p008-1.png");
     expect(node.pageStart).toBe(8);

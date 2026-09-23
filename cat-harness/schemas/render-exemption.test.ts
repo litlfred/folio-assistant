@@ -72,19 +72,20 @@ describe("this repository's actual declaration", () => {
     // So "the skills are on disk" is not the property; "the graph reaches
     // them" is.
     //
-    // Looked up by ID, not by path. This read `d.path === "render/"` and the
-    // directory moved to `tools/` on 2026-09-22, which broke a test about
-    // DECLARATION on a fact about location — the same "match on id, not path"
-    // rule the declaration schema states for overrides, missed in its own
-    // test. The id is what survives a relocation, so the id is what this
-    // asserts.
+    // Asked of the FILES the exemption owes, not of an entry id. This looked
+    // up `bootstrap-render` by id until bean `n350` moved the two skills into
+    // `skills/` and removed that entry; an id-shaped assertion would have died
+    // with the entry while the property it guards held. The property is:
+    // every owed file sits in a directory bootstrap DECLARES as a skills graph.
     const dirs = readDeclaration(CAT_BOOTSTRAP)?.directories ?? [];
-    const render = dirs.find((d) => d.id === "bootstrap-render");
-    expect(render, "bootstrap declares no `bootstrap-render` directory").toBeDefined();
-    expect(render?.graphKinds).toContain("skills");
-    // A SEPARATE id from `skills/`: overrides match on id, so reusing
-    // `cat-harness` would replace bootstrap's skills with these.
-    expect(dirs.filter((d) => d.id === render?.id)).toHaveLength(1);
+    const owes = readDeclaration(CAT_BOOTSTRAP)?.renderExemption?.owes ?? "";
+    const named = [...owes.matchAll(/`([^`]*bootstrap-graph-[a-z-]+\.md)`/g)].map((m) => m[1]!);
+    expect(named.length).toBeGreaterThan(0); // not vacuous
+    for (const rel of named) {
+      const home = dirs.find((d) => rel.startsWith(d.path));
+      expect(home, `${rel} is in no directory bootstrap declares`).toBeDefined();
+      expect(home?.graphKinds).toContain("skills");
+    }
   });
 });
 

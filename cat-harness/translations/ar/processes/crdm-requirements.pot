@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-requirements\n"
-"POT-Creation-Date: 2026-09-22T21:11:01.598Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.265Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -24,17 +24,17 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:69
+#: processes/crdm-requirements.bpmn:70
 #. Diagram element documentation
 msgid "Between requirements and sign-off, and the order is the argument: requirements are statements about things, and the model says what the things ARE. Drafted earlier it is invented from nothing, since the entities come from the phase-2 BPA; drafted later, sign-off approves requirements whose nouns were never pinned — which is how two stakeholders approve one sentence meaning different things. Owner, 2026-09-20."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:80
+#: processes/crdm-requirements.bpmn:81
 #. Diagram label
 msgid "Close-out"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:55
+#: processes/crdm-requirements.bpmn:56
 #. Diagram label
 msgid "Continue authoring"
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "CRDM requirements"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:68
+#: processes/crdm-requirements.bpmn:69
 #. Diagram label
 msgid "Data model Entities + cardinalities"
 msgstr ""
@@ -59,17 +59,17 @@ msgstr ""
 msgid "Detect feature request (crdm-detect skill)"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:84
+#: processes/crdm-requirements.bpmn:85
 #. Diagram label
 msgid "Feature delivered"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:57
+#: processes/crdm-requirements.bpmn:58
 #. Diagram element documentation
 msgid "Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:54
+#: processes/crdm-requirements.bpmn:55
 #. Diagram label
 msgid "Feature?"
 msgstr ""
@@ -79,17 +79,17 @@ msgstr ""
 msgid "Holds the one gate whose \"no\" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:61
+#: processes/crdm-requirements.bpmn:62
 #. Diagram element documentation
 msgid "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:56
+#: processes/crdm-requirements.bpmn:57
 #. Diagram label
 msgid "Link the work to an issue"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:65
+#: processes/crdm-requirements.bpmn:66
 #. Diagram element documentation
 msgid "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal."
 msgstr ""
@@ -99,37 +99,42 @@ msgstr ""
 msgid "Need identified"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:88
+#: processes/crdm-requirements.bpmn:89
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:77
+#: processes/crdm-requirements.bpmn:78
 #. Diagram element documentation
 msgid "One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:60
+#: processes/crdm-requirements.bpmn:61
 #. Diagram label
 msgid "Phase 1 Needs"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:72
+#: processes/crdm-requirements.bpmn:73
 #. Diagram label
 msgid "Phase 5 Beans + sign-off"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:76
+#: processes/crdm-requirements.bpmn:77
 #. Diagram label
 msgid "Phase 6 Implement + acceptance"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:64
+#: processes/crdm-requirements.bpmn:65
 #. Diagram label
 msgid "Phases 2–4 BPA + requirements"
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:73
+#: processes/crdm-requirements.bpmn:52
+#. Diagram element documentation
+msgid "Recognise the request as a platform capability change rather than content work, from crdm-detect's signals. Never call it \"CRDM\" to the person. Mid-content-work, ask whether to pause for requirements now or record a bean for later — do not switch on your own."
+msgstr ""
+
+#: processes/crdm-requirements.bpmn:74
 #. Diagram element documentation
 msgid "The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce."
 msgstr ""
@@ -149,12 +154,12 @@ msgstr ""
 msgid "The one activity in this diagram that is not a subprocess call: states the capability gap in its own words and, per its own documentation, does not need to know any of what follows is called CRDM. The six phases translate the need into that vocabulary, not the other way round."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:81
+#: processes/crdm-requirements.bpmn:82
 #. Diagram element documentation
 msgid "The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion."
 msgstr ""
 
-#: processes/crdm-requirements.bpmn:89
+#: processes/crdm-requirements.bpmn:90
 #. Diagram label
 msgid "yes"
 msgstr ""

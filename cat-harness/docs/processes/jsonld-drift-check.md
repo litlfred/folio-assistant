@@ -28,10 +28,10 @@ A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. F
 
 ## Steps
 
-**1** of 1 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 1 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Regenerate the context, block,&#10;library and site graphs &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | — |
+| **Regenerate the context, block,&#10;library and site graphs &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted. |
 
 {% endraw %}

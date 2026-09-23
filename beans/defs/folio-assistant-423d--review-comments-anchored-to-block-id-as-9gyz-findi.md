@@ -139,3 +139,88 @@ the 9gyz tie.
   second done-when).
 
 These stay open on this bean.
+
+## Owner ruling 2026-09-23: option 1, as a Skill and a Tool
+
+The owner asked *"JSON is the todo kind? then yes do 1. make sure it is a
+Skill/Tool so process can be modified later. full writeuip"*. The answer to
+the question is yes: `review-comments.json`'s `comments` ARE
+`folio-review-comment/v1` todos, each validated as one. The envelope carries
+only provenance, `malformed` and `untagged`.
+
+**Built (session_017nyJj3PsjvszpF3DyGeBgE):**
+
+- **Tool** `folio-review-comments` (`folio-assistant-core/scripts/review-comments.ts`,
+  declared in `folio-assistant-core/tools/index.ts`, `satisfies: ["review-comments"]`).
+  It fetches the comments, ingests them idempotently over `--existing`,
+  re-anchors against the head's blocks, and writes the file. It knows the
+  blocks either from `--folio` (and writes `blocks.json`) or from `--blocks`.
+- **Skill** `review-comments` (`cat-harness/skills/folio-core/review-comments.md`):
+  the full write-up. It covers the rulings, the tag, the kind, the transition
+  table, the Tool's steps, the two jobs and their trust boundary, the page,
+  where each kind of change goes, and what is not decided.
+- **`reanchorToBlocks`**: follows the head's `renamedFrom`, not the ChangeSet,
+  so a block added and then renamed within one PR keeps its comments.
+- **`folio-staging.yml`**:
+  - `stage` ingests and publishes `blocks.json` + `review-comments.json`;
+  - a new `comments` job refreshes the file on a tagged PR comment. It checks
+    out ONLY the platform (at `platform_ref`) and the publish branch, never
+    the PR's code, because it runs with a write token and is started by any
+    commenter. It skips bots, and on a push collision it recomputes rather
+    than rebasing.
+- **`init-folio`**: a document folio's caller gets `issue_comment` and a
+  `permissions` block.
+- **Review page**:
+  - each changed block lists its comments;
+  - three more groups get their own headings: comments on unchanged blocks,
+    ORPHANED comments, and unreadable tags;
+  - every changed block shows its `block: <label>` line and a PR link;
+  - no file means the page says "No comment data on this build."
+  - Checked in Chromium, light and dark.
+- **`RepoFullName`**, an injection-safe Tool type for `owner/name`.
+
+**Open (asked in the skill's "Not yet decided"):** where a moved status is
+persisted, either the folio's committed `todos` graph or the published file.
+Then: whether an edited comment reopens a comment, and the page RESOLVING
+comments (the original done-when). Resolving needs the persistence
+decision first.
+
+## Owner ruling 2026-09-23: a status change is COMMITTED to the folio's `todos/` on the PR branch
+
+The owner was asked with three options and chose **1**:
+
+- The review-process task that moves a status (the editor's "Accept, or send
+  back", the adjudicator's recorded entry) commits the comment's todo file
+  into the folio's `todos/items/` on the edit-set's branch.
+- It is reviewed in the same PR, lands on `main` with the edit as the review
+  record, and is part of the dynamic KG.
+- The published `review-comments.json` takes its statuses from those files.
+
+Rejected:
+- **the published file only**: not reviewed, not in the KG, and lost with
+  the preview;
+- **`main` after merge only**: nothing durable during the review.
+
+Known cost: extra commits on the edit-set's branch, and a PR from a fork
+cannot be written to.
+
+The owner then sharpened it: *"more accurate.. commit to feature branch"*.
+The commit goes to the FEATURE BRANCH that carries the edit-set, never to
+`main`.
+
+**Built (same session):**
+
+- **Tool `folio-review-comment-move`** (`folio-assistant-core/scripts/review-comment-move.ts`):
+  - moves a status through `transition()`;
+  - writes `<todo-feedback dir>/<id>.json`, with the directory read from
+    `todos/todos.json`;
+  - with `--commit`, commits the file to the current feature branch;
+  - refuses the base branch and a detached HEAD, before writing anything.
+- **`folio-review-comments --todos`**: committed comments win over the
+  previously published copy. The PR build passes it when the folio declares a
+  todos graph. A graph with no feedback directory is warned about, not fatal.
+- **Skill section** "Recording a decision: commit to the feature branch".
+
+**Open:**
+- `init-folio` writing a todos graph with a `todo-feedback` directory;
+- resolving from the page (which needs a write path; deliberately not built).

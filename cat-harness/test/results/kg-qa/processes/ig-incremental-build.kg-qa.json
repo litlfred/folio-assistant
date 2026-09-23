@@ -5,7 +5,7 @@
     "id": "Process_IgIncremental",
     "path": "processes/ig-incremental-build.bpmn"
   },
-  "source_hash": "sha256:1b8cf78eef154074e4378528862d2bcd83033c6edf9f36acf88ddfd5703269a7",
+  "source_hash": "sha256:6958f0eb580bdfab17a5b875c9128a9a4e1bbeeff2ee113d3f7502a931c69e47",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,37 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Sushi",
-          "detail": "\"SUSHI on the restricted tank\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Validate",
-          "detail": "\"Validate the cone (fhir_validate)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_LogFindings",
-          "detail": "\"Log findings on the bean\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Merge",
-          "detail": "\"Merge restored and rebuilt records\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Site",
-          "detail": "\"Assemble the site (template · Jekyll)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_QcBeans",
-          "detail": "\"File QC findings as beans\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Deploy",
-          "detail": "\"Deploy the site [content-publish]\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -110,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

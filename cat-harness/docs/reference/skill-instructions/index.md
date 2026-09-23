@@ -167,6 +167,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
+| [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Capability: `review` · Package: `folio-core` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
@@ -313,13 +314,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
-
-## CatBootstrap rendering (bootstrap/tools)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Emitting bootstrap's own graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | **The exemption and this skill are one trade, not two facts.** bootstrap |
-| [Publishing bootstrap's graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
 
 ## Knowledge-graph navigation (tooled)
 

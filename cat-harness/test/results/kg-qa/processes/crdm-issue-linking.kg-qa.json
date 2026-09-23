@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Issue",
     "path": "processes/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:3b38644a6bd31fcebfc664f1fea86200d75ee36d5f8e6e5489f65a1ab45a9afa",
+  "source_hash": "sha256:d97d2f19acfe660bf798b5c1a329b2c39403decd38d81030f14791f112594a3f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,17 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_ScanIssues",
-          "detail": "\"Scan open issues for match\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_LinkIssue",
-          "detail": "\"Link to existing issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -90,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

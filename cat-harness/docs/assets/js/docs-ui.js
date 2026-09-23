@@ -29,6 +29,25 @@
 (function () {
   "use strict";
 
+  /* THE SITE ROOT AS THIS SCRIPT WAS SERVED FROM IT — the last fallback for
+   * a page that declares no base at all. A `who-iris` replica page carries no
+   * `fa-baseurl` and no `fa-todo-src` (no Jekyll wrote it), but it loaded this
+   * file from `<root>assets/js/docs-ui.js`, so the root is on the script's own
+   * address. Read ONCE, here, because `document.currentScript` is only set
+   * while the script is first evaluated. Empty for an inline copy (every e2e
+   * fixture), which is the previous behaviour. Bean `zrvt`. */
+  var SCRIPT_BASE = (function () {
+    try {
+      var cs = document.currentScript;
+      if (!cs || !cs.src) return "";
+      var path = new URL(cs.src, location.href).pathname;
+      var suffix = "/assets/js/docs-ui.js";
+      return path.slice(-suffix.length) === suffix ? path.slice(0, -suffix.length) : "";
+    } catch (_e) {
+      return "";
+    }
+  })();
+
   var ZOOM_STEPS = [0.5, 0.67, 0.8, 1, 1.25, 1.5, 2, 3, 4];
   var DEFAULT_STEP = 3; // index of 1.0
 
@@ -2341,7 +2360,7 @@
   function siteBaseurl() {
     var meta = document.querySelector('meta[name="fa-baseurl"]');
     var v = (meta && meta.getAttribute("content")) || "";
-    return v ? v.replace(/\/+$/, "") : baseurlFromTodoSrc();
+    return v ? v.replace(/\/+$/, "") : (baseurlFromTodoSrc() || SCRIPT_BASE);
   }
 
   /* ── Is this a STAGING preview? ──────────────────────────────────────
@@ -2460,12 +2479,31 @@
     return { count: t.count, unit: t.unit.trim() };
   }
 
-  function mountGraphTiles(surface, into, hiddenIds) {
+  /** The declared tiles from the page's `<meta name="fa-tiles">`, or `null` when it carries none. */
+  function declaredTilesFromMeta() {
     var meta = document.querySelector('meta[name="fa-tiles"]');
     var raw = meta && meta.getAttribute("content");
-    if (!raw) return 0;
-    var tiles;
-    try { tiles = JSON.parse(raw); } catch (_e) { return 0; }
+    if (!raw) return null;
+    try {
+      var tiles = JSON.parse(raw);
+      return Array.isArray(tiles) ? tiles : null;
+    } catch (_e) {
+      return null;
+    }
+  }
+
+  function mountGraphTiles(surface, into, hiddenIds) {
+    var tiles = declaredTilesFromMeta();
+    return tiles ? renderGraphTiles(tiles, surface, into, hiddenIds) : 0;
+  }
+
+  /**
+   * Render the declared tiles for one surface. Split out of `mountGraphTiles`
+   * so the GLASS can hand it the same array fetched from
+   * `assets/harness/tiles.json` on a page no Jekyll wrote a meta for — one
+   * renderer and one declaration, whichever way the list arrived.
+   */
+  function renderGraphTiles(tiles, surface, into, hiddenIds) {
     var shown = 0;
     for (var i = 0; i < tiles.length; i++) {
       var t = tiles[i];
@@ -2697,7 +2735,15 @@
    * selection, and a reader who cannot select the text of a note cannot quote
    * it.
    */
-  function wireMove(panel, handle, live) {
+  function wireMove(panel, handle, live, onSettle) {
+    // `onSettle(geometry)`, OPTIONAL: told where the panel came to rest, once
+    // per arrow press and once per drag. The board window and the floating
+    // sticky pass nothing and keep their session-only geometry; the GLASS
+    // passes a saver, because an asset on the reader's glass is theirs across
+    // pages (bean `zrvt`). One implementation of moving, and the callers
+    // differ only in whether a position outlives the page.
+    function settle() { if (onSettle) onSettle(geometryOf(panel)); }
+
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
     panel.addEventListener("keydown", function (e) {
@@ -2706,11 +2752,13 @@
         e.preventDefault();
         e.stopPropagation();
         setMoveMode(panel, false, live);
+        panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
       if (nudge(panel, e.key, e.shiftKey)) {
         e.preventDefault();
         e.stopPropagation();
+        settle();
       }
     });
 
@@ -2720,7 +2768,10 @@
     handle.addEventListener("mousedown", function (e) {
       // Not on a control: a drag that started on `[x]` would fight the click
       // that closes the panel.
-      if (e.target.closest("[data-fa-control]") || e.target.closest("button")) return;
+      // Nor on a LINK: a drag that started on an asset's name would swallow
+      // the press a reader meant as "open it".
+      if (e.target.closest("[data-fa-control]") || e.target.closest("button") ||
+          e.target.closest("a")) return;
       from = { x: e.clientX, y: e.clientY, g: geometryOf(panel) };
       e.preventDefault();
     });
@@ -2733,7 +2784,10 @@
         height: from.g.height,
       });
     });
-    document.addEventListener("mouseup", function () { from = null; });
+    document.addEventListener("mouseup", function () {
+      if (from) settle();
+      from = null;
+    });
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -3730,6 +3784,16 @@
       // scheme becomes no link, which `el` renders by omitting the
       // attribute entirely — `pb04`, no link beats a link to nowhere.
       href: safeHref((meta && meta.href) || (all[key] && all[key].href)) || "",
+      // THE AVATAR — a book's cover, or whatever picture the library row
+      // declared (bean `zrvt`). Same boundary as `href`: it came from authored
+      // markup and it will reach an attribute, so it goes through the same
+      // default-deny check, and an absent picture is stored as "" rather than
+      // guessed. The glass draws the item's kind avatar for "".
+      avatar: safeHref((meta && meta.avatar) || (all[key] && all[key].avatar)) || "",
+      // WHAT KIND of thing it is — `library` or `todos`, the avatar kinds
+      // `avatars.css` already declares — so the glass can draw the kind avatar
+      // when there is no picture, or when the reader chose kind avatars.
+      kind: (meta && meta.kind) || (all[key] && all[key].kind) || "library",
     };
     setFolioAssets(all);
     announceFolio(key, "glass");
@@ -3748,6 +3812,35 @@
     all[key].shown = false;
     setFolioAssets(all);
     announceFolio(key, "folio");
+  }
+
+  /**
+   * Where an asset sits ON the glass — this reader's, in this browser.
+   *
+   * Stored on the folio entry rather than in a second map, so an asset and
+   * its place cannot disagree about whether the asset exists. DOES NOT
+   * announce: announcing repaints the glass, and a repaint in the middle of
+   * a move would rebuild the card under the reader's pointer and drop their
+   * focus. A position is not a change of state.
+   */
+  function placeOnGlass(key, geom) {
+    var all = folioAssets();
+    if (!all[key]) return;
+    all[key].geom = {
+      left: Math.max(0, Math.round(geom.left)),
+      top: Math.max(0, Math.round(geom.top)),
+      width: Math.round(geom.width),
+      height: Math.round(geom.height),
+    };
+    setFolioAssets(all);
+  }
+
+  /** Forget every position, so the glass lays itself out again. Nothing leaves the folio. */
+  function tidyGlass() {
+    var all = folioAssets();
+    Object.keys(all).forEach(function (k) { delete all[k].geom; });
+    setFolioAssets(all);
+    announceFolio("*", "tidied");
   }
 
   /**
@@ -3802,6 +3895,8 @@
       displayInFolio(row.getAttribute("data-fa-library-item"), {
         title: row.getAttribute("data-fa-library-title") || row.getAttribute("data-fa-library-item"),
         href: safeHref(row.getAttribute("data-fa-library-href") || undefined) || "",
+        avatar: safeHref(row.getAttribute("data-fa-library-avatar") || undefined) || "",
+        kind: row.getAttribute("data-fa-library-kind") || "library",
       });
       // `displayInFolio` already fired `fa:folio-changed`, which repaints.
     });
@@ -3861,11 +3956,24 @@
         slot = el("span", { class: "fa-pullout-slot" });
         slot.appendChild(el("button", { type: "button", class: "fa-pullout" }));
         slot.appendChild(el("span", { class: "fa-pullout-state" }));
+        // WHERE IT GOES, in order: the host the row DECLARES
+        // (`data-fa-pullout-host`), then the row's FIRST cell, then the row.
+        //
+        // It used to be the LAST cell, and that is issue #1006: on a table
+        // wider than the screen the last cell is past the right edge, so the
+        // owner looked at a library with their glass down and asked *"how do
+        // i get stuff from library onto glass?"* — the control existed and
+        // could not be seen. The first cell is where a reader's eye starts.
+        //
         // A TABLE ROW takes no `<span>` child -- the browser hoists it out of
         // the table entirely, which is how a control disappears while the
-        // markup looks right. Into the last cell when there is one.
-        var cell = row.lastElementChild;
-        (cell && cell.tagName === "TD" ? cell : row).appendChild(slot);
+        // markup looks right. So never the row itself when it is a `<tr>`.
+        var host = row.querySelector("[data-fa-pullout-host]");
+        if (!host) {
+          var cell = row.firstElementChild;
+          host = cell && cell.tagName === "TD" ? cell : row;
+        }
+        host.appendChild(slot);
       }
       var btn = slot.querySelector(".fa-pullout");
       var note = slot.querySelector(".fa-pullout-state");
@@ -3892,6 +4000,137 @@
     });
   }
 
+  /* ═══ THE READER'S GLASS SETTINGS ═════════════════════════════════════
+   *
+   * Bean `zrvt`, issue #1006. Owner, 2026-09-23: *"tile to change folio
+   * settings (like background theme=now is glass theme, need usabiltiy themes
+   * some may want exisritng new avatars. should be able to set opactiy"*, and
+   * then *"start with the glass being 20% opaque with a blur effect"*.
+   *
+   * PER-VIEWER, like `fa-reading-prefs`: a reader's glass is theirs, and a
+   * published page cannot write anything anybody else reads. Every read and
+   * write is wrapped for the same reason the folio store's are.
+   *
+   * A THEME CARRIES ITS OWN STARTING OPACITY. "High contrast" at 20% would be
+   * a contradiction in its own name, so choosing a theme moves the opacity to
+   * that theme's value; the reader can still move it afterwards. The default
+   * is the owner's: the glass theme, 20%, blurred.
+   */
+  var GLASS_PREFS_KEY = "fa-glass-prefs";
+  var GLASS_THEMES = [
+    { id: "glass", label: "Glass", hint: "see-through and blurred", opacity: 20 },
+    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines", opacity: 100 },
+    { id: "paper", label: "Paper", hint: "light and nearly solid", opacity: 92 },
+    { id: "night", label: "Night", hint: "dark and nearly solid", opacity: 92 },
+  ];
+  var GLASS_AVATAR_STYLES = [
+    { id: "pictures", label: "Pictures", hint: "a book's cover when it has one, otherwise its kind avatar" },
+    { id: "kinds", label: "Kind avatars", hint: "the harness's avatar for each kind, never a picture" },
+    { id: "text", label: "Text only", hint: "no pictures at all" },
+  ];
+  var GLASS_DEFAULTS = { theme: "glass", avatars: "pictures", opacity: 20, blur: true };
+
+  function glassPrefs() {
+    var p = { theme: GLASS_DEFAULTS.theme, avatars: GLASS_DEFAULTS.avatars,
+              opacity: GLASS_DEFAULTS.opacity, blur: GLASS_DEFAULTS.blur };
+    try {
+      var raw = JSON.parse(localStorage.getItem(GLASS_PREFS_KEY) || "{}") || {};
+      if (GLASS_THEMES.some(function (t) { return t.id === raw.theme; })) p.theme = raw.theme;
+      if (GLASS_AVATAR_STYLES.some(function (a) { return a.id === raw.avatars; })) p.avatars = raw.avatars;
+      if (typeof raw.opacity === "number" && isFinite(raw.opacity)) {
+        p.opacity = Math.max(0, Math.min(100, Math.round(raw.opacity)));
+      }
+      if (typeof raw.blur === "boolean") p.blur = raw.blur;
+    } catch (_e) { /* defaults */ }
+    return p;
+  }
+
+  function setGlassPrefs(p) {
+    try { localStorage.setItem(GLASS_PREFS_KEY, JSON.stringify(p)); } catch (_e) {
+      console.warn("docs-ui: glass settings could not be saved (storage blocked); " +
+                   "they apply to this page view only.");
+    }
+  }
+
+  /** Paint the settings onto the layer. CSS reads the attributes and the one custom property. */
+  function applyGlassPrefs(layer, p) {
+    layer.setAttribute("data-fa-glass-theme", p.theme);
+    layer.setAttribute("data-fa-glass-avatars", p.avatars);
+    layer.setAttribute("data-fa-glass-blur", p.blur ? "on" : "off");
+    layer.style.setProperty("--fa-glass-opacity", String(p.opacity / 100));
+  }
+
+  /**
+   * `avatars.css` on a page that did not load it — a replica page loads
+   * `docs-ui.css` alone. The kind avatars are declared THERE, once, and the
+   * glass borrows them rather than drawing a second set.
+   */
+  function ensureAvatarsCss() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (/\/avatars\.css(\?|$)/.test(links[i].getAttribute("href") || "")) return;
+    }
+    document.head.appendChild(el("link", {
+      rel: "stylesheet",
+      href: safeHref(withBase("/assets/css/avatars.css")),
+      "data-fa-glass-avatars-css": "",
+    }));
+  }
+
+  /** The declared kind avatar for `kind`, from `avatars.css`. */
+  function kindAvatar(kind) {
+    return el("span", {
+      class: "fa-avatar fa-glass-kind-avatar",
+      "data-fa-kind": kind || "library",
+      "aria-hidden": "true",
+    });
+  }
+
+  /**
+   * An asset's avatar on the glass, honouring the reader's avatar style.
+   * A picture that fails to load becomes the kind avatar — never a broken
+   * image, which reads as "something failed" where the truth is "no picture".
+   */
+  function glassAvatarFor(a, style) {
+    if (style === "text") return null;
+    var box = el("span", { class: "fa-glass-avatar", "aria-hidden": "true" });
+    var src = style === "pictures" ? safeHref(a.avatar) : "";
+    if (src) {
+      var img = el("img", { src: src, alt: "", loading: "lazy" });
+      img.addEventListener("error", function () {
+        if (img.parentNode) img.parentNode.replaceChild(kindAvatar(a.kind), img);
+      });
+      box.appendChild(img);
+    } else {
+      box.appendChild(kindAvatar(a.kind));
+    }
+    return box;
+  }
+
+  /**
+   * The todo index's address. The declared meta when the page has one, and
+   * otherwise the published index under the site root — a replica page
+   * carries no meta, and the todos are the harness's, not the page's.
+   */
+  function todoIndexUrl() {
+    var m = document.querySelector('meta[name="fa-todo-src"]');
+    var v = m && m.getAttribute("content");
+    return v || withBase("/assets/todos/index.json");
+  }
+
+  /** The declared tiles: the page's meta, else the published copy. `done(null)` when neither is readable. */
+  function glassTileList(done) {
+    var fromMeta = declaredTilesFromMeta();
+    if (fromMeta) return done(fromMeta);
+    fetch(withBase("/assets/harness/tiles.json"))
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (t) { done(Array.isArray(t) ? t : null); })
+      .catch(function (e) {
+        console.warn("docs-ui: the glass could not read its tiles (" + e.message + ").");
+        done(null);
+      });
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -3903,6 +4142,25 @@
     });
     document.body.appendChild(layer);
     glassLayer = layer;
+    var prefs = glassPrefs();
+    applyGlassPrefs(layer, prefs);
+    ensureAvatarsCss();
+    // THE ZOOM DECLARATION, for pages whose board never asked for it — a
+    // replica page has no board and no `fa-zoom-src` meta. Asked once; absent
+    // stays null, which keeps every card's words (see `zoomState`).
+    if (!zoomState.zoom) {
+      var zm = document.querySelector('meta[name="fa-zoom-src"]');
+      var zurl = (zm && zm.getAttribute("content")) || withBase("/assets/semantic-zoom.json");
+      fetch(zurl)
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          if (doc && typeof doc.belowPx === "number" && !zoomState.zoom) {
+            zoomState.zoom = doc;
+            Array.prototype.forEach.call(layer.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
+          }
+        })
+        .catch(function () { /* absent: every card keeps its words */ });
+    }
 
     // The handle. A BUTTON, not a div with a click: the disclosure, the focus
     // ring and the keyboard path are the browser's, and this instance's
@@ -3914,13 +4172,14 @@
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    }, "\u25BE Folio");
+    }, "▾ Folio");
     document.body.appendChild(handle);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
     var empty = el("p", { class: "fa-glass-empty" },
-      "Nothing on your folio glass. Open a library and pull an item out to put it here.");
+      "Nothing on your folio glass yet. To add something: put your folio away, open a library, " +
+      "and press “Pull out to folio” at the start of a row — or open Todos below.");
     sheet.appendChild(empty);
     layer.appendChild(sheet);
 
@@ -3934,77 +4193,456 @@
      */
     var shelf = el("div", { class: "fa-glass-shelf", "aria-label": "Assets on your folio" });
     sheet.appendChild(shelf);
+    var notes = el("div", { class: "fa-glass-notes" });
+    sheet.appendChild(notes);
+
+    /* ── A card ON the glass: placed, moved, sized, and zoomed ────────────
+     *
+     * The owner asked for the glass to be a SURFACE a note is placed on
+     * (`pv6g`), not a list. So each card carries its own geometry, and moving
+     * it is `wireMove` — the one implementation the board window and the
+     * floating sticky already share: keyboard first (✥ enters move mode,
+     * arrows move, Shift+arrows resize, Escape or Enter leaves), drag as the
+     * accelerator. The −/+ buttons are the low-dexterity path to size, since
+     * Shift+arrow is a chord.
+     *
+     * ZOOM IS SEMANTIC AND AUTOMATIC: below the folio's DECLARED width for
+     * the card's kind (`semantic-zoom.json`, via `rendersAvatar`), a card
+     * shows its avatar alone. No literal here, and no declaration means the
+     * card keeps its words at every size — `board-windows`: semantic zoom is
+     * driven by size, and a person's act is only the size they chose. */
+    var GLASS_CARD_W = 288;
+    // Tall enough for the avatar (4.75rem) AND the tool row (2.75rem) with
+    // padding. At 112 the cover overflowed the card's top edge and was
+    // clipped — measured by the drag spec, whose press landed on the glass
+    // behind a cover that was drawn outside its own card.
+    var GLASS_CARD_H = 152;
+    var GLASS_GAP = 12;
+    var raiseAt = 1;
+
+    function zoomKindOf(a) { return a.kind === "todos" ? "todo" : (a.kind || "library"); }
+
+    /** Where a card with no saved place goes: a grid, in key order. */
+    function defaultGlassGeom(a, i) {
+      var t = zoomThresholdFor(zoomKindOf(a));
+      // A DEFAULT card never starts zoomed out: at least the declared width
+      // plus a step, so the words show until the reader shrinks it.
+      var w = t ? Math.max(GLASS_CARD_W, t.belowPx + RESIZE_STEP) : GLASS_CARD_W;
+      var avail = Math.max(w, shelf.clientWidth || (window.innerWidth - 32));
+      var cols = Math.max(1, Math.floor((avail + GLASS_GAP) / (w + GLASS_GAP)));
+      return {
+        left: (i % cols) * (w + GLASS_GAP),
+        top: Math.floor(i / cols) * (GLASS_CARD_H + GLASS_GAP),
+        width: w,
+        height: GLASS_CARD_H,
+      };
+    }
+
+    /** The shelf is as tall as its lowest card, so the notes and panel sit below the cards. */
+    function fitShelf() {
+      var bottom = 0;
+      Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), function (c) {
+        var g = geometryOf(c);
+        bottom = Math.max(bottom, g.top + g.height);
+      });
+      shelf.style.height = bottom ? bottom + GLASS_GAP + "px" : "";
+    }
+
+    function zoomGlassCard(card) {
+      var kind = card.getAttribute("data-fa-zoom-kind");
+      var w = card.getBoundingClientRect().width || parseFloat(card.style.width) || 0;
+      card.setAttribute("data-fa-zoom", rendersAvatar(kind, w) ? "avatar" : "card");
+    }
+
+    function buildGlassCard(key, a) {
+      var card = el("article", {
+        class: "fa-glass-asset",
+        "data-fa-asset": key,
+        "data-fa-asset-kind": a.kind || "library",
+        "data-fa-zoom-kind": zoomKindOf(a),
+        "aria-label": a.title,
+        tabindex: "-1",
+      });
+      var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+      var face = el("div", { class: "fa-glass-asset-face" });
+      var ava = glassAvatarFor(a, prefs.avatars);
+      if (ava) face.appendChild(ava);
+      // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
+      // store is `localStorage`, which the reader's own devtools can
+      // rewrite, so a value sanitised on the way in is not a value that is
+      // safe on the way out. The boundary is where the URL reaches an
+      // `href`, and that is here.
+      var href = safeHref(a.href);
+      face.appendChild(href
+        ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
+        : el("span", { class: "fa-glass-asset-name" }, a.title));
+      card.appendChild(face);
+
+      var tools = el("div", { class: "fa-glass-asset-tools" });
+      var moveBtn = el("button", {
+        type: "button",
+        class: "fa-glass-asset-tool",
+        "data-fa-control": "move",
+        "aria-label": "Move " + a.title + " around the glass",
+        "aria-pressed": "false",
+        title: "Move (arrow keys; Shift+arrows resize)",
+      }, CONTROL_GLYPHS.move || "\u271C");
+      moveBtn.addEventListener("click", function () {
+        var on = card.getAttribute("data-fa-moving") !== "true";
+        setMoveMode(card, on, live);
+        moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      card.addEventListener("fa:move-mode", function () {
+        moveBtn.setAttribute("aria-pressed", "false");
+        moveBtn.focus();
+      });
+      function resizeBy(d) {
+        var g = geometryOf(card);
+        var ratio = g.height / g.width;
+        g.width = Math.max(MIN_WINDOW, g.width + d);
+        g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
+        applyGeometry(card, g);
+        placeOnGlass(key, g);
+        fitShelf();
+        zoomGlassCard(card);
+        live.textContent = (card.getAttribute("data-fa-zoom") === "avatar"
+          ? "Smaller: showing the avatar only." : "Size " + g.width + " by " + g.height + ".");
+      }
+      var smaller = el("button", {
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " smaller",
+        title: "Smaller",
+      }, "\u2212");
+      var larger = el("button", {
+        type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
+        title: "Larger",
+      }, "+");
+      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP); });
+      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP); });
+
+      // CLOSE, and the word matters. "Remove" and "delete" both say the
+      // asset stops being the reader's, which is exactly what does NOT
+      // happen -- `board-windows`: closing returns it to the middle state
+      // and never to the first. The label says where it goes.
+      var close = el("button", {
+        type: "button",
+        class: "fa-glass-asset-tool fa-glass-asset-close",
+        "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
+        title: "Back in library view (stays in your folio)",
+      }, "×");
+      close.addEventListener("click", function () { shelveFromGlass(key); });
+      tools.appendChild(moveBtn);
+      tools.appendChild(smaller);
+      tools.appendChild(larger);
+      tools.appendChild(close);
+      card.appendChild(tools);
+      card.appendChild(live);
+
+      // SELECTING ANY PART RAISES IT — the owner's rule for windows,
+      // 2026-09-20, and the same one here: a card the reader is touching is
+      // never under another.
+      function raise() { card.style.zIndex = String(++raiseAt); }
+      card.addEventListener("mousedown", raise);
+      card.addEventListener("focusin", raise);
+
+      wireMove(card, card, live, function (g) {
+        placeOnGlass(key, g);
+        fitShelf();
+      });
+      return card;
+    }
 
     function renderShelf() {
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
+      while (notes.firstChild) notes.removeChild(notes.firstChild);
       var all = folioAssets();
       var keys = Object.keys(all).filter(function (k) { return all[k].shown; });
       keys.sort();
 
-      keys.forEach(function (key) {
+      var placed = [];
+      keys.forEach(function (key, i) {
         var a = all[key];
-        var card = el("article", { class: "fa-glass-asset", "data-fa-asset": key });
-        // CHECKED AGAIN AT RENDER, and that is not belt-and-braces. The
-        // store is `localStorage`, which the reader's own devtools can
-        // rewrite, so a value sanitised on the way in is not a value that is
-        // safe on the way out. The boundary is where the URL reaches an
-        // `href`, and that is here.
-        var href = safeHref(a.href);
-        var name = href
-          ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
-          : el("span", { class: "fa-glass-asset-name" }, a.title);
-        card.appendChild(name);
-
-        // CLOSE, and the word matters. "Remove" and "delete" both say the
-        // asset stops being the reader's, which is exactly what does NOT
-        // happen -- `board-windows`: closing returns it to the middle state
-        // and never to the first. The label says where it goes.
-        var close = el("button", {
-          type: "button",
-          class: "fa-glass-asset-close",
-          "aria-label": "Put " + a.title + " back in the library view — it stays in your folio",
-          title: "Back in library view (stays in your folio)",
-        }, "×");
-        close.addEventListener("click", function () { shelveFromGlass(key); });
-        card.appendChild(close);
+        var card = buildGlassCard(key, a);
         shelf.appendChild(card);
+        applyGeometry(card, a.geom || defaultGlassGeom(a, i));
+        placed.push(card);
       });
+      fitShelf();
+      if (typeof ResizeObserver === "function") {
+        if (shelf.__faZoomObs) shelf.__faZoomObs.disconnect();
+        var zo = new ResizeObserver(function (entries) {
+          entries.forEach(function (en) { zoomGlassCard(en.target); });
+        });
+        placed.forEach(function (c) { zo.observe(c); });
+        shelf.__faZoomObs = zo;
+      }
+      placed.forEach(zoomGlassCard);
 
       // WHERE THE WAY BACK IS, said on the surface that cannot offer it.
       // `l4zi` one level out: the inverse of close is reachable from the
-      // LIBRARY, not from here, and a reader who is not told that reads a
-      // closed asset as one they lost. Shown whenever the reader holds
-      // anything at all, including when nothing is on the glass -- that is
-      // precisely the state in which the question arises.
+      // LIBRARY (or, for a todo, the Todos tile), not from the glass itself,
+      // and a reader who is not told that reads a closed asset as one they
+      // lost.
       //
-      // IT SAYS "PUT YOUR FOLIO AWAY FIRST", and that sentence is a measured
-      // fix rather than politeness. The glass is an overlay over whatever is
-      // being browsed, so while it is down the library row underneath takes
-      // no clicks -- an e2e spec failed on exactly that, with the sheet
-      // named as intercepting the pointer. A note sending a reader to a
-      // control the note's own surface is covering is the `pb04` shape: the
-      // affordance is there, it is reachable, and the reader cannot get to
-      // it from where they are standing.
+      // "PUT YOUR FOLIO AWAY FIRST" is a measured fix rather than politeness:
+      // while the glass is down the library row underneath takes no clicks.
       var shelved = Object.keys(all).filter(function (k) { return !all[k].shown; });
       if (shelved.length > 0) {
-        shelf.appendChild(el("p", { class: "fa-glass-shelved-note" },
+        notes.appendChild(el("p", { class: "fa-glass-shelved-note" },
           (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
-          "Put your folio away, then open the library view to put it back on the glass."));
+          "Put your folio away, then open the library view to put it back on the glass " +
+          "(for a todo, use the Todos tile below)."));
       }
 
       // Saved in THIS BROWSER, said in words wherever the reader's own items
-      // appear. The discarded-todos mechanism states the reason and it is the
-      // same one: a reader who thinks their folio follows them to another
+      // appear: a reader who thinks their folio follows them to another
       // machine has been misled by the control.
       if (keys.length > 0 || shelved.length > 0) {
-        shelf.appendChild(el("p", { class: "fa-glass-local-note" },
+        notes.appendChild(el("p", { class: "fa-glass-local-note" },
           "Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else."));
       }
       return keys.length;
     }
 
+    /* ── THE PANEL a tile opens, above the strip ──────────────────────────
+     * One at a time, and the tile that opened it closes it: `l4zi` — the
+     * inverse is reachable from the same control. */
+    var panel = el("section", {
+      class: "fa-glass-panel",
+      id: "fa-glass-panel",
+      role: "region",
+      hidden: "hidden",
+    });
+    sheet.appendChild(panel);
+    var openPanelId = null;
+    var panelButtons = {};
+
+    function closePanel() {
+      panel.setAttribute("hidden", "hidden");
+      while (panel.firstChild) panel.removeChild(panel.firstChild);
+      if (openPanelId && panelButtons[openPanelId]) {
+        panelButtons[openPanelId].setAttribute("aria-expanded", "false");
+      }
+      openPanelId = null;
+    }
+
+    function openPanel(id, title, build) {
+      if (openPanelId === id) { closePanel(); return; }
+      closePanel();
+      openPanelId = id;
+      panel.setAttribute("data-fa-panel", id);
+      panel.setAttribute("aria-label", title);
+      var head = el("div", { class: "fa-glass-panel-head" });
+      var h = el("h2", { class: "fa-glass-panel-title", tabindex: "-1" }, title);
+      head.appendChild(h);
+      var x = el("button", {
+        type: "button",
+        class: "fa-glass-panel-close",
+        "aria-label": "Close " + title,
+      }, "×");
+      x.addEventListener("click", function () {
+        var b = panelButtons[id];
+        closePanel();
+        if (b) b.focus();
+      });
+      head.appendChild(x);
+      panel.appendChild(head);
+      var body = el("div", { class: "fa-glass-panel-body" });
+      panel.appendChild(body);
+      build(body);
+      panel.removeAttribute("hidden");
+      if (panelButtons[id]) panelButtons[id].setAttribute("aria-expanded", "true");
+      h.focus();
+    }
+
+    /* TODOS — the todo list, on the glass, each with a pull-out.
+     *
+     * Each row DECLARES itself a library item (`data-fa-library-item`), so
+     * the one pull-out mechanism paints it, handles its click and reports its
+     * three states. A second "pin a todo" path would be a second answer to
+     * "how does something get onto the glass". */
+    function buildTodos(body) {
+      var status = el("p", { class: "fa-glass-panel-status" }, "Loading todos…");
+      body.appendChild(status);
+      var url = todoIndexUrl();
+      fetch(url)
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          var items = doc && Array.isArray(doc.items) ? doc.items : null;
+          if (!items) throw new Error("no items");
+          var hidden = discardedTodoIds();
+          var live = items.filter(function (t) { return t && t.id && hidden.indexOf(t.id) === -1; });
+          status.textContent = live.length === 0
+            ? "Nothing outstanding."
+            : live.length + (live.length === 1 ? " todo" : " todos") +
+              ". Press “Pull out to folio” to put one on your glass.";
+          var list = el("ul", { class: "fa-glass-todo-list" });
+          live.forEach(function (t) {
+            var li = el("li", {
+              class: "fa-glass-todo",
+              "data-fa-library-item": "todo/" + t.id,
+              "data-fa-library-title": t.summary || t.id,
+              "data-fa-library-href": withBase("/todos/") + "#" + encodeURIComponent(t.id),
+              "data-fa-library-kind": "todos",
+            });
+            var host = el("div", { class: "fa-glass-todo-row", "data-fa-pullout-host": "" });
+            host.appendChild(kindAvatar("todos"));
+            host.appendChild(el("span", { class: "fa-glass-todo-summary" }, t.summary || t.id));
+            li.appendChild(host);
+            list.appendChild(li);
+          });
+          body.appendChild(list);
+          body.appendChild(el("a", { class: "fa-glass-panel-more", href: safeHref(withBase("/todos/")) },
+            "Open the full todo board"));
+          if (document.__faRepaintLibraryRows) document.__faRepaintLibraryRows();
+          else paintLibraryRows();
+        })
+        .catch(function (e) {
+          // A third state, said as one: "could not read" is not "nothing to do".
+          status.textContent = "The todo list could not be read (" + e.message + "). " +
+            "That is not the same as having nothing to do.";
+        });
+    }
+
+    /* SETTINGS — theme, avatar style, opacity, blur.
+     *
+     * Radio groups and big buttons rather than a slider alone: the declared
+     * interaction profile here is low-dexterity, so every setting is a
+     * choice among a few large targets, and the opacity slider has step
+     * buttons beside it. */
+    function buildSettings(body) {
+      function save() { setGlassPrefs(prefs); applyGlassPrefs(layer, prefs); }
+
+      function radioGroup(legend, name, options, current, onPick) {
+        var fs = el("fieldset", { class: "fa-glass-setting" });
+        fs.appendChild(el("legend", {}, legend));
+        options.forEach(function (o) {
+          var id = "fa-glass-" + name + "-" + o.id;
+          var lab = el("label", { class: "fa-glass-choice", for: id });
+          var r = el("input", { type: "radio", name: "fa-glass-" + name, id: id, value: o.id });
+          if (o.id === current) r.checked = true;
+          r.addEventListener("change", function () { if (r.checked) onPick(o); });
+          lab.appendChild(r);
+          lab.appendChild(el("span", { class: "fa-glass-choice-label" }, o.label));
+          lab.appendChild(el("span", { class: "fa-glass-choice-hint" }, o.hint));
+          fs.appendChild(lab);
+        });
+        return fs;
+      }
+
+      var opacityOut = el("output", { class: "fa-glass-opacity-value", for: "fa-glass-opacity" });
+      var slider = el("input", {
+        type: "range", id: "fa-glass-opacity", min: "0", max: "100", step: "10",
+        "aria-label": "Glass opacity, percent",
+      });
+      function showOpacity() {
+        slider.value = String(prefs.opacity);
+        opacityOut.textContent = prefs.opacity + "%";
+      }
+      function setOpacity(v) {
+        prefs.opacity = Math.max(0, Math.min(100, Math.round(v / 10) * 10));
+        showOpacity();
+        save();
+      }
+
+      body.appendChild(radioGroup("Theme", "theme", GLASS_THEMES, prefs.theme, function (o) {
+        prefs.theme = o.id;
+        setOpacity(o.opacity);
+      }));
+      body.appendChild(radioGroup("Avatars", "avatars", GLASS_AVATAR_STYLES, prefs.avatars, function (o) {
+        prefs.avatars = o.id;
+        save();
+        renderShelf();
+      }));
+
+      var fs = el("fieldset", { class: "fa-glass-setting" });
+      fs.appendChild(el("legend", {}, "Opacity"));
+      var row = el("div", { class: "fa-glass-opacity" });
+      var less = el("button", { type: "button", class: "fa-glass-step", "aria-label": "Less opaque" }, "−");
+      var more = el("button", { type: "button", class: "fa-glass-step", "aria-label": "More opaque" }, "+");
+      less.addEventListener("click", function () { setOpacity(prefs.opacity - 10); });
+      more.addEventListener("click", function () { setOpacity(prefs.opacity + 10); });
+      slider.addEventListener("input", function () { setOpacity(Number(slider.value)); });
+      row.appendChild(less);
+      row.appendChild(slider);
+      row.appendChild(more);
+      row.appendChild(opacityOut);
+      fs.appendChild(row);
+      var blurLab = el("label", { class: "fa-glass-choice" });
+      var blurBox = el("input", { type: "checkbox", id: "fa-glass-blur" });
+      blurBox.checked = prefs.blur;
+      blurBox.addEventListener("change", function () { prefs.blur = blurBox.checked; save(); });
+      blurLab.appendChild(blurBox);
+      blurLab.appendChild(el("span", { class: "fa-glass-choice-label" }, "Blur what is behind the glass"));
+      fs.appendChild(blurLab);
+      body.appendChild(fs);
+      showOpacity();
+
+      // THE WAY BACK FROM A MESSY GLASS. Every card returns to the grid;
+      // nothing leaves the folio and nothing leaves the glass.
+      var tidy = el("button", { type: "button", class: "fa-glass-reset fa-glass-tidy" },
+        "Tidy the glass (put every card back in the grid)");
+      tidy.addEventListener("click", tidyGlass);
+      body.appendChild(tidy);
+
+      var reset = el("button", { type: "button", class: "fa-glass-reset fa-glass-defaults" }, "Back to the default glass");
+      reset.addEventListener("click", function () {
+        prefs = { theme: GLASS_DEFAULTS.theme, avatars: GLASS_DEFAULTS.avatars,
+                  opacity: GLASS_DEFAULTS.opacity, blur: GLASS_DEFAULTS.blur };
+        save();
+        renderShelf();
+        while (body.firstChild) body.removeChild(body.firstChild);
+        buildSettings(body);
+      });
+      body.appendChild(reset);
+      body.appendChild(el("p", { class: "fa-glass-local-note" },
+        "Saved in this browser only."));
+    }
+
+    /* ── THE TILE STRIP, along the glass's BOTTOM edge ────────────────────
+     *
+     * Owner, 2026-09-23: *"where are the todo, fsh guts etc tiles on bottom
+     * of glass?"* — which overrides `v0jv`'s *"the tiles must NOT be
+     * projected onto the glass"*. The strip reads the SAME declaration the
+     * navbar and the board read, filtered to the `glass` surface: one
+     * declaration, per-surface visibility, never two registries.
+     *
+     * Two tiles are the glass's own chrome rather than a graph's viewer:
+     * Todos and Settings. The declared `todos` tile is NOT drawn a second
+     * time beside them; its page is the "Open the full todo board" link
+     * inside the Todos panel. */
+    var strip = el("nav", { class: "fa-glass-tiles", "aria-label": "Folio tiles" });
+    sheet.appendChild(strip);
+
+    function chromeTile(id, label, glyph, title, build) {
+      var b = el("button", {
+        type: "button",
+        // NOT `data-fa-tile` and not `.fa-tile`: those mark a DECLARED graph
+        // tile, and every one of them opens "the declared visualisation of" a
+        // directory. These two are the glass's own controls, and wearing the
+        // graph tiles' marker would make them count as graph tiles.
+        class: "fa-glass-chrome-tile",
+        "data-fa-glass-chrome": id,
+        "aria-expanded": "false",
+        "aria-controls": "fa-glass-panel",
+        "aria-label": title,
+      });
+      b.appendChild(el("span", { class: "fa-glass-tile-glyph", "aria-hidden": "true" }, glyph));
+      b.appendChild(el("span", { class: "fa-tile-caption" }, label));
+      b.addEventListener("click", function () { openPanel(id, title, build); });
+      panelButtons[id] = b;
+      strip.appendChild(b);
+      return b;
+    }
+    chromeTile("glass-todos", "Todos", "☑", "Todos — pull one onto your glass", buildTodos);
+    chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings);
+
+    glassTileList(function (tiles) {
+      if (!tiles) return;
+      var declared = tiles.filter(function (t) { return t && t.id !== "todos"; });
+      renderGraphTiles(declared, "glass", strip, readerShownTiles());
+    });
 
     function setOpen(open) {
       layer.setAttribute("data-fa-glass", open ? "open" : "closed");
@@ -4016,18 +4654,15 @@
       // board floats here, so the count is taken from them rather than from
       // the layer's children, which would count the sheet itself.
       var floating = layer.querySelectorAll(".fa-sticky-floating").length;
-      // An asset the reader pulled out counts too, and this said `floating`
-      // alone until the shelf existed -- a glass holding one asset and no
-      // sticky would have read "Nothing on your folio glass" while showing
-      // the asset, which is the `pb04` shape pointed at a message.
+      // An asset the reader pulled out counts too — a glass holding one asset
+      // and no sticky must not read "Nothing on your folio glass".
       empty.hidden = floating + renderShelf() > 0;
+      if (!open) closePanel();
     }
 
     // The glass is on EVERY page, so a pull-out performed on a library row
     // has to reach it without a reload. One listener rather than the row
-    // calling in: the row does not know a glass is mounted, and a folio that
-    // only updated where the pulling page also hosted the glass would be the
-    // coupling `mountGlass` was hoisted out of `mountTodoBoard` to remove.
+    // calling in: the row does not know a glass is mounted.
     document.addEventListener("fa:folio-changed", function () {
       setOpen(layer.getAttribute("data-fa-glass") === "open");
     });
@@ -4043,12 +4678,355 @@
     document.addEventListener("keydown", function (ev) {
       if (ev.key !== "Escape") return;
       if (layer.getAttribute("data-fa-glass") !== "open") return;
+      // Escape closes the innermost thing first: an open panel, then the glass.
+      if (openPanelId) {
+        var b = panelButtons[openPanelId];
+        closePanel();
+        if (b) b.focus();
+        return;
+      }
       setOpen(false);
       handle.focus();
     });
 
     layer.__faSetGlassOpen = setOpen;
     return layer;
+  }
+
+  /* ═══ A STICKY'S HOME — the panel it came from ═══════════════════════════
+   *
+   * Bean `pv6g`. Owner, 2026-09-21: *"stickies can detach from the panel and
+   * placed on the 'display window/glass' and dont scroll when the
+   * folio/document/page scrolls. when closed tehy returned to their home
+   * display panel."* And 2026-09-23, choosing between three senses of "home":
+   * **"Panel it came from"** — *"each sticky records which panel and slot it
+   * came from, and closing returns it there."*
+   *
+   * ## The home is RECORDED, not remembered
+   *
+   * `mountTodoBoard` already returned a floated sticky to `slots[todo.id]`,
+   * but that home lived in the board's closure: gone on the next page, and
+   * unaskable of any sticky the board did not build. So a home is now DATA,
+   * declared in markup and stored with the pin:
+   *
+   *   a panel  `data-fa-home-panel="<panel>"`   (the landing board, the todo board)
+   *   a slot   `data-fa-home-slot="<id>"`        (one per sticky it holds)
+   *   the pin  `{ panel, slot, title, text, href, label, geom }` in this browser
+   *
+   * ## A pinned sticky is on the GLASS, so it is on every page
+   *
+   * The glass is the reader's and comes down over whatever they browse, so a
+   * sticky pinned on the landing page is still pinned on a library page. Off
+   * its home page it renders from the stored TEXT — never stored HTML, which
+   * would be markup read back out of `localStorage` into the DOM — and says
+   * where its home is. Closing it anywhere unpins it; it is back in its slot
+   * the next time the home panel is on screen, because that is where the
+   * slot IS. Per-reader and per-browser, like everything else on the glass.
+   */
+  var PIN_KEY = "fa-pinned-stickies";
+
+  function pinnedStickies() {
+    try {
+      var raw = localStorage.getItem(PIN_KEY);
+      var m = raw ? JSON.parse(raw) : {};
+      return m && typeof m === "object" && !Array.isArray(m) ? m : {};
+    } catch (_e) {
+      return {};
+    }
+  }
+
+  function setPinnedStickies(m) {
+    try { localStorage.setItem(PIN_KEY, JSON.stringify(m)); } catch (_e) {
+      console.warn("docs-ui: a pinned sticky could not be saved (storage blocked); " +
+                   "it stays pinned for this page view only.");
+    }
+  }
+
+  function pinKey(panel, slot) { return panel + "/" + slot; }
+
+  /** Record a pin, keeping any place the reader already gave it. */
+  function recordPin(panel, slot, meta) {
+    var all = pinnedStickies();
+    var key = pinKey(panel, slot);
+    var prev = all[key] || {};
+    all[key] = {
+      panel: panel,
+      slot: slot,
+      title: String((meta && meta.title) || prev.title || slot).slice(0, 200),
+      // TEXT, capped. Enough to recognise the note away from home; the whole
+      // note is one click away, at its home.
+      text: String((meta && meta.text) || prev.text || "").replace(/\s+/g, " ").trim().slice(0, 600),
+      href: safeHref((meta && meta.href) || prev.href) || "",
+      label: String((meta && meta.label) || prev.label || "").slice(0, 200),
+    };
+    if (prev.geom) all[key].geom = prev.geom;
+    setPinnedStickies(all);
+    return all[key];
+  }
+
+  function dropPin(panel, slot) {
+    var all = pinnedStickies();
+    delete all[pinKey(panel, slot)];
+    setPinnedStickies(all);
+  }
+
+  function pinGeom(panel, slot, g) {
+    var all = pinnedStickies();
+    var e = all[pinKey(panel, slot)];
+    if (!e) return;
+    e.geom = { left: Math.round(g.left), top: Math.round(g.top),
+               width: Math.round(g.width), height: Math.round(g.height) };
+    setPinnedStickies(all);
+  }
+
+  function pinOf(panel, slot) { return pinnedStickies()[pinKey(panel, slot)] || null; }
+
+  /** The home panel element for `panel` on THIS page, or null. */
+  function homePanelEl(panel) {
+    var all = document.querySelectorAll("[data-fa-home-panel]");
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].getAttribute("data-fa-home-panel") === panel) return all[i];
+    }
+    return null;
+  }
+
+  function homeSlotEl(panel, slot) {
+    var p = homePanelEl(panel);
+    if (!p) return null;
+    var slots = ownSlots(p);
+    for (var i = 0; i < slots.length; i++) {
+      if (slots[i].getAttribute("data-fa-home-slot") === slot) return slots[i];
+    }
+    return null;
+  }
+
+  /**
+   * The slots that belong to THIS panel — its nearest home-panel ancestor is
+   * the panel itself. Panels NEST: on the landing page the todo board is
+   * mounted inside the landing board, and without this a todo's slot would
+   * be read as a landing sticky's.
+   */
+  function ownSlots(panel) {
+    return Array.prototype.filter.call(panel.querySelectorAll("[data-fa-home-slot]"), function (n) {
+      return n.parentElement && n.parentElement.closest("[data-fa-home-panel]") === panel;
+    });
+  }
+
+  /** Where a newly pinned card lands with no saved place: the bottom-right, stacked. */
+  function defaultPinGeom(n) {
+    var w = Math.min(352, Math.max(240, window.innerWidth - 32));
+    var h = 220;
+    return {
+      left: Math.max(0, window.innerWidth - w - 16 - n * 12),
+      top: Math.max(0, window.innerHeight - h - 16 - n * 12),
+      width: w,
+      height: h,
+    };
+  }
+
+  /** Say something about a home, once, in the glass's own live region. */
+  function announceHome(text) {
+    var layer = mountGlass();
+    var live = layer.querySelector(".fa-home-live");
+    if (!live) {
+      live = el("p", { class: "fa-sr-only fa-home-live", "aria-live": "polite" });
+      layer.appendChild(live);
+    }
+    live.textContent = text;
+  }
+
+  /**
+   * A pinned sticky shown AWAY FROM HOME, from its stored text.
+   *
+   * Two controls and a link, and the words say what each does: the link goes
+   * to the home page, where the whole note is; "Send home" unpins it, and the
+   * note is back in its slot the next time that panel is on screen.
+   */
+  function awayCard(e, n) {
+    var layer = mountGlass();
+    var key = pinKey(e.panel, e.slot);
+    var card = el("article", {
+      class: "fa-sticky fa-sticky-floating fa-sticky-away",
+      "data-fa-pin": key,
+      "aria-label": e.title,
+      tabindex: "-1",
+    });
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    card.appendChild(el("h3", { class: "fa-sticky-away-title" }, e.title));
+    if (e.text) card.appendChild(el("p", { class: "fa-sticky-away-text" }, e.text));
+    var href = safeHref(e.href);
+    var where = e.label ? "its home panel on “" + e.label + "”" : "its home panel";
+    card.appendChild(href
+      ? el("a", { class: "fa-sticky-away-home", href: href }, "Go to " + where)
+      : el("p", { class: "fa-sticky-away-home" }, "Its home is " + where + "."));
+    var tools = el("div", { class: "fa-sticky-tools" });
+    var move = el("button", {
+      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
+      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = card.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(card, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var home = el("button", {
+      type: "button", class: "fa-sticky-sendhome",
+      "aria-label": "Send " + e.title + " home to " + where,
+      title: "Send home",
+    }, "⌂ Send home");
+    home.addEventListener("click", function () {
+      dropPin(e.panel, e.slot);
+      if (card.parentNode) card.parentNode.removeChild(card);
+      announceHome(e.title + " was sent home to " + where + ".");
+      document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
+    });
+    tools.appendChild(move);
+    tools.appendChild(home);
+    card.appendChild(tools);
+    card.appendChild(live);
+    wireMove(card, card, live, function (g) { pinGeom(e.panel, e.slot, g); });
+    layer.appendChild(card);
+    applyGeometry(card, e.geom || defaultPinGeom(n));
+    return card;
+  }
+
+  /**
+   * THE LANDING PANEL as a home: each landing sticky gets a Pin control, and a
+   * pinned one floats onto the glass as a copy of the real card, leaving a
+   * "Return" button in its slot. Closing it — from the card or the slot —
+   * returns it there. The owner's option text: *"Landing stickies get a Pin
+   * button too."*
+   */
+  function mountLandingHomes() {
+    var panel = homePanelEl("landing");
+    if (!panel) return;
+    ownSlots(panel).forEach(function (cell) {
+      var slot = cell.getAttribute("data-fa-home-slot");
+      var art = cell.querySelector(".fa-sticky");
+      if (!art || cell.querySelector(".fa-home-pin")) return;
+      var titleEl = art.querySelector("[id$='-summary']") || art.querySelector("h2, h3");
+      var title = (titleEl && titleEl.textContent.trim()) || slot;
+      var pin = el("button", {
+        type: "button",
+        class: "fa-sticky-pin fa-home-pin",
+        "aria-label": "Pin " + title + " to your glass — closing it brings it back here",
+      }, "Pin to glass");
+      pin.addEventListener("click", function () {
+        recordPin("landing", slot, {
+          title: title,
+          text: (art.querySelector(".fa-landing-sticky__body") || art).textContent,
+          href: safeHref(location.pathname),
+          label: document.title,
+        });
+        floatLanding(slot, true);
+      });
+      cell.appendChild(pin);
+    });
+    // Restore every landing pin whose slot is on this page.
+    Object.keys(pinnedStickies()).forEach(function (k) {
+      var e = pinnedStickies()[k];
+      if (e && e.panel === "landing" && homeSlotEl("landing", e.slot)) floatLanding(e.slot, false);
+    });
+  }
+
+  function floatLanding(slot, focus) {
+    var cell = homeSlotEl("landing", slot);
+    var e = pinOf("landing", slot);
+    if (!cell || !e) return;
+    var layer = mountGlass();
+    var key = pinKey("landing", slot);
+    if (layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]')) return;
+    var art = cell.querySelector(".fa-sticky");
+    var card = art.cloneNode(true);
+    // A COPY must not carry the original's ids: two elements with one id make
+    // `aria-labelledby` name whichever the browser finds first.
+    Array.prototype.forEach.call(card.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    card.removeAttribute("id");
+    card.removeAttribute("aria-labelledby");
+    card.setAttribute("aria-label", e.title);
+    card.classList.add("fa-sticky-floating");
+    card.setAttribute("data-fa-pin", key);
+    card.setAttribute("tabindex", "-1");
+    var live = el("span", { class: "fa-sr-only", "aria-live": "polite" });
+    var tools = el("div", { class: "fa-sticky-tools fa-home-tools" });
+    var move = el("button", {
+      type: "button", class: "fa-sticky-move", "data-fa-control": "move",
+      "aria-label": "Move " + e.title + " around the page", "aria-pressed": "false",
+    }, CONTROL_GLYPHS.move);
+    move.addEventListener("click", function () {
+      var on = card.getAttribute("data-fa-moving") !== "true";
+      setMoveMode(card, on, live);
+      move.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    var close = el("button", {
+      type: "button", class: "fa-sticky-sendhome",
+      "aria-label": "Return " + e.title + " to its panel",
+      title: "Return to its panel",
+    }, "⌂ Return");
+    close.addEventListener("click", function () { dockLanding(slot, true); });
+    tools.appendChild(move);
+    tools.appendChild(close);
+    card.appendChild(tools);
+    card.appendChild(live);
+    wireMove(card, card, live, function (g) { pinGeom("landing", slot, g); });
+    layer.appendChild(card);
+    var n = layer.querySelectorAll(".fa-sticky-floating").length - 1;
+    applyGeometry(card, e.geom || defaultPinGeom(n));
+
+    // The slot keeps its place and says where the note went. A REAL button,
+    // as on the todo board: a reader who clicks the grey space gets it back.
+    art.setAttribute("hidden", "hidden");
+    cell.classList.add("fa-sticky-slot-floating");
+    var pinBtn = cell.querySelector(".fa-home-pin");
+    if (pinBtn) pinBtn.hidden = true;
+    var recall = el("button", {
+      type: "button", class: "fa-sticky-recall",
+      "aria-label": "Return " + e.title + " from your glass to this panel",
+    }, e.title + " — on your glass. Return it here");
+    recall.addEventListener("click", function () { dockLanding(slot, true); });
+    cell.appendChild(recall);
+    if (focus) move.focus();
+    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "pinned" } }));
+  }
+
+  function dockLanding(slot, focus) {
+    var cell = homeSlotEl("landing", slot);
+    var key = pinKey("landing", slot);
+    dropPin("landing", slot);
+    var layer = mountGlass();
+    var card = layer.querySelector('[data-fa-pin="' + key.replace(/"/g, '\\"') + '"]');
+    if (card) card.parentNode.removeChild(card);
+    if (!cell) return;
+    var art = cell.querySelector(".fa-sticky");
+    if (art) art.removeAttribute("hidden");
+    cell.classList.remove("fa-sticky-slot-floating");
+    var recall = cell.querySelector(".fa-sticky-recall");
+    if (recall) recall.parentNode.removeChild(recall);
+    var pinBtn = cell.querySelector(".fa-home-pin");
+    if (pinBtn) {
+      pinBtn.hidden = false;
+      if (focus) pinBtn.focus();
+    }
+    document.dispatchEvent(new CustomEvent("fa:folio-changed", { detail: { key: key, state: "home" } }));
+  }
+
+  /**
+   * Every pin whose home is NOT on this page, as an away card. Pins whose home
+   * IS here are restored by that home: the landing panel above, the todo board
+   * when it mounts. The todo board mounts wherever the page declares a todo
+   * index, so a todo pin is "away" only on a page that declares none.
+   */
+  function mountAwayPins() {
+    var all = pinnedStickies();
+    var hasTodoBoard = !!document.querySelector('meta[name="fa-todo-src"]');
+    var n = 0;
+    Object.keys(all).forEach(function (k) {
+      var e = all[k];
+      if (!e || typeof e.panel !== "string" || typeof e.slot !== "string") return;
+      if (e.panel === "todos" && hasTodoBoard) return;
+      if (homePanelEl(e.panel)) return;
+      awayCard(e, n++);
+    });
   }
 
   function mountTodoBoard(items) {
@@ -4107,6 +5085,8 @@
       "aria-label": "Todos",
     };
     if (!landing) boardAttrs.hidden = "hidden";
+    // A HOME PANEL (bean `pv6g`): its slots are where a pinned todo returns.
+    boardAttrs["data-fa-home-panel"] = "todos";
     var board = el("section", boardAttrs);
     var head = el("div", { class: "fa-sticky-board-head" });
 
@@ -4228,6 +5208,9 @@
     var slots = {};
 
     function dock(todo) {
+      // THE HOME IS RECORDED, so docking forgets the pin as well as the card
+      // (bean `pv6g`) — or it would float again on the next page.
+      dropPin("todos", todo.id);
       var f = todoState.floating[todo.id];
       if (f) {
         // REMEMBER WHERE IT WAS, because dock DESTROYS the card and float
@@ -4279,7 +5262,8 @@
      * the origin is a card whose controls cannot be reached.
      */
     function placeFloating(card, todo) {
-      var saved = todoState.floatGeom[todo.id];
+      var pinned = pinOf("todos", todo.id);
+      var saved = todoState.floatGeom[todo.id] || (pinned && pinned.geom);
       if (saved) { applyGeometry(card, saved); return; }
       var n = Object.keys(todoState.floating).length;
       var w = Math.min(352, Math.max(240, window.innerWidth - 32));
@@ -4292,8 +5276,16 @@
       });
     }
 
-    function float(todo) {
+    function float(todo, restoring) {
       if (todoState.floating[todo.id]) return;
+      // Recorded BEFORE the card is placed, so `placeFloating` finds a saved
+      // place on a restore and the store holds the home on a fresh pin.
+      recordPin("todos", todo.id, {
+        title: todo.summary,
+        text: todo.comment || "",
+        href: safeHref(location.pathname),
+        label: document.title,
+      });
       var card = buildSticky(todo, float, dock, discard);
       card.classList.add("fa-sticky-floating");
       // Focusable so the move mode has somewhere to put focus and the arrow
@@ -4337,7 +5329,9 @@
         tools.appendChild(moveBtn);
       }
 
-      wireMove(card, card.querySelector(".fa-sticky-head") || card, live);
+      wireMove(card, card.querySelector(".fa-sticky-head") || card, live, function (g) {
+        pinGeom("todos", todo.id, g);
+      });
       layer.appendChild(card);
       placeFloating(card, todo);
       todoState.floating[todo.id] = card;
@@ -4359,9 +5353,10 @@
         slot.appendChild(recall);
       }
       // Focus follows the sticky, or a reader who cannot see the page has no
-      // idea anything happened.
+      // idea anything happened. NOT on a restore: a page that moved focus on
+      // load would drop a keyboard reader somewhere they did not go.
       var t = card.querySelector(".fa-sticky-toggle");
-      if (t) t.focus();
+      if (t && !restoring) t.focus();
     }
 
     // Items this browser discarded are off the board. Filtered HERE rather
@@ -4374,6 +5369,7 @@
       var row = rows[i];
       var slot = el("div", {
         class: "fa-sticky-slot" + (row.process ? " fa-sticky-slot-in-process" : ""),
+        "data-fa-home-slot": row.todo.id,
       });
       if (row.process) {
         // The process is named ON the sticky rather than as a run-in heading,
@@ -4389,6 +5385,17 @@
       slots[row.todo.id] = slot;
       grid.appendChild(slot);
     }
+    // RESTORE this board's pins, quietly — the reader pinned them on an
+    // earlier page and they are still on their glass.
+    Object.keys(pinnedStickies()).forEach(function (k) {
+      var pe = pinnedStickies()[k];
+      if (!pe || pe.panel !== "todos") return;
+      var t = live.filter(function (x) { return x.id === pe.slot; })[0];
+      if (t && slots[t.id]) float(t, true);
+      // A pin whose todo no longer exists (done, or discarded) has no home
+      // to go back to; drop it rather than float a card for nothing.
+      else if (!t) dropPin("todos", pe.slot);
+    });
     if (live.length === 0) {
       grid.appendChild(el("p", { class: "fa-sticky-empty" }, "Nothing outstanding."));
     }
@@ -6643,6 +7650,8 @@
     // than this page's furniture, so it must not inherit any of the guards
     // that decide whether a BOARD mounts — see `mountGlass`.
     mountGlass();
+    mountLandingHomes();
+    mountAwayPins();
     mountLibraryPullouts();
     mountTodoStickies();
     mountPageLanguageBar();
