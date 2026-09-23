@@ -116,6 +116,31 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // would have taken the generic hue and reported a finding — "no avatar
   // declared" is true of an instance nobody has decided about, and this one
   // has been decided about twice.
+  // SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner,
+  // 2026-09-23: *"smart-base avatar: use who-iris route, WHO blue no logo"*,
+  // taking the route this instance's exemption had named as open and
+  // preferable rather than leaving it exempt.
+  //
+  // TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is
+  // measured from the same #0093D5 — the organisation's own blue — and these
+  // are two instances of the SAME organisation's material. A reader scanning
+  // the navbar should see them as a family; giving smart-base a near-miss hue
+  // would assert a distinction that does not exist. The registry requires
+  // distinct GLYPHS, not distinct tones, and that is the right constraint:
+  // the glyph says which instance, the tone says whose.
+  //
+  // And no emblem, which is the whole of "the who-iris route": an
+  // organisation's published colour with a neutral glyph is not inventing its
+  // identity, where cropping its logo would be.
+  "smart-base": {
+    // A broad base with three narrowing courses above it — the layer the rest
+    // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
+    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // so the glyph reads the instance's position rather than its subject.
+    glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
+    tone: 199,
+    reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
+  },
   "who-iris": {
     // An open book with a band across it — a repository of published
     // documents, which is what IRIS is. Deliberately NOT the emblem: the
