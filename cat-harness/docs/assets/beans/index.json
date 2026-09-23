@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 551,
+      "count": 553,
       "unit": "beans"
     }
   },
@@ -3929,6 +3929,20 @@
       "file": "beans/defs/folio-assistant-iym1--vacuity-is-guarded-one-script-at-a-time-no-cross-g.md"
     },
     {
+      "id": "folio-assistant-izqr",
+      "title": "BOOTSTRAP ON AN EMPTY REPO: seed main first, then bootstrap onto it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T22:56:13Z",
+      "updatedAt": "2026-09-22T22:56:13Z",
+      "preview": "Owner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), a side request, verbatim:\n\n> *\"when bootstrapo initailzies, if repo is empty, it should seed main then bootstrap\"*\n\n**Why it matters.** A brand-new GitHub repository has no commits and no `main`. Every later step assumes both:\n- a feature branch needs a base to branch from;\n- a PR needs a base branch to target;\n- staging compares against `main`",
+      "file": "beans/defs/folio-assistant-izqr--bootstrap-on-an-empty-repo-seed-main-first-then-bo.md"
+    },
+    {
       "id": "folio-assistant-j1r2",
       "title": "Audio and visual assets carry translatable text — transcripts, captions, alt text, embedded labels",
       "status": "todo",
@@ -4222,7 +4236,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:54Z",
-      "updatedAt": "2026-09-22T21:51:43Z",
+      "updatedAt": "2026-09-22T23:09:51Z",
       "preview": "**What.** A `ChangeSet` node computed between two refs (`origin/main` and the\nbranch that STAGING rendered). For each block it records one of: added,\nremoved, modified (prose / structure / metadata), moved (new parent or order),\nor renamed (via `renamedFrom`, child 01). It is keyed on folio/ graph ids,\n**not** on file paths.\n\n**Why not reuse `diff`.** The `diff` skill is `git diff origin/main..HEA",
       "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
     },
@@ -5135,6 +5149,20 @@
       "updatedAt": "2026-09-21T20:12:17Z",
       "preview": "Reported by the owner, 2026-09-21, as a bare fact: the staging URL **404s**.\nIt was not propagation.\n\n## Measured on `gh-pages`, not inferred\n\nThis branch's preview has been **deleted four times today**, each time by the\n`cleanup` job firing when one of this session's own PRs merged:\n\n```\ncf39207d  staging(cleanup): remove STAGING/claude-lhs-…  (PR #786 closed)\n05f5cfae  staging(cleanup): remove S",
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
+    },
+    {
+      "id": "folio-assistant-p0za",
+      "title": "TOOLS COMPOSITION: 8 of 9 tool-list consumers read the harness-only barrel, so no instance outside cat-harness can serve a Tool",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T22:33:12Z",
+      "updatedAt": "2026-09-22T23:10:07Z",
+      "preview": "Found 2026-09-22 while wiring jwox's ChangeSet as a Tool (epic q4jm). Measured, not inferred.\n\n**The two barrels.** Of the nine modules that import a tools barrel:\n- **eight** read `cat-harness/tools/index.ts`: check-tools, harness-schema-export, kg-audit, kg-export, tool-coverage and three tests. It holds only cat-harness's own tools (plus `mcp.ts` and `sessions.ts`).\n- **one** (`check-maintained",
+      "file": "beans/defs/folio-assistant-p0za--tools-composition-8-of-9-tool-list-consumers-read.md"
     },
     {
       "id": "folio-assistant-p5wm",

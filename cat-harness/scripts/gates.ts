@@ -433,6 +433,19 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
   },
   {
+    // The ChangeSet step of `folio-staging.yml`, the reusable workflow folios
+    // call (bean `ojcx`). It computes over a folio's `folio` graph against
+    // its base, and this repository holds no folio, so there is nothing for
+    // a gate here to run it on. Its logic is not exempt: every change kind
+    // is asserted by `folio-assistant-core/schemas/changeset.test.ts` in
+    // `bun test`, which IS in the gate set.
+    match: "changeset.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's graph; the platform carries no folio. " +
+      "Covered by changeset.test.ts in `bun test`",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:

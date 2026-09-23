@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T14:56:52Z
-updated_at: 2026-09-20T14:57:07Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -56,3 +56,18 @@ QName against `targetNamespace` today — `processHierarchy` matches
 `calledElement="..."` as a raw string and `loadProcessModel` compares ids. It
 bites when a diagram is opened by a standards-conformant tool, or imported by
 another document, which is exactly when nobody is watching.
+
+---
+
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
+
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
+
+**Moved to `ahvw`.** BEYOND THE NAMED SET — see the note in this bean. BPMN targetNamespace drift across the WORKFLOW corpus is process hygiene and is not catalogue work by any reading.
+
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.
