@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: initialize-harness\n"
-"POT-Creation-Date: 2026-09-21T22:56:11.121Z\n"
+"POT-Creation-Date: 2026-09-23T20:16:39.888Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -161,7 +161,7 @@ msgstr ""
 
 #: processes/initialize-harness.bpmn:106
 #. Diagram element documentation
-msgid "The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to."
+msgid "The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what any Harness above it requires, and does not need to."
 msgstr ""
 
 #: processes/initialize-harness.bpmn:46
@@ -206,5 +206,5 @@ msgstr ""
 
 #: processes/initialize-harness.bpmn:60
 #. Diagram element documentation
-msgid "Zero or more. The DEFAULT is bootstrap itself. Context may name others — \"please initialize litlfred/folio-assistant\" in a discussion is one, and so is a derivative such as cat-harness or smart-guidelines. This step narrows; it does not decide."
+msgid "Zero or more. The DEFAULT is bootstrap itself. Context may name others: \"please set up <owner>/<repo> here\" in a discussion names one, and so does any Harness built on bootstrap that the Requestor mentions. This step narrows; it does not decide."
 msgstr ""

@@ -95,7 +95,7 @@ export const DiscussionInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe(
-      "Harnesses the agent has already narrowed to from context — a repository carrying `cat-harness/harness.json` is not a blank slate. Narrowing first is what keeps this to one question.",
+      "Harnesses the agent has already narrowed to from context — a repository whose root already holds a declaration, `<name>.json`, is not a blank slate. Narrowing first is what keeps this to one question.",
     ),
   knownRepositories: z
     .array(RepositoryRefSchema)
@@ -151,7 +151,7 @@ export const DiscussionOutputObjectSchema = z.object({
     .string()
     .optional()
     .describe(
-      "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open.",
+      "The harness this repository is to become — `bootstrap`, or any Harness built on it. Required when `outcome` is `settled` and `harness` was open.",
     ),
   repositories: z
     .array(RepositoryRefSchema)
