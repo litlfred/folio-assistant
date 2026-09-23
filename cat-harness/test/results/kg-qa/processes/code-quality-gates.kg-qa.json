@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:7598efd571dd8b146bec8fcee44b101eb832891dc27af191040f1dcaf1c46de5",
+  "source_hash": "sha256:af4c4a06c6be975e56e4d6639ceb77b5ab1d36e41ff1c889287616cf3ffb4914",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,29 +97,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Lean",
-          "detail": "\"Lean: no bare&#10;`import Mathlib` (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Python",
-          "detail": "\"Python: unused and&#10;wildcard imports (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_TypeScript",
-          "detail": "\"TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_E2E",
-          "detail": "\"End-to-end +&#10;accessibility (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Rust",
-          "detail": "\"Rust wildcard imports&#10;(WARN-ONLY)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -127,8 +106,8 @@
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

@@ -78,6 +78,7 @@ The rule the diagram exists to hold is the one about the way back: an action who
     </bpmn:startEvent>
 
     <bpmn:task id="A_RenderAvatars" name="Render every card as its avatar">
+      <bpmn:documentation>Render every card as its avatar — the starting state. Each content kind controls its own avatar; the board decides only that nothing starts open.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:incoming>F_Zoom2</bpmn:incoming>
@@ -95,12 +96,14 @@ The rule the diagram exists to hold is the one about the way back: an action who
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_Open" name="Project a window onto the board">
+      <bpmn:documentation>Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoOpen</bpmn:incoming>
       <bpmn:outgoing>F_Opened</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_Raise" name="Raise the window the reader selected">
+      <bpmn:documentation>Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoRaise</bpmn:incoming>
       <bpmn:incoming>F_Opened</bpmn:incoming>
@@ -108,12 +111,14 @@ The rule the diagram exists to hold is the one about the way back: an action who
     </bpmn:task>
 
     <bpmn:task id="A_Close" name="Close the window back to its avatar">
+      <bpmn:documentation>[x] closes the window back to its avatar. Only a person's [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoClose</bpmn:incoming>
       <bpmn:outgoing>F_Closed</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_OfferWayBack" name="Leave a reachable way back">
+      <bpmn:documentation>Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on &lt;body&gt; and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi).</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- NOT a courtesy step. Bean `l4zi`: closing without this is a
              delete with no confirmation wearing a toggle's clothes. -->
@@ -126,12 +131,14 @@ The rule the diagram exists to hold is the one about the way back: an action who
     <!-- ── The automatic half, which decides nothing ──────────── -->
 
     <bpmn:task id="A_ResolveThreshold" name="Resolve the kind's zoom threshold">
+      <bpmn:documentation>Resolve the semantic-zoom threshold for each card's kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoZoom</bpmn:incoming>
       <bpmn:outgoing>F_Zoom1</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_SwapToAvatar" name="Swap cards below the threshold; leave open windows alone">
+      <bpmn:documentation>Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- The sentence that keeps the two mechanisms apart, in the one
              place a renderer would otherwise conflate them. -->

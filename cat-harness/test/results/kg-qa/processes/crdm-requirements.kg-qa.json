@@ -5,7 +5,7 @@
     "id": "Process_CRDM",
     "path": "processes/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:47da78023aece0dcbe2818d14412f5b4d679d2d5a082b4dbfd6c975b7ee32798",
+  "source_hash": "sha256:2a98d9b7cb9388a044495461b58266eed9919275d82b4ed153f3d2b23f2df5e1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,13 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Detect",
-          "detail": "\"Detect feature request (crdm-detect skill)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -86,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
+    "pass": 11,
+    "fail": 0,
     "n/a": 7,
     "unknown": 0
   }

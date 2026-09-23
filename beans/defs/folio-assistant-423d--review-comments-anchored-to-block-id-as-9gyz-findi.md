@@ -184,3 +184,43 @@ persisted, either the folio's committed `todos` graph or the published file.
 Then: whether an edited comment reopens a comment, and the page RESOLVING
 comments (the original done-when). Resolving needs the persistence
 decision first.
+
+## Owner ruling 2026-09-23: a status change is COMMITTED to the folio's `todos/` on the PR branch
+
+The owner was asked with three options and chose **1**:
+
+- The review-process task that moves a status (the editor's "Accept, or send
+  back", the adjudicator's recorded entry) commits the comment's todo file
+  into the folio's `todos/items/` on the edit-set's branch.
+- It is reviewed in the same PR, lands on `main` with the edit as the review
+  record, and is part of the dynamic KG.
+- The published `review-comments.json` takes its statuses from those files.
+
+Rejected:
+- **the published file only**: not reviewed, not in the KG, and lost with
+  the preview;
+- **`main` after merge only**: nothing durable during the review.
+
+Known cost: extra commits on the edit-set's branch, and a PR from a fork
+cannot be written to.
+
+The owner then sharpened it: *"more accurate.. commit to feature branch"*.
+The commit goes to the FEATURE BRANCH that carries the edit-set, never to
+`main`.
+
+**Built (same session):**
+
+- **Tool `folio-review-comment-move`** (`folio-assistant-core/scripts/review-comment-move.ts`):
+  - moves a status through `transition()`;
+  - writes `<todo-feedback dir>/<id>.json`, with the directory read from
+    `todos/todos.json`;
+  - with `--commit`, commits the file to the current feature branch;
+  - refuses the base branch and a detached HEAD, before writing anything.
+- **`folio-review-comments --todos`**: committed comments win over the
+  previously published copy. The PR build passes it when the folio declares a
+  todos graph. A graph with no feedback directory is warned about, not fatal.
+- **Skill section** "Recording a decision: commit to the feature branch".
+
+**Open:**
+- `init-folio` writing a todos graph with a `todo-feedback` directory;
+- resolving from the page (which needs a write path; deliberately not built).

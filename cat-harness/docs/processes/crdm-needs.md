@@ -30,13 +30,13 @@ Identify the stakeholders, synthesise a needs statement from the sources, and lo
 
 ## Steps
 
-**2** of 4 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 4 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Phase 1: Identify stakeholders**<br>`A_Stakeholders` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The agent asks the BA who is affected by this change. The BA knows the domain — the agent does not guess. |
-| **Phase 1: Synthesise needs from sources**<br>`A_Synthesise` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | — |
+| **Phase 1: Synthesise needs from sources**<br>`A_Synthesise` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | From the chat, issue, uploads and library sources, write a clear, jargon-free statement of what is needed and why, tied to a concrete workflow. Post it on the GitHub issue, not in chat, and ask the requester and stakeholders to review it. |
 | **Review synthesised needs statement**<br>`BA_ReviewNeeds` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA reviews what the agent synthesised and checks it against what they actually need. |
-| **Confirm needs statement**<br>`S_ConfirmNeeds` | Stakeholders | — | — |
+| **Confirm needs statement**<br>`S_ConfirmNeeds` | Stakeholders | — | Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them. |
 
 {% endraw %}

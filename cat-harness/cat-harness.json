@@ -438,7 +438,14 @@
         "external-schema"
       ],
       "coverage": {
-        "skill": "schema-management"
+        "_visualiser_comment": "Declared 2026-09-23 under bean `yunp`: `external-schema` was one of the kinds with no published viewer, so the navbar listed it disabled and four records \u2014 an authority, an edition, its namespace IRIs, its dependents and its operative terms each \u2014 were reachable only by opening the JSON. ADDED TO THE COVERAGE BLOCK THAT WAS ALREADY HERE, not beside it: the first attempt wrote a second `coverage` key into the same object, which JSON permits and every parser resolves by taking the last \u2014 so the visualiser was silently discarded and the generator reported `no visualiser declared`. A duplicate key is not a merge.",
+        "skill": "schema-management",
+        "visualiser": [
+          {
+            "ref": "cat-harness/docs/external-schemas/index.md",
+            "title": "External schemas"
+          }
+        ]
       }
     },
     {

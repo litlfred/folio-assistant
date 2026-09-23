@@ -145,6 +145,7 @@
       <bpmn:outgoing>F07</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI on the restricted tank&#10;[l3-fhir-authoring]">
+      <bpmn:documentation>Compile the restricted checkout with SUSHI — the cone's FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
@@ -162,6 +163,7 @@
       <bpmn:outgoing>F09</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Validate" name="Validate the cone&#10;(fhir_validate) [fhir-validation]">
+      <bpmn:documentation>Validate the cone's resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="fhir-validation" />
       </bpmn:extensionElements>
@@ -174,6 +176,7 @@
       <bpmn:outgoing>F13</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_LogFindings" name="Log findings on the bean&#10;[todo-manager]">
+      <bpmn:documentation>Validation failed: record the findings on the change's bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:bean op="note" />
@@ -195,6 +198,7 @@
       <bpmn:outgoing>F14</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Merge" name="Merge restored and&#10;rebuilt records">
+      <bpmn:documentation>Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
@@ -212,6 +216,7 @@
       <bpmn:outgoing>F16</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Site" name="Assemble the site&#10;(template · Jekyll) [ig-publication]">
+      <bpmn:documentation>Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="ig-publication" />
       </bpmn:extensionElements>
@@ -233,6 +238,7 @@
       <bpmn:outgoing>F22</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
+      <bpmn:documentation>QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="todo-manager" />
         <folio:bean op="note" />
@@ -261,6 +267,7 @@
       <bpmn:incoming>F24</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Task_Deploy" name="Deploy the site&#10;[content-publish] [ig-publication]">
+      <bpmn:documentation>Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:fulfilment kinds="person system" reason="deploying the built site is mechanical; the lane records who is accountable for what is live, and its name “Publication manager — deploy and seed” says so. A publication manager may also deploy by hand." />
         <folio:skill ref="content-publish" />

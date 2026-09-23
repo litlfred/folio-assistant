@@ -571,6 +571,10 @@ export const RULES: Rule[] = [
       // itself. Its node list and its evidence join both come from
       // `check-methodology-evidence.ts` rather than a second walk.
       "scripts/gen-methodologies-viz.ts",
+      // The external-schema registry → projection + viewer, plus the one join
+      // nothing else makes: whether each record's `usedBy` path still exists.
+      // CORE beside `external-schemas.ts` itself, which is already here.
+      "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced

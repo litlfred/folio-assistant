@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-close\n"
-"POT-Creation-Date: 2026-09-22T21:11:01.590Z\n"
+"POT-Creation-Date: 2026-09-23T09:01:16.257Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -24,12 +24,12 @@ msgstr ""
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: processes/crdm-close.bpmn:37
+#: processes/crdm-close.bpmn:40
 #. Diagram label
 msgid "Close issue ONLY on BA authorisation"
 msgstr ""
 
-#: processes/crdm-close.bpmn:33
+#: processes/crdm-close.bpmn:35
 #. Diagram label
 msgid "Confirm all criteria met"
 msgstr ""
@@ -54,12 +54,12 @@ msgstr ""
 msgid "Phase begins"
 msgstr ""
 
-#: processes/crdm-close.bpmn:48
+#: processes/crdm-close.bpmn:51
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: processes/crdm-close.bpmn:39
+#: processes/crdm-close.bpmn:42
 #. Diagram element documentation
 msgid "Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it."
 msgstr ""
@@ -69,9 +69,19 @@ msgstr ""
 msgid "Stakeholders"
 msgstr ""
 
+#: processes/crdm-close.bpmn:33
+#. Diagram element documentation
+msgid "Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it."
+msgstr ""
+
 #: processes/crdm-close.bpmn:16
 #. Diagram element documentation
 msgid "Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it."
+msgstr ""
+
+#: processes/crdm-close.bpmn:37
+#. Diagram element documentation
+msgid "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so."
 msgstr ""
 
 #: processes/crdm-close.bpmn:25
