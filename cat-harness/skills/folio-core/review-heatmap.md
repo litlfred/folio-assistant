@@ -63,8 +63,10 @@ Freshness is the QA sweep's own rule, including the `uses`-graph hash that
 graph-scoped criteria depend on. Leaving that hash out made every
 detangler criterion read stale straight after a sweep.
 
-The QA sweep currently writes verdicts under the directory it was run on,
-not the instance root (bean `s3p2`), so the summary reads both.
+The QA sweep writes verdicts under the instance root (fixed by bean `s3p2`,
+2026-09-23). Before that fix, it wrote them under the directory it was run
+on, so the summary still reads there second, for folios swept before the
+fix.
 
 ## How the colour was chosen
 

@@ -2227,6 +2227,20 @@
       "file": "beans/defs/folio-assistant-85im--feature-staging-deploys-with-keep-files-true-so-a.md"
     },
     {
+      "id": "folio-assistant-87ln",
+      "title": "QOU QA MOVE: move qou's 3,653 sibling block-QA verdicts into test/results/block-qa/ (s3p2 option 2)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:29:00Z",
+      "updatedAt": "2026-09-23T13:29:00Z",
+      "preview": "Owner ruling 2026-09-23 on s3p2: \"1 + 2=bean\". Option 1 (fix the sweep's anchor) is done in s3p2. This is option 2.\n\n**What:** move qou's block QA verdicts from the legacy sibling layout (`content/…/<block>.qa.json`, beside each block) into the results tree `test/results/block-qa/content/…/<block>.qa.json`, which `blockQaPath` documents.\n\n**Measured 2026-09-23 (qou `7aafd8dbe`):** 3,653 `*.qa.json",
+      "file": "beans/defs/folio-assistant-87ln--qou-qa-move-move-qous-3653-sibling-block-qa-verdic.md"
+    },
+    {
       "id": "folio-assistant-88mg",
       "title": "CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it",
       "status": "in-progress",
@@ -6655,7 +6669,7 @@
     {
       "id": "folio-assistant-s3p2",
       "title": "qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-q4jm",

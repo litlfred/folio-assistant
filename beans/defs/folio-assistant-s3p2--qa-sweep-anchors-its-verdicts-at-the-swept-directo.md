@@ -1,7 +1,7 @@
 ---
 # folio-assistant-s3p2
 title: qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs
-status: todo
+status: completed
 type: bug
 created_at: 2026-09-23T10:52:44Z
 updated_at: 2026-09-23T10:52:44Z
@@ -19,6 +19,10 @@ Likely fix: return `dirname(found.path)` (the directory holding the declaration)
 Meanwhile, `cat-harness/scripts/publish-block-qa.ts` (qbfi) reads BOTH anchors.
 
 ## Done when
-- [ ] where qou's verdicts actually live is measured
-- [ ] the owner rules: move the anchor (with a migration) or leave it
-- [ ] a test pins the anchor for a scaffolded folio
+- [x] where qou's verdicts actually live is measured (2026-09-23, qou `7aafd8dbe`): **3,653** `*.qa.json`, ALL legacy siblings under `content/` beside their blocks. None at `<root>/test/results/block-qa/`, none at a nested `content/test/results/block-qa/`. So moving the anchor strands nothing: `existingBlockQaPath` always falls back to the sibling.
+- [x] the owner rules: move the anchor (with a migration) or leave it. **Owner, 2026-09-23: "1 + 2=bean"**: fix the anchor now (option 1). Moving qou's 3,653 sibling verdicts into `test/results/block-qa/` (option 2) is a separate bean.
+- [x] a test pins the anchor for a scaffolded folio: `cat-harness/content/pipeline/qa-paths.test.ts`, which fails with the old condition (anchored at `folio/`) and passes with the fix. `findContentRepoRoot` moved into `qa-paths.ts` so it can be imported without running a sweep.
+
+## Summary of Changes
+
+`findContentRepoRoot` (now in `qa-paths.ts`) stops at the first directory that ITSELF declares an instance (`findDeclarationFile`) or holds `.git`, instead of any directory whose ancestors have a config. A sweep of a scaffolded folio's `folio/` now anchors at the folio root, where `blockQaPath` documents verdicts. No existing verdicts move. The platform's own 122 already sit at the anchor the fix computes (`cat-harness/`). qou anchors by `.git` at its root either way, and its 3,653 sibling verdicts are always read. Freshness is keyed on content hashes, not paths, so nothing turns stale. `publish-block-qa` keeps reading the swept directory as a transition fallback for folios swept before the fix.

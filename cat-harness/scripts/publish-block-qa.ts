@@ -24,18 +24,18 @@
  * A verdict older than its block rendered as a pass is the exact failure
  * this repository's QA design exists to prevent.
  *
- * ## Where the verdicts are: two anchors, until the sweep's is settled
+ * ## Where the verdicts are: the instance root, and one transition read
  *
- * `blockQaPath` says verdicts live under `test/results/block-qa/` relative to
- * the INSTANCE root. But `qa-sweep`'s `findContentRepoRoot` stops at the
- * first directory where `resolveHarnessConfigPath` succeeds, and that lookup
- * itself climbs to parent directories. So a sweep of `folio/` anchors at
- * `folio/` and writes `folio/test/results/block-qa/…`. Measured 2026-09-23 on
- * a folio scaffolded by `init-folio`; bean `s3p2` records it. Moving the
- * sweep's anchor relocates every existing folio's verdicts, which is the
- * owner's call, not this script's. So this reads BOTH anchors, the instance
- * root first. A summary that looked in one place would report every block
- * unaudited, which reads as "nobody checked" when somebody did.
+ * `blockQaPath` puts verdicts under `test/results/block-qa/` relative to the
+ * INSTANCE root, and since bean `s3p2` (2026-09-23) the sweep anchors there.
+ * Before that fix, a sweep of `folio/` anchored at `folio/` itself, because
+ * the old walk stopped at the first directory whose ANCESTORS had a config,
+ * and wrote `folio/test/results/block-qa/…`. A folio swept before the fix
+ * still has its verdicts there. So this reads the instance root first and the
+ * swept directory second. A summary that looked in one place would report
+ * every such block unaudited, which reads as "nobody checked" when somebody
+ * did. The legacy sibling beside each block is read by `existingBlockQaPath`
+ * in both cases.
  *
  * ## Output
  *
