@@ -5,9 +5,6 @@
     {
       "id": "initiator",
       "title": "Initiator",
-      "lanes": [
-        "Initiator"
-      ],
       "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "actorKinds": [
         "agent"
@@ -24,9 +21,6 @@
     {
       "id": "knowledge-graph-data-store",
       "title": "Knowledge Graph Data Store",
-      "lanes": [
-        "Knowledge Graph Data Store"
-      ],
       "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
       "actorKinds": [
         "system"
@@ -37,9 +31,6 @@
     {
       "id": "requestor",
       "title": "Requestor",
-      "lanes": [
-        "Requestor"
-      ],
       "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
       "actorKinds": [
         "person"
@@ -50,9 +41,6 @@
     {
       "id": "logger",
       "title": "Logger",
-      "lanes": [
-        "Logger"
-      ],
       "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
       "actorKinds": [
         "system"
@@ -60,6 +48,5 @@
       "skills": [],
       "actedUpon": true
     }
-  ],
-  "_lanes_comment": "`lanes` names the diagram lanes each Role binds. log-message.bpmn's `Actor` lane is performed by whoever called the Process, so it declares that with `<folio:role variable=\"true\"/>` rather than naming a Role."
+  ]
 }

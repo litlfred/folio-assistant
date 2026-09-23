@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: document-ingestion\n"
-"POT-Creation-Date: 2026-09-23T19:45:54.299Z\n"
+"POT-Creation-Date: 2026-09-23T20:45:30.305Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,37 +14,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/document-ingestion.bpmn:67
+#: processes/document-ingestion.bpmn:71
 #. Diagram label
 msgid "A file lands in uploads/"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:170
+#: processes/document-ingestion.bpmn:174
 #. Diagram element documentation
 msgid "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:58
+#: processes/document-ingestion.bpmn:60
 #. Diagram element documentation
 msgid "A one-task detour from the Ingestion Engine's own loop: it exists as its own lane rather than a step inside Lane_1 specifically so that recording an incomplete L1 build is visible as a write to the SHARED plan — a bean anyone can see and pick up — rather than a private retry the engine keeps to itself."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:107
+#: processes/document-ingestion.bpmn:111
 #. Diagram label
 msgid "A theme source? (author&#39;s judgement)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:187
+#: processes/document-ingestion.bpmn:191
 #. Diagram label
 msgid "Available to cite as an L1 source"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:136
+#: processes/document-ingestion.bpmn:140
 #. Diagram label
 msgid "Build the L1 knowledge graph [document-intake]"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:209
+#: processes/document-ingestion.bpmn:213
 #. Diagram label
 msgid "complete"
 msgstr ""
@@ -54,17 +54,17 @@ msgstr ""
 msgid "Contributor (human or agent)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:61
+#: processes/document-ingestion.bpmn:64
 #. Diagram label
 msgid "Corpus — L1 source knowledge graph"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:95
+#: processes/document-ingestion.bpmn:99
 #. Diagram label
 msgid "Derive content from the assets [document-intake]"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:75
+#: processes/document-ingestion.bpmn:79
 #. Diagram label
 msgid "Detect media type and mint a doc id [document-intake]"
 msgstr ""
@@ -74,12 +74,12 @@ msgstr ""
 msgid "Document ingestion — uploads/ to the L1 source knowledge graph"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:189
+#: processes/document-ingestion.bpmn:193
 #. Diagram element documentation
 msgid "Every knowledge-graph reference to this source now resolves through library/. Authoring and review consume it from here -- see authoring-a-document.bpmn."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:85
+#: processes/document-ingestion.bpmn:89
 #. Diagram label
 msgid "Extract structure [document-intake]"
 msgstr ""
@@ -89,117 +89,117 @@ msgstr ""
 msgid "folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:207
+#: processes/document-ingestion.bpmn:211
 #. Diagram label
 msgid "gap"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:123
+#: processes/document-ingestion.bpmn:127
 #. Diagram label
 msgid "Ingest the theme [theme-art-intake]"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:198
+#: processes/document-ingestion.bpmn:202
 #. Diagram label
 msgid "Ingested"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:45
+#: processes/document-ingestion.bpmn:46
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:162
+#: processes/document-ingestion.bpmn:166
 #. Diagram label
 msgid "L1 complete?"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:147
+#: processes/document-ingestion.bpmn:151
 #. Diagram label
 msgid "L1 completeness gate"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:178
+#: processes/document-ingestion.bpmn:182
 #. Diagram label
 msgid "Move into library/<bib-slug>/"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:135
+#: processes/document-ingestion.bpmn:139
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:68
+#: processes/document-ingestion.bpmn:72
 #. Diagram element documentation
 msgid "ONE OF TWO ENTRY POINTS, and this said \"the only\" one until 2026-09-20. A drop during an editing session triggers ingestion in the background; the contributor does not wait for it. THE OTHER is materialization: an asset listed in a remote graph that this instance, or one of its dependencies, declares in `remoteGraphs`. Owner, 2026-09-20: \"things can enter library through uploads/ -> library/ document ingestion or through retrieval / materialization of asset known through listed external KG in one of the dependent harnesses.\" That path runs materialize-remote.bpmn FIRST -- purpose, then the five gates -- and re-enters this process at \"Extract structure\" with a file that already carries its provenance and its fixity. It does NOT pass through uploads/, and that is deliberate: uploads/ is a queue for things somebody dropped, and a materialized asset was never dropped. Recording it as an upload would lose the one fact that distinguishes the two, which is that somebody decided it could be held."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:168
+#: processes/document-ingestion.bpmn:172
 #. Diagram label
 msgid "Record the gap as a bean"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:46
+#: processes/document-ingestion.bpmn:47
 #. Diagram element documentation
 msgid "Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:139
+#: processes/document-ingestion.bpmn:143
 #. Diagram element documentation
 msgid "See ingest-build-l1-kg.bpmn."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:98
+#: processes/document-ingestion.bpmn:102
 #. Diagram element documentation
 msgid "See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:87
+#: processes/document-ingestion.bpmn:91
 #. Diagram element documentation
 msgid "See ingest-extract-structure.bpmn."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:148
+#: processes/document-ingestion.bpmn:152
 #. Diagram element documentation
 msgid "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:125
+#: processes/document-ingestion.bpmn:129
 #. Diagram element documentation
 msgid "See ingest-theme.bpmn. The subprocess derives one Theme node with kind sticky|webpage|publication, and refuses a source it cannot complete rather than emitting a partial theme."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:78
+#: processes/document-ingestion.bpmn:82
 #. Diagram element documentation
 msgid "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:180
+#: processes/document-ingestion.bpmn:184
 #. Diagram element documentation
 msgid "The folder name IS the bibliography citation key, so a citation and a directory are the same string."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:62
+#: processes/document-ingestion.bpmn:65
 #. Diagram element documentation
 msgid "The terminal state the whole diagram exists to reach: once Task_Promote lands material in library/<bib-slug>/, this lane is where that fact is recorded as available, and it is the boundary this diagram stops at — everything that depends on the source afterward, such as authoring-a-document.bpmn's citations, starts from here rather than being drawn into this process."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:163
+#: processes/document-ingestion.bpmn:167
 #. Diagram element documentation
 msgid "The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/<bib-slug>/."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:109
+#: processes/document-ingestion.bpmn:113
 #. Diagram element documentation
 msgid "Wired 2026-09-23 on the owner's ruling for bean `j66n`, choosing \"human/agentic judgement at the gateway\" over a declared predicate. THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable rule — a captured web deployment, or a document that STATES palette and typography rules — and it was refused for the reason the owner had already given when withdrawing `xffc`/`d3yq`: \"no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement.\" So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not. WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. `ingest-theme.bpmn` starts at \"Theme source in hand\" and can refuse as incomplete. Routing every document into it would make \"this is not a theme\" and \"this theme is malformed\" the same refusal, and the second is a defect while the first is the normal case."
 msgstr ""
 
-#: processes/document-ingestion.bpmn:57
+#: processes/document-ingestion.bpmn:59
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/document-ingestion.bpmn:133
+#: processes/document-ingestion.bpmn:137
 #. Diagram label
 msgid "yes"
 msgstr ""

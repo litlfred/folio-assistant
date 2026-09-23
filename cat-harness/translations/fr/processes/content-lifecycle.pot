@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-lifecycle\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.832Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.003Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/content-lifecycle.bpmn:143
+#: processes/content-lifecycle.bpmn:149
 #. Diagram element documentation
 msgid "Asked after feedback is filed as beans: is there more content to write for this folio? `yes` returns to editing and HCI validation; `no` retires or archives it."
 msgstr ""
@@ -24,32 +24,32 @@ msgstr ""
 msgid "Content lifecycle"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:107
+#: processes/content-lifecycle.bpmn:113
 #. Diagram element documentation
 msgid "Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:114
+#: processes/content-lifecycle.bpmn:120
 #. Diagram label
 msgid "Draft, review and publish [content-publish]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:94
+#: processes/content-lifecycle.bpmn:100
 #. Diagram label
 msgid "Editing and HCI validation [content-author]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:57
+#: processes/content-lifecycle.bpmn:59
 #. Diagram label
 msgid "Editors + authoring agents"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:132
+#: processes/content-lifecycle.bpmn:138
 #. Diagram label
 msgid "File feedback as beans [todo-manager]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:74
+#: processes/content-lifecycle.bpmn:80
 #. Diagram label
 msgid "Folio initiative"
 msgstr ""
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Folio lifecycle — one cycle, plan to retire"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:156
+#: processes/content-lifecycle.bpmn:162
 #. Diagram label
 msgid "Folio retired"
 msgstr ""
@@ -69,27 +69,27 @@ msgstr ""
 msgid "folio-assistant — the content lifecycle end to end, one cycle of a folio. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:125
+#: processes/content-lifecycle.bpmn:131
 #. Diagram element documentation
 msgid "Implementer and reader feedback on the published folio, triaged by severity and scope."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:106
+#: processes/content-lifecycle.bpmn:112
 #. Diagram label
 msgid "Integration test and QA sweep [content-test]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:142
+#: processes/content-lifecycle.bpmn:148
 #. Diagram label
 msgid "More content?"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:168
+#: processes/content-lifecycle.bpmn:174
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:149
+#: processes/content-lifecycle.bpmn:155
 #. Diagram element documentation
 msgid "No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes."
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Opens and closes the cycle rather than running any of it: Task_Plan commits scope, team and artefacts before Lane_WorkPlan turns them into beans, and Task_Retire is reached only when Gateway_NextCycle finds nothing left to do — so this lane's second appearance is a judgement that the cycle is actually finished, not a step inside it."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:77
+#: processes/content-lifecycle.bpmn:83
 #. Diagram label
 msgid "Plan scope, team, artifacts [content-plan]"
 msgstr ""
@@ -109,92 +109,92 @@ msgstr ""
 msgid "Programme manager"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:69
+#: processes/content-lifecycle.bpmn:74
 #. Diagram label
 msgid "Publication manager"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:148
+#: processes/content-lifecycle.bpmn:154
 #. Diagram label
 msgid "Retire or archive [content-retire]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:65
+#: processes/content-lifecycle.bpmn:69
 #. Diagram label
 msgid "Review team and SMEs"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:78
+#: processes/content-lifecycle.bpmn:84
 #. Diagram element documentation
 msgid "Scope the work, identify artifacts and actors, form the team, set the timeline."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:115
+#: processes/content-lifecycle.bpmn:121
 #. Diagram element documentation
 msgid "See draft-to-publication.bpmn."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:95
+#: processes/content-lifecycle.bpmn:101
 #. Diagram element documentation
 msgid "See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:85
+#: processes/content-lifecycle.bpmn:91
 #. Diagram label
 msgid "Seed the work plan [todo-manager]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:62
+#: processes/content-lifecycle.bpmn:65
 #. Diagram element documentation
 msgid "The corpus-wide check no single block's HCI validation gate can perform — cross-references, whole-folio build status, proof status and QA axes — sitting between the editor's accept and the publication manager's release, so a change that passed block-level review still has to clear folio-level checks before CallActivity_Publication ever runs."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:66
+#: processes/content-lifecycle.bpmn:70
 #. Diagram element documentation
 msgid "The only reviewing this lane does happens AFTER publication, not before it: Task_Feedback triages what implementers and readers report on the LIVE folio, by severity and scope, and that triage — not a fresh review — is what Task_FeedbackBeans turns into the next cycle's work."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:86
+#: processes/content-lifecycle.bpmn:92
 #. Diagram element documentation
 msgid "The plan becomes beans. From here on, beans/ is the shared answer to &#x27;what is done, what is next&#x27; — for humans and agents alike."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:70
+#: processes/content-lifecycle.bpmn:75
 #. Diagram element documentation
 msgid "The single point in the cycle where the corpus becomes public: reached only after Task_Test has cleared the whole folio, and its own outcome is what Task_Feedback then collects reactions to — so whatever this lane calls out to in draft-to-publication.bpmn is the last gate before readers see anything."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:58
+#: processes/content-lifecycle.bpmn:60
 #. Diagram element documentation
 msgid "The single re-entry point for every round the cycle contains — Gateway_NextCycle's 'yes' branch (H09) loops straight back here rather than to Task_Plan — so this lane runs once per proposed change, not once per cycle, and is where the accept decision on each of those changes is made before anything reaches the corpus-wide Task_Test."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:53
+#: processes/content-lifecycle.bpmn:54
 #. Diagram element documentation
 msgid "Touched twice, not once: Task_SeedBeans converts the programme manager's plan into trackable work at the start, and Task_FeedbackBeans converts triaged reader feedback into more of it at the end, immediately before Gateway_NextCycle asks whether to go around again — so this lane is what makes the lifecycle a LOOP rather than a line, carrying what closed one cycle into what opens the next."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:124
+#: processes/content-lifecycle.bpmn:130
 #. Diagram label
 msgid "Triage published feedback [content-feedback]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:133
+#: processes/content-lifecycle.bpmn:139
 #. Diagram element documentation
 msgid "Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:61
+#: processes/content-lifecycle.bpmn:64
 #. Diagram label
 msgid "Validation and QA (mechanical + agents)"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:52
+#: processes/content-lifecycle.bpmn:53
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:167
+#: processes/content-lifecycle.bpmn:173
 #. Diagram label
 msgid "yes"
 msgstr ""

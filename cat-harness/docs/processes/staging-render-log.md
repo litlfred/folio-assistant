@@ -24,7 +24,7 @@ Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
+| CI/CD Pipeline | `build-pipeline` | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
 
 ## Steps
 

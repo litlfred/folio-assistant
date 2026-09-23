@@ -24,7 +24,7 @@ folio-assistant — Ingestion subprocess — derive content from the assets. Sou
 
 | lane | role | what it does here |
 |---|---|---|
-| Ingestion Engine (agent, runs unattended) | — | The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material. |
 
 ## Steps
 

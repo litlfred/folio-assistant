@@ -44,6 +44,7 @@ The one irreversible thing is refused outright. Unwanted work is SCRAPPED with i
     <bpmn:laneSet id="LaneSet_BeanLifecycle">
       <bpmn:lane id="Lane_Agent" name="Agent (this session)">
         <bpmn:documentation>Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_DurableWork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CheckExists</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Exists</bpmn:flowNodeRef>
@@ -59,6 +60,7 @@ The one irreversible thing is refused outright. Unwanted work is SCRAPPED with i
       </bpmn:lane>
       <bpmn:lane id="Lane_Sibling" name="Sibling session or human (not yours to close)">
         <bpmn:documentation>The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="sibling-session"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_LeaveAlone</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NotYours</bpmn:flowNodeRef>
       </bpmn:lane>

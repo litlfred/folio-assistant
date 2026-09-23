@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 666,
+      "count": 669,
       "unit": "beans"
     }
   },
@@ -1303,14 +1303,14 @@
     {
       "id": "folio-assistant-54rk",
       "title": "CACHING + on-demand subgraph materialization, post-bootstrap",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T00:00:00Z",
-      "updatedAt": "2026-09-23T02:45:00Z",
+      "updatedAt": "2026-09-23T20:03:59Z",
       "preview": "Owner, 2026-09-20:\n\n> *\"some of this is post-inintation of a harness. user can ask (as they come in\n> need to use) if they want to material parts of subgraphs. need tools skills\n> around cahcing. bean up todo. but stub in process in cat-harness bootstrap\n> insitation steps.\"*\n\n## The shape\n\nBootstrap brings an agent to a working harness. It does **not** bring the\ncorpus — and it should not: `who-i",
       "file": "beans/defs/folio-assistant-54rk--caching-on-demand-subgraph-materialization-post-bo.md"
     },
@@ -2185,6 +2185,20 @@
       "file": "beans/defs/folio-assistant-7vhe--fsh-guts-viewer-dead-fish-icon-under-settings-with.md"
     },
     {
+      "id": "folio-assistant-7wgs",
+      "title": "Record when a materialized copy is last READ, so cache:index can rank eviction by use",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:03:49Z",
+      "updatedAt": "2026-09-23T20:03:49Z",
+      "preview": "Follow-up from bean `54rk`. `cache:index` has a last-read column and it says `not recorded` for all 276 copies, because nothing records reads.\n\nOwner, 2026-09-23, choosing among \"say not recorded\", \"add a lastReadAt field\" and \"use the file's access time\": **say not recorded**, and open this bean for recording reads later.\n\n**Why not file access time:** it is disabled on many mounts (noatime) and ",
+      "file": "beans/defs/folio-assistant-7wgs--record-when-a-materialized-copy-is-last-read-so-ca.md"
+    },
+    {
       "id": "folio-assistant-7x7g",
       "title": "external-schemas visualiser: 8 wireframe findings",
       "status": "todo",
@@ -2533,6 +2547,20 @@
       "updatedAt": "2026-09-23T18:10:15Z",
       "preview": "Found while doing tw61, 2026-09-23. On a freshly scaffolded document folio, a sweep records 46 criteria per block, and every recorded one passes or is n/a. `publish-block-qa` then says **\"passing\"**. But about 15 criteria that need an agent's judgement were never run: voice traps, exposition clarity, adversarial review. They appear in the sweep output as `[needs-agent]` and nowhere in the verdict ",
       "file": "beans/defs/folio-assistant-9791--qa-summary-passing-counts-only-script-checkable-cr.md"
+    },
+    {
+      "id": "folio-assistant-99zv",
+      "title": "RENDERED VERIFICATION: the skill says to read layout off the staging preview and never says how — plus a check that passed over a page with no stylesheets",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:47:12Z",
+      "updatedAt": "2026-09-23T20:12:24Z",
+      "preview": "Owner, 2026-09-23: *\"playright skills update to check intended UI (also need\nusabuility check)\"*.\n\n`rendered-verification` already existed and already covered the ground — build\nthe site, drive it with Playwright, measure computed style rather than reading\nthe stylesheet. So this **extends it** rather than adding a ninth skill beside\neight that overlap.\n\n## The gap\n\nThe skill said, correctly:\n\n> *",
+      "file": "beans/defs/folio-assistant-99zv--rendered-verification-the-skill-says-to-read-layou.md"
     },
     {
       "id": "folio-assistant-9c34",
@@ -4281,7 +4309,7 @@
     {
       "id": "folio-assistant-gpdo",
       "title": "COMPILED-ARTEFACT CACHING: .olean for mathlib, and the same shape for sushi/FHIR -> AST",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-5a3l",
@@ -5189,7 +5217,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
       "updatedAt": "2026-09-22T19:54:07Z",
-      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\nOwner: *\"i want to slowly get rid of IG publisher in the publication/iteration\npahse… we can use this for iterative delta's (if we dont care about\nindexing/versioning so much in STAGING, we need full IG AST rereun)\"*, and on\nsmart-immunizations: *",
+      "preview": "Reduce the IG Publisher to **AST + QA**, in phases with a stated exit criterion\neach, so that publication and iteration stop depending on a full build.\n\n## The plan is the SKILL. This bean is the work-plan entry.\n\n> [`fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md`](../../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md)\n\nRead it before starting any phase and before claiming ",
       "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
     },
     {
@@ -8127,6 +8155,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Issue #223 — cut this repo into layers that can depend on each other without\ncycles.\n\n`zlmp` is the gate: a lower layer importing from a higher one becomes a circular\ndependency BETWEEN REPOSITORIES the moment the cut happens, so that count has to\nreach zero before anything else here is safe. `x4a6` is a worked example of what\nblocks until it does — `docs/` cannot be declared because `folio` is co",
       "file": "beans/defs/folio-assistant-vke6--split-223-cut-this-repo-into-layers-that-can-depen.md"
+    },
+    {
+      "id": "folio-assistant-vkm0",
+      "title": "GENERALISE THE FIX, THEN ATTACK IT: a fix scoped to the wrong thing, and the adversarial pass that catches it",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T20:13:37Z",
+      "updatedAt": "2026-09-23T20:26:56Z",
+      "preview": "Owner, 2026-09-23: *\"schema modeling/paper writting/software big fixing skill\nupdate: try to generalize pattern of a fix. adversarty skill, did you\ngenrealize too much... are you picking up unindeneded things.\"*\n\n## One skill, not two\n\nThe adversary has **no subject until a generalisation exists** — \"did you\ngeneralise too much\" cannot be asked of nothing. So they are two moves in one\nfile, in ord",
+      "file": "beans/defs/folio-assistant-vkm0--generalise-the-fix-then-attack-it-a-fix-scoped-to.md"
     },
     {
       "id": "folio-assistant-vlhk",

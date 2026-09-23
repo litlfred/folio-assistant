@@ -43,10 +43,10 @@ describe("stakeholder map", () => {
 
   test("a lane binding no declared role is UNDETERMINED, not silently roleless", async () => {
     const map = await stakeholderMap(ROOT, ["skills/folio-core/todo-manager.md"]);
-    const declared = new Set(
-      (readRoleGraph(join(ROOT, "scenarios"))?.roles ?? []).flatMap((r) => r.lanes),
-    );
-    const unbound = map.lanes.filter((l) => !declared.has(l.lane));
+    // A lane binds by its own `<folio:role ref>` (#1168); one with no ref, or a
+    // ref to no declared role, binds nothing.
+    const declared = new Set((readRoleGraph(join(ROOT, "scenarios"))?.roles ?? []).map((r) => r.id));
+    const unbound = map.lanes.filter((l) => l.roleRef === undefined || !declared.has(l.roleRef));
     // Conditional on the corpus having one, and the assertion says which
     // case ran — a test that quietly passes on an empty filter is the
     // vacuity this repository keeps paying for.
