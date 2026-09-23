@@ -34,7 +34,8 @@ import { instanceDeclarationFilename, readDeclaration, siteDirFor } from "../sch
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
-import { harnessTiles } from "./harness-tiles.js";
+import { harnessTiles, instanceDirs } from "./harness-tiles.js";
+import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
 
 
@@ -235,13 +236,33 @@ function scanTileCounts(assetsDir: string): Map<string, TileCount> {
 }
 
 const links = siteLinks(decl, repoUrl);
-const allHarnesses = harnessTiles(
+const instanceNames = readdirSync(REPO_ROOT, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
+  .map((d) => d.name)
+  .sort();
+const allHarnesses = harnessTiles(REPO_ROOT, ROOT, instanceNames);
+
+/**
+ * THE HARNESSES CONFIG PANEL's data (issue #1146): every declaration here, its
+ * properties and their edit skills, and the associated harnesses. Same file,
+ * same gate, for the reason `harnesses` gives below.
+ */
+const tileOrder = (n: string): number => {
+  const i = allHarnesses.findIndex((t) => t.name === n);
+  return i < 0 ? allHarnesses.length : i;
+};
+const instantiatedHere = new Set(allHarnesses.filter((t) => t.instantiated).map((t) => t.name));
+const config = harnessPanel(
+  instanceDirs(REPO_ROOT, instanceNames).flatMap((dir) => {
+    const d = readDeclaration(dir);
+    return d ? [{ dir, decl: d, instantiated: instantiatedHere.has(d.name) }] : [];
+  })
+    // The sidebar's order, so the panel's groups read like the dividers.
+    .sort((a, b) => tileOrder(a.decl.name) - tileOrder(b.decl.name)),
   REPO_ROOT,
-  ROOT,
-  readdirSync(REPO_ROOT, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-    .map((d) => d.name)
-    .sort(),
+  repoUrl,
+  "main",
+  skillPageIn(join(ROOT, siteDirFor(ROOT))),
 );
 
 /**
@@ -426,6 +447,7 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links),
+  config,
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";

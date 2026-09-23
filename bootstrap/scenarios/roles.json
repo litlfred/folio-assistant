@@ -1,11 +1,11 @@
 {
-  "_comment": "CatBootstrap's three roles. Declared rather than left implicit in the diagram's lanes, which is where they lived until 2026-09-20 — a lane name is a string the audit cannot bind to anything, so `Bootstrapping agent` and `Person asking (judgement only)` appeared in the graph as roles nobody had defined. A role is the swimlane; an actor takes it on for the duration.",
+  "_comment": "bootstrap's four Roles. A Role is the lane of a Process diagram; an Actor takes it on for the length of that lane. They are declared here, rather than left as lane names in the diagrams, so that every lane binds to a Role somebody defined.",
   "name": "bootstrap",
   "roles": [
     {
       "id": "initiator",
       "title": "Initiator",
-      "description": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "actorKinds": [
         "agent"
       ],
@@ -31,7 +31,7 @@
     {
       "id": "requestor",
       "title": "Requestor",
-      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
       "actorKinds": [
         "person"
       ],
