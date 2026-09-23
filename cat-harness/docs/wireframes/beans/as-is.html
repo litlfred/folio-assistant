@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: beans — state</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  main { max-width: 68rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 24px; margin: 12px 0 2px; }
+  .sub { color: var(--mute); margin: 0 0 16px; font-size: 14px; }
+  .ptitle { font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--mute); margin: 0 0 8px; }
+  .board { display: grid; grid-template-columns: minmax(13rem, .7fr) 2fr; gap: 12px; }
+  .panel { border: 1px solid var(--line); padding: 12px 14px; background: var(--fill); }
+  .wide { grid-column: 1 / -1; }
+  .counts { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; }
+  .counts div { display: flex; flex-direction: column-reverse; }
+  .counts dt { font-size: 12px; color: var(--mute); }
+  .counts dd { margin: 0; font-size: 20px; font-weight: 700; }
+  .counts .big dd { font-size: 30px; line-height: 1.05; }
+  /* the bean status word is drawn by CSS: see intent.md, "a note on the word" */
+  .stuck { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 13px; }
+  .stuck li { display: grid; grid-template-columns: auto 1fr; gap: 8px; }
+  .lab { font-size: 11px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .ic { display: inline-block; width: 13px; height: 13px; line-height: 11px; text-align: center; border: 1.5px solid var(--ink); border-radius: 50%; font-size: 9px; margin-right: 3px; }
+  .stuck a { text-decoration: underline; }
+  .edit { font-size: 12px; }
+  .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .bar { display: grid; grid-template-columns: 17rem 1fr 2.2rem; gap: 10px; align-items: center; font-size: 13px; min-height: 40px; }
+  .bar .lbl { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .track { height: 12px; border: 1px solid var(--line); background: var(--bg); }
+  .fill { height: 100%; background: var(--ink); }
+  .val { text-align: right; font-weight: 700; }
+  .detail { margin: 4px 0 8px 14px; font-size: 13px; }
+  .detail .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .detail ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .pill { display: inline-block; border: 1px solid var(--ink); font-size: 10px; font-weight: 700; padding: 0 5px; text-transform: uppercase; margin-right: 6px; }
+  .stuck li.gap { display: block; }
+  .gap { color: var(--mute); font-size: 12px; padding: 4px 0; }
+  h2.sec { font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--mute); margin: 24px 0 8px; }
+  .graphs { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .graphs li { border: 1px solid var(--line); padding: 8px 12px; }
+  .graphs li.here { border: 2px solid var(--ink); }
+  .graphs h3 { font-size: 15px; margin: 0; }
+  .graphs p { margin: 0; font-size: 13px; color: var(--mute); }
+  .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-left: 6px; border: 1px dashed var(--mute); padding: 0 4px; }
+  @media (max-width: 700px) {
+    .board { grid-template-columns: 1fr; }
+    .counts .big { flex-basis: auto; }
+    .bar { grid-template-columns: 7.5rem 1fr 1.8rem; }
+    .bar .lbl { -webkit-line-clamp: 2; }
+  }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · beans · covers: cat-harness/docs/beans/index.html</div>
+<main>
+  <h1>beans</h1>
+  <p class="sub">beans/ · beans</p>
+
+  <div class="board">
+    <section class="panel" aria-label="Beans counts">
+      <h3 class="ptitle">Beans — the agent work plan</h3>
+      <dl class="counts">
+        <div class="big"><dd>241</dd><dt>open</dt></div>
+        <div><dd>122</dd><dt class="st">todo</dt></div>
+        <div><dd>119</dd><dt>in progress</dt></div>
+        <div><dd>311</dd><dt>completed</dt></div>
+        <div><dd>12</dd><dt>scrapped</dt></div>
+      </dl>
+    </section>
+
+    <section class="panel" aria-label="What is stuck">
+      <h3 class="ptitle">What is stuck</h3>
+      <ul class="stuck">
+        <li><span class="lab">⚠ No expiry</span><span><a href="#">crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite</a> — blocks <a href="#">Second annotator for the crdm-detect eval corpus</a> and states no expiry, so the block cannot be told from abandoned work <a class="edit" href="#" aria-label="Edit bean">✎</a></span></li>
+        <li><span class="lab">⚠ No expiry</span><span><a href="#">DECIDE: which transcription backend, and what CI pays for it</a> — blocks <a href="#">INGEST: audio — transcription and translation</a> and states no expiry, so the block cannot be told from abandoned work <a class="edit" href="#" aria-label="Edit bean">✎</a></span></li>
+        <li class="gap">2 more “no expiry” rows not drawn</li>
+        <li><span class="lab"><span class="ic">!</span>Block never lifted</span><span><a href="#">the narrative review queue could not see 24 of the 24 drafts, and its own test said zero</a> — is completed but still blocks <a href="#">INGEST: narrative description per image, localized, including images extracted from PDFs</a>, which is in-progress <a class="edit" href="#" aria-label="Edit bean">✎</a></span></li>
+        <li><span class="lab"><span class="ic">!</span>Block never lifted</span><span><a href="#">SKILL: creating a new instance KIND — naming, prefixes, and repointing bootstrap/README.md</a> — is completed but still blocks <a href="#">VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surface</a> <a class="edit" href="#" aria-label="Edit bean">✎</a></span></li>
+        <li class="gap">1 more “block never lifted” row not drawn</li>
+      </ul>
+    </section>
+
+    <section class="panel wide" aria-label="Open beans by epic">
+      <h3 class="ptitle">Open beans by epic</h3>
+      <ul class="bars">
+        <li>
+          <div class="bar"><span class="lbl">▾ KG: the knowledge graph's own structure, declaration and publication</span><span class="track"><span class="fill" style="display:block;width:100%"></span></span><span class="val">23</span></div>
+          <div class="detail">
+            <p class="wf-note">Drawn expanded: the row is a toggle, and this is what one click shows.</p>
+            <div class="acts"><a class="wf-btn" href="#">Open the epic</a><button class="wf-btn" type="button">Show only this epic</button></div>
+            <ul>
+              <li><span class="pill">in progress</span><a href="#">TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis</a></li>
+              <li><span class="pill">in progress</span><a href="#">Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action</a></li>
+              <li><span class="pill st">todo</span><a href="#">qa-results parity test fails intermittently under bun run gates (2 of 4 local runs), never alone or in CI</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><div class="bar"><span class="lbl">▸ PROCESS: how an agent decides what it is doing, and what governs each step</span><span class="track"><span class="fill" style="display:block;width:87%"></span></span><span class="val">20</span></div></li>
+        <li><div class="bar"><span class="lbl">▸ QA: verdicts, sidecars and the audited review record</span><span class="track"><span class="fill" style="display:block;width:78%"></span></span><span class="val">18</span></div></li>
+        <li><div class="bar"><span class="lbl">▸ HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system</span><span class="track"><span class="fill" style="display:block;width:74%"></span></span><span class="val">17</span></div></li>
+        <li><div class="bar"><span class="lbl">▸ INGEST: one pipeline from uploads/ to a complete L1 library</span><span class="track"><span class="fill" style="display:block;width:61%"></span></span><span class="val">14</span></div></li>
+        <li class="gap">13 more epics not drawn (19 in all, down to “DOCUMENTATION: one SDO voice …” with 1)</li>
+      </ul>
+    </section>
+  </div>
+
+  <h2 class="sec">State graphs this harness declares</h2>
+  <ul class="graphs">
+    <li class="here"><h3>beans<span class="tag">live</span></h3><p>The work plan.</p></li>
+    <li><h3><a href="#">glossary</a><span class="tag">elsewhere</span></h3><p>The swimlane glossary's retirement ledger.</p></li>
+    <li><h3><a href="#">health</a><span class="tag">declared</span></h3><p>Repository health reports — what the daily sweep under <code>test/health/</code> wrote.</p></li>
+    <li><h3><a href="#">qa</a><span class="tag">live</span></h3><p>Everything a QA process produced, in one declared tree.</p></li>
+    <li><h3><a href="#">todos</a><span class="tag">live</span></h3><p>A PERSON's outstanding items — the human half of memory, as against <code>beans/</code>, which is the agent's workflow management.</p></li>
+    <li class="gap">issue-marks (declared) and uploads (elsewhere) not drawn</li>
+  </ul>
+</main>
+</body>
+</html>

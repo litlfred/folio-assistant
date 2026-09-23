@@ -127,6 +127,19 @@ export function buildL1(dir: string, write = true): BuildResult {
     }
   }
 
+  // A licence record is a finding somebody made by searching (issue #1023,
+  // `check:source-licence`), not something this arm can derive. Rewriting the
+  // manifest must carry it over, or re-running the arm silently turns
+  // "unknown after five places searched" into "nobody looked".
+  const manifestPath = join(dir, "manifest.jsonld");
+  let licence: unknown;
+  if (existsSync(manifestPath)) {
+    try {
+      licence = (JSON.parse(readFileSync(manifestPath, "utf-8")) as { meta?: { licence?: unknown } }).meta?.licence;
+    } catch {
+      licence = undefined;
+    }
+  }
   const manifest = {
     "@context": CONTEXT,
     "@id": `${base}/manifest`,
@@ -140,9 +153,10 @@ export function buildL1(dir: string, write = true): BuildResult {
       source_sha256: st.source?.sha256 ?? null,
       granularity: st.granularity ?? null,
       disposition: "ingested source material — attributed to its document, not folio content",
+      ...(licence !== undefined ? { licence } : {}),
     },
   };
-  if (write) writeFileSync(join(dir, "manifest.jsonld"), `${JSON.stringify(manifest, null, 2)}\n`);
+  if (write) writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
   return { docId: st.doc_id, blocks: declared.length, missing: [] };
 }
