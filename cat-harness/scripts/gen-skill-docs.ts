@@ -192,7 +192,7 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "kg-navigation",
       label: "Reading the knowledge graph (tooled)",
-      repoPrefix: "kg-navigation/skills",
+      repoPrefix: "cat-harness/skills/kg-navigation",
       canonical: true,
     },
     {

@@ -61,8 +61,9 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
 - `docs/uml/overview/…`: the pages. Each shows the SVG, then a table of its
   sub-graphs, then the same model drawn by Mermaid, and links both source
   files. The table carries each sub-graph's detangle numbers (nodes,
-  cohesion, links in and out), read from the detangle instance's declared
-  `detangle-results` directory, or *not measured* where the detangler does not
+  cohesion, links in and out), read from `detangleResultsDir` in
+  `schemas/detangle-sidecar.ts`, the same function the detangler writes
+  through, or *not measured* where the detangler does not
   scan. So a change to `detangle/results/` makes these pages stale, and
   `uml:overview` must be re-run with `kg:detangle`. Every page carries `layout: default`: without it the local build
   rendered the page bare, with no site script and so no zoom controls. Published at

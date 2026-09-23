@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 640,
+      "count": 641,
       "unit": "beans"
     }
   },
@@ -2369,14 +2369,14 @@
     {
       "id": "folio-assistant-8suc",
       "title": "PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:54:54Z",
-      "updatedAt": "2026-09-23T13:54:54Z",
+      "updatedAt": "2026-09-23T16:44:46Z",
       "preview": "Found while closing `xeg6` on 2026-09-23, by hitting it.\n\n## The cycle\n\n- **`--promote` refuses** while the `image-descriptions` requirement is unmet.\n  Observed directly on `2602.12670v4`: *\"✗ NOT promoted — 1 requirement(s)\n  unmet: image-descriptions, 7 describable image(s) with no narrative\"*.\n- **Neither narrative writer can reach an unpromoted document.** The only two\n  are `scripts/apply-im",
       "file": "beans/defs/folio-assistant-8suc--promotion-and-descriptions-are-circular-both-narra.md"
     },
@@ -3093,6 +3093,20 @@
       "updatedAt": "2026-09-22T10:46:09Z",
       "preview": "The owner, 2026-09-21: *\"give structed Q&A w/ context. update skills in fedback\nlike this.\"*\n\nThe second clause is a rule and had no home. `symbiotic-interaction` §1 already\nsaid a steer means *\"do not require the author to repeat the correction\"*, but\napplied to the artefact alone that clause only holds inside one session: the\nproposal is fixed, the rule that produced it is not, and a fresh conte",
       "file": "beans/defs/folio-assistant-bx6q--a-steer-that-corrects-a-rule-must-land-in-the-skil.md"
+    },
+    {
+      "id": "folio-assistant-byql",
+      "title": "Fold detangle and kg-navigation into cat-harness — views of the harness, not layers of their own",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:02:35Z",
+      "updatedAt": "2026-09-23T17:02:35Z",
+      "preview": "Owner, 2026-09-23, on the 3 undetermined edges j79e's classifier reported (detangle.json and kg-navigation.json declare no `needs`): *\"Make them visualization of an existing harness\"*, then from the options offered chose **Fold into cat-harness**: move both under cat-harness as declared directories and drop their instance files.\n\nThis reverses the 2026-09-20 ruling that kg-navigation be a top-leve",
+      "file": "beans/defs/folio-assistant-byql--fold-detangle-and-kg-navigation-into-cat-harness-v.md"
     },
     {
       "id": "folio-assistant-bzyu",
@@ -4687,14 +4701,14 @@
     {
       "id": "folio-assistant-j79e",
       "title": "DETANGLE: a candidate subgraph is MEASURED (cohesive, low-cut), not chosen by taste — and the same process runs on modules, Lean and paper layout",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:14:40Z",
-      "updatedAt": "2026-09-23T02:45:00Z",
+      "updatedAt": "2026-09-23T16:32:08Z",
       "preview": "Owner, 2026-09-20, defining the term after four carves had already been picked by judgement:\n\n> 'candidate subgraph = large collection of thematiactally related content that is diconnected (maybe some light detagling) from other parts of the KG. (part of larger process detangle knwoedlge graph. look in lean, paper layout for related. generalize, make subprocess, deangle heuristics...).'\n\nTHIS IS A",
       "file": "beans/defs/folio-assistant-j79e--detangle-a-candidate-subgraph-is-measured-cohesive.md"
     },

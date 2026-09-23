@@ -44,7 +44,20 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-Same rule, two scales, two vocabularies. **Prune, merge, or factor into a
+**At knowledge-graph scale** — `scripts/kg-detangle.ts` (`bun run kg:detangle`), over the
+instance stack each `<instance>.json` declares in `needs`.
+
+The repository and knowledge-graph scales share ONE verdict function,
+`schemas/layer-direction.ts` (bean `j79e`). An edge is **wrong-direction**
+exactly when its target layer is not among what the source layer declares it
+may reach — `ALLOWED` for repos, `needs` plus itself for instances — and no
+reasoned permit names it. An instance with no `needs` is **undetermined**,
+reported in its own column, never read as clean. The function stops at
+direction: whether an allowed edge is a *restatement* or *essential* is the
+adjudicator's call, so those edges stay `unclassified` with the verdict as
+their basis.
+
+Same rule, three scales, two vocabularies. **Prune, merge, or factor into a
 third** are the only three moves, and "the classification is wrong" is the
 fourth possibility the block-scale version does not have because a block's
 chapter is not in doubt the way a module's layer is.
@@ -286,3 +299,5 @@ auto-dischargeable — they rename things and ripple through every reference.
   repository's own five-repo cut, including the Phase II per-repo gate.
 - `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
   of the above was recorded first.
+- `schemas/layer-direction.ts` — the one wrong-direction verdict both
+  `check:partition` and `kg:detangle` call.

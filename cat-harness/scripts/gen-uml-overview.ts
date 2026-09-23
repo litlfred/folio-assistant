@@ -57,6 +57,7 @@ import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration, siteDir } from "../schemas/cat-harness.js";
 import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-registry.js";
 import { readUmlPalette } from "./uml-palette.js";
+import { detangleResultsDir } from "../schemas/detangle-sidecar.js";
 import { schemasViewPuml } from "./gen-object-model-uml.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
@@ -579,9 +580,9 @@ function mmd(sections: Section[], withAttrs: boolean): string {
 //
 // Each sub-graph's row carries the detangle numbers for the same directory,
 // so the picture and the partition metric are read together (graph-rendering
-// rule 10; owner, 2026-09-23). Read from the detangle instance's declared
-// `detangle-results` directory. Pinned fields only: `kg-detangle.ts` pins
-// size, cohesion and the authority counts, never the verdict.
+// rule 10; owner, 2026-09-23). Pinned fields only: `kg-detangle.ts` pins
+// size, cohesion and the authority counts, never the verdict. The directory
+// comes from `detangleResultsDir`, the same function the writer uses.
 
 interface DetangleNumbers {
   size: number;
@@ -591,11 +592,8 @@ interface DetangleNumbers {
 }
 
 const DETANGLE_RESULTS: string | null = (() => {
-  for (const root of instanceRootsIn(REPO)) {
-    const entry = readDeclaration(root)?.directories.find((d) => d.id === "detangle-results");
-    if (entry) return join(root, entry.path);
-  }
-  return null;
+  const dir = detangleResultsDir(HARNESS);
+  return existsSync(dir) ? dir : null;
 })();
 
 /** The pinned numbers for the detangle group at `path`, or null: not every directory is scanned. */
