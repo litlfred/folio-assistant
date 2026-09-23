@@ -75,6 +75,8 @@ classDiagram
       category [1] enum(13)
       severity [1] critical | major | minor
       source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
       judgementOnly [0..1] boolean
     }
     class folio_assistant_core_voices_VoiceProfile["VoiceProfile"] {
@@ -83,6 +85,8 @@ classDiagram
       id [1] string
       title [1] string
       description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
       appliesTo [0..*] string[]
       provenance [1] assertion | evidence | house
@@ -110,6 +114,7 @@ classDiagram
       alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
+      maintains [0..*] Maintain[]
     }
   }
   cssClass "n_folio_assistant_core_core_schemas_schemas" fa_uml_kind_schemas

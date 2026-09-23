@@ -30,8 +30,11 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
     capturedAt [0..1] : string
     producer [0..1] : string
     readAt [1] : string
+    assets [0..*] : Asset[]
+    omitted [0..*] : Omitted[]
   }
   class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> #f4f4f1 {
+    //no schema declared, shape is whatever scripts/library-graph.ts writes//
   }
 }
 
