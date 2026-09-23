@@ -10,7 +10,7 @@
  *  3. the constants code reads are the list's values, so the two cannot drift.
  */
 import { afterAll, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -146,8 +146,10 @@ describe("the engine checks an adjudication's codes against the list it names", 
 
 describe("our namespaces are the code list's values", () => {
   test("each constant equals its code's value", async () => {
-    const own = (await import("../../code-lists/own-namespaces.json")).default;
-    const v = (code: string) => own.codes.find((c) => c.code === code)!.value;
+    const own = JSON.parse(readFileSync(join(INSTANCE, "code-lists", "own-namespaces.json"), "utf-8")) as {
+      codes: { code: string; value?: string }[];
+    };
+    const v = (code: string) => own.codes.find((c) => c.code === code)!.value!;
     expect(ns.WORKFLOWS_NS).toBe(v("workflows"));
     expect(ns.FOLIO_BPMN_NS).toBe(v("folio-bpmn"));
     expect(ns.CAT_HARNESS_NS).toBe(v("cat-harness"));

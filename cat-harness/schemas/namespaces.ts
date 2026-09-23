@@ -55,7 +55,15 @@ import { type TermLayer, termLayer } from "./vocabulary";
 // JSON import rather than the declaration resolver, because `cat-harness.ts`
 // imports this module and the resolver lives there — reaching back would be a
 // cycle. `check:code-lists` validates the file against its schema.
-import ownNamespaces from "../code-lists/own-namespaces.json";
+// READ, not `import`ed: Node's ESM loader (Playwright runs under it) refuses a
+// JSON import without `with { type: "json" }`, and this repository's
+// `module: ES2022` cannot spell that attribute. Bun accepted the bare import,
+// so every local run passed while the e2e job could not load the module.
+import { readFileSync } from "node:fs";
+
+const ownNamespaces = JSON.parse(
+  readFileSync(new URL("../code-lists/own-namespaces.json", import.meta.url), "utf-8"),
+) as { codes: { code: string; value?: string }[] };
 
 /** One of our namespaces, by its code in `code-lists/own-namespaces.json`. */
 export function ownNamespace(code: string): string {
