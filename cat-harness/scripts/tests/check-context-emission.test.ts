@@ -254,3 +254,40 @@ describe("the real corpus", () => {
     expect(r.unresolved.count).toBe(0);
   });
 });
+
+// ── Every plain key is a declared term — bean `yh6u` ──────────────────────
+
+import { checkDeclaredKeys } from "../check-context-emission.ts";
+
+describe("a key a content document writes must be a declared term", () => {
+  const C = { title: "dcterms:title", narrative: { "@id": "x:n", "@type": "@json" } } as Record<string, unknown>;
+  const U = "https://example.org/ctx.jsonld";
+
+  test("an undeclared key is caught — the 392-figure-narrative defect", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, title: "t", drafted_by: { id: "x" } } });
+    const k = checkDeclaredKeys(root, C, U);
+    expect(k.documents).toBe(1);
+    expect(k.undeclared.map((u) => u.prefix).sort()).toEqual(["drafted_by", "id"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("keys INSIDE a `@json` value are data, never flagged", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, narrative: { text: null, drafted_by: { id: "x" } } } });
+    const k = checkDeclaredKeys(root, C, U);
+    expect(k.documents).toBe(1);
+    expect(k.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a document on another context is not this check's to judge", () => {
+    const root = corpus({ "a.jsonld": { "@context": "https://other.example/ctx", whatever: 1 } });
+    expect(checkDeclaredKeys(root, C, U).documents).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the real corpus: every key declared, over a non-empty corpus", () => {
+    const k = checkDeclaredKeys();
+    expect(k.documents).toBeGreaterThan(0);
+    expect(k.undeclared).toEqual([]);
+  });
+});

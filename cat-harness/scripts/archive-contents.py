@@ -48,6 +48,7 @@ from typing import Any, Iterator
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _pdf_doc_id import slugify as _slugify  # noqa: E402
+from _content_context import CONTENT_CONTEXT_URL  # noqa: E402
 
 
 def _load_tech_meta():
@@ -176,6 +177,9 @@ def contents(archive: Path) -> dict[str, Any]:
         )
     files = [e for e in rows if e["kind"] == "file"]
     return {
+        # The record is JSON-LD, and says so (bean `yh6u`): without this every
+        # key below was dropped by a JSON-LD processor.
+        "@context": CONTENT_CONTEXT_URL,
         "$schema": "folio-archive-contents/v1",
         "@id": f"library/{_slugify(archive.stem)}/contents",
         "archive": _tm.tech_meta(str(archive)),
