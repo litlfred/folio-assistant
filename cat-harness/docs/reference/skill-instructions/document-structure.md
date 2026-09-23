@@ -69,3 +69,10 @@ After any reorder, re-read `uses[]` across the moved chapter: an editorial
 edge that pointed backwards may now point forwards, which is a real finding
 about reading order rather than a mechanical detail.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 3 · Scaffold the folio [folio_init] |
+

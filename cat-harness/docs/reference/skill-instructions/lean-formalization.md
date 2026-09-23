@@ -82,3 +82,10 @@ the formal side; `content-graph` is how you ask impact questions across both.
 unannotated `sorry` is indistinguishable from an abandoned one. `proof-triage`
 and `proof-gap-audit` are how you work the backlog of them down.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 5 · Formalise in Lean |
+

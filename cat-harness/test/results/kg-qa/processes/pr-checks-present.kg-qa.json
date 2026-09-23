@@ -87,11 +87,44 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Sweep",
+          "detail": "\"Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Label",
+          "detail": "\"Ensure the tracking&#10;label exists\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Close",
+          "detail": "\"Close the&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Track",
+          "detail": "\"Open or EDIT the one&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "\"Comment ONCE per&#10;(PR, head sha)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 8,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

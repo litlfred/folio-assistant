@@ -363,3 +363,13 @@ harness git instructions). Do not include the model identifier in the PR.
   branch as having unpushed work; the answer was a reachability check in the hook,
   not a deletion.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
+| [Code change and review](../../processes/code-change-review.html) | Prepare the merge, and watch it through |
+| [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Phase 6: Implement (feature branch + PR) |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Move the pin and open the PR |
+

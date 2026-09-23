@@ -606,6 +606,51 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "implement the step with nothing at all. A target this instance cannot load is `unknown`, not `fail`: it may " +
       "be hosted elsewhere, and an audit that cannot tell must not claim it can.",
   },
+  // ── Documentation completeness (bean `ooq3`, issue #1007) ─────────────
+  //
+  // The three criteria below ask whether a diagram can be READ, not whether it
+  // runs. Every join above can pass over a process nobody can find: on
+  // 2026-09-23 every one of 62 diagrams had a fresh SVG and `render:bpmn:check`
+  // was green, while 45 of them were shown on no page. `adjudication.bpmn` was
+  // one — drawn, rendered, merged, and reachable only by typing its URL.
+  {
+    id: "process-diagram-published",
+    applies: ["process"],
+    // `major`: the diagram exists and is correct, so nothing dangles — what is
+    // absent is the page a reader would meet it on, which the scale calls major.
+    severity: "major",
+    summary:
+      "The rendered diagram is shown on no docs page. A fresh SVG proves `render:bpmn` ran, not that anybody can " +
+      "reach the picture; the per-process pages `gen-processes-viz.ts` writes are what make this pass. `unknown` when " +
+      "no docs layer is declared — an audit that could not look must not report a clean page.",
+  },
+  {
+    id: "activity-documented",
+    applies: ["process"],
+    // `minor`, and deliberately not gated. A step's NAME is often enough; the
+    // measurement (95 of 456 undocumented) is the backlog, not a verdict that
+    // each one is wrong.
+    severity: "minor",
+    summary:
+      "An activity carries no `<bpmn:documentation>`, so its page can show a name and nothing about what the step " +
+      "is for. The process-level documentation is not a substitute: it says why the diagram exists, not what one " +
+      "step asks of its performer.",
+  },
+  {
+    id: "activity-calls-skill-process",
+    applies: ["process"],
+    // `minor` because the rule is a heuristic and says so. It fires only when
+    // exactly ONE step in a diagram names a skill that owns a same-named
+    // process: several steps naming one skill are using its know-how as steps
+    // (five in `refresh-materialized` name `materialize-remote`), which a call
+    // activity would get wrong. The raw match was 24; the rule leaves 9.
+    severity: "minor",
+    summary:
+      "A single step names a skill that has its own process of the same name, but is a plain task rather than a " +
+      "call activity — so the diagram re-describes the procedure instead of descending into it, and the called " +
+      "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
+      "records that it uses the skill for one slice rather than running its whole process.",
+  },
   {
     id: "role-skills-resolve",
     applies: ["role"],

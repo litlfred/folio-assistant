@@ -66,11 +66,52 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Sushi",
+          "detail": "\"SUSHI on the restricted tank\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "\"Validate the cone (fhir_validate)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_LogFindings",
+          "detail": "\"Log findings on the bean\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Merge",
+          "detail": "\"Merge restored and rebuilt records\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Site",
+          "detail": "\"Assemble the site (template · Jekyll)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_QcBeans",
+          "detail": "\"File QC findings as beans\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Deploy",
+          "detail": "\"Deploy the site [content-publish]\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 10,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

@@ -498,3 +498,11 @@ reader's font choice silently reconfiguring how an agent talks to the author.
 6. **Accessibility as a rendering concern only.** The largest win is §4's last
    rule — not asking at all — and no stylesheet delivers it.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Getting started](../../processes/getting-started.html) | Detect the interaction modality; Choose from the offered options |
+| [Session state machine](../../processes/session-state-machine.html) | Ask who is acting |
+
