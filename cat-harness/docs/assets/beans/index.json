@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 658,
+      "count": 659,
       "unit": "beans"
     }
   },
@@ -209,14 +209,14 @@
     {
       "id": "folio-assistant-0hd6",
       "title": "translate-bpmn has no --check, and 12 diagrams have no .pot at all",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T10:06:30Z",
-      "updatedAt": "2026-09-19T10:07:02Z",
+      "updatedAt": "2026-09-23T19:06:25Z",
       "preview": "_2026-09-19T10:07:02Z_ — FOUND WHILE REWIRING translate-bpmn.ts TO READ THE DECLARATION, 2026-09-19, and it is a pre-existing gap rather than anything that rewire caused. Running `bun run scripts/translate-bpmn.ts --extract --locale fr` produced TWELVE .pot files that git reported as UNTRACKED — templates that had never been generated for diagrams that have existed for some time: crdm-close, crdm-",
       "file": "beans/defs/folio-assistant-0hd6--translate-bpmn-has-no-check-and-12-diagrams-have-n.md"
     },
@@ -1987,6 +1987,20 @@
       "updatedAt": "2026-09-22T09:33:37Z",
       "preview": "Issue #877, and the owner's opening words: *\"WHO dgital health needs a once voice.\"*\n\nShaped as `who-style-guide/skills/voices/who-editorial/` — `voice.json` (`$schema: folio-voice-skill/v1`) carrying the rules, `SKILL.md` carrying how to USE them and deliberately NOT restating them, because a rule written as prose beside the same rule written as data is one fact in two places and the prose copy i",
       "file": "beans/defs/folio-assistant-7mi0--smart-base-voice-profiles-for-who-digital-health.md"
+    },
+    {
+      "id": "folio-assistant-7nvr",
+      "title": "KG BROWSER: a library entry's blocks are counted, never read — nothing renders the graph the corpus carries",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:05:22Z",
+      "updatedAt": "2026-09-23T19:15:36Z",
+      "preview": "parent: folio-assistant-0lmb\n\n\nIssue #1149, opened as requirements-only on the owner's ruling and then built\non their \"do 1149\".\n\n## The gap, measured\n\n`scripts/library-graph.ts` COUNTS an entry's blocks:\n\n    blocks: filesIn(join(dir, \"blocks\")).filter((f) => f.endsWith(\".jsonld\")).length,\n\nSo the viewer answers *how many* and never *what*. Meanwhile every block\ncarries `@type` (two of them), `ki",
+      "file": "beans/defs/folio-assistant-7nvr--kg-browser-a-library-entrys-blocks-are-counted-nev.md"
     },
     {
       "id": "folio-assistant-7o7i",
@@ -5937,14 +5951,14 @@
     {
       "id": "folio-assistant-oe98",
       "title": "480 dead links: 240 of 244 generated skill pages point 'Edit this page's source' at a path that does not exist",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T12:09:09Z",
-      "updatedAt": "2026-09-22T12:09:09Z",
+      "updatedAt": "2026-09-23T20:05:12Z",
       "preview": "Found 2026-09-22 while checking that a NEW skill page rendered. The new page was fine; it had simply joined 239 others carrying the same defect.\n\n## Measured\n\n```\ngenerated skill pages with a source link : 244\n  ... whose path does NOT resolve        : 240  (98%)\n  ... dead links (2 per page)            : 480\n```\n\nTwo links per page — *\"Generated from [`…`]\"* and *\"✎ Edit this page's source\"* — bo",
       "file": "beans/defs/folio-assistant-oe98--480-dead-links-240-of-244-generated-skill-pages-po.md"
     },

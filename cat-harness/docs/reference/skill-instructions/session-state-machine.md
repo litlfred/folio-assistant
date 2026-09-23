@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/session-state-machine.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/session-state-machine.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/session-state-machine.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/session-state-machine.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/session-state-machine.md){: .fa-edit-source }
 
 {% raw %}
 # Playing a state machine

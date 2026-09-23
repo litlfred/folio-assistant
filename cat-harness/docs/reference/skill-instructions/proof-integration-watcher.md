@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/proof-integration-watcher.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/proof-integration-watcher.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/proof-integration-watcher.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/proof-integration-watcher.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/proof-integration-watcher.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/proof-integration-watcher.md){: .fa-edit-source }
 
 {% raw %}
 # /proof-integration-watcher
