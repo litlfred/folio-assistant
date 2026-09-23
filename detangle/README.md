@@ -152,5 +152,14 @@ conclusion held; the evidence for it did not.
   outside the scanned set is reported separately and is *not* counted as an
   outbound edge: counting it would make a group with a broken link look
   entangled, which is a different finding calling for a different fix.
-- **`repo-partition.ts` is the same question on the module graph** and is not
-  yet an instance of this. Bean `folio-assistant-j79e`.
+- **Only `wrong-direction` is classified mechanically.** `repo-partition.ts`
+  asks the same direction question on the module graph, and since bean
+  `folio-assistant-j79e` both call one function,
+  `cat-harness/schemas/layer-direction.ts`. Here a node's layer is its
+  instance, and what it may reach is its declared `needs` plus itself. The
+  report's `wdir` column counts wrong-direction outbound edges and `undet`
+  counts edges whose source instance declares no `needs` — undetermined, not
+  clean. `restatement` and `essential` stay `unclassified`: they are the
+  adjudication, and `--group` prints each edge's basis so the adjudicator
+  starts from it. The counts are reported, not pinned — the sidecar ruling
+  pins size, cohesion and authority counts only.

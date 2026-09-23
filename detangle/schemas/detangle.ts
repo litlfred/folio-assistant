@@ -98,6 +98,7 @@
  * returns the clauses, not a boolean, precisely so the adjudicator can answer
  * them one at a time.
  */
+import type { DirectionVerdict } from "../../cat-harness/schemas/layer-direction.js";
 
 /** A node in whatever graph is being detangled. Deliberately not a file: modules, skills, blocks and Lean declarations are all nodes. */
 export interface DetangleNode {
@@ -195,6 +196,22 @@ export interface ClassifiedEdge extends DetangleEdge {
   kind: CutKind;
   /** Why it was classified so. A classification with no basis is an assertion. */
   basis: string;
+}
+
+/**
+ * The cut kind a DIRECTION verdict supports — and only that.
+ *
+ * `wrong-direction` is mechanical: the edge leaves a layer for one its
+ * declared `needs` does not reach, and `layer-direction.ts` decides it for
+ * `check:partition` too, so the two tools cannot disagree about one edge
+ * (bean `j79e`). Everything else stays `unclassified` with the verdict as
+ * its basis. `restatement` and `essential` are judgements about what the
+ * target MEANS, and this package's rule is that the carve is an
+ * adjudication — a function that guessed them would turn a reason to look
+ * into a finding.
+ */
+export function classifyByDirection(e: DetangleEdge, d: DirectionVerdict): ClassifiedEdge {
+  return { ...e, kind: d.verdict === "wrong-direction" ? "wrong-direction" : "unclassified", basis: d.basis };
 }
 
 export interface DetangleMetrics {

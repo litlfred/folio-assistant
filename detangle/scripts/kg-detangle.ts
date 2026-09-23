@@ -39,10 +39,14 @@ import {
   DEFAULT_THRESHOLDS,
   measure,
   failingClauses,
+  classifyByDirection,
+  type ClassifiedEdge,
   type DetangleEdge,
   type DetangleNode,
   type EdgeAuthority,
 } from "../schemas/detangle.js";
+import { allowedFromNeeds, directionOf, type LayerRule } from "../../cat-harness/schemas/layer-direction.js";
+import { ancestorsOf, flattenDependencies } from "../../cat-harness/schemas/dependency-order.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -250,6 +254,43 @@ for (const n of nodes) {
   }
 }
 
+// ── Direction — bean `j79e`.
+//
+// A node's LAYER is the instance it lives in: the first path segment, when
+// that directory declares itself with `<name>/<name>.json`. What a layer may
+// reach is its declared `needs`, transitively, plus itself — the same
+// relation `check:partition` applies to repos, through the same function.
+//
+// An instance with no `needs` is UNDETERMINED and its edges stay so. Filling
+// it in here would be deciding a layering nobody has declared.
+const layerNeeds = new Map<string, readonly string[] | undefined>();
+for (const seg of new Set(nodes.map((n) => n.id.split("/")[0]))) {
+  const decl = join(ROOT, seg, `${seg}.json`);
+  if (!existsSync(decl)) continue;
+  const needs = (JSON.parse(readFileSync(decl, "utf8")) as { needs?: string[] }).needs;
+  layerNeeds.set(seg, needs);
+}
+const flat = flattenDependencies(
+  [...layerNeeds].map(([id, needs]) => ({ id, needs: (needs ?? []).filter((n) => layerNeeds.has(n)), fatal: false })),
+);
+if (flat.problems.length) {
+  // Refused rather than walked: no ancestor set exists for a broken graph,
+  // and a partial one would report allowed edges as wrong-direction.
+  throw new Error(`kg-detangle: instance needs graph is broken — ${flat.problems.map((p) => p.detail).join("; ")}`);
+}
+const layerRule: LayerRule = { allowed: allowedFromNeeds(layerNeeds, ancestorsOf(flat.order)) };
+const layerOf = (id: string): string | undefined => {
+  const seg = id.split("/")[0];
+  return layerNeeds.has(seg) ? seg : undefined;
+};
+/** Edges whose direction nothing declared could settle — kept apart, because `unclassified` alone would hide them among the allowed. */
+const undeterminedEdges = new Set<DetangleEdge>();
+const classify = (e: DetangleEdge): ClassifiedEdge => {
+  const d = directionOf(e, layerOf(e.from), layerOf(e.to), layerRule);
+  if (d.verdict === "undetermined") undeterminedEdges.add(e);
+  return classifyByDirection(e, d);
+};
+
 const groups = [...new Set(nodes.map((n) => n.group))].sort();
 const only = process.argv.includes("--group")
   ? process.argv[process.argv.indexOf("--group") + 1]
@@ -257,7 +298,14 @@ const only = process.argv.includes("--group")
 
 const results = groups.map((g) => {
   const m = measure(g, nodes, edges);
-  return { ...m, clauses: failingClauses(m, DEFAULT_THRESHOLDS) };
+  const classified = m.worklist.map(classify);
+  return {
+    ...m,
+    classified,
+    wrongDirection: classified.filter((e) => e.kind === "wrong-direction").length,
+    undeterminedDirection: m.worklist.filter((e) => undeterminedEdges.has(e)).length,
+    clauses: failingClauses(m, DEFAULT_THRESHOLDS),
+  };
 });
 
 // ── The durable record — bean `sb6z`, and the owner's ruling on what it holds.
@@ -336,9 +384,9 @@ if (process.argv.includes("--json")) {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
   console.log(
     "  " +
-      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "prose".padStart(6), "role".padEnd(13), "verdict"].join(" "),
+      ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "prose".padStart(6), "wdir".padStart(5), "undet".padStart(6), "role".padEnd(13), "verdict"].join(" "),
   );
-  console.log("  " + "-".repeat(122));
+  console.log("  " + "-".repeat(135));
   for (const r of results) {
     if (only && r.group !== only) continue;
     const v = r.clauses.length === 0 ? "CANDIDATE" : `${r.clauses.length} clause(s) fail`;
@@ -354,6 +402,8 @@ if (process.argv.includes("--json")) {
           r.directionality.toFixed(2).padStart(6),
           String(r.enforcedBoundary).padStart(4),
           String(r.proseMentions).padStart(6),
+          String(r.wrongDirection).padStart(5),
+          String(r.undeterminedDirection).padStart(6),
           r.role.padEnd(13),
           v,
         ].join(" "),
@@ -361,8 +411,13 @@ if (process.argv.includes("--json")) {
     if (only) {
       for (const c of r.clauses) console.log(`      · ${c}`);
       if (r.worklist.length) {
-        console.log(`\n      Detangling worklist — every outbound edge:`);
-        for (const e of r.worklist) console.log(`      → ${e.to}   [${e.via}]   from ${e.from}`);
+        // Wrong-direction first: it is the kind a declaration decides, so it
+        // is the part of the list that needs no adjudication to act on.
+        console.log(`\n      Detangling worklist — every outbound edge, wrong-direction first:`);
+        const ordered = [...r.classified].sort((a, b) => Number(b.kind === "wrong-direction") - Number(a.kind === "wrong-direction"));
+        for (const e of ordered) {
+          console.log(`      → ${e.to}   [${e.via}]   from ${e.from}\n          ${e.kind} — ${e.basis}`);
+        }
       }
     }
   }
