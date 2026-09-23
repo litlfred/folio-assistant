@@ -1493,7 +1493,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-ylj7-accounting/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-ylj7-accounting/cat-harness.jsonld#process/Process_MaterializeRemote",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.",
+      "scopeNote": "Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused. Before the first gate it resolves the request against the source DESCRIPTOR (Task_Enumerate), because the size being gated is the closure's, not the request's — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.",
       "source": "cat-harness/processes/materialize-remote.bpmn"
     },
     {

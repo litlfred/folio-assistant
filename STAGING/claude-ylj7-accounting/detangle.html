@@ -14,10 +14,9 @@
   <style id="jtd-nav-activation">
   
 
-    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(4)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(28)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
@@ -26,14 +25,12 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(4) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(28) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(4) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(28) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(28) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +50,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Migration plan | folio-assistant</title>
+<title>Detangle | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Migration plan" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Detangle" />
+<meta property="og:locale" content="en" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Migration plan" />
+<meta property="twitter:title" content="Detangle" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -766,507 +763,424 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
-  <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-ylj7-accounting/architecture.html">Architecture</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Migration plan</span></li>
-  </ol>
-</nav>
-
-
+      
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="migration-plan--one-repo-to-five">
+            <h1 id="detangle">
   
   
-    <a href="#migration-plan--one-repo-to-five" class="anchor-heading" aria-labelledby="migration-plan--one-repo-to-five"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Migration plan — one repo to five
+    <a href="#detangle" class="anchor-heading" aria-labelledby="detangle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> detangle
   
   
 </h1>
     
 
-<ol id="markdown-toc">
-  <li><a href="#the-governing-principle" id="markdown-toc-the-governing-principle">The governing principle</a></li>
-  <li><a href="#phase-0--unblock-before-anything-moves" id="markdown-toc-phase-0--unblock-before-anything-moves">Phase 0 — unblock, before anything moves</a>    <ol>
-      <li><a href="#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built" id="markdown-toc-01--make-the-dependency-model-able-to-carry-the-split--decided-and-built">0.1 — Make the dependency model able to carry the split · <strong>decided and built</strong></a>        <ol>
-          <li><a href="#what-the-shape-costs-and-what-was-done-about-it" id="markdown-toc-what-the-shape-costs-and-what-was-done-about-it">What the shape costs, and what was done about it</a></li>
-          <li><a href="#where-it-lives-and-why-that-mattered" id="markdown-toc-where-it-lives-and-why-that-mattered">Where it lives, and why that mattered</a></li>
-          <li><a href="#still-open-under-01" id="markdown-toc-still-open-under-01">Still open under 0.1</a></li>
-        </ol>
-      </li>
-      <li><a href="#02--replace-the-filename-heuristic-with-a-real-dependency-scan--done" id="markdown-toc-02--replace-the-filename-heuristic-with-a-real-dependency-scan--done">0.2 — Replace the filename heuristic with a real dependency scan · <strong>done</strong></a></li>
-      <li><a href="#03--decide-what-folio-is" id="markdown-toc-03--decide-what-folio-is">0.3 — Decide what <code class="language-plaintext highlighter-rouge">folio</code> is</a></li>
-    </ol>
-  </li>
-  <li><a href="#phase-i--move-code-to-the-target-shape-still-one-repo" id="markdown-toc-phase-i--move-code-to-the-target-shape-still-one-repo">Phase I — move code to the target shape, still one repo</a></li>
-  <li><a href="#phase-ii--separate-repos-incrementally" id="markdown-toc-phase-ii--separate-repos-incrementally">Phase II — separate repos, incrementally</a></li>
-  <li><a href="#phase-iii--build-on-the-harness" id="markdown-toc-phase-iii--build-on-the-harness">Phase III — build on the harness</a></li>
-  <li><a href="#risks" id="markdown-toc-risks">Risks</a></li>
-  <li><a href="#what-this-plan-does-not-decide" id="markdown-toc-what-this-plan-does-not-decide">What this plan does not decide</a></li>
-</ol><hr />
+<blockquote>
+  <p><strong>Folded into cat-harness 2026-09-23</strong> (bean <code class="language-plaintext highlighter-rouge">byql</code>). This was the README of
+a top-level <code class="language-plaintext highlighter-rouge">detangle/</code> instance that declared no <code class="language-plaintext highlighter-rouge">needs</code>, so its own edges
+could not be placed by the direction classifier it hosts. The owner’s ruling:
+fold it into the harness. The script is <code class="language-plaintext highlighter-rouge">scripts/kg-detangle.ts</code>, the
+criterion <code class="language-plaintext highlighter-rouge">schemas/detangle.ts</code>, the pinned measurements
+<code class="language-plaintext highlighter-rouge">test/results/detangle/</code>; run it with <code class="language-plaintext highlighter-rouge">bun run kg:detangle</code>.</p>
+</blockquote>
+
+<p><strong>Is this candidate subgraph really a subgraph?</strong></p>
+
+<p>The criterion is the owner’s, 2026-09-20:</p>
 
 <blockquote>
-  <p><strong>Status: proposed, nothing started.</strong> This plan is the deliverable of
-<a href="https://github.com/litlfred/folio-assistant/issues/223">issue #223</a>. It is
-written to be argued with before any code moves.</p>
+  <p>candidate subgraph = large collection of thematically related content that is
+disconnected (maybe some light detangling) from other parts of the KG</p>
+
+  <p>other parts of graph are only referencing it… <strong>arrows mostly one way</strong></p>
 </blockquote>
-<h2 id="the-governing-principle">
+
+<p>That second line is what makes it checkable, and it is <strong>not</strong> “a small cut”. A
+candidate is a near-<strong>sink</strong>: the rest of the graph depends on it, and it
+depends on almost nothing outside itself. Ten edges in and ten out is a cut of
+twenty and cannot be lifted; fifty in and zero out is a cut of fifty and lifts
+cleanly.</p>
+<h2 id="nothing-here-decides-anything">
   
   
-    <a href="#the-governing-principle" class="anchor-heading" aria-labelledby="the-governing-principle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The governing principle
+    <a href="#nothing-here-decides-anything" class="anchor-heading" aria-labelledby="nothing-here-decides-anything"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Nothing here decides anything
   
   
 </h2>
     
 
-<p><strong>Move wiring and script together.</strong> Every boundary this migration creates is an
-opportunity to reproduce the defect <code class="language-plaintext highlighter-rouge">AGENTS.md</code> records from qou commit
-<code class="language-plaintext highlighter-rouge">39fc90f6</code>: a script deleted while its hook reference survived, or a path
-computed from a script’s own location that was correct before a split and wrong
-after.</p>
+<blockquote>
+  <p>taste matters as judgement = human/agentic adjudication</p>
+</blockquote>
 
-<p>Bean <code class="language-plaintext highlighter-rouge">dh4f</code> is the measured cost of that defect at the <em>last</em> split: 30 scripts
-triaged, 23 broken, and three of them —
-<a href="current-state.html#the-failure-mode-this-repo-has-already-paid-for">including a CI gate</a>
-— silently passing over a corpus they could no longer read. <strong>A green check is
-the symptom, not the reassurance.</strong></p>
+<p>The scanner is a <strong>mechanical reviewer</strong>. It emits findings with a <code class="language-plaintext highlighter-rouge">script</code>
+reviewer and a <code class="language-plaintext highlighter-rouge">severity</code>, in the shape <code class="language-plaintext highlighter-rouge">schemas/qa-review.ts</code> already defines,
+and it has no opinion about whether to carve. The carve is a <code class="language-plaintext highlighter-rouge">Decision</code> by a
+human or agentic adjudicator, and it may overrule any finding here — a theme a
+scanner cannot see is a real reason, and so is a boundary somebody intends to
+enforce before the edges exist to prove it.</p>
 
-<p>Hence every phase gate below is a <em>positive</em> assertion (this tool read this
-corpus and found this) rather than a negative one (nothing went red).</p>
-<h2 id="phase-0--unblock-before-anything-moves">
+<p>What the numbers buy is not authority. It is that the adjudication becomes
+<strong>reviewable</strong>: <em>“carved anyway, cohesion 0.31, because X”</em> is a durable claim
+somebody can disagree with later, and <em>“it felt right”</em> is not.</p>
+<h2 id="running-it">
   
   
-    <a href="#phase-0--unblock-before-anything-moves" class="anchor-heading" aria-labelledby="phase-0--unblock-before-anything-moves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 0 — unblock, before anything moves
+    <a href="#running-it" class="anchor-heading" aria-labelledby="running-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running it
   
   
 </h2>
     
 
-<p>Phase I is described in the issue as “move code around to prepare for change”.
-Three things have to be true first, and none of them is a move. Skipping them
-means discovering in Phase II that the target shape is unreachable.</p>
-<h3 id="01--make-the-dependency-model-able-to-carry-the-split--decided-and-built">
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run kg:detangle
+bun run kg:detangle <span class="nt">--group</span> cat-harness/processes
+bun run kg:detangle <span class="nt">--json</span>
+</code></pre></div></div>
+<h2 id="four-roles-because-one-way-does-not-mean-inward">
   
   
-    <a href="#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built" class="anchor-heading" aria-labelledby="01--make-the-dependency-model-able-to-carry-the-split--decided-and-built"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0.1 — Make the dependency model able to carry the split · <strong>decided and built</strong>
+    <a href="#four-roles-because-one-way-does-not-mean-inward" class="anchor-heading" aria-labelledby="four-roles-because-one-way-does-not-mean-inward"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Four roles, because “one way” does not mean “inward”
   
   
-</h3>
+</h2>
     
 
-<p><strong>Decision (2026-09-18, maintainer): load-time registration.</strong></p>
+<p><code class="language-plaintext highlighter-rouge">oneWayness</code> (inbound share) scores <strong>0.0</strong> both for a group with fifty edges
+each way — genuinely tangled — and for one with <strong>zero in and 334 out</strong>, which
+is as one-way as a boundary can be. The owner’s clause is <em>“arrows mostly one
+way”</em>, so the measure must be direction-blind:</p>
 
-<p>A dependency names a module in its <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>directionality = |2 · oneWayness − 1|
+</code></pre></div></div>
 
-<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"contributes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./contributions.ts"</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Its default export is called as the root walks the dependency tree, and returns
-the block kinds, adapter and MCP tools it adds. <code class="language-plaintext highlighter-rouge">schemas/contributions.ts</code> holds
-the registry; <code class="language-plaintext highlighter-rouge">loadContributions()</code> in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> walks and loads.</p>
-
-<p><strong>Gate met.</strong> A synthetic two-repo fixture in which the dependency contributes
-one block kind, one adapter and one MCP tool, and the root resolves all three —
-plus a test that a kind claimed by a second contributor is <strong>refused</strong>.
-13 tests, <code class="language-plaintext highlighter-rouge">schemas/contributions.test.ts</code>.</p>
-<h4 id="what-the-shape-costs-and-what-was-done-about-it">
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>role</th>
+      <th>arrows</th>
+      <th>how it separates</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>sink</strong></td>
+      <td>in ≫ out</td>
+      <td>lifts out as a <strong>dependency</strong> — others declare they need it</td>
+    </tr>
+    <tr>
+      <td><strong>source</strong></td>
+      <td>out ≫ in</td>
+      <td>lifts out as a <strong>dependent</strong> — it declares what it needs</td>
+    </tr>
+    <tr>
+      <td><strong>tangled</strong></td>
+      <td>both, comparably</td>
+      <td>not separable without real work. The only role the word fits.</td>
+    </tr>
+    <tr>
+      <td><strong>isolated</strong></td>
+      <td>none</td>
+      <td>trivially separable, and <em>not</em> the same as tangled however alike a bare <code class="language-plaintext highlighter-rouge">oneWayness</code> of 0.0 looks</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="arrows-is-the-direction-even-a-fact">
   
   
-    <a href="#what-the-shape-costs-and-what-was-done-about-it" class="anchor-heading" aria-labelledby="what-the-shape-costs-and-what-was-done-about-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the shape costs, and what was done about it
+    <a href="#arrows-is-the-direction-even-a-fact" class="anchor-heading" aria-labelledby="arrows-is-the-direction-even-a-fact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arrows: is the direction even a fact?
   
   
-</h4>
+</h2>
     
 
-<p>Load-time registration was chosen over a manifest validated before loading. It
-is cheaper and more familiar, and it makes <strong>load order semantically
-significant</strong> — the same five repos in a different listed order are a different
-program. Two mitigations are built in, and neither changes the chosen shape:</p>
+<p>Asked in four words, 2026-09-20: <em>“are arrows in wrong direction somewhere?”</em>
+Measured the same hour:</p>
 
-<p><strong>Collisions do not resolve by order.</strong> A kind claimed by two contributors
-throws, naming both. Last-writer-wins would make <code class="language-plaintext highlighter-rouge">adapterForKind</code> ambiguous —
-the one property <code class="language-plaintext highlighter-rouge">schemas/block-kinds.ts</code> states it must keep — <em>and</em> would make
-that ambiguity depend on listing order, which is the hardest kind of bug to
-reproduce from a report. A dependency also may not redefine a kind or adapter
-the platform already owns: shadowing <code class="language-plaintext highlighter-rouge">theorem</code> from a config file two repos away
-would change what every existing folio validates against.</p>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>extractor</th>
+      <th>cross-group edges</th>
+      <th>direction is</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bpmn-skill</code></td>
+      <td>340</td>
+      <td><strong>recorded</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">json-skill</code></td>
+      <td>125</td>
+      <td><strong>recorded</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ts-import</code></td>
+      <td>28</td>
+      <td>enforced</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">md-link</code></td>
+      <td>5</td>
+      <td><strong>recorded</strong></td>
+    </tr>
+  </tbody>
+</table></div>
 
-<p><strong>A diamond is not a collision.</strong> The proposed graph <em>is</em> a diamond —
-<code class="language-plaintext highlighter-rouge">smart-base → smart-kg → core</code> and <code class="language-plaintext highlighter-rouge">folio-asst-sci → core</code> — so a depth-first
-walk reaches <code class="language-plaintext highlighter-rouge">core</code> twice. Re-registering identical content from the same
-contributor is a no-op. Without that rule every realistic dependency tree throws
-a false collision on first load, and the obvious fix (dropping the collision
-check) is precisely the one that must not be made.</p>
-
-<p><strong>The dependency entry’s name is authoritative</strong> over whatever the contributed
-module says about itself. A contributor able to rename itself could claim
-another’s namespace and turn a collision into a silent merge.</p>
-
-<p><strong>A declared-but-missing <code class="language-plaintext highlighter-rouge">contributes</code> module is a hard error</strong>, not a silent
-zero contribution — the <code class="language-plaintext highlighter-rouge">AGENTS.md</code> “move wiring and script together” failure
-mode, caught at the point it occurs.</p>
-<h4 id="where-it-lives-and-why-that-mattered">
-  
-  
-    <a href="#where-it-lives-and-why-that-mattered" class="anchor-heading" aria-labelledby="where-it-lives-and-why-that-mattered"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where it lives, and why that mattered
-  
-  
-</h4>
-    
-
-<p><code class="language-plaintext highlighter-rouge">schemas/contributions.ts</code>, not <code class="language-plaintext highlighter-rouge">src/core/</code>. The registry is about the content
-model — which kinds exist, which adapter owns them — so it belongs with the
-model, and putting it under <code class="language-plaintext highlighter-rouge">src/</code> would have added another
-<code class="language-plaintext highlighter-rouge">agentic-harness → folio-assist-core</code> import, already the largest
-wrong-direction group. A mechanism built to enable the split must not deepen
-what the split has to undo. Verified: <code class="language-plaintext highlighter-rouge">check:partition</code> reports 45 edges before
-and after. MCP tool contributions are carried as opaque registrar callbacks for
-the same reason, so the MCP SDK type never reaches the content model.</p>
-<h4 id="still-open-under-01">
-  
-  
-    <a href="#still-open-under-01" class="anchor-heading" aria-labelledby="still-open-under-01"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Still open under 0.1
-  
-  
-</h4>
-    
-
-<p><code class="language-plaintext highlighter-rouge">resolveSkillDirs</code> still has no caller, and there is no content-directory
-resolver at all. The docstring table in <code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code> has been
-corrected to say so rather than claiming both work. Wiring them is finishing
-work, not a design question, and does not block Phase I.</p>
-<h3 id="02--replace-the-filename-heuristic-with-a-real-dependency-scan--done">
-  
-  
-    <a href="#02--replace-the-filename-heuristic-with-a-real-dependency-scan--done" class="anchor-heading" aria-labelledby="02--replace-the-filename-heuristic-with-a-real-dependency-scan--done"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0.2 — Replace the filename heuristic with a real dependency scan · <strong>done</strong>
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">bun run check:partition</code> (<code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code>) builds the import graph,
-partitions it across the five proposed repos, and reports the edges crossing a
-boundary in the wrong direction. Gate met: 341 modules, 670 edges, <strong>46
-wrong-direction edges</strong> named, <strong>0 modules unassigned</strong> (the 27 platform
-meta-scripts were triaged by hand, and are reported with their own provenance so
-a judgement stays visible as a judgement). Full results in
-<a href="current-state.html#the-wrong-direction-edges--phase-is-worklist">current state</a>.</p>
-
-<p>Two results change the plan below rather than merely confirming it:</p>
+<p><strong>470 of 498 — 94% — are <code class="language-plaintext highlighter-rouge">recorded</code>.</strong></p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">smart-kg</code> partitions to zero modules.</strong> There is no L1 code to move, so
-that repo is new construction like the Test repos, not an extraction. It is
-re-sequenced accordingly.</li>
-  <li><strong>21 of the 46 edges are <code class="language-plaintext highlighter-rouge">agentic-harness</code> → <code class="language-plaintext highlighter-rouge">folio-assist-core</code></strong> — the
-harness importing the content-object model, which is its defining constraint
-failing in practice. Extracting the harness is therefore <em>harder</em> than
-extracting sci, not easier, and Phase II’s order reflects that.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">enforced</code></strong> — reverse it and something breaks. A TypeScript <code class="language-plaintext highlighter-rouge">import</code>, a
+BPMN <code class="language-plaintext highlighter-rouge">calledElement</code>. The direction is a property of the system.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">recorded</code></strong> — the direction is <em>where the author put the pointer</em>.
+<code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="S"&gt;</code> is written on the diagram, so the arrow runs
+diagram → skill. Had the repo put <code class="language-plaintext highlighter-rouge">workflows: [...]</code> in each skill’s front
+matter instead, the identical coupling would be stored the other way and
+<code class="language-plaintext highlighter-rouge">processes</code> would measure as a <strong>sink</strong>.</li>
 </ul>
 
-<p>The count moved 33 → 41 → 45 as classification improved, and stopped only when
-the unassigned column reached zero. <strong>When re-running this, read the unassigned
-column before the edge count</strong> — a low edge count over an unclassified corpus is
-the same false comfort as a green check over an empty one.</p>
+<p>The test that settles it is <strong>what breaks each way</strong>. Delete a skill and
+<code class="language-plaintext highlighter-rouge">roles.json</code> has a dangling ref; delete <code class="language-plaintext highlighter-rouge">roles.json</code> and every skill still works
+but no lane can reach one. Both break — the coupling is <strong>symmetric</strong> and merely
+written down once, on one side.</p>
 
-<p>It then reached 46 when ten commits from <code class="language-plaintext highlighter-rouge">main</code> merged in: five new harness
-modules, one of which imports the content model. <strong>The harness → core violation
-grows as ordinary work lands</strong>, because nothing stops a new <code class="language-plaintext highlighter-rouge">src/</code> module
-importing <code class="language-plaintext highlighter-rouge">schemas/types.ts</code>. Add <code class="language-plaintext highlighter-rouge">check:partition --strict</code> as a CI gate once
-the count is driven down — the flag exists for it.</p>
-<h3 id="03--decide-what-folio-is">
-  
-  
-    <a href="#03--decide-what-folio-is" class="anchor-heading" aria-labelledby="03--decide-what-folio-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0.3 — Decide what <code class="language-plaintext highlighter-rouge">folio</code> is
-  
-  
-</h3>
-    
+<p>So <code class="language-plaintext highlighter-rouge">role</code> is now read off <strong>enforced edges alone</strong>, and a boundary made only of
+recorded ones is <code class="language-plaintext highlighter-rouge">undetermined</code>. Ten of twenty-two groups are, including both
+groups whose carve was under discussion. The first cut called them <code class="language-plaintext highlighter-rouge">source</code>
+with total confidence on 100% recorded evidence.</p>
 
-<p>From the <a href="https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913">issue comment</a>:
-top-level <code class="language-plaintext highlighter-rouge">content/</code> becomes <code class="language-plaintext highlighter-rouge">folio/</code>; <strong><code class="language-plaintext highlighter-rouge">folio</code> becomes its own schema which
-can contain zero or more Content instances</strong>; the left-hand navbar gets a
-section per node in the folio instance.</p>
-
-<p>The rename is mechanical and wide — <strong>2,408 literal <code class="language-plaintext highlighter-rouge">content/</code> occurrences
-across 429 files</strong>. The schema is not mechanical and is the part that matters:
-today <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> has a single <code class="language-plaintext highlighter-rouge">contentType</code> and a single adapter, so
-“a folio” and “a content instance” are the same object. Making a folio a
-container of zero-or-more instances is a model change that touches
-<code class="language-plaintext highlighter-rouge">adapterForKind</code>, the profile check, the render path and the viewer.</p>
-
-<p><strong>Do the schema first and the rename last.</strong> A rename lands cleanly on a settled
-model; a settled model does not land cleanly on a corpus mid-rename.</p>
-<h2 id="phase-i--move-code-to-the-target-shape-still-one-repo">
+<p>This repository already names the same failure one graph over. <code class="language-plaintext highlighter-rouge">AGENTS.md</code>:
+<em>“Never populate <code class="language-plaintext highlighter-rouge">uses[]</code> from Lean — it destroys the signal every ordering
+metric is computed from.”</em> <code class="language-plaintext highlighter-rouge">uses[]</code> is the editorial relation, the Lean graph is
+the formal one; they look alike, mean different things, and the rule exists
+because <strong>where a fact is recorded determines what a metric over it means</strong>.</p>
+<h2 id="what-the-graph-actually-looks-like">
   
   
-    <a href="#phase-i--move-code-to-the-target-shape-still-one-repo" class="anchor-heading" aria-labelledby="phase-i--move-code-to-the-target-shape-still-one-repo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase I — move code to the target shape, still one repo
+    <a href="#what-the-graph-actually-looks-like" class="anchor-heading" aria-labelledby="what-the-graph-actually-looks-like"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the graph actually looks like
   
   
 </h2>
     
 
-<p>Everything here happens <strong>inside</strong> <code class="language-plaintext highlighter-rouge">litlfred/folio-assistant</code>. Nothing is
-extracted. The output is a repo whose directory structure is the future state,
-so Phase II can be <code class="language-plaintext highlighter-rouge">git filter-repo</code> plus a <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> rather than
-archaeology.</p>
+<p>Measured 2026-09-20, 443 nodes and 758 edges:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>#</th>
-      <th>work</th>
-      <th>gate</th>
+      <th>group</th>
+      <th>size</th>
+      <th>in</th>
+      <th>out</th>
+      <th>groups</th>
+      <th>dir</th>
+      <th>role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>I.1</td>
-      <td>Resolve each wrong-direction cross-edge from 0.2 — invert the dependency, move the module, or record why it is legitimate</td>
-      <td>the cross-edge list is empty or every survivor has a written reason</td>
-    </tr>
-    <tr>
-      <td>I.1b</td>
-      <td>Gate the result: <code class="language-plaintext highlighter-rouge">bun run check:partition --strict</code> in CI</td>
-      <td>a new wrong-direction edge fails the PR that introduces it, rather than being found at extraction time</td>
-    </tr>
-    <tr>
-      <td>I.2</td>
-      <td>Introduce the <code class="language-plaintext highlighter-rouge">folio</code> schema (0.3); a folio holds 0..n content instances</td>
-      <td><code class="language-plaintext highlighter-rouge">content_validate</code> passes on a zero-instance folio <strong>and</strong> a two-instance folio</td>
-    </tr>
-    <tr>
-      <td>I.3</td>
-      <td>Rename <code class="language-plaintext highlighter-rouge">content/</code> → <code class="language-plaintext highlighter-rouge">folio/</code></td>
-      <td>no <code class="language-plaintext highlighter-rouge">content/</code> path literal survives outside intentional content-instance paths; full test suite green <strong>and</strong> a synthetic-folio run proves each moved tool still reads its corpus</td>
-    </tr>
-    <tr>
-      <td>I.4</td>
-      <td>LHS navbar renders a section per node in the folio instance</td>
-      <td>a two-instance folio shows two sections; a zero-instance folio renders without error</td>
-    </tr>
-    <tr>
-      <td>I.5</td>
-      <td>Group modules into the five target trees</td>
-      <td>each tree builds with only its declared dependencies on the path</td>
-    </tr>
-    <tr>
-      <td>I.6</td>
-      <td>Split QA <strong>infrastructure</strong> (harness) from QA <strong>criteria</strong> (downstream)</td>
-      <td>the criterion registry loads zero criteria without erroring; criteria come from a dependency</td>
-    </tr>
-    <tr>
-      <td>I.7</td>
-      <td>Reconcile the three <code class="language-plaintext highlighter-rouge">todo-manager.md</code> copies (<code class="language-plaintext highlighter-rouge">AGENTS.md</code> records a 188-line divergence and one copy with <strong>no CI guard</strong>)</td>
-      <td>one canonical copy; every other is generated and checked</td>
-    </tr>
-    <tr>
-      <td>I.8</td>
-      <td><strong>Every repo declares <code class="language-plaintext highlighter-rouge">stub</code> + <code class="language-plaintext highlighter-rouge">canonicalUrl</code> and publishes <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code> / <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.schema.json</code></strong></td>
-      <td><code class="language-plaintext highlighter-rouge">bun run kg:export</code> in each repo emits artefacts named after that repo, with absolute <code class="language-plaintext highlighter-rouge">@id</code>s under its own <code class="language-plaintext highlighter-rouge">canonicalUrl</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>I.8 is what keeps five repos from becoming five vocabularies.</strong> Each split
-repo publishes its own knowledge graph, and the graphs are only mergeable if
-their node IRIs do not collide. Naming every artefact after its repository and
-minting <code class="language-plaintext highlighter-rouge">@id</code>s under that repository’s <code class="language-plaintext highlighter-rouge">canonicalUrl</code> guarantees that by
-construction: <code class="language-plaintext highlighter-rouge">agentic-harness.jsonld</code> and <code class="language-plaintext highlighter-rouge">folio-assist-core.jsonld</code> cannot
-assert the same node IRI, because the document IRI is part of every node’s.</p>
-
-<p>The corollary is the rule the skill states and a test enforces: <strong>artefacts are
-stub-named, the declaration file is not.</strong> The first half still holds; the
-second was re-decided on 2026-09-21, and the declaration is now <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>
-— named for the instance’s <code class="language-plaintext highlighter-rouge">name</code> rather than its <code class="language-plaintext highlighter-rouge">stub</code>, which is what keeps
-it out of the stub-named set.</p>
-
-<p>The concern recorded here was <strong>discovery</strong>, and it was real: a consumer must
-be able to open a repository it has never seen without first knowing what it
-is called. It was answered rather than dropped. The failure this paragraph
-warned of — <em>a resolver computing the filename from the directory finds
-nothing when a repo is cloned under a different name, and reports “no config”
-rather than an error</em> — is the failure <code class="language-plaintext highlighter-rouge">findDeclarationFile()</code> is built to
-avoid: it never computes the name from the directory, but scans for a <code class="language-plaintext highlighter-rouge">*.json</code>
-whose stem equals the <code class="language-plaintext highlighter-rouge">name</code> <strong>inside</strong> it, and throws when a directory holds
-two rather than picking one.
-See <a href="../../skills/folio-core/directory-conventions.md"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>
-§Naming and <a href="../../skills/folio-core/kg-export.md"><code class="language-plaintext highlighter-rouge">kg-export</code></a>.</p>
-
-<p><strong>I.3 is the one to stage carefully.</strong> 2,408 occurrences is a scale at which a
-single sweep is unreviewable. Split it by consumer — pipeline, scripts, docs,
-workflows, CI — with the wiring for each moving in the same commit as its
-targets.</p>
-<h2 id="phase-ii--separate-repos-incrementally">
-  
-  
-    <a href="#phase-ii--separate-repos-incrementally" class="anchor-heading" aria-labelledby="phase-ii--separate-repos-incrementally"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase II — separate repos, incrementally
-  
-  
-</h2>
-    
-
-<p>One repo at a time, each becoming a folio-assistant instance in its own right.</p>
-
-<p><strong>Order, cheapest-first, each proving something the next needs:</strong></p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>order</th>
-      <th>repo</th>
-      <th>proves</th>
-      <th>why here</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td><code class="language-plaintext highlighter-rouge">folio-asst-sci</code></td>
-      <td>a dependency can contribute schemas, an adapter and MCP tools</td>
-      <td>hardest mechanism, cleanest boundary — 101 files that already cluster</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td><code class="language-plaintext highlighter-rouge">agentic-harness</code></td>
-      <td>the harness genuinely does nothing on its own</td>
-      <td>extracting it <em>from underneath</em> core is how you find out what core assumed</td>
-    </tr>
-    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/folio-core</code></td>
+      <td>108</td>
+      <td><strong>254</strong></td>
+      <td>10</td>
       <td>3</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-      <td>a dependency-of-a-dependency resolves</td>
-      <td>the depth-first walk is exercised for real</td>
+      <td>0.92</td>
+      <td>sink</td>
     </tr>
     <tr>
-      <td>4</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
-      <td>the L1/L2 line holds</td>
-      <td>needs WHO context; least-built today</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/content-lifecycle</code></td>
+      <td>10</td>
+      <td>88</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.98</td>
+      <td>sink</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines</code></td>
+      <td>11</td>
+      <td>60</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>sink</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/schemas</code></td>
+      <td>132</td>
       <td>5</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg-tools</code>, <code class="language-plaintext highlighter-rouge">smart-base-tools</code></td>
-      <td>the Tool/Content kind split</td>
-      <td>only worth doing once the parents are stable</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.67</td>
+      <td>sink</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">processes</code></td>
+      <td>41</td>
+      <td><strong>0</strong></td>
+      <td><strong>334</strong></td>
+      <td>6</td>
+      <td>1.00</td>
+      <td><strong>source</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scenarios</code></td>
+      <td>1</td>
+      <td>0</td>
+      <td>122</td>
+      <td>6</td>
+      <td>1.00</td>
+      <td>source</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/memory</code></td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>isolated</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter</code></td>
+      <td>66</td>
+      <td>47</td>
+      <td>16</td>
+      <td>2</td>
+      <td><strong>0.49</strong></td>
+      <td><strong>tangled</strong></td>
     </tr>
   </tbody>
 </table></div>
 
-<p><code class="language-plaintext highlighter-rouge">folio-assist-core</code> is never extracted: it is what remains.</p>
+<p><strong>Two tangled groups out of twenty-two.</strong> This is a well-layered graph, and the
+layering is the one the architecture describes: skill packages are leaves,
+orchestration (<code class="language-plaintext highlighter-rouge">workflows</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">tools</code>) is the root. Only
+<code class="language-plaintext highlighter-rouge">folio-paper-adapter</code> and <code class="language-plaintext highlighter-rouge">bootstrap/skills</code> are genuinely entangled.</p>
+<h2 id="reach-is-counted-in-groups-not-references">
+  
+  
+    <a href="#reach-is-counted-in-groups-not-references" class="anchor-heading" aria-labelledby="reach-is-counted-in-groups-not-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reach is counted in groups, not references
+  
+  
+</h2>
+    
 
-<p><strong>Per-repo gate — all five required:</strong></p>
+<p>334 raw references out of <code class="language-plaintext highlighter-rouge">processes</code> resolve to <strong>57 distinct files in
+6 packages</strong>. <code class="language-plaintext highlighter-rouge">document-intake.md</code> alone accounts for 36 of them, from the
+ingestion diagrams. That is <strong>one dependency stated 36 times</strong>, not 36
+problems — so the “light detangling” clause counts distinct target <em>groups</em>,
+which is what a declared dependency list would actually hold.</p>
+<h2 id="two-defects-this-found-in-its-own-first-cut">
+  
+  
+    <a href="#two-defects-this-found-in-its-own-first-cut" class="anchor-heading" aria-labelledby="two-defects-this-found-in-its-own-first-cut"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two defects this found in its own first cut
+  
+  
+</h2>
+    
+
+<p>Both were in the measurement, not the graph, and both are recorded because a
+number nobody can re-derive is a number nobody can argue with.</p>
 
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">git filter-repo</code> preserves history for every moved file.</li>
-  <li>The extracted repo builds and tests <strong>standalone</strong>, with its declared
-dependencies and nothing else on the path.</li>
-  <li>The parent, with the extraction declared as a dependency, is green.</li>
-  <li><strong>Every moved tool is run against a synthetic folio and asserted to have read
-a non-empty corpus</strong> — the <code class="language-plaintext highlighter-rouge">dh4f</code> gate. An empty corpus exits non-zero.</li>
-  <li>No wiring left behind: every hook, workflow and doc reference to a moved
-script is repointed in the <em>same</em> change.</li>
+  <li><strong>Name collision in resolution.</strong> Five <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> values —
+<code class="language-plaintext highlighter-rouge">activity-log</code>, <code class="language-plaintext highlighter-rouge">getting-started</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code>, <code class="language-plaintext highlighter-rouge">qa-report-signing</code>,
+<code class="language-plaintext highlighter-rouge">upstream-version-adoption</code> — are <em>also</em> basenames of diagrams in the same
+directory. Preferring a same-group hit resolved every one to the diagram
+referring to it. That manufactured <strong>31 phantom internal edges and all 8
+reported inbound edges</strong> for <code class="language-plaintext highlighter-rouge">processes</code>. A skill ref names a skill;
+the resolver is now restricted by extension.</li>
+  <li><strong>Missing call edges.</strong> <code class="language-plaintext highlighter-rouge">&lt;bpmn:import&gt;</code>, <code class="language-plaintext highlighter-rouge">calledElement</code> and <code class="language-plaintext highlighter-rouge">decisionRef</code>
+were not extracted at all — 39 edges, and they are precisely the <em>internal</em>
+edges of a workflow graph. Cohesion for the group under discussion was
+understated for the whole time its carve was being argued.</li>
 </ol>
 
-<p><strong>Rollback:</strong> until gate 3 passes, the extracted repo is additive — the parent
-keeps its copy. The cutover commit is the one that deletes the parent’s copy,
-and it is the only commit in Phase II worth reverting as a unit.</p>
-<h2 id="phase-iii--build-on-the-harness">
+<p>After both fixes <code class="language-plaintext highlighter-rouge">processes</code> reads <strong>0 in / 334 out</strong>, not 8 / 303. The
+conclusion held; the evidence for it did not.</p>
+<h2 id="known-limits-stated-rather-than-discovered-later">
   
   
-    <a href="#phase-iii--build-on-the-harness" class="anchor-heading" aria-labelledby="phase-iii--build-on-the-harness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase III — build on the harness
-  
-  
-</h2>
-    
-
-<p>New construction, not migration. L4/L5 Content, Tool and Test repos built off
-<code class="language-plaintext highlighter-rouge">agentic-harness</code>, and healthworker- and individual-facing workflows
-(immunizations is the issue’s example).</p>
-
-<p>The Test repos are the substantive new thing, because
-<a href="current-state.html#what-this-repo-is-authoritative-for-today">no Test repo exists today</a>:
-test data, generation templates, FHIR Test Plans, Gherkin dialects, ITB
-configuration. Their defining requirement is the taxonomy’s — <strong>test data assets
-are themselves folio content types in the KG</strong> — so that SME review of test data
-is the same workflow, with the same QA sidecars and the same translation path,
-as review of anything else.</p>
-
-<p><strong>Phase III is the test of whether the split worked.</strong> If a
-healthworker-facing folio has to depend on <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> to get a working
-install, the boundary is in the wrong place and Phase II is not finished.</p>
-<h2 id="risks">
-  
-  
-    <a href="#risks" class="anchor-heading" aria-labelledby="risks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Risks
+    <a href="#known-limits-stated-rather-than-discovered-later" class="anchor-heading" aria-labelledby="known-limits-stated-rather-than-discovered-later"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Known limits, stated rather than discovered later
   
   
 </h2>
     
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>risk</th>
-      <th>why it bites here</th>
-      <th>mitigation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Silent-success scripts</strong></td>
-      <td>proven at the last split: 30 scripts, 23 broken, a CI gate passing over 0 blocks</td>
-      <td>every gate is a positive assertion over a synthetic folio</td>
-    </tr>
-    <tr>
-      <td><strong>The dependency model cannot carry it</strong></td>
-      <td>schemas and MCP tools are ruled out by design <em>today</em></td>
-      <td>Phase 0.1 is a hard blocker, sequenced before any move</td>
-    </tr>
-    <tr>
-      <td><strong>The rename swamps review</strong></td>
-      <td>2,408 occurrences across 429 files</td>
-      <td>staged by consumer; schema before rename</td>
-    </tr>
-    <tr>
-      <td><strong>Folio specifics leak into a split repo</strong></td>
-      <td>already the most-repeated defect in <code class="language-plaintext highlighter-rouge">AGENTS.md</code></td>
-      <td><code class="language-plaintext highlighter-rouge">platform-boundary-guard</code> subagent on every extraction; a TRAP entry per incident</td>
-    </tr>
-    <tr>
-      <td><strong>Boundaries drawn without domain context</strong></td>
-      <td>the L1/L2 line needs WHO knowledge this repo does not encode</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code> sequenced 4th; the line is drawn by a person, not inferred</td>
-    </tr>
-    <tr>
-      <td><strong>Five changelogs, one change</strong></td>
-      <td>a cross-cutting fix now needs five PRs</td>
-      <td>the ordering test: split only where consumers or cadences differ</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="what-this-plan-does-not-decide">
-  
-  
-    <a href="#what-this-plan-does-not-decide" class="anchor-heading" aria-labelledby="what-this-plan-does-not-decide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this plan does not decide
-  
-  
-</h2>
-    
-
-<p>Stated plainly so the gaps are not mistaken for omissions:</p>
 
 <ul>
-  <li><strong>Whether a dependency may contribute adapters and MCP tools</strong> (0.1). The
-largest open question; <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> is unbuildable until it is answered.</li>
-  <li><strong>Where the L1/L2 boundary falls</strong> between <code class="language-plaintext highlighter-rouge">smart-kg</code> and <code class="language-plaintext highlighter-rouge">smart-base</code>.</li>
-  <li><strong>Whether the viewer splits by content type</strong> or exposes a registration point
-(<a href="future-state.html#folio-assist-core">future state</a>).</li>
-  <li><strong>Repo ownership, naming and hosting</strong> — org, visibility, release cadence.</li>
-  <li><strong>Whether <code class="language-plaintext highlighter-rouge">folio-asst-sci</code> depends on core only</strong>, as the issue states, or
-also needs harness surface that core does not re-export.</li>
+  <li><strong>Four extractors only</strong>: <code class="language-plaintext highlighter-rouge">md-link</code>, <code class="language-plaintext highlighter-rouge">bpmn-skill</code>, <code class="language-plaintext highlighter-rouge">json-skill</code>, <code class="language-plaintext highlighter-rouge">ts-import</code>.
+There is deliberately no full-text extractor — a skill that <em>mentions</em> another
+in prose is not depending on it. Under-counting makes a group look cleaner
+than it is, so the extractor list is printed with the results.</li>
+  <li><strong>69 dangling references</strong> at the time of writing. A reference to a node
+outside the scanned set is reported separately and is <em>not</em> counted as an
+outbound edge: counting it would make a group with a broken link look
+entangled, which is a different finding calling for a different fix.</li>
+  <li><strong>Only <code class="language-plaintext highlighter-rouge">wrong-direction</code> is classified mechanically.</strong> <code class="language-plaintext highlighter-rouge">repo-partition.ts</code>
+asks the same direction question on the module graph, and since bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-j79e</code> both call one function,
+<code class="language-plaintext highlighter-rouge">cat-harness/schemas/layer-direction.ts</code>. Here a node’s layer is its
+instance, and what it may reach is its declared <code class="language-plaintext highlighter-rouge">needs</code> plus itself. The
+report’s <code class="language-plaintext highlighter-rouge">wdir</code> column counts wrong-direction outbound edges and <code class="language-plaintext highlighter-rouge">undet</code>
+counts edges whose source instance declares no <code class="language-plaintext highlighter-rouge">needs</code> — undetermined, not
+clean. <code class="language-plaintext highlighter-rouge">restatement</code> and <code class="language-plaintext highlighter-rouge">essential</code> stay <code class="language-plaintext highlighter-rouge">unclassified</code>: they are the
+adjudication, and <code class="language-plaintext highlighter-rouge">--group</code> prints each edge’s basis so the adjudicator
+starts from it. The counts are reported, not pinned — the sidecar ruling
+pins size, cohesion and authority counts only.</li>
 </ul>
+<h2 id="for-agents-working-on-detangle">
+  
+  
+    <a href="#for-agents-working-on-detangle" class="anchor-heading" aria-labelledby="for-agents-working-on-detangle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> For agents working on detangle
+  
+  
+</h2>
+    
+
+<p>This section was the instance’s <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, moved here unchanged when the instance was folded.</p>
+<h3 id="the-scanner-decides-nothing-and-neither-do-you-from-its-output">
+  
+  
+    <a href="#the-scanner-decides-nothing-and-neither-do-you-from-its-output" class="anchor-heading" aria-labelledby="the-scanner-decides-nothing-and-neither-do-you-from-its-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The scanner decides nothing, and neither do you from its output
+  
+  
+</h3>
+    
+
+<p>It emits <strong>findings</strong> with a <code class="language-plaintext highlighter-rouge">script</code> reviewer and a severity. The carve is a
+<code class="language-plaintext highlighter-rouge">Decision</code> by a human or agentic adjudicator, and that adjudicator <strong>may
+overrule any finding here</strong> — a theme a scanner cannot see is a real reason,
+and so is a boundary somebody intends to enforce before the edges exist to
+prove it.</p>
+
+<p>So: do not carve a subgraph because the numbers look good, and do not argue
+that a carve is wrong because they look bad. <strong>What the numbers buy is not
+authority — it is that the adjudication becomes reviewable.</strong> <em>“Carved anyway,
+cohesion 0.31, because X”</em> is a durable claim; <em>“carved”</em> is not.</p>
+<h3 id="the-criterion-is-a-near-sink-not-a-small-cut">
+  
+  
+    <a href="#the-criterion-is-a-near-sink-not-a-small-cut" class="anchor-heading" aria-labelledby="the-criterion-is-a-near-sink-not-a-small-cut"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The criterion is a near-SINK, not a small cut
+  
+  
+</h3>
+    
+
+<blockquote>
+  <p>arrows mostly one way</p>
+</blockquote>
+
+<p>Ten edges in and ten out is a cut of twenty and cannot be lifted. Fifty in and
+zero out is a cut of fifty and lifts cleanly. <strong>The direction is the test, and
+the size of the cut is not</strong> — an agent optimising for a small cut is
+answering a different question from the one asked.</p>
+
+<p>Before you treat a direction as a fact, check whether it is a <strong>filing
+decision</strong>: an edge that points one way because somebody chose where to put a
+file is not evidence about the graph’s shape.</p>
 
           
 
