@@ -277,6 +277,7 @@ export const RULES: Rule[] = [
       "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
@@ -811,6 +812,7 @@ export const RULES: Rule[] = [
       "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
+      "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
@@ -1486,6 +1488,14 @@ const PERMITTED_EDGES: readonly PermittedEdge[] = [
       "loading that module is therefore a precondition of calling one. Without it the kind is " +
       "registered only if the process happened to import core first — an import-order property " +
       "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+  },
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/glossary-graph-kind.ts",
+    reason:
+      "The same trigger for core's second kind, `glossary` (owner, 2026-09-23: \"put glossary " +
+      "into folio-assistant-core\"). One entry per endpoint pair, as this list's rule requires; " +
+      "it goes away with the folio entry when the split lands (#223).",
   },
 ];
 
