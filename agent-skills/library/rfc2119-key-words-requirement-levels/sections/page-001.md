@@ -7,7 +7,7 @@ pages: 1-1
 pdf_page: 1
 source_pdf: rfc2119-key-words-requirement-levels.pdf
 source_sha256: 3c11b6002f839b8f
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 RFC 2119:

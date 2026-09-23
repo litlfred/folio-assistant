@@ -7,7 +7,7 @@ pages: 25-25
 pdf_page: 25
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 The taxonomy in this group describes the capabilities of digital technology that can be 
