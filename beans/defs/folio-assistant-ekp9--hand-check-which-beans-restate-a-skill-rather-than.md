@@ -459,6 +459,35 @@ timeout — **did not fire**, on either tree, before or after the merge.
 than quoting the brief's expectation back: the pre-existing set was those two,
 and it is now empty.
 
+### The skill set was re-derived through the DECLARATION, not the glob
+
+The method above globs `**/skills/**/*.md`, which is a path literal, and this
+repository's own history says a literal is how a sweep goes silently
+incomplete: `kgRoots` walked `join(root, "skills")` until bean `lps0`, and
+**10 skills in the gap had never been audited at all** — 219 under the literal,
+229 under the declaration, and the shortfall reported as clean.
+
+So the set was re-derived through `kgRoots`, unioned across all 19 instance
+roots that carry a declaration, and diffed against the glob:
+
+| | |
+|---|---|
+| declared kg roots, union over instances | **15** |
+| `.md` files under them | **277** |
+| `.md` files from the glob | **277** |
+| **missed by the glob** | **0** |
+
+The declaration names three roots with no `skills/` segment that a glob cannot
+reach — `cat-harness/processes`, `cat-harness/scenarios`,
+`smart-base/methodologies/processes`, plus `bootstrap/`'s two — and every one
+of them holds `.bpmn` and `.json` and **no markdown**. So the two answers
+coincide here.
+
+**That is a verification, not a vindication.** The glob was right by the
+accident of where the markdown happens to live; a skill authored under
+`scenarios/` tomorrow would be invisible to it and visible to the declaration.
+Anything re-running this sweep should resolve through `kgRoots`.
+
 ### Every finding re-verified against the merged tree
 
 `main` advanced 40+ commits during the sweep, including B1 (#1168, every BPMN
