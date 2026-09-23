@@ -22,6 +22,8 @@
  *
  *   <out>/index.html          every document in the folio, linked
  *   <out>/<slug>/index.html   one page per document, block anchors intact
+ *   <out>/review/index.html   what changed from main, read from the preview's
+ *                             changeset.json when opened (bean txut)
  *
  * ## Failure is loud
  *
@@ -41,6 +43,7 @@ import remarkHtml from "remark-html";
 
 import { folioDir } from "../schemas/cat-harness.js";
 import { buildDocumentMarkdown } from "../content/pipeline/render-markdown.js";
+import { reviewPageHtml } from "./gen-review-page.js";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -108,7 +111,12 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
   const list = result.documents
     .map((d) => `<li><a href="${esc(d.page)}">${esc(d.slug)}</a> (${d.blocks} blocks)</li>`)
     .join("\n");
-  writeFileSync(join(outDir, "index.html"), page("Documents", `<h1>Documents</h1>\n<ul>\n${list}\n</ul>`));
+  mkdirSync(join(outDir, "review"), { recursive: true });
+  writeFileSync(join(outDir, "review", "index.html"), reviewPageHtml());
+  writeFileSync(
+    join(outDir, "index.html"),
+    page("Documents", `<h1>Documents</h1>\n<p><a href="review/index.html">What changed from main</a></p>\n<ul>\n${list}\n</ul>`),
+  );
   return result;
 }
 
