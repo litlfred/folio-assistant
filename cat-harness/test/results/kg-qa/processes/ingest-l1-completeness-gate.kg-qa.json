@@ -5,7 +5,7 @@
     "id": "Process_L1Gate",
     "path": "processes/ingest-l1-completeness-gate.bpmn"
   },
-  "source_hash": "sha256:89a46a51910dd23412056e938c4c338d1288289b28e0e98db97c41af4c11d61a",
+  "source_hash": "sha256:d01b4622a8c4e2b875b525c9cf31e2582c46d5e107ab2ff53626c3a2bf51176d",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 16,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

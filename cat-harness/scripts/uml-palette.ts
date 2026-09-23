@@ -21,6 +21,8 @@ export interface UmlPalette {
   family: Record<string, string>;
   /** Graph kind → hex, falling back to the neutral tint for an unplaced kind. */
   kind(kind: string): string;
+  /** Formalization status (and `reviewed_human` / `reviewed_agentic`) → hex. */
+  status: Record<string, string>;
 }
 
 /** Parse `uml.css`: the `--fa-uml-*` tokens, and which kinds each family rule names. */
@@ -38,9 +40,13 @@ export function readUmlPalette(harnessRoot: string): UmlPalette {
     if (!hex) continue;
     for (const k of rule[1]!.matchAll(/g\.fa_uml_kind_([a-z0-9_]+)/g)) byKind.set(k[1]!, hex);
   }
+  const status: Record<string, string> = {};
+  for (const m of css.matchAll(/--fa-uml-status-([a-z_]+):\s*(#[0-9a-fA-F]{3,8})/g)) status[m[1]!] = m[2]!;
+
   const other = family.other ?? "#F4F4F1";
   return {
     family,
+    status,
     kind: (kind) => byKind.get(kind.replace(/[^A-Za-z0-9_]/g, "_")) ?? other,
   };
 }

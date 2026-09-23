@@ -42,6 +42,8 @@ silence.
 
 **Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
 
+`detangle` is no longer an instance at all — #1123 folded it into this harness as a directory the same day, which dissolves that particular question rather than answering it. The two senses below are why the question was worth asking anyway, and they outlive the example.
+
 The rule above is a rule about **sense 1**. The word is also used, correctly
 and by the owner, for something else:
 

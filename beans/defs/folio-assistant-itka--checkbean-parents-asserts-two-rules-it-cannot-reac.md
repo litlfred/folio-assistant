@@ -158,3 +158,10 @@ Closed 2026-09-23 **on evidence, not authorship**, during a "close beans and che
 - `PARENT_TYPES` is `{milestone, epic, feature}` (`cat-harness/scripts/check-bean-parents.ts:114`).
 - The epic rule is stated positively, `p.type !== "milestone"` (`:199`).
 - `bun run check:bean-parents` is green. Its one outstanding line is `d308`, which is baselined for its owner, as item 3 intended.
+
+## Carried over from #938, 2026-09-23
+
+#938 (`claude/eager-thompson-3bb3kq`) held two changes that never reached `main`. At the owner's request they were ported into #1136, and #938 was closed as carried over.
+
+- **A direction rule (`RANK`).** Widening `PARENT_TYPES` admitted a `feature` nested in a `feature` and a `milestone` under an `epic`, and the epic-only rule reaches neither. The rule is checked by removing it: `bean-parents-feature-tier.test.ts` then fails 3 of 13 tests; with it restored, all 13 pass. The real store is still clean under it: 231 open beans, and only `d308` is outstanding, baselined as before.
+- **An honest summary line.** With `d308` baselined, the tick used to claim "every epic from a milestone" on the line directly above the one that refutes it. It now says "every NEW epic", followed by the baselined count.
