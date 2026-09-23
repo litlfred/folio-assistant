@@ -51,6 +51,6 @@ Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency
 
 - [x] `merge_group:` on the two gating workflows
 - [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node `gates-merged`; `/prepare-merge` skill and command
-- [ ] falsified by replaying a real stale pair (d0c91582 against main at 10:52, cc6548ef)
-- [ ] bun run gates green; PR
+- [x] falsified both ways: replaying the real pair (d0c91582 against main at 10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the real defect — exit 1; a clean control (current main against itself) passes 135/135, exit 0. The first replay also showed two false failures from path-sensitive tests (`folio-root.test.ts` requires the checkout directory be named `folio-assistant`); fixed by naming the worktree after the checkout, and re-proved.
+- [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run gates 135/135; PR
 - [ ] owner switches on the merge queue for `main` (Settings → Rules/Branch protection → Require merge queue) — the owner's action, not an agent's
