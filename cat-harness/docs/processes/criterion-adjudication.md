@@ -37,4 +37,12 @@ Every one of the 4 step(s) is documented.
 | **Grant a dispensation, with its reason**<br>`A_Dispensation` | Adjudicator | [`adjudication`](../reference/skill-instructions/adjudication.html) | The rule applies and this subject is a stated exception. A `kind: "human"` entry with `result: "pass"` overrides the script's `fail` for that criterion, and ONLY while its `field_hash` matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it. A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable. |
 | **Write the entry that LEADS — keeping the checker's beneath it**<br>`A_RecordEntry` | Adjudicator | [`adjudication`](../reference/skill-instructions/adjudication.html) | Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not. Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`. |
 
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which of the three?**<br>`GW_Outcome` | The three are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason. | **the finding stands** → Write the entry that LEADS — keeping the checker's beneath it<br>**the criterion does not apply here** → Scope the criterion so it stops applying here<br>**it applies; this is an exception** → Grant a dispensation, with its reason |
+
 {% endraw %}

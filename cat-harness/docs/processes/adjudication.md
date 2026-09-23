@@ -41,11 +41,10 @@ Every one of the 3 step(s) is documented.
 
 ## Decisions
 
-Every one of the 2 decision(s) is documented.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Are both sides present?**<br>`GW_Adjudicable` | A missing entry is not a disagreement. One reviewer and no checker is a review; one checker and no reviewer is a gate. Leaving here is the correct outcome for both, and it is why an actor cannot enter this process simply by declaring that it has. | **both sides present** → Dispatch with adjudicator_sees — never the artefact<br>**only one side** → Not adjudicable — it is a review, a gate, or a bug report |
-| **Which of the three?**<br>`GW_Outcome` | The same three `review-narrative` and `voice-review` already name, and they are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason. | **the finding stands** → Write the entry that LEADS — keeping the checker's beneath it<br>**the criterion does not apply here** → Scope the criterion so it stops applying here<br>**it applies; this is an exception** → Grant a dispensation, with its reason |
 
 {% endraw %}
