@@ -36,7 +36,7 @@
 
 import { resolve } from "node:path";
 
-import { instanceRootsIn, readDeclaration, repoRootFor } from "./cat-harness";
+import { instanceRootsIn, readDeclaration, siblingScopeFor } from "./cat-harness";
 import { dependenciesFromNeeds } from "./harness-config";
 
 /**
@@ -157,7 +157,10 @@ export function dependsOnFor(instanceRoot: string): DependsOnExport {
   }));
 
   const byName = new Map<string, string>();
-  for (const root of instanceRootsIn(repoRootFor(abs))) {
+  // `siblingScopeFor`, not `repoRootFor` — see its docblock. This is a lookup
+  // of siblings by name, and for the instance declared at the repository root
+  // `dirname` looks outside the checkout and finds none of them.
+  for (const root of instanceRootsIn(siblingScopeFor(abs))) {
     try {
       const n = readDeclaration(root)?.name;
       if (n !== undefined) byName.set(n, root);
