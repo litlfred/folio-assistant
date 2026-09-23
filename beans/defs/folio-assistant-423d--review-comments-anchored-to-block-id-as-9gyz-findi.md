@@ -224,3 +224,13 @@ The commit goes to the FEATURE BRANCH that carries the edit-set, never to
 **Open:**
 - `init-folio` writing a todos graph with a `todo-feedback` directory;
 - resolving from the page (which needs a write path; deliberately not built).
+
+**`init-folio` todos graph, done (same session):** a new folio gets
+`todos/todos.json` declaring `items` and `feedback` (`todo-feedback`), with
+both directories created. Checked end to end on a scaffolded folio:
+`review-comment-move --commit` on feature branch `edit/dosing` committed
+`todos/feedback/review-pr7-c1.json` (open → addressed).
+
+**Left on 423d:** resolving from the page, which is deliberately not built
+because it needs a write path from a static page. And the real Actions run,
+which is owed with `ojcx`.

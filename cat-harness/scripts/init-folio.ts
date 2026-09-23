@@ -560,6 +560,45 @@ jobs:
 `;
 }
 
+/**
+ * The folio's todos graph: people's outstanding items, and FEEDBACK raised
+ * against a block. Bean `423d`.
+ *
+ * `feedback` (graph kind `todo-feedback`) is where a review-process task
+ * commits a reviewer's comment when it decides what happens to it
+ * (`folio-review-comment-move`, on the edit-set's feature branch, per the
+ * owner's ruling). Without the declaration the first recorded decision on a
+ * new folio stops with "declares no directory of graph kind todo-feedback",
+ * so a folio gets it from the start.
+ *
+ * No `defaultTheme`: a folio's own theme is the folio's to choose, and a
+ * literal here would impose one on every new folio.
+ */
+function todosGraph(slug: string): string {
+  return JSON.stringify(
+    {
+      name: slug,
+      directories: [
+        {
+          id: "items",
+          path: "items",
+          graphKinds: ["todo-items"],
+          description: "One Markdown file per todo, carrying `$schema: folio-todo/v1` in its front matter: a person's outstanding item.",
+        },
+        {
+          id: "feedback",
+          path: "feedback",
+          graphKinds: ["todo-feedback"],
+          description:
+            "Todos raised against a specific block. Review comments land here as `folio-review-comment/v1` JSON, committed on the edit-set's feature branch by the review-process task that decided them (the `review-comments` skill).",
+        },
+      ],
+    },
+    null,
+    2,
+  ) + "\n";
+}
+
 function beansYml(slug: string): string {
   return `beans:
     path: beans
@@ -712,6 +751,12 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   // declaration to read in a repo that does not exist yet — this is the
   // write that makes one possible.
   write("beans/.gitkeep", "");
+  // The todos graph, and both directories it declares: declaring a directory
+  // that does not exist is the `dh4f` defect (a consumer scans nothing and
+  // reports a clean run). declared-path-literal: scaffolding the layout, as above.
+  write("todos/todos.json", todosGraph(o.slug));
+  write("todos/items/.gitkeep", "");
+  write("todos/feedback/.gitkeep", "");
 
   // 2. The builder shim — the one place the platform path is written down.
   // declared-path-literal: the folio content root. Resolving it through `directoryForGraph` is bean `hs08`; the harness-side callers hit `ot9a`'s layering boundary, so the literal is COUNTED here rather than hidden.

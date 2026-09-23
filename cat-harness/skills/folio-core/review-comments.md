@@ -173,6 +173,9 @@ bun run folio-assistant-core/scripts/review-comment-move.ts \
 - **The move goes through `transition()`**, so `--process` and `--task` must
   be a task allowed to make it, and `resolved` / `adjudicated` need
   `--decision`. The command is not a back door around the table above.
+- **A new folio already has the directory.** `init-folio` writes
+  `todos/todos.json` declaring `items` and `feedback` (`todo-feedback`), and
+  creates both. An older folio that lacks it gets an error naming the remedy.
 - **The file goes where the graph says.** That is the todos graph's
   directory of kind `todo-feedback` ("todos raised against a specific block,
   carrying the submitter's identity"), read from `todos/todos.json`. A graph
@@ -265,9 +268,6 @@ of change goes:
   decision is recorded with `folio-review-comment-move` in the editor's
   session. A page button would need a write path from a static page, which
   is the problem this whole design avoids.
-- **A new folio's todos graph.** `init-folio` does not yet write a
-  `todos/todos.json` with a `todo-feedback` directory, so a new folio has to
-  declare one before its first decision is recorded. The error says so.
 - **A reviewer who edits a comment after ingest.** The edit is not re-read, so
   a record an editor has already acted on is not silently rewritten. Whether
   an edit should reopen the comment is open.
