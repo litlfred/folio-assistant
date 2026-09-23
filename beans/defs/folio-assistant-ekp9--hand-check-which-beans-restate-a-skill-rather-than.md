@@ -272,6 +272,27 @@ above was correct and the page was still wrong."*
 Under either reading of *"the last two"* the QA check is inside it, so the
 skill is wrong on that half regardless of how the list is grouped.
 
+**A THIRD disagreement, found on merging `main` (`b54de4d9`) after the first
+pass.** `docs-auto`'s built/not-built table is now wrong in both rows:
+
+> **the skill:** "| built | `index/skills`, `index/processes` |
+> | declared, **not** built | `glossary` (gated by bean `lqo9`'s roast),
+> `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles` |"
+
+Measured on the merged tree — `gen-docs-auto.ts` declares **four** types
+(`index/skills:321`, `index/docs:358`, `index/processes:409`,
+`glossary:487`), and both of the ones the table misplaces are emitting pages:
+
+| type | the skill says | on disk |
+|---|---|---|
+| `glossary` | declared, **not** built | **built** — `docs-auto/glossary/` holds `index.html` and a `glossary/` subtree |
+| `index/docs` | **absent from the table entirely** | **built** — `docs-auto/index/docs/` holds `docs`, `smart-trust-docs`, `who-iris-docs` |
+
+The `glossary` row is the costly one: it says the type is *"gated by bean
+`lqo9`'s roast"*, and `lqo9` is still open and still carries that gating as a
+live constraint. An agent reading either text concludes the glossary index is
+blocked on a roast that has in fact been overtaken.
+
 **What it would cost.** The bean's §4(a) is the one page written to obey the
 skill's own central rule — *"An index with no authored prose around it reads as
 complete while explaining nothing"* — and the route it claims now serves a
@@ -411,7 +432,7 @@ reviewable change, so none is touched here. In rough order of what it buys:
 |---|---|---|
 | 1 | `feature-staging` §3 | Say that staging writes **only** `branch`/`staging`/`staging_slug`/`pr_number`/`search_index`, and **why** the four time/SHA fields are absent, with a pointer to §"The facts are fetched, not baked". Highest value: today the skill instructs the reader to re-break it. |
 | 2 | `interaction-modality` §"the condition" | Re-point to `bean-rendered-decision-records` per the owner's option C, and keep the old sentence as a dated superseded note, which is the shape `goal-review` already uses. |
-| 3 | `docs-auto` §Related | Say the QA check is **built and gated**; say the landing page is **not** built. Correct `06e3`'s §4(a) to record that the route now serves a generated index — which re-opens §2's obligation rather than closing it. |
+| 3 | `docs-auto` §Related **and** its built/not-built table | Say the QA check is **built and gated**; say the landing page is **not** built. Move `glossary` to the built row and add `index/docs`, which the table omits. Correct `06e3`'s §4(a) to record that the route now serves a generated index — which re-opens §2's obligation rather than closing it. Check `lqo9` at the same time: it still carries the glossary type as gated on its own roast. |
 | 4 | `7pdi` | Replace the `adjudication.bpmn` sentence with a pointer to `adjudication` §"One judgement, six questions", plus a drift record — the `kn0t` shape exactly. |
 | 5 | `lqo9` + `swimlane-glossary` | Re-derive the lane count on both, or drop it from the prose and point at `check:lane-documentation`. `uses-editorial-review` already says why a count in prose is a claim rather than evidence. |
 | 6 | `s8mo` + `session-context` | Same, for "six fields" against the schema's eight. |
@@ -424,18 +445,35 @@ the bean is the argument for the constraint list.
 
 ## Verified
 
-`bun run gates` — **134 of 136**. The two failures are **pre-existing**, each
-confirmed red by stashing this change and running it on a clean tree:
+`bun run gates` — **136 of 136 green**, after merging `main` at `b54de4d9`.
 
-| gate | on `main`, clean |
-|---|---|
-| `kg:detangle:check` | exit 1 |
-| `docs:auto:check` | exit 1 — five `docs-auto` index pages stale |
+Before that merge it was 134 of 136, and both failures were **pre-existing** —
+each confirmed red by stashing this change and running on a clean tree
+(`kg:detangle:check` exit 1; `docs:auto:check` exit 1, five `docs-auto` index
+pages stale). **`main` fixed both**, which is why the merge was worth doing
+before reporting rather than after.
 
 The failure the brief named — `kg export > a preview says so in its type`, a 5 s
-timeout — **did not fire**, on either tree. `bun test`: 11009 pass, 56 skip,
-**0 fail** across 451 files. Saying so rather than quoting the brief's
-expectation back: the pre-existing set is these two, not that one.
+timeout — **did not fire**, on either tree, before or after the merge.
+`bun test`: 11009 pass, 56 skip, **0 fail** across 451 files. Saying so rather
+than quoting the brief's expectation back: the pre-existing set was those two,
+and it is now empty.
+
+### Every finding re-verified against the merged tree
+
+`main` advanced 40+ commits during the sweep, including B1 (#1168, every BPMN
+lane names its role) and #1180 (ODRL/PROV policies) — both touching files these
+findings rest on. Re-measured rather than assumed:
+
+| finding | after the merge |
+|---|---|
+| `hajp` — skill names `bean-decision-records` | unchanged, line 349 |
+| `g196` — skill §3 vs the workflow | unchanged, line 91 — **and now stronger**: `feature-staging.yml:324` carries the comment *"`short_sha`, `built_at` and `run_url` are DELIBERATELY ABSENT on a staging build, and this is the second half of bean `g196`"*. The workflow states the intent in words and the skill still contradicts it |
+| `7pdi` — `adjudication.bpmn` holds three activities | unchanged |
+| `06e3` — check built, landing page absent | unchanged, **plus the third disagreement above** |
+| `ga3q` — five of six gated skills point at the waiver | unchanged; `process-state.md` changed on `main` and still carries none |
+| `lqo9` — 182 lanes against both texts' 157 | unchanged at 182, through the lane-role rewrite |
+| `s8mo` — 8 schema fields against both texts' six | unchanged at 8 |
 
 ### One defect of my own, caught by a gate and worth keeping
 
