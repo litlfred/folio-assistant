@@ -35,7 +35,7 @@ about a REVIEW.
 | **Open comments** | review comments still `open` or `addressed`, with defects counted in brackets | `review-comments.json` | how bad the section is. One comment may be about the whole section, and a question is not a defect. |
 | **Stale comments** | open comments whose block changed AFTER the comment was made (its recorded hash differs from the block's current one) | `review-comments.json` + `blocks.json` | wrong or obsolete. It means **re-read the block before replying**, because the reviewer saw an earlier version. |
 | **Review coverage** | **not measured yet** | — | "every comment is resolved". Coverage needs a per-block reviewer VERDICT, which nothing records until the review process does (bean `en2d`). **Resolved comments are not approval**, so none is shown rather than a number built from them. |
-| **QA** | **not published yet** | — | a pass. The folio's QA results exist in its repository, but the staging build does not copy them into the preview yet. The owner asked for that next (bean `qbfi`, option 2). |
+| **QA** | the section's blocks whose latest QA verdicts FAIL (with the worst severity), and those whose verdicts are STALE or that were never audited | `block-qa.json`, published by the `folio-block-qa-summary` Tool from the folio's committed verdicts | a pass. A block counts as failing only on a verdict NEWER than the block; an older verdict makes it stale, and stale outranks passing. A section gets a row for QA alone only if something there fails or is stale. |
 
 **A column with no data says so in every row** ("not measured yet", "not
 published yet", or "no data" when a build lacks the file). It is never 0 and
@@ -45,6 +45,26 @@ what is not known.
 Orphaned comments (their block is gone) have no section. They are counted
 in a last row, "(listed in no section)", because an open comment is still
 open.
+
+## Where the QA column's data comes from
+
+The staging workflow runs the `folio-block-qa-summary` Tool
+(`cat-harness/scripts/publish-block-qa.ts`) over the folio. It reads each
+block's committed `block-qa/v1` verdicts, runs no checker, and writes
+`block-qa.json`. Each block is one of:
+
+- **failing**: a fresh verdict failed;
+- **stale**: nothing fresh failed, but some verdict predates the block's
+  files;
+- **passing**: every latest verdict is fresh and none failed;
+- **unaudited**: no verdict at all.
+
+Freshness is the QA sweep's own rule, including the `uses`-graph hash that
+graph-scoped criteria depend on. Leaving that hash out made every
+detangler criterion read stale straight after a sweep.
+
+The QA sweep currently writes verdicts under the directory it was run on,
+not the instance root (bean `s3p2`), so the summary reads both.
 
 ## How the colour was chosen
 

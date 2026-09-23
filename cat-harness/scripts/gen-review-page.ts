@@ -299,8 +299,10 @@ const SCRIPT = `
       get("../review-comments.json").catch(function () { return null; }),
       get("../changeset-text.json").catch(function () { return null; }),
       get("../blocks.json").catch(function () { return null; }),
+      get("../block-qa.json").catch(function () { return null; }),
     ]).then(function (both) {
       var blocksFile = both[3];
+      var qaFile = both[4];
       var st = both[0];
       var rc = both[1];
       var txt = both[2];
@@ -397,7 +399,7 @@ const SCRIPT = `
       if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only side by side is available.";
       applyView(viewAll.value);
       // The heat map (qbfi), above the list it indexes.
-      var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile });
+      var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile, qa: qaFile ? qaFile.blocks : null });
       if (heat.rows.length) {
         var wrap = document.getElementById("heat");
         wrap.appendChild(renderHeat(document, heat, heatBucket, function (sec) {
@@ -405,7 +407,7 @@ const SCRIPT = `
             list.querySelector('h2[data-section="(unchanged)"]');
           if (t) { t.focus(); t.scrollIntoView({ block: "start" }); }
         }));
-        wrap.appendChild(el("p", "Review coverage is not measured yet: it needs a per-block reviewer verdict, which nothing records until the review process does, and resolved comments are not approval. QA is not published to previews yet.", "muted"));
+        wrap.appendChild(el("p", "Review coverage is not measured yet: it needs a per-block reviewer verdict, which nothing records until the review process does, and resolved comments are not approval. QA counts a block as failing only on a verdict newer than the block; an older verdict is counted as stale.", "muted"));
       }
       if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
     });

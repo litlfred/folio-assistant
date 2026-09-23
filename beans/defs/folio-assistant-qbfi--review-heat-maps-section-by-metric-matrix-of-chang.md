@@ -36,7 +36,7 @@ says what each metric MEANS and what it must not be read as. In particular,
 coverage is not approval.
 
 ## Done when
-- [ ] the five metrics are computed from published data, not from an agent's /tmp
+- [ ] the five metrics are computed from published data (four of five; coverage waits on en2d), not from an agent's /tmp
 - [ ] the matrix, minimap and table view are on the review page, and pass the dataviz validator in both themes
 - [x] the skill is written, and content-graph.md points to it for the review use
 
@@ -76,3 +76,24 @@ coverage is not approval.
   no skills package, and a review skill split from its siblings would be found
   by nobody.
 - The minimap is not built here. It is the outline/minimap bean (`eb4l`).
+
+**Built (option 2, same PR): the QA column is real.**
+- Tool `folio-block-qa-summary` (`cat-harness/scripts/publish-block-qa.ts`)
+  reads the folio's committed `block-qa/v1` verdicts and writes
+  `block-qa.json` for the preview. Each block is failing, stale, passing or
+  unaudited, with the sweep's own freshness rule.
+- Stale outranks passing. That came from a real test: after one sentence was
+  added to a swept block, 24 criteria went stale and it still read "passing".
+- The graph hash is included. Without it, every detangler criterion read
+  stale straight after a sweep.
+- The summary reads verdicts at both anchors. The sweep writes under the
+  directory it was run on, not the instance root (bean `s3p2` records it and
+  waits on the owner).
+- `folio-staging.yml` runs it after the ChangeSet. The heat map's QA column
+  shows "N failing (worst) · N stale · N unaudited", or "passing".
+- Checked on the scaffolded folio with a REAL sweep: `prose:overview` fails
+  `voice-status-leak` (critical) on its placeholder text.
+
+**Left:**
+- coverage, which needs en2d's verdicts;
+- the minimap (`eb4l`).

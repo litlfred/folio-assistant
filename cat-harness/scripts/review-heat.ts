@@ -10,7 +10,7 @@
  * | open | review comments not yet closed (`open` or `addressed`); defects counted apart | how bad the section is; one comment may cover a whole section |
  * | stale | open comments whose block changed AFTER the comment was made | wrong; it means "re-read before replying" |
  * | coverage | NOT MEASURED YET | "every comment resolved". Coverage needs a per-block reviewer verdict, which nothing records until bean en2d's process does. Resolved comments are not approval. |
- * | qa | NOT PUBLISHED YET | a pass. The staging build does not yet publish the folio's QA results; the owner asked for that next (qbfi option 2). |
+ * | qa | the section's blocks whose latest QA verdicts FAIL, and those whose verdicts are STALE (older than the block), from `block-qa.json` | a pass when it is empty of failures: stale and unaudited blocks are counted and said, never read as passing |
  *
  * A column with no data is SAID, per row, never shown as 0 or blank. Zero
  * would read as "measured, and nothing there", which is the one thing it
@@ -28,6 +28,14 @@ export interface HeatRow {
   open: number;
   defects: number;
   stale: number;
+  /** Blocks whose fresh QA verdicts fail; the worst severity among them. */
+  qaFailing: number;
+  qaWorst: string | null;
+  /** Blocks whose QA verdicts are older than the block, and blocks never audited. */
+  qaStale: number;
+  qaUnaudited: number;
+  /** Blocks in the section the QA summary covers. */
+  qaBlocks: number;
 }
 
 export interface HeatInput {
@@ -36,15 +44,20 @@ export interface HeatInput {
   comments: Array<{ targetLabel: string; status: string; review: { kind: string; blockHash: string | null; orphaned?: boolean } }> | null;
   /** `blocks.json`: each head block's current hash and section, or null. */
   blocks: Record<string, { hash: string; section?: string }> | null;
+  /** `block-qa.json`'s `blocks`, or null when the build published none. */
+  qa?: Record<string, { state: string; worst: string | null }> | null;
 }
 
-export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: boolean; hasBlocks: boolean } {
+export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: boolean; hasBlocks: boolean; hasQa: boolean } {
   const NONE = "(listed in no section)";
   const rows = new Map<string, HeatRow>();
   const row = (s: string | undefined) => {
     const k = s || NONE;
     let r = rows.get(k);
-    if (!r) { r = { section: k, changed: 0, open: 0, defects: 0, stale: 0 }; rows.set(k, r); }
+    if (!r) {
+      r = { section: k, changed: 0, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0 };
+      rows.set(k, r);
+    }
     return r;
   };
   const sectionOf = new Map<string, string | undefined>();
@@ -64,12 +77,32 @@ export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: b
     if (c.review.kind === "defect") r.defects++;
     if (b && c.review.blockHash !== null && b.hash !== c.review.blockHash) r.stale++;
   }
+  // QA needs a section per block, which only blocks.json gives. A section
+  // gets a row for QA alone only when something there FAILS or is STALE; a
+  // clean section with no change and no comment is not a place to look first.
+  const qa = input.blocks && input.qa ? input.qa : null;
+  if (qa && input.blocks) {
+    const RANK: Record<string, number> = { critical: 0, major: 1, minor: 2 };
+    for (const [label, q] of Object.entries(qa)) {
+      const s = (input.blocks[label] || {}).section;
+      const k = s || NONE;
+      const attention = q.state === "failing" || q.state === "stale";
+      if (!rows.has(k) && !attention) continue;
+      const r = row(s);
+      r.qaBlocks++;
+      if (q.state === "failing") {
+        r.qaFailing++;
+        if (q.worst && (r.qaWorst === null || RANK[q.worst]! < RANK[r.qaWorst]!)) r.qaWorst = q.worst;
+      } else if (q.state === "stale") r.qaStale++;
+      else if (q.state === "unaudited") r.qaUnaudited++;
+    }
+  }
   // Reading order: sections as the ChangeSet meets them, then any others by name, NONE last.
   const order = [...new Set(input.changes.map((c) => (c.head || c.base || {}).section || NONE))];
   const rest = [...rows.keys()].filter((k) => !order.includes(k)).sort();
   const all = [...order, ...rest].filter((k) => k !== NONE);
   if (rows.has(NONE)) all.push(NONE);
-  return { rows: all.map((k) => rows.get(k)!), hasComments: input.comments !== null, hasBlocks: input.blocks !== null };
+  return { rows: all.map((k) => rows.get(k)!), hasComments: input.comments !== null, hasBlocks: input.blocks !== null, hasQa: qa !== null };
 }
 
 /** 0 → no fill; otherwise the tertile of the column's maximum, 1–3. */
@@ -88,7 +121,12 @@ export function heatBucket(v: number, max: number): number {
  */
 export function renderHeat(
   doc: Document,
-  h: { rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number }>; hasComments: boolean; hasBlocks: boolean },
+  h: {
+    rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number; qaFailing: number; qaWorst: string | null; qaStale: number; qaUnaudited: number; qaBlocks: number }>;
+    hasComments: boolean;
+    hasBlocks: boolean;
+    hasQa: boolean;
+  },
   bucket: (v: number, max: number) => number,
   jump: (section: string) => void,
 ): HTMLElement {
@@ -103,7 +141,7 @@ export function renderHeat(
     ["Open comments", "open or addressed; defects in brackets"],
     ["Stale comments", "the block changed after the comment was made: re-read before replying"],
     ["Review coverage", "not measured yet"],
-    ["QA", "not published yet"],
+    ["QA", "blocks whose latest QA verdicts fail; stale and unaudited blocks are counted, never read as passing"],
   ];
   const head = doc.createElement("thead");
   const hr = doc.createElement("tr");
@@ -116,8 +154,8 @@ export function renderHeat(
   }
   head.appendChild(hr);
   t.appendChild(head);
-  const max = (k: "changed" | "open" | "stale") => Math.max(0, ...h.rows.map((r) => r[k]));
-  const mx = { changed: max("changed"), open: max("open"), stale: max("stale") };
+  const max = (k: "changed" | "open" | "stale" | "qaFailing") => Math.max(0, ...h.rows.map((r) => r[k]));
+  const mx = { changed: max("changed"), open: max("open"), stale: max("stale"), qa: max("qaFailing") };
   const body = doc.createElement("tbody");
   const cell = (text: string, b: number, title: string, muted = false) => {
     const td = doc.createElement("td");
@@ -149,7 +187,16 @@ export function renderHeat(
       tr.appendChild(cell("no data", 0, "Needs review-comments.json and blocks.json", true));
     }
     tr.appendChild(cell("not measured yet", 0, "Coverage needs a per-block reviewer verdict, which nothing records yet (bean en2d). Resolved comments are not approval.", true));
-    tr.appendChild(cell("not published yet", 0, "The staging build does not publish the folio's QA results yet (bean qbfi, option 2).", true));
+    if (!h.hasQa) {
+      tr.appendChild(cell("not published", 0, "This build published no block-qa.json (or no blocks.json to place it by section)", true));
+    } else {
+      const parts: string[] = [];
+      if (r.qaFailing) parts.push(r.qaFailing + " failing" + (r.qaWorst ? " (" + r.qaWorst + ")" : ""));
+      if (r.qaStale) parts.push(r.qaStale + " stale");
+      if (r.qaUnaudited) parts.push(r.qaUnaudited + " unaudited");
+      const text = parts.length ? parts.join(" \u00b7 ") : r.qaBlocks ? "passing" : "no blocks";
+      tr.appendChild(cell(text, bucket(r.qaFailing, mx.qa), r.qaFailing + " block(s) failing, " + r.qaStale + " stale, " + r.qaUnaudited + " unaudited, of " + r.qaBlocks, !r.qaFailing && !r.qaStale && !r.qaUnaudited));
+    }
     body.appendChild(tr);
   }
   t.appendChild(body);

@@ -15,7 +15,7 @@ const comment = (id: number, targetLabel: string, kind: string, blockHash: strin
   review: { repo: "o/r", pr: 7, commentId: id, commentUrl: `https://example.org/c/${id}`, reviewer: "r", role: "reviewer", kind, blockHash, commit: "c1", orphaned: false, anchoredFrom: [] },
 });
 
-function files(withComments: boolean): Record<string, { type: string; body: string }> {
+function files(withComments: boolean, withQa = false): Record<string, { type: string; body: string }> {
   const f: Record<string, { type: string; body: string }> = {
     "/preview/review/": { type: "text/html", body: reviewPageHtml() },
     "/preview/staging.json": { type: "application/json", body: JSON.stringify({ branch: "b", pr: "7", prUrl: "https://example.org/pull/7", mainSite: "/main" }) },
@@ -51,11 +51,26 @@ function files(withComments: boolean): Record<string, { type: string; body: stri
       }),
     };
   }
+  if (withQa) {
+    f["/preview/block-qa.json"] = {
+      type: "application/json",
+      body: JSON.stringify({
+        $schema: "folio-block-qa-summary/v1",
+        blocks: {
+          "p:a": { state: "failing", fails: 1, warns: 0, worst: "critical", staleCriteria: 0 },
+          "p:b": { state: "passing", fails: 0, warns: 0, worst: null, staleCriteria: 0 },
+          "p:c": { state: "unaudited", fails: 0, warns: 0, worst: null, staleCriteria: 0 },
+          "p:u": { state: "stale", fails: 0, warns: 0, worst: null, staleCriteria: 3 },
+        },
+        counts: { failing: 1, passing: 1, stale: 1, unaudited: 1 },
+      }),
+    };
+  }
   return f;
 }
 
-async function open(page: Page, withComments = true): Promise<void> {
-  const f = files(withComments);
+async function open(page: Page, withComments = true, withQa = false): Promise<void> {
+  const f = files(withComments, withQa);
   await page.route(`${ORIGIN}/**`, (route) => {
     const hit = f[new URL(route.request().url()).pathname];
     return hit ? route.fulfill({ status: 200, contentType: hit.type, body: hit.body }) : route.fulfill({ status: 404, body: "" });
@@ -71,9 +86,9 @@ test.describe("review page: heat map (qbfi)", () => {
   test("one row per section in reading order, a comment on an unchanged block in its own section", async ({ page }) => {
     await open(page);
     expect(await rows(page)).toEqual([
-      ["doc/ch › sec:one", "2", "2 (1 defect)", "1", "not measured yet", "not published yet"],
-      ["doc/ch › sec:two", "1", "0", "0", "not measured yet", "not published yet"],
-      ["doc/ch › sec:three", "0", "1", "0", "not measured yet", "not published yet"],
+      ["doc/ch › sec:one", "2", "2 (1 defect)", "1", "not measured yet", "not published"],
+      ["doc/ch › sec:two", "1", "0", "0", "not measured yet", "not published"],
+      ["doc/ch › sec:three", "0", "1", "0", "not measured yet", "not published"],
     ]);
   });
 
@@ -94,5 +109,12 @@ test.describe("review page: heat map (qbfi)", () => {
     await open(page);
     await page.locator("table.heat tbody th button").first().click();
     expect(await page.evaluate(() => document.activeElement?.getAttribute("data-section"))).toBe("doc/ch::sec:one");
+  });
+
+  test("published QA: failing with its severity, stale and unaudited said, never a bare pass", async ({ page }) => {
+    await open(page, true, true);
+    const qa = (await rows(page)).map((r) => r[5]);
+    expect(qa).toEqual(["1 failing (critical)", "1 unaudited", "1 stale"]);
+    expect(await page.locator("table.heat tbody tr:first-child td").nth(4).getAttribute("class")).toBe("h3");
   });
 });
