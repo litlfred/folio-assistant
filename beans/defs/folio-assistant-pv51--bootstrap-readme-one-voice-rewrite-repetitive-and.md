@@ -52,3 +52,18 @@ Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *"bootstrap/README need pr
 | "bootstrap declares no `tools` graph" | out of place in the user story | `bootstrap.json` and bean `n350` |
 
 **One test widened, not weakened.** `bootstrap-initialization-convention.test.ts` now accepts an INDENTED fence, because the path sits inside the numbered steps. It was checked to still fail when the fenced path is changed to `<name>/docs/setup.md`.
+
+## Round 2 — owner review, 2026-09-23
+
+The owner's points, and what was done for each:
+- **"dont reference WHO smart guidelines … bootstrap = self definitional":** the DAK/WHO framing is gone, and so is §5, the DAK mapping. Every link stays inside `bootstrap/`, and a test enforces that.
+- **"all terms have a schema in glossary … align on schema":** new `bootstrap/schemas/graph.schema.json`, generated from `bootstrap-tools/schemas/graph.ts`. It holds one `$defs` definition per term: Knowledge Graph, Subgraph, Graph Kind, Asset, Harness, Actor, Role, Process, Process Node, Sequence Flow, Skill and Tool. The published vocabulary (`cat-harness/schemas/vocabulary.ts`) now READS these definitions instead of holding its own copies, and the bootstrap terms lost their links to cat-harness pages.
+- **"a graph schema can contain zero or more named dirs=subgraphs":** the schema's top level is the shape of a `<name>.json` declaration, with `directories` as its zero or more Subgraphs. A test holds every declaration in the repository to it. That caught `folio-assistant-sci.json`, the last declaration still using the pre-2026-09-21 field name `graphs`, now renamed to `graphKinds`.
+- **"capitalized terms … hyperlink only the first time":** each term is linked exactly once, at its first use; the test counts the links.
+- **"acronym … FR-1":** "Functional Requirement 1 (FR-1)" is spelled out at first use. BPMN is spelled out in the Process definition.
+- **"harness's bootstrap.json … it is the declaration of the harness the user wants":** the already-set-up test and FR-4 now use `<name>.json`, the chosen Harness's declaration, as the diagram does.
+- **"links to docs … seem to be bpmn files":** every step now links the `.md` Skill to read. Diagrams appear once, labelled "diagram".
+- **User story and walkthrough:** redone in plain words for a reader who has opened nothing else.
+- **AGENTS.md** repeated the same two errors, and a flow the diagram does not have. It is rewritten short, and points to the README.
+
+The rest of `bootstrap/` still leaks (about 130 mentions), recorded as a new bean under 88mg.

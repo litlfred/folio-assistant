@@ -1,165 +1,144 @@
-# bootstrap — your user story
+# bootstrap
 
-**You are an agent, and this page is your user story.** You have been pointed
-at a repository you know nothing about, and you are reading its `README.md` to
-turn it into a harness.
+This directory is where an agent starts when it has been handed a repository
+and knows nothing else about it. Everything here is a file to read: text
+(`.md`), data (`.json`) and diagrams (`.bpmn`). Nothing here is a program, so
+you need nothing installed to use it.
 
-The page is written in the **user-scenario formalism** of a WHO SMART Digital
-Adaptation Kit: persona, user scenario, business process, functional
-requirement. The persona is you. Every term links to the file that defines it;
-this page restates none of them.
+A capitalized word on this page is a defined term. It links to its definition
+the first time it appears. Every definition is in one file,
+[`schemas/graph.schema.json`](schemas/graph.schema.json).
 
 ---
 
-## 1 · Persona — who you are
+## What you are setting up
 
-> **DAK L2, generic persona.** A persona here is a **role**, and a role is a
-> **BPMN swimlane**: you do not *are* one, you **act as** one for the length
-> of a lane. All four are declared in [`scenarios/roles.json`](scenarios/roles.json).
+A [Knowledge Graph](schemas/graph.schema.json#/$defs/KnowledgeGraph) is
+information kept as files in a repository: things, and the named relations
+between them. One file at its root, `<name>.json`, declares it. That file
+gives its name and lists its
+[Subgraphs](schemas/graph.schema.json#/$defs/Subgraph), the named directories
+it is divided into.
 
-| persona | who it is |
+A [Harness](schemas/graph.schema.json#/$defs/Harness) is what you use to work
+with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
+way. This directory is the first Harness, `bootstrap`, declared by
+[`bootstrap.json`](bootstrap.json).
+
+**Setting up a repository means making it one particular Harness.** A person
+chooses which one, and the choice is hard to undo. Everything added to the
+repository afterwards is built on it.
+
+---
+
+## Who takes part
+
+An [Actor](schemas/graph.schema.json#/$defs/Actor) is a person, an agent or a
+program. Each Actor takes a [Role](schemas/graph.schema.json#/$defs/Role), and
+the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.json):
+
+| Role | who plays it |
 |---|---|
-| **Initiator** | **you**: the agent asked to initialize a harness, knowing only what this page gives you. |
-| **Requestor** | the person who wants one initialized, and the only one who can say *which*. |
-| **Knowledge Graph Data Store** | a git repository: where a harness is read from and a new one written to, through the git CLI or a forge's API. |
-| **Logger** | where an actor says what it is doing. It records and decides nothing; here it is the conversation you are already in. |
+| **Initiator** | you: the agent setting the repository up |
+| **Requestor** | the person who asked for it. Only the Requestor chooses the Harness. |
+| **Knowledge Graph Data Store** | a repository: the one being set up, and any a Harness is read from |
+| **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
-A **harness** is what a repository can be made into: `bootstrap` itself, or a
-derivative such as `cat-harness`, `folio-assistant` or `smart-guidelines`,
-declared by a [`bootstrap.json`](bootstrap.json). A **process** is a diagram
-with lanes, steps and branches; each lane is a persona.
-
-> **An Initiator has no harness, no server, no tools and no work plan.** If a
-> step seems to need one, you are reading instructions meant for later.
+As the Initiator you have no Harness yet, so you have no
+[Tools](schemas/graph.schema.json#/$defs/Tool) (programs to call). If a step
+seems to need one, it belongs to the Harness you are about to set up, not to
+this one.
 
 ---
 
-## 2 · The user story
+## User story
 
-> **As an** Initiator,
-> **I want to** turn a repository I know nothing about into a **named harness**,
-> **so that** everything written into it afterwards inherits the right
-> upstream. That is the one thing that cannot be fixed later: a wrong harness
-> does not fail, it succeeds at being the wrong thing.
+> **As** the Initiator, **I want** to set up the repository I was handed as
+> the Harness the Requestor chooses, **so that** everything added to it later
+> is built on the right Harness.
 
-**Acceptance.** The story is done when **either** a harness is installed **or**
-a failure is logged. Both are outcomes.
+The story ends in one of two ways, and both are acceptable: the Harness is set
+up, or the reason it could not be is recorded.
 
 ---
 
-## 3 · User scenario — the walkthrough
+## Steps
 
-> **DAK L2, user scenario.** The business process that realises it is
-> [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn).
-> Each step names the requirement in §4 that governs it.
+The steps are drawn as a
+[Process](schemas/graph.schema.json#/$defs/Process),
+[`initialize-harness.bpmn`](processes/initialize-harness.bpmn). It is the only
+Process you start. Each step names the
+[Skill](schemas/graph.schema.json#/$defs/Skill) to read and the Functional
+Requirement it must meet (see the next section).
 
-1. **You arrive knowing nothing.** You can open a file, and that is all
-   ([FR-1](#4--functional-requirements)). How to open anything here is
+1. **Learn how to open files here.** Read
    [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md).
-2. **You open [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn)
-   and begin at its start event** (FR-2). You read it; the engine that would
-   run it belongs to the harness you have not installed yet.
-3. **You ask the Requestor which harness, and where** (FR-3), bringing the
-   candidates and locations you found, and following
-   [`skills/confirm-harness.md`](skills/confirm-harness.md). The asking is the
-   [`discussion`](processes/discussion.bpmn) process. It is finished when a
-   document conforming to its
-   [output schema](schemas/discussion.output.schema.json) exists, not when a
-   pleasant exchange has happened.
-4. **You read what each location already is.** One that already carries a
-   `bootstrap.json` ends the story (FR-5).
-5. **You follow the chosen harness to its own instructions** (FR-4), which are
-   always at:
+   Opening files is all you can do (Functional Requirement 1, FR-1).
+2. **Find the candidates, and ask the Requestor to choose.** List the
+   Harnesses the repository could become, and the repositories it could be
+   set up in. Then ask the Requestor for one Harness and its repositories
+   (FR-3). Read [`skills/confirm-harness.md`](skills/confirm-harness.md) for
+   what to ask, and [`skills/discussion.md`](skills/discussion.md) for how.
+   This step is done when the answer is written down as a document that
+   matches [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json).
+3. **Check each repository.** If its root already holds a declaration,
+   `<name>.json`, it is already set up, and you stop (FR-5).
+4. **Record that you are starting.** Read
+   [`skills/log-message.md`](skills/log-message.md).
+5. **Follow the chosen Harness's own instructions.** Every Harness keeps them
+   at the same path (FR-4):
 
    ```
    <name>/docs/bootstrap/initialization.md
    ```
 
-   `<name>` is the `name` in that harness's `bootstrap.json`. You need not
-   know what the harness *is*, only where every harness keeps its
-   instructions. You log the start of the install first, and any failure
-   along the way, through the [`log-message`](processes/log-message.bpmn)
-   sub-process.
-6. **You leave a README at the repository root** (FR-8), following
+   Here `<name>` is the name the Requestor chose, as it appears in that
+   Harness's declaration, `<name>.json`.
+6. **Leave a README at the repository's root, if it has none** (FR-8). Read
    [`skills/root-readme.md`](skills/root-readme.md).
-7. **The story ends**, one of the two ways its acceptance names. Anything that
-   does not resolve on the way ends it too (FR-6).
+
+If anything cannot be found or read along the way, record what failed (step
+4's Skill) and stop (FR-6).
 
 ---
 
-## 4 · Functional requirements
+## Functional Requirements
 
-> **DAK L2, functional requirements.** Each is testable, and each `realises`
-> the user story. Each rule is stated here and nowhere else on this page.
+A Functional Requirement is a rule the steps must meet. Each has a number, so
+a step can name it: Functional Requirement 1 is FR-1.
 
-| id | requirement |
+| | rule |
 |---|---|
-| **FR-1** | An Initiator can reach every asset named here with no capability but opening a file. |
-| **FR-2** | Exactly **one** process may be started: `initialize-harness`. `discussion` and `log-message` are called by its steps, never started. |
-| **FR-3** | Only the Requestor chooses the harness. The Initiator may narrow the candidates, and may never break a tie. |
-| **FR-4** | Every harness keeps its initialization instructions at `<name>/docs/bootstrap/initialization.md`, so a harness nobody has seen before is still reachable. |
-| **FR-5** | A repository whose root already carries a `bootstrap.json` has been initialized. That is **logged and ended**, never redone: re-initializing over content, history and dependents cannot be undone by running anything again. |
-| **FR-6** | Anything that does not resolve (a missing file, a harness with no instructions at the FR-4 path, a name that matches nothing) is **reported, and stops the process**. Nothing is worked around. |
-| **FR-7** | This directory contains no executable code, so FR-1 cannot quietly stop being true. |
-| **FR-8** | A successful install leaves a root `README.md` naming the harness and the overall install status. It is created when absent, and **never** replaces one that exists. |
+| **FR-1** | Everything named here can be reached by opening files, and by nothing else. |
+| **FR-2** | You start one Process, `initialize-harness`. The Processes `discussion` and `log-message` are started only by its steps. |
+| **FR-3** | Only the Requestor chooses the Harness. You may shorten the list of candidates, but never choose between two. |
+| **FR-4** | Every Harness keeps its set-up instructions at `<name>/docs/bootstrap/initialization.md`, so you can set up a Harness you have never seen. |
+| **FR-5** | A repository whose root already holds a declaration is already set up. You record that and stop; you never set it up again. |
+| **FR-6** | Anything that cannot be found or read is recorded, and stops the Process. Nothing is worked around. |
+| **FR-7** | This directory holds no program code, so FR-1 stays true. |
+| **FR-8** | When the set-up succeeds, the repository's root has a `README.md` naming the Harness and whether the set-up succeeded everywhere. An existing README is added to, never replaced. |
 
 ---
 
-## 5 · DAK onto the harness data model
+## Every file here
 
-Every DAK concept this page uses already has one home in the harness data
-model:
-
-| DAK (SMART) | bootstrap / harness | declared in |
+| file | kind | what it is |
 |---|---|---|
-| Generic **persona** | **Role**: a swimlane an actor acts in | [`scenarios/roles.json`](scenarios/roles.json), [`role-graph.ts`](../cat-harness/schemas/role-graph.ts) |
-| **Actor** | **Actor**: a concrete participant, across processes | [`role-graph.ts`](../cat-harness/schemas/role-graph.ts) |
-| **User scenario** | this page | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `UserScenarioBlock` |
-| **Business process** | the BPMN diagrams, lanes bound to roles | [`processes/`](processes), [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `BusinessProcessBlock` |
-| **Functional requirement** | §4 | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `FunctionalRequirementBlock` |
-| **Core data element** | the fields of a harness declaration | [`cat-harness.ts`](../cat-harness/schemas/cat-harness.ts) |
-| L1 → L2 → L3 traceability | `realises` on every DAK block | [`dak-blocks.ts`](../cat-harness/schemas/dak-blocks.ts) `DakBlockBase.realises` |
-
-**The persona binding is an edge, not prose.** `UserScenarioBlock.personas`
-holds role ids (required, one or more, declared `@ref RoleDef`), so *"which
-scenarios involve the Requestor?"* is a query rather than a search. It is
-deliberately not `uses[]`, which is the editorial relation (what a reader must
-have read first); overloading it would corrupt every ordering metric computed
-from it.
-
----
-
-## 6 · Every asset in this harness
-
-Every file here is one you read. A file nobody can reach from this page is one
-nobody checks.
-
-| asset | what it is |
-|---|---|
-| [`README.md`](README.md) | this page: the user scenario, and the entry point |
-| [`AGENTS.md`](AGENTS.md) | the agent-generic pointer into this directory |
-| [`bootstrap.json`](bootstrap.json) | this instance's declaration: its directories, and the graph kind each holds |
-| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | the process you start |
-| [`processes/discussion.bpmn`](processes/discussion.bpmn) | asking the Requestor what only they can answer |
-| [`processes/log-message.bpmn`](processes/log-message.bpmn) | saying what you are doing |
-| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | how to open anything here, assuming nothing |
-| [`skills/confirm-harness.md`](skills/confirm-harness.md) | asking *which* harness |
-| [`skills/discussion.md`](skills/discussion.md) | running the discussion process |
-| [`skills/log-message.md`](skills/log-message.md) | running the log-message process |
-| [`skills/root-readme.md`](skills/root-readme.md) | writing the root README, and why that write is allowed |
-| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md), [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | emitting and publishing this instance's own graph. bootstrap has no visualiser; its `.json`/`.jsonld` is how it shows it is a graph. The Tool that performs it is cat-harness's `kg-graph-export`. |
-| [`skills/package-manifest.json`](skills/package-manifest.json) | the skills package declaration |
-| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json), [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the question and the answer, as data. A conforming output document finishes step 3. |
-| [`scenarios/roles.json`](scenarios/roles.json) | the four personas of §1 |
-
----
-
-**Precise definitions:**
-[harness declaration](../cat-harness/schemas/cat-harness.ts) ·
-[skill](../cat-harness/schemas/skill-package.ts) ·
-[role](../cat-harness/schemas/role-graph.ts) ·
-[DAK blocks](../cat-harness/schemas/dak-blocks.ts) ·
-[process](../cat-harness/processes) ·
-[tool](../cat-harness/schemas/tool.ts).
-Why bootstrapping is built this way:
-[the proposal](../cat-harness/docs/proposals/bootstrap.md).
+| [`README.md`](README.md) | text | this page |
+| [`AGENTS.md`](AGENTS.md) | text | sends an agent that reads `AGENTS.md` first to this page |
+| [`bootstrap.json`](bootstrap.json) | declaration | this Harness's declaration: its Subgraphs and its files |
+| [`schemas/graph.schema.json`](schemas/graph.schema.json) | schema | the shape of a declaration, and the definition of every term on this page |
+| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | schema | what you know before asking the Requestor |
+| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | schema | the Requestor's answer; a document matching it completes step 2 |
+| [`scenarios/roles.json`](scenarios/roles.json) | data | the four Roles |
+| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Skill | how to open anything here |
+| [`skills/confirm-harness.md`](skills/confirm-harness.md) | Skill | what to ask the Requestor |
+| [`skills/discussion.md`](skills/discussion.md) | Skill | how to ask |
+| [`skills/log-message.md`](skills/log-message.md) | Skill | how to record what you are doing |
+| [`skills/root-readme.md`](skills/root-readme.md) | Skill | how to write the root README |
+| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | Skill | writing this Harness's own Knowledge Graph as a data file |
+| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Skill | publishing that file |
+| [`skills/package-manifest.json`](skills/package-manifest.json) | data | the list of Skills |
+| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | diagram | the steps above |
+| [`processes/discussion.bpmn`](processes/discussion.bpmn) | diagram | asking the Requestor (step 2) |
+| [`processes/log-message.bpmn`](processes/log-message.bpmn) | diagram | recording what you are doing, and any failure |
