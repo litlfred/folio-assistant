@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: refresh-materialized\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.975Z\n"
+"POT-Creation-Date: 2026-09-23T18:42:53.469Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,37 +14,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/refresh-materialized.bpmn:54
+#: processes/refresh-materialized.bpmn:59
 #. Diagram label
 msgid "A copy is due for re-check"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:100
+#: processes/refresh-materialized.bpmn:105
 #. Diagram element documentation
 msgid "A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:99
+#: processes/refresh-materialized.bpmn:104
 #. Diagram label
 msgid "Adjudicate the conflict"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:129
+#: processes/refresh-materialized.bpmn:185
 #. Diagram label
 msgid "archival"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:65
+#: processes/refresh-materialized.bpmn:70
 #. Diagram label
 msgid "ARCHIVAL verify fixity — never re-fetch"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:93
+#: processes/refresh-materialized.bpmn:98
 #. Diagram label
 msgid "Both changed?"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:77
+#: processes/refresh-materialized.bpmn:164
+#. Diagram element documentation
+msgid "Both copies stay and the conflict is written down with what each side says. Deliberately does not re-pin, which is the one thing separating it from Task_KeepLocal: the question is unresolved, so it must be asked again next cycle. Recording is not optional here for the reason A_RecordEntry is not optional in an adjudication — a judgement nobody wrote down is indistinguishable from a check that never ran, and a DEFERRAL nobody wrote down is indistinguishable from a refresh that silently did nothing."
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:82
 #. Diagram element documentation
 msgid "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late."
 msgstr ""
@@ -54,34 +59,69 @@ msgstr ""
 msgid "Contributor (human or agent)"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:48
+#: processes/refresh-materialized.bpmn:50
 #. Diagram label
 msgid "Corpus — L1 source knowledge graph"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:94
+#: processes/refresh-materialized.bpmn:99
 #. Diagram element documentation
 msgid "Did the copy change both upstream and locally since it was fetched? `yes` goes to adjudicating the conflict; `no` re-materializes, re-asking the five gates, and records the new fixity."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:123
+#: processes/refresh-materialized.bpmn:173
+#. Diagram label
+msgid "Diverged on purpose, and the record says why"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:119
+#. Diagram element documentation
+msgid "Four answers, and they do four different things — which is the whole reason this gateway now exists. Until 2026-09-23 the adjudication flowed straight to Task_Apply, so the process ASKED which side wins and then always applied the remote. The judgement was made and discarded. Bean `bvuk`. `defer` is not `local` wearing a different hat: `local` decides and re-pins, so the same conflict stops being raised; `defer` deliberately does not decide and does not re-pin, so it is raised again next cycle. A process that could only decide would force a contributor with no answer today to invent one."
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:179
 #. Diagram label
 msgid "Fresh, and the graph records against what"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:40
+#: processes/refresh-materialized.bpmn:42
 #. Diagram label
 msgid "Ingestion Engine (agent, runs unattended)"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:60
+#: processes/refresh-materialized.bpmn:65
 #. Diagram element documentation
 msgid "Is this copy kept as a working copy or as an archive? `archival` only verifies fixity and never re-fetches; `working` asks what changed upstream."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:134
+#: processes/refresh-materialized.bpmn:152
+#. Diagram label
+msgid "Keep the local edit, and re-pin so it stops being asked"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:129
+#. Diagram element documentation
+msgid "Neither side wins whole: the contributor produces content that is neither the local copy nor the remote one, and THEN it is applied. Drawn as a separate step before Task_Apply rather than folded into it, because Task_Apply re-asks the five import gates against what is being materialized — and what is being materialized here is a hand-made artefact, which is exactly the case those gates should see rather than be told about."
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:198
+#. Diagram label
+msgid "neither whole — reconcile"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:190
 #. Diagram label
 msgid "no"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:175
+#. Diagram element documentation
+msgid "Not a failure and not freshness. The copy differs from upstream because somebody decided it should, or decided not to decide yet, and either way the graph now says which."
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:201
+#. Diagram label
+msgid "not decidable today"
 msgstr ""
 
 #: processes/refresh-materialized.bpmn:26
@@ -89,12 +129,12 @@ msgstr ""
 msgid "Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\" REFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere. An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:68
+#: processes/refresh-materialized.bpmn:73
 #. Diagram element documentation
 msgid "Re-compute the digest and compare. An archive is NEVER re-fetched — the source is what it exists to survive, so replacing it with today's version discards the state it was keeping. A mismatch means OUR copy rotted, and the remedy is restoration from a backup, not re-download."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:108
+#: processes/refresh-materialized.bpmn:136
 #. Diagram label
 msgid "Re-materialize, re-asking the five gates — and record the new fixity"
 msgstr ""
@@ -104,52 +144,82 @@ msgstr ""
 msgid "Reached only when both upstream and local changed, which is the one case this process refuses to resolve by rule: which side wins depends on why the local edit was made, a fact only this lane has."
 msgstr ""
 
+#: processes/refresh-materialized.bpmn:128
+#. Diagram label
+msgid "Reconcile the two by hand"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:162
+#. Diagram label
+msgid "Record the conflict, decide nothing, and do NOT re-pin"
+msgstr ""
+
 #: processes/refresh-materialized.bpmn:23
 #. Diagram label
 msgid "Refresh materialized remote content"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:41
+#: processes/refresh-materialized.bpmn:43
 #. Diagram element documentation
 msgid "Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:110
+#: processes/refresh-materialized.bpmn:138
 #. Diagram element documentation
 msgid "The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to. AND THE NEW FIXITY IS RECORDED IN THE SAME CHANGE. This step rewrites bytes that a materialization record describes, so leaving the old digest behind would make a CORRECT run of this process fail check:materialized-fixity as a mismatch — the gate reading \"somebody edited held content without saying so\" about the one process whose job is to replace it. Measured 2026-09-22 (bean 10s1): this task named no fixity write at all. This is the owner's publication exception, stated as a rule rather than as a carve-out. The exception is NOT \"these actors may skip the rule\"; it is \"say what you did\". A writer that updates the digest alongside the bytes passes, and the record then describes what is actually there. A writer that does not fails, correctly, because it has forked upstream silently. A list of permitted writers would go stale the first time somebody added a sixth one; this does not."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:86
+#: processes/refresh-materialized.bpmn:91
 #. Diagram element documentation
 msgid "The half nothing answers today. A materialized copy that was edited in place is not a copy any more, and overwriting it silently destroys work whose existence the process never established."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:84
+#: processes/refresh-materialized.bpmn:195
+#. Diagram label
+msgid "the local edit wins"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:154
+#. Diagram element documentation
+msgid "The local edit wins, so nothing is re-materialized — and the pin moves to the upstream revision that was compared against. Re-pinning is the half that is easy to forget and is the reason this is a step rather than an absence: without it the same upstream change is detected as new on every cycle, and a contributor is asked the same settled question for ever. The record says the copy is deliberately divergent FROM a named revision, which is a different claim from being stale against an unknown one."
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:192
+#. Diagram label
+msgid "the remote wins"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:89
 #. Diagram label
 msgid "What changed LOCALLY since"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:49
+#: processes/refresh-materialized.bpmn:51
 #. Diagram element documentation
 msgid "Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:130
+#: processes/refresh-materialized.bpmn:115
+#. Diagram label
+msgid "Which side, and on what terms?"
+msgstr ""
+
+#: processes/refresh-materialized.bpmn:186
 #. Diagram label
 msgid "working"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:75
+#: processes/refresh-materialized.bpmn:80
 #. Diagram label
 msgid "WORKING what changed upstream"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:58
+#: processes/refresh-materialized.bpmn:63
 #. Diagram label
 msgid "working, or archival?"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:133
+#: processes/refresh-materialized.bpmn:189
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -282,6 +282,7 @@ export const RULES: Rule[] = [
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
+      "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -495,6 +496,12 @@ export const RULES: Rule[] = [
       "schemas/dak-blocks.ts",
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      // CORE, not harness beside gen-uml-overview: it needs a folio to have
+      // anything to do, and its input is the core content model
+      // (`content/pipeline/content-graph.ts`). The shared PlantUML machinery it
+      // imports (`scripts/plantuml-render.ts`) stays harness, so the edge runs
+      // core → harness, the allowed direction.
+      "scripts/gen-content-graph-uml.ts",    // a paper's block graph (uses[] vs Lean), graph-rendering rules
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
       // Re-triaged 2026-09-19, bean `zlmp`. Listed as harness until then, on
       // "editing-process authorisation gate". But AGENTS.md says it runs IN a
