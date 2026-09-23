@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 155,
+      "count": 156,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -653,6 +653,14 @@
       "name": "methodology",
       "graphNode": "schema",
       "summary": "A methodology node's front matter — `folio-methodology/v1`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/model-registry.ts",
+      "instance": "cat-harness",
+      "name": "model-registry",
+      "graphNode": "schema",
+      "summary": "Which languages a MODEL is good at, and whether anybody checked.",
       "isTest": false
     },
     {
@@ -1930,7 +1938,7 @@
       "fields": [
         {
           "name": "url",
-          "type": "z .string() .describe( \"Clone URL or path. Not required to be reachable — an Initiator may have been told about a repos…",
+          "type": "z .string() .describe( \"Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told abou…",
           "optional": false,
           "array": false
         },
@@ -18108,6 +18116,141 @@
         "METHODOLOGY_SCHEMA_TAG",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/model-registry.ts#ModelEntry",
+      "name": "ModelEntry",
+      "module": "cat-harness/schemas/model-registry.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/model-registry.ts#ModelEntrySchema",
+      "name": "ModelEntrySchema",
+      "module": "cat-harness/schemas/model-registry.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The model identifier, exactly as the runtime reports it."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Human-readable name, for a report a person reads."
+        },
+        {
+          "name": "preferredLanguages",
+          "type": "z.array(z.string().min(2))",
+          "optional": false,
+          "array": true,
+          "doc": "BCP 47 tags, best first."
+        },
+        {
+          "name": "validation",
+          "type": "z.enum(VALIDATION_STATES)",
+          "optional": false,
+          "array": false,
+          "doc": "How the list above came to be believed. Required — see the header."
+        },
+        {
+          "name": "validatedBy",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who checked, when `validation` is `human-validated`."
+        },
+        {
+          "name": "validatedOn",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "ISO date of that check. A validation with no date cannot go stale."
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Anything a reader needs that the fields above cannot carry."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "VALIDATION_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/model-registry.ts#ModelRegistry",
+      "name": "ModelRegistry",
+      "module": "cat-harness/schemas/model-registry.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/model-registry.ts#ModelRegistrySchema",
+      "name": "ModelRegistrySchema",
+      "module": "cat-harness/schemas/model-registry.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-model-registry/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "models",
+          "type": "z.array(ModelEntrySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/model-registry.ts#ModelEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/model-registry.ts#ValidationState",
+      "name": "ValidationState",
+      "module": "cat-harness/schemas/model-registry.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -39838,6 +39981,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/model-registry.ts#ModelRegistrySchema",
+      "to": "cat-harness/schemas/model-registry.ts#ModelEntrySchema",
+      "via": "models",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/narrative.ts#NarrativeSchema",
