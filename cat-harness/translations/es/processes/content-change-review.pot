@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-change-review\n"
-"POT-Creation-Date: 2026-09-23T20:28:08.994Z\n"
+"POT-Creation-Date: 2026-09-23T20:45:30.263Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: processes/content-change-review.bpmn:360
 #. Diagram element documentation
-msgid "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it."
+msgid "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check."
 msgstr ""
 
 #: processes/content-change-review.bpmn:165
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Agent reviews downstream implications: - Will indicators need adjustment? - Will referral/follow-up for next visit be impacted? - Are translations affected (re-extract POT)? - Do Lean proofs still hold? skill: integration-watcher, translation-manager"
 msgstr ""
 
-#: processes/content-change-review.bpmn:414
+#: processes/content-change-review.bpmn:418
 #. Diagram label
 msgid "Approve"
 msgstr ""
@@ -104,17 +104,17 @@ msgstr ""
 msgid "Author submits the PR for formal review by the guidance review committee. The STAGING URL is the review surface."
 msgstr ""
 
-#: processes/content-change-review.bpmn:494
+#: processes/content-change-review.bpmn:498
 #. Diagram element documentation
 msgid "Bot comments or updates the staging URL on the PR. Includes commit SHA, branch name, and build log link."
 msgstr ""
 
-#: processes/content-change-review.bpmn:458
+#: processes/content-change-review.bpmn:462
 #. Diagram label
 msgid "Build staging site"
 msgstr ""
 
-#: processes/content-change-review.bpmn:447
+#: processes/content-change-review.bpmn:451
 #. Diagram label
 msgid "Change accepted"
 msgstr ""
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Change submitted"
 msgstr ""
 
-#: processes/content-change-review.bpmn:394
+#: processes/content-change-review.bpmn:398
 #. Diagram label
 msgid "Changes approved?"
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/content-change-review.bpmn:489
+#: processes/content-change-review.bpmn:493
 #. Diagram label
 msgid "Comment staging URL on PR"
 msgstr ""
@@ -144,12 +144,12 @@ msgstr ""
 msgid "Commit, push, update PR"
 msgstr ""
 
-#: processes/content-change-review.bpmn:402
+#: processes/content-change-review.bpmn:406
 #. Diagram element documentation
 msgid "Committee provides feedback. PR stays open. Author and agent iterate further."
 msgstr ""
 
-#: processes/content-change-review.bpmn:384
+#: processes/content-change-review.bpmn:388
 #. Diagram element documentation
 msgid "Committee reviews the agent's impact assessment: - Were all downstream effects identified? - Are the indicator changes acceptable? - Does the logic change match the narrative intent?"
 msgstr ""
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, \"Approve and merge\", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author."
 msgstr ""
 
-#: processes/content-change-review.bpmn:369
+#: processes/content-change-review.bpmn:373
 #. Diagram element documentation
 msgid "Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved."
 msgstr ""
@@ -189,12 +189,12 @@ msgstr ""
 msgid "Create feature branch"
 msgstr ""
 
-#: processes/content-change-review.bpmn:475
+#: processes/content-change-review.bpmn:479
 #. Diagram label
 msgid "Deploy to STAGING/<slug>/"
 msgstr ""
 
-#: processes/content-change-review.bpmn:585
+#: processes/content-change-review.bpmn:589
 #. Diagram label
 msgid "Deployment complete"
 msgstr ""
@@ -209,7 +209,7 @@ msgstr ""
 msgid "Detect change scope & impact"
 msgstr ""
 
-#: processes/content-change-review.bpmn:553
+#: processes/content-change-review.bpmn:557
 #. Diagram element documentation
 msgid "docs-site.yml triggers on the merge commit to main, rebuilding the root of gh-pages with the accepted changes. The build SHA stamp now reflects the merged state."
 msgstr ""
@@ -224,7 +224,7 @@ msgstr ""
 msgid "Edit narrative content blocks"
 msgstr ""
 
-#: processes/content-change-review.bpmn:368
+#: processes/content-change-review.bpmn:372
 #. Diagram label
 msgid "Every changed block reviewed?"
 msgstr ""
@@ -239,12 +239,12 @@ msgstr ""
 msgid "Feature branch ready"
 msgstr ""
 
-#: processes/content-change-review.bpmn:463
+#: processes/content-change-review.bpmn:467
 #. Diagram element documentation
 msgid "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page"
 msgstr ""
 
-#: processes/content-change-review.bpmn:509
+#: processes/content-change-review.bpmn:513
 #. Diagram element documentation
 msgid "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean 29ij, this is a task/workflow initiation. That is the whole reason it is an activity rather than a line of prose. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the claim. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. Claim rather than note: the watch is work in progress, and it is idempotent, so re-entering on a subsequent push does not duplicate it."
 msgstr ""
@@ -289,27 +289,27 @@ msgstr ""
 msgid "Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane."
 msgstr ""
 
-#: processes/content-change-review.bpmn:430
+#: processes/content-change-review.bpmn:434
 #. Diagram label
 msgid "Merge, on explicit confirmation"
 msgstr ""
 
-#: processes/content-change-review.bpmn:610
+#: processes/content-change-review.bpmn:614
 #. Diagram label
 msgid "No"
 msgstr ""
 
-#: processes/content-change-review.bpmn:628
+#: processes/content-change-review.bpmn:632
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/content-change-review.bpmn:588
+#: processes/content-change-review.bpmn:592
 #. Diagram label
 msgid "Not merged: preview kept"
 msgstr ""
 
-#: processes/content-change-review.bpmn:562
+#: processes/content-change-review.bpmn:566
 #. Diagram label
 msgid "Note the main-branch watch [watch]"
 msgstr ""
@@ -319,7 +319,7 @@ msgstr ""
 msgid "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment."
 msgstr ""
 
-#: processes/content-change-review.bpmn:502
+#: processes/content-change-review.bpmn:506
 #. Diagram label
 msgid "Open the branch-watch bean [watch]"
 msgstr ""
@@ -339,12 +339,12 @@ msgstr ""
 msgid "Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path."
 msgstr ""
 
-#: processes/content-change-review.bpmn:480
+#: processes/content-change-review.bpmn:484
 #. Diagram element documentation
 msgid "peaceiris/actions-gh-pages deploys to gh-pages branch under STAGING/<branch-slug>/ with keep_files: true so other staging deployments and the main site are preserved."
 msgstr ""
 
-#: processes/content-change-review.bpmn:527
+#: processes/content-change-review.bpmn:531
 #. Diagram label
 msgid "PR merged?"
 msgstr ""
@@ -354,12 +354,12 @@ msgstr ""
 msgid "PR submitted for review"
 msgstr ""
 
-#: processes/content-change-review.bpmn:452
+#: processes/content-change-review.bpmn:456
 #. Diagram label
 msgid "Push to feature branch"
 msgstr ""
 
-#: processes/content-change-review.bpmn:548
+#: processes/content-change-review.bpmn:552
 #. Diagram label
 msgid "Rebuild main site"
 msgstr ""
@@ -369,12 +369,12 @@ msgstr ""
 msgid "Receive change request"
 msgstr ""
 
-#: processes/content-change-review.bpmn:534
+#: processes/content-change-review.bpmn:538
 #. Diagram label
 msgid "Remove STAGING/<slug>/"
 msgstr ""
 
-#: processes/content-change-review.bpmn:401
+#: processes/content-change-review.bpmn:405
 #. Diagram label
 msgid "Request changes"
 msgstr ""
@@ -404,7 +404,7 @@ msgstr ""
 msgid "Review each slice [review-task]"
 msgstr ""
 
-#: processes/content-change-review.bpmn:379
+#: processes/content-change-review.bpmn:383
 #. Diagram label
 msgid "Review impact assessment"
 msgstr ""
@@ -429,7 +429,7 @@ msgstr ""
 msgid "Satisfied with changes?"
 msgstr ""
 
-#: processes/content-change-review.bpmn:569
+#: processes/content-change-review.bpmn:573
 #. Diagram element documentation
 msgid "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher."
 msgstr ""
@@ -444,7 +444,7 @@ msgstr ""
 msgid "Submit to review committee"
 msgstr ""
 
-#: processes/content-change-review.bpmn:589
+#: processes/content-change-review.bpmn:593
 #. Diagram element documentation
 msgid "The approval did not end in a merge. Nothing is deployed and STAGING/<slug>/ is left up; a later push to the branch starts a new run of this process."
 msgstr ""
@@ -454,17 +454,17 @@ msgstr ""
 msgid "The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee."
 msgstr ""
 
-#: processes/content-change-review.bpmn:415
+#: processes/content-change-review.bpmn:419
 #. Diagram element documentation
 msgid "The committee approves the change: the judgement, recorded with the evidence it rests on. Approving is not merging. They were one task (\"Approve and merge\") until bean en2d split them, because a self-authored change cannot be approved through GitHub's own review (the approver may not be the PR's author), and a merge needs the owner's explicit confirmation whoever approved."
 msgstr ""
 
-#: processes/content-change-review.bpmn:395
+#: processes/content-change-review.bpmn:399
 #. Diagram element documentation
 msgid "The committee's decision on the impact assessment. `No` requests changes; `Yes` approves."
 msgstr ""
 
-#: processes/content-change-review.bpmn:431
+#: processes/content-change-review.bpmn:435
 #. Diagram element documentation
 msgid "The owner says \"merge it\", and only then is the branch merged. Merge to main triggers: 1. the main site rebuilds with the changes; 2. the staging preview's cleanup runs; 3. the review comments committed on the feature branch land on main, as the review record."
 msgstr ""
@@ -474,12 +474,12 @@ msgstr ""
 msgid "The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS."
 msgstr ""
 
-#: processes/content-change-review.bpmn:528
+#: processes/content-change-review.bpmn:532
 #. Diagram element documentation
 msgid "Was the PR merged? `Yes` removes the STAGING/<slug>/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run."
 msgstr ""
 
-#: processes/content-change-review.bpmn:539
+#: processes/content-change-review.bpmn:543
 #. Diagram element documentation
 msgid "When the PR is merged or closed, the cleanup job removes the STAGING/<slug>/ directory from gh-pages so stale previews don't accumulate."
 msgstr ""
@@ -489,12 +489,12 @@ msgstr ""
 msgid "Withdraw a review comment [folio-review-comment-move]"
 msgstr ""
 
-#: processes/content-change-review.bpmn:614
+#: processes/content-change-review.bpmn:618
 #. Diagram label
 msgid "Yes"
 msgstr ""
 
-#: processes/content-change-review.bpmn:629
+#: processes/content-change-review.bpmn:633
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -292,6 +292,17 @@ export interface LibraryGraph {
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
+/** A file's text, or null — the third state, never an empty string. */
+function readText(path: string): string | null {
+  try {
+    return readFileSync(path, "utf-8");
+  } catch {
+    // Absent or unreadable. The caller renders "no content" rather than an
+    // empty document, which are different facts.
+    return null;
+  }
+}
+
 function readJson<T>(path: string): T | undefined {
   if (!existsSync(path)) return undefined;
   try {
@@ -386,6 +397,30 @@ export interface LibraryBlock {
   target: string | null;
   /** `not-authored` | `draft` | `confirmed` | `rejected`, or null where a kind carries none. */
   narrative: string | null;
+  /**
+   * What the block actually SAYS — bean `lrmo`.
+   *
+   * A row showing only a narrative STATE tells a reader that a description
+   * exists and not what it is, which is the gap the owner hit on first use:
+   * *"i expected to be able to see narrative content of extracted node"*.
+   *
+   * Two sources, because the two kinds carry content differently. A FIGURE's
+   * is `narrative.text` — an authored description, ours, short: 404 of them
+   * total 128 KB, so it is carried whole. A PROSE block's is the section
+   * markdown it points at, and those total **3.25 MB** with one entry at
+   * 508 KB, so carrying them whole would make opening one entry cost half a
+   * megabyte. Prose is excerpted.
+   */
+  content: string | null;
+  /**
+   * True when {@link content} is an excerpt rather than the whole thing.
+   *
+   * Stated rather than inferred from length. A reader who cannot tell a short
+   * section from a truncated one is being shown a claim about the document
+   * that the data does not support, and silent truncation is the same defect
+   * as a silent skip everywhere else in this repository.
+   */
+  truncated: boolean;
   provenance: string;
 }
 
@@ -419,6 +454,20 @@ export interface LibraryBlock {
  * than first, because an unplaced block is an oddity and burying it at the
  * top of the list is how it goes unnoticed.
  */
+/**
+ * How much of a prose section travels in the projection.
+ *
+ * 600 characters is a paragraph or so — enough to tell one section from
+ * another while browsing, which is what this view is for. Reading the section
+ * is a different act and the file is right there.
+ *
+ * Derived rather than picked: 1311 prose blocks at this bound add roughly
+ * 790 KB across 27 entries, against 3.25 MB for the whole corpus and a 508 KB
+ * worst entry. The largest single entry stays well under what one on-demand
+ * fetch should cost.
+ */
+const PROSE_EXCERPT = 600;
+
 export function readEntryBlocks(dir: string): LibraryBlock[] {
   const blocksDir = join(dir, "blocks");
   const files = filesIn(blocksDir).filter((f) => f.endsWith(".jsonld"));
@@ -429,7 +478,19 @@ export function readEntryBlocks(dir: string): LibraryBlock[] {
     if (!d) continue;
     const id = typeof d["@id"] === "string" ? (d["@id"] as string) : f.replace(/\.jsonld$/, "");
     const t = d["@type"];
-    const nar = d.narrative as { state?: unknown } | undefined;
+    const nar = d.narrative as { state?: unknown; text?: unknown } | undefined;
+    // A figure's description is authored and short — carried whole. A prose
+    // block's is the section file, excerpted. See `content` on the interface.
+    let content: string | null = typeof nar?.text === "string" ? (nar.text as string) : null;
+    let truncated = false;
+    if (content === null && typeof d.text === "string") {
+      const md = readText(join(blocksDir, d.text as string));
+      if (md !== null) {
+        const body = md.replace(/^---[\s\S]*?---\n/, "").trim();
+        truncated = body.length > PROSE_EXCERPT;
+        content = truncated ? body.slice(0, PROSE_EXCERPT).trimEnd() : body;
+      }
+    }
     byId.set(id, {
       id,
       types: Array.isArray(t) ? (t as string[]) : typeof t === "string" ? [t] : [],
@@ -441,6 +502,8 @@ export function readEntryBlocks(dir: string): LibraryBlock[] {
       // which one it came from is already said by `kind`.
       target: typeof d.text === "string" ? d.text : typeof d.file === "string" ? d.file : null,
       narrative: typeof nar?.state === "string" ? nar.state : null,
+      content,
+      truncated,
       provenance: typeof d.provenance === "string" ? d.provenance : "",
     });
   }

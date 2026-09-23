@@ -20,7 +20,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**19 file(s)** across 2 group(s). Each links to the file itself —
+**27 file(s)** across 2 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -33,7 +33,7 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 9 | carries the tag itself |
+| <span class="fg-tag fg-ok">declared</span> | 17 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 4 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 6 | **neither** — a gap, not a format limit |
 
@@ -43,11 +43,19 @@ summary count is the failure this table exists to avoid.
 
 ## retired
 
-3 file(s).
+11 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
 | [skill-definition-roles.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md) | `SkillDefinition.roles` — retired 2026-09-20 | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-AGENTS.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-AGENTS.md) | AGENTS.md — kg-navigation | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-bootstrap-graph-emission.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md) | Emitting bootstrap's own graph | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-bootstrap-graph-publication.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-bootstrap-graph-publication.md) | Publishing bootstrap's graph | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-bootstrap-kg-navigation.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-bootstrap-kg-navigation.md) | Reading a knowledge graph before you have anything | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-confirm-harness.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-confirm-harness.md) | Which harness, and where | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-discussion.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-discussion.md) | discussion — settling what an agent cannot read off disk | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-log-message.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-log-message.md) | Logging what you are doing | <span class="fg-tag fg-ok">declared</span> |
+| [skill-instructions-root-readme.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-root-readme.md) | The root README, and the one fact it must carry | <span class="fg-tag fg-ok">declared</span> |
 | [skill-roles-front-matter.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-roles-front-matter.md) | `roles:` in skill front matter — the whole record | <span class="fg-tag fg-ok">declared</span> |
 | [translations-fr-agent-onboarding.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/translations-fr-agent-onboarding.md) | Intégration de l'agent | <span class="fg-tag fg-ok">declared</span> |
 

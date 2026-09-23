@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # l2-dak-authoring

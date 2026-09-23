@@ -14,6 +14,8 @@
       "pageEnd": 2,
       "target": "../sections/sec-000-introduction.md",
       "narrative": null,
+      "content": "A skill packages a workflow, a set of conventions, domain facts, or a sequence of steps that an\nagent should follow for a particular kind of task, so that the agent behaves as a specialist without\nthe developer repeating the same guidance in every session. A characteristic property of a skill\nis that the agent can decide when to apply it, by matching the description, and that decision is\nprobabilistic. There is no compiler or type system confirming that the right skill fired. Authoring\nchoices therefore determine whether a skill is selected at all and whether its instructions are\nfollowed once",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -28,6 +30,8 @@
       "pageEnd": 1,
       "target": "../sections/sec-front-matter.md",
       "narrative": null,
+      "content": "Authoring Agent Skills: A Software-Engineering\nApproach\nGiuseppe Destefanis\nDepartment of Computer Science, University College London\ng.destefanis@ucl.ac.uk\nAbstract\nAgent Skills are an emerging way to extend large language model agents with reusable procedural\nknowledge that the agent loads on demand. Anthropic introduced Agent Skills and published\nthe format as an open specification supported across several agent tools. This note argues\nthat a skill is a software artefact and that its construction should follow software-engineering\nprinciples, with qualifications: single responsibility, sepa",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -42,6 +46,8 @@
       "pageEnd": 3,
       "target": "../sections/sec-001-skills-as-software-artefacts.md",
       "narrative": null,
+      "content": "The introduction set out the grounds for treating a skill as a software artefact: ordinary files that\ncan be versioned, an interface and an implementation, composition with other units, and the ways\nit can fail. Many of the disciplines that apply to ordinary software therefore apply to skills, some\ndirectly and some in a modified form, and this note treats authoring as a design activity.\nSeveral principles transfer, though each for a reason specific to how skills work rather than\nby analogy alone. A skill should have a single responsibility, one coherent capability, because\nthe description tha",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -56,6 +62,8 @@
       "pageEnd": 4,
       "target": "../sections/sec-002-the-skill-as-a-unit.md",
       "narrative": null,
+      "content": "A skill is a directory on the filesystem that contains a single SKILL.md file and, optionally,\nsupporting files such as reference documents, scripts, and templates. The SKILL.md file has two\nparts: YAML frontmatter holding a name and a description, and a markdown body holding the\ninstructions. A minimal skill is one SKILL.md with no other files. A larger skill bundles reference\nmaterial and code alongside it [2]. In Claude Code, the reference implementation used throughout\nthis note, skills live in ~/.claude/skills/ for personal use, or in .claude/skills/ inside a\n3\nrepository for project-scop",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -70,6 +78,8 @@
       "pageEnd": 4,
       "target": "../sections/sec-003-staged-loading.md",
       "narrative": null,
+      "content": "Skills use staged loading, described in the documentation as progressive disclosure [2]. The\nmechanism rests on three levels, shown in Figure 2.\nThe first level is the frontmatter. The name and description of every installed skill are made\navailable to the model at the start of a session, at a cost of roughly one hundred tokens per skill [2].\nThis is what lets a project hold many skills without paying for all of their contents up front. At\nthis stage the model knows only that the skill exists and what it claims to be for.\nThe second level is the body. When the model judges that a task matches",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -84,6 +94,8 @@
       "pageEnd": 5,
       "target": "../sections/sec-004-writing-the-description.md",
       "narrative": null,
+      "content": "Because the description is the trigger, it deserves more care than any other part of the skill. Write\nit in the third person, since it is read by the model as part of its own context, and a first or second\nperson voice can degrade matching. State both what the skill does and when it should be used,\nand include the concrete terms a relevant task would contain.\nA description such as “Handles releases” gives the model nothing to match against.\nA\ndescription such as “Drafts release notes from the pull requests merged between two version tags.\nUse when cutting a release, updating a changelog, or su",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -98,6 +110,8 @@
       "pageEnd": 5,
       "target": "../sections/sec-005-anatomy-of-a-well-formed-skill.md",
       "narrative": null,
+      "content": "Figure 3 shows the parts of a skill using a generic release-notes example. Inputs that the skill\nreads are drawn as chips on the left, the numbered steps of the body sit inside the container, and\nthe artefacts the skill produces are chips on the right. The same convention serves any skill: the\ncontainer is the unit of behaviour, the chips on either side are what it consumes and produces,\nand the inner boxes are the procedure the body encodes.\nrelease-notes\n$ARGUMENTS\n(tag range)\nchangelog-style.md\n(reference)\ngather-prs.py\n(bundled script)\nCHANGELOG.md\nsummary\n1. Resolve tag\nrange\n2. Collect m",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -112,6 +126,8 @@
       "pageEnd": 6,
       "target": "../sections/sec-006-skills-within-the-agent-tool-surface.md",
       "narrative": null,
+      "content": "Skills are one of several mechanisms that change how an agent behaves. They are easy to confuse,\nand choosing the wrong one is a common source of unreliable behaviour. Two questions separate\nthem: who decides that the mechanism runs, and what guarantee it provides. Table 1 sets\nout the mechanisms against these two questions, as Claude Code implements them. Analogous\n5\nmechanisms exist in other tools: the external tool connection follows the cross-vendor Model\nContext Protocol (MCP), and the project memory file has a cross-tool analogue in the AGENTS.md\nconvention.\nMechanism\nWho decides it runs",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -126,6 +142,8 @@
       "pageEnd": 8,
       "target": "../sections/sec-007-skills-and-hooks.md",
       "narrative": null,
+      "content": "This pairing deserves separate treatment, because it is where guarantees are most often misplaced.\nOn its automatic path a skill is model-invoked and probabilistic; a hook is runtime-invoked and\n6\nwho decides the run\nstrength of effect\nmodel-decided\nuser-invoked\nruntime-guaranteed\nadvisory\nblocking\nSkill\nExternal tool\nSubagent\nSlash command\nMemory file\nHook\nFigure 4: Schematic positioning of the mechanisms by who decides the run, the model, the user, or the\nruntime, and how strong the effect is, from advisory to blocking. The two tend to track together, since only\nruntime-decided mechanisms ca",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -140,6 +158,8 @@
       "pageEnd": 8,
       "target": "../sections/sec-008-an-evaluation-driven-authoring-process.md",
       "narrative": null,
+      "content": "Write evaluations before writing the skill. Run the model on representative tasks without the skill\nand record where it fails or lacks context. Turn those failures into a small set of test cases with\nexpected behaviours. Measure the baseline without the skill, then write the minimum instructions\nneeded to pass the tests, and iterate against them. This keeps the skill aimed at real gaps rather\nthan imagined ones [3].\nA reliable development loop uses two instances of the model [3]. Work with one instance to\ndraft and refine the skill, drawing on the context that would otherwise be typed by hand.",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -154,6 +174,8 @@
       "pageEnd": 8,
       "target": "../sections/sec-009-patterns-and-faults.md",
       "narrative": null,
+      "content": "For multi-step tasks, give the body an explicit ordered workflow, and for fragile sequences include\na checklist the model can copy and tick off as it proceeds. Where output quality depends on\nvalidation, build a loop: run a check, fix what it reports, run it again, and proceed only when\nit passes. For batch or destructive operations, have the model write a plan to a structured file\nand validate that file with a script before any change is applied, so that errors are caught before\nthey take effect. Where output format matters, provide a template; where style matters, provide\nworked input and ou",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -168,6 +190,8 @@
       "pageEnd": 9,
       "target": "../sections/sec-010-trust-and-third-party-skills.md",
       "narrative": null,
+      "content": "A skill should be treated as a software dependency. It can carry instructions, scripts, references,\nand links to external content, and the agent acts on those materials with whatever permissions it\nholds in the current environment. A skill that fetches external content is a particular concern,\nsince that content can itself carry instructions and can change after the skill was first trusted.\n8\nSo a skill from a third party should be inspected before use: read the SKILL.md, the bundled\nscripts, the referenced resources, and any external URLs, and check each against the skill’s stated\npurpose. Th",
+      "truncated": true,
       "provenance": "ingested"
     },
     {
@@ -182,6 +206,8 @@
       "pageEnd": 9,
       "target": "../sections/sec-011-summary-of-guidance.md",
       "narrative": null,
+      "content": "A skill is a software artefact, and the guidance above is an application of ordinary engineering\ndiscipline to it. The comparison drawn in UML class style holds for structure, while invocation\nworks differently: the model selects a skill probabilistically, so evaluations carry the weight a\ntype system would in conventional code. A skill is selected by the model on the strength of its\ndescription and loaded in stages, so the description must state both function and trigger, and the\nbody must stay short and assume general knowledge. Reference files are linked one level deep,\nand scripts are bund",
+      "truncated": true,
       "provenance": "ingested"
     }
   ]
