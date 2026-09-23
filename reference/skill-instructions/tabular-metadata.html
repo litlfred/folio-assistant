@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790161110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790161850">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790161110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790161850">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790161110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790161850">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790161110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790161850">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790161110">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790161850">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790161110" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790161850" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -774,27 +774,76 @@ that assumption three ways:</p>
 column), <code class="language-plaintext highlighter-rouge">fac:headerRow</code>, <code class="language-plaintext highlighter-rouge">fac:extent</code>.</p>
 
 <blockquote>
-  <p><strong>They are annotations ON a valid CSVW document, never a replacement for
-one.</strong> A reader with a standard CSVW parser ignores the <code class="language-plaintext highlighter-rouge">fac:</code> keys and still
-gets a correct table description. That property is the entire reason for
-adopting a standard rather than inventing a schema, so it is <strong>tested</strong>
-(<code class="language-plaintext highlighter-rouge">csvwOnly()</code> in <code class="language-plaintext highlighter-rouge">schemas/tabular-csvw.ts</code>) rather than asserted.</p>
+  <p><strong>The record is JSON; the CSVW is derived from it.</strong> The annotations live in
+<code class="language-plaintext highlighter-rouge">tabular.csvw.json</code> — plain JSON, deliberately not <code class="language-plaintext highlighter-rouge">.jsonld</code> — and
+<code class="language-plaintext highlighter-rouge">toCsvw()</code> in <code class="language-plaintext highlighter-rouge">schemas/tabular-csvw.ts</code> produces the genuine CSVW metadata
+document from it: the CSVW <code class="language-plaintext highlighter-rouge">@context</code>, CSVW’s own keys, nothing of ours at
+any level. A standard reader is handed that document and gets a correct
+table description. That property is the entire reason for adopting a
+standard rather than inventing a schema, so it is <strong>tested</strong> — the export is
+walked key by key against <code class="language-plaintext highlighter-rouge">CSVW_KEYS</code> — rather than asserted.</p>
 </blockquote>
 
 <p>Adding a fourth <code class="language-plaintext highlighter-rouge">fac:</code> term is the moment to stop and ask whether CSVW really
 cannot express it. Usually it can.</p>
+<h3 id="why-json-and-not-json-ld--bean-792y">
+  
+  
+    <a href="#why-json-and-not-json-ld--bean-792y" class="anchor-heading" aria-labelledby="why-json-and-not-json-ld--bean-792y"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why JSON and not JSON-LD — bean <code class="language-plaintext highlighter-rouge">792y</code>
+  
+  
+</h3>
+    
 
-<blockquote>
-  <p><strong>Known defect, not a pattern to copy — the <code class="language-plaintext highlighter-rouge">fac:</code> spelling here dangles.</strong>
-Everywhere else the core namespace’s prefix is its stub,
-<code class="language-plaintext highlighter-rouge">folio-assistant-core</code> (<a href="/folio-assistant/reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a> §”A prefix is the
-stub”). These keys cannot simply be renamed to match, because a CSVW
-metadata document may put only <code class="language-plaintext highlighter-rouge">@language</code> and <code class="language-plaintext highlighter-rouge">@base</code> in its local
-<code class="language-plaintext highlighter-rouge">@context</code> — no prefix of ours can be bound there, under ANY spelling, so
-a JSON-LD processor reads <code class="language-plaintext highlighter-rouge">fac</code> as a URI scheme. The fix is absolute IRIs
-as keys, which changes the document format; it is tracked as its own bean
-(<code class="language-plaintext highlighter-rouge">792y</code>) rather than folded into the prefix rename.</p>
-</blockquote>
+<p>This section used to claim the record WAS a valid CSVW document that a
+standard parser would read while ignoring the <code class="language-plaintext highlighter-rouge">fac:</code> keys. It was not. The
+record had no <code class="language-plaintext highlighter-rouge">@context</code>, so a CSVW parser rejects it, and a JSON-LD processor
+keeps only the <code class="language-plaintext highlighter-rouge">fac:</code> keys, read as IRIs in a URI scheme called <code class="language-plaintext highlighter-rouge">fac</code>. No
+spelling of the prefix fixes that inside CSVW, whose metadata documents may
+put only <code class="language-plaintext highlighter-rouge">@language</code> and <code class="language-plaintext highlighter-rouge">@base</code> in a local context — see
+<a href="/folio-assistant/reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a> §”A prefix is the stub”.</p>
+
+<p>The owner chose (2026-09-23) between three answers:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>the record</th>
+      <th>the cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>chosen</strong></td>
+      <td>JSON; CSVW DERIVED by <code class="language-plaintext highlighter-rouge">toCsvw()</code></td>
+      <td>the annotations are not linked data</td>
+    </tr>
+    <tr>
+      <td>full-IRI terms</td>
+      <td>real CSVW, annotations as ~12 flattened IRI terms, each defined in the vocabulary</td>
+      <td>JSON-LD drops <code class="language-plaintext highlighter-rouge">null</code>, so a DETERMINED null — a CSV has no sheet — becomes indistinguishable from “never recorded”</td>
+    </tr>
+    <tr>
+      <td>our own context</td>
+      <td>JSON-LD with a context binding our prefix</td>
+      <td>a CSVW reader still rejects it</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two facts decided it. <strong>Nothing reads the annotations as linked data</strong> — the
+graph projection reads <code class="language-plaintext highlighter-rouge">anchor.sheet</code> from the JSON — and
+<a href="/folio-assistant/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> says to generate as many
+renderings as have a consumer, and no more. And <strong>the three-state rule below
+needs <code class="language-plaintext highlighter-rouge">null</code> to mean something</strong>, which RDF cannot keep. If a consumer ever
+needs placement as linked data, the full-IRI answer is the one to revisit,
+and its cost is already written down here.</p>
+
+<p><strong>The <code class="language-plaintext highlighter-rouge">fac:</code> in the key names is a JSON name, not a prefix.</strong> It marks our
+fields apart from CSVW’s in the file. It is safe exactly because the file is
+not JSON-LD — rename the file back to <code class="language-plaintext highlighter-rouge">.jsonld</code> and it dangles again, which
+<code class="language-plaintext highlighter-rouge">check:context-emission</code> would then catch.</p>
 <h2 id="as-best-as-can-means-three-states-never-two">
   
   
@@ -1184,7 +1233,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35851718156"><code>2360397</code></a> &middot; 2026-09-23T10:58:20Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35852937881"><code>6c6faa2</code></a> &middot; 2026-09-23T11:10:47Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
