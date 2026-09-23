@@ -4361,6 +4361,44 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   overscroll-behavior: contain;
 }
 
+/* THE BACKDROP SCROLLS WITH THE WORDS — bean `624f`, owner 2026-09-23.
+ *
+ * Owner, 2026-09-21: *"if the content shape is not square and overruns, then
+ * you can scroll contents and background will scrll accoringing"*. Offered
+ * four readings on 2026-09-23 — scroll together, keep the art still, repeat
+ * it, stretch it — they chose **"scrolls with text"**: *"picture and words
+ * move together as one surface. The picture stays whole, and text past its
+ * end continues on the plain theme colour."*
+ *
+ * THE CARD IS THE SCROLLER, NOT THE TEXT BOX. Before this, the text box
+ * scrolled inside a still card, so the words slid over a fixed cat. Now the
+ * text box grows to its content and the CARD scrolls; the `<picture>` and the
+ * scrim are absolutely positioned against the card's scroll origin, so they
+ * move with the content — which is what makes it one surface.
+ *
+ * THE PICTURE STAYS WHOLE, because `object-fit: contain` above is unchanged:
+ * *"show full sticky image, not cropped"* (owner, earlier) is not traded
+ * away. So it covers exactly the first square, and a long note continues
+ * below it on `.fa-sticky`'s own themed surface. That is the honest
+ * consequence of "whole and unrepeated", and it is what the owner chose.
+ *
+ * DOCKED ONLY. On the glass (`.fa-sticky-floating`) a sticky is shaped to its
+ * content (the other half of this bean), so there is nothing to overrun. */
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fa-landing-sticky--fixed:not(.fa-sticky-floating) > .fa-landing-sticky__text {
+  /* At least the declared cloud, so a short note still sits where the art
+   * put it; taller when the words need it, which is what overflows the CARD. */
+  height: auto;
+  min-height: calc(var(--fa-th, 0.84) * 100%);
+  overflow: visible;
+  /* Room below the last line, so it never sits flush on the card's edge. */
+  padding-bottom: 0.75em;
+}
+
 /* A sticky with no art keeps the old flow behaviour exactly: no fixed shape, no
  * absolute box. `--fixed` is only added when art resolved, so this is the
  * third-state case the template already distinguishes. */
@@ -4784,10 +4822,53 @@ a.fa-nav-folders__link:focus-visible {
 /* Declared, with no published viewer. Struck through rather than hidden, the
  * same way the harness tabs' graph list marks one: a gap a reader can see is a
  * gap somebody can close. */
+/* AN INERT ROW, AND THE WORDS ARE THE STATE.
+ *
+ * Owner ruling on #1036: a declared graph with no viewer is shown, inert and
+ * LABELLED. `gjli` is the constraint that decides how: the state must not be
+ * carried by colour alone, and it must not read as a control.
+ *
+ * So this rule only DE-EMPHASISES; it no longer has to carry the meaning,
+ * because `.fa-nav-folders__note` beside it says which of the four inert
+ * states this is. `line-through` is gone with the same reasoning — on a row
+ * that now reads `code  no viewer yet` it struck through the kind's own name,
+ * which says "removed" rather than "not built", and struck text is harder to
+ * read for exactly the audience this rule is for.
+ *
+ * `opacity` raised from 0.45 to 0.7, and BOTH numbers are measured in a
+ * browser rather than reasoned about: composited over this panel the row
+ * cleared **3.56:1** at 0.45 and clears **6.48:1** at 0.7. The first is under
+ * the 4.5:1 a label this size owes; dimmer than a link and still legible is
+ * the whole requirement. (An earlier draft of this comment guessed "about
+ * 2.4:1" — wrong, and wrong in the direction that oversells the fix.) */
 .fa-nav-folders__link--dead {
   cursor: default;
-  opacity: 0.45;
-  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* The reason, in the same shape the harness tabs already use for theirs —
+ * `.fa-harness-graph__note`. One appearance for one meaning across the two
+ * surfaces, rather than a second look a reader has to learn. */
+.fa-nav-folders__note {
+  margin-left: 0.4em;
+  /* THE ROW'S OWN SIZE, not 0.75em of it. The folders block is already
+   * 0.75rem, so a further 0.75em put the reason at **9px** — measured, not
+   * estimated. `.fa-harness-graph__note` can afford that shrink because its
+   * row is larger; this one cannot, and the reason is the part of the row a
+   * reader most needs. Italic carries the de-emphasis on its own.
+   *
+   * This instance's declared interaction profile is low-dexterity
+   * (`interaction/interaction.json`), and `ui-accessibility` is explicit that
+   * density is cheaper than a missed target; the same argument applies to a
+   * label nobody can read. */
+  font-style: italic;
+  /* NO OPACITY OF ITS OWN, unlike `.fa-harness-graph__note`, and the
+   * difference is not an oversight. That note sits on a row at full strength;
+   * this one sits INSIDE `--dead`, which is already at 0.7, and opacity
+   * multiplies — 0.7 x 0.75 put the reason at roughly 4.3:1 while the kind
+   * beside it sat at 6.48. The reason is the part a reader needs most and it
+   * would have been the least legible thing in the row. Italic and 0.75em
+   * carry the de-emphasis without touching contrast. */
 }
 
 /* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
