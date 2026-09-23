@@ -437,7 +437,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
-    summary: "The harness layer's own knowledge graph, where a directory holds more than one of its parts.",
+    summary: "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
   },
   // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
   //
@@ -652,7 +652,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
-    summary: "Schema definitions, self-declared in the smart-base manner.",
+    summary: "A Subgraph of schema definitions: files that state the shape other files must have.",
   },
   // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
   // per named sub-graph and per instance, both written from one model by

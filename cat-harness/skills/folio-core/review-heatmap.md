@@ -35,7 +35,7 @@ about a REVIEW.
 | **Open comments** | review comments still `open` or `addressed`, with defects counted in brackets | `review-comments.json` | how bad the section is. One comment may be about the whole section, and a question is not a defect. |
 | **Stale comments** | open comments whose block changed AFTER the comment was made (its recorded hash differs from the block's current one) | `review-comments.json` + `blocks.json` | wrong or obsolete. It means **re-read the block before replying**, because the reviewer saw an earlier version. |
 | **Review coverage** | "3 of 5 reviewed": the section's added or changed blocks, and how many have a reviewer VERDICT on their **current** version. Shaded by what is still unreviewed. | `review-comments.json`'s `verdicts` + `blocks.json` (bean `px0t`) | "every comment is resolved". **Resolved comments are not a verdict**: a question answered is not a block judged. A verdict on an earlier version is shown on the block and does NOT count, so an edit after review reopens exactly the blocks it touched. A file written before verdicts existed has no `verdicts` field and reads "no data", never "0 reviewed". |
-| **QA** | the section's blocks whose latest QA verdicts FAIL (with the worst severity), and those whose verdicts are STALE or that were never audited | `block-qa.json`, published by the `folio-block-qa-summary` Tool from the folio's committed verdicts | a pass. A block counts as failing only on a verdict NEWER than the block; an older verdict makes it stale, and stale outranks passing. A section gets a row for QA alone only if something there fails or is stale. |
+| **QA** | the section's blocks whose latest QA verdicts FAIL (with the worst severity), and those whose verdicts are STALE or that were never audited | `block-qa.json`, published by the `folio-block-qa-summary` Tool after the staging job sweeps the build | a pass. A block counts as failing only on a verdict NEWER than the block; an older verdict makes it stale, and stale outranks passing. A section gets a row for QA alone only if something there fails or is stale. |
 
 **A column with no data says so in every row** ("not published", or "no
 data" when a build lacks the file). It is never 0 and
@@ -48,10 +48,12 @@ open.
 
 ## Where the QA column's data comes from
 
-The staging workflow runs the `folio-block-qa-summary` Tool
-(`cat-harness/scripts/publish-block-qa.ts`) over the folio. It reads each
-block's committed `block-qa/v1` verdicts, runs no checker, and writes
-`block-qa.json`. Each block is one of:
+The staging workflow first sweeps the build (its `qa_sweep` input, on by
+default, bean `tw61`), then runs the `folio-block-qa-summary` Tool
+(`cat-harness/scripts/publish-block-qa.ts`). The Tool reads each block's
+`block-qa/v1` verdicts, runs no checker itself, and writes `block-qa.json`.
+So the column reports THIS build's script-checkable criteria. Criteria that
+need an agent's judgement are not run by the sweep. Each block is one of:
 
 - **failing**: a fresh verdict failed;
 - **stale**: nothing fresh failed, but some verdict predates the block's
