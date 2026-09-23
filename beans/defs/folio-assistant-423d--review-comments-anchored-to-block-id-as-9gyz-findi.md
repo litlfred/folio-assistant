@@ -139,3 +139,48 @@ the 9gyz tie.
   second done-when).
 
 These stay open on this bean.
+
+## Owner ruling 2026-09-23: option 1, as a Skill and a Tool
+
+The owner asked *"JSON is the todo kind? then yes do 1. make sure it is a
+Skill/Tool so process can be modified later. full writeuip"*. The answer to
+the question is yes: `review-comments.json`'s `comments` ARE
+`folio-review-comment/v1` todos, each validated as one. The envelope carries
+only provenance, `malformed` and `untagged`.
+
+**Built (session_017nyJj3PsjvszpF3DyGeBgE):**
+
+- **Tool** `folio-review-comments` (`folio-assistant-core/scripts/review-comments.ts`,
+  declared in `folio-assistant-core/tools/index.ts`, `satisfies: ["review-comments"]`).
+  It fetches the comments, ingests them idempotently over `--existing`,
+  re-anchors against the head's blocks, and writes the file. It knows the
+  blocks either from `--folio` (and writes `blocks.json`) or from `--blocks`.
+- **Skill** `review-comments` (`cat-harness/skills/folio-core/review-comments.md`):
+  the full write-up. It covers the rulings, the tag, the kind, the transition
+  table, the Tool's steps, the two jobs and their trust boundary, the page,
+  where each kind of change goes, and what is not decided.
+- **`reanchorToBlocks`**: follows the head's `renamedFrom`, not the ChangeSet,
+  so a block added and then renamed within one PR keeps its comments.
+- **`folio-staging.yml`**:
+  - `stage` ingests and publishes `blocks.json` + `review-comments.json`;
+  - a new `comments` job refreshes the file on a tagged PR comment. It checks
+    out ONLY the platform (at `platform_ref`) and the publish branch, never
+    the PR's code, because it runs with a write token and is started by any
+    commenter. It skips bots, and on a push collision it recomputes rather
+    than rebasing.
+- **`init-folio`**: a document folio's caller gets `issue_comment` and a
+  `permissions` block.
+- **Review page**:
+  - each changed block lists its comments;
+  - three more groups get their own headings: comments on unchanged blocks,
+    ORPHANED comments, and unreadable tags;
+  - every changed block shows its `block: <label>` line and a PR link;
+  - no file means the page says "No comment data on this build."
+  - Checked in Chromium, light and dark.
+- **`RepoFullName`**, an injection-safe Tool type for `owner/name`.
+
+**Open (asked in the skill's "Not yet decided"):** where a moved status is
+persisted, either the folio's committed `todos` graph or the published file.
+Then: whether an edited comment reopens a comment, and the page RESOLVING
+comments (the original done-when). Resolving needs the persistence
+decision first.

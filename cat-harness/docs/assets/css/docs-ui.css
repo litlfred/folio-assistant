@@ -868,6 +868,25 @@
    * flex floor; collapsing either changes a layout this rule has no business
    * changing, and neither leaves a gap between marks.
    */
+  /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
+   *
+   * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
+   * — measured at a 500px viewport, the region was **22px** tall around a
+   * summary of **25**, so the row read as `ON THIS PAG` with its descenders
+   * sliced off. Fine at 600 and above, which is why it had not been seen.
+   *
+   * `.fa-doc-index` is `flex: 0 1 auto`, and its own rule says why it may
+   * shrink: *"it scrolls inside its cap."* That is true while it is OPEN. A
+   * CLOSED `<details>` has nothing to scroll, so every pixel the flex layout
+   * takes from it is a pixel of the one row it still has — and the reader
+   * cannot scroll to recover it or even tell that it happened.
+   *
+   * So the yield is conditioned on the thing that made it safe. `.fa-nav-folders`
+   * needs no rule here: it is already `flex: 0 0 auto` and never shrank, which
+   * is why the owner's screenshot shows `FOLDERS 24` intact directly beneath a
+   * clipped `ON THIS PAGE 8`. */
+  .side-bar .fa-doc-index:not([open]) { flex-shrink: 0; }
+
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
   .side-bar .fa-harness-tabs__heading,
@@ -4756,18 +4775,28 @@ button.fa-nav-icon {
 .fa-harness-tab,
 .fa-harness-section {
   --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(46% * var(--fa-tile-on, 0)) 34%);
+  /* WHAT GOES ON THE INK, in the same two schemes and derived the same way.
+   *
+   * The ink is a 34%-lightness blue here and a 72% one in dark, so a single
+   * letter colour cannot sit on both — which is the `y8cm` failure this whole
+   * block exists to have ended, and it would have come straight back the
+   * moment a mark was painted at full ink. Tinted rather than pure white or
+   * black so a knocked-out initial still reads as belonging to its hue. */
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 97%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) .fa-harness-tab,
   :root:not([data-fa-scheme="light"]) .fa-harness-section {
     --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+    --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
   }
 }
 
 :root[data-fa-scheme="dark"] .fa-harness-tab,
 :root[data-fa-scheme="dark"] .fa-harness-section {
   --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
 }
 
 .fa-harness-tabs {
@@ -4911,9 +4940,20 @@ a.fa-harness-tab__body:focus-visible {
   align-items: center;
   justify-content: center;
   border-radius: 0.1875rem;
-  /* The tone, at the strength the mark can carry. A generic harness computes
-   * this to grey, for the reason the `--fa-tile-ink` block above gives. */
-  background: color-mix(in oklab, var(--fa-tile-ink) 55%, transparent);
+  /* THE TONE AT FULL STRENGTH, with the letter knocked out of it.
+   *
+   * Owner, 2026-09-23: *"no logo on who-iris icon (for now). just WHO blue"*.
+   * who-iris is the only harness with no art, so this rule IS its mark — and
+   * at the 55% mix it carried before, hue 199 arrived as a grey-blue square.
+   * A tone diluted until it is not the colour anybody named is the same as not
+   * having declared one.
+   *
+   * A generic harness still computes to grey: `--fa-tile-on` is `0` for a kind
+   * with no declared avatar, so the saturation resolves to `0%` and this
+   * paints the absence rather than painting hue 0 red. The dilution was never
+   * what made that safe — that block above is. */
+  background: var(--fa-tile-ink);
+  color: var(--fa-tile-ink-on);
   font-size: 0.8125rem;
   font-weight: 700;
   line-height: 1;

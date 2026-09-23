@@ -517,13 +517,20 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
 #   1. Set build_command below to the command that builds this folio's site.
 #   2. Uncomment the pull_request trigger.
 # Until then it runs only when dispatched, and the build step refuses.`;
+  // `issue_comment` refreshes the preview's review comments when a reviewer
+  // writes one (bean 423d, the `review-comments` skill). The reusable
+  // workflow's `comments` job runs only on it, and checks out no PR code.
   const trigger = on
     ? `  pull_request:
     types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created, edited]
   workflow_dispatch:`
     : `  workflow_dispatch:
   # pull_request:
-  #   types: [opened, synchronize, reopened]`;
+  #   types: [opened, synchronize, reopened]
+  # issue_comment:
+  #   types: [created, edited]`;
   return `name: Staging preview
 
 # A before/after preview of this folio for every pull request, published to
@@ -534,6 +541,13 @@ ${header}
 
 on:
 ${trigger}
+
+# What the reusable workflow needs, and no more: publish the preview, comment
+# on the pull request, and read its comments for the review page.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
 
 jobs:
   staging:

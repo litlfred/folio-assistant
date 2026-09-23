@@ -128,7 +128,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
-        <details class="fa-harness-tabs" open>
+        <details class="fa-harness-tabs">
           <summary class="fa-harness-tabs__heading">Harnesses <span class="fa-harness-tabs__count">1</span></summary>
           <ul class="fa-harness-tabs__list">
             <li class="fa-harness-tab">
@@ -506,11 +506,33 @@ test.describe("at rest the strip carries marks and nothing else", () => {
 
   test("the marks stay — they are what the strip is FOR", async ({ page }) => {
     await load(page, CUSTOM);
-    // Icons and avatars, at rest, with no hover. The owner asked for exactly
-    // these two things and nothing else.
+    // Icons and marks, at rest, with no hover.
     await expect(page.locator(".fa-nav-icons .fa-nav-icon").first()).toBeVisible();
-    await expect(page.locator(".fa-harness-tab__mark")).toBeVisible();
     await expect(page.locator(".fa-nav-home__mark")).toBeVisible();
+  });
+
+  test("the harness avatars follow their group, and that is a TRADE the owner made", async ({ page }) => {
+    // Two instructions, one day apart, that pull opposite ways:
+    //
+    //   *"should only be icons/avatars so compat"*  — 2026-09-23, morning
+    //   *"harnesses start closed"*                  — 2026-09-23, later
+    //
+    // The harness avatars live inside that group, so a closed group takes them
+    // out of the strip. The second instruction is the later one and is
+    // implemented literally; this test states the consequence rather than
+    // hiding it, so that reversing it is one `open` in `nav_footer_custom.html`
+    // and one expectation here.
+    //
+    // NOT worked around in CSS. A stylesheet that revealed a closed
+    // disclosure's contents would make `[open]` stop meaning what it says,
+    // which is worse than either answer.
+    await load(page, CUSTOM);
+    await expect(page.locator(".fa-harness-tabs")).not.toHaveAttribute("open", "");
+    await expect(page.locator(".fa-harness-tab__mark")).not.toBeVisible();
+
+    await page.hover(".side-bar");
+    await page.locator(".fa-harness-tabs__heading").click();
+    await expect(page.locator(".fa-harness-tab__mark")).toBeVisible();
   });
 
   test("the icon row STACKS at rest and lies flat when open", async ({ page }) => {
@@ -526,6 +548,30 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.waitForTimeout(250);
     const open = await tops();
     expect(new Set(open).size).toBe(1);
+  });
+
+
+  test("a CLOSED document index never yields its one row — the `flex-shrink` fix", async ({ page }) => {
+    // Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*.
+    // Measured at a 500px viewport: the region was 22px around a 25px summary,
+    // so the row read as `ON THIS PAG` with its descenders sliced off. The
+    // region is `flex: 0 1 auto` and its own rule says why that is safe —
+    // *"it scrolls inside its cap"* — which is true while it is OPEN. Closed,
+    // there is nothing to scroll, so every pixel the layout takes is a pixel
+    // of the only row it has and the reader cannot recover it.
+    await page.setViewportSize({ width: 1200, height: 500 });
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.waitForTimeout(250);
+    const fits = await page.evaluate(() => {
+      const box = document.querySelector(".fa-doc-index");
+      const sum = document.querySelector(".fa-doc-index__heading");
+      if (!box || !sum) return null;
+      return Math.round(sum.getBoundingClientRect().bottom - box.getBoundingClientRect().bottom);
+    });
+    // Zero or negative: the summary's bottom is at or above the region's.
+    expect(fits).not.toBeNull();
+    expect(fits!).toBeLessThanOrEqual(0);
   });
 
   test("the fixed bottom stays ANCHORED to the bottom in both states", async ({ page }) => {
