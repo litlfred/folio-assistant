@@ -22,12 +22,26 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 5,
     "fail": 0,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/lean-proof-review.md",
+      "code": "cat-harness/skills/folio-paper-adapter/lean-proof-review.ts",
+      "prose_hash": "99fcd9283523",
+      "code_hash": "e77c930aef2b",
+      "by": "baseline"
+    }
+  ]
 }

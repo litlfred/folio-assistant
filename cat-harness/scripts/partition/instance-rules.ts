@@ -886,6 +886,9 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // Its one cross-run criterion — declared prose ↔ code pairs and their
+      // attestations (bean `cuxx`). Same side as the auditor that calls it.
+      "scripts/prose-code-pairs.ts",
       "scripts/known-skills.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the

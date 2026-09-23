@@ -32,12 +32,26 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 2,
+    "pass": 3,
     "fail": 2,
     "n/a": 0,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-core/content-graph.md",
+      "code": "cat-harness/skills/folio-core/content-graph.ts",
+      "prose_hash": "fe237fb4b496",
+      "code_hash": "71c03b5233f9",
+      "by": "baseline"
+    }
+  ]
 }
