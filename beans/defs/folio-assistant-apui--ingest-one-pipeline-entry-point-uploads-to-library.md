@@ -143,3 +143,69 @@ content, the Dublin Core record and the manifest* — and blocks, manifest and
 images are still run by hand before `--promote`. Staging one document leaves
 **4 requirements unmet**, named by the tool. So this bean stays open: the
 entry point is real and verified, but it is not yet the whole path.
+
+---
+
+*2026-09-23, second session* — **THE PIPELINE TERMINATES.** One document went
+`uploads/` → `library/` in two commands, and the done-when above is met.
+
+```
+bun run ingest "uploads/Skills in OpenAI API.pdf" --library ../agent-skills/library
+bun run cat-harness/scripts/ingest-document.ts "uploads/..." --library ... --promote
+```
+
+→ `agent-skills/library/skills-in-openai-api/` with `structure.json`,
+`sections/`, `blocks/`, `manifest.jsonld`, `images.json`, its `.jsonld`
+siblings and a committed QA verdict. `✓ (L1 complete, promoted)`.
+
+## The instruction could never have been made correct
+
+`withDerivedArms` sequences `pdf-images.py` and `l1-blocks.ts` after the rung.
+The printed *"run the remaining arms with -o …"* is **deleted**, not corrected,
+because the two arms take OPPOSITE conventions — measured by running both:
+
+| arm | `-o` wants | given the other |
+|---|---|---|
+| `pdf-images.py` | the library ROOT | writes `<slug>/<slug>/images.json`; the entry's own stays absent |
+| `l1-blocks.ts` | the ENTRY directory | throws *"no structure.json — this is not a staged entry"* |
+
+**No value of `-o` was right for both.** So the correction shipped in #1035
+made that line right for `pdf-images` and wrong for `l1-blocks` in the same
+stroke — my own fix, half wrong, and only visible by running the other arm. A
+sequence in code has no sentence to get wrong.
+
+## What running it for real found: L1-complete is not corpus-consistent
+
+A promoted entry passed `check:l1-complete` and then **failed
+`gen:jsonld:check`** — `manifest.jsonld` and `sections/*.jsonld` had no
+`.jsonld` siblings. Promotion checks the L1 requirements; it does not check
+the corpus-level generators that read the result.
+
+So the full path today is **three commands, not two**:
+
+```
+bun run ingest <pdf> --library <lib>          # rung + images + blocks/manifest
+… --promote                                   # crosses into library/
+bun run cat-harness/content/pipeline/gen-library-jsonld.ts   # the siblings
+bun run check:l1-complete -- --write          # the committed verdict
+```
+
+The last two are **not** folded into `--promote` here, deliberately: both are
+CORPUS-WIDE generators, and having a single-document promotion rewrite the
+whole corpus is a much larger claim than this bean makes. `gen-library-jsonld`
+also reported **81 pre-existing stale nodes** under `arxiv-2508.05192v2` and
+offers `--prune`; nothing was pruned —
+`deletion-requires-confirmation`, and they are not this change's to remove.
+
+## Still open
+
+- Folding the two corpus generators into promotion, or deciding they stay
+  separate on purpose. That is the remaining ambiguity in this bean's
+  done-when: *"one documented command"* is now two, plus two corpus steps.
+- `archive` and `tabular` rungs get NO derived arms. Stated rather than
+  assumed: `PAGED_ONLY` exists because not every requirement applies to every
+  kind, and neither was measured. "More arms cannot hurt" is how a gate starts
+  reporting a requirement over content it was never about.
+- Seven of the eight un-ingested uploads (`r8br`'s browser prints) are still
+  un-promoted. The path is proven on one; promoting the rest is a corpus
+  addition and is the owner's call, not a side effect of fixing a tool.
