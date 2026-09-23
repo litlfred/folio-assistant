@@ -264,10 +264,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T07:45:08.191Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/440cc48ec27d08a1daa800b310cd239a88d70587",
-  "sourceCommitSha": "440cc48ec27d08a1daa800b310cd239a88d70587",
-  "sourceCommitAt": "2026-09-23T07:43:06Z",
+  "generatedAt": "2026-09-23T07:56:48.048Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fcfe6f98980e245be61ee26ee319a57fa3dd3795",
+  "sourceCommitSha": "fcfe6f98980e245be61ee26ee319a57fa3dd3795",
+  "sourceCommitAt": "2026-09-23T07:54:31Z",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 241,
@@ -280,7 +280,7 @@
     "Role": 140,
     "ProcessNode": 753,
     "Tool": 70,
-    "Schema": 96,
+    "Schema": 97,
     "GraphKind": 29,
     "Directory": 40,
     "Asset": 3
@@ -1314,7 +1314,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/rendered-verification.md",
-      "instructionLines": 172,
+      "instructionLines": 214,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -35482,6 +35482,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/materialization"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/review-comment",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "review-comment",
+      "title": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "module": "../folio-assistant-core/schemas/review-comment.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/review-comment"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/artifact-store",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "artifact-store",
@@ -37319,8 +37328,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "7bcbd78124b79b30aba1e6c7bd6616912c56535d",
+    "sha": "a70e094dce5b8f1dbe0572485b790eb405ca4056",
     "pr": "1016/merge",
-    "run": "35833196682"
+    "run": "35834208256"
   }
 }
