@@ -489,7 +489,7 @@ function puml(name: string, pageUrl: string, sections: Section[], withAttrs: boo
 //
 // - a grid of unconnected packages (an overview): ELK again, more columns;
 // - anything with edges between classes: Graphviz, left to right, with
-//   orthogonal edges. Graphviz can route an edge across a box, which is why
+//   straight-segment (polyline) edges and wide spacing. Graphviz can route an edge across a box, which is why
 //   ELK stays the portrait default.
 
 type Orientation = "portrait" | "landscape";
@@ -516,9 +516,17 @@ function landscapeOf(text: string): string {
     rest.splice(end, 0, ...gridLinks(pkgs, "landscape"));
     return rest.join("\n");
   }
+  // Polyline, not ortho: Graphviz's orthogonal router places edge labels away
+  // from their edges and ran lines through boxes (owner, 2026-09-23: "make
+  // wider, its messy"). Wider spacing is what makes room for the labels; the
+  // portrait view's own nodesep/ranksep, tuned for ELK, are dropped.
   return lines
-    .filter((l) => l.trim() !== "!pragma layout elk")
-    .flatMap((l) => (l.startsWith("@startuml") ? [l, "left to right direction", "skinparam linetype ortho"] : [l]))
+    .filter((l) => l.trim() !== "!pragma layout elk" && !/^skinparam (nodesep|ranksep)\b/.test(l.trim()))
+    .flatMap((l) =>
+      l.startsWith("@startuml")
+        ? [l, "left to right direction", "skinparam linetype polyline", "skinparam nodesep 70", "skinparam ranksep 160"]
+        : [l],
+    )
     .join("\n");
 }
 
