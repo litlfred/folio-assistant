@@ -85,8 +85,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasSkill",
       "@type": "@id"
     },
-    "bindsLane": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsLane",
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
       "@type": "@id"
     },
     "maintains": {
@@ -278,10 +278,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T21:36:09.631Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c30873f7ec6714abc8868ba3288e9efcd9bdc81",
-  "sourceCommitSha": "4c30873f7ec6714abc8868ba3288e9efcd9bdc81",
-  "sourceCommitAt": "2026-09-23T21:34:07Z",
+  "generatedAt": "2026-09-23T21:48:08.212Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/db1f7268f352de3a06722d74646384bd5017233d",
+  "sourceCommitSha": "db1f7268f352de3a06722d74646384bd5017233d",
+  "sourceCommitAt": "2026-09-23T21:46:07Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -561,6 +561,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Initiator",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/initiator",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
     },
     {
@@ -568,6 +569,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Requestor",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/requestor",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
     },
     {
@@ -575,6 +577,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Knowledge Graph Data Store",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
     },
     {
@@ -1250,6 +1253,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "Logger",
       "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/logger",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Logger"
     },
     {
@@ -1444,9 +1448,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/log-message",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/initiator"
     },
     {
@@ -1461,9 +1462,6 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store"
     },
     {
@@ -1478,9 +1476,6 @@
       ],
       "judgementOnly": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Requestor"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/requestor"
     },
     {
@@ -1495,9 +1490,6 @@
       ],
       "actedUpon": true,
       "hasSkill": [],
-      "bindsLane": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Logger"
-      ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/logger"
     },
     {
@@ -1606,8 +1598,8 @@
   ],
   "staging": {
     "branch": "claude/bean-restates-skill-gate",
-    "sha": "206f5991cb25a93ed02a2147929ce9da4905bd08",
+    "sha": "b8480cd5b7e9d7bd6fd8526e3c2b33ad84bc09c3",
     "pr": "1191/merge",
-    "run": "35923260400"
+    "run": "35924466007"
   }
 }
