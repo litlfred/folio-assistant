@@ -1,5 +1,4 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Proposals"
 kind: proposal
 movedOn: 2026-09-19

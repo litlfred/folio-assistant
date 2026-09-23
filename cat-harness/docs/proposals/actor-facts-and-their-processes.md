@@ -1,7 +1,8 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Actor facts and the processes that must read them"
 kind: proposal
+movedFrom: fsh-guts/proposals/
+movedOn: 2026-09-23
 issue: 363
 bean: folio-assistant-bkje
 summary: >-
@@ -9,6 +10,15 @@ summary: >-
 ---
 
 # Actor facts and the processes that must read them
+
+> **Editorial correction, 2026-09-23.** This proposal was written while the
+> instance declaration was a fixed `harness.json`; it is `<name>.json` since
+> the 2026-09-21 split (`<name>.config.json` is the config beside it). The
+> references below were updated so a reader is not sent to a file that does not
+> exist — the proposal's argument is untouched, and only the filename moved.
+> The occurrences were invisible while this lived under `fsh-guts/`, which the
+> filename gate counts as retired material; publishing it is what surfaced them.
+
 {: .no_toc }
 
 Two asks from the owner, 2026-09-20, resolved the same way because they are
@@ -61,7 +71,7 @@ So the general remedy proposed here is not another split. It is:
 
 `folio-assistant-g7vb` landed a `network` axis — `internet` |
 `egress-restricted` | `air-gapped` — on the **deployment**
-(`harness.json`'s `topology`). That is the wrong granularity for this case,
+(`<name>.json`'s `topology`). That is the wrong granularity for this case,
 and the owner's sentence says why: a deployment may have internet while a
 **particular machine actor inside it** cannot reach out. Reach is a fact
 about the participant, not only about the site.

@@ -199,7 +199,7 @@ timestamps, never a comment body). Leaving them behind a dot was never
 defensible: this repository's own dot-prefix guard rejects a dot-prefixed
 segment, so the file read at the start of every session sat in the one place
 the conventions forbid. Option A of
-[`fsh-guts/proposals/workflow-state-in-beans.md`](fsh-guts/proposals/workflow-state-in-beans.md):
+[`cat-harness/docs/proposals/workflow-state-in-beans.md`](cat-harness/docs/proposals/workflow-state-in-beans.md):
 the criticism it carried there ("two places to look") was never about two
 stores, but about two *hidden* ones.
 

@@ -95,7 +95,7 @@ The owner:
 > need both, different needs.
 
 **None of the three shapes above was the answer, and the answer was already
-written down** — `fsh-guts/proposals/instance-versioning.md` §3.3, on an owner
+written down** — `cat-harness/docs/proposals/instance-versioning.md` §3.3, on an owner
 ruling of 2026-09-20: *"sha is for staging, regernecing in published SEMVER"*,
 with `check:published-refs` already implemented as its gate.
 

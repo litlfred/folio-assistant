@@ -32,7 +32,7 @@ Owner, 2026-09-20:
 
 `PUBLICATION_HOSTS` in `schemas/cat-harness.ts` is `github-pages`,
 `local-server`, `jurisdiction-endpoint`, `none` — axis 3 of
-[`deployment-topologies`](../../../fsh-guts/proposals/deployment-topologies.md).
+[`deployment-topologies`](../../docs/proposals/deployment-topologies.md).
 Every value answers *what serves the rendering*. A CDN answers a different
 question: *what stands between the server and the reader*. jsDelivr in front of
 raw GitHub, Cloudflare in front of an origin, an institutional cache in front
@@ -234,7 +234,7 @@ above, and it is the one that decides stage 4.
 - Bean `xies` — the **publication** gates: (chief) editor signoff → merge →
   human eyes on the rendered artefact → publish. This skill is what is being
   published; that bean is who says it may be.
-- [`deployment-topologies`](../../../fsh-guts/proposals/deployment-topologies.md)
+- [`deployment-topologies`](../../docs/proposals/deployment-topologies.md)
   — the ten axes, four of them declared, and why absent is a third state.
 - [`asset-extraction`](asset-extraction.md) §"Derived renderings" — what a
   package may contain that the source never supplied, and how it must say so.

@@ -1,5 +1,4 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Deployment topologies and operating modes"
 kind: proposal
 movedOn: 2026-09-19
@@ -10,6 +9,15 @@ summary: >-
 ---
 
 # Deployment topologies and operating modes
+
+> **Editorial correction, 2026-09-23.** This proposal was written while the
+> instance declaration was a fixed `harness.json`; it is `<name>.json` since
+> the 2026-09-21 split (`<name>.config.json` is the config beside it). The
+> references below were updated so a reader is not sent to a file that does not
+> exist — the proposal's argument is untouched, and only the filename moved.
+> The occurrences were invisible while this lived under `fsh-guts/`, which the
+> filename gate counts as retired material; publishing it is what surfaced them.
+
 {: .no_toc }
 
 Asked on [#363](https://github.com/litlfred/folio-assistant/issues/363),
@@ -94,7 +102,7 @@ is declared rather than inferred.
 |---|---|---|---|
 | 1 | **forge** | `none` (local git only) · `github` · `self-hosted` (GitLab, Gitea, …) · `jurisdiction-hosted` | where change proposals live |
 | 2 | **visibility** | `public` · `private` · `internal` | who can reach the repository |
-| 3 | **publication host** | `github-pages` · `local-server` · `jurisdiction-endpoint` · `none` | where a rendering is served from. **The first axis actually declared** — `publication.host` in `harness.json` |
+| 3 | **publication host** | `github-pages` · `local-server` · `jurisdiction-endpoint` · `none` | where a rendering is served from. **The first axis actually declared** — `publication.host` in `<name>.json` |
 | 4 | **compute** | `workstation` · `vendor-cloud` · `jurisdiction-cloud` · `own-infrastructure` | whose hardware runs the harness |
 | 5 | **network reach** | `internet` · `egress-restricted` · `air-gapped` | what the harness may call out to |
 | 6 | **tool surface** | `mcp` · `cli` · `both` | how a capability is invoked |
@@ -138,7 +146,7 @@ separately — a second declaration is a second thing to disagree with.
 ### Axis 3 is declared — `publication.host`
 
 The first of these axes to exist in code rather than only in this table.
-`publication.host` in `harness.json`, values exactly the four above, and
+`publication.host` in `<name>.json`, values exactly the four above, and
 `publicationHost()` in `schemas/cat-harness.ts` reads it. Bean
 `folio-assistant-1lfx`.
 
@@ -209,7 +217,7 @@ them produces a benchmark that means nothing. Bean `folio-assistant-amom`.
 
 ### Where a mode's output goes — provenance, not file family
 
-The rule is already the repository's, recorded in `harness.json`'s declaration
+The rule is already the repository's, recorded in `<name>.json`'s declaration
 of the `qa` graph: **placement follows provenance.** This proposal adds one
 consequence and does not change the rule.
 
