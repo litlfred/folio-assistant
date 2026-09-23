@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yag0
 title: 'WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-23T05:46:53Z
-updated_at: 2026-09-23T05:51:17Z
+updated_at: 2026-09-23T06:49:58Z
 parent: folio-assistant-yj32
 ---
 
@@ -41,7 +41,7 @@ build, and the page's `h1` IS *"Library — the L1 corpus"* — it is the right
 viewer, not the uploads one. An early reading of mine said otherwise; it had
 extracted a sub-fragment.
 
-## What IS wrong
+## ~~What IS wrong~~ — STRUCK 2026-09-23, THE FINDING WAS FALSE
 
 **The page is a shell.** `cat-harness/docs/cat-harness/library/who-iris/index.html`,
 20,160 bytes, committed and built identically, contains **none** of:
@@ -85,3 +85,66 @@ renders its empty state.
       entries, so this cannot recur silently
 - [ ] confirm whether the deployed site was merely stale, since that changes
       whether anything about the LINK needs doing at all
+
+## FALSE FINDING — corrected 2026-09-23, issue #1009
+
+**The page works.** Loaded in Chromium against a real build:
+
+```
+STATUS LINE: who-iris · 3 entries · 84,292 words · 404 sections
+json responses: ["200 .../assets/library/index.json"]
+console errors:  []
+  contains 9789241548960: true    contains wpr-rdo: true    contains who-pub-tps: true
+```
+
+### How the error was made, and why it was unfalsifiable as written
+
+I grepped the committed HTML for the entry names. **The viewer is
+client-rendered** — `DATA_HREF = "../../../assets/library/index.json"`, fetched
+at runtime, filtered by `inScope(x) { return !SCOPE || x.instance === SCOPE }`.
+The names are necessarily absent from the static file for a working page and a
+broken one alike. That test could not have returned any other answer.
+
+The bean read as well-evidenced — a byte count, a file path, an "identical
+committed and built" comparison — which is what made it convincing and what
+made it wrong.
+
+### A second error in the same bean
+
+It said who-iris's `library/` held *"the one directory"*. It holds **three**:
+`wpr-rdo-2020-003-eng`, `who-pub-tps-931`, `9789241548960-eng` — exactly the
+"3 things" the owner expected. I had read a truncated listing.
+
+### What the evidence says instead
+
+| checked | result |
+|---|---|
+| the `library` rail link on `/who-iris/` | `../cat-harness/library/who-iris/` — correct |
+| the viewer page | 3 entries, `200` on its data, no console errors |
+| the data file | 3 entries, 4 uploads, 1 queue tagged `who-iris` |
+| the deployment | Docs site succeeded on `47629383` at 06:36Z — NOT stale |
+
+So the owner most likely reached the docs-auto page via the **`docs`** rail
+entry, which sits beside `library` as a one-letter glyph plus a bare kind word.
+
+### What actually shipped from this bean
+
+1. **A regression test** — `cat-harness/test/library-viewer-scope.e2e.ts`.
+   Its first draft **passed against a fixture with who-iris's entries deleted**,
+   because it read the subjects it checked from the viewer's own data: no key,
+   no iteration, green. It now takes its expectations from the DECLARATIONS on
+   disk, which the failure being looked for cannot empty. Falsified both ways
+   before being kept.
+2. **The uploads/library visualiser share documented** on who-iris's
+   declaration — defensible (the library page carries a scoped uploads section)
+   but previously silent, which is why the rail shows two entries at one URL.
+3. **`rendered-verification`** gains §"A STATIC read of a client-rendered page
+   is not verification — in either direction", written from this failure. The
+   skill already existed; I did not consult it.
+
+## Done when
+- [x] the page is confirmed to list who-iris's entries — it always did
+- [x] a check fails when a declared subject's entries do not reach its viewer
+- [x] the deployment question settled: current, not stale
+- [ ] whether the rail's adjacent one-letter targets need distinguishing — the
+      owner's call, and not this bean's to decide
