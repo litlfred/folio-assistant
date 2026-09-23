@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 651,
+      "count": 652,
       "unit": "beans"
     }
   },
@@ -1973,6 +1973,20 @@
       "updatedAt": "2026-09-22T09:33:37Z",
       "preview": "Issue #877, and the owner's opening words: *\"WHO dgital health needs a once voice.\"*\n\nShaped as `who-style-guide/skills/voices/who-editorial/` — `voice.json` (`$schema: folio-voice-skill/v1`) carrying the rules, `SKILL.md` carrying how to USE them and deliberately NOT restating them, because a rule written as prose beside the same rule written as data is one fact in two places and the prose copy i",
       "file": "beans/defs/folio-assistant-7mi0--smart-base-voice-profiles-for-who-digital-health.md"
+    },
+    {
+      "id": "folio-assistant-7nvr",
+      "title": "KG BROWSER: a library entry's blocks are counted, never read — nothing renders the graph the corpus carries",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:05:22Z",
+      "updatedAt": "2026-09-23T19:15:36Z",
+      "preview": "parent: folio-assistant-0lmb\n\n\nIssue #1149, opened as requirements-only on the owner's ruling and then built\non their \"do 1149\".\n\n## The gap, measured\n\n`scripts/library-graph.ts` COUNTS an entry's blocks:\n\n    blocks: filesIn(join(dir, \"blocks\")).filter((f) => f.endsWith(\".jsonld\")).length,\n\nSo the viewer answers *how many* and never *what*. Meanwhile every block\ncarries `@type` (two of them), `ki",
+      "file": "beans/defs/folio-assistant-7nvr--kg-browser-a-library-entrys-blocks-are-counted-nev.md"
     },
     {
       "id": "folio-assistant-7o7i",
