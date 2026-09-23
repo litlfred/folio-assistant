@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 153,
+      "count": 155,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1218,6 +1218,21 @@
       "name": "types",
       "graphNode": "schema",
       "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/user-story.test.ts",
+      "instance": "cat-harness",
+      "name": "user-story.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/user-story.ts",
+      "instance": "cat-harness",
+      "name": "user-story",
+      "graphNode": "schema",
+      "summary": "User stories — what a reader acting in a role is trying to do.",
       "isTest": false
     },
     {
@@ -21959,20 +21974,6 @@
           "doc": "Who this reader IS, in prose — the persona an author writes for and a QA"
         },
         {
-          "name": "voice",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The voice to address this reader in."
-        },
-        {
-          "name": "useCases",
-          "type": "string[]",
-          "optional": true,
-          "array": true,
-          "doc": "What this reader is actually trying to do — the cases the content has to"
-        },
-        {
           "name": "skills",
           "type": "string[]",
           "optional": false,
@@ -22023,18 +22024,6 @@
           "array": false
         },
         {
-          "name": "voice",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "useCases",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
           "name": "id",
           "type": "z.string().min(1)",
           "optional": false,
@@ -22060,7 +22049,7 @@
         },
         {
           "name": "skills",
-          "type": "z.array(z.string()).default([])",
+          "type": "z.array(SkillNameSchema).default([])",
           "optional": true,
           "array": true,
           "doc": "Skills available to an actor in this role, before inheritance."
@@ -22087,7 +22076,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
+      ],
       "unresolved": [
         "ACTOR_KINDS"
       ],
@@ -22164,6 +22155,48 @@
         "cat-harness/schemas/role-graph.ts#ActorDefSchema",
         "cat-harness/schemas/role-graph.ts#RoleDefSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/role-graph.ts#RoleRef",
+      "name": "RoleRef",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/role-graph.ts#RoleRefSchema",
+      "name": "RoleRefSchema",
+      "module": "cat-harness/schemas/role-graph.ts",
+      "kind": "zod-object",
+      "doc": "A pointer AT a role, from whatever depends on one — a voice addressed to",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -31720,6 +31753,108 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/user-story.ts#UserStory",
+      "name": "UserStory",
+      "module": "cat-harness/schemas/user-story.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/user-story.ts#UserStoryGraph",
+      "name": "UserStoryGraph",
+      "module": "cat-harness/schemas/user-story.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/user-story.ts#UserStoryGraphSchema",
+      "name": "UserStoryGraphSchema",
+      "module": "cat-harness/schemas/user-story.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "stories",
+          "type": "z.array(UserStorySchema).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/user-story.ts#UserStorySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/user-story.ts#UserStorySchema",
+      "name": "UserStorySchema",
+      "module": "cat-harness/schemas/user-story.ts",
+      "kind": "zod-object",
+      "doc": "One user story: as <role>, I want <want>.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9-]+$/, \"a story id is lower-case kebab\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "RoleRefSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The role this story is told as."
+        },
+        {
+          "name": "want",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the reader wants to do, in their terms — \"I want to …\"."
+        },
+        {
+          "name": "soThat",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why, when it is not obvious from the want — \"so that …\"."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/role-graph.ts#RoleRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/version-bump.ts#Bump",
       "name": "Bump",
       "module": "cat-harness/schemas/version-bump.ts",
@@ -32188,11 +32323,11 @@
           "doc": "BPMN process ids, as `<bpmn:process id>` spells them —"
         },
         {
-          "name": "lanes",
-          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "name": "roles",
+          "type": "z.array(RoleRefSchema).min(1).optional()",
           "optional": true,
           "array": true,
-          "doc": "Declared role ids from `scenarios/roles.json` — the SWIMLANE, which"
+          "doc": "The roles this voice addresses — the reader it is written FOR."
         },
         {
           "name": "scenarios",
@@ -32204,7 +32339,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/role-graph.ts#RoleRefSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -40231,6 +40368,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/role-graph.ts#RoleDefSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skills",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#RoleGraph",
       "to": "cat-harness/schemas/role-graph.ts#ActorDef",
       "via": "actors",
@@ -41527,6 +41672,30 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/user-story.ts#UserStoryGraphSchema",
+      "to": "cat-harness/schemas/user-story.ts#UserStorySchema",
+      "via": "stories",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/user-story.ts#UserStorySchema",
+      "to": "cat-harness/schemas/role-graph.ts#RoleDefSchema",
+      "via": "role",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/user-story.ts#UserStorySchema",
+      "to": "cat-harness/schemas/role-graph.ts#RoleRefSchema",
+      "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
       "to": "cat-harness/schemas/version-bump.ts#Bump",
       "via": "bump",
@@ -41645,6 +41814,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
+      "to": "cat-harness/schemas/role-graph.ts#RoleRefSchema",
+      "via": "roles",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
