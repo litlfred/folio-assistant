@@ -21,12 +21,14 @@ The page's own description: *"The Tool nodes this instance declares — how each
 
 ## What it must show (read off the generator)
 
-- totals: 70 Tool nodes, 50 skills satisfied, 52 shell, 22 MCP
+- totals: 71 Tool nodes, 52 skills satisfied, 53 shell, 22 MCP
 - invocation and installation counts
 - the `satisfies` resolution verdict
 - one row per tool: id + title, description, invocation tags, satisfied skills, i/o port count
 
-## Observed on main (edf3a89+)
+## Observed on main (re-checked against main 0bcf94bd)
+
+Re-checked against the page as regenerated in this checkout. The template, the chrome and the tag colours are unchanged. Only the counts moved: one new Tool, `context-prefixes` (JSON-LD prefix check, satisfies `kg-export`), and `kg-graph-export` now satisfies three skills (`bootstrap-graph-emission`, `bootstrap-graph-publication`, `kg-export`). The drawing is updated to match: invocation shell 53, installation `none` 66, and the verdict "all 52 skills named across 71 tools resolve".
 
 Regions in reading order, web (≥ 800 px, drawn at 1280):
 1. **Sidebar strip, 56 px at rest.** It shows marks only:
@@ -40,10 +42,10 @@ Regions in reading order, web (≥ 800 px, drawn at 1280):
 2. **"▾ Folio" glass handle.** `position: fixed`, top centre, over the page.
 3. **Main header.** The theme's search field (moved there by `docs-ui.js`).
 4. **Page title "Tools"** and two framing paragraphs.
-5. **Four stat boxes:** 70 / 50 / 52 / 22.
+5. **Four stat boxes:** 71 / 52 / 53 / 22.
 6. **"How they are invoked, and installed":** two small tables.
 7. **"Does every `satisfies` name a skill that exists?":** a one-sentence verdict.
-8. **"Every tool":** a 70-row, 5-column table.
+8. **"Every tool":** a 71-row, 5-column table.
 9. **Footer:**
    - "Open notes (3)", the no-JS todo listing, collapsed by `docs-ui.js`
    - the licence line
@@ -56,7 +58,7 @@ Mobile (≤ 390):
 
 ## Findings
 
-1. **No way to find one tool among 70 except page search.** The only way in is a flat alphabetical table. It has no filter by invocation or by skill, and the stat boxes and invocation counts are not links into the rows they count.
+1. **No way to find one tool among 71 except page search.** The only way in is a flat alphabetical table. It has no filter by invocation or by skill, and the stat boxes and invocation counts are not links into the rows they count.
 2. **Skills and tool ids are not links.** `satisfies` is rendered as `code` text. A reader who wants the skill has to copy the name and search for it. This is the very join the page exists to show.
 3. **Invocation tags fail contrast on the default dark scheme.** The page's inline `<style>` sets fixed hex colours: `.tg-shell #0d6e5e`, `.tg-mcp #6b5b95`, `.tg-inproc #1d5fa8`, `.tg-manual #a8430f`. On just-the-docs' dark body (`#27262b`, and `color_scheme: dark` in `_config.yml`), I computed 2.44, 2.54, 2.33 and 2.48 to 1, all at 11.5 px. That is below the 4.5:1 floor. The tag text carries the meaning, so colour is not the only channel, but the text itself is hard to read.
 4. **Mobile: the main table is 5 columns wide in a 358 px column.** Below 800 px, "invoked", "satisfies" and "i/o" are off-screen until the reader scrolls the table sideways. Nothing on screen says the table scrolls, and each row is several screens tall because the description column wraps to about 20 characters.

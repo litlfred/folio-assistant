@@ -23,7 +23,10 @@
   th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
   th { font-size: 12px; text-transform: uppercase; color: var(--mute); }
   td.n, th.n { text-align: right; }
-  .list { width: 1738px; }
+  .list { width: 1820px; }
+  td.first, .list th:first-child { width: 391px; min-width: 391px; }
+  td.first .pull { padding: 6px 10px; font-weight: 700; font-size: 13px; }
+  .ava { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 46px; border: 1px solid var(--ink); background: var(--fill); margin-right: 8px; vertical-align: middle; font-size: 9px; color: var(--mute); }
   .list td { height: 72px; }
   .pill { display: inline-block; border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; }
   .pill.dash { border-style: dashed; }
@@ -56,7 +59,7 @@
     <p class="sub">who-iris · 3 entries · 84,292 words · 404 sections</p>
     <div class="chips">
       <span class="chip"><b>1</b> uningested in <code>who-iris/uploads</code> of 4</span>
-      <span class="chip"><b>1719</b> json file(s) scanned for references</span>
+      <span class="chip"><b>1728</b> json file(s) scanned for references</span>
     </div>
   </header>
 
@@ -65,15 +68,15 @@
     <span class="seg" role="group" aria-label="View"><span class="on">Listing</span><span>Desktop</span></span>
   </div>
 
-  <p class="wf-note wf-web-only" style="margin:8px 16px">The listing is 1738 px wide inside its own scroll box: at 1280 px <b>referenced by</b> and <b>source</b> (with “Pull out to folio”) are past the dashed edge.</p>
-  <p class="wf-note wf-mobile-only" style="margin:8px 16px">At 390 px only <b>slug</b> and part of <b>title</b> are in view; the other eleven columns are past the dashed edge.</p>
+  <p class="wf-note wf-web-only" style="margin:8px 16px">The listing is 1820 px wide inside its own scroll box. “Pull out to folio” now sits in the first cell, beside the cover, but at 1280 px <b>pages</b>, <b>words</b>, <b>size</b>, <b>referenced by</b> and <b>source</b> are past the dashed edge.</p>
+  <p class="wf-note wf-mobile-only" style="margin:8px 16px">At 390 px only the first cell is in view: the cover, the slug and “Pull out to folio”. <b>Title</b> and the eleven columns after it are past the dashed edge.</p>
   <div class="clip">
   <table class="list" aria-label="Library listing">
     <thead><tr><th>Slug ▲</th><th>Title</th><th>Instance</th><th>Rung</th><th class="n">Sections</th><th class="n">Blocks</th><th class="n">Images</th><th class="n">OCR</th><th class="n">Pages</th><th class="n">Words</th><th class="n">Size</th><th class="n">Referenced by</th><th>Source</th></tr></thead>
     <tbody>
-      <tr><td class="slug">9789241548960-eng</td><td>Handbook forGuideline Development 2nd edition</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">250</td><td class="n">252</td><td class="n">2</td><td class="n"><span class="pill dash">not scanned</span></td><td class="n">1–179</td><td class="n">55,174</td><td class="n">1.1 MB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">9789241548960_eng.pdf</span> <span class="pull">Pull out to folio</span></td></tr>
-      <tr><td class="slug">who-pub-tps-931</td><td>Abies</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">121</td><td class="n">121</td><td class="n">121</td><td class="n"><span class="pill">121 OCR pages</span></td><td class="n">1–121</td><td class="n">25,713</td><td class="n">544 KB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">WHO_PUB_TPS_93.1.pdf</span> <span class="pull">Pull out to folio</span></td></tr>
-      <tr><td class="slug">wpr-rdo-2020-003-eng</td><td>PUBLICATION AND INFORMATION</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">33</td><td class="n">33</td><td class="n">21</td><td class="n"><span class="pill dash">not scanned</span></td><td class="n">1–33</td><td class="n">3,405</td><td class="n">5.1 MB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">WPR-RDO-2020-003-eng.pdf</span> <span class="pull">Pull out to folio</span></td></tr>
+      <tr><td class="first"><span class="ava" aria-label="cover">cover</span><span class="slug">9789241548960-eng</span> <span class="pull">⤴ Pull out to folio</span></td><td>Handbook forGuideline Development 2nd edition</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">250</td><td class="n">252</td><td class="n">2</td><td class="n"><span class="pill dash">not scanned</span></td><td class="n">1–179</td><td class="n">55,174</td><td class="n">1.1 MB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">9789241548960_eng.pdf</span> </td></tr>
+      <tr><td class="first"><span class="ava" aria-label="cover">cover</span><span class="slug">who-pub-tps-931</span> <span class="pull">⤴ Pull out to folio</span></td><td>Abies</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">121</td><td class="n">121</td><td class="n">121</td><td class="n"><span class="pill">121 OCR pages</span></td><td class="n">1–121</td><td class="n">25,713</td><td class="n">544 KB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">WHO_PUB_TPS_93.1.pdf</span> </td></tr>
+      <tr><td class="first"><span class="ava" aria-label="cover">cover</span><span class="slug">wpr-rdo-2020-003-eng</span> <span class="pull">⤴ Pull out to folio</span></td><td>PUBLICATION AND INFORMATION</td><td><span class="pill dash">who-iris</span></td><td><span class="pill">paged</span></td><td class="n">33</td><td class="n">33</td><td class="n">21</td><td class="n"><span class="pill dash">not scanned</span></td><td class="n">1–33</td><td class="n">3,405</td><td class="n">5.1 MB</td><td class="n"><span class="pill">1 catalogue, 1 voices</span></td><td><span class="pill">source verified</span> <span class="k">WPR-RDO-2020-003-eng.pdf</span> </td></tr>
     </tbody>
   </table>
   </div>
@@ -93,7 +96,7 @@
     </tbody>
   </table>
   </div></div>
-  <p class="wf-mute" style="margin:16px">The same template renders agent-skills (4 entries), cat-harness (2), folio-assistant (0 entries, 20 of 31 uploads uningested) and folio-assistant-sci (1).</p>
+  <p class="wf-mute" style="margin:16px">The same template renders agent-skills (4 entries), cat-harness (4, two with a cover), folio-assistant (0 entries, 20 of 31 uploads uningested) and folio-assistant-sci (1). Where an entry has no cover, a book glyph of the same size stands in. The Desktop view’s cards carry the same cover and “Pull out to folio” beside the title.</p>
 </div>
 </body>
 </html>
