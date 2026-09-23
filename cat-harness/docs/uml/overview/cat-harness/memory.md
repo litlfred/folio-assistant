@@ -44,6 +44,7 @@ classDiagram
       updatedAt [0..1] string
       targetLabel [0..1] string
       anchor [0..1] object
+      alsoAbout [0..*] AlsoAbout[]
       tags [0..1] object
       label [1] stable | trap | baseline
       measured [0..1] object

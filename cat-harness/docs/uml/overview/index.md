@@ -11,10 +11,20 @@ has_children: true
 
 Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`.
 
-**Source:** [PlantUML](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-schemas.puml) · the full model with Bean and Todo is [`harness-object-model.puml`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-object-model.puml).
+**Source:** [PlantUML](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-schemas.puml) · the full model, with Bean and Todo, is [below](#the-full-object-model).
 
 <figure class="bpmn-figure">
   <img src="{{ '/assets/img/uml/harness-schemas.svg' | relative_url }}" alt="UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships.">
+</figure>
+
+## The full object model
+
+The same classes plus the state family, Todo and Bean, and the edges that reach them: Task's `folio:bean` op, and Todo's tags on Role, Process, Task and Actor. Bean is read from the `beans` CLI's GraphQL schema, so this file is regenerated only where that CLI is installed (`bun run cat-harness/scripts/gen-object-model-uml.ts`).
+
+**Source:** [PlantUML](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/uml/harness-object-model.puml)
+
+<figure class="bpmn-figure">
+  <img src="{{ '/assets/img/uml/harness-object-model.svg' | relative_url }}" alt="UML class diagram of the full harness object model: the schemas diagram above plus a state package holding Todo and Bean, with their data fields and relationships.">
 </figure>
 
 ## Per harness

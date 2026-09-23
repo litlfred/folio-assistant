@@ -45,4 +45,13 @@ Every one of the 8 step(s) is documented.
 | **IG Publisher build**<br>`Task_IgPublisher` | Build pipeline — SUSHI · validator · IG Publisher | [`ig-publication`](../reference/skill-instructions/ig-publication.html) | Run the IG Publisher: it renders output/, writes each resource's JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion. |
 | **Publish the IG site**<br>`Task_PublishIg` | Publication manager | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Release authorisation and review follow draft-to-publication.bpmn. |
 
+## Decisions
+
+**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **FHIR valid?**<br>`Gateway_Valid` | — | **no** → Author FSH profiles<br>**yes** → QC gates |
+| **QC clean?**<br>`Gateway_QcPass` | — | **no** → File QC findings as beans<br>**yes** → IG Publisher build |
+
 {% endraw %}

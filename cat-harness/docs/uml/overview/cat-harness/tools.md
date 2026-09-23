@@ -48,6 +48,7 @@ classDiagram
       alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
+      maintains [0..*] Maintain[]
     }
   }
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains

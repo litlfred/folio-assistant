@@ -651,6 +651,40 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
       "records that it uses the skill for one slice rather than running its whole process.",
   },
+  // ── Documentation completeness past activities (bean `6hq4`, issue #1044) ─
+  //
+  // Measured 2026-09-23 over all 62 diagrams: 123 gateways — 102 diverging
+  // exclusive (DECISIONS), 9 converging exclusive, 6 parallel forks, 6 joins,
+  // no inclusive (the model refuses them). 104 of 123 had no documentation, 83
+  // of them decisions. Of 220 branches out of a decision, 0 were unnamed and 0
+  // repeated a sibling's label; of 174 start/end events, 0 were unnamed — so
+  // there is no event criterion, and lanes are `check:lane-documentation`'s.
+  {
+    id: "gateway-documented",
+    applies: ["process"],
+    // `minor` and not gated, like `activity-documented`: 83 is a backlog, and
+    // a well-named question with well-named branches often reads without
+    // prose. Only DECISIONS are asked — a merge, fork or join decides nothing,
+    // and its BPMN symbol already says everything true of it.
+    severity: "minor",
+    summary:
+      "A decision (an exclusive gateway with more than one way out) carries no `<bpmn:documentation>`, so its page " +
+      "shows the question and not what answers it: who decides, from what evidence, and what each branch commits " +
+      "the process to. A DMN table or a `<folio:judgement reason>` is not a substitute — it says how the answer is " +
+      "reached, not what is being asked.",
+  },
+  {
+    id: "gateway-branches-named",
+    applies: ["process"],
+    // `minor`, and it reads 0 on the day it was added: it holds a line the
+    // corpus already meets rather than opening a backlog. Not `major`, because
+    // an engine routes an unnamed branch correctly — what is lost is the
+    // READER's ability to say which answer leads where.
+    severity: "minor",
+    summary:
+      "A branch out of a decision has no name, or repeats a sibling's label, so a reader cannot tell which answer " +
+      "takes it. Every branch of a decision needs a label distinct from the others on the same gateway.",
+  },
   {
     id: "prose-reviewed-since-code-changed",
     applies: ["process", "skill"],
@@ -663,6 +697,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A declared prose ↔ code pair — a diagram's <folio:implements workflow>, or a skill .md beside its same-stem .ts — " +
       "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
+  },
+  {
+    id: "prose-claims-resolve",
+    applies: ["process", "skill"],
+    // `minor`, advisory (R7). Stage A of #1042: what the prose side of a
+    // declared pair says about the code side, checked where it names a
+    // resolvable thing. Measured before it shipped: 1 false, 23 holding and
+    // 10 undetermined claims over 32 pairs — the undetermined are a folio's
+    // files and scripts, which is why they are never counted as false.
+    severity: "minor",
+    summary:
+      "The prose of a declared prose ↔ code pair names something that does not exist: a symbol not declared in the module " +
+      "it cites, a module missing from a directory that exists here, a `bun run` file that is not there, or a " +
+      "`<folio:job>` the workflow does not have. `unknown` when every parsed claim pointed outside this repository.",
   },
   {
     id: "role-skills-resolve",

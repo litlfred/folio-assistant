@@ -57,6 +57,9 @@ classDiagram
       id [1] string
       state [1] ok | finding | unknown
       summary [1] string
+      thresholds [0..*] Threshold[]
+      measurements [0..*] Measurement[]
+      findings [0..*] Finding[]
       reason [0..1] string
     }
     class cat_harness_health_HealthReport["HealthReport"] {
@@ -66,6 +69,7 @@ classDiagram
       subject [1] object
       updated_at [1] string
       verdict [1] clean | findings | unknown
+      checks [1..*] Check[]
     }
   }
   cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds

@@ -39,4 +39,12 @@ Every one of the 5 step(s) is documented.
 | **Consolidate findings**<br>`Task_Consolidate` | Reviewer / SME | [`content-review`](../reference/skill-instructions/content-review.html) | One report from however many subprocesses ran. Findings are advice: a reviewer cannot accept the change. |
 | **Accept, or send back**<br>`Task_EditorDecides` | Editors + authoring agents | [`content-validate`](../reference/skill-instructions/content-validate.html) | The editor's lane, kept separate on purpose: the reviewer who judged the change is not the position that accepts it. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Prose, code, or both?**<br>`GW_Kind` | — | **prose** → Narrative review<br>**code nodes** → Code node review |
+
 {% endraw %}

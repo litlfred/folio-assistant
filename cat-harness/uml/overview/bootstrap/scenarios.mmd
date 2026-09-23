@@ -27,6 +27,8 @@ classDiagram
     class bootstrap_scenarios_RoleGraph["RoleGraph"] {
       <<json: RoleGraphSchema>>
       name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
     }
   }
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles

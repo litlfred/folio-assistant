@@ -47,6 +47,7 @@ classDiagram
       source_hash [1] string | null
       criteria [1] map~object~
       totals [1] map~number~
+      pair_attestations [0..*] Pair_attestation[]
     }
     class cat_harness_qa_block_qa_v1_block_qa_v1["block-qa/v1"] {
       <<json: BlockQaReport>>
@@ -109,6 +110,7 @@ classDiagram
     }
     class cat_harness_qa_folio_qa_index_v1["folio-qa-index/v1"] {
       <<untyped: written by scripts/gen-docs-pages.ts>>
+      no schema declared, shape is whatever scripts/gen-docs-pages.ts writes
     }
   }
   cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations

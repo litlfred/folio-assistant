@@ -40,4 +40,12 @@ Every one of the 5 step(s) is documented.
 | **Record the determination**<br>`A_RecordDetermination` | Initiator | [`discussion`](../reference/skill-instructions/discussion.html) | Writes a document conforming to `discussion.output.schema.json`: the harness, the repositories as read-from / written-to pairs, `determinedBy`, and who answered. This artefact is what finishes the task. |
 | **Record what is still open**<br>`A_RecordUnsettled` | Initiator | [`discussion`](../reference/skill-instructions/discussion.html) | The declined route. `outcome: unsettled` with `stillOpen`, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination. |
 
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Does the answer settle it?**<br>`G_Settled` | Judgement, exercised by the Initiator — which is why this gateway carries no `folio:decision`. Whether an answer settles the matter is not computable from the answer's text, and a DMN table here would be a claim that it is. | **yes** → Record the determination<br>**not yet — ask once more** → Put the question, with its candidates named<br>**declined** → Record what is still open |
+
 {% endraw %}

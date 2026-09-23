@@ -41,4 +41,12 @@ Every one of the 7 step(s) is documented.
 | **Resolve the kind's zoom threshold**<br>`A_ResolveThreshold` | Board renderer | [`board-windows`](../reference/skill-instructions/board-windows.html) | Resolve the semantic-zoom threshold for each card's kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default. |
 | **Swap cards below the threshold; leave open windows alone**<br>`A_SwapToAvatar` | Board renderer | [`board-windows`](../reference/skill-instructions/board-windows.html) | Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated. |
 
+## Decisions
+
+**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **What did the reader do?**<br>`GW_Act` | — | **open a card** → Project a window onto the board<br>**select a window** → Raise the window the reader selected<br>**[x]** → Close the window back to its avatar<br>**resize the board** → Resolve the kind's zoom threshold<br>**leave** → The reader leaves the board |
+
 {% endraw %}
