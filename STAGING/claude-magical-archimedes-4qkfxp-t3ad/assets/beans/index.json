@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 635,
+      "count": 638,
       "unit": "beans"
     }
   },
@@ -1077,6 +1077,20 @@
       "file": "beans/defs/folio-assistant-4ccr--wireframe-findings-usability-and-accessibility-def.md"
     },
     {
+      "id": "folio-assistant-4d22",
+      "title": "A bean completed AFTER its PR merges is orphaned by the next re-branch — twice in one session",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T11:49:49Z",
+      "updatedAt": "2026-09-22T11:49:49Z",
+      "preview": "Measured 2026-09-22, twice, on this branch.\n\n## The shape\n\nThe sequence that loses it:\n\n1. PR merges.\n2. Agent marks the bean `completed` and commits it to the branch.\n3. Agent re-branches from the merged main: `git checkout -B <branch> origin/main`.\n4. **The completion commit is now orphaned** — it was pushed to the remote\n   branch but never merged, and the local branch no longer contains it.\n\nT",
+      "file": "beans/defs/folio-assistant-4d22--a-bean-completed-after-its-pr-merges-is-orphaned-b.md"
+    },
+    {
       "id": "folio-assistant-4dbr",
       "title": "Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo",
       "status": "todo",
@@ -1963,14 +1977,14 @@
     {
       "id": "folio-assistant-7ofc",
       "title": "folio/ is the only cat-harness graph with no visualiser — the owner ruled it needs one, owned by cat-harness",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T10:48:40Z",
-      "updatedAt": "2026-09-22T10:48:40Z",
+      "updatedAt": "2026-09-22T11:39:16Z",
       "preview": "Owner, 2026-09-22: *\"folio must be in cat-harness and visualizer owned by it. transations too... there should be visualizer.\"*\n\nMeasured against that ruling — the three graphs the ruling names:\n\n| graph | in cat-harness | visualiser declared | present |\n|---|---|---|---|\n| `library/` | yes | `docs/cat-harness/library/cat-harness/index.html` | yes |\n| `translations/` | yes | `docs/translation-statu",
       "file": "beans/defs/folio-assistant-7ofc--folio-is-the-only-cat-harness-graph-with-no-visual.md"
     },
@@ -2103,14 +2117,14 @@
     {
       "id": "folio-assistant-7vhe",
       "title": "FSH-GUTS viewer: dead fish icon under settings, with a node counter and a select dialog",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T10:48:10Z",
-      "updatedAt": "2026-09-19T13:24:17Z",
+      "updatedAt": "2026-09-23T16:34:05Z",
       "preview": "Owner, 2026-09-19:\n\n> only available under settings at dead fish icon. opening it shows a list of\n> all the nodes in fsh-guts/ (has counter on icon) and use can open dialog to\n> select and display them. can be webpages, todos, whaeber.\n\n## What to build\n\n- a **dead fish icon** in the settings area of the docs site\n- a **counter** on the icon — how many nodes `fsh-guts/` holds\n- clicking opens a **",
       "file": "beans/defs/folio-assistant-7vhe--fsh-guts-viewer-dead-fish-icon-under-settings-with.md"
     },
@@ -4251,6 +4265,20 @@
       "file": "beans/defs/folio-assistant-hfwl--sample-import-sdlc-the-process-for-testing-an-impo.md"
     },
     {
+      "id": "folio-assistant-hn0l",
+      "title": "pdf-structure/v1: the text origin is spelled two ways (source.text_source embedded|ocr vs text_source text-layer|ocr)",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T16:30:13Z",
+      "updatedAt": "2026-09-23T16:30:13Z",
+      "preview": "Measured while defining pdf-structure/v1 (issue #1112, `cat-harness/schemas/pdf-structure.ts`).\n\nOne question, whether the section text came from the PDF's own text layer or from OCR, has two fields and two vocabularies in the same file:\n\n| writer | field | values |\n|---|---|---|\n| `scripts/pdf-structure.py` | `source.text_source` | `embedded`, `ocr` |\n| `scripts/pdf-pages.py` | top-level `text_so",
+      "file": "beans/defs/folio-assistant-hn0l--pdf-structurev1-the-text-origin-is-spelled-two-way.md"
+    },
+    {
       "id": "folio-assistant-hpax",
       "title": "MATERIALIZE REMOTE CONTENT: one subprocess, shared by catalogue import and harness bootstrap, plus its refresh",
       "status": "todo",
@@ -4463,14 +4491,14 @@
     {
       "id": "folio-assistant-itka",
       "title": "check:bean-parents asserts two rules it cannot reach: roots are filtered out before the epic-under-epic test, and task->feature is refused while beans prime declares feature a tier",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:59:36Z",
-      "updatedAt": "2026-09-22T11:46:10Z",
+      "updatedAt": "2026-09-23T16:34:05Z",
       "preview": "Found 2026-09-21 by tripping it: a new epic was parented to another epic, and\n`check:bean-parents` printed *\"✓ every open bean is placed under an epic or a\nmilestone, **and no epic hangs from another**\"* over it.\n\n## Finding 1 — the epic-under-epic rule is structurally unreachable\n\nThe rule exists, at `check-bean-parents.ts`:\n\n```ts\n} else if (b.type === \"epic\" && p.type === \"epic\") {\n```\n\nThe set",
       "file": "beans/defs/folio-assistant-itka--checkbean-parents-asserts-two-rules-it-cannot-reac.md"
     },
@@ -7257,6 +7285,20 @@
       "file": "beans/defs/folio-assistant-thb1--source-assessed-not-evidence-the-ai-mediated-raci.md"
     },
     {
+      "id": "folio-assistant-thux",
+      "title": "QUIET CLAIMS: a bean worked through its children is quiet by design — the check reads the parent's own file only",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T16:39:21Z",
+      "updatedAt": "2026-09-23T16:39:48Z",
+      "preview": "`bean-quiet-claims` reads one signal: `updated_at` on the bean's own file. For a\ntask that is the right signal. For a bean worked **through its children** it is\nthe wrong one — nothing touches the parent's file while the children move, so\nthe parent accrues quiet hours for doing exactly what it is for.\n\nAnd the finding then names no action a person can take. Its action says:\n\n> Check for a livenes",
+      "file": "beans/defs/folio-assistant-thux--quiet-claims-a-bean-worked-through-its-children-is.md"
+    },
+    {
       "id": "folio-assistant-tis1",
       "title": "TILE COUNT: an empty viewer's tile looks exactly like a populated one — badge the count, absent is a third state",
       "status": "completed",
@@ -8777,14 +8819,14 @@
     {
       "id": "folio-assistant-zkgs",
       "title": "findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T13:54:01Z",
-      "updatedAt": "2026-09-20T13:54:01Z",
+      "updatedAt": "2026-09-23T14:52:07Z",
       "preview": "## What was measured\n\nFound while fencing `detangler-archimedean-wall` behind `folioOptionalAxes()`.\nThe fence verified OFF immediately and could not be verified ON from anywhere\nin this checkout, whatever the cwd. Every number below was observed.\n\n`findContentRepoRoot()` walks up from `process.cwd()` and stops at the nearest\nancestor holding the declared folio directory. `cat-harness/harness.json",
       "file": "beans/defs/folio-assistant-zkgs--findcontentreporoot-stops-at-cat-harness-so-this-r.md"
     },

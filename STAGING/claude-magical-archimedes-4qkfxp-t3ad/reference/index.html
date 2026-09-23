@@ -13,10 +13,26 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(26)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(26) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(26) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(26) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +50,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>CRDM — link the work to an issue | folio-assistant</title>
+<title>Reference | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="CRDM — link the work to an issue" />
+<meta property="og:title" content="Reference" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="CRDM — link the work to an issue" />
+<meta property="twitter:title" content="Reference" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -744,135 +760,26 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/crdm-issue-linking.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
-</blockquote>
-<h1 id="crdm--link-the-work-to-an-issue">
+            <h1 id="reference">
   
   
-    <a href="#crdm--link-the-work-to-an-issue" class="anchor-heading" aria-labelledby="crdm--link-the-work-to-an-issue"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CRDM — link the work to an issue
+    <a href="#reference" class="anchor-heading" aria-labelledby="reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reference
   
   
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_CRDM_Issue</code> · strict (defaulted) · 4 step(s)</p>
+<p>The generated schema and skill-instruction reference is <strong>not built
+into this preview</strong>. Nothing on this branch changes it, and carrying
+it costs 35.8 MiB of the Pages budget the main site shares — see bean
+<code class="language-plaintext highlighter-rouge">tebu</code>.</p>
 
-<p>Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA’s permission — an issue is the stakeholder’s record, not the agent’s scratchpad.</p>
+<p>Read it on the published site:
+<a href="https://litlfred.github.io/folio-assistant/reference/">https://litlfred.github.io/folio-assistant/reference/</a>.</p>
 
-<p><img src="../assets/img/workflows/crdm-issue-linking.svg" alt="BPMN diagram: CRDM — link the work to an issue" style="max-width:100%" /></p>
-<h2 id="how-it-connects">
-  
-  
-    <a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
-  
-  
-</h2>
-    
-
-<ul>
-  <li><strong>Called by:</strong> <a href="crdm-requirements.html">CRDM requirements</a></li>
-  <li><strong>Calls:</strong> <a href="related-work.html">Related work: find, sort, summarize, ask to coordinate</a></li>
-</ul>
-<h2 id="lanes--who-acts">
-  
-  
-    <a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>lane</th>
-      <th>role</th>
-      <th>what it does here</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Agent</td>
-      <td>—</td>
-      <td>The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="steps">
-  
-  
-    <a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
-  
-  
-</h2>
-    
-
-<p>Every one of the 4 step(s) is documented.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>step</th>
-      <th>lane</th>
-      <th>skill / sub-process</th>
-      <th>what it does</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Related work: find, sort, ask</strong><br /><code class="language-plaintext highlighter-rouge">Call_RelatedWork</code></td>
-      <td>Agent</td>
-      <td>calls <a href="related-work.html">Related work: find, sort, summarize, ask to coordinate</a></td>
-      <td>When the requirement is initiated or updated through a human-agent chat, search the beans and the repository’s issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023).</td>
-    </tr>
-    <tr>
-      <td><strong>Scan open issues for match</strong><br /><code class="language-plaintext highlighter-rouge">A_ScanIssues</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
-      <td>Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one.</td>
-    </tr>
-    <tr>
-      <td><strong>Ask BA to create or link issue</strong><br /><code class="language-plaintext highlighter-rouge">A_AskCreate</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
-      <td>Ask — never create. Creating an issue without the BA’s permission is the thing this step exists to prevent.</td>
-    </tr>
-    <tr>
-      <td><strong>Link to existing issue</strong><br /><code class="language-plaintext highlighter-rouge">A_LinkIssue</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
-      <td>A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="decisions">
-  
-  
-    <a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
-  
-  
-</h2>
-    
-
-<p>Every one of the 1 decision(s) is documented.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>decision</th>
-      <th>what decides it</th>
-      <th>branches</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Issue found?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Issue</code></td>
-      <td>Answered by the scan of open issues: does one already cover this work? <code class="language-plaintext highlighter-rouge">yes</code> links to it; <code class="language-plaintext highlighter-rouge">no</code> asks the BA to create or name one. The agent does not create an issue on its own.</td>
-      <td><strong>no</strong> → Ask BA to create or link issue<br /><strong>yes</strong> → Link to existing issue</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>A branch that touches <code class="language-plaintext highlighter-rouge">cat-harness/schemas/</code>, <code class="language-plaintext highlighter-rouge">cat-harness/skills/</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness/methodologies/</code> or the reference generators gets the
+full tree here instead.</p>
 
           
 
