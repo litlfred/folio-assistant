@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 578,
+      "count": 579,
       "unit": "beans"
     }
   },
@@ -1219,7 +1219,7 @@
     {
       "id": "folio-assistant-5kn6",
       "title": "NEEDS ORDERS, DEPENDENCIES OVERLAY: no smart-* instance declares config dependencies, so no skill overlay composes in the stack",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-uhkv",
@@ -3535,6 +3535,20 @@
       "updatedAt": "2026-09-22T06:10:00Z",
       "preview": "R25: *\"the user in visualization should be able to pull down their folio\"*,\nand R30's glass — *\"pulling down folio panel = glass/window on which stikcy\nnotes/avatrs of materialized assets … are visualized.\"*\n\n## The defect was procedural, not structural\n\nThe layer already existed, already on `document.body`, already\n`position: fixed; inset: 0` — structurally a glass. It was **created inside\n`mount",
       "file": "beans/defs/folio-assistant-funp--r25-glass-stage-1-the-folio-layer-exists-on-any-pa.md"
+    },
+    {
+      "id": "folio-assistant-fuve",
+      "title": "OVERLAY RESOLUTION: an unresolvable needs name is dropped silently, and repoRootFor climbs out of the repo for the root instance",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T09:16:46Z",
+      "updatedAt": "2026-09-23T09:16:46Z",
+      "preview": "Found while verifying `5kn6`'s premise — which the same measurement\n**falsified**: the overlay now composes down the `needs` chain, `smart-trust`\nreaching 6 skill directories where the bean recorded 0. Looking at the numbers\nfor every instance rather than only the `smart-*` ones is what surfaced these.\n\nBoth defects are mine, introduced this session in the `needs`-drives-the-overlay\nwork.\n\n## A — ",
+      "file": "beans/defs/folio-assistant-fuve--overlay-resolution-an-unresolvable-needs-name-is-d.md"
     },
     {
       "id": "folio-assistant-fuzm",
