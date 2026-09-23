@@ -71,6 +71,21 @@ export const BranchSchema = z
   .refine((b) => !b.includes(".."), "a branch name may not contain `..`")
   .describe("A git branch name");
 
+/**
+ * A forge repository's full name, `owner/name`.
+ *
+ * Its own type rather than `Text` because a Tool takes it on the command line
+ * (`folio-review-comments --repo`, bean `423d`), and `Text` is deliberately
+ * not admissible there. Each half is the character set GitHub allows in an
+ * owner and a repository name, which contains no shell metacharacter, and
+ * `..` is refused, so it can never climb a path it is joined into.
+ */
+export const RepoFullNameSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/, "a repository is `owner/name`")
+  .refine((r) => !r.includes(".."), "a repository name may not contain `..`")
+  .describe("A forge repository's full name, owner/name");
+
 /** A pull/merge request number. */
 export const ChangeProposalNumberSchema = z
   .number()
@@ -513,6 +528,7 @@ export const TOOL_TYPES = {
   RepoPath: RepoPathSchema,
   Url: UrlSchema,
   Branch: BranchSchema,
+  RepoFullName: RepoFullNameSchema,
   ChangeProposalNumber: ChangeProposalNumberSchema,
   Markdown: MarkdownSchema,
   Text: TextSchema,
@@ -611,6 +627,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "RepoPath",
   "Url",
   "Branch",
+  "RepoFullName",
   "ChangeProposalNumber",
   "Slug",
   // Every enum below is injection-safe by construction: a value outside the

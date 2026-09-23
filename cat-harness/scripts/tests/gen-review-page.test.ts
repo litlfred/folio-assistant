@@ -38,4 +38,16 @@ describe("review page", () => {
   test("change kinds are words, not colours", () => {
     for (const w of ["added", "removed", "reworded", "edited", "moved", "renamed"]) expect(html).toContain(`"${w}"`);
   });
+
+  test("reads review comments, and says when there is no comment data rather than showing none", () => {
+    expect(html).toContain('get("../review-comments.json")');
+    expect(html).toContain("No comment data on this build.");
+  });
+
+  test("keeps the three groups that would otherwise vanish, and the tag to start a comment with", () => {
+    expect(html).toContain("Comments on blocks this pull request did not change");
+    expect(html).toContain("Orphaned: the block these were made on is gone");
+    expect(html).toContain("Comments whose tag could not be read");
+    expect(html).toContain('"block: " + c.label');
+  });
 });

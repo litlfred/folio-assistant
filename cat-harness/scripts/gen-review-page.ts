@@ -28,6 +28,22 @@
  * block labels that `build-document-site` writes, which the `id-unique` and
  * `id-stable` QA criteria guard.
  *
+ * ## Review comments (bean `423d`)
+ *
+ * `../review-comments.json` is the `folio-review-comments` Tool's output:
+ * `folio-review-comment/v1` todos, one per tagged PR comment. The page lists
+ * each block's comments under it. It gives three more groups their own
+ * headings, because each would otherwise vanish:
+ * - comments on blocks this PR did not change;
+ * - ORPHANED comments, whose block is gone;
+ * - tags nobody could read.
+ *
+ * Every changed block also shows the `block: <label>` line to start a new
+ * comment with, and links to the PR, since GitHub cannot pre-fill a comment
+ * box. No file at all is SAID, never shown as an empty list: "no comment
+ * data" and "nobody commented" are different facts. The skill that governs
+ * all of this is `review-comments`.
+ *
  * ## Accessibility is not a finish
  *
  * - Every change kind is a WORD, never a colour alone.
@@ -54,6 +70,9 @@ const STYLE = `
   .label { font-family: ui-monospace, monospace; }
   .links a { margin-right: 1rem; }
   .muted { color: var(--muted); }
+  .comments { margin: .25rem 0 0 1rem; padding-left: .75rem; border-left: 3px solid var(--rule); }
+  .comment { padding: .15rem 0; }
+  .tagline { font-family: ui-monospace, monospace; font-size: .9rem; }
 `;
 
 const SCRIPT = `
@@ -90,7 +109,7 @@ const SCRIPT = `
     if (!items.length) return;
     at = (i + items.length) % items.length;
     items[at].focus();
-    status.textContent = "Change " + (at + 1) + " of " + items.length;
+    status.textContent = "Item " + (at + 1) + " of " + items.length;
   }
 
   document.getElementById("next").addEventListener("click", function () { focusItem(at + 1); });
@@ -101,12 +120,47 @@ const SCRIPT = `
     else if (e.key === "k") { focusItem(at - 1); e.preventDefault(); }
   });
 
+  // One comment as a line of words: kind, status, who, what — never colour alone.
+  function commentEl(c) {
+    var d = el("div", null, "comment");
+    var r = c.review || {};
+    d.appendChild(el("span", (r.kind || "comment") + ", " + c.status, "kind"));
+    d.appendChild(el("span", (r.reviewer || "?") + " as " + (r.role || "reviewer") + ": "));
+    d.appendChild(el("span", c.summary));
+    if (r.anchoredFrom && r.anchoredFrom.length) d.appendChild(el("span", " (made on " + r.anchoredFrom.join(", ") + ")", "muted"));
+    if (r.commentUrl) { d.appendChild(el("span", " ")); var a = el("a", "read on the pull request"); a.href = r.commentUrl; d.appendChild(a); }
+    return d;
+  }
+  function commentList(cs) {
+    var box = el("div", null, "comments");
+    cs.forEach(function (c) { box.appendChild(commentEl(c)); });
+    return box;
+  }
+  function section(title, nodes) {
+    if (!nodes.length) return;
+    list.appendChild(el("h2", title));
+    var ul = el("ul");
+    nodes.forEach(function (n) { var li = el("li"); li.tabIndex = -1; li.appendChild(n); ul.appendChild(li); items.push(li); });
+    list.appendChild(ul);
+  }
+
   function get(url) {
     return fetch(url).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
 
   get("../changeset.json").then(function (cs) {
-    return get("../staging.json").catch(function () { return {}; }).then(function (st) {
+    return Promise.all([
+      get("../staging.json").catch(function () { return {}; }),
+      get("../review-comments.json").catch(function () { return null; }),
+    ]).then(function (both) {
+      var st = both[0];
+      var rc = both[1];
+      var byLabel = {};
+      var shown = {};
+      ((rc && rc.comments) || []).forEach(function (c) {
+        if (c.review && c.review.orphaned) return;
+        (byLabel[c.targetLabel] = byLabel[c.targetLabel] || []).push(c);
+      });
       var main = st.mainSite ? String(st.mainSite).replace(/\\/?$/, "/") : null;
       var s = cs.summary;
       // The head is "worktree" in CI (the checkout under review), which names
@@ -117,9 +171,10 @@ const SCRIPT = `
         s.added + " added, " + s.removed + " removed, " + s.changed + " changed (" +
         s.prose + " reworded, " + s.moved + " moved, " + s.renamed + " renamed, " + s.manifest + " edited), " +
         s.unchanged + " unchanged.";
+      if (!rc) summary.textContent += " No comment data on this build.";
+      else summary.textContent += " " + rc.comments.length + " review comment(s).";
       if (!cs.changes.length) {
         status.textContent = "No block changed. " + s.unchanged + " block(s) compared.";
-        return;
       }
       var groups = {};
       var order = [];
@@ -144,12 +199,42 @@ const SCRIPT = `
           if (before) { var b = el("a", "view on main"); b.href = before; links.appendChild(b); }
           if (!after && !before) links.appendChild(el("span", "no page to link to", "muted"));
           li.appendChild(links);
+          var mine = byLabel[c.label] || [];
+          shown[c.label] = true;
+          if (mine.length) li.appendChild(commentList(mine));
+          if (c.change !== "removed") {
+            var t = el("div", null, "muted");
+            t.appendChild(el("span", "To comment, start a pull-request comment with "));
+            t.appendChild(el("code", "block: " + c.label, "tagline"));
+            if (st.prUrl) { t.appendChild(el("span", " ")); var p = el("a", "open the pull request"); p.href = st.prUrl; t.appendChild(p); }
+            li.appendChild(t);
+          }
           ul.appendChild(li);
           items.push(li);
         });
         list.appendChild(ul);
       });
-      status.textContent = items.length + " change(s). Press j for the next, k for the previous.";
+      if (rc) {
+        var elsewhere = [];
+        Object.keys(byLabel).forEach(function (label) {
+          if (shown[label]) return;
+          var d = el("div");
+          d.appendChild(el("span", label, "label"));
+          d.appendChild(commentList(byLabel[label]));
+          elsewhere.push(d);
+        });
+        section("Comments on blocks this pull request did not change", elsewhere);
+        section("Orphaned: the block these were made on is gone", rc.comments
+          .filter(function (c) { return c.review && c.review.orphaned; })
+          .map(function (c) { var d = el("div"); d.appendChild(el("span", c.targetLabel, "label")); d.appendChild(commentList([c])); return d; }));
+        section("Comments whose tag could not be read", rc.malformed.map(function (m) {
+          var d = el("div");
+          d.appendChild(el("span", m.error + " "));
+          var a = el("a", "fix it on the pull request"); a.href = m.url; d.appendChild(a);
+          return d;
+        }));
+      }
+      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
     });
   }).catch(function () {
     status.textContent =
@@ -175,8 +260,8 @@ export function reviewPageHtml(): string {
 <p id="summary" class="muted"></p>
 <p id="status" role="status" aria-live="polite">Loading the ChangeSet…</p>
 <div class="nav">
-  <button type="button" id="prev">Previous change (k)</button>
-  <button type="button" id="next">Next change (j)</button>
+  <button type="button" id="prev">Previous (k)</button>
+  <button type="button" id="next">Next (j)</button>
   <a href="../index.html">All documents</a>
 </div>
 <div id="changes"></div>
