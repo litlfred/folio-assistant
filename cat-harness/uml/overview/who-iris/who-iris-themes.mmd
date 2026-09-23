@@ -1,0 +1,25 @@
+classDiagram
+  direction TB
+  namespace who_iris__who_iris_themes {
+    class who_iris_who_iris_themes_Override["Override"] {
+      <<json: ThemeSchema>>
+      field [1] string
+      source [1] string
+      reason [1] string
+    }
+    class who_iris_who_iris_themes_Theme["Theme"] {
+      <<json: ThemeSchema>>
+      $schema [1] 'folio-theme/v1'
+      id [1] string
+      kind [1] sticky | webpage | publication
+      inherits [0..1] object
+      name [0..1] string
+      description [0..1] string
+      palette [0..1] object
+      backdrop [0..1] object
+      layouts [0..1] object
+    }
+  }
+  who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
+  cssClass "who_iris_who_iris_themes_Override" fa_uml_kind_themes
+  cssClass "who_iris_who_iris_themes_Theme" fa_uml_kind_themes
