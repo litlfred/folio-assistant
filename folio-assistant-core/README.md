@@ -55,6 +55,7 @@ Outside that chain, and answering a different question:
 | node | question it answers |
 |---|---|
 | [`schemas/changeset.ts`](schemas/changeset.ts) | what changed in a folio between two refs, **block by block**: added, removed, renamed, reworded or moved? Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard. Read by the review page (epic `q4jm`). |
+| [`schemas/review-comment.ts`](schemas/review-comment.ts) | a reviewer's comment on one block, as a **todo kind** (`folio-review-comment/v1`, parent: the harness todo). It is required to name its block, has a closed lifecycle that only review-process tasks may move, is ingested idempotently from tagged PR comments, and follows renames. A removed block's comments are kept as orphaned (bean `423d`). |
 
 ## Three states, and there is no default
 

@@ -197,6 +197,18 @@ export interface ProcessNode {
    */
   noSkillReason?: string;
   /**
+   * `<folio:no-call reason="…"/>` — this step names a skill that owns a
+   * same-named process, and is deliberately NOT a call activity of it.
+   *
+   * A call activity runs the called process from its first start event to its
+   * end. A step that uses a skill's know-how for one slice of that process —
+   * one check out of a review, one deploy out of a three-entry lifecycle, a
+   * loop over many previews — would be misdrawn as a call. Same rule as
+   * {@link noSkillReason}: the reason is required at load time, so silencing
+   * `activity-calls-skill-process` costs a sentence somebody can review.
+   */
+  noCallReason?: string;
+  /**
    * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
    * call, on purpose, and this is why.
    *
@@ -292,6 +304,8 @@ export interface ProcessFlow {
 export interface LaneDef {
   id: string;
   name?: string;
+  /** `<bpmn:documentation>` on the lane — what the role does IN this diagram. */
+  documentation?: string;
   /** `<folio:role ref="…"/>` on the lane, when declared. */
   roleRef?: string;
   /**
@@ -419,6 +433,13 @@ export interface ProcessModel {
    * agent can report a decision or only a default.
    */
   logCapture?: "on" | "off";
+  /**
+   * `<bpmn:documentation>` on the process element itself — what the diagram
+   * is FOR. The node-level `documentation` says what one step does; this is
+   * the paragraph a reader meets before any step, and `process-documented`
+   * in `schemas/kg-qa.ts` is what notices when it is missing.
+   */
+  documentation?: string;
   /** The process's lanes, in document order. A lane IS a role — see below. */
   lanes: LaneDef[];
   /** Every start event, in document order. */
@@ -529,6 +550,20 @@ function noSkillReasonOf(
     throw new Error(
       `${id}: <folio:no-skill/> carries no reason. An exemption with no stated ` +
         `justification cannot be reviewed — say why this step has no implementing skill.`,
+    );
+  }
+  return reason;
+}
+
+/** `<folio:no-call reason="…"/>` — same load-time rule as {@link noSkillReasonOf}. */
+function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): string | undefined {
+  const decl = ext.find((v) => v.$type === "folio:no-call");
+  if (!decl) return undefined;
+  const reason = decl.reason?.trim();
+  if (!reason) {
+    throw new Error(
+      `${id}: <folio:no-call/> carries no reason. Say why this step uses the skill's know-how ` +
+        `rather than calling its process.`,
     );
   }
   return reason;
@@ -797,7 +832,8 @@ export async function loadProcessModel(
       .filter((v) => v.$type === CONVENTION_EXT && v.ref)
       .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
-    lanes.push({ id: laneId, name: lane.name, roleRef, performerVaries, nodes: nodeIds });
+    const laneDoc = (lane as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined;
+    lanes.push({ id: laneId, name: lane.name, ...(laneDoc ? { documentation: laneDoc } : {}), roleRef, performerVaries, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
       laneIdOf.set(id, laneId);
@@ -869,6 +905,7 @@ export async function loadProcessModel(
         activity: ext.filter((v) => v.$type === CONVENTION_EXT && v.ref).map((v) => v.ref!),
       }),
       noSkillReason: noSkillReasonOf(ext, el.id),
+      noCallReason: noCallReasonOf(ext, el.id),
       judgementReason: judgementReasonOf(ext, el),
       fulfilment: fulfilmentOf(ext, el.id),
       touchesWorkPlan: ext.some((v) => v.$type === "folio:bean"),
@@ -1039,6 +1076,7 @@ export async function loadProcessModel(
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
     dir: dirname(bpmnPath),
+    documentation: (proc as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
     enforcement,
     involvementVocabulary,
     logCapture,

@@ -243,3 +243,12 @@ gate can see.
   PR-body status checklist (invariant 3) is its externally-visible
   projection, so a watcher needs no access to the session's bean queue.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
+| [Code change and review](../../processes/code-change-review.html) | Make the change; Commit, push, open the PR |
+| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
+

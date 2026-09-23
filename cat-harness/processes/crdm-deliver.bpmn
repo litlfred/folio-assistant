@@ -78,7 +78,7 @@ screenshot — the same argument the merge discipline makes about rendered work.
 
 Measured in this repo on 2026-09-16: holding a rendered change back for
 assessment made assessment harder, not safer.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="feature-staging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><folio:skill ref="feature-staging"/><folio:no-call reason="Pushing the branch is the step; feature-staging.yml then runs on the pull_request event, not because this diagram called it. A call activity would claim the engine drives CI."/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Summary" name="Post summary
 to issue">

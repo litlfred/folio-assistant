@@ -236,3 +236,10 @@ indistinguishable from never having asked.
 | the round summary that records it | [`issue-working`](issue-working.md) |
 | why work becomes a bean first | [`todo-manager`](todo-manager.md) |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Offer the knowledge-graph destinations for the agreed set; Choose a destination, or none |
+

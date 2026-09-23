@@ -163,6 +163,48 @@ claim it is not. One run against a build of `origin/main` is what turned
 "something I just broke" into "a live defect nobody had reported", and it is
 the same measurement either way.
 
+## A STATIC read of a client-rendered page is not verification — in either direction
+
+This skill is usually reached for to stop a false **green**. It stops a false
+**red** just as often, and that failure is less obvious because being wrong
+about a defect feels like diligence.
+
+> **Grepping a page's committed HTML for content the page fetches at runtime
+> proves nothing.** The content is absent whether the page works or not.
+
+### The failure this is written from
+
+2026-09-23, bean `yag0`. The owner reported a library viewer as broken. A
+session "confirmed" it by grepping
+`cat-harness/docs/cat-harness/library/who-iris/index.html` for the entry names,
+finding none, and reporting the page as *"a shell"* — 20,160 bytes, committed
+and built identically, holding none of its subject's three entries.
+
+The viewer is client-rendered. It carries
+`DATA_HREF = "../../../assets/library/index.json"`, fetches it, and filters by
+`inScope(x) { return !SCOPE || x.instance === SCOPE }`. **The names could not
+have been in that file.** The test could not have returned any other answer,
+for a working page or a broken one.
+
+Loading it in Chromium took one command and settled it:
+`who-iris · 3 entries · 84,292 words · 404 sections`, data `200`, no console
+errors, all three entries present.
+
+### The cost of a false red
+
+A false green ships a defect. A false red files a bug against working code,
+sends the next agent to rewrite a generator that is correct, and — because the
+report carries measurements and a file size — reads as thoroughly evidenced.
+The bean was filed with a "where to look first" list, every item pointing at
+code with nothing wrong with it.
+
+### The rule
+
+**If a page assembles any of its content after load, open it.** The tell is
+cheap to check: a `fetch`, an `XMLHttpRequest`, a `DATA_HREF`, a `<script>`
+that writes into the DOM. Finding one means a static read cannot answer the
+question, and `§"Running it here"` above is how to answer it instead.
+
 ## What this does NOT replace
 
 The gate set. This is the layer **above** it: gates catch what is checkable

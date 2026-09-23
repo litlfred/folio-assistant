@@ -26,6 +26,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, resolve, basename, relative } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -492,8 +493,46 @@ function escapePipes(s: string): string {
   return s.replace(/\|/g, "\\|");
 }
 
-function main(): void {
+/**
+ * The processes that run a skill, appended to its page (bean `ooq3`).
+ *
+ * The reverse of `<folio:skill ref>`, which `processes/index.md` tabulates and
+ * which a reader standing on the skill could not see. When a process shares the
+ * skill's name it is the skill's OWN procedure, so its diagram is embedded
+ * here rather than only linked — that is the case `adjudication` was in: a
+ * skill, a process, and no page showing the second from the first.
+ */
+function processesSection(name: string, rows: readonly ProcessRow[]): string[] {
+  const own = rows.find((r) => r.stem === name && r.loadError === undefined);
+  const runners = rows
+    .filter((r) => r.loadError === undefined)
+    .map((r) => ({ r, steps: r.steps.filter((st) => st.skills.includes(name)) }))
+    .filter((x) => x.steps.length > 0);
+  if (!own && runners.length === 0) return [];
+  const out: string[] = ["", "## Processes that run this skill", ""];
+  if (own) {
+    out.push(`This skill has its own process: **[${own.name}](../../processes/${own.stem}.html)**.`);
+    out.push("");
+    if (own.svg) {
+      out.push(`<img src="../../assets/img/workflows/${own.stem}.svg" alt="BPMN diagram: ${own.name.replace(/"/g, "&quot;")}" style="max-width:100%">`);
+      out.push("");
+    }
+  }
+  if (runners.length) {
+    out.push("| process | step(s) that name it |");
+    out.push("|---|---|");
+    for (const { r, steps } of runners) {
+      const names = steps.map((st) => (st.calledElement ? `${st.name} (calls a sub-process)` : st.name));
+      out.push(`| [${escapePipes(r.name)}](../../processes/${r.stem}.html) | ${escapePipes(names.join("; "))} |`);
+    }
+    out.push("");
+  }
+  return out;
+}
+
+async function main(): Promise<void> {
   mkdirSync(OUT_DIR, { recursive: true });
+  const procRows = await processRows();
 
   const indexRows: Record<string, string[]> = {};
   // One page per skill id in a flat output dir; if a skill appears in more than
@@ -618,6 +657,7 @@ function main(): void {
       page.push("{% raw %}");
       page.push(body.trimEnd());
       page.push("{% endraw %}");
+      page.push(...processesSection(name, procRows));
       page.push("");
       emit(join(OUT_DIR, `${published}.md`), page.join("\n"));
       written.set(published, group.category);
@@ -676,4 +716,4 @@ function main(): void {
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }
 
-main();
+await main();

@@ -201,3 +201,11 @@ non-obvious, because it has just finished finding them out.
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before&#10;touching anything |
+| [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
+

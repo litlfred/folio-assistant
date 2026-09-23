@@ -54,3 +54,17 @@ Every activity carries `<folio:skill ref>` and `<folio:bean>`, per
 `content-change-review.bpmn` already carries "Compare main vs staging", "Deploy to STAGING/<slug>/" and a Review Committee lane. **Extend it rather than drawing `large-document-review.bpmn`**: add a sliced-review sub-process and the coverage gateway at "Compare main vs staging". Also split its single **"Approve and merge"** task into approve (q4cm's tool) and merge (the existing explicit-confirmation step). Today it fuses them.
 
 - [ ] "Approve and merge" is split into two tasks
+
+## Task ids the review-comment lifecycle already names (423d, 2026-09-23)
+
+`REVIEW_TRANSITIONS` in `folio-assistant-core/schemas/review-comment.ts` names
+two tasks in the diagram this bean authors. They are marked
+`awaits: "en2d"`:
+
+- `Process_LargeDocumentReview#Task_IngestComments`: tagged PR comments
+  become review-comment todos;
+- `Process_LargeDocumentReview#Task_WithdrawComment`: a reviewer withdraws
+  one.
+
+Author them with these ids, or rename both sides together. Then remove
+`awaits`, and the existing test will hold the ids to the BPMN.
