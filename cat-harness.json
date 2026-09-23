@@ -268,14 +268,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T17:19:57.847Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b8959725980dd2cdd1f91d0f0a11882b5992ef3d",
-  "sourceCommitSha": "b8959725980dd2cdd1f91d0f0a11882b5992ef3d",
-  "sourceCommitAt": "2026-09-23T19:16:43+02:00",
+  "generatedAt": "2026-09-23T17:32:21.337Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7a6465201611484a282927eddfdb082a10f90003",
+  "sourceCommitSha": "7a6465201611484a282927eddfdb082a10f90003",
+  "sourceCommitAt": "2026-09-23T19:29:46+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 246,
+    "Skill": 247,
     "Actor": 32,
     "Capability": 28,
     "Convention": 2,
@@ -284,7 +284,7 @@
     "SequenceFlow": 850,
     "Role": 146,
     "ProcessNode": 808,
-    "Tool": 75,
+    "Tool": 76,
     "Schema": 105,
     "GraphKind": 30,
     "Directory": 40,
@@ -1245,7 +1245,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/staging-review.md",
-      "instructionLines": 591,
+      "instructionLines": 595,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2897,6 +2897,22 @@
       ],
       "instructionsPath": "skills/folio-core/html-rendering-qc.md",
       "instructionLines": 100,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "visual-diff",
+      "title": "Visual diff — see a figure change",
+      "description": "Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, and how the staging job and the review process call it. Use when a reviewer asks \"what does this figure look like now\", when a table's markup diff is unreadable, or when a staging preview's pictures are missing.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/visual-diff.md",
+      "instructionLines": 121,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5487,6 +5503,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
@@ -26017,7 +26034,8 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20Committee",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -30568,6 +30586,85 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/folio-block-screenshots",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "folio-block-screenshots",
+      "title": "Folio block screenshots",
+      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/block-screenshots.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "changeset",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The preview's `changeset.json`: which blocks changed, and their kind on each side.",
+            "required": true,
+            "arg": {
+              "flag": "--changeset"
+            }
+          },
+          {
+            "name": "base",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The published main site, as a directory (the publish branch's root).",
+            "required": false,
+            "arg": {
+              "flag": "--base"
+            }
+          },
+          {
+            "name": "head",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The staging build's site directory.",
+            "required": false,
+            "arg": {
+              "flag": "--head"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them.",
+            "required": false,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "count",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work.",
+            "required": false,
+            "arg": {
+              "flag": "--count"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "visual-diff",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "chromium"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff"
       ]
     },
     {
@@ -35757,6 +35854,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/semantic-review-scoping",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/voice-overlay-review"
       ],
       "bindsLane": [
@@ -35784,7 +35882,8 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/visual-diff"
       ],
       "bindsLane": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Review%20Coordinator"
@@ -37159,8 +37258,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "b8959725980dd2cdd1f91d0f0a11882b5992ef3d",
+    "sha": "7a6465201611484a282927eddfdb082a10f90003",
     "pr": "main",
-    "run": "35894502388"
+    "run": "35895994083"
   }
 }
