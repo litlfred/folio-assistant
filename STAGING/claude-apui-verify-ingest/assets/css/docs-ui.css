@@ -6515,3 +6515,43 @@ a.fa-harness-tab__body:focus-visible {
 
 :root[data-fa-scheme="light"] .fa-site-mark--light { display: inline-block; }
 :root[data-fa-scheme="light"] .fa-site-mark--dark { display: none; }
+
+/* ── A sticky AWAY FROM HOME (bean `pv6g`) ────────────────────────────────
+ *
+ * A pinned sticky whose home panel is not on this page, drawn from its stored
+ * text. Opaque for the reason every floating card is: it sits over page
+ * content, and see-through words over words are unreadable. */
+.fa-sticky-away {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  background: #1f1e24;
+  color: #e8eaed;
+  border: 1px solid #5a5670;
+  border-radius: var(--fa-folio-radius, 0);
+}
+:root[data-fa-scheme="light"] .fa-sticky-away {
+  background: #ffffff;
+  color: #1b1b1f;
+  border-color: #8a8699;
+}
+.fa-sticky-away-title { margin: 0; font-size: 1rem; }
+.fa-sticky-away-text { margin: 0; font-size: 0.85rem; line-height: 1.35; }
+.fa-sticky-away-home { color: inherit; text-decoration: underline; font-size: 0.85rem; }
+.fa-sticky-away .fa-sticky-tools,
+.fa-home-tools { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+.fa-sticky-sendhome,
+.fa-home-tools .fa-sticky-move,
+.fa-sticky-away .fa-sticky-move {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.7rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.fa-home-pin { margin-top: 0.4rem; }
