@@ -100,7 +100,7 @@ measurement of that was too generous: this said the only reader was
 workflow, and its output directory `schemas/generated/` does not exist. So
 the degradation model has **zero** effective readers, not one. The gateway is
 what executes. (`folio-assistant-3lbz`, and
-`fsh-guts/proposals/zod-schemas-as-tools.md`.)
+`cat-harness/docs/proposals/zod-schemas-as-tools.md`.)
 
 Both are worth having, and they must agree — the declaration is what a
 reader, a generated doc and `check:fallback-roles` can see without executing

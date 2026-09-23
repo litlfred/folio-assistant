@@ -405,7 +405,7 @@
       "href": "/cat-harness/uploads/",
       "hidden": false,
       "icon": "uploads",
-      "count": 20,
+      "count": 22,
       "unit": "waiting"
     },
     {
@@ -1190,7 +1190,7 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
-      "href": "/cat-harness/voices/smart-base/",
+      "href": "/cat-harness/library/smart-base/",
       "hrefKind": "viewer",
       "stats": [
         {
@@ -1206,7 +1206,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -1217,7 +1217,7 @@
         },
         {
           "kind": "library",
-          "note": "no viewer yet"
+          "path": "/cat-harness/library/smart-base/"
         },
         {
           "kind": "methodology",
@@ -1237,10 +1237,10 @@
         }
       ],
       "findings": [
-        "smart-base: declares 5 graph(s) with no published viewer — fhir-artifact-index, library, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: no avatar declared for this instance — showing the generic mark.",
-        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/smart-base/) rather than the instance's own themed root."
+        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",

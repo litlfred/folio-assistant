@@ -1,5 +1,4 @@
 ---
-$schema: folio-fsh-guts/v1
 title: "Migrating AGENTS.md into skills"
 kind: proposal
 movedOn: 2026-09-19

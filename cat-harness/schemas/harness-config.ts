@@ -29,7 +29,7 @@
  * [`directory-conventions`](../skills/folio-core/directory-conventions.md)
  * §"Pinning a reference — a SHA may stage, only a version may publish" —
  * with `bun run check:published-refs` as its mechanical half. The full scheme
- * is `fsh-guts/proposals/instance-versioning.md`.
+ * is `cat-harness/docs/proposals/instance-versioning.md`.
  *
  * ## What gets resolved across dependencies
  *
@@ -184,7 +184,7 @@ export interface HarnessConfig {
 /**
  * An EXACT semver version. Ranges are refused.
  *
- * Rule 2 of `fsh-guts/proposals/instance-versioning.md` §2, and the one that
+ * Rule 2 of `cat-harness/docs/proposals/instance-versioning.md` §2, and the one that
  * matters most: **FHIR pins exact versions and has no way to express a range**,
  * so a downstream that must align to FHIR cannot be handed `^1.2.0`. The
  * constraint is alignment, and alignment is not a preference here — the owner

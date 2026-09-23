@@ -3,7 +3,7 @@
  * Run the gates CI runs — DERIVED from the workflow, never listed here.
  *
  * Bean `folio-assistant-n60j`. The SDLC audit
- * (`fsh-guts/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
+ * (`cat-harness/docs/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
  * phase unowned for the platform: the commands a contributor runs before
  * pushing lived in `package.json` and in CI YAML and nowhere an agent was
  * told to read. An agent found them by grepping.
