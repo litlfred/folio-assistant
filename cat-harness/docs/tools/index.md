@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>76</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>55</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>58</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>77</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>57</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>59</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 58 |
+| <span class="tg-tag tg-shell">shell</span> | 59 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 71 |
+| `none` | 72 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **55** skills named across **76** tools resolve to a
+Yes — all **57** skills named across **77** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -67,6 +67,7 @@ tool advertising a capability the graph cannot locate.
 | `ci-health`<br>Is CI passing on the default branch? | Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start. | <span class="tg-tag tg-shell">shell</span> | `ci-health` | 3 in / 1 out |
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
+| `content-graph-uml`<br>A paper's block graph as UML | Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper. | <span class="tg-tag tg-shell">shell</span> | `content-graph`<br>`graph-rendering` | 4 in / 1 out |
 | `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
 | `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
