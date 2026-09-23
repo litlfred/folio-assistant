@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 625,
+      "count": 630,
       "unit": "beans"
     }
   },
@@ -2227,6 +2227,20 @@
       "file": "beans/defs/folio-assistant-85im--feature-staging-deploys-with-keep-files-true-so-a.md"
     },
     {
+      "id": "folio-assistant-87ln",
+      "title": "QOU QA MOVE: move qou's 3,653 sibling block-QA verdicts into test/results/block-qa/ (s3p2 option 2)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:29:00Z",
+      "updatedAt": "2026-09-23T13:29:00Z",
+      "preview": "Owner ruling 2026-09-23 on s3p2: \"1 + 2=bean\". Option 1 (fix the sweep's anchor) is done in s3p2. This is option 2.\n\n**What:** move qou's block QA verdicts from the legacy sibling layout (`content/…/<block>.qa.json`, beside each block) into the results tree `test/results/block-qa/content/…/<block>.qa.json`, which `blockQaPath` documents.\n\n**Measured 2026-09-23 (qou `7aafd8dbe`):** 3,653 `*.qa.json",
+      "file": "beans/defs/folio-assistant-87ln--qou-qa-move-move-qous-3653-sibling-block-qa-verdic.md"
+    },
+    {
       "id": "folio-assistant-88mg",
       "title": "CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it",
       "status": "in-progress",
@@ -2337,6 +2351,20 @@
       "updatedAt": "2026-09-22T07:22:05Z",
       "preview": "Owner, 2026-09-21: *\"need lit review, put this also as part of workflow for\nevidenced based literature review as part of guideline development process (see\nwho living guidelines).\"*\n\n## Why it is the same mechanism\n\nA **living guideline** is continuously updated as evidence appears, rather than\nrevised on a multi-year cycle. That makes evidence surveillance a *recurring\ndispatched step* rather tha",
       "file": "beans/defs/folio-assistant-8rwa--lit-review-evidence-based-literature-review-as-a-d.md"
+    },
+    {
+      "id": "folio-assistant-8suc",
+      "title": "PROMOTION AND DESCRIPTIONS ARE CIRCULAR: both narrative writers scan libraries only, and --promote refuses to file into one until the narratives exist",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:54:54Z",
+      "updatedAt": "2026-09-23T13:54:54Z",
+      "preview": "Found while closing `xeg6` on 2026-09-23, by hitting it.\n\n## The cycle\n\n- **`--promote` refuses** while the `image-descriptions` requirement is unmet.\n  Observed directly on `2602.12670v4`: *\"✗ NOT promoted — 1 requirement(s)\n  unmet: image-descriptions, 7 describable image(s) with no narrative\"*.\n- **Neither narrative writer can reach an unpromoted document.** The only two\n  are `scripts/apply-im",
+      "file": "beans/defs/folio-assistant-8suc--promotion-and-descriptions-are-circular-both-narra.md"
     },
     {
       "id": "folio-assistant-8x9b",
@@ -3097,15 +3125,15 @@
     {
       "id": "folio-assistant-ca4a",
       "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T11:21:05Z",
-      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape",
+      "updatedAt": "2026-09-23T12:19:15Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape\n\n## Summary of Changes\n\nPR #1072, merged 2026-09-23 on the ow",
       "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
     },
     {
@@ -3167,15 +3195,15 @@
     {
       "id": "folio-assistant-chhd",
       "title": "flbx stage C: review-task branch for prose and the code it describes, calling adjudication",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
-      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [ ] stages B and A merged\n- [ ] review-task gains the branch; skill written; Lean skill re-pointed\n- [ ] kg:audit, render and gates green",
+      "updatedAt": "2026-09-23T13:31:33Z",
+      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [x] stages B and A merged (#1065, #1072)\n- [x] review-task gains the branch; skill written; Lean skill re-pointed\n- [x] kg:audit, render and gates gree",
       "file": "beans/defs/folio-assistant-chhd--flbx-stage-c-review-task-branch-for-prose-and-the.md"
     },
     {
@@ -3579,6 +3607,20 @@
       "file": "beans/defs/folio-assistant-ebvl--mountlibrarypullouts-registers-one-fafolio-changed.md"
     },
     {
+      "id": "folio-assistant-edx7",
+      "title": "NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:30:28Z",
+      "updatedAt": "2026-09-23T13:30:28Z",
+      "preview": "Owner, 2026-09-23, naming three pages and then the rule:\n\n> navbar should be on sub pages like\n> https://litlfred.github.io/folio-assistant/cat-harness/catalogue/who-iris/\n>\n> or https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n> or library\n>\n> etc... **common fixture unless explicty removed in harness visualtion.**\n\nThe last line is the requirement, and i",
+      "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
+    },
+    {
       "id": "folio-assistant-eief",
       "title": "CSVW skill + ingestion tools: tabular metadata as far as it can be determined",
       "status": "todo",
@@ -3805,14 +3847,14 @@
     {
       "id": "folio-assistant-flbx",
       "title": "NARRATIVE-ASSERTS-CODE: one review axis for 'does the prose say what the artefact does', with Lean as a specialisation",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:55:39Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T13:31:33Z",
       "preview": "The open item from bean 7pdi (its unchecked 'narrative-asserts-code axis' Done-when). Owner 2026-09-23 chose it as next work (session_01SiFEMuTciyB681XP5WfcbB). CRDM: this bean starts at Phase 1 (needs) — nothing built before the needs statement is confirmed.\n\n## Existing partial answers (measured 2026-09-23)\n- proof-narrative-lean-equivalence (agent skill): paper prose vs .lean. Lean only; nrv8 f",
       "file": "beans/defs/folio-assistant-flbx--narrative-asserts-code-one-review-axis-for-does-th.md"
     },
@@ -3983,6 +4025,20 @@
       "updatedAt": "2026-09-20T18:51:53Z",
       "preview": "The owner, 2026-09-20, while the `bbbl` decision was being implemented:\n\n> *\"human can waive cinfirmation rights (e.g. for session, for process run)\"*\n>\n> *\"context depedndent, should be in memories.  (update skills)\"*\n\n## What this changes\n\nSeveral rules here stop an agent and hand a decision back: merging to `main`,\nremoving a durable artefact, spawning a swarm, closing a bean whose evidence\nthe",
       "file": "beans/defs/folio-assistant-ga3q--waiver-a-human-can-waive-a-confirmation-right-scop.md"
+    },
+    {
+      "id": "folio-assistant-ga8a",
+      "title": "STAGING SIZE: a composed instance is carried by every preview — smart-trust is 776.6 MB across 13, larger than the reference/ lever already pulled",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:30:49Z",
+      "updatedAt": "2026-09-23T13:31:14Z",
+      "preview": "`bun run health` reports `staging-preview-size` **critical** again. Measured on\n`origin/gh-pages` 2026-09-23, not taken from the report: **13 previews, 2.10 GB**;\nthe whole published tree is **2.36 GB** against GitHub's 1 GB Pages limit.\n\nIssue #843 / bean `tebu` cut `reference/` and `api/` from a preview whose branch\ndoes not touch their sources. **That cut is working** — 3 of the 13 previews car",
+      "file": "beans/defs/folio-assistant-ga8a--staging-size-a-composed-instance-is-carried-by-eve.md"
     },
     {
       "id": "folio-assistant-gjli",
@@ -5487,6 +5543,20 @@
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
     },
     {
+      "id": "folio-assistant-nbjv",
+      "title": "TABULAR RECORDS LIE ABOUT THEIR FORMAT: tabular.jsonld has no @context, so a JSON-LD reader keeps only its @id",
+      "status": "scrapped",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:25:01Z",
+      "updatedAt": "2026-09-23T13:25:01Z",
+      "preview": "**Scrapped the hour it was opened. The defect was already fixed, the other\nway, and I did not check before asking the owner to choose.**\n\n## What this bean claimed\n\nThat `scripts/tabular-records.py` writes `tabular.jsonld` with no `@context`,\nso a JSON-LD processor keeps only its `@id` and drops every other key. The\nproposed fix was bean `792y`'s ruling applied to the twin: rename to\n`tabular.json",
+      "file": "beans/defs/folio-assistant-nbjv--tabular-records-lie-about-their-format-tabularjson.md"
+    },
+    {
       "id": "folio-assistant-nfgo",
       "title": "SCRAP: report the 17 one-shot migrations with sizes and ages — the decision is the owner's",
       "status": "completed",
@@ -6655,7 +6725,7 @@
     {
       "id": "folio-assistant-s3p2",
       "title": "qa-sweep anchors its verdicts at the SWEPT directory, not the instance root, because resolveHarnessConfigPath climbs",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-q4jm",
@@ -8119,14 +8189,14 @@
     {
       "id": "folio-assistant-xeg6",
       "title": "ARXIV SUB-THRESHOLD IMAGES: 2602.12670v4 is blocked on image-descriptions, and a coverage bound would misclassify 3 of its 7",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T16:24:49Z",
-      "updatedAt": "2026-09-21T16:24:49Z",
+      "updatedAt": "2026-09-23T13:55:28Z",
       "preview": "Split out of bean `r8br` / issue #722 on 2026-09-21, which deliberately left\nits promotion box unticked because of this document.\n\n`2602.12670v4` is one of the seven staged documents blocked on\n`image-descriptions`. It is **not** a browser print, so the capture rung\n`r8br` added does not reach it and was never going to.\n\n## Measured 2026-09-21\n\n| | |\n|---|---|\n| producer / creator | `pikepdf 8.15.",
       "file": "beans/defs/folio-assistant-xeg6--arxiv-sub-threshold-images-260212670v4-is-blocked.md"
     },
@@ -8497,14 +8567,14 @@
     {
       "id": "folio-assistant-z1ug",
       "title": "STICKY PANEL: the landing stickies and the todos share one panel, minimised to a tile at start",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T17:11:37Z",
-      "updatedAt": "2026-09-21T18:46:42Z",
+      "updatedAt": "2026-09-23T13:44:01Z",
       "preview": "Tracked as https://github.com/litlfred/folio-assistant/issues/756 items 1, 2 and 4.\n\nOwner, 2026-09-21: \"i dont want fa-sticky-board fa-landing-board to have inside it: fa-sticky fa-landing-sticky ... i want them in the sticky panel instead\", \"i thought the sticky panel had some todos, but they seem gone. they should be closed/tiled to start\", \"the todo panel should start minimized with an icon to",
       "file": "beans/defs/folio-assistant-z1ug--sticky-panel-the-landing-stickies-and-the-todos-sh.md"
     },
@@ -8637,14 +8707,14 @@
     {
       "id": "folio-assistant-zkgs",
       "title": "findContentRepoRoot() stops at cat-harness/, so this repo's harness.config.json is never read",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T13:54:01Z",
-      "updatedAt": "2026-09-20T13:54:01Z",
+      "updatedAt": "2026-09-23T14:52:07Z",
       "preview": "## What was measured\n\nFound while fencing `detangler-archimedean-wall` behind `folioOptionalAxes()`.\nThe fence verified OFF immediately and could not be verified ON from anywhere\nin this checkout, whatever the cwd. Every number below was observed.\n\n`findContentRepoRoot()` walks up from `process.cwd()` and stops at the nearest\nancestor holding the declared folio directory. `cat-harness/harness.json",
       "file": "beans/defs/folio-assistant-zkgs--findcontentreporoot-stops-at-cat-harness-so-this-r.md"
     },
