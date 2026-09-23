@@ -32,6 +32,7 @@ classDiagram
   namespace cat_harness__uml {
     class cat_harness_uml_uml_shape["uml"] {
       <<schema: scripts/gen-uml-overview.ts>>
+      fields not machine-readable: scripts/gen-uml-overview.ts names no exported schema
     }
   }
   cssClass "cat_harness_uml_uml_shape" fa_uml_kind_uml

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-19cc
 title: UML generators as Tool nodes, with a uml-overview skill
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T09:57:43Z
-updated_at: 2026-09-23T09:57:43Z
+updated_at: 2026-09-23T11:49:48Z
 parent: folio-assistant-zzmr
 ---
 

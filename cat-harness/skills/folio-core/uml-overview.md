@@ -67,7 +67,11 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
   with one child per harness. The sub-graph pages stay out of the menu and are
   linked from their harness page, because a menu listing every sub-graph would
   be too long to scan.
-- `uml/harness-object-model.puml`: the object model.
+- `uml/harness-object-model.puml`: the object model, and
+  `docs/assets/img/uml/harness-object-model.svg`, shown second on the UML
+  overview page. `gen-object-model-uml.ts` writes the `.puml` only where the
+  `beans` CLI is installed, so `gen-uml-overview.ts` renders the committed
+  file and never rewrites it. Its stamp check needs neither Java nor beans.
 - `uml/harness-schemas.puml` and `docs/assets/img/uml/harness-schemas.svg`:
   the schemas view: Schema, Role, Actor, Skill, User Story, Process, Task
   and Test. It leaves out Bean, the one class read from the `beans` CLI, so
@@ -105,7 +109,7 @@ kind's `nodeSchemas`, `validator` or `schema`, or any schema those point at.
 read from `beans graphql --schema`. Without it the check exits 2, "could not
 check", and never passes. That is why it is not a CI gate.
 
-## Three things that have already gone wrong
+## Four things that have already gone wrong
 
 - **A converter change emptied every box silently.** When the repo moved to
   Zod 4, `zod-to-json-schema` returned empty schemas and the overview drew boxes
@@ -115,6 +119,14 @@ check", and never passes. That is why it is not a CI gate.
 - **A family was drawn where it does not live.** The kind-wide `nodeSchemas` map
   put cat-harness's voice schemas inside `bootstrap/skills`. Each sub-graph now
   draws only the `$schema` tags found in its own directory.
+- **Boxes came out empty with no reason given.** A sub-graph of JSON Schema
+  files carries `$schema: …draft-07…`, and the generator drew that
+  metaschema: one box, no fields. Owner, 2026-09-23: "why empty?". Now each
+  schema document is its own class. The ones with no properties (value sets,
+  `$ref` compositions) are listed one line each in a single summary class. A
+  field that is composed stays a line in its parent. A kind with no readable
+  shape carries one italic line saying why. No generated class is empty, and
+  a new empty one is a regression.
 - **Importing a generator wrote files.** Both scripts ran their main block on
   import, which dirtied the tree in CI (no `beans` CLI, so different output).
   Both are guarded by `import.meta.main`. A new generator needs the same guard.

@@ -55,6 +55,7 @@ classDiagram
       alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
+      maintains [0..*] Maintain[]
     }
   }
   cssClass "n_fhir_harness_fhir_ig_skills_skills" fa_uml_kind_skills

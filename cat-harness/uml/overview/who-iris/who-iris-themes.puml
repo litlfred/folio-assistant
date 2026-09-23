@@ -24,6 +24,7 @@ package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
     palette [0..1] : object
     backdrop [0..1] : object
     layouts [0..1] : object
+    overrides [0..*] : Override[]
   }
 }
 

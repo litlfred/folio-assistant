@@ -699,6 +699,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
   },
   {
+    id: "prose-claims-resolve",
+    applies: ["process", "skill"],
+    // `minor`, advisory (R7). Stage A of #1042: what the prose side of a
+    // declared pair says about the code side, checked where it names a
+    // resolvable thing. Measured before it shipped: 1 false, 23 holding and
+    // 10 undetermined claims over 32 pairs — the undetermined are a folio's
+    // files and scripts, which is why they are never counted as false.
+    severity: "minor",
+    summary:
+      "The prose of a declared prose ↔ code pair names something that does not exist: a symbol not declared in the module " +
+      "it cites, a module missing from a directory that exists here, a `bun run` file that is not there, or a " +
+      "`<folio:job>` the workflow does not have. `unknown` when every parsed claim pointed outside this repository.",
+  },
+  {
     id: "role-skills-resolve",
     applies: ["role"],
     severity: "critical",

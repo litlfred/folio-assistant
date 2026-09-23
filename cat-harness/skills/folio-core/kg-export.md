@@ -101,6 +101,24 @@ Four questions, in this order. The worked call for each term is in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
 
+## Every key is a declared term — in content documents too
+
+Rule 5 above, applied to CONTENT (bean `yh6u`): in every document on the
+published content context, a plain key must be a declared term, or a JSON-LD
+processor drops it without a word. Measured before the check existed: 8
+undeclared keys across 392 committed figure blocks — every agent-drafted figure
+narrative was being dropped. `bun run check:context-emission` now fails on one.
+
+It does **not** descend into a value typed `@json`. Such a value is a JSON
+literal by declaration: its inner keys are data, not properties. That is the
+right home for a nested structure that is ours rather than linked data, and
+**the only way its nulls survive** — the three-state rule lives in them.
+
+**A path is a literal, never an `@id`.** A block-relative path coerced to
+`@id` resolves against the context's `@base`, not against the block, and so
+names a location the file is not at. `file` on a figure block is a literal for
+that reason; `text` on a prose block still has the defect (bean `589f`).
+
 ## A prefix is the stub — and a prefix that is spoken must be bound
 
 Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is

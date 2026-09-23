@@ -248,7 +248,39 @@
       <ul class="fa-harness-tab__graphs">
       {%- for v in t.visualisations -%}
         <li class="fa-harness-graph">
-        {%- if v.path -%}
+        {%- comment -%}
+          A PATH THAT RESOLVES AND A PAGE THAT IS NOT THERE.
+
+          `compose-docs.ts` lays a `publish: "staging-only"` page into the site
+          only under `--staging`, and `harness-tiles.ts` resolves `path`
+          against the SOURCE tree -- so on the canonical deploy the path is
+          present, correct and dead. Measured 2026-09-23 on a canonical-shaped
+          local build: `fsh-guts`, reached from two places in this sidebar and
+          from neither one on staging.
+
+          The graph TILE has skipped such a page since it was written, with the
+          reason in its own comment: *"Conflating them would let 'show hidden'
+          resurrect a link to a 404."* This list did not, because `stagingOnly`
+          did not reach it -- the same shape as `note` before it.
+
+          `site.data.build.staging_slug` is what `head_custom.html` writes into
+          `fa-staging`, so this template asks the same question the client
+          does, at build time, and the two cannot disagree about which deploy
+          this is.
+        {%- endcomment -%}
+        {%- comment -%}
+          ONE `assign`, because Liquid's `and`/`or` bind right-to-left and take
+          no parentheses: the first version of this was three `and`s either
+          side of an `or` and was correct only by accident of that order.
+          `default:` collapses nil and empty, which are the same answer here —
+          a build that cannot say it is a preview is treated as canonical, the
+          safe direction and the one `isStagingPreview` already takes.
+        {%- endcomment -%}
+        {%- assign _fa_staging = site.data.build.staging_slug | default: '' -%}
+        {%- if v.path and v.stagingOnly and _fa_staging == '' -%}
+          <span class="fa-harness-graph__link fa-harness-graph__link--unlinked">{{ v.kind }}</span>
+          <span class="fa-harness-graph__note">staging only</span>
+        {%- elsif v.path -%}
           <a class="fa-harness-graph__link" href="{{ v.path | relative_url }}">{{ v.kind }}</a>
         {%- else -%}
           {%- comment -%}

@@ -25,6 +25,8 @@ classDiagram
       capturedAt [0..1] string
       producer [0..1] string
       readAt [1] string
+      assets [0..*] Asset[]
+      omitted [0..*] Omitted[]
     }
   }
   folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets

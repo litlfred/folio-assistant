@@ -58,6 +58,8 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+
 import {
   FhirArtifactIndexSchema,
   materializationCensus,
@@ -70,6 +72,16 @@ import {
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
+/**
+ * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
+ *
+ * OPTIONAL, and its absence is a third state rather than "this IG has no
+ * menu": `ingest-ig-menu.ts` needs the upstream source checkout, which is not
+ * on every machine. Absent → the menu sections are not written and the build
+ * SAYS so; it does not quietly render a site with no navigation and call it
+ * complete.
+ */
+const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
 
 const CHECK = process.argv.includes("--check");
@@ -186,15 +198,58 @@ const CSS = `
  * `description` are the index's own, never typed here, which is the same rule
  * the rest of this generator follows.
  */
-function shell(title: string, description: string, body: string, depth = 0): string {
+/**
+ * Where a page sits in the LEFT-HAND NAV — three roles, not a depth number.
+ *
+ * It was `depth = 0 | 1`, and one number was carrying two different facts: a
+ * CATEGORY page and an ARTEFACT page both passed `1`, so the `nav_exclude`
+ * written for the 674 leaves swept out the 7 category pages with them. The
+ * sidebar showed exactly ONE smart-trust row — the index — and the structure
+ * this index is grouped by was invisible in the one place a reader navigates
+ * from.
+ *
+ * The comment that justified it was right about the leaves and wrong about the
+ * sections: *"674 artefacts would bury the sidebar's real structure"* — the
+ * categories ARE that structure. Two facts, two values, so the next person
+ * cannot accidentally exclude one by describing the other.
+ */
+type NavRole =
+  /** The front door. Carries the children. */
+  | { kind: "index" }
+  /** One of the 7 categories — a listed child of the index. */
+  | { kind: "section"; order: number }
+  /** One of the 674 artefacts. Excluded: a leaf per artefact buries the rest. */
+  | { kind: "leaf" };
+
+/**
+ * The index page's title, and the string a section names as its `parent`.
+ *
+ * just-the-docs matches a child to its parent BY TITLE, so these two cannot be
+ * written independently — one constant, referenced twice, or a re-titled index
+ * silently orphans all 7 sections and the sidebar quietly flattens.
+ */
+const INDEX_TITLE = "WHO SMART Trust — artefact index";
+
+function navFrontMatter(nav: NavRole): string[] {
+  switch (nav.kind) {
+    case "index":
+      return ["has_children: true"];
+    case "section":
+      return [`parent: ${yamlScalar(INDEX_TITLE)}`, `nav_order: ${nav.order}`];
+    case "leaf":
+      // Still excluded, and for the reason the original comment gave: 674
+      // leaves would bury the sidebar. Unchanged behaviour, now stated of the
+      // case it was actually meant for.
+      return ["nav_exclude: true"];
+  }
+}
+
+function shell(title: string, description: string, body: string, nav: NavRole = { kind: "index" }): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
     `description: ${yamlScalar(description)}`,
-    // `nav_exclude` on the artefact pages: 674 artefacts would bury the
-    // sidebar's real structure under one instance's leaves. The index page is
-    // the front door and stays listed.
-    ...(depth === 0 ? [] : ["nav_exclude: true"]),
+    ...navFrontMatter(nav),
     "---",
     "",
   ].join("\n");
@@ -335,7 +390,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   ].join("\n");
 
   return shell(
-    "WHO SMART Trust — artefact index",
+    INDEX_TITLE,
     `All ${ix.count} artefacts of the WHO SMART Trust IG ${ix.version ?? ""}, reconstructed from its published output.`,
     body,
   );
@@ -389,7 +444,13 @@ function artifactTable(list: FhirArtifact[], base: string): string[] {
  * reader to go to the IG's own `artifacts.html` — a sentence that was true
  * only while those artefacts had no pages here.
  */
-function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[]): string {
+/**
+ * `order` is the category's position in `byCategory`, passed in rather than
+ * derived here: the index page already iterates that map to build its own
+ * sections, so the sidebar and the page body are ordered by ONE traversal and
+ * cannot disagree about which category comes first.
+ */
+function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
   const name = label ?? "Other";
   const body = [
     `[← all ${ix.count} artefacts](../)`,
@@ -407,7 +468,7 @@ function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: Fh
     `${name} — WHO SMART Trust`,
     `The ${list.length} WHO SMART Trust artefacts in the ${name} category, with canonical URLs and published representations.`,
     body,
-    1,
+    { kind: "section", order },
   );
 }
 
@@ -500,8 +561,57 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     `${name} — WHO SMART Trust artefact`,
     `${a.key} in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.`,
     body,
-    1,
+    { kind: "leaf" },
   );
+}
+
+/**
+ * One page per top-level menu group — which is how the IG's TOP BAR becomes a
+ * LEFT-HAND nav.
+ *
+ * The owner, 2026-09-23: *"navar menu is now on LHS"*. just-the-docs builds
+ * its sidebar from the PAGES in the collection, so an entry in it has to be a
+ * page; there is no per-folio hook for a bare external link. A page per group
+ * is therefore the mechanism, not a workaround — and it is the honest one,
+ * because each group genuinely has something to say: the list of its members
+ * and where they are published.
+ *
+ * **Every link points UPSTREAM, and that is not a shortfall.** These pages are
+ * published by the IG Publisher and this repository does not hold them — the
+ * gh-pages harvest kept 674 FHIR artefacts and none of the narrative pages
+ * (measured: 0 of 12 menu labels matched an artefact title). A page here that
+ * pretended to hold `system-actors.html` would be fabricating content; one
+ * that links to the canonical copy is a navigation aid, which is what a menu
+ * is.
+ */
+function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string {
+  const rows = group.items.map((it) => `- [${mdCell(it.label)}](${menuHref(menu, it)})`);
+  const body = [
+    `[← all ${menu.groups.length} sections](../)`,
+    ``,
+    ...(group.items.length > 0
+      ? rows
+      : [
+          // A group the config declares with no children. Stated, because an
+          // empty list and a page that failed to render look the same.
+          `*${mdCell(group.label)} carries no sub-items in \`sushi-config.yaml\`.*`,
+        ]),
+    ``,
+    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, group)}).`, ``] : []),
+    `Published by the IG at \`${menu.canonical}\`. This repository holds the IG's`,
+    `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
+  ].join("\n");
+  return shell(
+    `${group.label} — WHO SMART Trust`,
+    `The ${group.items.length} page(s) the WHO SMART Trust IG publishes under ${group.label}.`,
+    body,
+    { kind: "section", order },
+  );
+}
+
+/** A filename-safe slug, on the same rule `categoryName` uses. */
+function menuName(label: string): string {
+  return label.replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
 // ── Build ──────────────────────────────────────────────────────────────
@@ -541,9 +651,28 @@ for (const a of ix.artifacts) {
 // A page for each category too large to inline, so "too many to list here"
 // points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
 // makes — one threshold, read twice, rather than two that can disagree.
+// THE IG'S MENU, FIRST IN THE SIDEBAR — it is the IG's own ordering of itself,
+// and the artefact categories are this repository's view on top of it.
+let sectionOrder = 0;
+let menu: IgMenu | undefined;
+if (existsSync(MENU)) {
+  const m = IgMenuSchema.safeParse(JSON.parse(readFileSync(MENU, "utf8")));
+  if (!m.success) {
+    console.error("the committed IG menu does not validate — refusing to render nav from it:");
+    for (const i of m.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  menu = m.data;
+  for (const group of menu.groups) {
+    sectionOrder += 1;
+    pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
+  }
+}
+
 for (const [label, list] of byCategory(ix.artifacts)) {
   if (list.length > INLINE_LIMIT) {
-    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list));
+    sectionOrder += 1;
+    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list, sectionOrder));
   }
 }
 
@@ -594,4 +723,16 @@ if (CHECK) {
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
+  // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
+  // checks, and an absent menu reported as silence is indistinguishable from
+  // an IG that publishes no navigation — which this one plainly does.
+  if (menu) {
+    console.log(
+      `  ${menu.groups.length} menu section(s) — the IG's own top bar, ${menuItemCount(menu)} item(s), ` +
+        `from ${menu.source.path} @ ${menu.source.ref.slice(0, 8)}`,
+    );
+  } else {
+    console.log("  0 menu section(s) — COULD NOT DETERMINE: no menu.json.");
+    console.log("    Run `ingest-ig-menu.ts --source <ig-repo>`; this is not an IG without navigation.");
+  }
 }

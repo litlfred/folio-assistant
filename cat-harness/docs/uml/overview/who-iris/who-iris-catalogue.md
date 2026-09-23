@@ -41,11 +41,13 @@ classDiagram
       schema [0..1] string
       element [1] string
       qualifier [0..1] string
+      values [1..*] Value[]
     }
     class who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1["folio-dublin-core/v1"] {
       <<json: DublinCoreRecordSchema>>
       $schema [1] 'folio-dublin-core/v1'
       id [1] string
+      fields [1..*] Field[]
       provenance [1] object
     }
     class who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion["MaskedRegion"] {
@@ -64,6 +66,7 @@ classDiagram
       mediaType [0..1] string
       pixelWidth [0..1] integer
       pixelHeight [0..1] integer
+      maskedRegions [1..*] MaskedRegion[]
       materialization [1] object
     }
     class who_iris_who_iris_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1["folio-catalogue-node/v1"] {
@@ -77,6 +80,7 @@ classDiagram
       childCountUpstream [0..1] integer
       libraryId [0..1] string
       metadataRef [0..1] string
+      bitstreams [0..*] Bitstream[]
       materialization [1] object
     }
     class who_iris_who_iris_catalogue_folio_catalogue_v1_folio_catalogue_v1["folio-catalogue/v1"] {
