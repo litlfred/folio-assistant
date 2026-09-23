@@ -6,11 +6,11 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 150,
+      "count": 153,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 19,
+      "count": 20,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -705,6 +705,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/odrl.test.ts",
+      "instance": "cat-harness",
+      "name": "odrl.test",
+      "graphNode": "undeclared",
+      "summary": "ODRL 2.2 policies (issue #1180): the schema refuses what it cannot mean, the",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/odrl.ts",
+      "instance": "cat-harness",
+      "name": "odrl",
+      "graphNode": "schema",
+      "summary": "W3C ODRL 2.2 policies: what an Actor may do, scoped by Process, Task and Role.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/overlay-resolution.test.ts",
       "instance": "cat-harness",
       "name": "overlay-resolution.test",
@@ -783,6 +799,14 @@
       "name": "property-skills",
       "graphNode": "schema",
       "summary": "Which skill edits which declaration property: the \"edit skills\" column of the",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/prov.ts",
+      "instance": "cat-harness",
+      "name": "prov",
+      "graphNode": "schema",
+      "summary": "W3C PROV-O: the record of a task being performed. Issue #1180.",
       "isTest": false
     },
     {
@@ -1379,6 +1403,15 @@
       "name": "masked-region.test",
       "graphNode": "undeclared",
       "summary": "`maskedRegions` — the rules, each against the mistake it exists for.",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/materialization-compiled.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "materialization-compiled.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The `compiled` purpose: valid against its INPUTS, checked before use — bean `gpdo`.",
       "isTest": true
     },
     {
@@ -18355,6 +18388,314 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/odrl.ts#ActionGraph",
+      "name": "ActionGraph",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "type-alias",
+      "doc": "The action graph: an action id → the actions it is `includedIn`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#Decision",
+      "name": "Decision",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "type-alias",
+      "doc": "THREE answers, never two. `unknown` means no rule speaks to the request, and",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "permit",
+        "deny",
+        "unknown"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#FolioLeftOperand",
+      "name": "FolioLeftOperand",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#OdrlConstraintSchema",
+      "name": "OdrlConstraintSchema",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "leftOperand",
+          "type": "z.enum(FOLIO_LEFT_OPERANDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "operator",
+          "type": "z.enum(ODRL_OPERATORS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rightOperand",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "FOLIO_LEFT_OPERANDS",
+        "ODRL_OPERATORS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#OdrlPolicy",
+      "name": "OdrlPolicy",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#OdrlPolicySchema",
+      "name": "OdrlPolicySchema",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.union([z.string(), z.array(z.unknown()), z.record(z.string(), z.unknown())])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.enum([\"Set\", \"Offer\", \"Agreement\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "uid",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "profile",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The folio ODRL profile; required, because the actions only mean something against it."
+        },
+        {
+          "name": "inheritFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Policies whose rules this one inherits: ODRL's `inheritFrom`."
+        },
+        {
+          "name": "conflict",
+          "type": "z.enum(ODRL_CONFLICT).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assigner",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "An Agreement names who grants it. A Set does not have to."
+        },
+        {
+          "name": "permission",
+          "type": "z.array(OdrlRuleSchema).default([])",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "prohibition",
+          "type": "z.array(OdrlRuleSchema).default([])",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/odrl.ts#OdrlRuleSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ODRL_CONFLICT",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#OdrlRule",
+      "name": "OdrlRule",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#OdrlRuleSchema",
+      "name": "OdrlRuleSchema",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "assignee",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "An actor id, or {@link ANYONE}."
+        },
+        {
+          "name": "action",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the rule applies to; absent means the instance's whole graph."
+        },
+        {
+          "name": "constraint",
+          "type": "z.array(OdrlConstraintSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/odrl.ts#OdrlConstraintSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#PermitRequest",
+      "name": "PermitRequest",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "actor",
+          "type": "string | null",
+          "optional": false,
+          "array": false,
+          "doc": "The actor asking, or `null` for an unauthenticated reader."
+        },
+        {
+          "name": "actorRoles",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false,
+          "doc": "The roles the actor may act as (`ActorDef.roles`); empty or absent means unconstrained."
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "scope",
+          "type": "RequestScope",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/odrl.ts#RequestScope"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/odrl.ts#RequestScope",
+      "name": "RequestScope",
+      "module": "cat-harness/schemas/odrl.ts",
+      "kind": "interface",
+      "doc": "The scope a request is made in. Every field is optional, and an absent one satisfies no constraint on it.",
+      "fields": [
+        {
+          "name": "cat-harness:process",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "cat-harness:task",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "cat-harness:role",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/panel-chrome.ts#Capabilities",
       "name": "Capabilities",
       "module": "cat-harness/schemas/panel-chrome.ts",
@@ -18977,6 +19318,141 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/prov.ts#Iso",
+      "name": "Iso",
+      "module": "cat-harness/schemas/prov.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/prov.ts#ProvActivity",
+      "name": "ProvActivity",
+      "module": "cat-harness/schemas/prov.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/prov.ts#ProvActivitySchema",
+      "name": "ProvActivitySchema",
+      "module": "cat-harness/schemas/prov.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@type",
+          "type": "z.literal(\"prov:Activity\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prov:startedAtTime",
+          "type": "Iso",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prov:endedAtTime",
+          "type": "Iso.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "prov:qualifiedAssociation",
+          "type": "ProvAssociationSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prov:actedOnBehalfOf",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "prov:used",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "prov:generated",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "cat-harness:underPolicy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The ODRL policy uid the run was under. Required: a run under no policy cannot be checked."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/prov.ts#Iso",
+        "cat-harness/schemas/prov.ts#ProvAssociationSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/prov.ts#ProvAssociationSchema",
+      "name": "ProvAssociationSchema",
+      "module": "cat-harness/schemas/prov.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prov:agent",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prov:hadRole",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "prov:hadPlan",
+          "type": "z.string().regex(PLAN_REF, \"hadPlan is <process>#<task>\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "PLAN_REF",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -21156,6 +21632,13 @@
           "type": "string",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "includedIn",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "The broader actions this one is part of: another action here, or one of"
         }
       ],
       "extendsNames": [],
@@ -21188,6 +21671,12 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "includedIn",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true
         }
       ],
       "extendsNames": [],
@@ -21276,7 +21765,7 @@
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display text. Not used for matching — {@link RoleDef.lanes} is."
+          "doc": "Display text. Not used for matching: a lane binds by `<folio:role ref>`."
         },
         {
           "name": "description",
@@ -21290,13 +21779,6 @@
           "optional": false,
           "array": true,
           "doc": "Which kinds of actor may take this role on. `external` marks a participant"
-        },
-        {
-          "name": "lanes",
-          "type": "string[]",
-          "optional": false,
-          "array": true,
-          "doc": "Exact BPMN lane names this role binds, across every diagram."
         },
         {
           "name": "persona",
@@ -21403,12 +21885,6 @@
           "name": "actorKinds",
           "type": "z.array(z.enum(ACTOR_KINDS)).min(1)",
           "optional": false,
-          "array": true
-        },
-        {
-          "name": "lanes",
-          "type": "z.array(z.string()).default([])",
-          "optional": true,
           "array": true
         },
         {
@@ -34922,6 +35398,71 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledInputs",
+      "name": "CompiledInputs",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
+      "name": "CompiledInputsSchema",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "zod-object",
+      "doc": "What a COMPILED copy was built from. Its validity is a statement about",
+      "fields": [
+        {
+          "name": "toolchain",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`."
+        },
+        {
+          "name": "sourceRevision",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The revision of the source the artefact was built from, e.g. a commit sha."
+        },
+        {
+          "name": "inputDigest",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/, \"a sha256 digest is 64 lowercase hex characters\").optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A sha256 over the build inputs, where the builder can produce one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/materialization.ts#CompiledValidity",
+      "name": "CompiledValidity",
+      "module": "folio-assistant-core/schemas/materialization.ts",
+      "kind": "type-alias",
+      "doc": "Is a COMPILED copy still valid for the inputs we have now? Call it BEFORE",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/materialization.ts#Fixity",
       "name": "Fixity",
       "module": "folio-assistant-core/schemas/materialization.ts",
@@ -34983,6 +35524,7 @@
         "expired",
         "no-expiry",
         "permanent",
+        "input-bound",
         "not-materialized"
       ],
       "refs": [],
@@ -35213,6 +35755,13 @@
           "doc": "Required when `purpose` is `archival` or `both`."
         },
         {
+          "name": "inputs",
+          "type": "CompiledInputsSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Required when `purpose` is `compiled`, and only allowed then. See {@link CompiledInputsSchema}."
+        },
+        {
           "name": "materializedAt",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -35243,6 +35792,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
         "folio-assistant-core/schemas/materialization.ts#FixitySchema",
         "folio-assistant-core/schemas/materialization.ts#GatesSchema",
         "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema"
@@ -39137,6 +39687,38 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/odrl.ts#OdrlPolicySchema",
+      "to": "cat-harness/schemas/odrl.ts#OdrlRuleSchema",
+      "via": "permission",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/odrl.ts#OdrlPolicySchema",
+      "to": "cat-harness/schemas/odrl.ts#OdrlRuleSchema",
+      "via": "prohibition",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/odrl.ts#OdrlRuleSchema",
+      "to": "cat-harness/schemas/odrl.ts#OdrlConstraintSchema",
+      "via": "constraint",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/odrl.ts#PermitRequest",
+      "to": "cat-harness/schemas/odrl.ts#RequestScope",
+      "via": "scope",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/panel-chrome.ts#PanelControl",
       "to": "cat-harness/schemas/panel-chrome.ts#ControlCapability",
       "via": "needs",
@@ -39191,6 +39773,30 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/prov.ts#ProvActivitySchema",
+      "to": "cat-harness/schemas/prov.ts#Iso",
+      "via": "prov:endedAtTime",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/prov.ts#ProvActivitySchema",
+      "to": "cat-harness/schemas/prov.ts#Iso",
+      "via": "prov:startedAtTime",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/prov.ts#ProvActivitySchema",
+      "to": "cat-harness/schemas/prov.ts#ProvAssociationSchema",
+      "via": "prov:qualifiedAssociation",
+      "kind": "field",
+      "optional": false,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/qa-report.ts#DetailsShape",
@@ -41398,6 +42004,14 @@
       "via": "sourceLoss",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
+      "to": "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
+      "via": "inputs",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
