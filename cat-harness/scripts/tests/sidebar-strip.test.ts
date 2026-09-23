@@ -17,9 +17,23 @@
  * defending the wrong design. Three of these assertions passed every
  * falsification and still had to go.
  *
- * The rendered result is NOT checked and cannot be: `remote_theme` resolves on
- * the runner, so the theme's compiled selectors are not in this checkout, and
- * the published site is refused at this environment's proxy.
+ * The rendered result is not checked HERE, but it is no longer true that it
+ * cannot be. `remote_theme` resolves on the runner, so the theme's compiled
+ * selectors are not in this checkout, and this environment's proxy refuses the
+ * published site over HTTP — but the STAGING PREVIEW IS COMMITTED TO
+ * `gh-pages`, and git reaches it:
+ *
+ *     git fetch origin gh-pages
+ *     git archive FETCH_HEAD:STAGING/<slug> | tar -x -C <dir>/<baseurl>/STAGING/<slug>
+ *
+ * Served at THAT path -- the pages address their assets under the staging
+ * baseurl, and mounting them anywhere else 404s every stylesheet while still
+ * rendering a page that a careless check calls a pass -- Playwright then drives
+ * the real CI build, theme and all. Demonstrated 2026-09-23 on bean `vfr8`:
+ * 10 stylesheets, 0 failed requests, 4 of 5 figures genuinely auto-expanded.
+ *
+ * These assertions stay a text check anyway, because a stylesheet invariant
+ * wants to fail in the fast gate set rather than behind a 90 MB extract.
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -284,11 +298,12 @@ describe("figures keep a white plate, with and without JavaScript", () => {
  *
  * The defect needs the THEME's stacking context to appear, and
  * `remote_theme` resolves on the runner — the compiled selectors are not in
- * this checkout, the published site is refused at this environment's proxy,
- * and every e2e spec here builds a fixture rather than a Jekyll site. So the
- * rendered result cannot be asserted, exactly as this file's header already
- * says. What CAN be asserted is the invariant the defect violated, over the
- * stylesheet itself.
+ * this checkout, and every e2e spec here builds a fixture rather than a Jekyll
+ * site. The rendered result CAN be reached, by the gh-pages route this file's
+ * header now describes, and the fix was verified that way -- but a 90 MB
+ * extract and a browser do not belong in the fast gate set, and they check a
+ * PARTICULAR BUILD rather than the rule. What belongs here is the invariant
+ * the defect violated, over the stylesheet itself.
  *
  * ## What it does NOT claim
  *
