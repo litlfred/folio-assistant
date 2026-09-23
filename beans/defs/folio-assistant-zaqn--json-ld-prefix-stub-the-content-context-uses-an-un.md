@@ -31,7 +31,7 @@ A namespace is `<canonical>/<stub>/ns#`, so its prefix is that same word:
 - [x] gate: every compact IRI in a published context / type table has a declared prefix, and every prefix equals its namespace's stub
 - [x] regenerate the JSON-LD files (gen:jsonld)
 - [x] document the rule in the skills (kg-export, vocabulary / directory conventions) and on the gate's Tool node
-- [ ] bun run gates green; PR opened
+- [x] bun run gates green; PR opened (#1016)
 
 ## Progress 2026-09-23
 
