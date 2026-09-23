@@ -269,7 +269,9 @@
     "Process_BuildL1Kg": [],
     "Process_DeriveContent": [],
     "Process_ExtractStructure": [],
-    "Process_L1Gate": [],
+    "Process_L1Gate": [
+      "Process_Adjudication"
+    ],
     "Process_IngestTheme": [],
     "Process_JsonLdDrift": [],
     "Process_KgToPortal": [],
@@ -279,10 +281,13 @@
     "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [],
     "Process_QaReportSigning": [],
-    "Process_RefreshMaterialized": [],
+    "Process_RefreshMaterialized": [
+      "Process_Adjudication"
+    ],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
     "Process_NarrativeReview": [
+      "Process_Adjudication",
       "Process_VoiceReview"
     ],
     "Process_Review": [
@@ -293,14 +298,18 @@
     "Process_RenderLog": [],
     "Process_SwotAnalysis": [],
     "Process_ThemeUIReview": [],
-    "Process_Translation": [],
+    "Process_Translation": [
+      "Process_Adjudication"
+    ],
     "Process_UpstreamPinWatch": [
       "Process_UpstreamAdoption"
     ],
     "Process_UpstreamAdoption": [
       "Process_OptionsAnalysis"
     ],
-    "Process_VoiceReview": [],
+    "Process_VoiceReview": [
+      "Process_Adjudication"
+    ],
     "Process_DIIG": []
   },
   "themeArt": {

@@ -101,6 +101,12 @@
       "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
       "description": "A git branch name"
     },
+    "RepoFullName": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A forge repository's full name, owner/name"
+    },
     "ChangeProposalNumber": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "integer",
@@ -333,8 +339,8 @@
   },
   "staging": {
     "branch": "main",
-    "sha": "edf3a89349596844cdc04777e3c11e13d10ac01a",
+    "sha": "73c1e666fbe80a7fea978044359122eab81d1b2b",
     "pr": "main",
-    "run": "35831852039"
+    "run": "35836992992"
   }
 }

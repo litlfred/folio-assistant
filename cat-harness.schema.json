@@ -657,6 +657,17 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "publishable": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
         }
       },
       "required": [
@@ -670,8 +681,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "edf3a89349596844cdc04777e3c11e13d10ac01a",
+    "sha": "73c1e666fbe80a7fea978044359122eab81d1b2b",
     "pr": "main",
-    "run": "35831852039"
+    "run": "35836992992"
   }
 }

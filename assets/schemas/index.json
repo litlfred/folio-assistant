@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 132,
+      "count": 135,
       "unit": "modules"
     },
     "detangle-schemas": {
@@ -14,7 +14,7 @@
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 13,
+      "count": 15,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -338,6 +338,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/depends-on.ts",
+      "instance": "cat-harness",
+      "name": "depends-on",
+      "graphNode": "schema",
+      "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/document-image.ts",
       "instance": "cat-harness",
       "name": "document-image",
@@ -425,6 +433,14 @@
       "reason": "a re-export barrel: it defines nothing of its own",
       "summary": "Re-exports all types, Zod validation schemas, and builder functions.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/instance-versioning.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-versioning.test",
+      "graphNode": "undeclared",
+      "summary": "A minimal valid declaration, extended per test.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/jsonld.ts",
@@ -1040,6 +1056,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/version-bump.ts",
+      "instance": "cat-harness",
+      "name": "version-bump",
+      "graphNode": "schema",
+      "summary": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/viz-generators.test.ts",
       "instance": "cat-harness",
       "name": "viz-generators.test",
@@ -1231,6 +1255,22 @@
       "graphNode": "undeclared",
       "summary": "The invariants the three content-layer schemas exist to enforce.",
       "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-comment.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-comment.test",
+      "graphNode": "undeclared",
+      "summary": "The review-comment todo kind (bean 423d): a todo with more structure, a",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "instance": "folio-assistant-core",
+      "name": "review-comment",
+      "graphNode": "schema",
+      "summary": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "isTest": false
     },
     {
       "module": "large-datasets/schemas/artifact-store.ts",
@@ -5545,6 +5585,27 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "publishable",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity — reverse-DNS, stable forever, never reused."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The version, and it is an EXACT semver triple."
         }
       ],
       "extendsNames": [
@@ -5666,12 +5727,34 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "publishable",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The package identity an EXTERNAL consumer depends on — reverse-DNS."
+        },
+        {
+          "name": "version",
+          "type": "ExactVersionSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The version — an exact semver triple, `current` or `dev`. Never a range."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
+        "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
@@ -5912,6 +5995,20 @@
         "reproduce",
         "skip"
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+      "name": "ExactVersionSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-scalar",
+      "doc": "An EXACT semver version. Ranges are refused.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -10300,6 +10397,133 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "name": "DependsOnExport",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "records",
+          "type": "DependsOnRecord[]",
+          "optional": false,
+          "array": true,
+          "doc": "Emitted only when the exporting instance is itself publishable."
+        },
+        {
+          "name": "gaps",
+          "type": "DependsOnGap[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unavailable",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why there are no records, when the answer is not \"it has no dependencies\"."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/depends-on.ts#DependsOnGap",
+        "cat-harness/schemas/depends-on.ts#DependsOnRecord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "name": "DependsOnGap",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The dependency's declared name, which is all an unresolved edge has."
+        },
+        {
+          "name": "reason",
+          "type": "DependsOnGapReason",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/depends-on.ts#DependsOnGapReason"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnGapReason",
+      "name": "DependsOnGapReason",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "type-alias",
+      "doc": "Why an edge could not become a record.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "undecided",
+        "internal",
+        "unresolved",
+        "unreadable"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/depends-on.ts#DependsOnRecord",
+      "name": "DependsOnRecord",
+      "module": "cat-harness/schemas/depends-on.ts",
+      "kind": "interface",
+      "doc": "One `ImplementationGuide.dependsOn` entry.",
+      "fields": [
+        {
+          "name": "packageId",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The dependency's `id` — reverse-DNS, the identity a consumer resolves."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Its exact `version`. Never a range, never a SHA (§3.3)."
+        },
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Its `canonicalUrl`, which plays FHIR's `uri` role (§3.2)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
       "name": "CaptureBasis",
       "module": "cat-harness/schemas/document-image.ts",
@@ -13132,20 +13356,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/harness-config.ts#ExactVersionSchema",
-      "name": "ExactVersionSchema",
-      "module": "cat-harness/schemas/harness-config.ts",
-      "kind": "zod-scalar",
-      "doc": "An EXACT semver version. Ranges are refused.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/harness-config.ts#FolioAssistantDependency",
       "name": "FolioAssistantDependency",
       "module": "cat-harness/schemas/harness-config.ts",
@@ -13271,7 +13481,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/harness-config.ts#ExactVersionSchema"
+        "cat-harness/schemas/cat-harness.ts#ExactVersionSchema"
       ],
       "unresolved": [],
       "external": [
@@ -25091,6 +25301,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#RepoFullNameSchema",
+      "name": "RepoFullNameSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A forge repository's full name, `owner/name`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
       "name": "RepoPathSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -28519,6 +28743,107 @@
       "refs": [
         "cat-harness/schemas/types.ts#ValidationIssue"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#Bump",
+      "name": "Bump",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "type-alias",
+      "doc": "A version bump, in increasing order of what it costs a consumer.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "patch",
+        "minor",
+        "major"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#ExportedGraph",
+      "name": "ExportedGraph",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "doc": "The shape this reads out of an exported document. Deliberately minimal.",
+      "fields": [
+        {
+          "name": "@graph",
+          "type": "unknown[]",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "name": "SurfaceDiff",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "added",
+          "type": "SurfaceSubject[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "removed",
+          "type": "SurfaceSubject[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "bump",
+          "type": "Bump",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/version-bump.ts#Bump",
+        "cat-harness/schemas/version-bump.ts#SurfaceSubject"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "name": "SurfaceSubject",
+      "module": "cat-harness/schemas/version-bump.ts",
+      "kind": "interface",
+      "doc": "One subject in the exported surface: its type and its id, together.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -32675,6 +33000,522 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/review-comment.ts#AnchorChange",
+      "name": "AnchorChange",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "doc": "The two ChangeSet entries that move an anchor. Structural, so no import cycle.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#BlockAnchor",
+      "name": "BlockAnchor",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "One block as the head has it: its content hash and the labels it used to have.",
+      "fields": [
+        {
+          "name": "hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "renamedFrom",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
+      "name": "IngestResult",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "created",
+          "type": "ReviewComment[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unchanged",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Already ingested. Same id, so nothing new."
+        },
+        {
+          "name": "malformed",
+          "type": "Array<{ commentId: number; url: string; error: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "Tagged but malformed: said, not dropped, so the reviewer can fix it."
+        },
+        {
+          "name": "untagged",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "No tag: ordinary conversation. Counted so \"nothing ingested\" is explained."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewComment"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#PrComment",
+      "name": "PrComment",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "A PR conversation comment, in the fields GitHub's API returns.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+      "name": "ProcessTask",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "A task in a BPMN process: the only thing allowed to move a comment.",
+      "fields": [
+        {
+          "name": "process",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The `<bpmn:process id>`."
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The task's id in that process."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "name": "ReviewComment",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind",
+      "name": "ReviewCommentKind",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "nodeKind"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName",
+      "name": "ReviewCommentKindName",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "name": "ReviewCommentSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "ReviewCommentKind"
+      ],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFile",
+      "name": "ReviewCommentsFile",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema",
+      "name": "ReviewCommentsFileSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "doc": "`review-comments.json`, published beside `changeset.json` in a preview.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(REVIEW_COMMENTS_FILE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repo",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commit",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The head commit whose blocks the comments were anchored against."
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "comments",
+          "type": "z.array(ReviewCommentSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "malformed",
+          "type": "z.array(z.object({ commentId: z.number().int(), url: z.string(), error: z.string() }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "untagged",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "REVIEW_COMMENTS_FILE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "name": "ReviewCommentStatus",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewFields",
+      "name": "ReviewFields",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewFieldsSchema",
+      "name": "ReviewFieldsSchema",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repo",
+          "type": "z.string().regex(/^[\\w.-]+\\/[\\w.-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`owner/name` of the repository the pull request is in."
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "The edit-set's pull request."
+        },
+        {
+          "name": "commentId",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub's id of the conversation comment this was ingested from."
+        },
+        {
+          "name": "commentUrl",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reviewer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "GitHub login of the reviewer."
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The lane they reviewed in: a role id from `roles.json`."
+        },
+        {
+          "name": "kind",
+          "type": "z.enum(REVIEW_COMMENT_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blockHash",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The block's content hash when the comment was ingested. `null` when the"
+        },
+        {
+          "name": "commit",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The head commit the comment was ingested against."
+        },
+        {
+          "name": "orphaned",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false,
+          "doc": "The block the label names is gone. Kept and shown, never dropped. An"
+        },
+        {
+          "name": "anchoredFrom",
+          "type": "z.array(z.string()).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "The labels this comment was anchored to before a rename re-anchored it."
+        },
+        {
+          "name": "decision",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The 9gyz Decision that closed it. Required once resolved or adjudicated."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "REVIEW_COMMENT_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewTag",
+      "name": "ReviewTag",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "doc": "The tag a reviewer starts a PR comment with.",
+      "fields": [
+        {
+          "name": "block",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ReviewCommentKindName",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Everything after the header, trimmed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "name": "ReviewTransition",
+      "module": "folio-assistant-core/schemas/review-comment.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "from",
+          "type": "readonly (ReviewCommentStatus | null)[]",
+          "optional": false,
+          "array": false,
+          "doc": "`null` for creation."
+        },
+        {
+          "name": "to",
+          "type": "ReviewCommentStatus",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "ProcessTask & { /** The `.bpmn` under `cat-harness/processes/` that declares it. */ file: string; /** * Set when the di…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "needsDecision",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "A transition that closes a comment must name the Decision that closed it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+        "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "large-datasets/schemas/artifact-store.ts#ArtifactStore",
       "name": "ArtifactStore",
       "module": "large-datasets/schemas/artifact-store.ts",
@@ -33709,6 +34550,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+      "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
       "via": "navbarIcons",
       "kind": "field",
@@ -34628,6 +35477,30 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "via": "gaps",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnExport",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnRecord",
+      "via": "records",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/depends-on.ts#DependsOnGap",
+      "to": "cat-harness/schemas/depends-on.ts#DependsOnGapReason",
+      "via": "reason",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -35053,7 +35926,7 @@
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#FolioAssistantDependencySchema",
-      "to": "cat-harness/schemas/harness-config.ts#ExactVersionSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
       "via": "version",
       "kind": "field",
       "optional": true,
@@ -37124,6 +37997,30 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#Bump",
+      "via": "bump",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "via": "added",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
+      "to": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
+      "via": "removed",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/vocabulary.ts#TermGloss",
       "to": "cat-harness/schemas/vocabulary.ts#TermLayer",
       "via": "layer",
@@ -37665,6 +38562,62 @@
       "via": "signature",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#IngestResult",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewComment",
+      "via": "created",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentsFileSchema",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentSchema",
+      "via": "comments",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTag",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentKindName",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ProcessTask",
+      "via": "by",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/review-comment.ts#ReviewTransition",
+      "to": "folio-assistant-core/schemas/review-comment.ts#ReviewCommentStatus",
+      "via": "to",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {

@@ -16,7 +16,7 @@
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">RoleDef</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#actedupon">actedUpon</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#actorkinds">actorKinds</a><span class="tsd-signature-symbol">:</span> (<span class="tsd-signature-type">&quot;person&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;agent&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;system&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;external&quot;</span>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#description">description</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#inherits">inherits</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#judgementonly">judgementOnly</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#lanes">lanes</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#persona">persona</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#skills">skills</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#title">title</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#usecases">useCases</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#voice">voice</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:227</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:227</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -52,7 +52,7 @@ be a finding nobody can act on, and a check that produces those is a check
 somebody switches off.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L323">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:323</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L323">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:323</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="actorkinds"><span>actor<wbr/>Kinds</span><a href="#actorkinds" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">actorKinds</span><span class="tsd-signature-symbol">:</span> (<span class="tsd-signature-type">&quot;person&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;agent&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;system&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;external&quot;</span>)<span class="tsd-signature-symbol">[]</span></div>
@@ -74,26 +74,26 @@ actor IS one kind of thing; a role ADMITS several. Collapsing either into
 the other loses a distinction the graph is built on.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L261">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:261</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L261">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:261</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="description"><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L239">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:239</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L239">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:239</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Stable id. Referenced by <code>&lt;folio:role ref&gt;</code> and by <code>inherits</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L229">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:229</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L229">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:229</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="inherits"><code class="tsd-tag">Optional</code><span>inherits</span><a href="#inherits" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">inherits</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Roles this one IS-A. Skills are unioned transitively; cycles rejected.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L311">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:311</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L311">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:311</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="judgementonly"><code class="tsd-tag">Optional</code><span>judgement<wbr/>Only</span><a href="#judgementonly" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">judgementOnly</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
@@ -119,7 +119,7 @@ role's lanes, which is what lets the criterion GATE on the undeclared
 ones instead of staying advisory for ever.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L348">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:348</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L348">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:348</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="lanes"><span>lanes</span><a href="#lanes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">lanes</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -130,7 +130,7 @@ riskier change than declaring the synonyms. New diagrams should use
 <code>&lt;folio:role ref&gt;</code> and need not add a name here.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L270">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:270</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L270">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:270</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="persona"><code class="tsd-tag">Optional</code><span>persona</span><a href="#persona" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">persona</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -148,14 +148,14 @@ every block would invite the two to disagree, and a per-block audience
 that contradicts its lane is worse than none — it looks authoritative.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L287">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:287</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L287">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:287</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="skills"><span>skills</span><a href="#skills" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">skills</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Skills available to an actor in this role, before inheritance.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L309">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:309</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L309">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:309</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="title"><span>title</span><a href="#title" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -166,7 +166,7 @@ role spelling them differently from a directory or a Tool meant a consumer
 had to know which kind of node it held before it could print one.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L238">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:238</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L238">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:238</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="usecases"><code class="tsd-tag">Optional</code><span>use<wbr/>Cases</span><a href="#usecases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">useCases</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -178,7 +178,7 @@ page answers them. &quot;Is this well written&quot; is unanswerable; &quot;does 
 a reviewer find what changed since they last looked&quot; is not.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L307">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:307</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L307">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:307</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="voice"><code class="tsd-tag">Optional</code><span>voice</span><a href="#voice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">voice</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -190,7 +190,7 @@ agent judges against the same string rather than against its own taste,
 which is what makes a voice finding reviewable instead of an opinion.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/edf3a89349596844cdc04777e3c11e13d10ac01a/cat-harness/schemas/role-graph.ts#L297">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:297</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/73c1e666fbe80a7fea978044359122eab81d1b2b/cat-harness/schemas/role-graph.ts#L297">work/folio-assistant/folio-assistant/cat-harness/schemas/role-graph.ts:297</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
