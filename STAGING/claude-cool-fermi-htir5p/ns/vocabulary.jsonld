@@ -770,6 +770,21 @@
       "layer": "harness"
     },
     {
+      "@id": "folio-assistant-core:ReviewVerdictsGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ReviewVerdictsGraph",
+      "comment": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
+      "prefLabel": "ReviewVerdictsGraph",
+      "definition": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
+      "notation": "folio-assistant-core:ReviewVerdictsGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
+    },
+    {
       "@id": "cat-harness:ScenarioGraph",
       "@type": [
         "rdfs:Class",

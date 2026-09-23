@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 623,
+      "count": 626,
       "unit": "beans"
     }
   },
@@ -125,7 +125,7 @@
     {
       "id": "folio-assistant-0818",
       "title": "SMART-TRUST LHS NAV: the IG harvest dropped the menu AND the narrative pages — 0 of 12 menu labels resolve against 674 artefacts",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-yj32",
@@ -925,14 +925,14 @@
     {
       "id": "folio-assistant-3psh",
       "title": "check:l1-complete cannot see an ORPHAN directory inside a library entry",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:28:09Z",
-      "updatedAt": "2026-09-23T11:16:11Z",
+      "updatedAt": "2026-09-23T12:23:44Z",
       "preview": "Found 2026-09-20 by causing it, then fixing the cause and finding the\nartefact still there.\n\n`pdf-images.py` derived the doc id differently from `pdf-structure.py`, so for\nthree arXiv papers it wrote `images.json` into a SIBLING directory of the entry\nit belonged to. That is fixed. But the same shape can arrive by any arm taking\n`-o <library-root>` with a doc id the entry does not have, and **noth",
       "file": "beans/defs/folio-assistant-3psh--checkl1-complete-cannot-see-an-orphan-directory-in.md"
     },
@@ -1317,14 +1317,14 @@
     {
       "id": "folio-assistant-589f",
       "title": "TEXT LINKS RESOLVE WRONG: `text` is coerced to @id, so ../sections/x.md resolves against @base, not the block",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T11:57:40Z",
-      "updatedAt": "2026-09-23T11:57:40Z",
+      "updatedAt": "2026-09-23T13:24:28Z",
       "preview": "Found by `yh6u` while declaring `file` (2026-09-23).\n\n## What is wrong\n\n`CONTENT_CONTEXT` declares `text: {\"@id\": \"folio-assistant-core:text\", \"@type\": \"@id\"}`. Prose blocks write `text: \"../sections/sec-001-introduction.md\"` — a path RELATIVE TO THE BLOCK. Under `@id` coercion a JSON-LD processor resolves it against the context's `@base` (`https://litlfred.github.io/folio/`), giving `https://litl",
       "file": "beans/defs/folio-assistant-589f--text-links-resolve-wrong-text-is-coerced-to-id-so.md"
     },
@@ -1921,14 +1921,14 @@
     {
       "id": "folio-assistant-7m6g",
       "title": "VISUALISER FILTER: by document, library, graph — and one per thing in the folio working space",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:02:31Z",
-      "updatedAt": "2026-09-21T21:02:31Z",
+      "updatedAt": "2026-09-23T12:26:57Z",
       "preview": "Owner, 2026-09-21: \"visualizer filter by document, library, graph, and one each thing in folio (working space. see beans/siblings)\"\n\n## What is asked\n\nThe visualiser gains a filter with at least these axes:\n\n- **document** — the authored content object\n- **library** — the STATIC graph (issue #764 section 3 F2: a folio's subjects are\n  the library and the working documents/assets/artefacts)\n- **gra",
       "file": "beans/defs/folio-assistant-7m6g--visualiser-filter-by-document-library-graph-and-on.md"
     },
@@ -3012,16 +3012,16 @@
     },
     {
       "id": "folio-assistant-bvuk",
-      "title": "ONE OUTCOME GATEWAY, FIVE DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
-      "status": "todo",
+      "title": "ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:19:05Z",
-      "updatedAt": "2026-09-23T09:19:05Z",
-      "preview": "Five processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## The five callers, and what each actually asks\n\nMeasured 2026-09-23 — `grep -rn 'calledElement=\"Process_Adjud",
+      "updatedAt": "2026-09-23T11:28:33Z",
+      "preview": "Six processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## Two corrections to this bean, both from checking it before building\n\n### It is SIX callers, not five\n\n`wirefr",
       "file": "beans/defs/folio-assistant-bvuk--one-outcome-gateway-five-different-questions-proce.md"
     },
     {
@@ -3097,15 +3097,15 @@
     {
       "id": "folio-assistant-ca4a",
       "title": "flbx stage A: generalise check:agents-claims to every declared prose/code pair",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T11:21:05Z",
-      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape",
+      "updatedAt": "2026-09-23T12:19:15Z",
+      "preview": "Issue #1042, R3. After stage B. Location + absence shapes, plus resolvable claims (CLI flag, exit code, workflow job / if: step). Unparsed claims counted, never passed.\n\n## Done when\n- [x] stage B merged (#1065)\n- [x] claim shapes extended and run over each declared pair kind\n- [x] not-parsed count reported per run; tests pin each shape\n\n## Summary of Changes\n\nPR #1072, merged 2026-09-23 on the ow",
       "file": "beans/defs/folio-assistant-ca4a--flbx-stage-a-generalise-checkagents-claims-to-ever.md"
     },
     {
@@ -3167,15 +3167,15 @@
     {
       "id": "folio-assistant-chhd",
       "title": "flbx stage C: review-task branch for prose and the code it describes, calling adjudication",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-flbx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:38:11Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
-      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [ ] stages B and A merged\n- [ ] review-task gains the branch; skill written; Lean skill re-pointed\n- [ ] kg:audit, render and gates green",
+      "updatedAt": "2026-09-23T13:31:33Z",
+      "preview": "Issue #1042, R4 R5. After stages B and A. General narrative-asserts-code skill with no Lean specifics; proof-narrative-lean-equivalence re-pointed as its Lean specialisation; checker/reviewer disagreement calls Process_Adjudication.\n\n## Done when\n- [x] stages B and A merged (#1065, #1072)\n- [x] review-task gains the branch; skill written; Lean skill re-pointed\n- [x] kg:audit, render and gates gree",
       "file": "beans/defs/folio-assistant-chhd--flbx-stage-c-review-task-branch-for-prose-and-the.md"
     },
     {
@@ -3595,14 +3595,14 @@
     {
       "id": "folio-assistant-en2d",
       "title": "PROCESS: large-document-review.bpmn composing staging, review-task, adjudication and a coverage gate — and whether editor already is the coordinator",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T21:02:55Z",
-      "updatedAt": "2026-09-22T21:04:31Z",
+      "updatedAt": "2026-09-23T11:42:28Z",
       "preview": "Owner: *\"process, roels ... integrate into current processes\"*.\n\n**Roles, measured 2026-09-22.** `roles.json` already declares reviewer,\neditor, narrative-reviewer, qc-reviewer, clinical-sme, adjudicator,\nfeedback-provider and stakeholder. `.claude/skills/actors/` adds\ntechnical-officer and content-reviewer. **No new review role is obviously\nneeded.** The candidate is a **review coordinator**: som",
       "file": "beans/defs/folio-assistant-en2d--process-large-document-reviewbpmn-composing-stagin.md"
     },
@@ -3805,14 +3805,14 @@
     {
       "id": "folio-assistant-flbx",
       "title": "NARRATIVE-ASSERTS-CODE: one review axis for 'does the prose say what the artefact does', with Lean as a specialisation",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:55:39Z",
-      "updatedAt": "2026-09-23T10:38:11Z",
+      "updatedAt": "2026-09-23T13:31:33Z",
       "preview": "The open item from bean 7pdi (its unchecked 'narrative-asserts-code axis' Done-when). Owner 2026-09-23 chose it as next work (session_01SiFEMuTciyB681XP5WfcbB). CRDM: this bean starts at Phase 1 (needs) — nothing built before the needs statement is confirmed.\n\n## Existing partial answers (measured 2026-09-23)\n- proof-narrative-lean-equivalence (agent skill): paper prose vs .lean. Lean only; nrv8 f",
       "file": "beans/defs/folio-assistant-flbx--narrative-asserts-code-one-review-axis-for-does-th.md"
     },
@@ -4375,6 +4375,20 @@
       "updatedAt": "2026-09-21T05:50:43Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> update each instance kind's staring readme (QA check, each harness kind needs\n> readme, it is added as a reference to repo's root readme.md to explain what is\n> in it).  whwn cat-harness boostrap init takes over it creates README.md if it\n> does not exist and add link and overall harness install statue.\n>\n> the reaadme in repo root should:\n>   *   point to the boots",
       "file": "beans/defs/folio-assistant-ie9l--readmes-every-instance-kind-needs-its-own-starting.md"
+    },
+    {
+      "id": "folio-assistant-iiop",
+      "title": "GLASS POLISH: the cover fills its card, the browser-only note is dismissable and names the missing save tool, and the tile strip is four tiles plus More",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-6lb8",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T12:26:57Z",
+      "updatedAt": "2026-09-23T12:26:57Z",
+      "preview": "Owner, 2026-09-23, with screenshots of the glass over a schemas page:\n\n> artefact avatar should cover sheet\n\n> need to be able to dismiss: Your folio is saved in this browser only — not sent anywhere, and not visible to anyone else. should also say (no \"save\" tool is currently enabled)\n\n> too many tiles!\n\nOffered shapes, the owner chose **\"Fills the card\"** for the avatar and **\"Few + a More tile\"",
+      "file": "beans/defs/folio-assistant-iiop--glass-polish-the-cover-fills-its-card-the-browser.md"
     },
     {
       "id": "folio-assistant-imen",
@@ -5249,6 +5263,20 @@
       "file": "beans/defs/folio-assistant-m9zz--translations-bootstraptranslations-holds-15-pot-fi.md"
     },
     {
+      "id": "folio-assistant-mc8h",
+      "title": "MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T13:25:16Z",
+      "updatedAt": "2026-09-23T13:25:16Z",
+      "preview": "Found by getting it wrong on [#1064](https://github.com/litlfred/folio-assistant/pull/1064),\nand written down because the mistake is cheap to repeat.\n\n## What happened\n\n`main` absorbed **31, 13, 11 and 12** commits under one branch in about\nseventy minutes. Each time, the PR went `dirty`, and each time the response\nwas: merge `origin/main`, resolve, `bun run gates`, push. Four rounds.\n\n**`get_stat",
+      "file": "beans/defs/folio-assistant-mc8h--merge-forward-treadmill-re-merging-main-faster-tha.md"
+    },
+    {
       "id": "folio-assistant-mgdg",
       "title": "GRAPH LAYER: name the content-vs-state axis on GraphKindDef",
       "status": "completed",
@@ -6047,6 +6075,20 @@
       "updatedAt": "2026-09-20T04:03:21Z",
       "preview": "## Measured 2026-09-20\n\nThe root `harness.json` declares `bootstrap` → `bootstrap/skills/`, so\nfolio-assistant's graph carries **bootstrap's skills and roles**. It does NOT\ndeclare `bootstrap/workflows/`, so it does not carry **bootstrap's process** —\nthat isolation was deliberate (#432, where bootstrap's process was leaking into\nthe root graph 88 times).\n\nSo the root carries half of bootstrap. Th",
       "file": "beans/defs/folio-assistant-pve3--the-root-declares-half-of-bootstrap-its-skills-but.md"
+    },
+    {
+      "id": "folio-assistant-px0t",
+      "title": "REVIEW VERDICTS: record a per-block reviewer verdict so GW_Covered's uncoveredBlocks is computed, not supplied",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T11:41:17Z",
+      "updatedAt": "2026-09-23T12:28:17Z",
+      "preview": "Found while doing en2d (2026-09-23). `content-change-review.bpmn` now has a\ncoverage gate, `GW_Covered`, backed by `decisions/review-coverage-gate.dmn`.\nIt reads two facts: `uncoveredBlocks` and `openDefects`.\n\n`openDefects` can already be counted from `review-comments.json`.\n**`uncoveredBlocks` cannot**, because nothing records a reviewer's per-block\nVERDICT. A verdict means \"I read this block, a",
+      "file": "beans/defs/folio-assistant-px0t--review-verdicts-record-a-per-block-reviewer-verdic.md"
     },
     {
       "id": "folio-assistant-py74",
