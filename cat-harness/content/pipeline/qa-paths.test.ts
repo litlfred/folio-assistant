@@ -15,8 +15,10 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
+import { initFolio } from "../../scripts/init-folio";
 import {
   BLOCK_QA_RESULTS_DIR,
+  findContentRepoRoot,
   blockOfQaPath,
   blockQaPath,
   blockQaReadPaths,
@@ -129,5 +131,39 @@ describe("the inverse, which no-orphan-sidecar depends on", () => {
       const blockRoot = join(root, "folio", "ch", "b");
       expect(blockOfQaPath(root, legacyBlockQaPath(blockRoot))).toBeUndefined();
     });
+  });
+});
+
+// ── The sweep's anchor (bean s3p2) ───────────────────────────────
+
+describe("findContentRepoRoot: where a sweep anchors (s3p2)", () => {
+  it("a sweep of a scaffolded folio's content graph anchors at the folio's ROOT, not at the swept directory", () => {
+    const root = mkdtempSync(join(tmpdir(), "s3p2-"));
+    try {
+      initFolio({ targetDir: root, contentType: "document", slug: "anchor-test", title: "Anchor Test", authors: ["A"], link: "sibling", assistantPath: "folio-assistant", skipVcs: true });
+      // The regression: `folio/` anchored at itself, and verdicts landed at
+      // `folio/test/results/block-qa/…`, where nothing reads them.
+      expect(findContentRepoRoot(join(root, "folio"), "/fallback")).toBe(root);
+      // A block-path PREFIX deep inside still finds the same root.
+      const deep = join(root, "folio", "doc", "chapter");
+      mkdirSync(deep, { recursive: true });
+      expect(findContentRepoRoot(join(deep, "a-block"), "/fallback")).toBe(root);
+      expect(blockQaPath(findContentRepoRoot(deep, "/fallback"), join(deep, "a-block"))).toBe(
+        join(root, "test", "results", "block-qa", "folio", "doc", "chapter", "a-block.qa.json"),
+      );
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it("a directory holding `.git` still anchors, as a legacy folio like qou does", () => {
+    const root = mkdtempSync(join(tmpdir(), "s3p2-git-"));
+    try {
+      mkdirSync(join(root, ".git"));
+      mkdirSync(join(root, "content", "ch"), { recursive: true });
+      expect(findContentRepoRoot(join(root, "content", "ch"), "/fallback")).toBe(root);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });
