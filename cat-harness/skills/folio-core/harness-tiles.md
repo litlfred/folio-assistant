@@ -47,8 +47,15 @@ and by the owner, for something else:
 
 | sense | what it means | how you tell |
 |---|---|---|
-| **1 — instantiated here** | this checkout runs it | a `<name>.config.json` at the **repository** root. 5 of 19 instances |
+| **1 — instantiated here** | this checkout runs it | a `<name>.config.json` at the **repository** root — `ls *.config.json`, not a number quoted here |
 | **2 — a layer others instantiate** | a base a *downstream* repo stands up | nothing in this checkout. It is a statement about the layer's role in the stack |
+
+**No count is given for either sense, on purpose.** The first draft of this
+section said "5 of 19" and was stale within the hour: `smart-base` was
+instantiated by #1129 while this page sat in review, making it 6. That is the
+rule this corpus states everywhere and keeps paying for — *a count in prose is
+a claim nothing checks* — caught here only because the merge that broke it
+happened to land in the same session. Ask the filesystem.
 
 Sense 2 is not loose talk. `smart-stack-layering` says *"the DAK harness every
 smart-\* DAK repo instantiates"*; `fhir-harness`'s own description says *"what
