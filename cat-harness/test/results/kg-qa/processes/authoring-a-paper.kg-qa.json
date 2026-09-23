@@ -5,7 +5,7 @@
     "id": "Process_PaperAuthoring",
     "path": "processes/authoring-a-paper.bpmn"
   },
-  "source_hash": "sha256:ac7a94e24460ee83cf2afbeef9a7bc182cb9dfb97c996e96d5275da480392bdd",
+  "source_hash": "sha256:773f8e0f4056300447b90fd82d2b6320ab5527cb403e9e8a0be3be28427f362b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,29 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Scaffold",
-          "detail": "\"3 · Scaffold the folio repo\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Formalize",
-          "detail": "\"5 · Formalise in Lean\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Validate",
-          "detail": "\"6 · Validate\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Render",
-          "detail": "\"7 · Render PDF / HTML\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Review",
-          "detail": "\"8 · Review and feedback\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -102,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
+    "pass": 12,
+    "fail": 0,
     "n/a": 6,
     "unknown": 0
   }

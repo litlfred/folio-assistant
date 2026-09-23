@@ -33,19 +33,19 @@ folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. 
 
 ## Steps
 
-**7** of 10 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 10 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Scope the DAK**<br>`Task_ScopeDak` | Programme manager / technical officer | [`content-plan`](../reference/skill-instructions/content-plan.html) | Enumerate the processes, decisions and data elements the guideline implies; identify the actors. |
-| **Seed the work plan**<br>`Task_SeedBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | — |
-| **Personas and scenarios**<br>`Task_Personas` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | — |
-| **Business processes · BPMN 2.0**<br>`Task_Bpmn` | Business analyst | [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | — |
-| **Decision logic · DMN tables**<br>`Task_Dmn` | Business analyst | [`dmn-authoring`](../reference/skill-instructions/dmn-authoring.html) | — |
-| **Data dictionary and core data elements**<br>`Task_DataDict` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | — |
-| **Indicators and requirements**<br>`Task_Indicators` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | — |
+| **Seed the work plan**<br>`Task_SeedBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan. |
+| **Personas and scenarios**<br>`Task_Personas` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated. |
+| **Business processes · BPMN 2.0**<br>`Task_Bpmn` | Business analyst | [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR. |
+| **Decision logic · DMN tables**<br>`Task_Dmn` | Business analyst | [`dmn-authoring`](../reference/skill-instructions/dmn-authoring.html) | Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset. |
+| **Data dictionary and core data elements**<br>`Task_DataDict` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice. |
+| **Indicators and requirements**<br>`Task_Indicators` | Business analyst | [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations. |
 | **Terminology bindings**<br>`Task_Terminology` | Terminologist | [`terminology-management`](../reference/skill-instructions/terminology-management.html) | ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them. |
 | **Clinical validation**<br>`Task_SmeValidate` | Clinical SME | [`content-review`](../reference/skill-instructions/content-review.html) | Ground truth: does the DAK say what the guideline says? |
-| **Assemble and validate the DAK**<br>`Task_AssembleDak` | Business analyst | [`content-validate`](../reference/skill-instructions/content-validate.html) | — |
+| **Assemble and validate the DAK**<br>`Task_AssembleDak` | Business analyst | [`content-validate`](../reference/skill-instructions/content-validate.html) | Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run. |
 
 {% endraw %}

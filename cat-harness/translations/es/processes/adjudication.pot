@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: adjudication\n"
-"POT-Creation-Date: 2026-09-22T09:06:04.796Z\n"
+"POT-Creation-Date: 2026-09-23T08:40:43.322Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Are both sides present?"
 msgstr ""
 
-#: processes/adjudication.bpmn:176
+#: processes/adjudication.bpmn:177
 #. Diagram label
 msgid "both sides present"
 msgstr ""
@@ -84,12 +84,12 @@ msgstr ""
 msgid "Feedback provider"
 msgstr ""
 
-#: processes/adjudication.bpmn:143
+#: processes/adjudication.bpmn:144
 #. Diagram label
 msgid "Grant a dispensation, with its reason"
 msgstr ""
 
-#: processes/adjudication.bpmn:182
+#: processes/adjudication.bpmn:187
 #. Diagram label
 msgid "it applies; this is an exception"
 msgstr ""
@@ -104,32 +104,32 @@ msgstr ""
 msgid "Not adjudicable — it is a review, a gate, or a bug report"
 msgstr ""
 
-#: processes/adjudication.bpmn:156
+#: processes/adjudication.bpmn:157
 #. Diagram element documentation
 msgid "Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not. Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`."
 msgstr ""
 
-#: processes/adjudication.bpmn:137
+#: processes/adjudication.bpmn:138
 #. Diagram element documentation
 msgid "One edit to the criterion rather than ten overrules on the blocks it should never have covered. This branch is the one an adjudicator under time pressure converts into a dispensation, and the conversion is a defect: a dispensation lapses when the source moves, so a mis-scoped criterion granted its way past comes back every time anybody touches the block."
 msgstr ""
 
-#: processes/adjudication.bpmn:177
+#: processes/adjudication.bpmn:178
 #. Diagram label
 msgid "only one side"
 msgstr ""
 
-#: processes/adjudication.bpmn:136
+#: processes/adjudication.bpmn:137
 #. Diagram label
 msgid "Scope the criterion so it stops applying here"
 msgstr ""
 
-#: processes/adjudication.bpmn:170
+#: processes/adjudication.bpmn:171
 #. Diagram element documentation
 msgid "Settled for this version of the source. The sidecar now holds both readings and the reason one of them leads."
 msgstr ""
 
-#: processes/adjudication.bpmn:169
+#: processes/adjudication.bpmn:170
 #. Diagram label
 msgid "Settled, with the reason on the record"
 msgstr ""
@@ -139,12 +139,12 @@ msgstr ""
 msgid "State the finding and what it read"
 msgstr ""
 
-#: processes/adjudication.bpmn:181
+#: processes/adjudication.bpmn:184
 #. Diagram label
 msgid "the criterion does not apply here"
 msgstr ""
 
-#: processes/adjudication.bpmn:180
+#: processes/adjudication.bpmn:181
 #. Diagram label
 msgid "the finding stands"
 msgstr ""
@@ -154,12 +154,12 @@ msgstr ""
 msgid "The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. What IS checkable is that the outcome is one of the three below and that it carries a reason, which is what the steps after this gateway exist for."
 msgstr ""
 
-#: processes/adjudication.bpmn:144
+#: processes/adjudication.bpmn:145
 #. Diagram element documentation
 msgid "The rule applies and this subject is a stated exception. A `kind: \"human\"` entry with `result: \"pass\"` overrides the script's `fail` for that criterion, and ONLY while its `field_hash` matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it. A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable."
 msgstr ""
 
-#: processes/adjudication.bpmn:129
+#: processes/adjudication.bpmn:130
 #. Diagram element documentation
 msgid "The same three `review-narrative` and `voice-review` already name, and they are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason."
 msgstr ""
@@ -169,12 +169,12 @@ msgstr ""
 msgid "The sidecar, not a complaint. `block-qa/v1` allows several entries per criterion and declares three reviewer kinds, so \"they disagree\" is read off the record rather than asserted by whoever is unhappy."
 msgstr ""
 
-#: processes/adjudication.bpmn:125
+#: processes/adjudication.bpmn:126
 #. Diagram label
 msgid "Which of the three?"
 msgstr ""
 
-#: processes/adjudication.bpmn:155
+#: processes/adjudication.bpmn:156
 #. Diagram label
 msgid "Write the entry that LEADS — keeping the checker's beneath it"
 msgstr ""

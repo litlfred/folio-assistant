@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: l2-dak-authoring\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.499Z\n"
+"POT-Creation-Date: 2026-09-23T08:42:27.166Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -19,9 +19,39 @@ msgstr ""
 msgid "A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:169
+#: processes/l2-dak-authoring.bpmn:175
 #. Diagram label
 msgid "Assemble and validate the DAK [content-validate]"
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:176
+#. Diagram element documentation
+msgid "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:138
+#. Diagram element documentation
+msgid "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:114
+#. Diagram element documentation
+msgid "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:106
+#. Diagram element documentation
+msgid "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:130
+#. Diagram element documentation
+msgid "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:122
+#. Diagram element documentation
+msgid "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset."
 msgstr ""
 
 #: processes/l2-dak-authoring.bpmn:48
@@ -29,12 +59,12 @@ msgstr ""
 msgid "Business analyst"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:111
+#: processes/l2-dak-authoring.bpmn:113
 #. Diagram label
 msgid "Business processes · BPMN 2.0 [bpmn-authoring]"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:197
+#: processes/l2-dak-authoring.bpmn:204
 #. Diagram label
 msgid "changes needed"
 msgstr ""
@@ -44,22 +74,22 @@ msgstr ""
 msgid "Clinical SME"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:156
+#: processes/l2-dak-authoring.bpmn:162
 #. Diagram label
 msgid "Clinical validation [content-review]"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:164
+#: processes/l2-dak-authoring.bpmn:170
 #. Diagram label
 msgid "Clinically accurate?"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:125
+#: processes/l2-dak-authoring.bpmn:129
 #. Diagram label
 msgid "Data dictionary and core data elements [l2-dak-authoring]"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:118
+#: processes/l2-dak-authoring.bpmn:121
 #. Diagram label
 msgid "Decision logic · DMN tables [dmn-authoring]"
 msgstr ""
@@ -74,17 +104,17 @@ msgstr ""
 msgid "folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:157
+#: processes/l2-dak-authoring.bpmn:163
 #. Diagram element documentation
 msgid "Ground truth: does the DAK say what the guideline says?"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:140
+#: processes/l2-dak-authoring.bpmn:146
 #. Diagram element documentation
 msgid "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:132
+#: processes/l2-dak-authoring.bpmn:137
 #. Diagram label
 msgid "Indicators and requirements [l2-dak-authoring]"
 msgstr ""
@@ -94,7 +124,7 @@ msgstr ""
 msgid "L2 DAK authoring"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:176
+#: processes/l2-dak-authoring.bpmn:183
 #. Diagram label
 msgid "L2 DAK ready for L3"
 msgstr ""
@@ -109,7 +139,7 @@ msgstr ""
 msgid "Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:104
+#: processes/l2-dak-authoring.bpmn:105
 #. Diagram label
 msgid "Personas and scenarios [l2-dak-authoring]"
 msgstr ""
@@ -139,7 +169,7 @@ msgstr ""
 msgid "Terminologist"
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:139
+#: processes/l2-dak-authoring.bpmn:145
 #. Diagram label
 msgid "Terminology bindings [terminology-management]"
 msgstr ""
@@ -149,7 +179,12 @@ msgstr ""
 msgid "The one gate every authored track must clear before assembly: a \"no\" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together."
 msgstr ""
 
-#: processes/l2-dak-authoring.bpmn:198
+#: processes/l2-dak-authoring.bpmn:83
+#. Diagram element documentation
+msgid "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan."
+msgstr ""
+
+#: processes/l2-dak-authoring.bpmn:205
 #. Diagram label
 msgid "validated"
 msgstr ""

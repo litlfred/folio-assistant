@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "processes/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:72fc714252b1e7ac7420bdd9ea474b8571400482c8bb71155223ea9c72525c49",
+  "source_hash": "sha256:0f1462a45c48b118754534e63340d653d05299625e387af725a6be8ceb5a3804",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,13 +72,8 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "\"Regenerate the context, block,&#10;library and site graphs &#8212; and diff\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
@@ -86,8 +81,8 @@
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
+    "pass": 10,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

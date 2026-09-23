@@ -32,17 +32,17 @@ folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of trut
 
 ## Steps
 
-**5** of 8 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 8 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
 | **Map L2 → L3**<br>`Task_MapL2` | FHIR modeller | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. |
-| **Author FSH profiles**<br>`Task_AuthorFsh` | FHIR modeller | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | — |
-| **SUSHI compile → FHIR JSON**<br>`Task_Sushi` | Build pipeline — SUSHI · validator · IG Publisher | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | — |
-| **Validate against profiles**<br>`Task_Validate` | Build pipeline — SUSHI · validator · IG Publisher | [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | — |
-| **QC gates**<br>`Task_QcGates` | QC reviewer | [`quality-control`](../reference/skill-instructions/quality-control.html) | — |
+| **Author FSH profiles**<br>`Task_AuthorFsh` | FHIR modeller | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2. |
+| **SUSHI compile → FHIR JSON**<br>`Task_Sushi` | Build pipeline — SUSHI · validator · IG Publisher | [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | Compile the FSH to FHIR JSON with SUSHI. Compiling is not conformance: a green SUSHI result goes on to validation and never stands in for it. |
+| **Validate against profiles**<br>`Task_Validate` | Build pipeline — SUSHI · validator · IG Publisher | [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring. |
+| **QC gates**<br>`Task_QcGates` | QC reviewer | [`quality-control`](../reference/skill-instructions/quality-control.html) | The QC reviewer rules on the aggregate QA against the publication gates. Emitting the QA report is mechanical; ruling on it is a decision, which is why it sits in the reviewer's lane rather than the build's. |
 | **File QC findings as beans**<br>`Task_QcBeans` | Work plan — beans (shared by humans and agents) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | QC findings do not stay in a report nobody re-reads — each becomes a bean the modeller and the agents both see. |
-| **IG Publisher build**<br>`Task_IgPublisher` | Build pipeline — SUSHI · validator · IG Publisher | [`ig-publication`](../reference/skill-instructions/ig-publication.html) | — |
+| **IG Publisher build**<br>`Task_IgPublisher` | Build pipeline — SUSHI · validator · IG Publisher | [`ig-publication`](../reference/skill-instructions/ig-publication.html) | Run the IG Publisher: it renders output/, writes each resource's JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion. |
 | **Publish the IG site**<br>`Task_PublishIg` | Publication manager | [`content-publish`](../reference/skill-instructions/content-publish.html)<br>[`ig-publication`](../reference/skill-instructions/ig-publication.html) | Release authorisation and review follow draft-to-publication.bpmn. |
 
 {% endraw %}

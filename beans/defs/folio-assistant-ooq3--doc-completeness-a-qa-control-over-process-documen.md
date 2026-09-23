@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ooq3
 title: 'DOC COMPLETENESS: a QA control over process documentation — 45 of 62 diagrams are shown on no page, 95 of 456 steps undocumented, adjudication callers do not call it'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T06:49:40Z
-updated_at: 2026-09-23T06:58:44Z
+updated_at: 2026-09-23T08:22:51Z
 parent: folio-assistant-1swy
 ---
 
@@ -40,3 +40,11 @@ The 4 remaining `activity-calls-skill-process` findings were compared against
 what a call would actually run (the engine enters `startNodes[0]` and runs to
 the end): none fits. They now carry `<folio:no-call reason="…"/>` —
 reason required at load, same rule as `no-skill` — and the criterion is 0.
+
+## Summary of Changes
+
+Merged in PR #1008 (2026-09-23, owner's "merge it"). `kg:audit` gains
+`process-diagram-published` (45 → 0), `activity-calls-skill-process` (9 → 0:
+5 adjudication steps became call activities, 4 carry `<folio:no-call reason>`)
+and `activity-documented` (95, minor — follow-up bean `f2ho`). One generated
+page per process; skill pages list the processes that run them.

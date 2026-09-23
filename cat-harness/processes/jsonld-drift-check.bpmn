@@ -38,6 +38,7 @@
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Regenerate the context, block,&amp;#10;library and site graphs &amp;#8212; and diff">
+      <bpmn:documentation>Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
       </bpmn:extensionElements>

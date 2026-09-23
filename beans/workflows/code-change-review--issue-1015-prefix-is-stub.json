@@ -5,9 +5,7 @@
   "source": "cat-harness/processes/code-change-review.bpmn",
   "subject": "issue-1015-prefix-is-stub",
   "bean": "folio-assistant-zaqn",
-  "tokens": [
-    "Task_Review"
-  ],
+  "tokens": [],
   "arrivals": {},
   "history": [
     {
@@ -57,6 +55,18 @@
       "node": "Task_RunGates",
       "actor": "claude",
       "note": "origin/main merged (f3e3ce6e); gates 128/128 again, prefix check clean over 3,113 documents. Waiting on review."
+    },
+    {
+      "at": "2026-09-23T08:48:00.000Z",
+      "node": "Task_PrepareMerge",
+      "actor": "claude",
+      "note": "Owner said 'merge it'. main moved four times during the wait (#1008/#1018, #1021, #1003, #1010); merged in three times with gates re-run (one generated detangle conflict, regenerated with kg:detangle). The fourth (#1010) was checked instead: no shared files, no .jsonld, no old-prefix terms, merge-tree clean \u2014 merged at 57ac8ca1 with expectedHeadSha pinned, CI green."
+    },
+    {
+      "at": "2026-09-23T08:52:00.000Z",
+      "node": "Task_CloseBean",
+      "actor": "claude",
+      "note": "Bean zaqn completed with a Summary of Changes. Issue #1015 was auto-closed by the PR body's 'Closes #1015' \u2014 reported on the issue for the owner's sign-off rather than silently accepted."
     }
   ]
 }
