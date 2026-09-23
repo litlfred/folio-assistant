@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { siteDir, siteDirFor } from "../../schemas/cat-harness.js";
-import { harnessTiles, ownStatePage, subjectPage } from "../harness-tiles.js";
+import { harnessTiles, inertNote, ownStatePage, subjectPage } from "../harness-tiles.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 /** A repo with a site-owning harness and any number of siblings. */
@@ -175,7 +175,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
       who: { name: "who", directories: [{ id: "lib", path: "library/", graphKinds: ["library"] }] },
     });
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
 
@@ -200,7 +200,7 @@ describe("a link is DECLARATION-driven and PRESENCE-checked", () => {
     const f = fixture({ host: host(), who: { name: "who", directories: [{ id: "b", path: "b/", graphKinds: ["beans"] }] } }, [
       "beans",
     ]);
-    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans" }]);
+    expect(tilesOf(f).find((t) => t.name === "who")!.visualisations).toEqual([{ kind: "beans", note: "no viewer yet" }]);
   });
 });
 
@@ -623,7 +623,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = join("host", hostSite(f.repo), "nowhere", "index.html");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    expect(who.visualisations).toEqual([{ kind: "library", note: "no viewer yet" }]);
     expect(who.findings.join(" ")).toContain("does not resolve on disk");
     expect(who.findings.join(" ")).toContain("no published viewer");
   });
@@ -646,7 +646,10 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const ref = join("who", "elsewhere", "index.html");
     writeDeclaration(join(f.repo, "who"), JSON.stringify(decorate(withViewer(ref)), null, 2));
     const who = tilesOf(f).find((t) => t.name === "who")!;
-    expect(who.visualisations).toEqual([{ kind: "library" }]);
+    // THE ROW SAYS THE SAME THING THE FINDING DOES. `viewer not published`,
+    // never `no viewer yet` — a reader told the second about a viewer that
+    // was built would go and build a second one.
+    expect(who.visualisations).toEqual([{ kind: "library", note: "viewer not published" }]);
     expect(who.findings.join(" ")).toContain("exists but is not at a conventional path");
     // And NOT the unbuilt message, which is the assertion that would have
     // been false. Without this line the test passes on a report that says
@@ -688,7 +691,7 @@ describe("a DECLARED visualiser is a viewer — the other half of `flh4`", () =>
     const who = tilesOf(f).find((t) => t.name === "who")!;
     expect(who.visualisations).toEqual([
       { kind: "library", path: "/lib-view/" },
-      { kind: "uploads" },
+      { kind: "uploads", note: "no viewer yet" },
     ]);
     expect(who.findings.join(" ")).toContain("no published viewer — uploads");
   });
@@ -824,5 +827,59 @@ describe("an icon's URL is the SITE DIRECTORY's mount, not the instance's front 
     giveOwnSite(f.repo, "guest");
     const guest = tilesOf(f).find((t) => t.name === "guest")!;
     expect(guest.icon).toBeNull();
+  });
+});
+
+/**
+ * THE WORDS ON AN INERT ROW, all four of them.
+ *
+ * Two of these four answers occur ZERO times in this repository — measured
+ * over all 31 unlinked kinds in `docs/_data/harness.json` on 2026-09-23, of
+ * which 24 are `unbuilt` and 7 are `unbuilt` under `bootstrap`'s exemption.
+ * `staging-only` and `undiscovered` are produced by no instance here, and
+ * `harnessTiles` emits no finding of either shape either.
+ *
+ * `undiscovered` is still reached by a FIXTURE — the `flh4` test above, for a
+ * viewer that resolves outside the site directory, which now asserts the row
+ * as well as the finding. `staging-only` is reached by nothing else at all,
+ * so the first test below is the only thing in this repository that runs it.
+ * `1xhc` — a gate that does not fire is indistinguishable from one that
+ * passed.
+ */
+describe("inertNote — why a row does not open", () => {
+  test("a STAGING-ONLY viewer is withheld on purpose, and is not called a gap", () => {
+    // `harness-tiles` already refuses to report this as a finding: "a report
+    // that flags an intended state as a finding is the same disease as one
+    // that hides a real gap". Labelling the row "no viewer yet" on the surface
+    // a reader is actually looking at would be that same mistake, moved.
+    expect(inertNote("staging-only", false)).toBe("staging only");
+    // And the exemption has no view about it — it is withheld by its own
+    // `publish` setting, not by a decision not to render.
+    expect(inertNote("staging-only", true)).toBe("staging only");
+  });
+
+  test("a viewer that EXISTS but is not published says so — it is a different gap", () => {
+    // "Built and unreachable is a different gap from unbuilt", in the
+    // finding's own words. A reader told "no viewer yet" about a viewer that
+    // was built would go and build a second one.
+    expect(inertNote("undiscovered", false)).toBe("viewer not published");
+    expect(inertNote("undiscovered", true)).toBe("viewer not published");
+  });
+
+  test("UNBUILT is the only bucket the render exemption narrows", () => {
+    expect(inertNote("unbuilt", false)).toBe("no viewer yet");
+    expect(inertNote("unbuilt", true)).toBe("no viewer by design");
+  });
+
+  test("every answer is distinct — four states must not collapse to one wording", () => {
+    // The defect this replaced: `title="declared, with no published viewer"`,
+    // one wording for four states, and wrong for two of them.
+    const all = [
+      inertNote("staging-only", false),
+      inertNote("undiscovered", false),
+      inertNote("unbuilt", false),
+      inertNote("unbuilt", true),
+    ];
+    expect(new Set(all).size).toBe(4);
   });
 });

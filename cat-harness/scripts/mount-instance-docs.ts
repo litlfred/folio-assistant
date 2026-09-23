@@ -326,10 +326,23 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
  * same kind (an override and its default), and a navbar that listed `library`
  * twice would be reporting the declaration's shape rather than the graph's.
  *
+ * A KIND WITH NO HREF NOW SAYS WHY, when `notes` can tell it — see
+ * {@link graphNotes}. Greying the row was the whole of the signal until
+ * 2026-09-23, which made "declared and not built" a fact carried by contrast
+ * and by nothing else, on the one surface where the sidebar template at least
+ * had a `title`. Absent from `notes` is the honest third state and renders
+ * exactly as before: a grey row with no claim about why.
+ *
  * @param linked  href per kind for the kinds that ARE published, already
  *   relative to the page being rendered.
+ * @param notes  reason per kind for the kinds that are NOT, from the
+ *   generator that already tells the four reasons apart.
  */
-export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<string, string>): NavItem[] {
+export function declaredGraphs(
+  instanceDirName: string,
+  linked: ReadonlyMap<string, string>,
+  notes: ReadonlyMap<string, string> = new Map(),
+): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
   let d: { directories?: { graphKinds?: string[] }[] };
@@ -348,7 +361,13 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
       if (seen.has(kind)) continue;
       seen.add(kind);
       const href = linked.get(kind);
-      out.push({ label: kind, icon: kind.slice(0, 1).toUpperCase(), ...(href ? { href } : {}) });
+      const note = href ? undefined : notes.get(kind);
+      out.push({
+        label: kind,
+        icon: kind.slice(0, 1).toUpperCase(),
+        ...(href ? { href } : {}),
+        ...(note ? { note } : {}),
+      });
     }
   }
   return out.sort((a, b) => a.label.localeCompare(b.label));
@@ -381,6 +400,49 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
  *   href in `harness.json` is site-absolute and a mounted page is not at the
  *   root.
  */
+/**
+ * WHY each of an instance's unrendered graphs is unrendered — kind → reason.
+ *
+ * Read from the same `harness.json` {@link instantiatedHarnesses} reads, and
+ * for the same reason: `harness-tiles.ts` already separates staging-only,
+ * render-exempt, built-but-unreachable and nobody-built-it in order to word
+ * four different findings, and a table here would be a fifth answer free to
+ * disagree with those four. This function looks the answer up; it decides
+ * nothing.
+ *
+ * EMPTY, not `undefined`, when the file is missing or will not parse — and
+ * that is a deliberate difference from `instantiatedHarnesses`, which uses
+ * absence to make the caller omit a whole region. Here there is nothing to
+ * omit: the graph rows come from the DECLARATION and are rendered either way.
+ * A missing file costs the reasons, not the rows, and a row with no reason is
+ * exactly what this surface shipped until today.
+ *
+ * Keyed by kind within one instance, because that is how `declaredGraphs`
+ * asks. Two harnesses may both declare `library`, so the instance is part of
+ * the question and never assumed.
+ */
+function graphNotes(built: string, instanceName: string): Map<string, string> {
+  const out = new Map<string, string>();
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return out;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return out;
+  let d: { harnesses?: { name?: string; visualisations?: { kind?: string; path?: string; note?: string }[] }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return out;
+  }
+  const h = (d.harnesses ?? []).find((x) => x.name === instanceName);
+  for (const v of h?.visualisations ?? []) {
+    // A kind WITH a path is not inert, so it has no reason to give. Guarding
+    // on the path as well as on the note means a stale `note` left beside a
+    // freshly published viewer cannot label a working link "no viewer yet".
+    if (v.kind && v.note && v.path === undefined) out.set(v.kind, v.note);
+  }
+  return out;
+}
+
 function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
   // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
   // was the first version and `check:declared-paths` refused it -- rightly,
@@ -521,7 +583,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
       }
 
-      const links: NavItem[] = declaredGraphs(m.name, linked);
+      const links: NavItem[] = declaredGraphs(m.name, linked, graphNotes(built, m.name));
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
