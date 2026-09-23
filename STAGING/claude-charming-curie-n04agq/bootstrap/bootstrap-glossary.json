@@ -46,7 +46,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/initiator",
       "@type": "skos:Concept",
       "prefLabel": "Initiator",
-      "definition": "An agent being requested to initialize a cat-harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "definition": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
       "notation": "initiator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap-glossary.jsonld",
       "usage": [
@@ -97,7 +97,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/requestor",
       "@type": "skos:Concept",
       "prefLabel": "Requestor",
-      "definition": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or a derivative such as cat-harness, folio-assistant or smart-guidelines. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "definition": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
       "notation": "requestor",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap-glossary.jsonld",
       "usage": [
