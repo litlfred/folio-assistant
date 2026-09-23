@@ -150,3 +150,45 @@ copied (0.78 already clears the floor at 7.36:1).
 - [x] engineer for the root instance
 - [x] architecture theme — id, palette, layouts, all measured
 - [ ] architecture BACKDROP — blocked on a portrait crop that does not exist
+
+
+## ROUND 4, 2026-09-23 — smart-base takes the who-iris route
+
+Owner: *"smart-base avatar: use who-iris route, WHO blue no logo"*.
+
+`smart-base` shipped as an **exemption** when `smart-base.config.json` made it
+an instantiated harness, on the reasoning that WHO's mark is not this
+repository's to choose. That exemption's own comment named the better route as
+open and the owner's to take, and this is the owner taking it.
+
+**Registry entry, not an asset.** `AVATARS["smart-base"]` — glyph
+`M3 18h18M6 14h12M9 10h6M11 6h2` (a broad base with three narrowing courses
+above it), `tone: 199`. No emblem, no crop, no file: that IS the who-iris
+route — an organisation's published colour with a neutral glyph is not
+inventing its identity, where cropping its logo would be.
+
+**The glyph reads the instance's POSITION, not its subject.** `fhir-harness`
+sits under smart-base; `smart-l1`, `smart-dak` and `smart-ig` are built on it.
+A base course under narrowing ones is that shape. Every other WHO-adjacent
+instance would draw the same subject matter, so the subject cannot
+discriminate and the position can.
+
+**Tone 199 is shared with `who-iris` deliberately.** Measured from the same
+`#0093D5`, because they are two instances of the same organisation's material
+and should read as a family. The registry constrains **glyphs** to be
+distinct, not tones, and that is the right constraint: the glyph says which
+instance, the tone says whose. A near-miss hue would assert a distinction
+that does not exist.
+
+**The exemption is removed in the same change**, which the check requires
+rather than tolerates: `check:avatar-instances` FAILS on an exemption naming an
+instance that has since declared an avatar, so the two edits cannot drift
+apart. After: 6 instantiated harnesses, 1 exemption (`smart-trust`), no gap.
+
+**`docs/_data/harness.json` moved too**, and that is the point of the change
+rather than a side effect — the tile now carries `tone: 199` and the mark's
+`reads` line instead of `genericAvatar: true`, and the finding *"smart-base: no
+avatar declared for this instance — showing the generic mark"* is gone.
+
+- [x] smart-base has a mark, on the who-iris route
+- [x] the stale exemption removed in the same commit
