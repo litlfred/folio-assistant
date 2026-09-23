@@ -186,3 +186,10 @@ After merge:
   wording, in [`prepare-merge.md`](prepare-merge.md) §Guardrails; change one and
   change the other.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Commit, push, update PR |
+

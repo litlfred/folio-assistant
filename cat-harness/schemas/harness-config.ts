@@ -181,36 +181,6 @@ export interface HarnessConfig {
 
 // ── Zod schemas ─────────────────────────────────────────────────
 
-/**
- * An EXACT semver version. Ranges are refused.
- *
- * Rule 2 of `cat-harness/docs/proposals/instance-versioning.md` §2, and the one that
- * matters most: **FHIR pins exact versions and has no way to express a range**,
- * so a downstream that must align to FHIR cannot be handed `^1.2.0`. The
- * constraint is alignment, and alignment is not a preference here — the owner
- * called it a hard constraint on 2026-09-20 because some instances are
- * consumed from outside this monorepo.
- *
- * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
- * (rule 3). They are deliberately accepted HERE and barred from the published
- * tier by `check:published-refs`, which is the same line §3.3 draws for a SHA:
- * a staging reference is fine in a checkout and unresolvable to an external
- * consumer.
- */
-export const ExactVersionSchema = z
-  .string()
-  .min(1)
-  .refine(
-    (v) =>
-      v === "current" ||
-      v === "dev" ||
-      /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(v),
-    {
-      message:
-        "an exact semver version, `current` or `dev` — ranges (^, ~, >=, *, ||, x) cannot be expressed in FHIR's dependsOn and are refused",
-    },
-  );
-
 export const FolioAssistantDependencySchema = z.object({
   name: z.string().min(1),
   /**
@@ -368,6 +338,7 @@ import {
   type ContentTypeRegistry,
 } from "./content-type";
 import {
+  ExactVersionSchema,
   instanceConfigFilename,
   findInstanceRoot,
   isKgOnlyDirectory,
@@ -379,6 +350,17 @@ import {
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
+/**
+ * Re-exported, not redefined.
+ *
+ * The rule it carries — exact versions, never ranges — binds BOTH a
+ * declaration's own `version` and a dependency's `version`, and those live in
+ * two modules. It is defined in the lower one ({@link ExactVersionSchema} in
+ * `cat-harness.ts`, which this module already imports) so the two cannot drift
+ * into two spellings of one constraint. This line keeps the name importable
+ * from here, where every existing caller looks for it.
+ */
+export { ExactVersionSchema };
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The

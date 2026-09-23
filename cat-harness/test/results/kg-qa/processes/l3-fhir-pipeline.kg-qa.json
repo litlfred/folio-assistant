@@ -66,11 +66,44 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_AuthorFsh",
+          "detail": "\"Author FSH profiles\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Sushi",
+          "detail": "\"SUSHI compile → FHIR JSON\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "\"Validate against profiles\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_QcGates",
+          "detail": "\"QC gates\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_IgPublisher",
+          "detail": "\"IG Publisher build\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 10,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

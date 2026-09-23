@@ -66,11 +66,32 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "S_FeatureSignoff",
+          "detail": "\"Feature sign-off on issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "BA_Confirm",
+          "detail": "\"Confirm all criteria met\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
+    "pass": 9,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

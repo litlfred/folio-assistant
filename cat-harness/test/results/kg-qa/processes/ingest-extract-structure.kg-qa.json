@@ -66,11 +66,32 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_ExtractText",
+          "detail": "\"Extract the text layer\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        },
+        {
+          "where": "Task_Structure",
+          "detail": "\"Write structure.json (TOC, page ranges, metadata)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+        }
+      ]
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 0,
+    "pass": 10,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

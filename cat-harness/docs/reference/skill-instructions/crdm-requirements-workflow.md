@@ -346,3 +346,16 @@ When a round of implementation is complete (one or more beans resolved):
 - [Publication workflow](https://litlfred.github.io/folio-assistant/publication-workflow.html) — the content lifecycle this fits within
 - Issue [#203](https://github.com/litlfred/folio-assistant/issues/203)
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM close-out](../../processes/crdm-close.html) | Close issue ONLY on BA authorisation |
+| [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Review increment (test behaviour); Share MVP with stakeholders; Translate feedback into agent direction |
+| [CRDM — link the work to an issue](../../processes/crdm-issue-linking.html) | Scan open issues for match; Ask BA to create or link issue; Link to existing issue |
+| [CRDM Phase 1 — needs](../../processes/crdm-needs.html) | Phase 1: Identify stakeholders; Phase 1: Synthesise needs from sources; Review synthesised needs statement |
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phases 3–4: Define requirements + impact; Review requirements and impact analysis |
+| [CRDM requirements](../../processes/crdm-requirements.html) | Describe the need (chat, issue, discussion); Link the work to an issue (calls a sub-process); Phase 1 Needs (calls a sub-process); Phases 2–4 BPA + requirements (calls a sub-process); Data model Entities + cardinalities (calls a sub-process); Phase 5 Beans + sign-off (calls a sub-process); Phase 6 Implement + acceptance (calls a sub-process); Close-out (calls a sub-process) |
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Announce the branch on the issue |
+

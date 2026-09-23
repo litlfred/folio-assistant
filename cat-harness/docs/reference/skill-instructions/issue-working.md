@@ -131,3 +131,11 @@ When to open an issue at all is [`crdm-detect`](../crdm/crdm-detect.md)
 permission**. This section is about what is owed once the work exists, not
 about manufacturing an issue for every bean.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Branch, and announce it |
+| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per&#10;(PR, head sha) |
+

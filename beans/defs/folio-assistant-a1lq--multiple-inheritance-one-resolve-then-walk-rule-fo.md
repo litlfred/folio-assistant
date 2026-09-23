@@ -1,10 +1,11 @@
 ---
 # folio-assistant-a1lq
 title: 'MULTIPLE INHERITANCE: one resolve-then-walk rule for harness instances and node kinds — fully resolve the ordered dependency tree, then walk deepest-first from bootstrap/'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T06:15:36Z
-updated_at: 2026-09-23T06:15:36Z
+updated_at: 2026-09-23T07:10:03Z
 parent: folio-assistant-zzmr
 ---
 
@@ -55,7 +56,7 @@ So the platform already contains the resolve-then-walk the owner describes. It j
 - [x] one resolver is used by instance resolution AND node-kind composition; the second `flattenDependencies` is gone or delegates
 - [x] a diamond resolves once; a cycle and a missing dependency are reported problems (tests for each)
 - [x] a same-depth field conflict between two parents is reported; an explicit child override is allowed (test)
-- [ ] `TodoNodeSchema` and 423d's review comment declare their parents and are composed by the resolver
+- [x] `TodoNodeSchema` and 423d's review comment declare their parents and are composed by the resolver
 
 ## Roast, held 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): measured, nothing built
 
@@ -173,3 +174,5 @@ That registry holds GRAPH kinds (directories such as `todo-items` and
 
 Left for 423d: its review comment declares `TodoNodeKind` as its parent.
 That is the last unchecked box, and it is 423d's work.
+
+The last box closed 2026-09-23: `ReviewCommentKind` declares `TodoNodeKind` as its parent (the 423d PR). a1lq is done.
