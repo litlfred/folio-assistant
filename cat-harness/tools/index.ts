@@ -468,7 +468,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "problems", schema: t("Text"), description: "Sources that could not be read, counted rather than silently omitted." },
         ],
       },
-      satisfies: ["kg-export"],
+      // Bean `n350`: the Tool that publishes bootstrap's graph, so it also
+      // satisfies the two skills that govern that graph. They live in
+      // `bootstrap/skills/`; `check-tools` resolves them across instances.
+      satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
       // No `alternativeTo`, deliberately. The four siblings sharing this skill
       // are COMPLEMENTARY steps — export, then publish, then serve — not four
       // ways to do one thing, and the schema's own note on that field says a
@@ -821,6 +824,28 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun", "chromium"], network: false },
     }),
 
+    // Wireframes (issue #1023): the mechanical half of `wireframe-design-review`.
+    // It records per-viewport pass/fail entries and never a score, because the
+    // `wiregen` methodology adopts the structure of its source's rating and
+    // refuses the arithmetic.
+    defineTool({
+      id: "wireframe-check",
+      title: "Wireframe check at web and mobile viewports",
+      description:
+        "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
+      install: { none: true },
+      invoke: { shell: "bun run wireframe:check" },
+      io: {
+        inputs: [
+          { name: "candidates", schema: t("RepoPath"), required: true, repeated: true, arg: { positional: 0 }, description: "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where screenshots and report.json go; default .build/wireframes." },
+        ],
+        outputs: [{ name: "report", schema: t("RepoPath"), description: "report.json: per candidate, per viewport, per criterion. The screenshots are beside it." }],
+      },
+      satisfies: ["wireframe-design-review"],
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
     //
     // These two were blocked rather than missing. Both are committed, published,
@@ -1004,6 +1029,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       maintains: [
         { source: "schemas/jsonld.ts", artefact: "ns/content/v1.jsonld", format: "json-ld" },
       ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── Every prefix spoken is bound, and every own prefix is a stub ──────
+    //
+    // Bean `zaqn`. `content-context` above proves the published context
+    // AGREES with its source; it cannot prove the source is right, and it was
+    // not: twenty terms written `folio:` under a binding spelt `fac`, so 1,737
+    // documents expanded to IRIs in a URI scheme called `folio`. This node is
+    // the check that asks the converse of the emission count — the direction
+    // that corrupts data. The discipline is `kg-export` §"A prefix is the stub".
+    defineTool({
+      id: "context-prefixes",
+      title: "JSON-LD prefix check",
+      description:
+        "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, and each binding onto one of our own namespaces is spelt as that instance's stub. A context it cannot resolve is reported as undetermined, never clean.",
+      install: { none: true },
+      invoke: { shell: "bun run check:context-emission" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit both reports as JSON instead of the console summary." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "Console (or JSON) report; exit 1 on an unbound prefix, a misspelt own prefix, a silent binding, or an empty corpus." }],
+      },
+      satisfies: ["kg-export"],
       requires: { runtime: ["bun"], network: false },
     }),
 

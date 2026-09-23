@@ -438,7 +438,14 @@
         "external-schema"
       ],
       "coverage": {
-        "skill": "schema-management"
+        "_visualiser_comment": "Declared 2026-09-23 under bean `yunp`: `external-schema` was one of the kinds with no published viewer, so the navbar listed it disabled and four records \u2014 an authority, an edition, its namespace IRIs, its dependents and its operative terms each \u2014 were reachable only by opening the JSON. ADDED TO THE COVERAGE BLOCK THAT WAS ALREADY HERE, not beside it: the first attempt wrote a second `coverage` key into the same object, which JSON permits and every parser resolves by taking the last \u2014 so the visualiser was silently discarded and the generator reported `no visualiser declared`. A duplicate key is not a merge.",
+        "skill": "schema-management",
+        "visualiser": [
+          {
+            "ref": "cat-harness/docs/external-schemas/index.md",
+            "title": "External schemas"
+          }
+        ]
       }
     },
     {
@@ -457,23 +464,13 @@
       }
     },
     {
-      "_comment": "CAT-BOOTSTRAP'S RENDER SUBGRAPH, declared here for the same reason its sibling above is: `resolveSkillDirs` walks THIS instance's declaration plus its dependencies, and bootstrap is not a declared dependency of cat-harness \u2014 it is composed under it. So a directory declared only in `bootstrap/harness.json` is invisible to `skill_fetch` from this root, which is how bootstrap's own skills came to be declared twice BY DECISION (see the entry above). WITHOUT IT the two skills that constitute bootstrap's rendering exemption are unfetchable from the root \u2014 and an exemption whose substitute cannot be reached is the hole `renderExemption.owes` exists to close. Bean `hfkl`. A SEPARATE id from `bootstrap`, because overrides match on id and reusing it would replace the skills with these.",
-      "id": "bootstrap-render",
-      "path": "bootstrap/tools/",
+      "id": "uml",
+      "path": "uml/",
       "dependents": "skip",
-      "scope": "repository",
+      "description": "UML class diagrams of every named sub-graph a harness declares \u2014 uml/overview/<instance>.puml|.mmd and uml/overview/<instance>/<sub-graph>.puml|.mmd \u2014 written from one model by scripts/gen-uml-overview.ts. The groupings are the declaration entries themselves and the classes are read from each graph kind's registered validator, so nothing here is authored. The rendered pages are docs/uml/overview/, which render the Mermaid and link both sources. Owner, 2026-09-23.",
       "graphKinds": [
-        "skills"
-      ],
-      "description": "MOVED from `render/` to `tools/` on 2026-09-22 on the owner's instruction. The ID is UNCHANGED: `bootstrap-render` names what this package IS \u2014 the skills governing bootstrap's own graph emission \u2014 and ids are stable across a relocation while paths are not, which is the same rule that kept the discussion schemas' published `$id`s fixed when they moved. graphKinds stays `[\"skills\"]` and does NOT become `[\"tools\"]`: the `tools` graph holds Tool nodes authored as TypeScript through `defineTool`, and these are two markdown skill bodies. `hfkl` records the owner's original words for this content \u2014 *\"as subgraph of skill related to renering .jsonld/.json\"*, and *\"maybe in wrong place\"*, which is what this move answers. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` \u2014 *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation \u2014 so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html",
-            "title": "Skills \u2014 bootstrap rendering"
-          }
-        ]
-      }
+        "uml"
+      ]
     },
     {
       "id": "cat-harness",
@@ -517,6 +514,16 @@
     {
       "id": "methodologies",
       "theme": "analyst",
+      "coverage": {
+        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-kg/methodologies/` and `smart-base/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
+        "visualiser": [
+          {
+            "ref": "cat-harness/docs/methodologies/index.md",
+            "title": "Methodologies"
+          }
+        ],
+        "skill": "methodology-adoption"
+      },
       "path": "methodologies/",
       "dependents": "skip",
       "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable \u2014 which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here \u2014 see smart-kg-methodologies. RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` \u2014 the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out \u2014 it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",

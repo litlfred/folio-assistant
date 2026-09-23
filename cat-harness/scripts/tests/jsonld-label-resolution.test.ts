@@ -169,7 +169,7 @@ describe("types", () => {
   });
 
   test("simulator carries no DoCO co-type — it has no counterpart", () => {
-    expect(typesForKind("simulator")).toEqual(["folio:Simulator"]);
+    expect(typesForKind("simulator")).toEqual(["folio-assistant-core:Simulator"]);
   });
 });
 

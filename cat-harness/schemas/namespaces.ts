@@ -124,12 +124,38 @@ export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
 /** Every XML namespace this project mints for itself. */
 export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;
 
-/** The prefixes those namespaces bind to in a `@context`. */
+/**
+ * The prefixes those namespaces bind to in a `@context` — and each prefix IS
+ * the declaring instance's stub.
+ *
+ * Owner, 2026-09-23: "prefix -> match stub". Each namespace above is already
+ * `<canonical>/<stub>/ns#`, so the path segment, the stub and the prefix are
+ * now ONE word in three places instead of three words that must agree. They
+ * were `bs`, `cat` and `fac` until then, and the cost of three spellings was
+ * measured rather than argued (bean `zaqn`): `CONTENT_CONTEXT` renamed its
+ * binding from `folio` to `fac` and kept writing twenty terms as `folio:…`,
+ * so every content term in 1,737 committed documents expanded to an IRI in a
+ * URI scheme called `folio` — well-formed, meaningless, and joined with
+ * nothing. An abbreviation is a second name, and a second name is where the
+ * two drift.
+ *
+ * `check-context-emission.ts` enforces both halves: a prefix a document USES
+ * must be bound, and a binding onto one of our own namespaces must be spelt
+ * as that namespace's stub.
+ */
 export const NS_PREFIXES = {
-  bs: CAT_BOOTSTRAP_NS,
-  cat: CAT_HARNESS_NS,
-  fac: CORE_NS,
+  bootstrap: CAT_BOOTSTRAP_NS,
+  "cat-harness": CAT_HARNESS_NS,
+  "folio-assistant-core": CORE_NS,
 } as const;
+
+/** One of our own prefixes — each the stub of the instance declaring it. */
+export type NsPrefix = keyof typeof NS_PREFIXES;
+
+/** The instance stub a namespace of ours names — the segment before `/ns#`. */
+export function stubOfNamespace(ns: string): string | undefined {
+  return /\/([^/]+)\/ns#$/.exec(ns)?.[1];
+}
 
 /** The namespace a layer's terms hang off. */
 export function namespaceForLayer(layer: TermLayer): string {
@@ -137,8 +163,8 @@ export function namespaceForLayer(layer: TermLayer): string {
 }
 
 /** The prefix a layer's terms are written with. */
-export function prefixForLayer(layer: TermLayer): "bs" | "cat" | "fac" {
-  return layer === "bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
+export function prefixForLayer(layer: TermLayer): NsPrefix {
+  return layer === "bootstrap" ? "bootstrap" : layer === "core" ? "folio-assistant-core" : "cat-harness";
 }
 
 /**

@@ -17,7 +17,7 @@ folio-assistant — Document ingestion — uploads/ to the L1 source knowledge g
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Adopt a methodology from a source document](methodology-from-source.html)
 - **Calls:** [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html), [Ingestion subprocess — derive content from the assets](ingest-derive-content.html), [Ingestion subprocess — extract structure](ingest-extract-structure.html), [Ingestion subprocess — ingest a theme](ingest-theme.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
 
 ## Lanes — who acts

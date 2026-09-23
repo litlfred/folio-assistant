@@ -446,6 +446,20 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by changeset.test.ts in `bun test`",
   },
   {
+    // Same reason as the ChangeSet above (bean `423d`): the review-comments
+    // Tool ingests a FOLIO's pull-request comments against that folio's
+    // blocks, in the folio's staging job and in its comment-triggered
+    // refresh. The platform has no folio and no such pull request to run it
+    // on here. Its logic is not exempt: `review-comments.test.ts` (the Tool,
+    // including the command run offline exactly as both jobs call it) and
+    // `review-comment.test.ts` (the kind) are in `bun test`.
+    match: "review-comments.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging and comment-refresh jobs over that folio's PR and blocks; the platform carries no folio. " +
+      "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
@@ -708,6 +722,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "same as `library:viz:check`, and NECESSARILY so: it renders that projection. The writer runs at deploy (`docs-site.yml`), and what it draws derives from the whole repository, so a red here means a sibling merged rather than that this diff forgot. Gating it would also be worse than gating its sibling, because this generator emits no projection of its own — it publishes a viewer over `assets/library/index.json` (bean `flh4`: one dataset, since two would be two answers to how many are queued), so its staleness is the library projection's staleness wearing a second name. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "wireframe:check",
+    kind: "covered-by",
+    reason:
+      "not a gate but the Tool `wireframe-check`: it takes the candidate files to render as arguments, and with none it has nothing to measure. What it writes, `checks/report.json` beside each wireframe, IS gated, by `check:wireframes`, which fails on a declared visualiser whose wireframe has no report, or a report missing a viewport or holding a fail (issue #1023). Run it by hand when a wireframe changes",
   },
   {
     script: "check:session-staleness",

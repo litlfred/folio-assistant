@@ -807,6 +807,9 @@ jobs:
           bun run check:declared-paths
           bun run check:fallback-roles
           bun run check:kind-validators
+          # The UML overview is drawn from the declarations and the kind
+          # validators just checked, so it goes stale when either changes.
+          bun run uml:overview:check
           bun run check:artifact-index
           bun run smart-trust:pages:check
           # The fsh-guts index is generated from the graph, so it goes stale the
@@ -817,6 +820,17 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The methodologies index renders the `methodology` graph across
+          # EVERY instance that declares one, so it goes stale when any of them
+          # adopts a method, ingests a source, or changes an `applies-when`.
+          # Gated for the reason every generated page here is: a stale viewer
+          # is a page that reports a corpus that no longer exists.
+          bun run methodologies:viz:check
+          # The external-schemas index renders the registry AND resolves every
+          # `usedBy` path in it, so it goes stale when a record is added, an
+          # edition bumps, or a file a record names is renamed. The last of
+          # those is the one nothing else would notice.
+          bun run external-schemas:viz:check
           bun run processes:viz:check
           # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
           # (owner's ruling, 2026-09-22). Hashes every materialized artefact
@@ -973,6 +987,16 @@ jobs:
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
           bun run check:layout-norms
+          # Every ingested source records its licence, or records that nobody
+          # could find it and where they looked (issue #1023). It REPORTS
+          # absence and `unknown`, because the field is new, and fails only on
+          # a record that claims something it cannot back.
+          bun run check:source-licence
+          # Every declared harness visualiser has a wireframe, checked at a web
+          # AND a mobile viewport (issue #1023; owner: "need both web and
+          # mobile layouts in usability reviews"). Gated: a visualiser added
+          # without a wireframe, or a wireframe checked at one width, fails.
+          bun run check:wireframes
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition

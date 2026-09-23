@@ -868,6 +868,25 @@
    * flex floor; collapsing either changes a layout this rule has no business
    * changing, and neither leaves a gap between marks.
    */
+  /* A CLOSED DISCLOSURE MUST NOT YIELD, because it has nothing to give.
+   *
+   * Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*. It was
+   * — measured at a 500px viewport, the region was **22px** tall around a
+   * summary of **25**, so the row read as `ON THIS PAG` with its descenders
+   * sliced off. Fine at 600 and above, which is why it had not been seen.
+   *
+   * `.fa-doc-index` is `flex: 0 1 auto`, and its own rule says why it may
+   * shrink: *"it scrolls inside its cap."* That is true while it is OPEN. A
+   * CLOSED `<details>` has nothing to scroll, so every pixel the flex layout
+   * takes from it is a pixel of the one row it still has — and the reader
+   * cannot scroll to recover it or even tell that it happened.
+   *
+   * So the yield is conditioned on the thing that made it safe. `.fa-nav-folders`
+   * needs no rule here: it is already `flex: 0 0 auto` and never shrank, which
+   * is why the owner's screenshot shows `FOLDERS 24` intact directly beneath a
+   * clipped `ON THIS PAGE 8`. */
+  .side-bar .fa-doc-index:not([open]) { flex-shrink: 0; }
+
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
   .side-bar .fa-harness-tabs__heading,
@@ -3274,15 +3293,263 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * is mounted on — which is now every page — unusable, and it would do so
  * invisibly, since a transparent full-viewport div looks like nothing at all.
  */
+/* THE GLASS'S LOOK IS THE READER'S, set from the Settings tile (bean `zrvt`,
+ * issue #1006). Three tokens per theme — the tint, the card and the ink —
+ * and ONE opacity the reader moves, carried as `--fa-glass-opacity` on the
+ * layer. Default, on the owner's words 2026-09-23: *"start with the glass
+ * being 20% opaque with a blur effect."*
+ *
+ * THE CARDS ARE SOLID WHATEVER THE OPACITY. The owner's screenshot of the
+ * first glass showed an asset's title printed straight over the library
+ * table — *"very hard to read"*. See-through is the glass; the things ON it
+ * are paper, so a reader can turn the glass down to nothing and still read. */
+.fa-sticky-layer {
+  --fa-glass-tint: 20, 20, 24;
+  --fa-glass-card: #1f1e24;
+  --fa-glass-ink: #e8eaed;
+  --fa-glass-muted: #b4b8c0;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #8c74f0;
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer,
+.fa-sticky-layer[data-fa-glass-theme="paper"] {
+  --fa-glass-tint: 240, 240, 244;
+  --fa-glass-card: #ffffff;
+  --fa-glass-ink: #1b1b1f;
+  --fa-glass-muted: #4a4d55;
+  --fa-glass-edge: #8a8699;
+  --fa-glass-accent: #4a34b8;
+}
+.fa-sticky-layer[data-fa-glass-theme="night"] {
+  --fa-glass-tint: 12, 12, 16;
+  --fa-glass-card: #1a1a1f;
+  --fa-glass-ink: #f1f2f4;
+  --fa-glass-muted: #c3c6cc;
+  --fa-glass-edge: #5a5670;
+  --fa-glass-accent: #a592ff;
+}
+/* HIGH CONTRAST: black and white, 2px white edges and a yellow focus — the
+   usability theme, so no tint, no shadow and no picture is load-bearing. */
+.fa-sticky-layer[data-fa-glass-theme="contrast"] {
+  --fa-glass-tint: 0, 0, 0;
+  --fa-glass-card: #000000;
+  --fa-glass-ink: #ffffff;
+  --fa-glass-muted: #ffffff;
+  --fa-glass-edge: #ffffff;
+  --fa-glass-accent: #ffe600;
+}
 .fa-sticky-layer[data-fa-glass="open"] {
   pointer-events: auto;
   /* Translucent rather than opaque: the point of a glass is that you can see
      what you were browsing underneath it. */
-  background: rgba(20, 20, 24, 0.55);
+  background: rgba(var(--fa-glass-tint), var(--fa-glass-opacity, 0.2));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-:root[data-fa-scheme="light"] .fa-sticky-layer[data-fa-glass="open"] {
-  background: rgba(240, 240, 244, 0.72);
+.fa-sticky-layer[data-fa-glass="open"][data-fa-glass-blur="off"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
+
+/* ── What sits ON the glass: solid, and legible at any opacity ─────────── */
+.fa-glass-empty,
+.fa-glass-notes p,
+.fa-glass-asset,
+.fa-glass-panel {
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-empty,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-notes p,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-asset,
+.fa-sticky-layer[data-fa-glass-theme="contrast"] .fa-glass-panel {
+  border-width: 2px;
+  box-shadow: none;
+}
+/* THE SHELF IS A SURFACE, not a list: each card carries its own left/top/
+   width/height (set by the script from the reader's saved place, or a grid),
+   and the shelf is as tall as its lowest card so what follows sits below. */
+.fa-glass-shelf {
+  position: relative;
+  margin: 1rem 0 0;
+}
+.fa-glass-asset {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  overflow: auto;
+  border-radius: var(--fa-folio-radius, 0);
+}
+.fa-glass-asset-face {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4.85rem;
+  flex: 1 1 auto;
+  cursor: grab;
+}
+.fa-glass-asset-tools { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+.fa-glass-asset[data-fa-moving="true"] {
+  outline: 3px dashed var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+/* SEMANTIC ZOOM: below the declared width, the avatar alone. The NAME is
+   still the card's accessible name (`aria-label`), so a reader who cannot see
+   the picture loses nothing by the zoom. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-name { display: none; }
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-face { justify-content: center; }
+.fa-glass-avatar {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  height: 4.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--fa-glass-edge);
+  background: rgba(var(--fa-glass-tint), 0.35);
+}
+.fa-glass-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fa-glass-kind-avatar { --fa-avatar-size: 2rem; color: var(--fa-glass-accent); }
+.fa-glass-asset-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--fa-glass-ink);
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; }
+.fa-glass-asset-tool,
+.fa-glass-panel-close,
+.fa-glass-step {
+  flex: 0 0 auto;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fa-glass-notes { max-width: 40rem; margin: 1rem auto 0; }
+.fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
+
+/* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
+.fa-glass-tiles {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--fa-glass-card);
+  border-top: 2px solid var(--fa-glass-accent);
+  color: var(--fa-glass-ink);
+}
+.fa-glass-tiles .fa-tile,
+.fa-glass-tiles .fa-glass-chrome-tile {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+.fa-glass-tiles .fa-tile svg { width: 1.6rem; height: 1.6rem; }
+.fa-glass-chrome-tile { font-weight: 700; }
+.fa-glass-tile-glyph { font-size: 1.6rem; line-height: 1; }
+.fa-glass-tiles .fa-glass-chrome-tile[aria-expanded="true"] {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-tiles .fa-tile-caption { overflow-wrap: anywhere; line-height: 1.15; }
+.fa-glass-tiles .fa-tile:focus-visible,
+.fa-glass-tiles .fa-glass-chrome-tile:focus-visible,
+.fa-glass-sheet button:focus-visible,
+.fa-glass-sheet a:focus-visible,
+.fa-glass-sheet input:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* ── The panel a chrome tile opens, above the strip ───────────────────── */
+.fa-glass-panel {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  padding: 0.75rem 1rem 1rem;
+}
+.fa-glass-panel-head { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-panel-title { flex: 1 1 auto; margin: 0; font-size: 1.1rem; color: var(--fa-glass-ink); }
+.fa-glass-panel-status { color: var(--fa-glass-muted); font-size: 0.85rem; }
+.fa-glass-panel-more { color: var(--fa-glass-ink); text-decoration: underline; }
+.fa-glass-todo-list { list-style: none; margin: 0.5rem 0; padding: 0; }
+.fa-glass-todo { border-top: 1px solid var(--fa-glass-edge); padding: 0.5rem 0; }
+.fa-glass-todo-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.fa-glass-todo-row .fa-avatar { --fa-avatar-size: 1.5rem; color: var(--fa-glass-accent); }
+.fa-glass-todo-summary { flex: 1 1 14rem; }
+.fa-glass-setting { border: 1px solid var(--fa-glass-edge); margin: 0.75rem 0; padding: 0.5rem 0.75rem; }
+.fa-glass-setting legend { font-weight: 700; padding: 0 0.25rem; }
+.fa-glass-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+.fa-glass-choice input { width: 1.4rem; height: 1.4rem; margin: 0; }
+.fa-glass-choice-label { font-weight: 600; }
+.fa-glass-choice-hint { color: var(--fa-glass-muted); font-size: 0.82rem; }
+.fa-glass-opacity { display: flex; align-items: center; gap: 0.5rem; }
+.fa-glass-opacity input[type="range"] { flex: 1 1 auto; min-width: 6rem; height: 2.75rem; }
+.fa-glass-opacity-value { min-width: 3.5rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+.fa-glass-reset {
+  display: block;
+  margin: 0.5rem 0;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  cursor: pointer;
+}
+
+/* ── The pull-out, first in its row ───────────────────────────────────── */
+.fa-pullout-slot { display: inline-flex; align-items: center; gap: 0.4rem; margin-left: 0.5rem; vertical-align: middle; }
+.fa-pullout {
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  border: 2px solid #8c74f0;
+  background: #4a34b8;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.fa-pullout::before { content: "\2934\00a0"; }
+.fa-pullout-state { font-size: 0.78rem; }
 
 /* The sheet is the glass's own chrome and is ALWAYS present, which is what
    keeps `:empty` above from hiding an open glass that holds no cards yet. It
@@ -3291,7 +3558,11 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-glass-sheet {
   position: absolute;
   inset: 0;
-  padding: 3rem 1rem 1rem;
+  /* The BOTTOM is kept clear for the tile strip, which overlays this edge:
+     padding to scroll into, and scroll-padding so a control scrolled into
+     view — by focus or by a click — lands above the strip, not under it. */
+  padding: 3rem 1rem 8.5rem;
+  scroll-padding-bottom: 8.5rem;
   overflow: auto;
 }
 .fa-sticky-layer[data-fa-glass="closed"] .fa-glass-sheet { visibility: hidden; }
@@ -4513,10 +4784,53 @@ a.fa-nav-folders__link:focus-visible {
 /* Declared, with no published viewer. Struck through rather than hidden, the
  * same way the harness tabs' graph list marks one: a gap a reader can see is a
  * gap somebody can close. */
+/* AN INERT ROW, AND THE WORDS ARE THE STATE.
+ *
+ * Owner ruling on #1036: a declared graph with no viewer is shown, inert and
+ * LABELLED. `gjli` is the constraint that decides how: the state must not be
+ * carried by colour alone, and it must not read as a control.
+ *
+ * So this rule only DE-EMPHASISES; it no longer has to carry the meaning,
+ * because `.fa-nav-folders__note` beside it says which of the four inert
+ * states this is. `line-through` is gone with the same reasoning — on a row
+ * that now reads `code  no viewer yet` it struck through the kind's own name,
+ * which says "removed" rather than "not built", and struck text is harder to
+ * read for exactly the audience this rule is for.
+ *
+ * `opacity` raised from 0.45 to 0.7, and BOTH numbers are measured in a
+ * browser rather than reasoned about: composited over this panel the row
+ * cleared **3.56:1** at 0.45 and clears **6.48:1** at 0.7. The first is under
+ * the 4.5:1 a label this size owes; dimmer than a link and still legible is
+ * the whole requirement. (An earlier draft of this comment guessed "about
+ * 2.4:1" — wrong, and wrong in the direction that oversells the fix.) */
 .fa-nav-folders__link--dead {
   cursor: default;
-  opacity: 0.45;
-  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* The reason, in the same shape the harness tabs already use for theirs —
+ * `.fa-harness-graph__note`. One appearance for one meaning across the two
+ * surfaces, rather than a second look a reader has to learn. */
+.fa-nav-folders__note {
+  margin-left: 0.4em;
+  /* THE ROW'S OWN SIZE, not 0.75em of it. The folders block is already
+   * 0.75rem, so a further 0.75em put the reason at **9px** — measured, not
+   * estimated. `.fa-harness-graph__note` can afford that shrink because its
+   * row is larger; this one cannot, and the reason is the part of the row a
+   * reader most needs. Italic carries the de-emphasis on its own.
+   *
+   * This instance's declared interaction profile is low-dexterity
+   * (`interaction/interaction.json`), and `ui-accessibility` is explicit that
+   * density is cheaper than a missed target; the same argument applies to a
+   * label nobody can read. */
+  font-style: italic;
+  /* NO OPACITY OF ITS OWN, unlike `.fa-harness-graph__note`, and the
+   * difference is not an oversight. That note sits on a row at full strength;
+   * this one sits INSIDE `--dead`, which is already at 0.7, and opacity
+   * multiplies — 0.7 x 0.75 put the reason at roughly 4.3:1 while the kind
+   * beside it sat at 6.48. The reason is the part a reader needs most and it
+   * would have been the least legible thing in the row. Italic and 0.75em
+   * carry the de-emphasis without touching contrast. */
 }
 
 /* ═══ THE NAVBAR ICON ROW — line 2 of the fixed top ════════════════════════
@@ -4756,18 +5070,28 @@ button.fa-nav-icon {
 .fa-harness-tab,
 .fa-harness-section {
   --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(46% * var(--fa-tile-on, 0)) 34%);
+  /* WHAT GOES ON THE INK, in the same two schemes and derived the same way.
+   *
+   * The ink is a 34%-lightness blue here and a 72% one in dark, so a single
+   * letter colour cannot sit on both — which is the `y8cm` failure this whole
+   * block exists to have ended, and it would have come straight back the
+   * moment a mark was painted at full ink. Tinted rather than pure white or
+   * black so a knocked-out initial still reads as belonging to its hue. */
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 97%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-fa-scheme="light"]) .fa-harness-tab,
   :root:not([data-fa-scheme="light"]) .fa-harness-section {
     --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+    --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
   }
 }
 
 :root[data-fa-scheme="dark"] .fa-harness-tab,
 :root[data-fa-scheme="dark"] .fa-harness-section {
   --fa-tile-ink: hsl(var(--fa-tile-tone, 0) calc(42% * var(--fa-tile-on, 0)) 72%);
+  --fa-tile-ink-on: hsl(var(--fa-tile-tone, 0) calc(30% * var(--fa-tile-on, 0)) 12%);
 }
 
 .fa-harness-tabs {
@@ -4911,9 +5235,20 @@ a.fa-harness-tab__body:focus-visible {
   align-items: center;
   justify-content: center;
   border-radius: 0.1875rem;
-  /* The tone, at the strength the mark can carry. A generic harness computes
-   * this to grey, for the reason the `--fa-tile-ink` block above gives. */
-  background: color-mix(in oklab, var(--fa-tile-ink) 55%, transparent);
+  /* THE TONE AT FULL STRENGTH, with the letter knocked out of it.
+   *
+   * Owner, 2026-09-23: *"no logo on who-iris icon (for now). just WHO blue"*.
+   * who-iris is the only harness with no art, so this rule IS its mark — and
+   * at the 55% mix it carried before, hue 199 arrived as a grey-blue square.
+   * A tone diluted until it is not the colour anybody named is the same as not
+   * having declared one.
+   *
+   * A generic harness still computes to grey: `--fa-tile-on` is `0` for a kind
+   * with no declared avatar, so the saturation resolves to `0%` and this
+   * paints the absence rather than painting hue 0 red. The dilution was never
+   * what made that safe — that block above is. */
+  background: var(--fa-tile-ink);
+  color: var(--fa-tile-ink-on);
   font-size: 0.8125rem;
   font-weight: 700;
   line-height: 1;
@@ -6223,3 +6558,115 @@ a.fa-harness-tab__body:focus-visible {
 
 :root[data-fa-scheme="light"] .fa-site-mark--light { display: inline-block; }
 :root[data-fa-scheme="light"] .fa-site-mark--dark { display: none; }
+
+/* ── A sticky AWAY FROM HOME (bean `pv6g`) ────────────────────────────────
+ *
+ * A pinned sticky whose home panel is not on this page, drawn from its stored
+ * text. Opaque for the reason every floating card is: it sits over page
+ * content, and see-through words over words are unreadable. */
+.fa-sticky-away {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  background: #1f1e24;
+  color: #e8eaed;
+  border: 1px solid #5a5670;
+  border-radius: var(--fa-folio-radius, 0);
+}
+:root[data-fa-scheme="light"] .fa-sticky-away {
+  background: #ffffff;
+  color: #1b1b1f;
+  border-color: #8a8699;
+}
+.fa-sticky-away-title { margin: 0; font-size: 1rem; }
+.fa-sticky-away-text { margin: 0; font-size: 0.85rem; line-height: 1.35; }
+.fa-sticky-away-home { color: inherit; text-decoration: underline; font-size: 0.85rem; }
+.fa-sticky-away .fa-sticky-tools,
+.fa-home-tools { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+.fa-sticky-sendhome,
+.fa-home-tools .fa-sticky-move,
+.fa-sticky-away .fa-sticky-move {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.7rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.fa-home-pin { margin-top: 0.4rem; }
+
+/* ── Touch: where a finger drags, and where it scrolls (bean `c132`) ──────
+ *
+ * `wireMove` takes a non-mouse drag only from a GRIP or in move mode. These
+ * are exactly those, and `touch-action: none` is what stops the browser
+ * claiming the gesture as a scroll before the page sees it. Everywhere else
+ * a finger scrolls, so a long note is still readable on a tablet. */
+[data-fa-grip],
+.fa-sticky-floating[data-fa-moving="true"],
+.fa-glass-asset[data-fa-moving="true"] {
+  touch-action: none;
+}
+
+/* ── A PHONE gets one column (bean `c132`) ─────────────────────────────────
+ *
+ * Owner, 2026-09-23: *"Mobile phone is maybe linearized view due to space.
+ * But tablet should be like laptops."* 37.5rem (600px) is the line: every
+ * phone in portrait is under it and every tablet is over it, including an
+ * iPad mini (744px) held upright.
+ *
+ * LINEARIZED, and !important is the mechanism, not a shortcut: each card
+ * carries its laptop geometry as INLINE left/top/width/height (the reader's
+ * saved place), and only !important outranks an inline style. The saved
+ * place is left in the store untouched, so the same reader on a laptop finds
+ * their cards where they put them. */
+@media (max-width: 37.49rem) {
+  /* Closed: nothing floats over the page. The handle says how many wait. */
+  .fa-sticky-layer[data-fa-glass="closed"] > .fa-sticky-floating { display: none; }
+  .fa-glass-handle[data-fa-count]::after {
+    content: " \00b7 " attr(data-fa-count);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Open: the layer is ONE scrolling column, in reading order. */
+  .fa-sticky-layer[data-fa-glass="open"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    padding: 3.5rem 0.75rem 8.5rem;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-glass-sheet {
+    position: static;
+    inset: auto;
+    padding: 0;
+    overflow: visible;
+    order: 1;
+  }
+  .fa-sticky-layer[data-fa-glass="open"] > .fa-sticky-floating {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none;
+    order: 2;
+  }
+  .fa-glass-shelf {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .fa-glass-shelf > .fa-glass-asset {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  /* A position means nothing in a column, so the controls that set one go.
+     Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
+  .fa-sticky-layer [data-fa-control="move"],
+  .fa-glass-asset-tool[aria-label^="Make "],
+  .fa-glass-tidy { display: none; }
+}

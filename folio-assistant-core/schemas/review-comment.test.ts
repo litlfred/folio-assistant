@@ -15,6 +15,7 @@ import {
   ingestPrComments,
   parseReviewTag,
   reanchor,
+  reanchorToBlocks,
   transition,
   type PrComment,
 } from "./review-comment";
@@ -157,5 +158,28 @@ describe("re-anchoring across a ChangeSet", () => {
 
   it("an unrelated change leaves the comment alone", () => {
     expect(reanchor([ingestOne()], [{ change: "added", label: "prose:new" }])).toEqual([]);
+  });
+});
+
+describe("re-anchoring against the head's blocks (renamedFrom)", () => {
+  const blocks = (entries: [string, string[]][]) =>
+    new Map(entries.map(([label, renamedFrom]) => [label, { hash: `h-${label}`, renamedFrom }]));
+
+  it("follows a block's renamedFrom — even for a block the PR itself added", () => {
+    const [c] = reanchorToBlocks([ingestOne()], blocks([["prose:summary", ["prose:overview"]]]));
+    expect(c.targetLabel).toBe("prose:summary");
+    expect(c.review.anchoredFrom).toEqual(["prose:overview"]);
+  });
+
+  it("orphans a comment whose block is gone, and un-orphans it if the block returns", () => {
+    const [gone] = reanchorToBlocks([ingestOne()], blocks([["prose:other", []]]));
+    expect(gone.review.orphaned).toBe(true);
+    const [back] = reanchorToBlocks([gone], blocks([["prose:overview", []]]));
+    expect(back.review.orphaned).toBe(false);
+  });
+
+  it("returns every comment, and an anchored one unchanged", () => {
+    const c = ingestOne();
+    expect(reanchorToBlocks([c], blocks([["prose:overview", []]]))).toEqual([c]);
   });
 });

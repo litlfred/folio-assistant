@@ -143,8 +143,11 @@ export const RULES: Rule[] = [
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
       // (bean txut; 7ofc's ruling for the folio visualiser). It imports
-      // nothing; build-document-site (core) calls it, core -> harness.
+      // only harness modules (the diff renderers and their registry, bean
+      // d903); build-document-site (core) calls it, core -> harness.
       "scripts/gen-review-page.ts",
+      "scripts/review-renderers.ts",     // the diff renderers the review page embeds (bean `d903`)
+      "scripts/word-diff.ts",            // the word diff those renderers run, embedded by toString (bean `d903`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -271,6 +274,9 @@ export const RULES: Rule[] = [
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
+      "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
+      "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
+      "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -335,6 +341,7 @@ export const RULES: Rule[] = [
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
+      "schemas/diff-renderers.ts",           // the review page's diff renderers, declared as data (bean `d903`)
       // What a graph TILE shows. Same argument as `scripts/graph-tiles.ts`
       // twenty lines up, and it arrived the same way: classified core first
       // because a badge is something a reader sees, and `check:partition`
@@ -423,6 +430,11 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Issue #1023. Both read every instance's declaration (visualisers) or
+      // every declared library (manifests), and hold no folio's content: the
+      // same reason as the layout norm above.
+      "scripts/check-source-licence.ts",
+      "scripts/check-wireframes.ts",
       // The knowledge-graph viewer's generator — KG tooling, arrived from
       // `main` and fell through every prefix.
       "scripts/kg-viewer.ts",
@@ -564,6 +576,17 @@ export const RULES: Rule[] = [
       "scripts/voices-graph.ts",             // declared voices/ → voices + their citations
       "scripts/gen-voices-viz.ts",           // those voices → projection + viewer
       "scripts/gen-tools-viz.ts",            // the tools graph → projection + viewer, and its `satisfies` join against the skills corpus
+      // The methodology graph → projection + viewer. CORE by the same two
+      // counts as its siblings, and by a third: it renders the graph across
+      // EVERY instance that declares one, so it is the harness answering
+      // "what has this repository adopted", not one instance answering for
+      // itself. Its node list and its evidence join both come from
+      // `check-methodology-evidence.ts` rather than a second walk.
+      "scripts/gen-methodologies-viz.ts",
+      // The external-schema registry → projection + viewer, plus the one join
+      // nothing else makes: whether each record's `usedBy` path still exists.
+      // CORE beside `external-schemas.ts` itself, which is already here.
+      "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced

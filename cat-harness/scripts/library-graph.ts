@@ -77,7 +77,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
 import type { LibraryRef } from "./library-refs.ts";
-import { basename, dirname, join, relative } from "node:path";
+import { basename, dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
@@ -145,6 +145,80 @@ export interface LibraryEntry {
    * which is again not the same as empty.
    */
   referencedBy?: LibraryRef[];
+  /**
+   * The entry's AVATAR — the picture a reader sees for this book on a library
+   * row and on the folio glass. Bean `zrvt`, issue #1006. Owner, 2026-09-23:
+   * *"library items need avatar (book's) which should use the cover or
+   * whatever is associated to it if there is something"*.
+   *
+   * In order: the rendered COVER beside the entry (`<slug>-cover.png`, the
+   * file `who-iris/scripts/gen-covers.ts` writes, emblem already masked),
+   * then the first image `images.json` declares a `figure`. A logo is never
+   * the avatar — it names who published the book, not the book.
+   *
+   * **ABSENT when there is nothing, or only something too big to be a
+   * thumbnail** ({@link AVATAR_MAX_BYTES}). No guess, no placeholder URL: the
+   * viewer draws a book glyph for an absent avatar, which says "no picture"
+   * rather than a broken image saying "a picture failed".
+   */
+  avatar?: LibraryAvatar;
+}
+
+/** Where an entry's picture came from, where it lives, and where it is published. */
+export interface LibraryAvatar {
+  /** Site-root-relative, leading `/`, no base — composed by the viewer. */
+  href: string;
+  /** The source file, REPO-relative — what `gen-library-viz` copies to {@link href}. */
+  src: string;
+  source: "cover" | "figure";
+}
+
+/**
+ * The largest picture that becomes an avatar. Measured 2026-09-23 over every
+ * library entry: covers are 6–15 KB, but a first figure runs to 1.3 MB (a
+ * full-page scan). An avatar is a thumbnail's job, and the copy is committed,
+ * so a picture over this has NO avatar rather than a megabyte in the site.
+ */
+export const AVATAR_MAX_BYTES = 128 * 1024;
+
+/**
+ * The entry's avatar, or `undefined`.
+ *
+ * PUBLISHED AS A COPY under the site's own `assets/library/avatars/`, not at
+ * the instance's mount. The mount (`/library/<instance>/`) exists only on the
+ * BUILT site, so a cover linked there 404'd on every surface that serves the
+ * committed tree — the e2e server, and any page read before the build. A
+ * copy resolves on all of them, and `gen-library-viz --check` fails when a
+ * copy's bytes differ from its source, so it cannot drift.
+ */
+export function avatarOf(
+  libDir: string,
+  instance: string,
+  slug: string,
+  images: { images?: unknown[] } | null | undefined,
+  repoRoot: string,
+): LibraryAvatar | undefined {
+  const fits = (abs: string): boolean =>
+    existsSync(abs) && statSync(abs).isFile() && statSync(abs).size <= AVATAR_MAX_BYTES;
+  const make = (abs: string, source: LibraryAvatar["source"]): LibraryAvatar => {
+    const ext = extname(abs).toLowerCase() || ".png";
+    return {
+      href: `/assets/library/avatars/${instance}/${slug}${ext}`,
+      src: relative(repoRoot, abs).split("\\").join("/"),
+      source,
+    };
+  };
+  const cover = join(libDir, `${slug}-cover.png`);
+  if (fits(cover)) return make(cover, "cover");
+  for (const raw of images?.images ?? []) {
+    const img = raw as { file?: unknown; role?: unknown };
+    if (img.role !== "figure" || typeof img.file !== "string") continue;
+    // The FIRST figure decides. A later, smaller one is not "the picture
+    // associated with the book", it is whichever happened to be small.
+    const abs = join(libDir, slug, img.file);
+    return fits(abs) ? make(abs, "figure") : undefined;
+  }
+  return undefined;
 }
 
 /**
@@ -388,6 +462,10 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         // and deciding it here would mean deciding it without the file.
         upload: sourceFile ? "absent" : "unknown",
         uploadInstance: "",
+        ...(() => {
+          const avatar = avatarOf(libDir, instance, slug, images, repoRoot);
+          return avatar ? { avatar } : {};
+        })(),
       });
     }
   }

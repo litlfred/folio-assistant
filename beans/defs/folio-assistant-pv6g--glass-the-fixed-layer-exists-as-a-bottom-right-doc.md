@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pv6g
 title: 'GLASS: the fixed layer exists as a bottom-right dock, not a surface a note is placed on'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-21T17:28:39Z
-updated_at: 2026-09-21T17:31:42Z
+updated_at: 2026-09-23T09:54:09Z
 parent: folio-assistant-6lb8
 ---
 
@@ -78,3 +78,35 @@ which decides where landing stickies live — and a home-panel field chosen
 before that is a field chosen against a layout about to change. Left `todo`
 with the glass half struck out, so whoever takes it starts from what is
 actually missing rather than rebuilding what shipped.
+
+## Owner ruling, 2026-09-23 — the HOME is the panel it came from
+
+Put as three options, with the conflation this bean records stated first (panel of origin / the per-content-node sticky list of `6lb8` §6 / the landing slide-away panel). The owner chose **"Panel it came from"**:
+
+> Each sticky records which panel and slot it came from, and closing returns it there. If that panel isn't on this page, it waits in your folio. Landing stickies get a Pin button too.
+
+So the home is sense 1, **recorded on the sticky** rather than living in one board's closure. Senses 2 and 3 are not what "home" means. Sense 3, the landing panel, is simply one panel a sticky can come from.
+
+## Built 2026-09-23 — the home is data
+
+- **A home panel is declared in markup:** `data-fa-home-panel="<panel>"`, with `data-fa-home-slot="<id>"` on each slot. The landing board (`landing.html`) and the todo board (`mountTodoBoard`) both declare one.
+- **A pin is stored:** `fa-pinned-stickies` holds `{ panel, slot, title, text, href, label, geom }`. It is per reader and per browser, like everything on the glass. The board's closure-held `slots[todo.id]` is no longer the only record of where a todo came from.
+- **Landing stickies get "Pin to glass"** (the owner's option text). A pinned one floats as a COPY of the real card with its ids stripped, so there is one id per element. Its slot keeps a real "Return it here" button. Closing from the card or from the slot returns it home and forgets the pin.
+- **Pinned is pinned on every page**, because the glass is the reader's. On its home page the real card is restored, quietly and without moving focus. Anywhere else it is an AWAY card built from the stored TEXT, never stored HTML. The away card links to its home page and has "Send home", which unpins it, so it is back in its slot the next time that panel is on screen.
+- **Todos use the same store:** `float` records the pin, `dock` drops it, and the board restores its pins on mount. A pin whose todo no longer exists is dropped rather than floated.
+
+### Verified
+
+`sticky-home.e2e.ts`, 13 specs across three pages (landing, board, away): the XSS case, where stored `<img onerror>` and a `javascript:` href render as text and no link; persistence of position; and focus on return.
+
+### A guard the specs do NOT prove, said rather than hidden
+
+`ownSlots` keeps a panel from claiming a nested panel's slots (the todo board mounts INSIDE the landing board). A mutation to `return true` still passes, because landing pins are wired at init, before the board's fetch resolves. The guard is kept for when that ordering changes. The nesting spec asserts the structure and the count, and its comment says what it does not prove.
+
+## Summary of Changes
+
+Merged in #1030 (issue #1029). Owner's ruling: the home is the panel the sticky came from.
+- Home panels and slots are declared in markup, and pins are stored per reader.
+- Landing stickies get "Pin to glass"; todos share the same store.
+- Away from home, a pinned sticky is a text card with a way home.
+- The `ownSlots` nesting guard is recorded above as not independently provable by the specs.

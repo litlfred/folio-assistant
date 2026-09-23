@@ -1,0 +1,11 @@
+classDiagram
+  direction TB
+  namespace cat_harness__glossary {
+    class cat_harness_glossary_folio_glossary_ledger_v1["folio-glossary-ledger/v1"] {
+      <<ts: Ledger>>
+      $schema [1] string
+      instance [1] string
+      concepts [1] Record~string, LedgerEntry~
+    }
+  }
+  cssClass "cat_harness_glossary_folio_glossary_ledger_v1" fa_uml_kind_glossary

@@ -169,16 +169,16 @@ describe("JSON-LD typing", () => {
     // The block is the authored manifest; the FHIR ValueSet is what its .fsh
     // compiles to. Typing the manifest as a FHIR resource would invite a
     // consumer to read FHIR fields off it.
-    expect(typesForKind("value-set")).toEqual(["folio:ValueSet"]);
+    expect(typesForKind("value-set")).toEqual(["folio-assistant-core:ValueSet"]);
   });
 
   test("DoCO co-typing stays sparing", () => {
-    expect(typesForKind("decision-table")).toEqual(["folio:DecisionTable", "doco:Table"]);
-    expect(typesForKind("persona")).toEqual(["folio:Persona"]);
+    expect(typesForKind("decision-table")).toEqual(["folio-assistant-core:DecisionTable", "doco:Table"]);
+    expect(typesForKind("persona")).toEqual(["folio-assistant-core:Persona"]);
   });
 
   test("paper typing is unchanged", () => {
-    expect(typesForKind("theorem")).toEqual(["folio:Theorem", "doco:Section"]);
+    expect(typesForKind("theorem")).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
   });
 });
 

@@ -1,0 +1,34 @@
+classDiagram
+  direction TB
+  namespace folio_assistant__uploads {
+    class folio_assistant_uploads_folio_extraction_v1_Asset["Asset"] {
+      <<json: ExtractionSchema>>
+      path [1] string
+      bytes [1] integer
+      mediaType [0..1] string
+      modifiedAt [0..1] string
+      sha256 [0..1] string
+      localPath [0..1] string
+      extractedBecause [0..1] string
+    }
+    class folio_assistant_uploads_folio_extraction_v1_Omitted["Omitted"] {
+      <<json: ExtractionSchema>>
+      pattern [1] string
+      reason [1] string
+      count [1] integer
+    }
+    class folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1["folio-extraction/v1"] {
+      <<json: ExtractionSchema>>
+      $schema [1] 'folio-extraction/v1'
+      container [1] string
+      method [1] zip | pdf | saved-webpage | tarball
+      capturedAt [0..1] string
+      producer [0..1] string
+      readAt [1] string
+    }
+  }
+  folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
+  folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
+  cssClass "folio_assistant_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
+  cssClass "folio_assistant_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
+  cssClass "folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads

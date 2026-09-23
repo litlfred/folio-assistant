@@ -38,4 +38,32 @@ describe("review page", () => {
   test("change kinds are words, not colours", () => {
     for (const w of ["added", "removed", "reworded", "edited", "moved", "renamed"]) expect(html).toContain(`"${w}"`);
   });
+
+  test("reads review comments, and says when there is no comment data rather than showing none", () => {
+    expect(html).toContain('get("../review-comments.json")');
+    expect(html).toContain("No comment data on this build.");
+  });
+
+  test("keeps the three groups that would otherwise vanish, and the tag to start a comment with", () => {
+    expect(html).toContain("Comments on blocks this pull request did not change");
+    expect(html).toContain("Orphaned: the block these were made on is gone");
+    expect(html).toContain("Comments whose tag could not be read");
+    expect(html).toContain('"block: " + c.label');
+  });
+
+  test("embeds the tested renderers and the registry, not copies of them (d903)", () => {
+    expect(html).toContain('get("../changeset-text.json")');
+    expect(html).toContain("var wordDiff = ");
+    expect(html).toContain("var renderInline = ");
+    for (const id of ["word", "inline", "side-by-side"]) expect(html).toContain(`"id":"${id}"`);
+    expect(html).toContain('<select id="view">');
+  });
+
+  test("the viewer's choice is stored only through guarded calls", () => {
+    // localStorage throws in a private window; every use sits in a try.
+    const uses = html.match(/localStorage\.[a-zA-Z]+\(/g) ?? [];
+    expect(uses.length).toBe(2);
+    expect(html).toMatch(/try \{ return window\.localStorage\.getItem/);
+    expect(html).toMatch(/try \{ window\.localStorage\.setItem/);
+  });
 });

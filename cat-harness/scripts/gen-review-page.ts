@@ -28,6 +28,37 @@
  * block labels that `build-document-site` writes, which the `id-unique` and
  * `id-stable` QA criteria guard.
  *
+ * ## Review comments (bean `423d`)
+ *
+ * `../review-comments.json` is the `folio-review-comments` Tool's output:
+ * `folio-review-comment/v1` todos, one per tagged PR comment. The page lists
+ * each block's comments under it. It gives three more groups their own
+ * headings, because each would otherwise vanish:
+ * - comments on blocks this PR did not change;
+ * - ORPHANED comments, whose block is gone;
+ * - tags nobody could read.
+ *
+ * Every changed block also shows the `block: <label>` line to start a new
+ * comment with, and links to the PR, since GitHub cannot pre-fill a comment
+ * box. No file at all is SAID, never shown as an empty list: "no comment
+ * data" and "nobody commented" are different facts. The skill that governs
+ * all of this is `review-comments`.
+ *
+ * ## Choosing how to see a change (bean `d903`)
+ *
+ * Every changed block has a "Show this change as" selector over the renderers
+ * in `schemas/diff-renderers.ts`: a word diff of the source, the block inline
+ * as rendered, or the two published pages side by side. Each block opens
+ * with its kind's default. A page-level selector overrides every block, and
+ * that one choice is remembered for this viewer in `localStorage`. Every read
+ * and write is wrapped, so a private window or blocked storage just means
+ * the defaults.
+ *
+ * A renderer that cannot run on a block is still listed, disabled, with the
+ * reason in its label. The renderers themselves are
+ * `scripts/review-renderers.ts` and `scripts/word-diff.ts`, embedded here
+ * with `toString()`, so the functions the tests drive are the ones that run.
+ *
  * ## Accessibility is not a finish
  *
  * - Every change kind is a WORD, never a colour alone.
@@ -38,6 +69,10 @@
  * - The list is built with DOM APIs, never `innerHTML`: a block label is folio
  *   content and must not be able to become markup.
  */
+
+import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
+import { cleanRendered, renderInline, renderSideBySide, renderWordDiff } from "./review-renderers.js";
+import { wordDiff } from "./word-diff.js";
 
 const STYLE = `
   :root { color-scheme: light dark; --fg: #1b1b1b; --bg: #fdfdfb; --muted: #5b5b5b; --link: #0b5cad; --rule: #d8d8d4; }
@@ -54,6 +89,20 @@ const STYLE = `
   .label { font-family: ui-monospace, monospace; }
   .links a { margin-right: 1rem; }
   .muted { color: var(--muted); }
+  .comments { margin: .25rem 0 0 1rem; padding-left: .75rem; border-left: 3px solid var(--rule); }
+  .comment { padding: .15rem 0; }
+  .tagline { font-family: ui-monospace, monospace; font-size: .9rem; }
+  select { font: inherit; min-height: 2.75rem; padding: .25rem .5rem; color: var(--fg); background: var(--bg); border: 1px solid var(--muted); border-radius: .4rem; }
+  select:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+  .viewrow { margin: .5rem 0 .25rem; display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+  .diff { margin: .25rem 0 .5rem; padding: .5rem .75rem; border: 1px solid var(--rule); border-radius: .4rem; overflow-x: auto; }
+  pre.diff { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, monospace; }
+  ins { background: #d7f5dc; color: #0b3d17; text-decoration: underline; }
+  del { background: #fbdada; color: #5c0b0b; text-decoration: line-through; }
+  @media (prefers-color-scheme: dark) { ins { background: #12391d; color: #c8f2d0; } del { background: #45181a; color: #f5caca; } }
+  .diff-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .diff-sbs iframe { width: 100%; height: 22rem; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; }
+  @media (max-width: 40rem) { .diff-sbs { grid-template-columns: 1fr; } }
 `;
 
 const SCRIPT = `
@@ -90,23 +139,147 @@ const SCRIPT = `
     if (!items.length) return;
     at = (i + items.length) % items.length;
     items[at].focus();
-    status.textContent = "Change " + (at + 1) + " of " + items.length;
+    status.textContent = "Item " + (at + 1) + " of " + items.length;
   }
 
   document.getElementById("next").addEventListener("click", function () { focusItem(at + 1); });
   document.getElementById("prev").addEventListener("click", function () { focusItem(at - 1); });
   document.addEventListener("keydown", function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
+    // A letter typed into a selector picks an option; it is not navigation.
+    var tag = e.target && e.target.tagName;
+    if (tag === "SELECT" || tag === "INPUT" || tag === "TEXTAREA") return;
     if (e.key === "j") { focusItem(at + 1); e.preventDefault(); }
     else if (e.key === "k") { focusItem(at - 1); e.preventDefault(); }
   });
+
+  // One comment as a line of words: kind, status, who, what — never colour alone.
+  function commentEl(c) {
+    var d = el("div", null, "comment");
+    var r = c.review || {};
+    d.appendChild(el("span", (r.kind || "comment") + ", " + c.status, "kind"));
+    d.appendChild(el("span", (r.reviewer || "?") + " as " + (r.role || "reviewer") + ": "));
+    d.appendChild(el("span", c.summary));
+    if (r.anchoredFrom && r.anchoredFrom.length) d.appendChild(el("span", " (made on " + r.anchoredFrom.join(", ") + ")", "muted"));
+    if (r.commentUrl) { d.appendChild(el("span", " ")); var a = el("a", "read on the pull request"); a.href = r.commentUrl; d.appendChild(a); }
+    return d;
+  }
+  function commentList(cs) {
+    var box = el("div", null, "comments");
+    cs.forEach(function (c) { box.appendChild(commentEl(c)); });
+    return box;
+  }
+  function section(title, nodes) {
+    if (!nodes.length) return;
+    list.appendChild(el("h2", title));
+    var ul = el("ul");
+    nodes.forEach(function (n) { var li = el("li"); li.tabIndex = -1; li.appendChild(n); ul.appendChild(li); items.push(li); });
+    list.appendChild(ul);
+  }
+
+  // ── Diff renderers (bean d903) ─────────────────────────────────
+  var VIEW_KEY = "folio-review:view";
+  function loadView() { try { return window.localStorage.getItem(VIEW_KEY) || ""; } catch (e) { return ""; } }
+  function saveView(v) { try { window.localStorage.setItem(VIEW_KEY, v); } catch (e) { /* the defaults, then */ } }
+  function defaultFor(kind) {
+    var fb = null;
+    for (var i = 0; i < RENDERERS.length; i++) {
+      if (RENDERERS[i].defaultFor.indexOf(kind) >= 0) return RENDERERS[i].id;
+      if (RENDERERS[i].defaultFor.indexOf("*") >= 0) fb = RENDERERS[i].id;
+    }
+    return fb || RENDERERS[0].id;
+  }
+  // Why a renderer cannot run on this block, or null when it can.
+  function unavailable(r, ctx) {
+    for (var i = 0; i < r.needs.length; i++) {
+      var n = r.needs[i];
+      if (n === "text" && !ctx.text) return "no prose on either side";
+      if (n === "pages" && !ctx.before && !ctx.after) return "no page to show";
+    }
+    return null;
+  }
+  function renderInto(panel, id, ctx) {
+    while (panel.firstChild) panel.removeChild(panel.firstChild);
+    var t = ctx.text || {};
+    var base = t.base || null;
+    var head = t.head || null;
+    var out;
+    if (id === "word") {
+      var ops = wordDiff(base ? base.prose : "", head ? head.prose : "");
+      out = ops === null ? "This block is too long for a word diff. Choose side by side." : renderWordDiff(document, ops);
+    } else if (id === "inline") {
+      out = renderInline(document, base ? base.html : null, head ? head.html : null, wordDiff, cleanRendered);
+    } else if (id === "side-by-side") {
+      out = renderSideBySide(document, ctx.before, ctx.after);
+    }
+    if (typeof out === "string") panel.appendChild(el("p", out, "muted"));
+    else if (out) panel.appendChild(out);
+  }
+  var viewers = [];
+  function viewSelector(ctx) {
+    var row = el("div", null, "viewrow");
+    var id = "view-" + viewers.length;
+    var lab = el("label", "Show this change as");
+    lab.htmlFor = id;
+    var sel = document.createElement("select");
+    sel.id = id;
+    RENDERERS.forEach(function (r) {
+      var why = unavailable(r, ctx);
+      var o = el("option", r.label + (why ? " (unavailable: " + why + ")" : ""));
+      o.value = r.id;
+      o.title = r.description;
+      if (why) o.disabled = true;
+      sel.appendChild(o);
+    });
+    var panel = el("div");
+    function pick(v) {
+      var r = RENDERERS.filter(function (x) { return x.id === v; })[0];
+      if (!r || unavailable(r, ctx)) {
+        // The chosen view cannot run here: fall back to the first one that can.
+        r = RENDERERS.filter(function (x) { return !unavailable(x, ctx); })[0];
+      }
+      if (!r) { while (panel.firstChild) panel.removeChild(panel.firstChild); panel.appendChild(el("p", "Nothing to show for this change: it is to the manifest only.", "muted")); return; }
+      sel.value = r.id;
+      renderInto(panel, r.id, ctx);
+    }
+    sel.addEventListener("change", function () { pick(sel.value); });
+    row.appendChild(lab);
+    row.appendChild(sel);
+    var v = { row: row, panel: panel, pick: pick, kind: ctx.kind };
+    viewers.push(v);
+    return v;
+  }
+  function applyView(global) {
+    viewers.forEach(function (v) { v.pick(global || defaultFor(v.kind)); });
+  }
+  var viewAll = document.getElementById("view");
+  var none = el("option", "Each block's default");
+  none.value = "";
+  viewAll.appendChild(none);
+  RENDERERS.forEach(function (r) { var o = el("option", r.label); o.value = r.id; o.title = r.description; viewAll.appendChild(o); });
+  viewAll.value = loadView();
+  if (viewAll.value !== loadView()) viewAll.value = "";
+  viewAll.addEventListener("change", function () { saveView(viewAll.value); applyView(viewAll.value); });
 
   function get(url) {
     return fetch(url).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
 
   get("../changeset.json").then(function (cs) {
-    return get("../staging.json").catch(function () { return {}; }).then(function (st) {
+    return Promise.all([
+      get("../staging.json").catch(function () { return {}; }),
+      get("../review-comments.json").catch(function () { return null; }),
+      get("../changeset-text.json").catch(function () { return null; }),
+    ]).then(function (both) {
+      var st = both[0];
+      var rc = both[1];
+      var txt = both[2];
+      var byLabel = {};
+      var shown = {};
+      ((rc && rc.comments) || []).forEach(function (c) {
+        if (c.review && c.review.orphaned) return;
+        (byLabel[c.targetLabel] = byLabel[c.targetLabel] || []).push(c);
+      });
       var main = st.mainSite ? String(st.mainSite).replace(/\\/?$/, "/") : null;
       var s = cs.summary;
       // The head is "worktree" in CI (the checkout under review), which names
@@ -117,9 +290,10 @@ const SCRIPT = `
         s.added + " added, " + s.removed + " removed, " + s.changed + " changed (" +
         s.prose + " reworded, " + s.moved + " moved, " + s.renamed + " renamed, " + s.manifest + " edited), " +
         s.unchanged + " unchanged.";
+      if (!rc) summary.textContent += " No comment data on this build.";
+      else summary.textContent += " " + rc.comments.length + " review comment(s).";
       if (!cs.changes.length) {
         status.textContent = "No block changed. " + s.unchanged + " block(s) compared.";
-        return;
       }
       var groups = {};
       var order = [];
@@ -144,12 +318,52 @@ const SCRIPT = `
           if (before) { var b = el("a", "view on main"); b.href = before; links.appendChild(b); }
           if (!after && !before) links.appendChild(el("span", "no page to link to", "muted"));
           li.appendChild(links);
+          var v = viewSelector({
+            kind: (c.head || c.base || {}).kind || "",
+            text: txt && txt.blocks ? txt.blocks[c.label] || null : null,
+            before: before,
+            after: after,
+          });
+          li.appendChild(v.row);
+          li.appendChild(v.panel);
+          var mine = byLabel[c.label] || [];
+          shown[c.label] = true;
+          if (mine.length) li.appendChild(commentList(mine));
+          if (c.change !== "removed") {
+            var t = el("div", null, "muted");
+            t.appendChild(el("span", "To comment, start a pull-request comment with "));
+            t.appendChild(el("code", "block: " + c.label, "tagline"));
+            if (st.prUrl) { t.appendChild(el("span", " ")); var p = el("a", "open the pull request"); p.href = st.prUrl; t.appendChild(p); }
+            li.appendChild(t);
+          }
           ul.appendChild(li);
           items.push(li);
         });
         list.appendChild(ul);
       });
-      status.textContent = items.length + " change(s). Press j for the next, k for the previous.";
+      if (rc) {
+        var elsewhere = [];
+        Object.keys(byLabel).forEach(function (label) {
+          if (shown[label]) return;
+          var d = el("div");
+          d.appendChild(el("span", label, "label"));
+          d.appendChild(commentList(byLabel[label]));
+          elsewhere.push(d);
+        });
+        section("Comments on blocks this pull request did not change", elsewhere);
+        section("Orphaned: the block these were made on is gone", rc.comments
+          .filter(function (c) { return c.review && c.review.orphaned; })
+          .map(function (c) { var d = el("div"); d.appendChild(el("span", c.targetLabel, "label")); d.appendChild(commentList([c])); return d; }));
+        section("Comments whose tag could not be read", rc.malformed.map(function (m) {
+          var d = el("div");
+          d.appendChild(el("span", m.error + " "));
+          var a = el("a", "fix it on the pull request"); a.href = m.url; d.appendChild(a);
+          return d;
+        }));
+      }
+      if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only side by side is available.";
+      applyView(viewAll.value);
+      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous.";
     });
   }).catch(function () {
     status.textContent =
@@ -175,12 +389,21 @@ export function reviewPageHtml(): string {
 <p id="summary" class="muted"></p>
 <p id="status" role="status" aria-live="polite">Loading the ChangeSet…</p>
 <div class="nav">
-  <button type="button" id="prev">Previous change (k)</button>
-  <button type="button" id="next">Next change (j)</button>
+  <button type="button" id="prev">Previous (k)</button>
+  <button type="button" id="next">Next (j)</button>
   <a href="../index.html">All documents</a>
 </div>
+<div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
 <div id="changes"></div>
 </main>
+<script>
+var RENDERERS = ${JSON.stringify(DIFF_RENDERERS).replace(/</g, "\\u003c")};
+var wordDiff = ${wordDiff.toString()};
+var cleanRendered = ${cleanRendered.toString()};
+var renderWordDiff = ${renderWordDiff.toString()};
+var renderInline = ${renderInline.toString()};
+var renderSideBySide = ${renderSideBySide.toString()};
+</script>
 <script>${SCRIPT}</script>
 </body>
 </html>

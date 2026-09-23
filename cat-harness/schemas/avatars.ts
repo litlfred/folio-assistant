@@ -99,6 +99,31 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
   },
+  // WHO BLUE, AND NO EMBLEM. Owner, 2026-09-23: *"no logo on who-iris icon
+  // (for now). just WHO blue"* — reversing their own choice of 2026-09-22,
+  // which had the WHO emblem-and-wordmark cropped to the emblem. The image
+  // stays declared in `who-iris.json`; only the `icon` pointer to it is gone,
+  // so restoring it is one field rather than a re-ingest.
+  //
+  // 199 is MEASURED from #0093D5, the organisation's blue as `who-iris.json`
+  // already records it: rgb(0,147,213), max channel blue, so the hue is
+  // 4 + (0-147)/213 sixths of a turn = 198.6°, rounded. Written as an angle
+  // rather than as the hex because that is what this table holds and what the
+  // stylesheet builds both schemes from — a literal colour here would be
+  // legible in one mode and not the other, which is the `y8cm` failure.
+  //
+  // Without this entry `avatarFor("who-iris")` falls to GENERIC, so the tile
+  // would have taken the generic hue and reported a finding — "no avatar
+  // declared" is true of an instance nobody has decided about, and this one
+  // has been decided about twice.
+  "who-iris": {
+    // An open book with a band across it — a repository of published
+    // documents, which is what IRIS is. Deliberately NOT the emblem: the
+    // owner asked for the colour without the logo.
+    glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
+    tone: 199,
+    reads: "an open book — a repository of published documents, in WHO blue",
+  },
   // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
   //
   // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
@@ -260,6 +285,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 6h7v12H4zM13 6h7v12h-7zM11 9h2M11 12h2M11 15h2",
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
+  },
+  // A CLASS BOX — a title compartment over an attribute compartment, with an
+  // association line leaving it. The one glyph that says "a diagram of shapes"
+  // rather than any shape in particular. `tone: 220` was unused, and sits beside
+  // `external-schema`'s 208 because both are about the shape of things.
+  uml: {
+    glyph: "M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z",
+    tone: 220,
+    reads: "a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand",
   },
   glossary: {
     glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",

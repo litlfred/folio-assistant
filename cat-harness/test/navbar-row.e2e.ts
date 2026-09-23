@@ -71,7 +71,8 @@ const BASEURL = "/folio-assistant";
 type NavbarRow = {
   icons: string[];
   hrefs: Record<string, string>;
-  folders: { kind: string; path?: string }[];
+  notes?: Record<string, string>;
+  folders: { kind: string; path?: string; note?: string }[];
 };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: NavbarRow | null;
@@ -92,7 +93,18 @@ const CUSTOM: NavbarRow = {
   icons: ["close", "todos", "beans", "kg", "launcher"],
   // `beans` and `kg` deliberately have NO href: declared, not published.
   hrefs: { todos: "/todos/" },
-  folders: [{ kind: "library", path: "/library/" }, { kind: "memory" }],
+  // ...and each carries WHY, in the wording `harness-tiles.ts` computes. Two
+  // DIFFERENT reasons on purpose: the whole point of the ruling on #1036 is
+  // that the four inert states stay told apart at the last step, so a fixture
+  // with one reason twice could not catch them being collapsed.
+  notes: { beans: "no viewer yet", kg: "staging only" },
+  folders: [
+    { kind: "library", path: "/library/" },
+    { kind: "memory", note: "no viewer by design" },
+    // NO NOTE AT ALL — data older than the note being carried. Not a fourth
+    // state, and the page must not invent one for it.
+    { kind: "scenarios" },
+  ],
 };
 
 const HEADINGS =
@@ -128,7 +140,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
-        <details class="fa-harness-tabs" open>
+        <details class="fa-harness-tabs">
           <summary class="fa-harness-tabs__heading">Harnesses <span class="fa-harness-tabs__count">1</span></summary>
           <ul class="fa-harness-tabs__list">
             <li class="fa-harness-tab">
@@ -222,13 +234,25 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     // under test cannot catch a wrong one — arrived at from the other side:
     // the expectation was not read from anything, it was copied off the code.
     await expect(todos).toHaveAttribute("href", BASEURL + "/todos/");
-    for (const gap of ["Beans", "Knowledge graph"]) {
-      const slot = page.locator('.fa-nav-icons [aria-label="' + gap + '"]');
+    // THE REASON IS IN THE ACCESSIBLE NAME. This row is glyphs with no words,
+    // so `aria-label` is the only channel a screen reader has — and it said
+    // just "Beans" for a slot that goes nowhere, describing a working control
+    // to somebody who cannot see that it is grey (`gjli`).
+    for (const [gap, why] of [["Beans", "no viewer yet"], ["Knowledge graph", "staging only"]]) {
+      const slot = page.locator('.fa-nav-icons [aria-label^="' + gap + '"]');
       await expect(slot).toHaveCount(1);
       await expect(slot).toHaveClass(/fa-nav-icon--dead/);
       expect(await slot.evaluate((n) => n.tagName)).toBe("SPAN");
-      await expect(slot).toHaveAttribute("title", /declared, with no published viewer/);
+      await expect(slot).toHaveAttribute("aria-label", gap + " — " + why);
+      await expect(slot).toHaveAttribute("title", gap + " — " + why);
     }
+    // ...and the two reasons are DIFFERENT. A fixture that asserted one
+    // wording twice would pass with the four states collapsed into one, which
+    // is the defect the ruling on #1036 is about.
+    const labels = await page
+      .locator(".fa-nav-icons .fa-nav-icon--dead")
+      .evaluateAll((ns) => ns.map((n) => n.getAttribute("aria-label")));
+    expect(new Set(labels).size).toBe(labels.length);
   });
 
   test("EVERY composed href carries the baseurl — the class, not the instance", async ({ page }) => {
@@ -322,8 +346,59 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       BASEURL + "/library/",
     );
     const dead = page.locator(".fa-nav-folders__link--dead");
-    await expect(dead).toHaveText("memory");
-    expect(await dead.evaluate((n) => n.tagName)).toBe("SPAN");
+    await expect(dead).toHaveCount(2);
+    expect(await dead.first().evaluate((n) => n.tagName)).toBe("SPAN");
+  });
+
+  test("an inert row SAYS WHICH CASE, in text a reader can actually get", async ({ page }) => {
+    // Owner ruling on #1036: shown, inert and LABELLED, with the label saying
+    // which of the four states it is. This row carried it as `opacity: 0.45`,
+    // a strikethrough and a `title` tooltip — a channel a keyboard user never
+    // reaches and a touch user cannot produce.
+    //
+    // The wording is CARRIED from `harness-tiles.ts`, never composed here:
+    // `inertNote` words four states and the single string this replaced was
+    // wrong for two of them.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const row = (kind: string) =>
+      page.locator(".fa-nav-folders__item", { hasText: kind }).locator(".fa-nav-folders__note");
+    await expect(row("memory")).toHaveText("no viewer by design");
+    // ABSENT is not a fourth state — it is data older than the note, and
+    // inventing "no viewer yet" for it is the guess the rule is against.
+    await expect(row("scenarios")).toHaveText("reason not recorded");
+    await expect(row("memory")).not.toHaveText(await row("scenarios").innerText());
+  });
+
+  test("an inert row is not a CONTROL — `gjli`", async ({ page }) => {
+    // A greyed thing that takes a tab and then does nothing costs a keyboard
+    // user an interaction to discover it is dead. Not an anchor, not a button,
+    // and nothing focusable anywhere inside it.
+    await load(page, CUSTOM);
+    const inert = page.locator(".fa-nav-folders__link--dead");
+    for (const tag of await inert.evaluateAll((ns) => ns.map((n) => n.tagName))) {
+      expect(tag).toBe("SPAN");
+    }
+    expect(
+      await inert.evaluateAll((ns) =>
+        ns.flatMap((n) => [n, ...Array.from(n.querySelectorAll("*"))]).filter(
+          (x) => x.hasAttribute("href") || x.hasAttribute("tabindex") || x.tagName === "BUTTON",
+        ).length,
+      ),
+    ).toBe(0);
+  });
+
+  test("the state is NOT carried by colour alone", async ({ page }) => {
+    // The other half of `gjli`. Strip the styling that makes a dead row LOOK
+    // dead and the row must still say so — which is what a screen reader, a
+    // high-contrast mode and a printed page all get.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const text = await page
+      .locator(".fa-nav-folders__item", { hasText: "memory" })
+      .evaluate((n) => (n.textContent ?? "").replace(/\s+/g, " ").trim());
+    expect(text).toContain("memory");
+    expect(text).toContain("no viewer by design");
   });
 
   test("it arrives CLOSED and opens in one click", async ({ page }) => {
@@ -506,11 +581,33 @@ test.describe("at rest the strip carries marks and nothing else", () => {
 
   test("the marks stay — they are what the strip is FOR", async ({ page }) => {
     await load(page, CUSTOM);
-    // Icons and avatars, at rest, with no hover. The owner asked for exactly
-    // these two things and nothing else.
+    // Icons and marks, at rest, with no hover.
     await expect(page.locator(".fa-nav-icons .fa-nav-icon").first()).toBeVisible();
-    await expect(page.locator(".fa-harness-tab__mark")).toBeVisible();
     await expect(page.locator(".fa-nav-home__mark")).toBeVisible();
+  });
+
+  test("the harness avatars follow their group, and that is a TRADE the owner made", async ({ page }) => {
+    // Two instructions, one day apart, that pull opposite ways:
+    //
+    //   *"should only be icons/avatars so compat"*  — 2026-09-23, morning
+    //   *"harnesses start closed"*                  — 2026-09-23, later
+    //
+    // The harness avatars live inside that group, so a closed group takes them
+    // out of the strip. The second instruction is the later one and is
+    // implemented literally; this test states the consequence rather than
+    // hiding it, so that reversing it is one `open` in `nav_footer_custom.html`
+    // and one expectation here.
+    //
+    // NOT worked around in CSS. A stylesheet that revealed a closed
+    // disclosure's contents would make `[open]` stop meaning what it says,
+    // which is worse than either answer.
+    await load(page, CUSTOM);
+    await expect(page.locator(".fa-harness-tabs")).not.toHaveAttribute("open", "");
+    await expect(page.locator(".fa-harness-tab__mark")).not.toBeVisible();
+
+    await page.hover(".side-bar");
+    await page.locator(".fa-harness-tabs__heading").click();
+    await expect(page.locator(".fa-harness-tab__mark")).toBeVisible();
   });
 
   test("the icon row STACKS at rest and lies flat when open", async ({ page }) => {
@@ -526,6 +623,30 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.waitForTimeout(250);
     const open = await tops();
     expect(new Set(open).size).toBe(1);
+  });
+
+
+  test("a CLOSED document index never yields its one row — the `flex-shrink` fix", async ({ page }) => {
+    // Owner, 2026-09-23, with a screenshot: *"on this page is cut off"*.
+    // Measured at a 500px viewport: the region was 22px around a 25px summary,
+    // so the row read as `ON THIS PAG` with its descenders sliced off. The
+    // region is `flex: 0 1 auto` and its own rule says why that is safe —
+    // *"it scrolls inside its cap"* — which is true while it is OPEN. Closed,
+    // there is nothing to scroll, so every pixel the layout takes is a pixel
+    // of the only row it has and the reader cannot recover it.
+    await page.setViewportSize({ width: 1200, height: 500 });
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    await page.waitForTimeout(250);
+    const fits = await page.evaluate(() => {
+      const box = document.querySelector(".fa-doc-index");
+      const sum = document.querySelector(".fa-doc-index__heading");
+      if (!box || !sum) return null;
+      return Math.round(sum.getBoundingClientRect().bottom - box.getBoundingClientRect().bottom);
+    });
+    // Zero or negative: the summary's bottom is at or above the region's.
+    expect(fits).not.toBeNull();
+    expect(fits!).toBeLessThanOrEqual(0);
   });
 
   test("the fixed bottom stays ANCHORED to the bottom in both states", async ({ page }) => {

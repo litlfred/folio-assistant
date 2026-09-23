@@ -74,13 +74,57 @@ which is the one distinction the catalogue exists to draw. **Not moved.** If
 the owner still wants it moved, that is a ruling and this paragraph is the
 argument it overrides.
 
+## RE-MEASURED 2026-09-23, and the numbers above are wrong
+
+Read from the generated `docs/_data/harness.json`, which the build derives
+from the declaration and already emits as its own finding: *"cat-harness:
+declares 7 graph(s) with no published viewer — code, external-schema,
+interaction, memory, methodology, scenarios, waiver."*
+
+**7 of 24, not 16 of 22.** Do not quote that sentence either: re-run
+`bun run docs:harness` and read `navbar.folders` for the entries with no
+`path`.
+
+`fsh-guts` — the kind this bean names as the lead — **already had a viewer**,
+gained after the bean was written. Its second done-when was satisfied by
+something nobody recorded here, which is the same drift this section exists to
+correct.
+
+Two were built this round, taking it to **5**:
+
+- `methodology` — 9 typed nodes across three instances, each with an `origin`,
+  an `applies-when` and an evidence base, reaching no reader. `→ /methodologies/`
+- `external-schema` — 4 records pinning an edition, its namespace IRIs, its
+  dependents and its operative terms. `→ /external-schemas/`
+
+## The remaining five, decided rather than left disabled
+
+A viewer earns its place when a PERSON reaches for the graph. These do not,
+and this is the recorded reason the third done-when asks for.
+
+| kind | why no viewer |
+|---|---|
+| `code` | four TypeScript directories (`scripts/`, `src/`, `adapters/`, `test/`). Its viewer is the forge, and the launcher already carries a Source link to it. A generated index over 300 modules would be a worse `git ls-files`. |
+| `scenarios` | **deferred, not declined.** `zw4a` (PR #989) puts roles and their skills into the PROCESS viewer, and it states the reason a standalone one must not be built first: *"a second traversal is a second answer … free to disagree with the first."* Revisit once `zw4a` lands. |
+| `interaction` | one committed file, read by every agent at session start and never by a reader looking for a page. `agentic-harness.md` already documents it as `coverage.docs`. |
+| `memory` | agent-facing state, and `agent-memory` governs what may be written there. A page would publish one agent's notes to an audience that is not reading them. |
+| `waiver` | the same, one level smaller: a confirmation waiver is a fact about one session. |
+
+`interaction`, `memory` and `waiver` are the three the bean's own priority
+section already called *"an audience of one agent"*. This records that as a
+decision rather than leaving it as an unexplained disabled row.
+
 ## Done when
 
-- [ ] The 6-of-22 split is RE-MEASURED, not quoted from here
-- [ ] `fsh-guts` has a viewer, or a recorded reason it should not
-- [ ] Every remaining disabled entry either has a viewer or a bean saying why
+- [x] The 6-of-22 split is RE-MEASURED, not quoted from here — it is 7 of 24,
+      and 5 after this round
+- [x] `fsh-guts` has a viewer, or a recorded reason it should not — it already
+      had one
+- [x] Every remaining disabled entry either has a viewer or a bean saying why
       it does not — a disabled entry with no explanation is a gap that looks
-      like neglect
+      like neglect. The five are decided in the table above; `scenarios` is the
+      one that is deferred rather than declined, and it names the bean that
+      holds it.
 - [ ] The prioritisation above is the owner's, not mine: a kind I called
       agent-facing may be one they open weekly
 

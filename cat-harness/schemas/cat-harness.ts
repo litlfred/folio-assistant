@@ -934,19 +934,32 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
  */
+/**
+ * The surfaces a tile can appear on.
+ *
+ * `glass` joined 2026-09-23 (bean `zrvt`, issue #1006) on the owner's words:
+ * *"where are the todo, fsh guts etc tiles on bottom of glass?"* That
+ * overrides `v0jv`'s earlier *"the tiles must NOT be projected onto the
+ * glass"*, and it is a SURFACE on the one declaration rather than a second
+ * list of glass tiles — `harness-tiles`: one declaration, per-surface
+ * visibility, never two registries.
+ */
+export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
+export type TileSurface = (typeof TILE_SURFACES)[number];
+
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
   /** What a tile calls it. Absent falls back to the directory's id. */
   title: z.string().min(1).optional(),
   /**
-   * Where its tile appears. Absent means BOTH.
+   * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
    *
    * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
    * declared once and says where it shows — never two registries free to
    * disagree about what a tile is.
    */
-  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  surfaces: z.array(z.enum(TILE_SURFACES)).nonempty().optional(),
   /**
    * Whether this tile starts out of frame. Absent means shown.
    *
@@ -1061,8 +1074,8 @@ export function visualisationsOf(
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
 }
 
-/** Does this visualisation's tile appear on this surface? Absent means both. */
-export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+/** Does this visualisation's tile appear on this surface? Absent means every surface. */
+export function showsOn(v: Visualisation, surface: TileSurface): boolean {
   return v.surfaces === undefined || v.surfaces.includes(surface);
 }
 
@@ -2389,6 +2402,58 @@ export function siteDir(_d: Pick<CatHarnessDeclaration, "name" | "stub">): strin
  */
 export function repoRootFor(instanceRoot: string): string {
   return join(instanceRoot, "..");
+}
+
+/**
+ * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
+ * the instance root IS the repository root.
+ *
+ * ## Why {@link repoRootFor} is not enough, and is not wrong either
+ *
+ * `repoRootFor` is `dirname`, and says so. Its contract assumes an instance
+ * nested one level under the repository, which every instance here satisfies
+ * but one: **`folio-assistant` is declared AT the repository root.** For that
+ * one, `dirname` climbs out of the checkout, and a name lookup built on it
+ * sees no siblings at all.
+ *
+ * Measured on `main` at `80c18ac`, before this existed:
+ *
+ * ```
+ * repoRootFor("/home/user/folio-assistant")  -> "/home/user"
+ * instanceRootsIn("/home/user")              -> 1   (only folio-assistant)
+ * ```
+ *
+ * so the root instance's `needs: ["folio-assistant-core"]` derived **nothing**,
+ * and its overlay held one directory — the authored config edge, which does not
+ * go through the derivation. A broken resolver that returns one plausible entry
+ * is worse than one that returns none: it reads as a working overlay.
+ *
+ * ## The discriminator is "does this directory CONTAIN other instances"
+ *
+ * Asked in this module's own vocabulary rather than by probing for `.git`, for
+ * two reasons. A `.git` probe answers a question about version control when
+ * the question is about instance scope — a repository is not the only thing
+ * that can hold instances, and `init-folio` already builds trees that have no
+ * `.git` yet. And it keeps this testable over the throwaway trees the
+ * cross-instance tests use, which is where the sibling rules are falsified.
+ *
+ * So: if scanning `instanceRoot` finds an instance OTHER than itself, it is a
+ * container and it is the scope. Otherwise it is a leaf and its siblings live
+ * one level up, which is exactly {@link repoRootFor}'s assumption.
+ *
+ * **This does NOT replace `repoRootFor`.** That function answers "where does
+ * the REPOSITORY's own furniture live" — `.github/`, `package.json`, `beans/`
+ * — and for a nested instance the two agree. This one answers "where do I look
+ * up a sibling by name", and they differ only for the instance that is also
+ * the root. Collapsing them would make the repository-furniture question
+ * wrong for that same instance, in the other direction.
+ */
+export function siblingScopeFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  for (const found of instanceRootsIn(abs)) {
+    if (resolve(found) !== abs) return abs;
+  }
+  return repoRootFor(abs);
 }
 
 /**

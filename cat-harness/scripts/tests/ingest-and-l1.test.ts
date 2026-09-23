@@ -227,7 +227,7 @@ function entry(over: Partial<Record<"structure" | "manifest" | "images", unknown
   );
   writeFileSync(
     join(dir, "manifest.jsonld"),
-    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio:SourceDocument"], contains: ["a"], provenance: {} }),
+    JSON.stringify(over.manifest ?? { "@id": "x", "@type": ["folio-assistant-core:SourceDocument"], contains: ["a"], provenance: {} }),
   );
   // Bean `d5f1` shipped, so `image-descriptions` is CHECKED rather than
   // not-derivable, and a fixture standing for "every derivable requirement
@@ -613,6 +613,19 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // hand straight into the entry directory).
     expect(src).toContain("planFor(pdf, undefined, stagingRoot)");
     expect(src).not.toContain("const plan = planFor(pdf);");
+
+    // AND THE SAME FOR THE SENTENCE IT PRINTS, which this test did not cover
+    // until 2026-09-23 — so the code path was fixed in #495 while the
+    // INSTRUCTION went on telling an agent to do the wrong thing for four
+    // days. Measured by following it: `pdf-images.py -o ingest-staging/<slug>`
+    // wrote `ingest-staging/<slug>/<slug>/images.json`, and the entry's own
+    // `images.json` stayed absent — reproducing by hand exactly the defect the
+    // comment above describes.
+    //
+    // A fixed code path does not fix the prose beside it. They are two
+    // surfaces and only one of them was asserted.
+    expect(src).toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), stagingRoot)}");
+    expect(src).not.toContain("run the remaining arms with -o ${relative(resolve(INSTANCE_ROOT), staging)}");
     expect(src).toContain('const staging = join(stagingRoot, slug);');
   });
 
@@ -830,16 +843,52 @@ describe("a document's figures can be VECTOR, and the gate no longer passes over
     expect([...labels].sort()).toEqual(["1", "2.3"]);
   });
 
-  test("ZERO images placed while the text declares figures is NOT-DERIVABLE", () => {
-    // The case this state exists for. Nothing could correspond, so no arm
-    // described them and none could. `met` here is the silence `m4xy` measured.
+  test("ZERO images placed, but every declared figure is CAPTIONED — the caption is the handle", () => {
+    // Owner ruling 2026-09-23, over building a vector arm: the caption text is
+    // the reader's handle and the arm is a later bean. This test asserted
+    // `not-derivable` until then, and the change is the ruling rather than a
+    // gate being lowered — the caption has to actually be there, per figure.
     const r = withSection("Fig. 3. DIIG digital health enterprise architecture framework\n", {
       ...base,
       images: [],
     });
-    expect(r.state).toBe("not-derivable");
-    expect(r.detail).toContain("no raster image was placed");
+    expect(r.state).toBe("met");
+    // MET ON THE EVIDENCE, NOT ON A COUNT. The caption is quoted into the
+    // detail, so a reader can see what stood in for the description. `m4xy`
+    // exists because an entry could be "L1-complete, gate-green, and missing
+    // every figure it declares, with nothing anywhere signalling a gap" — a
+    // bare `met` here would rebuild exactly that.
+    expect(r.detail).toContain("DIIG digital health enterprise architecture framework");
     expect(r.detail).toContain("m4xy");
+  });
+
+  test("a figure with NO caption text is still not-derivable, and is NAMED", () => {
+    // `Fig. 7` with nothing after it is a cross-reference or a caption this
+    // lower bound could not read. Either way nothing describes that figure, so
+    // the caption handle does not reach it and saying otherwise would be the
+    // silent pass this gate exists against.
+    //
+    // Measured on the real corpus 2026-09-23: `9789240093362-eng` declares 18
+    // figures and only THREE are captions. A blanket `met` on "declares
+    // figures" would have passed over fifteen.
+    const r = withSection("Fig. 7 illustrates the maturity model\n", { ...base, images: [] });
+    expect(r.state).toBe("not-derivable");
+    // The LABEL is named, so a reader sees which figure is uncovered rather
+    // than a bare shortfall they cannot act on.
+    expect(r.detail).toContain("Fig. 7");
+    expect(r.detail).toContain("m4xy");
+  });
+
+  test("a caption beats a bare mention of the SAME figure, in either order", () => {
+    // One real caption and three cross-references is a captioned figure. The
+    // handbook's `Fig. 5` is exactly this: "Fig. 5 illustrates the M&E …"
+    // appears before "Fig. 5. Intervention maturity over time".
+    const r = withSection(
+      "Fig. 5 illustrates the M&E framework\nFig. 5. Intervention maturity over time\n",
+      { ...base, images: [] },
+    );
+    expect(r.state).toBe("met");
+    expect(r.detail).toContain("Intervention maturity over time");
   });
 
   test("...and NOT `unmet`, because that would be a permanent blocker", () => {
