@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/skills/latex-authoring/output.schema.json",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "staging": {
+    "branch": "claude/cool-fermi-htir5p",
+    "sha": "379059691d736e644b752b4e784493ba7848fa83",
+    "pr": "1173/merge",
+    "run": "35914426356"
+  }
+}
