@@ -1,0 +1,142 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-wireframes.ts",
+    "script_hash": "0e8d571a8396"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "harness-visualiser-wireframes"
+  },
+  "updated_at": "2026-09-23T09:19:15.171Z",
+  "families": {
+    "covered": {
+      "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
+      "count": 0,
+      "entries": []
+    },
+    "failing": {
+      "summary": "A mechanical check that failed: renders, no-overflow or no-placeholder.",
+      "count": 0,
+      "entries": []
+    },
+    "incomplete": {
+      "summary": "A wireframe missing its intent, its candidate or its check report.",
+      "count": 0,
+      "entries": []
+    },
+    "missing-viewport": {
+      "summary": "A candidate checked at only one width. A usability review at one viewport is incomplete, not passed.",
+      "count": 0,
+      "entries": []
+    },
+    "uncovered": {
+      "summary": "A declared visualiser that no wireframe covers.",
+      "count": 32,
+      "entries": [
+        {
+          "ref": "cat-harness/docs/beans/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/catalogue/who-iris/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-trust-docs/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/who-iris-docs/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/bootstrap-render/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/folio/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/library/agent-skills/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/library/folio-assistant/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/library/who-iris/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/schemas/detangle/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/uploads/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/voices/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/voices/who-style-guide/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/fsh-guts/index.md"
+        },
+        {
+          "ref": "cat-harness/docs/processes/index.md"
+        },
+        {
+          "ref": "cat-harness/docs/todos/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/tools/index.md"
+        },
+        {
+          "ref": "cat-harness/docs/translation-status/index.html"
+        }
+      ]
+    },
+    "unknown-ref": {
+      "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 32
+}

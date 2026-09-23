@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "methodologies"
   },
-  "updated_at": "2026-09-23T06:48:13.042Z",
+  "updated_at": "2026-09-23T08:30:49.675Z",
   "families": {
     "evidence-unresolved": {
       "summary": "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: it reads as an ingested source in every listing, so a reader who does not open it is told the citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer is not an open question about whether to adopt something.",
@@ -17,8 +17,13 @@
     },
     "invalid-front-matter": {
       "summary": "A node tagged `folio-methodology/v1` whose front matter does not validate against `schemas/methodology.ts`. The schema is `strict()`, so a misspelled key is a finding rather than a silent omission — `applies_when` beside a correct `applies-when` would otherwise validate while the selection question never reached the node. Fails by default.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "node": "methodologies/wiregen.md",
+          "detail": "front matter is not valid YAML: Nested mappings are not allowed in compact mappings at line 3, column 8:\n\ntitle: WireGen: wireframing from a written design intent\n       ^\n"
+        }
+      ]
     },
     "no-evidence-declared": {
       "summary": "A valid methodology citing an origin, with no `evidence:` pointing at an ingested source. THE FINDING THIS AXIS WAS BUILT FOR: on 2026-09-22 this was six of six. Reported, never gated — whether a methodology whose source nobody can open may still be used is the owner's call, and a gate failing on the whole corpus at once is one somebody switches off. `literature-search` is the skill that closes one of these.",
@@ -62,5 +67,5 @@
       "entries": []
     }
   },
-  "total": 6
+  "total": 7
 }

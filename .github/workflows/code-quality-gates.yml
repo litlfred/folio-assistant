@@ -957,6 +957,16 @@ jobs:
           # baseline entry — cannot regress. Owner: "follow established
           # norms on layout. qa to enforce."
           bun run check:layout-norms
+          # Every ingested source records its licence, or records that nobody
+          # could find it and where they looked (issue #1023). It REPORTS
+          # absence and `unknown`, because the field is new, and fails only on
+          # a record that claims something it cannot back.
+          bun run check:source-licence
+          # Every declared harness visualiser has a wireframe, checked at a web
+          # AND a mobile viewport (issue #1023; owner: "need both web and
+          # mobile layouts in usability reviews"). Gated: a visualiser added
+          # without a wireframe, or a wireframe checked at one width, fails.
+          bun run check:wireframes
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
