@@ -35,6 +35,8 @@
  * @graphNode schema
  */
 
+import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
+
 /**
  * Which layer owns a term — and therefore which instances must carry it.
  *
@@ -142,9 +144,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
 
   Actor: {
     layer: "bootstrap",
-    gloss:
-      "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
-    seeAlso: "/agentic-harness.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Actor,
   },
   Convention: {
     layer: "harness",
@@ -160,9 +162,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   Role: {
     layer: "bootstrap",
-    gloss:
-      "A BPMN swimlane: the persona an actor takes on because of the lane it is acting in, carrying that lane's skills.",
-    seeAlso: "/agentic-harness.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Role,
   },
   LaneUsage: {
     gloss:
@@ -174,8 +176,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   Skill: {
     layer: "bootstrap",
-    gloss: "The instruction body an actor needs to perform a task.",
-    seeAlso: "/skills.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Skill,
   },
   SkillPackage: {
     gloss: "A directory of skills shipped and versioned together.",
@@ -183,21 +186,26 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   Process: {
     layer: "bootstrap",
-    gloss: "A BPMN process: lanes that bind roles, activities that name skills, and the flow between them.",
-    seeAlso: "/publication-workflow.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Process,
   },
   ProcessNode: {
     layer: "bootstrap",
-    gloss: "One element of a process — an activity, a gateway, a start or end event.",
-    seeAlso: "/publication-workflow.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.ProcessNode,
   },
   SequenceFlow: {
     layer: "bootstrap",
-    gloss: "A directed edge between two process nodes.",
-    seeAlso: "/publication-workflow.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
-    gloss: "A callable operation the harness exposes, declared as a node rather than only as code.",
+    // Harness layer, so its IRI does not move; its DEFINITION is bootstrap's,
+    // because bootstrap/README.md uses the word before anything else loads.
+    gloss: BOOTSTRAP_TERMS.Tool,
     seeAlso: "/architecture.html",
   },
   Schema: {
@@ -208,20 +216,21 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   Directory: {
     layer: "bootstrap",
-    gloss: "A declared place to look, naming the kinds of graph found in it.",
-    seeAlso: "/architecture.html",
+    // bootstrap's word for this is Subgraph: a named directory of a Knowledge
+    // Graph. The class keeps its name, so no published IRI moves.
+    gloss: BOOTSTRAP_TERMS.Subgraph,
   },
   Asset: {
     layer: "bootstrap",
-    gloss:
-      "A file an instance declares as its own, with the role that file plays for it — the instance " +
-      "saying what something IS rather than a scan inferring it.",
-    seeAlso: "/architecture/harness-instances.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Asset,
   },
   GraphKind: {
     layer: "bootstrap",
-    gloss: "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
-    seeAlso: "/architecture.html",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.GraphKind,
   },
   // `Harness`, not `CatHarness`, and `cat:` not `bs:`. The owner, 2026-09-19:
   // "but why bs:catharness? shouldnt that be in cat?... and maybe we name the
@@ -230,7 +239,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // stuttered the layer into the term.
   Harness: {
     layer: "harness",
-    gloss: "An instance's root declaration: the directories it scans and the graphs they hold.",
+    // Definition from bootstrap, which the owner stated: "a harness is used to
+    // interact with a knowledge graph". Layer and IRI unchanged.
+    gloss: BOOTSTRAP_TERMS.Harness,
     seeAlso: "/architecture.html",
   },
   Image: {

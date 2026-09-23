@@ -17,7 +17,7 @@ One process, called wherever remote content is landed locally. The owner, 2026-0
 
 ## How it connects
 
-- **Called by:** no call activity names this process
+- **Called by:** [Sample import into a structured data store](sample-import.html)
 - **Calls:** none
 - **Names the `materialize-remote` skill without calling this process:** [Refresh materialized remote content](refresh-materialized.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Skill:** [`materialize-remote`](../reference/skill-instructions/materialize-remote.html)

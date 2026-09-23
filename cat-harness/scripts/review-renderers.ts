@@ -238,6 +238,12 @@ export function renderVisual(
   lg.textContent = "Show";
   fs.appendChild(lg);
   const stage = doc.createElement("div");
+  // Open on something to SEE: the marked diff when there is one, else the
+  // side that was pictured (found by the ojcx run: a new block opened on
+  // "Before", which can only say it is missing).
+  const has = (s: { png: string | null } | null) => !!(s && s.png);
+  const first = views.findIndex(([id]) => id === "diff" || (id === "after" && has(v.after)) || (id === "before" && has(v.before)));
+  const start = first < 0 ? 0 : first;
   const show = (i: number) => {
     while (stage.firstChild) stage.removeChild(stage.firstChild);
     stage.appendChild(views[i]![2]());
@@ -248,7 +254,7 @@ export function renderVisual(
     r.type = "radio";
     r.name = group;
     r.value = id;
-    r.checked = i === 0;
+    r.checked = i === start;
     r.addEventListener("change", () => show(i));
     l.appendChild(r);
     l.appendChild(doc.createTextNode(" " + label));
@@ -256,6 +262,6 @@ export function renderVisual(
   });
   box.appendChild(fs);
   box.appendChild(stage);
-  show(0);
+  show(start);
   return box;
 }
