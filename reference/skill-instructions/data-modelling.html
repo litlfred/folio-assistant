@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790193936">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790194384">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790193936">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790194384">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790193936">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790194384">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790193936">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790194384">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790193936">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790194384">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","docs","external-schema","folio","fsh-guts","glossary","health","interaction","issue-marks","library","memory","methodology","processes","qa","scenarios","schemas","skills","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790193936" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790194384" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -965,6 +965,150 @@ declaration instead is how inheritance turns into optionality by accident.</p>
 variant that overrides a value <strong>cites why</strong>, the same as any other asserted
 fact — otherwise the model records what the value is and loses where it came
 from, which is the failure the <code class="language-plaintext highlighter-rouge">uses[]</code> rule exists to prevent elsewhere.</p>
+<h3 id="8-point-from-the-dependent-at-the-general-node">
+  
+  
+    <a href="#8-point-from-the-dependent-at-the-general-node" class="anchor-heading" aria-labelledby="8-point-from-the-dependent-at-the-general-node"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Point from the dependent at the general node
+  
+  
+</h3>
+    
+
+<p>A relation between two entities is written on ONE of them. Write it on the
+entity that DEPENDS, pointing at the one it depends on. <strong>A general, reused
+node never holds a field naming the things that use it.</strong></p>
+
+<p>Owner, 2026-09-23 (#1168): <em>“tasks are used to implement skills, skills
+should not know about tasks”</em> and <em>“voice external to a role. should not be in
+data model… need to flip arrows.”</em></p>
+
+<p>The test is the step-3 question applied to the relation: <strong>if every user of
+this node disappeared, would the node still be complete?</strong> A skill with no
+task implementing it is still a skill; a task with no skill is not a task. So
+the pointer lives on the task.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>relation</th>
+      <th>written on</th>
+      <th>never on</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a task implements a skill</td>
+      <td>the BPMN task (<code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code>)</td>
+      <td>the skill</td>
+      <td>a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill</td>
+    </tr>
+    <tr>
+      <td>a voice speaks for a role</td>
+      <td>the voice (<code class="language-plaintext highlighter-rouge">activeIn</code>)</td>
+      <td>the role (<code class="language-plaintext highlighter-rouge">voice</code>)</td>
+      <td>a role is what an actor does in a lane; how it sounds is a separate, swappable thing</td>
+    </tr>
+    <tr>
+      <td>a lane is played by a role</td>
+      <td>the lane (<code class="language-plaintext highlighter-rouge">&lt;folio:role ref&gt;</code>)</td>
+      <td>the role (<code class="language-plaintext highlighter-rouge">lanes</code>)</td>
+      <td>the role names diagrams it cannot know about</td>
+    </tr>
+    <tr>
+      <td>a user story is for a role</td>
+      <td>the story (<code class="language-plaintext highlighter-rouge">actor</code>)</td>
+      <td>the role (<code class="language-plaintext highlighter-rouge">useCases</code>)</td>
+      <td>stories are added by whoever writes them, not by editing the role</td>
+    </tr>
+    <tr>
+      <td>a Tool satisfies a skill</td>
+      <td>the Tool (<code class="language-plaintext highlighter-rouge">satisfies</code>)</td>
+      <td>the skill</td>
+      <td>several Tools may satisfy one skill</td>
+    </tr>
+    <tr>
+      <td>a test checks a skill’s contract</td>
+      <td>the test run</td>
+      <td>the skill</td>
+      <td>tests come and go; the contract does not</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Prose counts.</strong> A skill body that says <em>“the only step of
+initialize-harness”</em> knows its caller just as surely as a field does, and goes
+stale the same way. Say what the skill does, not who calls it; the caller’s
+own declaration says the rest.</p>
+
+<p><strong>The general node owns its CONTRACT.</strong> What a skill takes and returns is a
+fact about the skill, so it is declared there: an <strong>input</strong> and an <strong>output</strong>
+schema reference, each either a KG schema or a pinned external schema. Tasks,
+Tools and tests point at the skill and are checked against that contract. That
+is how a general node stays complete without naming its users.</p>
+<h3 id="9-make-every-cross-node-reference-a-typed-kg-reference">
+  
+  
+    <a href="#9-make-every-cross-node-reference-a-typed-kg-reference" class="anchor-heading" aria-labelledby="9-make-every-cross-node-reference-a-typed-kg-reference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Make every cross-node reference a typed KG reference
+  
+  
+</h3>
+    
+
+<p>A reference is a claim that another node exists. A bare string makes that
+claim in a vocabulary nothing resolves: a typo, a rename or a deleted node
+reads exactly like a valid name. Owner, 2026-09-23: <em>“Things like skills
+should be KG reference.”</em></p>
+
+<p>So a field that names another node holds a <strong>KG reference</strong>: the target’s
+kind and id, resolvable in the knowledge graph, and projected by <code class="language-plaintext highlighter-rouge">kg-export</code>
+as an <code class="language-plaintext highlighter-rouge">@id</code> link, never a literal. Use the helpers that already exist rather
+than inventing one:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>helper</th>
+      <th>shape</th>
+      <th>for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">KgRefSchema</code> (<code class="language-plaintext highlighter-rouge">schemas/carried-note.ts</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">{kind, id, note?}</code></td>
+      <td>any KG node</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TaskRefSchema</code> (<code class="language-plaintext highlighter-rouge">schemas/carried-note.ts</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">{process, task}</code></td>
+      <td>a BPMN task: the pair, never a bare task id</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">VoiceRefSchema</code> (<code class="language-plaintext highlighter-rouge">schemas/voices.ts</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">{instance?, voiceId}</code></td>
+      <td>a voice, possibly in another instance</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SkillNameSchema</code> (<code class="language-plaintext highlighter-rouge">schemas/tool-types.ts</code>)</td>
+      <td>kebab id</td>
+      <td>a skill id, where a whole ref is not needed</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">module#Export</code>, <code class="language-plaintext highlighter-rouge">instance:module#Export</code> (<code class="language-plaintext highlighter-rouge">parseValidatorRef</code>)</td>
+      <td>string with a checked grammar</td>
+      <td>a schema</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>A reference that crosses into another instance says which instance. And a
+reference is <strong>resolved by a check</strong>, not trusted: the audit that reads the
+field fails on one that points at nothing.</p>
+
+<p><strong>Free text stays free text</strong> only when it is not a claim about another node:
+a description, a note, a persona. <code class="language-plaintext highlighter-rouge">useCases</code> was free text that named things
+the graph could not point at; that is the case this rule exists for.</p>
 <h2 id="what-falsifies-a-model">
   
   
@@ -1008,6 +1152,14 @@ break is a diagram.</p>
     <tr>
       <td>find a required field a variant can never state</td>
       <td>requiredness is being checked before resolution, not after</td>
+    </tr>
+    <tr>
+      <td>delete every user of a general node; is it still complete?</td>
+      <td>a field on the general node names its users (step 8)</td>
+    </tr>
+    <tr>
+      <td>rename a node; does anything still read as valid?</td>
+      <td>a reference is a bare string, not a KG reference (step 9)</td>
     </tr>
   </tbody>
 </table></div>
@@ -1220,7 +1372,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35913502648"><code>fcafdea</code></a> &middot; 2026-09-23T20:05:32Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35914313651"><code>aabdc87</code></a> &middot; 2026-09-23T20:13:00Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
