@@ -260,10 +260,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T05:41:29.377Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8eb0cfe2a27ef1379bd2bd54ff38f62f4fb3fe05",
-  "sourceCommitSha": "8eb0cfe2a27ef1379bd2bd54ff38f62f4fb3fe05",
-  "sourceCommitAt": "2026-09-23T07:39:04+02:00",
+  "generatedAt": "2026-09-23T06:06:34.770Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/10e42ec1f7286a843903d794faf5e7469394366b",
+  "sourceCommitSha": "10e42ec1f7286a843903d794faf5e7469394366b",
+  "sourceCommitAt": "2026-09-23T08:04:02+02:00",
   "sourceTreeDirty": true,
   "counts": {
     "Skill": 241,
@@ -272,9 +272,9 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 62,
-    "SequenceFlow": 788,
+    "SequenceFlow": 791,
     "Role": 140,
-    "ProcessNode": 751,
+    "ProcessNode": 753,
     "Tool": 69,
     "Schema": 96,
     "GraphKind": 29,
@@ -22573,8 +22573,34 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
       ],
-      "nodeCount": 11,
-      "flowCount": 11,
+      "nodeCount": 13,
+      "flowCount": 14,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_yes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Gateway_ThemeSource",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_join",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_no",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Gateway_ThemeSource",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -22606,7 +22632,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Derive",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Gateway_ThemeSource",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -22749,6 +22775,47 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Gateway_ThemeSource",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A theme source? (author's judgement)",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_yes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_no"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Ingest the theme",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_join"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Build the L1 knowledge graph",
@@ -22762,7 +22829,8 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i4"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_join",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_theme_no"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i5"
@@ -22817,8 +22885,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Work%20plan%20—%20beans%20(shared%20by%20humans%20and%20agents)",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager"
       ],
       "touchesWorkPlan": true,
@@ -34933,8 +34999,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "8eb0cfe2a27ef1379bd2bd54ff38f62f4fb3fe05",
+    "sha": "10e42ec1f7286a843903d794faf5e7469394366b",
     "pr": "main",
-    "run": "35823288052"
+    "run": "35825060679"
   }
 }
