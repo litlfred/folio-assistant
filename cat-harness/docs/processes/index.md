@@ -96,7 +96,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**95** distinct skill(s) are named by an activity.
+**96** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -191,6 +191,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `uploads-watch` | `content-acquisition.bpmn` |
 | `upstream-version-adoption` | `upstream-pin-watch.bpmn`, `upstream-version-adoption.bpmn` |
 | `uses-editorial-review` | `review-narrative.bpmn` |
+| `visual-diff` | `content-change-review.bpmn` |
 | `voice-editorial-review` | `review-narrative.bpmn` |
 | `voice-overlay-review` | `review-narrative.bpmn`, `voice-review.bpmn` |
 | `watch` | `code-change-review.bpmn`, `content-change-review.bpmn` |

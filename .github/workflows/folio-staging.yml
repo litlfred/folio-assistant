@@ -266,6 +266,26 @@ jobs:
           path: pages
           persist-credentials: true
 
+      - name: Picture changed figures, diagrams and tables
+        # The `folio-block-screenshots` Tool (bean `0rxe`, skill `visual-diff`):
+        # each changed visual block, pictured on the published main site (the
+        # publish branch's root, checked out above) and on this build, and
+        # compared pixel by pixel in Chromium. The review page shows them.
+        # Chromium is installed only when there is something to picture.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          N=$(bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" --changeset "$SITE_DIR/changeset.json" --count)
+          if [ "$N" = "0" ]; then
+            echo "no figure, diagram, table, equation or simulator changed: no pictures to take"
+            exit 0
+          fi
+          (cd "$PLATFORM_DIR" && npx --yes playwright install --with-deps chromium)
+          bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" \
+            --changeset "$SITE_DIR/changeset.json" --base pages --head "$SITE_DIR" --out "$SITE_DIR"
+
       - name: Ingest review comments
         # Tagged PR comments → `folio-review-comment/v1` todos, kept across
         # builds via the preview's previous file (bean `423d`). A failure here
@@ -315,9 +335,9 @@ jobs:
           # build that exited 0 having written nothing would otherwise replace a
           # working preview with an empty one, which 404s exactly like a page
           # the author meant to delete. The data files the steps above write
-          # (changeset and its text, blocks, block QA, review comments) are not
-          # a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json' || true)" ]; then
+          # (changeset and its text, blocks, block QA, review comments, the
+          # visual diff and its pictures) are not a site on their own.
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
