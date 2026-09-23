@@ -888,6 +888,8 @@ export const RULES: Rule[] = [
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
+      // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
+      "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the
