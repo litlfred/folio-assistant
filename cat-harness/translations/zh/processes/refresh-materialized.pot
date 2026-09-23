@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: refresh-materialized\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.975Z\n"
+"POT-Creation-Date: 2026-09-23T18:39:15.174Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: processes/refresh-materialized.bpmn:100
 #. Diagram element documentation
-msgid "A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it."
+msgid "A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it. Permitted answers (bean `bvuk`, owner 2026-09-23): `local` — keep the local edit; `upstream` — take the upstream change. Task_Apply applies whichever side won; nothing branches here."
 msgstr ""
 
 #: processes/refresh-materialized.bpmn:99
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Adjudicate the conflict"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:129
+#: processes/refresh-materialized.bpmn:133
 #. Diagram label
 msgid "archival"
 msgstr ""
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Did the copy change both upstream and locally since it was fetched? `yes` goes to adjudicating the conflict; `no` re-materializes, re-asking the five gates, and records the new fixity."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:123
+#: processes/refresh-materialized.bpmn:127
 #. Diagram label
 msgid "Fresh, and the graph records against what"
 msgstr ""
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Is this copy kept as a working copy or as an archive? `archival` only verifies fixity and never re-fetches; `working` asks what changed upstream."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:134
+#: processes/refresh-materialized.bpmn:138
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Re-compute the digest and compare. An archive is NEVER re-fetched — the source is what it exists to survive, so replacing it with today's version discards the state it was keeping. A mismatch means OUR copy rotted, and the remedy is restoration from a backup, not re-download."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:108
+#: processes/refresh-materialized.bpmn:112
 #. Diagram label
 msgid "Re-materialize, re-asking the five gates — and record the new fixity"
 msgstr ""
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Runs whichever of the two paths Gateway_Purpose selects. On the working path it answers the two comparisons — upstream and local — whose combination Gateway_Both reads to decide whether a human must adjudicate; on the archival path it never compares to the source at all, since fixity asks only whether the copy itself rotted."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:110
+#: processes/refresh-materialized.bpmn:114
 #. Diagram element documentation
 msgid "The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to. AND THE NEW FIXITY IS RECORDED IN THE SAME CHANGE. This step rewrites bytes that a materialization record describes, so leaving the old digest behind would make a CORRECT run of this process fail check:materialized-fixity as a mismatch — the gate reading \"somebody edited held content without saying so\" about the one process whose job is to replace it. Measured 2026-09-22 (bean 10s1): this task named no fixity write at all. This is the owner's publication exception, stated as a rule rather than as a carve-out. The exception is NOT \"these actors may skip the rule\"; it is \"say what you did\". A writer that updates the digest alongside the bytes passes, and the record then describes what is actually there. A writer that does not fails, correctly, because it has forked upstream silently. A list of permitted writers would go stale the first time somebody added a sixth one; this does not."
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good."
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:130
+#: processes/refresh-materialized.bpmn:134
 #. Diagram label
 msgid "working"
 msgstr ""
@@ -149,7 +149,7 @@ msgstr ""
 msgid "working, or archival?"
 msgstr ""
 
-#: processes/refresh-materialized.bpmn:133
+#: processes/refresh-materialized.bpmn:137
 #. Diagram label
 msgid "yes"
 msgstr ""

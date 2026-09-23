@@ -97,10 +97,14 @@ since">
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate the conflict">
-      <bpmn:documentation>A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it.</bpmn:documentation>
+      <bpmn:documentation>A human or agentic decision, never a merge rule. Which side wins depends on why the local edit was made, and a process that picked automatically would be choosing without the one fact that decides it.
+
+Permitted answers (bean `bvuk`, owner 2026-09-23): `local` — keep the local edit; `upstream` — take the upstream change. Task_Apply applies whichever side won; nothing branches here.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
         <folio:skill ref="adjudication" />
+        <folio:adjudication codes="local upstream"/>
+        <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>

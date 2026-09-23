@@ -131,15 +131,20 @@ Tool: translation_validate MCP tool</documentation>
     <callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate flagged passage&#10;(human reviewer)">
       <documentation>A human SME or editor reviews the flagged passage.
 They may:
-- Accept the translation as-is (false positive)
-- Edit the translation and re-run QA
-- Reject and request re-translation
+- `accepted`: accept the translation as-is (false positive)
+- `retranslate`: edit the translation, or reject it and request a new one;
+  both go back through Task_Translate and QA runs again
+
+(Permitted answers: bean `bvuk`, owner 2026-09-23. Gateway_PostQA's two
+branches carry the same codes, and the engine refuses a mismatch.)
 
 The round trip establishes that two readings differ. Which one is
 right is a human call.</documentation>
       <extensionElements>
         <folio:skill ref="translation-manager" />
         <folio:skill ref="adjudication" />
+        <folio:adjudication codes="accepted retranslate"/>
+        <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
       </extensionElements>
     </callActivity>
 
@@ -215,8 +220,12 @@ differ, sets stale: true. The translation remains visible with a
     <sequenceFlow id="Flow_DriftNo" name="Clean" sourceRef="Gateway_Drift" targetRef="Task_WriteUnofficial" />
 
     <sequenceFlow id="Flow_Adjudicated" sourceRef="Task_Adjudicate" targetRef="Gateway_PostQA" />
-    <sequenceFlow id="Flow_PostQA_Redo" name="Re-translate" sourceRef="Gateway_PostQA" targetRef="Task_Translate" />
-    <sequenceFlow id="Flow_PostQA_Accept" name="Accepted" sourceRef="Gateway_PostQA" targetRef="Task_WriteUnofficial" />
+    <sequenceFlow id="Flow_PostQA_Redo" name="Re-translate" sourceRef="Gateway_PostQA" targetRef="Task_Translate">
+      <extensionElements><folio:adjudication code="retranslate"/></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_PostQA_Accept" name="Accepted" sourceRef="Gateway_PostQA" targetRef="Task_WriteUnofficial">
+      <extensionElements><folio:adjudication code="accepted"/></extensionElements>
+    </sequenceFlow>
 
     <sequenceFlow id="Flow_Unofficial" sourceRef="Task_WriteUnofficial" targetRef="Gateway_Signoff" />
     <sequenceFlow id="Flow_SignoffYes" name="Yes" sourceRef="Gateway_Signoff" targetRef="Task_Signoff" />

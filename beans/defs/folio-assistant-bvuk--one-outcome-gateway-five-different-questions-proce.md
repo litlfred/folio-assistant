@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bvuk
 title: 'ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication''s three codes do not fit every caller'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T09:19:05Z
-updated_at: 2026-09-23T11:28:33Z
+updated_at: 2026-09-23T18:52:11Z
 parent: folio-assistant-ahvw
 ---
 
@@ -158,7 +158,16 @@ union guard would have let `code` sit ignored on a judge.
 
 - [x] Owner picks a shape — **(4), split at the judgement**, 2026-09-23. (1)
       was off the table: the codes selected TASKS, not a returned value.
-- [ ] Each caller's permitted answers are the ones its own question admits.
+- [x] Each caller's permitted answers are the ones its own question admits.
+      **All ten, 2026-09-23** (owner approved the five proposals as a set):
+      content-change-review `stands withdrawn`; ingest-l1-completeness-gate
+      `drift false-positive`; refresh-materialized `local upstream`;
+      translation-workflow `accepted retranslate` (its existing Gateway_PostQA
+      branches coded); wireframe-design-review re-pointed to
+      `Process_CriterionAdjudication`, `accepts="stands scope dispensation"`;
+      document-ingestion `accepts="drift false-positive"` on its call into the
+      L1 gate, which now contains a judgement. `check:workflow-refs`:
+      "10 of 10 say which answers they can act on".
       **Two of six done** (`review-narrative`, `voice-review`, via
       `criterion-adjudication`). The other four no longer run the wrong
       outcomes, but still declare no enum of their own — reported by
@@ -167,4 +176,19 @@ union guard would have let `code` sit ignored on a judge.
 - [x] A caller whose codes differ from the shared gateway's is REFUSED rather
       than silently routed through the wrong three — `checkAcceptedCodes` in
       `process-model.ts`, with absence reported rather than guessed.
-- [ ] `bun run gates` green.
+- [x] `bun run gates` green — locally every gate but the two that fail only because of the git-ignored `.claude/worktrees/`; CI must be green before the PR merges.
+
+## Summary of Changes
+
+Shape (4) landed earlier today (split at the judgement; `accepts` checked at load). This closes the remaining box: every caller now names the answers ITS question admits, approved by the owner as one set on 2026-09-23.
+
+| caller | answers | how |
+|---|---|---|
+| content-change-review | `stands` · `withdrawn` | recorded on the comment; no branch |
+| ingest-l1-completeness-gate | `drift` · `false-positive` | Task_Verdict records either |
+| refresh-materialized | `local` · `upstream` | Task_Apply applies the winner |
+| translation-workflow | `accepted` · `retranslate` | Gateway_PostQA's two existing branches coded; "edit and re-run QA" folds into `retranslate` |
+| wireframe-design-review | `stands` · `scope` · `dispensation` | re-pointed to Process_CriterionAdjudication (`accepts`) |
+| document-ingestion | `accepts="drift false-positive"` | its call into the L1 gate, which now contains a judgement |
+
+Each call declaring `codes` also carries `folio:fulfilment kinds="person agent"`. `check:workflow-refs`: 10 of 10 callers declared. `adjudication-marker.test.ts` updated: wireframe moves to the criterion callers, and each shared-half caller's own codes are pinned.
