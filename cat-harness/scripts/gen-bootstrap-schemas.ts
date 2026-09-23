@@ -24,7 +24,7 @@
  *
  * ## What this has to put back, and why it is not optional
  *
- * `zodToJsonSchema` drops `.refine()` entirely — measured: no `allOf`, no
+ * The converter drops `.refine()` entirely — measured: no `allOf`, no
  * `if`/`then`, no message. The output document's two conditionals would
  * therefore vanish, and the published schema would start ACCEPTING what it
  * currently REJECTS. That is a contract weakened invisibly, which is the
@@ -40,9 +40,10 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
+import { z } from "zod";
+
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
 
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 import {
   DiscussionInputSchema,
@@ -138,15 +139,18 @@ export function render(t: (typeof TARGETS)[number]): string {
   // self-contained. The cost — a referenced type is not a named thing in the
   // output — is the same one `harness-schema-export` accepts, and it is why
   // the schema GRAPH is read from the `.ts` rather than from this.
-  const body = zodToJsonSchema(t.schema, { $refStrategy: "none" }) as Record<string, unknown>;
+  const body = z.toJSONSchema(t.schema, { io: "input", reused: "inline" }) as Record<
+    string,
+    unknown
+  >;
 
-  // zodToJsonSchema emits its own `$schema`; the draft is stated here so the
+  // The converter emits its own `$schema`; the draft is stated below so the
   // published document does not change dialect when the library does.
   delete body.$schema;
 
   // STRICTNESS IS KEPT, DELIBERATELY — bean `z634`, decided 2026-09-21.
   //
-  // `z.object()` is strict, so zodToJsonSchema emits `additionalProperties:
+  // `z.object()` is strict, so the converter emits `additionalProperties:
   // false` on every object. The port that introduced this file STRIPPED it,
   // and that was right THEN: the hand-written documents it replaced carried
   // none at any depth, and porting a shape is not the moment to change what
