@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 659,
+      "count": 663,
       "unit": "beans"
     }
   },
@@ -1665,6 +1665,20 @@
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
     },
     {
+      "id": "folio-assistant-6hf2",
+      "title": "A: data-modelling guidance — dependents point at the general node; references are typed KG refs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [ ] gates green, PR open",
+      "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
+    },
+    {
       "id": "folio-assistant-6hq4",
       "title": "QA: gateway documentation-completeness criteria (decisions and their branches)",
       "status": "completed",
@@ -3139,14 +3153,14 @@
     {
       "id": "folio-assistant-bvuk",
       "title": "ONE OUTCOME GATEWAY, SIX DIFFERENT QUESTIONS: Process_Adjudication's three codes do not fit every caller",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T09:19:05Z",
-      "updatedAt": "2026-09-23T11:28:33Z",
+      "updatedAt": "2026-09-23T18:52:11Z",
       "preview": "Six processes call Process_Adjudication. Its GW_Outcome offers stands/scope/dispensation — QA-criterion outcomes. refresh-materialized calls it to decide which side wins a local-vs-remote conflict. Those are not the same answers. Pre-existing; #1026 made it visible by naming the codes.\n\n## Two corrections to this bean, both from checking it before building\n\n### It is SIX callers, not five\n\n`wirefr",
       "file": "beans/defs/folio-assistant-bvuk--one-outcome-gateway-five-different-questions-proce.md"
     },
@@ -4529,6 +4543,20 @@
       "updatedAt": "2026-09-19T00:41:16Z",
       "preview": "## Progress — 2026-09-18\n\nMechanism landed on `claude/festive-galileo-s7ibx0` ([PR #282](https://github.com/litlfred/folio-assistant/pull/282)).\n\nBefore: a `callActivity` was an opaque box completed in one step, so decomposing\na diagram made it read better and gate LESS. `editing-hci-validation` asked for\none `CallActivity_Evidence` and skipped the ten gated steps of\n`evidence-retrieval`; `documen",
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
+    },
+    {
+      "id": "folio-assistant-i4i1",
+      "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan C. After B lands.",
+      "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
     },
     {
       "id": "folio-assistant-i9xp",
@@ -6975,6 +7003,20 @@
       "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
     },
     {
+      "id": "folio-assistant-s4sp",
+      "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
+      "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -7493,6 +7535,20 @@
       "updatedAt": "2026-09-22T11:45:32Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/856\n\nOwner ruling 2026-09-22, over greying an empty tile out and over \"an empty\nviewer is fine to open\". Their reason is the stronger argument: a badge also\nmakes a WRONG count visible, where a dimmed tile only ever answers\n\"empty or not\".\n\n## The defect\n\nA tile carries a glyph and a caption and nothing else. An empty viewer's tile\nis indis",
       "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
+    },
+    {
+      "id": "folio-assistant-tr05",
+      "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:25Z",
+      "updatedAt": "2026-09-23T19:53:25Z",
+      "preview": "Owner 2026-09-23 (#1168). Plan A (guidance) -> B (data model) -> C (UML), in that order.",
+      "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
     },
     {
       "id": "folio-assistant-tr1m",
