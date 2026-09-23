@@ -1,7 +1,7 @@
 ---
 # folio-assistant-snjh
 title: 'INSTANCE VERSIONING §3.1/3.2/3.4/4: publishability declared, dependsOn emitted, bump computed — §4.1''s falsifier ran first and did not fire'
-status: in-progress
+status: completed
 type: feature
 parent: folio-assistant-vke6
 created_at: 2026-09-23T08:05:42Z
@@ -85,7 +85,7 @@ modules (`check:partition`), and two check scripts in no workflow
 - [x] §3.4 `dependsOn` emitted, with four-reason gaps for what it cannot express
 - [x] §4 `check:version-bump`, `surfaceAtRef` verified end-to-end against a real tag
 - [x] `bun run gates` green (130)
-- [ ] PR #1018 merged — **owner's call, not mine**
+- [x] PR #1018 merged — owner said "merge 1018", 2026-09-23T08:22Z, `32bfc36`
 
 ## Deliberately NOT done
 
@@ -95,3 +95,35 @@ report *undecided*, and both new gates report a **stated nothing** rather than
 a pass. Inferring the answer is the one thing the third state exists to
 prevent. §6 Q2 (where released packages live) and Q3 (whether `package.json`'s
 `0.1.0` is cat-harness's version) are likewise untouched.
+
+## Summary of Changes
+
+Merged as [#1018](https://github.com/litlfred/folio-assistant/pull/1018) →
+`32bfc36`, closing [#1017](https://github.com/litlfred/folio-assistant/issues/1017).
+All four sections of `instance-versioning.md` that were outstanding are in;
+§3.3 was already done by #985.
+
+| file | what it carries |
+|---|---|
+| `schemas/cat-harness.ts` | `publishable` / `id` / `version`, the `superRefine` that binds them, and `ExactVersionSchema` re-homed |
+| `schemas/harness-config.ts` | re-exports `ExactVersionSchema` so the no-ranges rule has one definition |
+| `schemas/depends-on.ts` | §3.4's `{packageId, version, uri}` record and its four-reason gaps |
+| `schemas/version-bump.ts` | §4's surface diff, `applyBump`, `clearsFloor` |
+| `scripts/check-publishable.ts` | the census + the two cross-instance rules |
+| `scripts/check-version-bump.ts` | §4.1's gate, four states, `surfaceAtRef` |
+| `scripts/kg-export.ts` | emits the block, or `dependsOnUnavailable` saying why not |
+| `scripts/check-published-refs.ts` | carrier 3 now reads the real thing instead of declaring a gap |
+
+50 tests in `schemas/instance-versioning.test.ts`, over throwaway trees.
+`bun run gates` green across 130 before and after the base merge.
+
+## What did NOT change, and is the next decision
+
+**No instance declares `publishable`.** §6 Q1 is the owner's, and both new
+gates report a *stated nothing* rather than a pass until it is answered. That
+is the intended end state of this bean, not a loose end — see the sibling bean
+if one is opened for Q1 itself.
+
+The `canonicalUrl` obligation (§3.2 states it as a remark; this made it a
+requirement, on §3.4's argument) is flagged in the PR body and reversible in
+one `superRefine` branch.
