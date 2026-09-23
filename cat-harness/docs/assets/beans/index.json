@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 660,
+      "count": 664,
       "unit": "beans"
     }
   },
@@ -1663,6 +1663,20 @@
       "updatedAt": "2026-09-20T19:59:52Z",
       "preview": "Owner, 2026-09-20, settling where the README render sits in the pipeline:\n\n> dynamic content then hets get json/jsonld export avaiable under\n> cat-harness/state.jsonld or so (whatever matches the dyanmic state\n> vsualizesrs)\n\n**\"or so (whatever matches …)\" is an explicit uncertainty, and it was not\nclosed by guessing.** `scripts/render-pipeline.ts` declares the step\n(`kg-dynamic`), fixes its POSIT",
       "file": "beans/defs/folio-assistant-6h47--render-stage-3-the-dynamic-state-export-has-a-posi.md"
+    },
+    {
+      "id": "folio-assistant-6hf2",
+      "title": "A: data-modelling guidance — dependents point at the general node; references are typed KG refs",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "## Done when\n- [x] data-modelling.md states both rules with the owner's examples and the existing typed-ref helpers\n- [x] skill prose that names its callers is removed (confirm-harness, root-readme, discussion, log-message, bootstrap package manifest)\n- [ ] gates green, PR open",
+      "file": "beans/defs/folio-assistant-6hf2--a-data-modelling-guidance-dependents-point-at-the.md"
     },
     {
       "id": "folio-assistant-6hq4",
@@ -4545,6 +4559,20 @@
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
     {
+      "id": "folio-assistant-i4i1",
+      "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan C. After B lands.",
+      "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
+    },
+    {
       "id": "folio-assistant-i9xp",
       "title": "beans update --body-file REPLACES the body silently; the skill named only the inline --body-append",
       "status": "completed",
@@ -5965,14 +5993,14 @@
     {
       "id": "folio-assistant-oe98",
       "title": "480 dead links: 240 of 244 generated skill pages point 'Edit this page's source' at a path that does not exist",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T12:09:09Z",
-      "updatedAt": "2026-09-22T12:09:09Z",
+      "updatedAt": "2026-09-23T20:05:12Z",
       "preview": "Found 2026-09-22 while checking that a NEW skill page rendered. The new page was fine; it had simply joined 239 others carrying the same defect.\n\n## Measured\n\n```\ngenerated skill pages with a source link : 244\n  ... whose path does NOT resolve        : 240  (98%)\n  ... dead links (2 per page)            : 480\n```\n\nTwo links per page — *\"Generated from [`…`]\"* and *\"✎ Edit this page's source\"* — bo",
       "file": "beans/defs/folio-assistant-oe98--480-dead-links-240-of-244-generated-skill-pages-po.md"
     },
@@ -6989,6 +7017,20 @@
       "file": "beans/defs/folio-assistant-s3p2--qa-sweep-anchors-its-verdicts-at-the-swept-directo.md"
     },
     {
+      "id": "folio-assistant-s4sp",
+      "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:34Z",
+      "updatedAt": "2026-09-23T19:53:34Z",
+      "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
+      "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
+    },
+    {
       "id": "folio-assistant-s8mo",
       "title": "SESSION CONTEXT: what the state machine tracks, with actor required",
       "status": "completed",
@@ -7507,6 +7549,20 @@
       "updatedAt": "2026-09-22T11:45:32Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/856\n\nOwner ruling 2026-09-22, over greying an empty tile out and over \"an empty\nviewer is fine to open\". Their reason is the stronger argument: a badge also\nmakes a WRONG count visible, where a dimmed tile only ever answers\n\"empty or not\".\n\n## The defect\n\nA tile carries a glyph and a caption and nothing else. An empty viewer's tile\nis indis",
       "file": "beans/defs/folio-assistant-tis1--tile-count-an-empty-viewers-tile-looks-exactly-lik.md"
+    },
+    {
+      "id": "folio-assistant-tr05",
+      "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:53:25Z",
+      "updatedAt": "2026-09-23T19:53:25Z",
+      "preview": "Owner 2026-09-23 (#1168). Plan A (guidance) -> B (data model) -> C (UML), in that order.",
+      "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
     },
     {
       "id": "folio-assistant-tr1m",

@@ -1,4 +1,25 @@
 ---
+$schema: folio-fsh-guts/v1
+title: "Skill-instructions page \"log-message\" — a generated page nothing regenerates any more"
+kind: generated-page
+movedOn: 2026-09-23
+movedFrom: "cat-harness/docs/reference/skill-instructions/log-message.md"
+bean: folio-assistant-oe98
+summary: >-
+  A page gen-skill-docs.ts wrote before commit 258d6e0a (byql: fold detangle
+  and kg-navigation into cat-harness) and has not written since. It was no
+  longer in the skill-instructions index, --check could not see it, and both
+  of its source/edit links pointed at paths that no longer exist. Moved here
+  on the owner's choice (2026-09-23, "move to trashcan") rather than deleted;
+  the live page for any skill that still exists is regenerated from its source.
+---
+
+> **Retired 2026-09-23.** Moved here rather than deleted, per
+> `skills/folio-core/fsh-guts.md`. The original page follows verbatim,
+> including its own front matter, fenced so it is not read as this node's.
+
+````markdown
+---
 layout: default
 title: 'Logging what you are doing'
 parent: Skill instructions
@@ -95,3 +116,4 @@ It is also not a status report to the Requestor. Logging is not asking. If a
 step needs a judgement, that is [`confirm-harness`](confirm-harness.md), and no
 number of log lines substitutes for it.
 {% endraw %}
+````
