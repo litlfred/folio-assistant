@@ -52,13 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "CallActivity_IngestTheme",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -107,8 +102,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }
