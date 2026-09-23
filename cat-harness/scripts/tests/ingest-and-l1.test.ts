@@ -28,6 +28,8 @@ import {
   sidecarDocument,
   sourceBlockOf,
   staleSidecars,
+  ENTRY_DIRECTORIES,
+  ENTRY_SIDECARS,
 } from "../check-l1-complete.ts";
 import { NARRATIVE_BEARING } from "../narratives.ts";
 import {
@@ -979,5 +981,85 @@ describe("a document's figures can be VECTOR, and the gate no longer passes over
     expect(r.state).toBe("met");
     expect(r.detail).toContain("declares at least 1 captioned figure");
     expect(r.detail).toContain("NOT established");
+  });
+});
+
+/**
+ * WHAT AN ENTRY MAY NOT CONTAIN — bean `3psh`.
+ *
+ * THE CORPUS CANNOT TEST THIS. Measured 2026-09-23: 5 libraries, 21 entries,
+ * **zero** orphans and zero unexpected children. So a green corpus run proves
+ * nothing about this requirement, and these fixtures are not belt-and-braces
+ * — they are the only thing that will ever execute the branch. `1xhc`: a gate
+ * that does not fire is indistinguishable from one that passed.
+ *
+ * What the defect looked like before, measured on a real complete entry: it
+ * passed clean, passed again with a nested orphan holding an `images.json`
+ * under the WRONG `doc_id`, and passed a third time with a wholly unexpected
+ * loose file — because no requirement said what an entry may not contain.
+ */
+describe("an entry's contents are a CLOSED set — `3psh`", () => {
+  const entry = (children: Record<string, string | null>): string => {
+    const dir = mkdtempSync(join(tmpdir(), "l1-contents-"));
+    for (const [name, body] of Object.entries(children)) {
+      if (body === null) mkdirSync(join(dir, name), { recursive: true });
+      else writeFileSync(join(dir, name), body);
+    }
+    return dir;
+  };
+  const contents = (dir: string) => checkEntry(dir).requirements.find((r) => r.name === "contents");
+
+  const PAGED = {
+    "structure.json": '{"$schema":"pdf-structure/v1","doc_id":"d","sections":[]}',
+    "manifest.jsonld": "{}",
+    "images.json": '{"$schema":"folio-document-images/v1","doc_id":"d","images":[]}',
+    sections: null,
+    blocks: null,
+  };
+
+  test("a clean entry is MET, and says how many children it accounted for", () => {
+    const r = contents(entry(PAGED));
+    expect(r?.state).toBe("met");
+    expect(r?.detail).toContain("5 child(ren)");
+  });
+
+  test("`images/` and `ocr/` are allowed — they are arms' output, not strays", () => {
+    // Measured on the corpus: `images/` on 13 of 21 entries and `ocr/` on 2.
+    // A closed set that excluded them would fail 13 entries on its first run,
+    // which is how a new gate gets weakened back out again.
+    expect(contents(entry({ ...PAGED, images: null, ocr: null }))?.state).toBe("met");
+  });
+
+  test("a NESTED ORPHAN is unmet and is NAMED", () => {
+    // The original incident: `pdf-images.py` derived the doc id differently
+    // from `pdf-structure.py` and wrote into a sibling; after a rename the
+    // sibling ended up INSIDE the entry. Both duplicates were byte-identical
+    // apart from `doc_id` and both were committed unnoticed.
+    const r = contents(entry({ ...PAGED, "260725032v1": null }));
+    expect(r?.state).toBe("unmet");
+    expect(r?.detail).toContain("260725032v1");
+    // NAMED, NOT REMOVED — `deletion-requires-confirmation`. An orphan is
+    // evidence of which arm misfiled it; deleting it destroys that.
+    expect(r?.detail).toContain("Reported, not removed");
+  });
+
+  test("an unexpected loose FILE is unmet too — not only directories", () => {
+    const r = contents(entry({ ...PAGED, "notes.txt": "x" }));
+    expect(r?.state).toBe("unmet");
+    expect(r?.detail).toContain("notes.txt");
+  });
+
+  test("a dotfile is NOT a stray", () => {
+    // `.DS_Store` and friends are the environment's, not an arm's. Flagging
+    // them would train a reader to ignore this finding, which is worse than
+    // not having it.
+    expect(contents(entry({ ...PAGED, ".DS_Store": "x" }))?.state).toBe("met");
+  });
+
+  test("the allowed set is the DECLARED one, not a literal repeated here", () => {
+    // If these drift apart, the requirement and its documentation disagree
+    // and only one of them is executable.
+    for (const d of ENTRY_DIRECTORIES) expect(contents(entry({ ...PAGED, [d]: null }))?.state).toBe("met");
+    for (const f of ENTRY_SIDECARS) expect(contents(entry({ ...PAGED, [f]: "{}" }))?.state).toBe("met");
   });
 });
