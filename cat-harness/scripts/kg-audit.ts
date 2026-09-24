@@ -49,6 +49,7 @@ import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
 import { checkTestRuns } from "./test-run-conformance.js";
 import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
+import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
 import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
@@ -1327,6 +1328,58 @@ function arrowDirection(): KgCriterionEntry {
 }
 
 /**
+ * Do the files a general node's PROSE names still exist (bean `epbt`)?
+ *
+ * Advisory. Prose may name a dependent as explanation — the owner kept that
+ * on 2026-09-24 — but it cannot notice a rename, so a path whose directory is
+ * here and whose file is not is listed. A bare name nothing here carries is
+ * undetermined (an output, a folio's file, an example) and never a finding.
+ */
+function proseNamesResolve(): KgCriterionEntry {
+  const repo = repoRootFor(root);
+  const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
+  if (ls.exitCode !== 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
+  }
+  const basenames = new Set(new TextDecoder().decode(ls.stdout).split("\n").map((f) => f.split("/").pop()!));
+  // Every instance's root, not only this one: `materialize-remote.bpmn`
+  // names `schemas/materialization.ts`, which is folio-assistant-core's, and
+  // prose spells a sibling instance's path from that instance's root.
+  const roots = [
+    repo,
+    root,
+    ...readdirSync(repo, { withFileTypes: true })
+      .filter((e) => e.isDirectory() && !e.name.startsWith(".") && e.name !== "node_modules")
+      .map((e) => join(repo, e.name)),
+  ];
+  const texts: { where: string; prose: string }[] = workflowFiles(root)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => ({ where: relative(root, f), prose: diagramProse(readFileSync(f, "utf-8")) }));
+  const graph = readSchemaGraph(root);
+  const generalModules = new Set((graph?.decls ?? []).filter((d) => d.general).map((d) => d.module));
+  for (const m of generalModules) {
+    for (const d of generalDeclarationProse(readFileSync(join(repo, m), "utf-8"))) {
+      texts.push({ where: `${m}#${d.name}`, prose: d.prose });
+    }
+  }
+  let named = 0;
+  const findings: KgFinding[] = [];
+  for (const t of texts) {
+    for (const n of namedFiles(t.prose)) {
+      named++;
+      if (classifyName(n, roots, basenames) === "missing") {
+        findings.push({ where: t.where, detail: `names \`${n}\`: its directory is here and the file is not — renamed, moved, or never written.` });
+      }
+    }
+  }
+  // Zero names over every general node is a reader that matched nothing.
+  if (named === 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no file name was found in any general node's prose, so nothing was checked." }] };
+  }
+  return entry(findings);
+}
+
+/**
  * The recorded test runs, followed to the skill each names and on to that
  * skill's contract (#1168, B4). Three criteria rather than one, because
  * "could not check" is a different finding from "checked and wrong".
@@ -1891,6 +1944,7 @@ function auditGraph(
       "skill-contract-resolves": entry(brokenSkillContracts()),
       ...testRunCriteria(skills),
       "arrow-direction": arrowDirection(),
+      "prose-names-resolve": proseNamesResolve(),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },

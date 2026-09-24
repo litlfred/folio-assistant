@@ -1172,6 +1172,18 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "should hold the pointer (data-modelling step 8).",
   },
   {
+    id: "prose-names-resolve",
+    applies: ["graph"],
+    // `minor` and advisory (bean `epbt`). Prose may name a dependent as
+    // explanation — the arrow rule governs data — so this never says a name
+    // should not be there, only that it no longer resolves.
+    severity: "minor",
+    summary:
+      "A general node's prose — a BPMN process's documentation, or a `@general` declaration's doc comment — names " +
+      "a file whose directory is in this checkout and which is not: renamed, moved, or never written. A bare name " +
+      "nothing here carries is undetermined (a run's output, a folio's file, an example) and not reported.",
+  },
+  {
     id: "story-role-resolves",
     applies: ["graph"],
     severity: "major",
