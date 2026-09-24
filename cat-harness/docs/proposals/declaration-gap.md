@@ -205,8 +205,8 @@ are either in the wrong repo."*
 |---|---|---|---|---|
 | `cat-harness/blueprint/` | 4 | 72K | the QOU formalization blueprint. `src/content.tex` is 1,192 lines of `\begin{definition}[Frobenius–Hopf Data]` with `\lean{QOU.FrobeniusHopfData}` refs; `web.tex` titles itself *"Quantum Observable Universe — Formalization Blueprint"* | **nothing** |
 | `cat-harness/home_page/` | 2 | 12K | a Jekyll site root with `baseurl: "/qou"`, `title: "litlfred's Papers"`, and a table linking one paper | **nothing** |
-| `cat-harness/latex/` | 1 | 48K | `preamble.tex`, 830 lines, self-described as *"Shared LaTeX preamble for all papers in the folio"* | **nothing** |
-| `cat-harness/computations/` | 1 | 8K | one `wall-violations.witness.json` | **nothing** — and two `fsh-guts/scripts/` documents already say so: *"Their subject is absent. `cat-harness/computations/` holds one file, a `.witness.json`, and no Python…"* |
+| `cat-harness/latex/` | 1 | 48K | `preamble.tex`, 830 lines, self-described as *"Shared LaTeX preamble for all papers in the folio"* | four workflow steps and a skill — **by a path that does not resolve**; see below |
+| `cat-harness/computations/` | 1 | 8K | one `wall-violations.witness.json` | `wall-violations-sweep.ts` — **by a path that does not resolve**; see below. Two `fsh-guts/scripts/` documents already note the directory: *"Their subject is absent. `cat-harness/computations/` holds one file, a `.witness.json`, and no Python…"* |
 
 On **age**, honestly: this clone's history begins 2026-09-19 (2,601 commits in
 four days), and the 2026-09-20 partition `git mv`'d these into `cat-harness/`,
@@ -241,6 +241,87 @@ plausibly the pre-split ancestor of `cat-harness/ui/`, which is the same kind of
 thing with none of the QOU hardcoding — but that is a guess, and this proposal
 does not act on guesses.
 
+### Corrected: two of the four ARE referenced — by paths that cannot reach them
+
+A first sweep of this document searched for the literal prefixes
+`cat-harness/latex/` and `cat-harness/computations/` and reported both as
+referenced by nothing. That was wrong, and the way it was wrong is the same
+mistake the measurement section already records once: **searching for the path
+a file is at rather than the path a consumer writes.**
+
+- `--preamble ../latex/preamble.tex` appears in `lean_ci.yml`, `publish.yml`,
+  `blueprint.yml` and `lean-build.yml`, and in
+  `skills/folio-core/docs-generation.md`.
+- `folio-assistant/computations/wall-violations.witness.json` is the default
+  output path in `content/pipeline/wall-violations-sweep.ts`.
+
+Neither resolves. The four workflow steps carry no `working-directory`, so they
+run at the repository root, where `../latex/preamble.tex` points **above the
+checkout** — and the file is at `cat-harness/latex/preamble.tex`. The witness
+path names `folio-assistant/computations/`, and the file is at
+`cat-harness/computations/`. Both are the folio-side layout, left behind by the
+2026-09-20 partition; AGENTS.md already records the same shape for
+`witness-refresh`, which *"needs `folio-assistant/computations/`, and the
+platform carries no folio."*
+
+So the finding is sharper than "unreferenced": these are files no consumer
+scans (`v8gh`) named by consumers that scan nothing and report a clean run
+(`dh4f`) — **both defects over one pair of files**. The workflow step is
+`continue-on-error: true` and guarded by `if [ ! -d content ]`, so nothing ever
+went red over it.
+
+Fixing those five dangling references is **not** part of this proposal. They are
+qou-shaped invocations in a repository that carries no folio, and they are
+listed here so the next reader does not rediscover them.
+
+## Verified against `litlfred/qou`, 2026-09-24
+
+The owner chose: check that `litlfred/qou` already holds each removal candidate,
+and remove only what it does. Checked against qou's default branch `main`
+(`7aafd8dbe`) and its `gh-pages` branch. qou carries 6,443 branches, so this is
+a claim about those two and not about all of them.
+
+| candidate | in `litlfred/qou`? | verdict |
+|---|---|---|
+| `cat-harness/computations/wall-violations.witness.json` | **yes**, at the same relative path, `computations/wall-violations.witness.json` | **removed** |
+| `cat-harness/latex/preamble.tex` | **yes**, as `qou/main.tex` — 811 of its 830 lines are common | **removed** |
+| `cat-harness/blueprint/` | **no** — no `blueprint/` on `main` or `gh-pages`, and no `.tex` file anywhere in qou carries the blueprint's labels | **kept** — only copy |
+| `cat-harness/home_page/` | **no** — qou holds no `_config.yml` at all | **kept** — only copy |
+
+Two of the four are not a matter of degree, and both are worth stating exactly.
+
+**The witness is not a duplicate; it is a zero-run.** qou's copy was computed
+`2026-05-02` and reports `fileCount: 9, totalHits: 20`. The folio-assistant copy
+is *later* — `2026-08-08` — and reports `fileCount: 0, totalHits: 0`, with every
+category zeroed. It is the sweep run in the platform repo against the folio that
+is not there. Nothing is lost by removing it and the real one is in qou.
+
+**The preamble in this repository is the SUPERSEDED one, and the divergence is
+a mathematical correctness fix.** qou's `main.tex` removed a block of 16 macros
+on 2026-08-22 and replaced it with a comment saying why, which is still there:
+
+> This block defined 16 macros whose names are author typos — a control
+> sequence written without the space that separates it from the next token
+> (`\pi c_s` → `\pic_s`, `\xi Z` → `\xiZ`, `\lambda L` → `\lambdaL`). Defining
+> the glued name makes the page compile, and that is the problem: it converts a
+> loud failure into silently-wrong printed mathematics. Two did exactly that.
+> `\pic` expanded to `\pi`, so `2\pic_s` printed `2\pi_s` and the sound speed
+> vanished from a Hawking-temperature denominator … Every source site is fixed;
+> **do not restore these.**
+
+`cat-harness/latex/preamble.tex` still defines all sixteen. It is not a spare
+copy of a live file; it is the version qou deliberately reverted, sitting in a
+repository whose own banner says it should hold no folio content. Keeping it is
+the standing risk that something restores it.
+
+**`blueprint/` and `home_page/` are kept**, because removing them would destroy
+the only copy — 1,192 lines of blueprint mapping manuscript labels to `QOU.*`
+Lean declarations, and a site index. What to do with them needs a decision that
+is partly about the other repository, and it is asked separately rather than
+guessed at here. One observation for whoever takes it: `home_page/index.md`
+links to `blueprint/` and `blueprint.pdf`, and **neither exists on qou's
+`gh-pages`** — so the page it indexes was never published.
+
 ## What would falsify this
 
 - **If any of the four `remove` candidates is reachable from a workflow, a
@@ -249,9 +330,10 @@ does not act on guesses.
   `*.yml`, `*.yaml`, excluding the directory itself and the generated
   `docs-auto`/`docs/reference` trees. It did not cover `.tex` `\input`, shell,
   or HTML `src`/`href`.
-- **If `litlfred/qou` does not already carry `blueprint/` and the LaTeX
-  preamble**, then removing them here loses the only copy, and the move is to
-  push them there first. This was not checked; it needs the other repository.
+- **Checked, and it decided two of the four**: qou carries the witness and the
+  preamble and does not carry `blueprint/` or `home_page/`. The check covered
+  qou's `main` and `gh-pages` only; it holds 6,443 branches and one of them
+  could carry either.
 - **If the pass-through `skills/` parents turn out to be read by something that
   walks declarations one level deep**, they stop being a model question and
   become a real gap.
