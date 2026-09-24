@@ -591,6 +591,10 @@ export const RULES: Rule[] = [
       // caller and not a second answer to what the navigation looks like.
       "scripts/viewer-page.ts",
       "scripts/check-viewer-nav.ts",
+      // The rail over the FINISHED site (bean `oi1y`). Core beside
+      // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
+      // rather than guessing them, and which it deliberately runs after.
+      "scripts/rail-standalone-pages.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
