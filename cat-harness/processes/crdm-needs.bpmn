@@ -14,10 +14,12 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Needs">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>The single review here is what GW_Needs is literally named for — "BA approves?" — even though Lane_Stakeholders' confirmation sits between this task and that gateway in the flow; the phase's own documentation makes clear the loop needs both, so reading the gate label alone would miss half of what it takes to exit it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ReviewNeeds</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Drafts the needs statement but never decides it is right — A_Synthesise is the sole target when GW_Needs loops back — and this process's own documentation calls an unconfirmed synthesis "an agent's summary, not a requirement," which is exactly what this lane alone produces before the two lanes below it look at it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Needs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Stakeholders</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Synthesise</bpmn:flowNodeRef>
@@ -26,6 +28,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>The task itself carries no documentation of its own, so this lane's entry is the only place recording what "confirm" means in Phase 1: recognising the synthesised needs statement as actually theirs, immediately before the loop gate — not, as in the later data-model phase, judging a cardinality, because there is no model yet to have one.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_ConfirmNeeds</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -51,7 +54,9 @@ checks it against what they actually need.</bpmn:documentation>
 statement">
       <bpmn:documentation>Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
+    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?">
+      <bpmn:documentation>The BA's answer to the needs statement. `revise` goes back to synthesising needs from the sources; `yes` completes the phase.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Process_CRDM_Needs" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_1" sourceRef="Start_Process_CRDM_Needs" targetRef="A_Stakeholders"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_2" sourceRef="A_Stakeholders" targetRef="A_Synthesise"/>

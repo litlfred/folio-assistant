@@ -26,10 +26,10 @@ A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fall
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent | — | Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely. |
-| CI/CD Pipeline | — | Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one. |
-| Reviewer / SME | — | Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it. |
-| Publication manager | — | Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository. |
+| Agent | `authoring-agent` | Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely. |
+| CI/CD Pipeline | `build-pipeline` | Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one. |
+| Reviewer / SME | `reviewer` | Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it. |
+| Publication manager | `publication-manager` | Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository. |
 
 ## Steps
 
@@ -50,11 +50,11 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Findings we can fix?**<br>`GW_Findings` | — | **yes** → Impact analysis what of ours binds it<br>**no** → Options analysis adopt · hold · decline |
-| **Adopt?**<br>`GW_Adopt` | — | **yes** → Move the pin and open the PR<br>**no** → Record the hold or the decline |
+| **Findings we can fix?**<br>`GW_Findings` | The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline). | **yes** → Impact analysis what of ours binds it<br>**no** → Options analysis adopt · hold · decline |
+| **Adopt?**<br>`GW_Adopt` | The project manager's decision. `yes` moves the pin and opens the PR; `no` records the hold or the decline. | **yes** → Move the pin and open the PR<br>**no** → Record the hold or the decline |
 
 {% endraw %}

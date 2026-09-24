@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "processes/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:7844c74ed28090fec54101ae67a43f0cb1edef020488f5e154ef8822dd8e6bed",
+  "source_hash": "sha256:dbdcb53d84ae1f19ea35dec9662ad87ca9f87e870a6686df6fae95ec009c0448",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Drift",
-          "detail": "\"Did anything&#10;change?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   },
@@ -112,7 +115,7 @@
       "kind": "implements",
       "prose": "cat-harness/processes/atomic-mass-drift-check.bpmn",
       "code": ".github/workflows/atomic-mass-gen-check.yml",
-      "prose_hash": "7844c74ed280",
+      "prose_hash": "dbdcb53d84ae",
       "code_hash": "92f3675a0e49",
       "by": "baseline"
     }

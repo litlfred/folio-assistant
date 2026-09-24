@@ -372,6 +372,12 @@ jobs:
           bun run glossary:check
           bun run glossary:check:bootstrap
 
+      # Core's glossary (owner, 2026-09-23: "put glossary into
+      # folio-assistant-core"): every `folio-glossary/v1` document validates,
+      # and the glossary/ page and its SKOS JSON-LD are current.
+      - name: glossary page and SKOS
+        run: bun run check:glossary
+
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
       # 58 of 62 .pot templates are diagrams and none has a .po). It checks
@@ -586,7 +592,7 @@ jobs:
         run: bun run ns:check
 
       # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
+      # `bootstrap-tools`, because bootstrap promises a Bootstrapping Agent it needs
       # no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
@@ -917,6 +923,14 @@ jobs:
           # rules a per-declaration parse cannot hold (a duplicate id, an
           # unreadable declaration).
           bun run check:publishable
+          # TWO questions about a code file, never averaged: is it in a
+          # DECLARED directory, and is it REACHABLE from a Tool node. They
+          # fail independently and are fixed by different work, so a single
+          # coverage number would let a rise in one hide a fall in the other —
+          # which is the defect bean `ylj7` was opened for. Advisory: both
+          # questions have open beans, and a gate that fails on a backlog is a
+          # gate somebody switches off.
+          bun run check:code-accounting
           # §4's bump, computed from the exported-surface diff rather than
           # claimed by a commit message. §4.1's falsifier was run before this
           # was built — 18 patch / 1 minor / 1 major over 20 commits on main —
@@ -1016,6 +1030,11 @@ jobs:
           # defect that registry exists to end, and a registry nothing runs is
           # the `xom7` shape one level along.
           bun run external-schemas:check
+          # Code lists -- every closed set of codes (adjudication answers, the
+          # namespaces this project mints) is a node with a definition and a
+          # source per code, not a string in an attribute. Owner, 2026-09-23.
+          # Refuses a malformed list, and an adjudication naming no list.
+          bun run code-lists:check
           bun run docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any
@@ -1135,6 +1154,18 @@ jobs:
       # above states. Bean `7ofc`.
       - name: folio projection and viewer are current
         run: bun run folio:viz:check
+
+      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
+      # than an exception to it. The viewer-nav audit walks the whole docs
+      # tree, so its sidecar goes stale the moment anybody adds a generated
+      # page anywhere — gating on staleness would make a red mean "somebody
+      # else merged", which is the shape the owner ruled ungated on
+      # 2026-09-20. A page that WAS railed and is not any more is the author
+      # of the diff, every time. Staleness and the still-unwired pages are
+      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # Bean `edx7`.
+      - name: viewer pages keep the navbar they had
+        run: bun run check:viewer-nav
 
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each

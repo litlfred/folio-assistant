@@ -7,7 +7,7 @@ pages: 2-2
 pdf_page: 2
 source_pdf: gurel-tat-2017-swot-analysis.pdf
 source_sha256: e303cb06af559cf5
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Uluslararası Sosyal Araştırmalar Dergisi 

@@ -98,14 +98,15 @@ describe("the README tells an agent the same path the code computes", () => {
     // A presence check over prose is satisfied incidentally; this reads the
     // one place the README actually makes the claim.
     const readme = readFileSync(join(REPO_ROOT, "bootstrap", "README.md"), "utf-8");
-    const fenced = [...readme.matchAll(/```\n([^`]*)\n```/g)].map((m) => m[1]!.trim());
+    // A fence may be indented, as it is inside the README's numbered steps.
+    const fenced = [...readme.matchAll(/^[ \t]*```\n([^`]*?)\n[ \t]*```/gm)].map((m) => m[1]!.trim());
     expect(fenced).toContain(`<name>/docs/${CAT_BOOTSTRAP_INIT_DOC}`);
   });
 
   test("the convention is stated in ONE place, not echoed into the skill", () => {
     // `confirm-harness.md` deliberately does NOT repeat the path. It used to,
     // and this test asserted it did — two copies of a convention are two
-    // things to keep in step, and the README is where an Initiator is sent.
+    // things to keep in step, and the README is where a Bootstrapping Agent is sent.
     // What the skill owns is the CONTRACT (at most one harness); what the
     // README owns is WHERE that harness keeps its instructions.
     const skill = readFileSync(join(REPO_ROOT, "bootstrap", "skills", "confirm-harness.md"), "utf-8");

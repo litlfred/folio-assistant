@@ -7,7 +7,7 @@
  *
  * ## Why the source and the output are in different instances
  *
- * `bootstrap/README.md` promises an Initiator **no harness, no server, no
+ * `bootstrap/README.md` promises a Bootstrapping Agent **no harness, no server, no
  * tools and no work plan**, and that what it reads is "a file you read, not
  * something you run". That directory holds `.md`, `.json` and `.bpmn` and no
  * executable code. So the Zod lives in `bootstrap-tools/` and the JSON
@@ -50,6 +50,8 @@ import {
   DiscussionOutputObjectSchema,
   JSON_SCHEMA_CONDITIONALS,
 } from "../../bootstrap-tools/schemas/discussion.ts";
+import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const check = process.argv.includes("--check");
@@ -98,9 +100,10 @@ const TARGETS = [
     id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
     title: "Discussion Input",
     description:
-      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — an Initiator has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
+      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
     schema: DiscussionInputSchema,
     conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
   },
   {
     // declared-path-literal: as above — path moved, `$id` deliberately not.
@@ -111,6 +114,34 @@ const TARGETS = [
       "What the exchange determined: which harness, which repositories, on whose word, and by what means. This document existing and conforming is what finishes the task — not that a conversation took place.",
     schema: DiscussionOutputObjectSchema,
     conditionals: JSON_SCHEMA_CONDITIONALS as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
+  },
+  {
+    // bootstrap's own terms, and the shape of a `<name>.json` declaration
+    // (owner, 2026-09-23: "bootstrap = self definitional … all terms have a
+    // schema"). `bootstrap/README.md` links each term's first use here.
+    file: "schemas/graph.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
+    title: "Knowledge Graph declaration",
+    description:
+      BOOTSTRAP_TERMS.KnowledgeGraph +
+      " This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.",
+    schema: KnowledgeGraphDeclarationSchema,
+    conditionals: [] as readonly unknown[],
+    terms: BOOTSTRAP_TERMS as Readonly<Record<string, string>>,
+  },
+  {
+    // The shape of `models/models.json`. Its Zod source moved out of bootstrap
+    // into cat-harness on 2026-09-23 (bean iwtn, FR-7: bootstrap holds no
+    // code); this document is what a reader with nothing installed opens.
+    file: "schemas/model-registry.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+    title: "Model Registry",
+    description:
+      "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
+    schema: ModelRegistrySchema,
+    conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
   },
 ] as const;
 
@@ -188,6 +219,14 @@ export function render(t: (typeof TARGETS)[number]): string {
   // published file the way it reads in the schema: the object, then the rules
   // that relate its fields.
   if (t.conditionals.length) doc.allOf = t.conditionals;
+
+  // The glossary, as schema: one `$defs` entry per term, each a definition a
+  // README links to. A term with no structure of its own (Role, Skill) is a
+  // definition only, which JSON Schema expresses as a title and a description.
+  const terms = Object.entries(t.terms);
+  if (terms.length) {
+    doc.$defs = Object.fromEntries(terms.map(([name, definition]) => [name, { title: name, description: definition }]));
+  }
 
   return `${JSON.stringify(doc, null, 2)}\n`;
 }

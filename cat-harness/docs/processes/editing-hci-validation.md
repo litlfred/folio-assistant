@@ -24,13 +24,13 @@ folio-assistant — editing a content block and its HCI validation gate. Source 
 
 | lane | role | what it does here |
 |---|---|---|
-| Editor / author (person) | — | Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built. |
-| Work plan — beans (shared by humans and agents) | — | Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome. |
-| Authoring agent (system) | — | Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide. |
-| HCI validation pipeline (system) | — | Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything. |
-| Mechanical validation (system) | — | Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse. |
-| Non-mechanical validation (review agent or SME) | — | Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial. |
-| Corpus (versioned store) | — | Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance. |
+| Editor / author (person) | `author` | Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built. |
+| Work plan — beans (shared by humans and agents) | `work-plan` | Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome. |
+| Authoring agent (system) | `authoring-agent` | Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide. |
+| HCI validation pipeline (system) | `validation-pipeline` | Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything. |
+| Mechanical validation (system) | `validation-pipeline` | Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse. |
+| Non-mechanical validation (review agent or SME) | `reviewer` | Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial. |
+| Corpus (versioned store) | `corpus` | Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance. |
 
 ## Steps
 
@@ -58,11 +58,11 @@ Every one of the 17 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Judgement call?**<br>`Gateway_ReviewerKind` | — | **no** → Agent review of the change<br>**yes** → Human / SME review |
-| **Accept, revise or discard?**<br>`Gateway_EditorDecision` | — | **revise** → Revise the proposed change<br>**discard** → Change discarded<br>**accept** → Commit into the corpus |
+| **Judgement call?**<br>`Gateway_ReviewerKind` | Does this change need a judgement call? `no` goes to agent review; `yes` goes to a human or SME. The question is about the change, not about who is available. | **no** → Agent review of the change<br>**yes** → Human / SME review |
+| **Accept, revise or discard?**<br>`Gateway_EditorDecision` | The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus. | **revise** → Revise the proposed change<br>**discard** → Change discarded<br>**accept** → Commit into the corpus |
 
 {% endraw %}

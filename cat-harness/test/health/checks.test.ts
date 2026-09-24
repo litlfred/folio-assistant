@@ -571,6 +571,124 @@ describe("bean-store", () => {
     ...o,
   });
 
+  // ── Bean `thux`: a claim worked through its CHILDREN is not quiet ─────
+  //
+  // `bean-quiet-claims` reads one signal — `updated_at` on the bean's own
+  // file — and for a task that is right. For a bean worked through its
+  // children nothing touches the parent while they move, so it accrued quiet
+  // hours for doing exactly what it is for, and the finding had no action:
+  // refreshing it means editing a file for no reason, which is `o5qj`'s shape
+  // one check over. Measured 2026-09-23: 39 quiet claims, 8 of them parenting
+  // work that had moved inside the window.
+  //
+  // `QUIET` is 72 hours; the fixture clock is 2026-09-19T12:00:00Z.
+  const longAgo = "2026-09-14T12:00:00Z"; // 120 h — quiet
+  const justNow = "2026-09-19T06:00:00Z"; // 6 h  — moving
+
+  it("a claim whose CHILD moved is not reported quiet", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
+  it("...but it is still COUNTED — `dh4f`", () => {
+    // "No claim went quiet" and "the quiet ones were parents of moving work"
+    // must not read the same. Nothing thresholds this.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    const m = r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work");
+    expect(m?.value).toBe(1);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims")?.value).toBe(0);
+  });
+
+  it("a parent whose children are ALL quiet still fires — the discrimination", () => {
+    // `bzyu` on the real store: 8 open children, none moving. Without this the
+    // change would excuse every parent and the check would stop saying
+    // anything about the beans it exists for.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: longAgo, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toContain("bean-quiet-claims");
+    // Both of them: the child is quiet on its own account too.
+    expect(r.findings.filter((f) => f.metric === "bean-quiet-claims").length).toBe(2);
+  });
+
+  it("a CHILDLESS quiet claim is untouched by any of this", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [bean({ id: "lone", status: "in-progress", updatedAt: longAgo })],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-quiet-claims"]);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work")?.value).toBe(0);
+  });
+
+  it("keyed on PARENTHOOD, not on `type: epic`", () => {
+    // The relation carries the argument; `type` is a label a bean sets about
+    // itself while `parent` is a fact another bean asserts about it. The
+    // fixture's parent has no type at all and is still excused.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "plain", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "todo", updatedAt: justNow, parent: "plain" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
+  // ── Bean `7umv`: an action must name a mechanism that can reach its subject ──
+
+  it("the ORPHAN action does not offer the label, because it cannot reach an orphan", () => {
+    // `feature-staging.yml`'s `cleanup` reads labels from the
+    // `pull_request_target: closed` payload, and a preview is only findable as
+    // an orphan once that event has fired — so labelling afterwards fires
+    // nothing (bean `w2g5`). The action used to name the label FIRST.
+    // Measured cost: the owner applied it to both orphaned slugs and 201.2 MB
+    // stayed exactly where it was.
+    const r = stagingOrphanCheck(healthyContext({
+      staging: {
+        state: "ok",
+        value: { branch: "present", previews: [{ slug: "gone-branch", bytes: 99 * MB, files: 10 }], command: "fixture" },
+      },
+      openPrHeads: { state: "ok", value: [] },
+      branches: { state: "ok", value: { candidates: [], defaultBranch: "main", command: "fixture" } },
+    }));
+    expect(r.findings.length).toBeGreaterThan(0);
+    const action = r.findings[0].action!;
+    // The mechanism that WORKS is named, with the exact inputs.
+    expect(action).toContain("workflow_dispatch");
+    expect(action).toContain("cleanup_slug: gone-branch");
+    expect(action).toContain("cleanup_confirm: gone-branch");
+    // And the one that does not is named as not working, rather than omitted —
+    // a reader who has already tried it needs to know why it did nothing.
+    expect(action).toMatch(/DOES NOT WORK|does not work/);
+    expect(action).toContain("w2g5");
+  });
+
   it("fires `major` on a duplicate title — the 14,688-duplicate shape, at its leading edge", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {

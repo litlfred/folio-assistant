@@ -24,7 +24,7 @@ A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. F
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against. |
+| CI/CD Pipeline | `build-pipeline` | The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against. |
 
 ## Steps
 
@@ -36,10 +36,10 @@ Every one of the 1 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Did anything&#10;change?**<br>`GW_Drift` | — | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+| **Did anything&#10;change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating the context, block, library and site graphs. No difference ends clean; any difference ends the job red, because a committed file is stale against its source. | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
 
 {% endraw %}

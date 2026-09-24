@@ -5,7 +5,7 @@
     "id": "Process_BoardRelocate",
     "path": "processes/board-relocate.bpmn"
   },
-  "source_hash": "sha256:f6f27b61c10b40ae124d8561431a91962fa47725507222d669ffed0d05275fe5",
+  "source_hash": "sha256:6c1d96221b93b19ee0d18d7dd90f8d9a7bfb0a661627df17f444fda3c1bd2a45",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Confirmed",
-          "detail": "\"Confirmed by the reader?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 10,
     "unknown": 0
   }

@@ -5,7 +5,7 @@
     "id": "Process_QaReportSigning",
     "path": "processes/qa-report-signing.bpmn"
   },
-  "source_hash": "sha256:93ef1ef8436bb0f66a2dab658ae34bd62d9036c818d664854b77333233a06cb0",
+  "source_hash": "sha256:7cd973709aeb1befa21dd94e0595b7256184f8746e284db2864580d9ed9e410e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -93,15 +93,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_SigningRoute",
-          "detail": "\"Which signing route?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -115,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 2,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

@@ -24,8 +24,8 @@ folio-assistant — Ingestion subprocess — build the L1 knowledge graph. Sourc
 
 | lane | role | what it does here |
 |---|---|---|
-| Ingestion Engine (agent, runs unattended) | — | Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it. |
-| Corpus — L1 source knowledge graph | — | The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it. |
+| Corpus — L1 source knowledge graph | `corpus` | The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet. |
 
 ## Steps
 

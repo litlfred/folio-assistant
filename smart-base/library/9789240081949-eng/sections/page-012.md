@@ -7,7 +7,7 @@ pages: 12-12
 pdf_page: 12
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 Use-cases

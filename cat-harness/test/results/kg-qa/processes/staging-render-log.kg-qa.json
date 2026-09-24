@@ -5,7 +5,7 @@
     "id": "Process_RenderLog",
     "path": "processes/staging-render-log.bpmn"
   },
-  "source_hash": "sha256:d6a897a1d12b17ba2c4b0f8442dd9121f14545677081876c03ce83b96df51190",
+  "source_hash": "sha256:1edae325b8b603832133dfc1faba0d94e462a493e932f125da1933f39ce08b8e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -105,19 +105,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_What",
-          "detail": "\"What is happening?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Live",
-          "detail": "\"Any liveness signal fired?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -131,8 +130,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

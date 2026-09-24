@@ -6,12 +6,8 @@
   "requiredCapabilities": [
     { "capabilityId": "sushi-compiler", "degradation": "warn" }
   ],
-  "scripts": [
-    { "path": "scripts/validate-terminology.py", "runtime": "python", "phase": "validate" }
-  ],
   "routingPatterns": ["terminology", "CodeSystem", "ValueSet", "ConceptMap", "SNOMED", "ICD", "LOINC"],
   "tags": ["smart-guidelines", "terminology", "fhir"],
   "package": "authoring-who-smart-guidelines",
-  "lifecycleStages": ["author", "validate"],
-  "schemaRef": "schemas/skills/terminology-management"
+  "lifecycleStages": ["author", "validate"]
 }

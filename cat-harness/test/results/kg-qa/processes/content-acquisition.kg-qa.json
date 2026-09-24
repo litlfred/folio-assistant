@@ -5,7 +5,7 @@
     "id": "Process_ContentAcquisition",
     "path": "processes/content-acquisition.bpmn"
   },
-  "source_hash": "sha256:9fd89d9c76a2bd42466d5d044e39ead895839a1035be8f28825828058730343d",
+  "source_hash": "sha256:f456a1268030ce98cc10ed240cbcc01d3c40874a73dd0535fda37125265bdaa3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,15 +97,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Offered",
-          "detail": "\"Offered already?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -119,8 +122,8 @@
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 2,
+    "pass": 13,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

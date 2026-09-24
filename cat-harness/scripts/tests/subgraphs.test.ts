@@ -17,7 +17,7 @@
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
-import { owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
+import { isDerivedGraph, owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
 import { scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -113,6 +113,38 @@ describe("the entanglement report", () => {
     // And the corpus itself is clean — stated as its own assertion so that
     // "clean" and "not computed" can never be the same passing test.
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
+  });
+
+  test("a DERIVED graph's unresolved links are never dangling", () => {
+    // A library section is machine-produced FROM a source document, so a
+    // markdown link inside it is whatever the derivation carried across. Five
+    // documents ingested on 2026-09-23 printed `./REFERENCE.md`, `./FORMS.md`
+    // and `./advanced.md` inside EXAMPLES of a skill directory — 12 findings,
+    // every one asking somebody to edit a transcription of a document this
+    // project did not write.
+    //
+    // `schemas/cat-harness.ts` already said so of the `derived` layer — *"a QA
+    // finding against a derived section is a finding against its GENERATOR,
+    // not against the corpus, and it sends a reviewer to fix the wrong file"*
+    // — and this check simply was not applying it.
+    //
+    // Asserted as an INVARIANT rather than a count. `derivedLinks.length > 0`
+    // would be the same trap the test above documents: it would fail the day
+    // somebody drains it, punishing the fix. This holds whether the corpus
+    // carries twelve or none.
+    // Same call shape as `scanSubgraphs` itself — it takes an instance CHAIN,
+    // not a path, and passing the root produced a `chain.find is not a
+    // function` rather than a wrong answer.
+    const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+    const derivedIds = new Set(
+      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).map((d) => d.id),
+    );
+    expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
+
+    // Nothing from a derived directory may be reported as dangling …
+    expect(report.dangling.filter((d) => derivedIds.has(d.fromDir))).toEqual([]);
+    // … and everything in the derived bucket must come from one.
+    expect(report.derivedLinks.filter((d) => !derivedIds.has(d.fromDir))).toEqual([]);
   });
 
   test("CRDM's relocations left no broken links behind — both of them", () => {

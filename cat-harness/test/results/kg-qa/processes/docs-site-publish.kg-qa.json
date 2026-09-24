@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:f7c95b60249ce25081c7888796ee978c159290ee9b84e4b18803f55f03a1ec47",
+  "source_hash": "sha256:3d6aa92bfcd60e90cce2a7e852f50c75d2e60dd7ce75c4350593317aba3d982c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -80,25 +80,29 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Complete",
-          "detail": "\"Is every maintained&#10;artefact present?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Survived",
-          "detail": "\"Did the previews&#10;survive?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
       "findings": []
     },
-    "prose-reviewed-since-code-changed": {
+    "node-reachable": {
       "result": "pass",
       "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/docs-site.yml",
+          "detail": ".github/workflows/docs-site.yml changed since cat-harness/processes/docs-site-publish.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -106,9 +110,9 @@
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 16,
     "fail": 1,
-    "n/a": 8,
+    "n/a": 7,
     "unknown": 0
   },
   "pair_attestations": [
@@ -116,8 +120,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/docs-site-publish.bpmn",
       "code": ".github/workflows/docs-site.yml",
-      "prose_hash": "f7c95b60249c",
-      "code_hash": "771f7cf73311",
+      "prose_hash": "3d6aa92bfcd6",
+      "code_hash": "b9ce5edee4e4",
       "by": "baseline"
     }
   ]

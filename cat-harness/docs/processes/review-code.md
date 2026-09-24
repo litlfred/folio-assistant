@@ -24,7 +24,7 @@ Judging changed CODE NODES — Tool definitions and schema definition nodes — 
 
 | lane | role | what it does here |
 |---|---|---|
-| Code reviewer | — | Forks on node kind but never on verdict: Task_ReviewTool catches a skill that is satisfied but whose mechanism is reachable from nowhere, Task_ReviewSchema catches a visual fact with two homes instead of one, and both branches converge on the same Task_RecordVerdict — so whichever kind of node changed, the reader of the finding sees one recording discipline, not two. |
+| Code reviewer | `code-reviewer` | Forks on node kind but never on verdict: Task_ReviewTool catches a skill that is satisfied but whose mechanism is reachable from nowhere, Task_ReviewSchema catches a visual fact with two homes instead of one, and both branches converge on the same Task_RecordVerdict — so whichever kind of node changed, the reader of the finding sees one recording discipline, not two. |
 
 ## Steps
 
@@ -39,10 +39,10 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Which node kind?**<br>`GW_NodeKind` | — | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
+| **Which node kind?**<br>`GW_NodeKind` | What kind of node is under review? `Tool` goes to the Tool-node review; `schema` goes to the schema-definition review. | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
 
 {% endraw %}

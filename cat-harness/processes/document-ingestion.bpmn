@@ -40,10 +40,12 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Ingestion_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
+        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Dropped</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Detect</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Extract</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Derive</bpmn:flowNodeRef>
@@ -56,10 +58,12 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_2" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>A one-task detour from the Ingestion Engine's own loop: it exists as its own lane rather than a step inside Lane_1 specifically so that recording an incomplete L1 build is visible as a write to the SHARED plan — a bean anyone can see and pick up — rather than a private retry the engine keeps to itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_OpenBean</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_3" name="Corpus — L1 source knowledge graph">
         <bpmn:documentation>The terminal state the whole diagram exists to reach: once Task_Promote lands material in library/&lt;bib-slug&gt;/, this lane is where that fact is recorded as available, and it is the boundary this diagram stops at — everything that depends on the source afterward, such as authoring-a-document.bpmn's citations, starts from here rather than being drawn into this process.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Citeable</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Ingested</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -149,14 +153,18 @@ knowledge graph
 
 NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has
 never existed, and is not `proof-triage` (that one triages proofs). Left
-uncovered until the skill is written.</bpmn:documentation>
+uncovered until the skill is written.
+
+The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:link href="document-ingestion.html#the-l1-completeness-gate" />
+        <folio:adjudication accepts="real spurious source-wrong"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>
       <bpmn:outgoing>Flow_i6</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:exclusiveGateway id="Gateway_Complete" name="L1 complete?">
+      <bpmn:documentation>The verdict of the L1 completeness gate. `gap` records the gap as a bean; `complete` promotes the source into library/&lt;bib-slug&gt;/.</bpmn:documentation>
       <bpmn:incoming>Flow_i6</bpmn:incoming>
       <bpmn:outgoing>Flow_i7</bpmn:outgoing>
       <bpmn:outgoing>Flow_i9</bpmn:outgoing>
@@ -236,7 +244,7 @@ as an L1 source">
       <bpmndi:BPMNEdge id="Flow_i5_di" bpmnElement="Flow_i5"><di:waypoint x="1470" y="350" /><di:waypoint x="1510" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i6_di" bpmnElement="Flow_i6"><di:waypoint x="1660" y="350" /><di:waypoint x="1750" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i7_di" bpmnElement="Flow_i7"><di:waypoint x="1800" y="350" /><di:waypoint x="1670" y="350" /><di:waypoint x="1670" y="530" /><di:waypoint x="1700" y="530" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i8_di" bpmnElement="Flow_i8"><di:waypoint x="1775" y="570" /><di:waypoint x="1775" y="610" /><di:waypoint x="865" y="430" /><di:waypoint x="865" y="390" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i8_di" bpmnElement="Flow_i8"><di:waypoint x="1775" y="570" /><di:waypoint x="1775" y="595" /><di:waypoint x="865" y="595" /><di:waypoint x="865" y="390" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i9_di" bpmnElement="Flow_i9"><di:waypoint x="1800" y="350" /><di:waypoint x="1890" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i10_di" bpmnElement="Flow_i10"><di:waypoint x="2040" y="350" /><di:waypoint x="2050" y="350" /><di:waypoint x="2050" y="710" /><di:waypoint x="2080" y="710" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i11_di" bpmnElement="Flow_i11"><di:waypoint x="2230" y="710" /><di:waypoint x="2327" y="710" /></bpmndi:BPMNEdge>

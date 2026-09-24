@@ -23,6 +23,7 @@
     <bpmn:laneSet id="LaneSet_Process_AtomicMassDrift">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Drift</bpmn:flowNodeRef>
@@ -45,6 +46,7 @@
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Drift" name="Did anything&amp;#10;change?">
+      <bpmn:documentation>Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>

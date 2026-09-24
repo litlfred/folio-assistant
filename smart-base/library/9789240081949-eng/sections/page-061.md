@@ -7,7 +7,7 @@ pages: 61-61
 pdf_page: 61
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 case study of new service-driven-software for management of emergency supplies during disasters and emergency 

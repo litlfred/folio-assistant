@@ -1,0 +1,97 @@
+{
+  "$schema": "folio-code-list/v1",
+  "id": "own-namespaces",
+  "title": "Namespaces this project mints",
+  "description": "Every namespace IRI folio-assistant mints for itself, with what each one names. Code reads the values from here (schemas/namespaces.ts); external-schemas:check fails on a spelling of ours that is not listed, and on a retired one still in use.",
+  "source": {
+    "href": "https://github.com/litlfred/folio-assistant/issues/1140",
+    "note": "owner, 2026-09-23: code lists as nodes rather than constants in code"
+  },
+  "codes": [
+    {
+      "code": "cat-bootstrap",
+      "label": "bootstrap vocabulary",
+      "definition": "JSON-LD terms the bootstrap instance declares; the prefix is the instance stub.",
+      "value": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+      "source": {
+        "note": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      }
+    },
+    {
+      "code": "cat-harness",
+      "label": "cat-harness vocabulary",
+      "definition": "JSON-LD terms the cat-harness instance declares; the prefix is the instance stub.",
+      "value": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+      "source": {
+        "note": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      }
+    },
+    {
+      "code": "folio-assistant-core",
+      "label": "folio-assistant-core vocabulary",
+      "definition": "JSON-LD terms folio-assistant-core declares; the prefix is the instance stub.",
+      "value": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+      "source": {
+        "note": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      }
+    },
+    {
+      "code": "folio-assistant-core-dspace",
+      "label": "DSpace qualified fields",
+      "definition": "Where a DSpace qualified Dublin Core field name with no DCMI equivalent is minted, under the content layer that owns the Dublin Core model.",
+      "value": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns/dspace#",
+      "source": {
+        "note": "folio-assistant-core/schemas/dublin-core.ts DSPACE_NS, a constant until 2026-09-23; found unlisted by the bean 2j09 JSON-LD scan"
+      }
+    },
+    {
+      "code": "legacy-folio",
+      "label": "legacy single vocabulary",
+      "definition": "The single namespace every term used before the per-layer split. Kept so the vocabulary document can name the stem it published under; never minted into.",
+      "value": "https://litlfred.github.io/folio-assistant/ns#",
+      "status": "retired",
+      "source": {
+        "note": "schemas/namespaces.ts, where each was a constant until 2026-09-23"
+      }
+    },
+    {
+      "code": "folio-base",
+      "label": "content @base",
+      "definition": "The @base every emitted content document resolves relative ids against. An IRI this project mints, but a base rather than a vocabulary: no term hangs off it.",
+      "value": "https://litlfred.github.io/folio/",
+      "source": {
+        "note": "schemas/jsonld.ts FOLIO_BASE, where it was a constant until 2026-09-23"
+      }
+    },
+    {
+      "code": "folio-bpmn",
+      "label": "BPMN extension elements",
+      "definition": "The XML namespace folio:skill, folio:bean, folio:adjudication and the other BPMN extension elements are in.",
+      "value": "https://litlfred.github.io/folio-assistant/bpmn",
+      "source": {
+        "href": "https://github.com/litlfred/folio-assistant/issues/1140",
+        "note": "bean 0d99, 2026-09-20"
+      }
+    },
+    {
+      "code": "legacy-folio-bpmn",
+      "label": "never-ours BPMN spelling",
+      "definition": "A spelling of the extension namespace on a domain this project does not own. Listed only so a check can name it when it reappears.",
+      "value": "http://folio-assistant.dev/bpmn",
+      "status": "retired",
+      "source": {
+        "note": "bean 0d99, 2026-09-20"
+      }
+    },
+    {
+      "code": "workflows",
+      "label": "process diagrams",
+      "definition": "The targetNamespace every process diagram declares, so every calledElement names a process in the caller's own namespace.",
+      "value": "https://litlfred.github.io/folio-assistant/workflows",
+      "source": {
+        "href": "https://github.com/litlfred/folio-assistant/issues/1140",
+        "note": "bean rtrg, owner 2026-09-23"
+      }
+    }
+  ]
+}

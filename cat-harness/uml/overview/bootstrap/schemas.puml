@@ -41,9 +41,43 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     exchange [1..*] : Exchange[]
     stillOpen [0..*] : list<harness | repositories>
   }
+  class "Directory" as bootstrap_schemas_graph_schema_json_Directory <<schema: graph.schema.json>> #e9edf3 {
+    id [1] : string
+    path [1] : string
+    graphKinds [1..*] : string[]
+    description [0..1] : string
+  }
+  class "Asset" as bootstrap_schemas_graph_schema_json_Asset <<schema: graph.schema.json>> #e9edf3 {
+    id [1] : string
+    src [1] : string
+    role [1] : string
+  }
+  class "Knowledge Graph declaration" as bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration <<schema: graph.schema.json>> #e9edf3 {
+    name [1] : string
+    title [0..1] : string
+    description [0..1] : string
+    directories [0..*] : Directory[]
+    assets [0..*] : Asset[]
+  }
+  class "Model" as bootstrap_schemas_model_registry_schema_json_Model <<schema: model-registry.schema.json>> #e9edf3 {
+    id [1] : string
+    title [1] : string
+    preferredLanguages [0..*] : string[]
+    validation [1] : unverified | self-reported | human-validated
+    validatedBy [0..1] : string
+    validatedOn [0..1] : string
+    note [0..1] : string
+  }
+  class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
+    $schema [1] : 'folio-model-registry/v1'
+    models [0..*] : Model[]
+  }
 }
 
 bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
 bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "0..*" bootstrap_schemas_discussion_output_schema_json_Repository : repositories
 bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" bootstrap_schemas_discussion_output_schema_json_Exchange : exchange
+bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
+bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
+bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
 @enduml

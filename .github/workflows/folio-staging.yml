@@ -104,6 +104,17 @@ on:
         required: false
         default: main
         type: string
+      qa_sweep:
+        description: >
+          Run the platform's QA sweep over the folio before publishing its
+          QA summary, so the preview's heat map reports THIS build rather than
+          whatever was last committed (bean `tw61`). The script-checkable
+          criteria run; criteria that need an agent's judgement are left
+          unaudited. A critical failure is reported in the preview, and does
+          not stop it.
+        required: false
+        default: true
+        type: boolean
       publish_branch:
         description: The branch GitHub Pages serves from.
         required: false
@@ -224,11 +235,25 @@ jobs:
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
             --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
 
+      - name: Sweep the folio's QA
+        # The owner's ask: "setup proper QA on init" (bean `tw61`). Without it a
+        # new folio's preview read "unaudited" on every block, because nothing
+        # had ever swept it. No `--ci`: a critical failure belongs on the heat
+        # map where a reviewer sees it, not in a preview that never publishes.
+        if: inputs.qa_sweep
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          FOLIO_DIR: ${{ inputs.folio_dir }}
+        run: |
+          set -eu
+          bun run "$PLATFORM_DIR/cat-harness/content/pipeline/qa-sweep.ts" "$FOLIO_DIR"
+
       - name: Publish the folio's block QA summary
-        # What the folio's QA sweep last recorded, per block: failing, stale,
-        # passing or unaudited. The review page's heat map reads it (bean
-        # `qbfi`). It reads committed verdicts and runs no checker, so a
-        # folio that has never been swept publishes "unaudited", not a failure.
+        # What the QA sweep recorded, per block: failing, stale, passing or
+        # unaudited. The review page's heat map reads it (bean `qbfi`). The
+        # step above sweeps this build first (`tw61`). With `qa_sweep: false`,
+        # this reports the verdicts the folio committed, and a folio never
+        # swept publishes "unaudited", not a failure.
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           FOLIO_DIR: ${{ inputs.folio_dir }}
@@ -265,6 +290,26 @@ jobs:
           ref: ${{ inputs.publish_branch }}
           path: pages
           persist-credentials: true
+
+      - name: Picture changed figures, diagrams and tables
+        # The `folio-block-screenshots` Tool (bean `0rxe`, skill `visual-diff`):
+        # each changed visual block, pictured on the published main site (the
+        # publish branch's root, checked out above) and on this build, and
+        # compared pixel by pixel in Chromium. The review page shows them.
+        # Chromium is installed only when there is something to picture.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          N=$(bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" --changeset "$SITE_DIR/changeset.json" --count)
+          if [ "$N" = "0" ]; then
+            echo "no figure, diagram, table, equation or simulator changed: no pictures to take"
+            exit 0
+          fi
+          (cd "$PLATFORM_DIR" && npx --yes playwright install --with-deps chromium)
+          bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" \
+            --changeset "$SITE_DIR/changeset.json" --base pages --head "$SITE_DIR" --out "$SITE_DIR"
 
       - name: Ingest review comments
         # Tagged PR comments → `folio-review-comment/v1` todos, kept across
@@ -315,9 +360,9 @@ jobs:
           # build that exited 0 having written nothing would otherwise replace a
           # working preview with an empty one, which 404s exactly like a page
           # the author meant to delete. The data files the steps above write
-          # (changeset and its text, blocks, block QA, review comments) are not
-          # a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json' || true)" ]; then
+          # (changeset and its text, blocks, block QA, review comments, the
+          # visual diff and its pictures) are not a site on their own.
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi

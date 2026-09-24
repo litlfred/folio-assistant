@@ -157,6 +157,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
+    // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
+    // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
+    // and `bun run preview:site` builds a site to run it on locally.
+    match: "check:duplicate-ids",
+    kind: "ci-only",
+    reason:
+      "runs on the built ./_site that only the staging job produces; its scanner and the " +
+      "nav include's one-checkbox rule are pinned by duplicate-ids.test.ts in `bun test`",
+  },
+  {
     // Mounts each instance's rendered content into the built site. It COPIES
     // rather than checks, so there is no verdict for a contributor to run —
     // and it is meaningless outside a job that has just built `_site/`.
@@ -416,6 +427,13 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes `--site ./_site`: it resolves links in the BUILT site, which Jekyll produces in CI",
   },
   {
+    match: "publish-verify.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
+      "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
@@ -469,6 +487,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "runs inside a FOLIO's staging job over that folio's committed QA verdicts; the platform carries no folio. " +
       "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
+  },
+  {
+    // The same reason (bean `0rxe`): the visual diff pictures a FOLIO's
+    // changed figures on that folio's published main site and staging build.
+    // The platform has no folio. The pixel compare is unit-tested, and the
+    // whole Tool runs in Chromium in `block-screenshots.e2e.ts`.
+    match: "block-screenshots.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's published site and staging build; the platform carries no folio. " +
+      "Covered by block-screenshots.test.ts in `bun test` and block-screenshots.e2e.ts in the e2e job",
   },
   {
     match: "staging-banner.ts",
@@ -745,6 +774,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
+  },
+  {
+    script: "ingest:ig-chrome:check",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT, and here it needs THREE checkouts rather than one. It compares the committed `chrome.json` against the `fhir.template` chain the IG's `ig.ini` names — `fhir.base.template` and `who.template.root`, which are separate repositories (`HL7/ig-template-base`, `WorldHealthOrganization/smart-ig-template`) that this checkout does not contain and a runner cannot fetch. Same wall as `ingest:ig-menu:check`, one layer worse: an IG's appearance is declared in no file the IG owns. Built so a skip CANNOT be mistaken for a pass — with no `--ig`/`--layer` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed chrome's EFFECT: `smart-trust:pages:check` regenerates all 681 pages from it and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-chrome/v1`. Run this one by hand after cloning the IG and its templates, or from `/prepare-merge`. Bean `ajx9`",
   },
   {
     script: "check:session-staleness",

@@ -60,7 +60,12 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
   diagrams".
 - `docs/uml/overview/…`: the pages. Each shows the SVG, then a table of its
   sub-graphs, then the same model drawn by Mermaid, and links both source
-  files. Every page carries `layout: default`: without it the local build
+  files. The table carries each sub-graph's detangle numbers (nodes,
+  cohesion, links in and out), read from `detangleResultsDir` in
+  `schemas/detangle-sidecar.ts`, the same function the detangler writes
+  through, or *not measured* where the detangler does not
+  scan. So a change to `detangle/results/` makes these pages stale, and
+  `uml:overview` must be re-run with `kg:detangle`. Every page carries `layout: default`: without it the local build
   rendered the page bare, with no site script and so no zoom controls. Published at
   `<site>/uml/overview/<instance>.html`; the index is
   `<site>/uml/overview/index.html`. The site menu has a **UML overview** entry
@@ -94,7 +99,8 @@ as the default. Owner, 2026-09-23: "can we have portrait and landscape
 views?".
 
 - **The committed `.puml` is the portrait view.** The landscape view is
-  derived from it by `landscapeOf` in `gen-uml-overview.ts` and rendered to
+  derived from it by `landscapeOf` in `scripts/plantuml-render.ts`, shared with
+  every PlantUML generator, and rendered to
   `<name>.landscape.svg`. It is not committed as a second source, so the two
   views cannot say different things.
 - **ELK ignores direction.** `left to right direction` and arrow hints left
@@ -152,6 +158,14 @@ check", and never passes. That is why it is not a CI gate.
 - **Importing a generator wrote files.** Both scripts ran their main block on
   import, which dirtied the tree in CI (no `beans` CLI, so different output).
   Both are guarded by `import.meta.main`. A new generator needs the same guard.
+
+## Related
+
+- [`graph-rendering`](../graph-management/graph-rendering.md): the general
+  rules this generator is the first full application of.
+- [`graph-detanglement`](../graph-management/graph-detanglement.md): the
+  practice whose numbers (size, cohesion, links in and out) each page shows
+  beside its sub-graphs, read from `detangle/results/`.
 
 ## A 404 on a page you just merged
 

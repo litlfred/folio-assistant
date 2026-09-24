@@ -21,7 +21,7 @@ import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
 
-import { hasRole, forbidden } from "../core/rbac.js";
+import { allows, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";
 import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
@@ -98,8 +98,8 @@ export async function handleGlossaryPost(
   const path = url.pathname;
 
   if (path === "/api/glossary/curation" && req.method === "POST") {
-    if (!hasRole(req, "collaborator")) {
-      return forbidden("saving glossary curation", "collaborator");
+    if (!allows(req, "content-authoring")) {
+      return forbidden("saving glossary curation", "content-authoring");
     }
     try {
       const body = (await req.json()) as {

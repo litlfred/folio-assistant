@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/getting-started.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/getting-started.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/getting-started.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/getting-started.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/getting-started.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/getting-started.md){: .fa-edit-source }
 
 {% raw %}
 # /getting-started — what did they actually ask for?
@@ -203,6 +203,13 @@ jumping straight to a branch.
    - **unknown** — no URL could be derived, or the probe failed. Say *that*.
      "Should be live shortly" is a claim you do not have evidence for, and an
      author who later finds nothing there has been told something false.
+4. **Tell them the corpus is by reference, and how to change that.** A fresh
+   harness holds references, not the remote content itself: `who-iris` alone
+   is hundreds of gigabytes. When they need part of a remote subgraph locally,
+   that is an ask made later, as the need appears. Name the skill
+   (`materialize-on-demand`) and the one command that shows what is already
+   held (`bun run cache:index`), so they learn the option exists here rather
+   than by finding a schema. Do not materialize anything now. Bean `54rk`.
 
 ## 6. Anti-patterns
 

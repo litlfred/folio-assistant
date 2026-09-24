@@ -189,6 +189,19 @@ describe("inheritance — the Phase 0.3 gate", () => {
     expect(kg[0]!.declaredBy).toBe("relocated");
   });
 
+  it("a renamed id still overrides the entry it meant (cat-harness → skills, bean iwtn)", () => {
+    const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
+    try {
+      mkdirSync(join(root, "old-skills"));
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", dependents: "skip", graphKinds: ["skills"] }] });
+      const dirs = resolveDirectories([{ name: "older", root, own: true }]);
+      expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
+      expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
   it("an override keeps the inherited position rather than reshuffling the scan order", () => {
     const dirs = resolveDirectories([
       { name: "agentic-harness", root: HARNESS },
@@ -673,11 +686,11 @@ describe("default directories — inherit the convention, declare only the devia
     writeDeclaration(inst, JSON.stringify({ name: "minimal" }));
 
     const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
-    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "skills", "tools"]);
     // `(default)` rather than the instance's name: a consumer can tell an
     // inherited convention from something this instance chose.
     expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("skills/");
   });
 
   it("a default whose directory is ABSENT is not seeded", () => {
@@ -701,11 +714,11 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
-    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "skills")!.declaredBy).toBe("relocated");
     // ...and the defaults it did NOT override are still there.
     expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
   });
@@ -1036,7 +1049,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "bootstrap",
       "bootstrap-tools",
       "cat-harness",
-      "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
@@ -1052,7 +1064,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "kg-navigation",
       "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
@@ -1180,7 +1191,18 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // the methodology nodes, here and in `smart-kg` — which is the right
     // grain anyway, since `analyst` describes the methodologies rather than
     // the skills that apply them.
-    expect(themed.map((d) => d.id).sort()).toEqual(["methodologies", "smart-kg-methodologies"]);
+    //
+    // THREE since 2026-09-23. `folio-assistant-core-methodologies` joined when
+    // core got a methodologies graph of its own (`doc-researcher`), and it
+    // takes `analyst` for the same reason the other two do: the subject is a
+    // METHOD, and the theme describes methods rather than the layer that holds
+    // them. A second theme for core's copy would say the two graphs render
+    // differently, which nobody decided and which the pages do not do.
+    expect(themed.map((d) => d.id).sort()).toEqual([
+      "folio-assistant-core-methodologies",
+      "methodologies",
+      "smart-kg-methodologies",
+    ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });

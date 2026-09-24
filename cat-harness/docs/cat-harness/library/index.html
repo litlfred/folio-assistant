@@ -6,6 +6,16 @@
 <title>Library — the L1 corpus</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E">
 <style>
+/* The block content panel — bean lrmo. Tokens only, so it follows the light
+   and dark themes above rather than hardcoding either. */
+#blocks details > summary { cursor: pointer; }
+#blocks .block-body { margin: .4rem 0 .2rem; }
+#blocks .block-body pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  padding: .55rem .7rem; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
+}
+#blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -84,7 +94,7 @@ td.lib-first { white-space:nowrap; }
 .card .lib-ava { width:56px; height:76px; }
 </style>
 </head>
-<body>
+<body><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
 <header>
   <h1>Library — the L1 corpus</h1>
   <p class="empty" id="status" style="padding:0">loading…</p>
@@ -100,6 +110,7 @@ td.lib-first { white-space:nowrap; }
 <main>
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
+  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
   <h2>Uploads — the queue feeding this</h2>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
@@ -352,6 +363,90 @@ function honourAnchor(){
     row.setAttribute("data-fa-anchored", "1");
     row.scrollIntoView({ block: "center" });
   }
+  /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
+     anchor rather than a click so a shared URL lands on the same view. */
+  loadBlocks(known.id);
+}
+
+/* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
+   Bean 7nvr.
+
+   The index carries a COUNT of blocks; this is what they are. It is a
+   separate fetch because the corpus holds 1715 blocks over about a megabyte
+   of JSON-LD against a 44 KB index, so inlining would multiply the cost of
+   the page that answers "what is in here" to serve a question asked about
+   one entry at a time.
+
+   THREE OUTCOMES, like honourAnchor above. The file loads and the blocks are
+   listed; the file loads and the entry genuinely has none, which is a
+   determined answer and says so; or the fetch fails, which is reported as a
+   failure rather than rendered as an empty document. An entry with no blocks
+   and an entry we could not read must never look the same. */
+function blocksHref(id){
+  var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
+  return dir + "entries/" + encodeURIComponent(id) + ".json";
+}
+function renderBlocks(id, data, err){
+  var el = $("blocks");
+  el.hidden = false;
+  if (err) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">Could not read the block graph for ' +
+      esc(id) + ' — ' + esc(err) + '. This is a failure to read, not an empty document.</p>';
+    return;
+  }
+  var bs = (data && data.blocks) || [];
+  if (!bs.length) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">' + esc(id) +
+      ' has no blocks. Nothing failed — the entry carries none.</p>';
+    return;
+  }
+  el.innerHTML = '<h2>Blocks — ' + esc(id) + ' <span class="note">(' + bs.length +
+    ', in page order)</span></h2><table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative</th></tr></thead><tbody>' +
+    bs.map(function(b){
+      /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
+         something without knowing our vocabulary, and showing only ours
+         would hide the half this project did not invent. */
+      var pages = b.pageStart == null ? '—'
+        : (b.pageEnd != null && b.pageEnd !== b.pageStart ? b.pageStart + '–' + b.pageEnd : String(b.pageStart));
+      /* A narrative state is three-valued and none of them is an error:
+         not-authored means nobody has written one, which is a fact rather
+         than a gap. Rendered as plain text for that reason. */
+      var nar = b.narrative == null ? '—' : esc(b.narrative);
+      /* THE CONTENT IS BEHIND A NATIVE <details> — bean lrmo.
+         The owner opened this view and said "i expected to be able to see
+         narrative content of extracted node": a row carrying only a state
+         says a description exists without saying what it is.
+
+         <details> rather than a scripted panel because it expands, collapses
+         and takes focus from the keyboard with no JavaScript at all, which is
+         one less thing to get wrong and one less thing to test. gjli.
+
+         TRUNCATION IS DECLARED, never inferred from length. A reader who
+         cannot tell a short section from a cut one is being shown a claim the
+         data does not support. */
+      var title = esc(b.title || '—');
+      var body;
+      if (b.content) {
+        body = '<details><summary>' + title + '</summary><div class="block-body">' +
+          '<pre>' + esc(b.content) + '</pre>' +
+          (b.truncated ? '<p class="note">Excerpt — the first 600 characters. The section file holds the rest.</p>' : '') +
+          '</div></details>';
+      } else {
+        /* No content is a DETERMINED answer for a page-scan or an image with
+           no description, and is said plainly rather than left blank. */
+        body = title + ' <span class="note">(no content carried)</span>';
+      }
+      return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td>' + body +
+        '</td><td>' + nar + '</td></tr>';
+    }).join("") + '</tbody></table>';
+}
+function loadBlocks(id){
+  fetch(blocksHref(id), {cache: "no-store"})
+    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function(d){ renderBlocks(id, d, null); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
 }
 
 function setView(v){

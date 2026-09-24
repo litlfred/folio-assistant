@@ -80,7 +80,7 @@ are yours.
 
 **The files you inherit that are POINTERS belong to you.** The first one is
 [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md)
-— the page an Initiator reads before it knows anything about the repository.
+— the page a Bootstrapping Agent reads before it knows anything about the repository.
 It is written for *this* repository: it resolves 13 links into
 `../cat-harness/`, across 6 files, and every one of them is a **term
 definition** — what a role is, what a DAK block is, what a harness declaration

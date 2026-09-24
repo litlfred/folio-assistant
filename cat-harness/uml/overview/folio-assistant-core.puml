@@ -14,6 +14,9 @@ package "folio-assistant-core/core-schemas" as pkg_folio_assistant_core_core_sch
 package "folio-assistant-core/folios" as pkg_folio_assistant_core_folios <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_folios_folio
 }
+package "folio-assistant-core/glossary" as pkg_folio_assistant_core_glossary <<glossary>> {
+  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_glossary_glossary
+}
 package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voices>> {
   class "Source" as folio_assistant_core_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
     title [1] : string
@@ -79,13 +82,102 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     maintains [0..*] : Maintain[]
   }
 }
+package "folio-assistant-core/core-scripts" as pkg_folio_assistant_core_core_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_scripts_code
+}
+package "folio-assistant-core/core-library" as pkg_folio_assistant_core_core_library <<library>> {
+  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_folio_assistant_core_core_library_library
+}
+package "folio-assistant-core/core-methodologies" as pkg_folio_assistant_core_core_methodologies <<methodology>> {
+  note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_methodologies_methodology
+}
+package "folio-assistant-core/core-skills" as pkg_folio_assistant_core_core_skills <<skills>> {
+  class "Source" as folio_assistant_core_core_skills_folio_voice_v1_Source <<json: VoiceProfileSchema>> #e8f0ee {
+    title [1] : string
+    instance [0..1] : string
+    libraryId [0..1] : string
+    kgRef [0..1] : string
+    url [0..1] : string<uri>
+    year [0..1] : integer
+  }
+  class "Pattern" as folio_assistant_core_core_skills_folio_voice_v1_Pattern <<json: VoiceProfileSchema>> #e8f0ee {
+    regex [1] : string
+    caseSensitive [0..1] : boolean
+    message [1] : string
+  }
+  class "Terminology" as folio_assistant_core_core_skills_folio_voice_v1_Terminology <<json: VoiceProfileSchema>> #e8f0ee {
+    correct [1] : string
+    incorrect [1] : string | string[]
+    context [0..1] : string
+  }
+  class "Rule" as folio_assistant_core_core_skills_folio_voice_v1_Rule <<json: VoiceProfileSchema>> #e8f0ee {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : enum(13)
+    severity [1] : critical | major | minor
+    source [1] : object
+    patterns [0..*] : Pattern[]
+    terminology [0..*] : Terminology[]
+    judgementOnly [0..1] : boolean
+  }
+  class "folio-voice/v1" as folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 <<json: VoiceProfileSchema>> #e8f0ee {
+    $schema [1] : 'folio-voice/v1' | 'folio-voice-skill/v1'
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    sources [1..*] : Source[]
+    rules [1..*] : Rule[]
+    overlaySeverity [0..1] : critical | major | minor
+    appliesTo [0..*] : string[]
+    provenance [1] : assertion | evidence | house
+    extends [0..1] : object
+    activeIn [0..1] : object
+    superseded [0..1] : object
+  }
+}
+package "folio-assistant-core/core-processes" as pkg_folio_assistant_core_core_processes <<processes>> {
+  class "Business Process Model and Notation (BPMN)" as folio_assistant_core_core_processes_omg_bpmn_2_0 <<ext: omg-bpmn-2.0>> #eee9f5 {
+    bpmn:callActivity [0..*] : element
+    bpmn:collaboration [0..*] : element
+    bpmn:definitions [0..*] : element
+    bpmn:documentation [0..*] : element
+    bpmn:endEvent [0..*] : element
+    bpmn:exclusiveGateway [0..*] : element
+    bpmn:extensionElements [0..*] : element
+    bpmn:flowNodeRef [0..*] : element
+    bpmn:import [0..*] : element
+    bpmn:incoming [0..*] : element
+    bpmn:lane [0..*] : element
+    bpmn:laneSet [0..*] : element
+    bpmn:outgoing [0..*] : element
+    bpmn:parallelGateway [0..*] : element
+    bpmn:participant [0..*] : element
+    bpmn:process [0..*] : element
+    bpmn:sequenceFlow [0..*] : element
+    bpmn:serviceTask [0..*] : element
+    bpmn:startEvent [0..*] : element
+    bpmn:task [0..*] : element
+    bpmn:timerEventDefinition [0..*] : element
+    bpmn:userTask [0..*] : element
+  }
+}
 
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Terminology : terminology
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Rule : rules
 folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains
-' grid: portrait, 2 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools
+folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
+folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
+folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Terminology : terminology
+folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Rule : rules
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_voices
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_tools
+pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_scripts
+pkg_folio_assistant_core_voices -[hidden]down- pkg_folio_assistant_core_core_library
+pkg_folio_assistant_core_core_tools -[hidden]down- pkg_folio_assistant_core_core_methodologies
+pkg_folio_assistant_core_core_scripts -[hidden]down- pkg_folio_assistant_core_core_skills
+pkg_folio_assistant_core_core_library -[hidden]down- pkg_folio_assistant_core_core_processes
 @enduml

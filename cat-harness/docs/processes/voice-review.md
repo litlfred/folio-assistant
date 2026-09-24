@@ -24,7 +24,7 @@ The voice axis: load whichever editorial voices are active, run each rule's mech
 
 | lane | role | what it does here |
 |---|---|---|
-| Narrative reviewer | — | Runs every active voice to completion rather than stopping at the first, because rules from separate voices are UNIONED rather than merged — two voices can both flag capitalisation and both findings must stand, so folding voice N+1's pass into voice N's would lose which voice raised what. At each citation, this lane also has to route the defect to the right place: a rule its own citation does not support goes to Task_RuleIsWrong as a finding against the VOICE, never into Task_Adjudicate, which only ever judges the block. |
+| Narrative reviewer | `narrative-reviewer` | Runs every active voice to completion rather than stopping at the first, because rules from separate voices are UNIONED rather than merged — two voices can both flag capitalisation and both findings must stand, so folding voice N+1's pass into voice N's would lose which voice raised what. At each citation, this lane also has to route the defect to the right place: a rule its own citation does not support goes to Task_RuleIsWrong as a finding against the VOICE, never into Task_Adjudicate, which only ever judges the block. |
 
 ## Steps
 
@@ -41,12 +41,12 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Any voice activated?**<br>`GW_AnyActive` | — | **none** → No voice — nothing to review<br>**one or more** → Load the active voices |
-| **Does the quote support the rule?**<br>`GW_QuoteSupports` | — | **no** → The RULE is the defect — bean it<br>**yes** → Adjudicate: prose, scope, or exception |
-| **Another active voice?**<br>`GW_MoreVoices` | — | **yes** → Run the rule's mechanical half<br>**no** → Record on the block's QA sidecar |
+| **Any voice activated?**<br>`GW_AnyActive` | Is any voice activated for this block, beyond the base voice already adjudicated? `none` ends with nothing to review; `one or more` loads the active voices. | **none** → No voice — nothing to review<br>**one or more** → Load the active voices |
+| **Does the quote support the rule?**<br>`GW_QuoteSupports` | Answered by opening the rule's citation: does the quoted source support the rule? `no` means the rule itself is the defect and is beaned; `yes` goes to adjudicating the prose, the rule's scope or an exception. | **no** → The RULE is the defect — bean it<br>**yes** → Adjudicate: prose, scope, or exception |
+| **Another active voice?**<br>`GW_MoreVoices` | Is another active voice left to review? `yes` runs that voice's mechanical half; `no` records the results on the block's QA sidecar. | **yes** → Run the rule's mechanical half<br>**no** → Record on the block's QA sidecar |
 
 {% endraw %}

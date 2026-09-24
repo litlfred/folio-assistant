@@ -24,7 +24,7 @@ Feature work must be linked to a GitHub issue. First find the related work (bean
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent | — | The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology. |
+| Agent | `authoring-agent` | The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology. |
 
 ## Steps
 
@@ -39,10 +39,10 @@ Every one of the 4 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Issue found?**<br>`GW_Issue` | — | **no** → Ask BA to create or link issue<br>**yes** → Link to existing issue |
+| **Issue found?**<br>`GW_Issue` | Answered by the scan of open issues: does one already cover this work? `yes` links to it; `no` asks the BA to create or name one. The agent does not create an issue on its own. | **no** → Ask BA to create or link issue<br>**yes** → Link to existing issue |
 
 {% endraw %}

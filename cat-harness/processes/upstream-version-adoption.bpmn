@@ -21,6 +21,7 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
     <bpmn:laneSet id="LaneSet_Process_UpstreamAdoption">
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Adopt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Scope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Impact</bpmn:flowNodeRef>
@@ -32,16 +33,19 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="CI/CD Pipeline">
         <bpmn:documentation>Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Mvp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Gates</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="Reviewer / SME">
         <bpmn:documentation>Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>R_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Findings</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Publication" name="Publication manager">
         <bpmn:documentation>Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>PM_Decide</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Adopt</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -85,7 +89,9 @@ A red gate is EVIDENCE, not an exit. It does not end the process and it does not
 A `userTask`, and the lane admits `person` and `agent` — a review agent is a legitimate reviewer here, and the separation that matters is the next lane's: a reviewer cannot accept.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="staging-review"/></bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?"/>
+    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?">
+      <bpmn:documentation>The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline).</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt &#183; hold &#183; decline" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.
 
@@ -104,7 +110,9 @@ Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?"/>
+    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?">
+      <bpmn:documentation>The project manager's decision. `yes` moves the pin and opens the PR; `no` records the hold or the decline.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="A_ApplyPin" name="Move the pin&#10;and open the PR">
       <bpmn:documentation>The pin literal moves in the one file `upstream-pins.json` declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict.</bpmn:documentation>
       <bpmn:extensionElements>

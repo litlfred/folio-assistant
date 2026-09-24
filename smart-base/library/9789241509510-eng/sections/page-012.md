@@ -7,7 +7,7 @@ pages: 12-12
 pdf_page: 12
 source_pdf: 9789241509510_eng.pdf
 source_sha256: 26aa12fbae4eafb2
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 2

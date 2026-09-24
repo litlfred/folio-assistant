@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: methodology-from-source\n"
-"POT-Creation-Date: 2026-09-23T09:33:26.046Z\n"
+"POT-Creation-Date: 2026-09-23T17:04:29.551Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Adopt a methodology from a source document"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:67
+#: processes/methodology-from-source.bpmn:69
 #. Diagram label
 msgid "Adopted"
 msgstr ""
@@ -44,12 +44,12 @@ msgstr ""
 msgid "Authors, publication, identifier, and the licence the source itself states. No stated licence means reference only: headings, page ranges and a summary in our own words; the file stays in uploads/ (git-ignored) pinned by checksum. A method with no origin is a house process; write a skill instead."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:80
+#: processes/methodology-from-source.bpmn:82
 #. Diagram label
 msgid "changes"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:68
+#: processes/methodology-from-source.bpmn:70
 #. Diagram label
 msgid "Declined, with the reason recorded"
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Integrate: call existing processes"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:79
+#: processes/methodology-from-source.bpmn:81
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -144,12 +144,17 @@ msgstr ""
 msgid "The method's steps become a process whose judgement points call the processes that already exist (adjudication, options analysis, review) by calledElement. Nothing is re-implemented. A needed change to an existing process becomes a bean against its owner."
 msgstr ""
 
+#: processes/methodology-from-source.bpmn:67
+#. Diagram element documentation
+msgid "The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to A_Render, the step that writes the adopted-against-refused table, so the agent re-runs render, placement, integration and tools and the owner reviews the result again. Only the owner accepts an adoption."
+msgstr ""
+
 #: processes/methodology-from-source.bpmn:48
 #. Diagram element documentation
 msgid "What the source says, section by section, then a table of what this platform adopts and what it refuses, each with a reason. Extensions beyond the source (such as web plus mobile where the paper studied mobile) are stated as ours. Reported results are not imported as facts."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:78
+#: processes/methodology-from-source.bpmn:80
 #. Diagram label
 msgid "yes"
 msgstr ""

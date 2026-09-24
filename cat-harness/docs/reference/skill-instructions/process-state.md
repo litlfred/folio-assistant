@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/process-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/process-state.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/process-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/process-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/process-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/process-state.md){: .fa-edit-source }
 
 {% raw %}
 # Process state — the task you are in, inside the process you are running
@@ -23,12 +23,21 @@ authorised.
 | level | answers | where it lives |
 |---|---|---|
 | **process instance** | which run of which process is this? | `.folio/workflow/`, committed |
-| **swimlane / role** | am I the actor who may do this? | the lane on the activity |
+| **swimlane / role** | am I the actor who may do this? | the lane on the activity; checked by the executor ([`task-authorization`](../folio-core/task-authorization.md)) |
 | **task** | which step am I on, and is it enabled? | `workflow_next` |
 
 `workflow_next` reports what is enabled **now**, which lane owns it, and which
 skill implements it. `workflow_complete` refuses a step that is not enabled.
 Those two are the ground truth; your memory of where you were is not.
+
+**Name yourself when you complete a step.** Pass `actor` as a declared actor
+id, not a free-text name: `workflow_complete` checks that actor against the
+lane's role and the ODRL policies before recording anything, refuses a role
+mismatch or a `deny`, and writes the verdict into the history. An `actor` you
+type is recorded as **asserted**, not authenticated. Say so rather than
+presenting it as identity. `workflow_gate` takes the same `actor` and `target`,
+so ask it before doing the work
+([`task-authorization`](../folio-core/task-authorization.md)).
 
 ## Say which process you are in — every turn
 
@@ -45,6 +54,16 @@ id.
 than the capability: the engine's "what is enabled now" call reports the enabled
 step, the lane that owns it, and the skill that implements it — so the answer is
 something to act on rather than a bare step name.
+
+**Say which permission you are acting under.** Entering a task in a lane
+means performing it as that lane's role, and since issue #1180 that needs an
+ODRL rule that permits it there (`permits()` in `schemas/odrl.ts`: the actor,
+the action, and the process, task and role as scope). If the answer is
+`unknown` or `deny`, you are out of process for that task: route it to a lane
+whose actor holds the permission, or stop and ask. The engine enforces this
+before the task at the deterministic end of the spectrum; at the agentic end
+nothing stops you, and the QA/QC report over the PROV-O record finds it
+afterwards (`agentic-harness.html#bpmn-execution`).
 
 **Switching processes is the case that matters.** Moving between processes
 changes who is accountable for the next step and which gates apply, and **a

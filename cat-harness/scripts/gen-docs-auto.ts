@@ -94,6 +94,7 @@ import {
   siteDirFor,
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
+import { withViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO = join(ROOT, "..");
@@ -486,7 +487,7 @@ export const TYPES: AutoDocType[] = [
   {
     id: "glossary",
     title: "Glossary",
-    graph: "glossary",
+    graph: "swimlane-glossary",
     extracts:
       "every term this instance's swimlanes define — the role's title and description, " +
       "the lane names that bind it, and whether the term has been retired",
@@ -525,7 +526,7 @@ export const TYPES: AutoDocType[] = [
       }
 
       const items: AutoDocItem[] = [];
-      for (const d of declaredDirectories("glossary")) {
+      for (const d of declaredDirectories("swimlane-glossary")) {
         for (const f of walk(d.absPath, (n) => n === "glossary-ledger.json")) {
           let parsed: { instance?: string; concepts?: Record<string, { prefLabel?: string; firstSeen?: string; retiredOn?: string | null }> };
           try {
@@ -810,7 +811,17 @@ var SCOPE = "${esc(prefix === "" ? "docs-auto" : prefix.split("/").pop()!)}";
 }
 
 let stale = 0;
+/**
+ * THE NAVBAR IS APPLIED HERE — bean `edx7`, at this generator's single write.
+ *
+ * Its sub-pages are keyed by DIRECTORY ID (`who-iris-skills`), not by instance
+ * name, so the rail lists this instance's graphs. Stripping `-skills` to yield
+ * `who-iris` would be a second answer to a question the directory declaration
+ * already answers, and silently wrong on the first id that ends in those
+ * characters for another reason.
+ */
 function emit(path: string, content: string): void {
+  content = withViewerNav(content, path, { built: basename(ROOT), docsRoot: join(ROOT, siteDirFor(ROOT)) }) ?? content;
   if (check) {
     const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
     if (current === content) return;

@@ -34,7 +34,6 @@ const GRAPH: RoleGraph = {
       title: "Reviewer",
       description: "r",
       actorKinds: ["person", "agent"],
-      lanes: ["Reviewer"],
       skills: ["read-findings"],
     },
     {
@@ -42,7 +41,6 @@ const GRAPH: RoleGraph = {
       title: "Adjudicator",
       description: "a",
       actorKinds: ["person", "agent"],
-      lanes: ["Adjudicator"],
       skills: ["adjudication"],
       inherits: ["reviewer"],
     },
@@ -53,7 +51,6 @@ const GRAPH: RoleGraph = {
       // Nobody performs it — a lane tasks act ON. Zero skills here is n/a
       // rather than a gap, which is what `actedUpon` exists to say.
       actorKinds: [],
-      lanes: ["Corpus"],
       skills: [],
       actedUpon: true,
     },
@@ -72,13 +69,13 @@ describe("the binding verdict is `laneBinding`'s, not this file's", () => {
     expect(d.roleId).toBe("adjudicator");
   });
 
-  test("a lane bound by NAME resolves too — the case that was missed", () => {
-    // No `roleRef` at all. An implementation that only honoured the explicit
-    // ref reported 140 of the corpus's 184 lanes as unbound; every one of them
-    // is bound by name through `RoleDef.lanes`.
+  test("a lane with no `roleRef` is UNBOUND, whatever its name", () => {
+    // Roles no longer list lane names (data-modelling step 8, #1168): the 140
+    // lanes that bound by name were each given an explicit ref. A name that
+    // happens to equal a role's title binds nothing, so a lane that lost its
+    // ref is a finding rather than a silent match.
     const d = laneDetail({ id: "L", name: "Reviewer" }, ACTS, GRAPH);
-    expect(d.binding).toBe("bound");
-    expect(d.roleId).toBe("reviewer");
+    expect(d.binding).toBe("unbound");
   });
 
   test("a ref naming no declared role is `dangling`, not `unbound`", () => {
@@ -109,19 +106,25 @@ describe("the binding verdict is `laneBinding`'s, not this file's", () => {
     expect(laneDetail({ id: "L", name: "Nowhere" }, ACTS, GRAPH).binding).toBe("unbound");
   });
 
-  test("an unreadable role graph reports `dangling` — verbatim, and bean `7go7`", () => {
-    // This test first asserted `unbound`, on a comment claiming `laneBinding`
-    // returned that. It does not: with no graph, a ref that resolves to
-    // nothing is `dangling`, so ONE missing file renders every ref-bearing
-    // lane as a defect. Arguably the `dh4f` shape.
+  test("an unreadable role graph reports `ungraphed` — bean `7go7`, resolved", () => {
+    // It used to report `dangling`, so ONE missing file rendered all 44
+    // ref-bearing lanes in this corpus as broken references — the `dh4f`
+    // shape, a sweep that could not look reporting findings.
     //
-    // Pinned as-is rather than guarded here, because `laneBinding` is
-    // `kg:audit`'s resolver as well and a viewer quietly disagreeing with the
-    // audit about whether a lane is bound would be worse than the shape it
-    // avoids. Recorded as `7go7` instead of decided unilaterally.
+    // This test pinned that behaviour rather than guarding it, on the stated
+    // ground that `laneBinding` is `kg:audit`'s resolver too and a viewer
+    // disagreeing with the audit would be worse. **That ground was false**,
+    // and checking it is what unblocked the fix: `kg-audit.ts` already
+    // branches on `!graph` and overwrites these criteria with `unknown`, so
+    // the audit never published `dangling` here — it computed it and threw it
+    // away. The viewer was the one disagreeing.
+    //
+    // The owner ruled 2026-09-23 for a required parameter over a sixth kind,
+    // so there is no verdict to take and the viewer says it could not look.
     const d = laneDetail({ id: "L", name: "Adjudicator", roleRef: "adjudicator" }, ACTS, undefined);
-    expect(d.binding).toBe("dangling");
+    expect(d.binding).toBe("ungraphed");
     expect(d.roleSkills).toEqual([]);
+    expect(d.roleId, "no graph means no role, not a guessed one").toBeUndefined();
   });
 });
 

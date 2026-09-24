@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/library-ingestion.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/library-ingestion.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/library-ingestion.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/library-ingestion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/library-ingestion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/library-ingestion.md){: .fa-edit-source }
 
 {% raw %}
 # Library ingestion
@@ -105,9 +105,9 @@ of declaring one: navigable without being held.
 2026-09-19 over the four entries in `library/`:
 
 - `toc_source: outline` → `pdf-structure` (`9789241548960-eng`, 250 sections)
-- `toc_source: none`, `text_source: text-layer` → `pdf-pages` (`milnorlink`,
+- `toc_source: none`, `source.text_source: embedded` → `pdf-pages` (`milnorlink`,
   `wpr-rdo-2020-003-eng`)
-- `toc_source: none`, `text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
+- `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
 
 ## An inferred chapter tree is refused, not guessed
@@ -136,8 +136,8 @@ is never rendered as one that was.
 ```
 library/<bib-slug>/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
-                     granularity, text_source, sections[], structure_note,
-                     source{} (see below)
+                     granularity, sections[], structure_note,
+                     source{} (see below; source.text_source says embedded|ocr)
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
@@ -155,7 +155,9 @@ Every rung writes `source` on `structure.json`, from the single definition in
 `scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
 SOURCE's, UTC to the second — not the ingest time, because what tells you a
 re-fetch got something new is the file changing), `mimetype_sniffed` and
-`mimetype_source`. `pdf-structure` adds `pages`, `text_source` and `extractor`.
+`mimetype_source`. Both rungs add `text_source`, `embedded` or `ocr`: ONE field and ONE
+vocabulary for where the section text came from (issue #1121; `pdf-pages` used to write a
+top-level `text-layer`). `pdf-structure` also adds `pages` and `extractor`.
 
 **The mimetype is sniffed from the leading bytes and never falls back to the
 extension.** An extension is a claim by whoever named the file; the magic bytes
@@ -348,6 +350,74 @@ failing it would make an unreviewed queue indistinguishable from a broken arm.
 
 A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
 whether the shape was read, counted, or `undetermined`.
+
+### Describing a document's images — and why it is an ARM, not a step you run
+
+`pdf-images.py` classifies by geometry, which answers exactly one question: is
+this image the whole page, or something on it. It cannot tell a logo from a
+chart. The finer roles come from LOOKING, and that judgement is **data** —
+`<library>/image-verdicts.json`, one entry per image, reviewable line by line.
+
+```sh
+bun run ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
+# look at ingest-staging/<doc-id>/images/, write the verdicts into
+# <lib>/image-verdicts.json, then:
+bun run ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
+bun run ingest uploads/FILE.pdf --library <lib> --promote
+```
+
+**Re-running `ingest` is the second step, not a separate apply command**, and
+that is the whole design rather than a convenience. Bean `8suc`:
+
+- `--promote` refuses an entry whose `image-descriptions` requirement is unmet;
+- both writers of a narrative — `apply-image-verdicts.ts` and `narratives.ts` —
+  resolved their targets through `directoriesForGraph(root, "library")`.
+
+So a document with describable images could not be promoted without
+descriptions, and could not be given descriptions without being promoted. A
+cycle, and every staged document sat in it. It went unnoticed because every
+entry carrying applied verdicts predated the gate, so the tool always found
+it — the path that fails was the one nothing had walked.
+
+**Applying by hand works exactly once.** `pdf-images.py` opens the sidecar with
+`"w"` — no existence check, no merge — so the next `ingest` overwrites the
+descriptions, and overwrites them *quietly*: the file still parses and still
+validates, it simply has no narratives in it any more. Running the application
+as the fourth arm, **after** `pdf-images.py`, makes a re-run RE-APPLY instead —
+the sidecar is rebuilt from the PDF and the committed judgement is laid back
+over it.
+
+`--staging <entry-dir> --library <lib-dir>` is available directly if you need
+it, and `--library` is **required**: a staging directory does not say which
+library a document is being promoted into (`v1hw` — a queue does not determine
+a library). An absent verdicts file exits **0**, because the first ingest
+necessarily runs before anybody has looked at the images; `image-descriptions`
+is the gate that refuses, not that script. An *orphaned* verdict — one naming
+an image the sidecar does not have — still fails, in either mode.
+
+Every narrative it writes lands as `draft`. Only a person confirms one.
+
+#### Reading a figure: the text layer is not the figure
+
+Two findings from `xeg6`, both of which would have shipped as descriptions:
+
+**A diverging axis's SIGN cannot be read from the text layer.** `get_text`
+returned `0.2 0.4 0.6` below the zero of a `Delta Pass Rate` bar with **no
+sign at any codepoint** — matplotlib draws U+2212 as a vector path, so the
+minus exists in the rendering and not in the text. Rendering the region showed
+`-0.2 -0.4 -0.6` plainly. A verdict trusting the extraction would have called
+a `-0.6` endpoint `+0.6`.
+
+**And the direction is a fact about the axis, not about the colours.** The
+recorded inspection said a bar ran *"blue low to red high"*. Its ticks said
+`Pass Rate`, `1.0` at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — **worse than no
+description**, because a missing one is visibly missing.
+
+So: render the region and read the ticks. Two images that look alike need the
+same check each — the same record called three bars one repeated legend when
+the third was a different, signed scale, and it had the disconfirming datum
+(5188 bytes against 5167 twice) already written down beside the claim.
 
 ### An `.xlsx` IS a zip, and that broke the archive routing
 

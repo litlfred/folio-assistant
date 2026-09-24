@@ -165,3 +165,103 @@ export function renderSideBySide(doc: Document, before: string | null, after: st
   box.appendChild(pane("This preview", after));
   return box;
 }
+
+/**
+ * The visual diff (bean `0rxe`): pictures of the block on each side, from the
+ * `folio-block-screenshots` Tool. Four views, each ONE click on a native
+ * radio button (arrow keys move between them): the changed pixels marked,
+ * before, after, or both side by side. There is no slider, because a slider
+ * is a drag, and the owner's rule is one key or one click.
+ *
+ * The share of changed pixels is stated in WORDS, so the marker colour is
+ * never the only signal. A side that could not be pictured says why.
+ * Self-contained: the page embeds it with `toString()`.
+ */
+export function renderVisual(
+  doc: Document,
+  v: {
+    label: string;
+    before: { png: string | null; missing?: string } | null;
+    after: { png: string | null; missing?: string } | null;
+    changed: number | null;
+    diff: string | null;
+  } | null,
+  prefix: string,
+  group: string,
+): HTMLElement {
+  const box = doc.createElement("div");
+  box.className = "diff diff-visual";
+  const note = (t: string) => {
+    const p = doc.createElement("p");
+    p.className = "muted";
+    p.textContent = t;
+    return p;
+  };
+  if (!v) {
+    box.appendChild(note("No pictures of this block on this build."));
+    return box;
+  }
+  const why = (s: { png: string | null; missing?: string } | null, side: string) =>
+    s === null ? (side === "before" ? "Not on main: this block is new." : "Not on this preview: this block was removed.")
+      : s.missing === "page" ? "Its page is not in the " + (side === "before" ? "published site" : "preview") + "."
+      : s.missing === "anchor" ? "Its anchor is not on the " + (side === "before" ? "published" : "preview") + " page."
+      : null;
+  const pic = (src: string | null, alt: string, fallback: string | null) => {
+    if (!src) return note(fallback || "No picture.");
+    const i = doc.createElement("img");
+    i.src = prefix + src;
+    i.alt = alt;
+    i.loading = "lazy";
+    return i;
+  };
+  const summary = doc.createElement("p");
+  summary.className = "kind";
+  summary.textContent = v.changed === null
+    ? "Only one side could be pictured, so nothing is compared."
+    : v.changed === 0 ? "No pixel changed beyond anti-aliasing: the change is not visible."
+    : (v.changed * 100).toFixed(1) + "% of the block's pixels changed.";
+  box.appendChild(summary);
+  const views: Array<[string, string, () => HTMLElement]> = [];
+  if (v.diff) views.push(["diff", "Changed pixels", () => pic(v.diff, v.label + ": changed pixels marked", null)]);
+  views.push(["before", "Before", () => pic(v.before && v.before.png, v.label + " on main", why(v.before, "before"))]);
+  views.push(["after", "After", () => pic(v.after && v.after.png, v.label + " on this preview", why(v.after, "after"))]);
+  views.push(["both", "Both", () => {
+    const row = doc.createElement("div");
+    row.className = "diff-sbs";
+    row.appendChild(pic(v.before && v.before.png, v.label + " on main", why(v.before, "before")));
+    row.appendChild(pic(v.after && v.after.png, v.label + " on this preview", why(v.after, "after")));
+    return row;
+  }]);
+  const fs = doc.createElement("fieldset");
+  fs.className = "visual-modes";
+  const lg = doc.createElement("legend");
+  lg.textContent = "Show";
+  fs.appendChild(lg);
+  const stage = doc.createElement("div");
+  // Open on something to SEE: the marked diff when there is one, else the
+  // side that was pictured (found by the ojcx run: a new block opened on
+  // "Before", which can only say it is missing).
+  const has = (s: { png: string | null } | null) => !!(s && s.png);
+  const first = views.findIndex(([id]) => id === "diff" || (id === "after" && has(v.after)) || (id === "before" && has(v.before)));
+  const start = first < 0 ? 0 : first;
+  const show = (i: number) => {
+    while (stage.firstChild) stage.removeChild(stage.firstChild);
+    stage.appendChild(views[i]![2]());
+  };
+  views.forEach(([id, label], i) => {
+    const l = doc.createElement("label");
+    const r = doc.createElement("input");
+    r.type = "radio";
+    r.name = group;
+    r.value = id;
+    r.checked = i === start;
+    r.addEventListener("change", () => show(i));
+    l.appendChild(r);
+    l.appendChild(doc.createTextNode(" " + label));
+    fs.appendChild(l);
+  });
+  box.appendChild(fs);
+  box.appendChild(stage);
+  show(start);
+  return box;
+}

@@ -16,6 +16,7 @@ The question it exists to answer: what happened to STAGING/&lt;slug&gt;, and why
     <bpmn:laneSet id="LaneSet_Process_RenderLog">
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_RenderLog</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_What</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_LogRendered</bpmn:flowNodeRef>
@@ -33,7 +34,9 @@ The question it exists to answer: what happened to STAGING/&lt;slug&gt;, and why
 is about to change"/>
 
     <bpmn:exclusiveGateway id="GW_What" name="What is
-happening?"/>
+happening?">
+      <bpmn:documentation>What is about to happen to the publish branch? A `deploy` appends `rendered`; a `takedown` first preflights whether the preview is live; a `full-replace deploy` appends `restored` for the previews it put back.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_LogRendered" name="Append `rendered`">
       <bpmn:documentation>A re-deploy is a rendering, so it gets its own entry rather than overwriting the last. "When was this last built" is then answerable without diffing commits.</bpmn:documentation>
@@ -47,7 +50,9 @@ is the preview live?">
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Live" name="Any liveness
-signal fired?"/>
+signal fired?">
+      <bpmn:documentation>Answered by the preflight: did any liveness signal fire for this preview? `yes — refuse` keeps it and appends `retained` with the reason; `no` removes it and appends `removed` with the reason.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_LogRetained" name="Append `retained`
 with the reason">

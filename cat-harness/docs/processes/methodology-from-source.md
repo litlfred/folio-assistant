@@ -44,10 +44,10 @@ The general process an agent follows when someone shares a paper, book or standa
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Adopted?**<br>`GW_Decision` | — | **yes** → Adopted<br>**no** → Declined, with the reason recorded<br>**changes** → Render the method: adopted vs refused |
+| **Adopted?**<br>`GW_Decision` | The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to A_Render, the step that writes the adopted-against-refused table, so the agent re-runs render, placement, integration and tools and the owner reviews the result again. Only the owner accepts an adoption. | **yes** → Adopted<br>**no** → Declined, with the reason recorded<br>**changes** → Render the method: adopted vs refused |
 
 {% endraw %}

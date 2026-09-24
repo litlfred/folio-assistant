@@ -4,7 +4,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   id="Definitions_QaReportSigning"
-                  targetNamespace="https://folio-assistant.dev/workflows"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="0.1.0">
 
   <!-- ═══════════════════════════════════════════════════════════════════
@@ -135,6 +135,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     </bpmn:serviceTask>
 
     <bpmn:exclusiveGateway id="Gateway_SigningRoute" name="Which signing route?">
+      <bpmn:documentation>Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/signing-route.dmn#Decision_SigningRoute" />
       </bpmn:extensionElements>

@@ -395,6 +395,81 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     expect(countConsideredOptions(text)).toBe(2);
   });
 
+  // ── Bean `vq8g`: three enumeration forms, and the most structured wins ──
+  //
+  // Counting top-level list items alone was wrong in BOTH directions on the
+  // real store, measured 2026-09-23 over its 12 decision records. `j6t3` and
+  // `xgd8` enumerate with bold paragraphs and counted ZERO — and they carry
+  // FIVE options each against the store's typical three, so the two most
+  // developed analyses in the corpus were the two reported empty, against an
+  // action that says to "drop the section". `dhvf` enumerates with `###`
+  // subheadings over Pro/Con/Cost bullets and counted TEN for four options.
+  //
+  // MADR is format-agnostic — "at least two, every one real", never a markdown
+  // list — so the detector is what changes, not the beans.
+
+  it("counts options written as BOLD ENUMERATED paragraphs — `j6t3`, `xgd8`", () => {
+    const text = [
+      "## Options — to develop, not yet chosen",
+      "",
+      "**A. Generate the slash commands.** Emit one per skill.",
+      "*For:* smallest change. *Against:* Claude Code only.",
+      "",
+      "**B. Serve them as MCP tools.** The harness already runs a server.",
+      "*For:* host-agnostic. *Against:* offered, not enforced.",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("counts options written as SUBHEADINGS, not their pros and cons — `dhvf`", () => {
+    // The over-count direction, and the reason the forms are not summed:
+    // summing would give 6 here for a bean with 2 options.
+    const text = [
+      "## Considered options",
+      "",
+      "### A — adopt the rules wholesale",
+      "- **Pro.** Proven at scale.",
+      "- **Con.** Needs a registry.",
+      "",
+      "### B — pin the git ref (RECOMMENDED)",
+      "- **Pro.** Exact and verifiable.",
+      "- **Con.** No compatibility signal.",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("an ordinary subheading inside the section is not an option", () => {
+    // `j6t3` really carries `### Tier 1 — a person types these`. A looser rule
+    // would count it and inflate every bean that explains its options under
+    // headings of their own.
+    const text = [
+      "## Options",
+      "",
+      "**A. One.** first",
+      "**B. Two.** second",
+      "",
+      "### Tier 1 — a person types these",
+      "### The drift runs BOTH ways",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("a subheading form OUTRANKS bare list items in the same section", () => {
+    // Precedence, stated as a test rather than left to reading order: when both
+    // appear the list items are sub-points of the headed options.
+    const text = "## Options\n\n### A. one\n- pro\n- con\n### B. two\n- pro\n- con\n";
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("plain list items still count when no other form appears — the 9 that already worked", () => {
+    // The regression guard: ten of the twelve records on the store enumerate
+    // this way and must not move.
+    expect(countConsideredOptions("## Options\n\n- a\n- b\n- c\n")).toBe(3);
+  });
+
   it("an options section with no items is 0 — a real, reportable count", () => {
     // Not `undefined`. The section exists, so the bean claims an analysis; that
     // it lists nothing is the finding, and it gets a different remedy from one
