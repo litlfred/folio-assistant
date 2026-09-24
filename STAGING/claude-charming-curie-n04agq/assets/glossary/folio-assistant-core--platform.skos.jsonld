@@ -1,0 +1,183 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "Folio Assistant platform terms",
+      "skos:definition": "Terms the platform introduced in September 2026, each defined where its schema defines it and linked to the W3C concept it corresponds to, rather than copying that concept's definition.",
+      "dcterms:hasVersion": "2026-09-23",
+      "dcterms:modified": "2026-09-23",
+      "dcterms:license": "CC-BY-4.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/associated-harness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "associated harness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A harness this one knows by name, site and repository, and never loads, builds or copies. The fourth relation beside depends (needs), references (remoteGraphs) and utilizes (dependencies)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#AssociatedHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/policy",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "policy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which Actor may do which action, and where, written as W3C ODRL 2.2 permission and prohibition rules scoped by Process, Task and Role."
+        }
+      ],
+      "skos:exactMatch": [
+        {
+          "@id": "http://www.w3.org/ns/odrl/2/Policy"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/odrl.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/permission",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "permission"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One ODRL rule allowing an assignee an action, optionally on a target and within constraints. A permission to a broader action permits every action included in it."
+        }
+      ],
+      "skos:broader": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/policy"
+        }
+      ],
+      "skos:exactMatch": [
+        {
+          "@id": "http://www.w3.org/ns/odrl/2/Permission"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/odrl.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/task-run",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "task run"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One performance of a BPMN task by an Actor in a Role under a policy, recorded as a W3C PROV-O activity whose plan is the task."
+        }
+      ],
+      "skos:closeMatch": [
+        {
+          "@id": "http://www.w3.org/ns/prov#Activity"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/prov.ts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/actor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "actor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles. Which login is which actor is the data store's to know."
+        }
+      ],
+      "skos:closeMatch": [
+        {
+          "@id": "http://www.w3.org/ns/prov#Agent"
+        }
+      ],
+      "dcterms:source": "cat-harness/skills/folio-core/role-model.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/role",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "role"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need."
+        }
+      ],
+      "skos:related": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/actor"
+        }
+      ],
+      "skos:closeMatch": [
+        {
+          "@id": "http://www.w3.org/ns/prov#Role"
+        }
+      ],
+      "dcterms:source": "cat-harness/skills/folio-core/role-model.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/glossary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "glossary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied."
+        }
+      ],
+      "skos:closeMatch": [
+        {
+          "@id": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts"
+    }
+  ]
+}
