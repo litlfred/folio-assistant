@@ -36,6 +36,7 @@
  * definition, naming each one.
  *
  * @module scripts/ns-export
+ * @covers cat-harness
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

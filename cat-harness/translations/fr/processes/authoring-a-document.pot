@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: authoring-a-document\n"
-"POT-Creation-Date: 2026-09-23T20:28:08.951Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.535Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,207 +14,207 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/authoring-a-document.bpmn:79
+#: processes/authoring-a-document.bpmn:80
 #. Diagram label
 msgid "1 · Plan the document [content-plan]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:87
+#: processes/authoring-a-document.bpmn:88
 #. Diagram label
 msgid "2 · Seed the work plan [todo-manager]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:96
+#: processes/authoring-a-document.bpmn:97
 #. Diagram label
 msgid "3 · Scaffold the folio [folio_init]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:104
+#: processes/authoring-a-document.bpmn:105
 #. Diagram label
 msgid "4 · Author blocks [document-authoring]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:115
+#: processes/authoring-a-document.bpmn:116
 #. Diagram label
 msgid "5 · Check the profile [content-validate]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:129
+#: processes/authoring-a-document.bpmn:130
 #. Diagram label
 msgid "6 · Validate [content-validate]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:137
+#: processes/authoring-a-document.bpmn:138
 #. Diagram label
 msgid "7 · Render MD / HTML / PDF [document-publishing]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:145
+#: processes/authoring-a-document.bpmn:146
 #. Diagram label
 msgid "8 · Review and feedback [content-review]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:159
+#: processes/authoring-a-document.bpmn:160
 #. Diagram label
 msgid "9 · Publish [content-publish]"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:124
+#: processes/authoring-a-document.bpmn:125
 #. Diagram element documentation
 msgid "Answered by the profile check (step 5): does every block stay within the folio's declared content profile? `violations` sends the author back to step 4 to fix the blocks; `clean` goes on to validation."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:182
+#: processes/authoring-a-document.bpmn:183
 #. Diagram label
 msgid "approved"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:138
+#: processes/authoring-a-document.bpmn:139
 #. Diagram element documentation
 msgid "Assemble to Markdown, then pandoc. The PDF goes through an HTML engine — never latexmk."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:42
+#: processes/authoring-a-document.bpmn:43
 #. Diagram label
 msgid "Author (person)"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:30
+#: processes/authoring-a-document.bpmn:31
 #. Diagram label
 msgid "Authoring a document"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:28
+#: processes/authoring-a-document.bpmn:29
 #. Diagram label
 msgid "Authoring a document — plan to published"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:53
+#: processes/authoring-a-document.bpmn:54
 #. Diagram label
 msgid "Authoring agent (system)"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:59
+#: processes/authoring-a-document.bpmn:60
 #. Diagram label
 msgid "Build pipeline — validate · render · publish"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:177
+#: processes/authoring-a-document.bpmn:178
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:116
+#: processes/authoring-a-document.bpmn:117
 #. Diagram element documentation
 msgid "content_profile_check: no math kind, no lean field, no .lean sibling. This is the step a paper folio does not have, and the reason a document folio never needs Lean or TeX to publish."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:167
+#: processes/authoring-a-document.bpmn:168
 #. Diagram label
 msgid "Document published"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:105
+#: processes/authoring-a-document.bpmn:106
 #. Diagram element documentation
 msgid "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement goes through normative-statements."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:97
+#: processes/authoring-a-document.bpmn:98
 #. Diagram element documentation
 msgid "folio_init writes content/, uploads/, library/, the manifests, the builder shim and AGENTS.md. Skipped when the folio already exists."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:31
+#: processes/authoring-a-document.bpmn:32
 #. Diagram element documentation
 msgid "folio-assistant — authoring a document end to end (no Lean, no required TeX). Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The shape is the paper process minus the Lean lane and plus one step, the profile check, which is what keeps a document folio publishable without either toolchain."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:181
+#: processes/authoring-a-document.bpmn:182
 #. Diagram label
 msgid "iterate"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:76
+#: processes/authoring-a-document.bpmn:77
 #. Diagram label
 msgid "New document"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:70
+#: processes/authoring-a-document.bpmn:71
 #. Diagram element documentation
 msgid "Owns the one gate that decides publish or iterate, and is deliberately unspecialised: this process relaxes the paper process's clinical-SME lane into whichever reviewer a given document actually binds, because no single expertise fits every document the way it does a guideline."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:60
+#: processes/authoring-a-document.bpmn:61
 #. Diagram element documentation
 msgid "Owns the one gate this process has that the paper process does not — the profile check — so nothing with a math kind, a lean field or a .lean sibling reaches Task_Validate or Task_Render pretending to be document content; everything downstream of Gateway_ProfileClean assumes that profile."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:153
+#: processes/authoring-a-document.bpmn:154
 #. Diagram label
 msgid "Ready to publish?"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:69
+#: processes/authoring-a-document.bpmn:70
 #. Diagram label
 msgid "Reviewer / subject-matter expert"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:130
+#: processes/authoring-a-document.bpmn:131
 #. Diagram element documentation
 msgid "Schema and constraint checks over every block."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:80
+#: processes/authoring-a-document.bpmn:81
 #. Diagram element documentation
 msgid "Scope it: chapters, the blocks each needs, which statements are normative."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:160
+#: processes/authoring-a-document.bpmn:161
 #. Diagram element documentation
 msgid "See draft-to-publication.bpmn for the review and release path this expands into. Release authorisation is not relaxable."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:54
+#: processes/authoring-a-document.bpmn:55
 #. Diagram element documentation
 msgid "Task_AuthorBlocks is where every loop in this process lands — a profile violation from Lane_Build and an iterate from Lane_Reviewer both come back here — so this lane, not either gate, is what actually turns a rejection into a fixed block; Task_Scaffold runs once, before either loop exists."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:43
+#: processes/authoring-a-document.bpmn:44
 #. Diagram element documentation
 msgid "The only place a person acts before the process becomes agent- and pipeline-driven: Task_Plan sets the chapters, the blocks each needs and which statements are normative, once, before Lane_WorkPlan seeds a bean and Lane_Agent takes over every later edit, including every iteration the review and profile-check loops send back."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:88
+#: processes/authoring-a-document.bpmn:89
 #. Diagram element documentation
 msgid "The plan becomes beans, so a resumed session or a sibling agent can pick it up."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:146
+#: processes/authoring-a-document.bpmn:147
 #. Diagram element documentation
 msgid "The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:154
+#: processes/authoring-a-document.bpmn:155
 #. Diagram element documentation
 msgid "The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:49
+#: processes/authoring-a-document.bpmn:50
 #. Diagram element documentation
 msgid "Touched exactly once in this process — Task_SeedPlan turns the plan into a bean right after Task_Plan, so a resumed session or a sibling agent can pick the authoring loop up without re-deriving what was decided at the top."
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:176
+#: processes/authoring-a-document.bpmn:177
 #. Diagram label
 msgid "violations"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:123
+#: processes/authoring-a-document.bpmn:124
 #. Diagram label
 msgid "Within the declared profile?"
 msgstr ""
 
-#: processes/authoring-a-document.bpmn:48
+#: processes/authoring-a-document.bpmn:49
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""

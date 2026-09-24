@@ -64,6 +64,7 @@
  *   bun run content/pipeline/gen-library-jsonld.ts --doc <doc-id>
  *
  * @module content/pipeline/gen-library-jsonld
+ * @covers library, uploads
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";

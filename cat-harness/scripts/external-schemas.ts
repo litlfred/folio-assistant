@@ -19,6 +19,7 @@
  *   bun run cat-harness/scripts/external-schemas.ts --check    # CI
  *
  * @module scripts/external-schemas
+ * @covers external-schema
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

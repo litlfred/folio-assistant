@@ -82,7 +82,7 @@ against the server's own location. It is accurate today and it is a second
 answer to a question `<name>.json` already answers — so a directory the
 instance declares and the registry omits is invisible to `skill_fetch`. That
 has bitten: `content-lifecycle` was absent from the table until 2026-09-18
-while **52** `<folio:skill ref>` activities across the workflow diagrams named
+while **52** `<bootstrap.processes:skill ref>` activities across the workflow diagrams named
 its skills, so `workflow_next` handed an agent `content-validate` and
 `skill_fetch` answered *"package not found"* — for every step of every content
 process. `kg:audit`'s `skill-servable` criterion exists to keep that shut.
@@ -123,7 +123,7 @@ so they cannot disagree.
 - **`.claude/skills/` is not uniformly skills.** `actors/`, `capabilities/`,
   `roles/`, `hooks/` and `requirements/` are other node kinds that live there.
   Reading the tree as skills put 46 non-skills into the set, at which point
-  `<folio:skill ref="viewer"/>` resolved — to a capability probe.
+  `<bootstrap.processes:skill ref="viewer"/>` resolved — to a capability probe.
 - **A `.md` under the skills path that declares its own `$schema` is not a
   skill.** The agent-memory nodes under `memory/` declare
   `folio-memory/v1`. Without this rule the audit treated all 25 as skills and

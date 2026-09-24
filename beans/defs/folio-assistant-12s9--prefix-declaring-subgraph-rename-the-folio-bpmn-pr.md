@@ -82,4 +82,17 @@ No file under `bootstrap/` carries `folio:` or `folio-*/v1`, and the ALLOW list 
 - **Found:** `variable-performer.test.ts` edited bootstrap's diagram by searching for `<folio:role …>`, a no-op after the rename. It failed, which is good; it now also asserts that each edit actually changed the file.
 
 ## Next
-- [ ] 3. The cat-harness diagrams: `skill`, `role` and `precondition` move to `bootstrap.processes:` (bootstrap declares them), and the other 13 elements move to a `cat-harness.processes:` address minted the same way, with its own `ns.jsonld`.
+- [x] 3. The cat-harness diagrams: `skill`, `role` and `precondition` move to `bootstrap.processes:` (bootstrap declares them), and the other 13 elements move to a `cat-harness.processes:` address minted the same way, with its own `ns.jsonld`.
+
+### Stage 3 done, 2026-09-24
+- **New address `…/cat-harness/processes/ns#`**: code `cat-harness-processes`, `CAT_HARNESS_PROCESSES_NS`, and `cat-harness/processes/ns.jsonld`, which defines the 15 elements cat-harness declares. It is published at `<base>/cat-harness/processes/ns` (plus `.jsonld` and `.json`) by both workflows.
+- **All 71 non-bootstrap diagrams** bind only the vocabularies they use and write `bootstrap.processes:skill|role|precondition` and `cat-harness.processes:<the rest>`.
+- **Verified by the parser, not by reading the diffs.** Every one of the 71 models was snapshotted before and after. The only difference in any of them is one `reason` text that now names `cat-harness.processes:adjudication`; no Skill, Role, bean op, policy or decision changed. The snapshot was checked for vacuity: 1,878 skill lists, 2,271 role refs and 119 work-plan steps.
+- **Docs and Skills:** 139 element mentions in 53 hand-written files were mapped. `bpmn-processes` gained a "Binding the extension namespaces" section, so new diagrams are written the new way.
+- **Tests:**
+  - no diagram binds the old address;
+  - every element used is defined by the vocabulary of the address it is written under (more than 500 checked).
+- **Found:** two TEST files, `processes-viz` and `skill-coverage`, read the real diagrams with a raw `folio:` regex. After the rename they counted zero, and three of the processes-viz tests **still passed**. All are fixed, and the gate now covers test files, matches only real element names, and ignores error-message matchers.
+
+## Next
+- [ ] 4. Folios in other repositories (qou needs the owner's go-ahead first), then retire the old `…/bpmn` address. The 15 test fixtures that still bind it are part of that.

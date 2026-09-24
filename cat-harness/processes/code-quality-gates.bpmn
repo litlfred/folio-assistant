@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_CodeQualityGates" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CodeQualityGates">
@@ -17,13 +18,13 @@
            leaving to the default. The process IS the gate: four hard jobs
            whose failure blocks a merge. A diagram of the gate that was
            advisory about its own steps would be self-contradicting. -->
-      <folio:policy enforcement="strict"/>
-      <folio:implements workflow=".github/workflows/code-quality-gates.yml"/>
+      <cat-harness.processes:policy enforcement="strict"/>
+      <cat-harness.processes:implements workflow=".github/workflows/code-quality-gates.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Lean</bpmn:flowNodeRef>
@@ -53,8 +54,8 @@
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="lean-bare-import"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="lean-bare-import"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -62,8 +63,8 @@
     <bpmn:task id="Task_Python" name="Python: unused and&amp;#10;wildcard imports (HARD)">
       <bpmn:documentation>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="python-imports"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="python-imports"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
@@ -71,8 +72,8 @@
     <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
       <bpmn:documentation>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="typescript"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="typescript"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
@@ -80,8 +81,8 @@
     <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
       <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="e2e"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="e2e"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
@@ -89,8 +90,8 @@
     <bpmn:task id="Task_Rust" name="Rust wildcard imports&amp;#10;(WARN-ONLY)">
       <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="rust-wildcard"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="rust-wildcard"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
@@ -98,8 +99,8 @@
     <bpmn:task id="Task_Advisories" name="Dependency advisories&amp;#10;(WARN-ONLY)">
       <bpmn:documentation>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:job name="dependency-advisories"/>
-        <folio:skill ref="platform-gates"/>
+        <cat-harness.processes:job name="dependency-advisories"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>

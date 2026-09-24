@@ -64,6 +64,7 @@
  *   bun run translation:index:check    # fail if stale, invalid, or unreadable
  *
  * @module content/pipeline/translation-index
+ * @covers translation-sources
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";

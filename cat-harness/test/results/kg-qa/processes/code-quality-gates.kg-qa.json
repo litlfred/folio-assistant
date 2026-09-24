@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:01f972d2c60ac55d0d043ac40880e0e52dd7afd148434656f686dd1f872c756e",
+  "source_hash": "sha256:c8667c8bc1515b12f26b005503b34e2f99ffc381cf001f05386e5fda16554f72",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -145,8 +145,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "01f972d2c60a",
-      "code_hash": "238cf5a0932b",
+      "prose_hash": "c8667c8bc151",
+      "code_hash": "7776a413c6cc",
       "by": "agent",
       "reason": "Re-read the process documentation against the yml change. The change adds one step, check:code-accounting, inside the TypeScript job. The prose's claim about that box is 'TypeScript IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES' and lists their families; a thirty-first gate of the same kind is what that sentence already describes, deliberately approximately, so the box's meaning does not move. Nothing about the six-job shape, the four-hard/two-warn asymmetry, continue-on-error or the lane changes: the new step is hard-failing inside an already-hard job, so it adds no warn-only mechanism to keep apart."
     }

@@ -125,6 +125,8 @@
  *
  * Usage:  bun run check:declared-paths  [--update]
  * Exit:   0 at or under baseline · 1 above it, or a marked literal naming nothing
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

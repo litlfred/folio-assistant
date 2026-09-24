@@ -41,6 +41,7 @@
  * Exit: 0 complete (or nothing to check), 1 a requirement unmet, 2 could not check.
  *
  * @module scripts/check-l1-complete
+ * @covers library
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

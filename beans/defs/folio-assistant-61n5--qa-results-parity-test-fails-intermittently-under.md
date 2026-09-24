@@ -48,8 +48,9 @@ exports.
   the worst time measured under load. It is not set in `bunfig.toml`, because
   bun 1.3.11 ignores `[test] timeout` there. That was measured with a 6 s test,
   which still failed at 5 s. The preload version was measured passing.
-- `check-declaration-filename.test.ts`: the whole-repo scan is computed once
-  for its three tests instead of three times. The file went from 10.8 s to
-  about 5.8 s together with qa-results. The scan also gets an explicit, measured timeout.
+- `check-declaration-filename.test.ts`: the same one-scan-and-budget fix
+  landed on `main` independently while this was in review (`corpus()`,
+  `CORPUS_TIMEOUT`). Main's version was kept at the merge. It is the same
+  diagnosis reached from the other side, which is corroboration.
 - `qa-results.test.ts`: the parity test gets an explicit, measured timeout.
 

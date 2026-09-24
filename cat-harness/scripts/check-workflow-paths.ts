@@ -174,6 +174,7 @@
  * would see.
  *
  * @module scripts/check-workflow-paths
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
