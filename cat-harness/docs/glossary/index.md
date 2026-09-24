@@ -1371,7 +1371,7 @@ BlockAtSchema.index <span class="fa-gloss-status">candidate, extracted</span>
 BlockAtSchema.section <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The section listing it: `&lt;manifest dir&gt;::&lt;section label | title | #n&gt;`. Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at.</p>
+<p>The section listing it: `&#123;manifest dir}::&#123;section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build). Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/changeset.ts"><code>folio-assistant-core/schemas/changeset.ts#BlockAtSchema.section</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.blockbase.audience" data-fa-state="extracted" data-fa-gloss="">
