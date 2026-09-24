@@ -8,7 +8,7 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2428 terms: **7 authored** in 1 glossary, and **2421 extracted** from knowledge-graph assets in 19 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2428 terms: **7 authored** in 1 glossary, and **2421 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
@@ -1710,40 +1710,40 @@ bootstrap-kg-navigation <span class="fa-gloss-status">candidate, extracted</span
 <p>Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed.</p>
 <p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-kg-navigation.md"><code>bootstrap/skills/bootstrap-kg-navigation.md</code></a></p>
 </dd>
-<dt id="bootstrap-tools--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.at-id" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.at-id" data-fa-state="extracted" data-fa-gloss="">
 BootstrapGraphDocumentSchema.@id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Must equal the path the document is published at (bootstrap-graph-publication).</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/bootstrap-graph.ts"><code>bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id</code></a></p>
 </dd>
-<dt id="bootstrap-tools--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.omitted" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.omitted" data-fa-state="extracted" data-fa-gloss="">
 BootstrapGraphDocumentSchema.omitted <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The instance-bound collectors that were NOT run. &quot;Has no tools&quot; and &quot;tools were never looked for&quot; are different facts; this is how the document says which one it means.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/bootstrap-graph.ts"><code>bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted</code></a></p>
 </dd>
-<dt id="bootstrap-tools--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.problems" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.problems" data-fa-state="extracted" data-fa-gloss="">
 BootstrapGraphDocumentSchema.problems <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Sources that could not be read, counted rather than silently dropped.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/bootstrap-graph.ts"><code>bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems</code></a></p>
 </dd>
-<dt id="bootstrap-tools--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.repository" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.repository" data-fa-state="extracted" data-fa-gloss="">
 BootstrapGraphDocumentSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The instance's declared name.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/bootstrap-graph.ts"><code>bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository</code></a></p>
 </dd>
-<dt id="bootstrap-tools--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable" data-fa-state="extracted" data-fa-gloss="">
 BootstrapGraphDocumentSchema.sourceCommitUnavailable <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Said instead of `sourceCommit*` when the build could not read git.</p>
-<p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/bootstrap-graph.ts"><code>bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable</code></a></p>
 </dd>
 <dt id="smart-base--kg-tools--bpmn-to-fsh" data-fa-state="extracted" data-fa-gloss="">
 BPMN → FHIR Shorthand <span class="fa-gloss-status">candidate, extracted</span>
@@ -17149,8 +17149,7 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>bootstrap-tools</td><td>—</td><td>—</td><td>—</td><td>—</td><td>5 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>253 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1335 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>253 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1340 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>163 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 276,
+      "count": 277,
       "unit": "beans"
     }
   },
@@ -363,14 +363,14 @@
     {
       "id": "folio-assistant-319n",
       "title": "ZOD IS IN CAT-HARNESS: move bootstrap-tools' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-88mg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:17Z",
-      "updatedAt": "2026-09-23T22:52:17Z",
+      "updatedAt": "2026-09-24T05:45:45Z",
       "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
       "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
     },
@@ -1721,6 +1721,20 @@
       "updatedAt": "2026-09-20T18:51:53Z",
       "preview": "The owner, 2026-09-20, while the `bbbl` decision was being implemented:\n\n> *\"human can waive cinfirmation rights (e.g. for session, for process run)\"*\n>\n> *\"context depedndent, should be in memories.  (update skills)\"*\n\n## What this changes\n\nSeveral rules here stop an agent and hand a decision back: merging to `main`,\nremoving a durable artefact, spawning a swarm, closing a bean whose evidence\nthe",
       "file": "beans/defs/folio-assistant-ga3q--waiver-a-human-can-waive-a-confirmation-right-scop.md"
+    },
+    {
+      "id": "folio-assistant-ghgn",
+      "title": "ORPHANED VIEWER PAGES: the schema-viewer and UML generators never remove the page of a retired instance (detangle's is still published)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:40:27Z",
+      "updatedAt": "2026-09-24T05:40:27Z",
+      "preview": "Found 2026-09-24 while retiring `bootstrap-tools` (bean 319n). `gen-schema-viz.ts` and `gen-uml-overview.ts` write one page per instance but never remove the page of an instance that no longer exists. So a retired instance keeps a published page that nothing links to.\n\n- `bootstrap-tools`: its two orphans (`cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html` and `cat-harness/docs/uml/",
+      "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
     },
     {
       "id": "folio-assistant-gnqa",

@@ -4363,6 +4363,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.at-id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BootstrapGraphDocumentSchema.@id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Must equal the path the document is published at (bootstrap-graph-publication)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.omitted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BootstrapGraphDocumentSchema.omitted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools were never looked for\" are different facts; this is how the document says which one it means."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.problems",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BootstrapGraphDocumentSchema.problems"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sources that could not be read, counted rather than silently dropped."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BootstrapGraphDocumentSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's declared name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BootstrapGraphDocumentSchema.sourceCommitUnavailable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Said instead of `sourceCommit*` when the build could not read git."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/carried-note.artefactrefschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {

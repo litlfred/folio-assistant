@@ -2,7 +2,7 @@
  * bootstrap's own terms, and the shape of the file that declares a Knowledge
  * Graph. Generated into `bootstrap/schemas/graph.schema.json`.
  *
- * @module bootstrap-tools/schemas/graph
+ * @module schemas/graph
  * @graphNode schema
  *
  * ## Why bootstrap defines its own terms (owner, 2026-09-23)

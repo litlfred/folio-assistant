@@ -1609,6 +1609,41 @@
       "status": "candidate"
     },
     {
+      "id": "bootstrap-graph.bootstrapgraphdocumentschema.at-id",
+      "prefLabel": "BootstrapGraphDocumentSchema.@id",
+      "definition": "Must equal the path the document is published at (bootstrap-graph-publication).",
+      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id",
+      "status": "candidate"
+    },
+    {
+      "id": "bootstrap-graph.bootstrapgraphdocumentschema.omitted",
+      "prefLabel": "BootstrapGraphDocumentSchema.omitted",
+      "definition": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools were never looked for\" are different facts; this is how the document says which one it means.",
+      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted",
+      "status": "candidate"
+    },
+    {
+      "id": "bootstrap-graph.bootstrapgraphdocumentschema.problems",
+      "prefLabel": "BootstrapGraphDocumentSchema.problems",
+      "definition": "Sources that could not be read, counted rather than silently dropped.",
+      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems",
+      "status": "candidate"
+    },
+    {
+      "id": "bootstrap-graph.bootstrapgraphdocumentschema.repository",
+      "prefLabel": "BootstrapGraphDocumentSchema.repository",
+      "definition": "The instance's declared name.",
+      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable",
+      "prefLabel": "BootstrapGraphDocumentSchema.sourceCommitUnavailable",
+      "definition": "Said instead of `sourceCommit*` when the build could not read git.",
+      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable",
+      "status": "candidate"
+    },
+    {
       "id": "carried-note.artefactrefschema.id",
       "prefLabel": "ArtefactRefSchema.id",
       "definition": "Its identifier within the provider: `203`, a SHA, a run id.",
