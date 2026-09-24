@@ -551,3 +551,69 @@ what a declared-and-resolving viewer does, and it does not make any graph
 appear on a surface its declaration excludes.
 
 **This is this bean's open question 2** — *"What is a 'display subgraph'? Every declared `graphs` entry, or an opt-in subset?"* — closed. Question 1 (which file marks an instance) was closed earlier the same day. Still open: where `.fa-landing-board` fits, and issue #851's common expanding nav element.
+
+---
+
+## Item 4 measured, 2026-09-24 — as literally asked it has NO SUBJECT, and building it would render zero rows
+
+Stream `10uc` (GOAL 2), session_01SrFVoXeLER715HHQQaK22u. The last open item:
+
+> **A tab for materialised local subgraphs and declared remote graphs**, and
+> opening content indicating local or remote.
+
+### Measured on `main`
+
+| | declared | the navbar reads it |
+|---|---|---|
+| local subgraphs | yes | **yes — already rendered**, per the verification above |
+| **`remoteGraphs`** — what this item literally asks for | **zero declarations, anywhere in the tree** | **no** — 0 hits in `harness-tiles.ts`, `nav_footer_custom.html` and `docs-ui.js` |
+| **`associatedHarnesses`** | **one, and it is real** | no — the **config panel** (`harness-panel.ts`) renders it, with an e2e test |
+
+The one real remote thing this repository knows about:
+
+    ihris — "iHRIS Knowledge Base"
+      url        https://litlfred.github.io/ihris/
+      repository https://github.com/litlfred/ihris
+      relation   folio-of
+
+### Why this is not "just build it"
+
+**`RemoteGraph` is a well-made type with no instances.** Rendering it in the
+navbar today gives a branch that fires **zero times in this repository** — the
+failure this codebase has already recorded twice and named once:
+
+- `inertNote`'s own docstring: a branch *"reached by NOTHING — not the corpus,
+  not a fixture"*, and the reason it was extracted.
+- the read-only mark, which *"shipped live CSS and live JS rendering on 0 of 3
+  deployed pages"*, found by reading a deploy rather than a diff.
+- `1xhc`, the general form: **a gate that does not fire is indistinguishable
+  from one that passed.**
+
+So the local half of this item is done and the remote half has a schema, no
+data, and no consumer. Shipping it would look like delivery and be untestable
+against anything real.
+
+### And the nearby subject is deliberately NOT the same relation
+
+`AssociatedHarness`'s own docstring forbids the obvious substitution:
+
+> `RemoteGraph` is a GRAPH known but not held: graph kinds at a URL. An
+> associated harness is an INSTANCE — a declaration of its own — so it is a
+> separate list, not a `RemoteGraph` with more fields.
+
+It is the **fourth** relation, beside depends (`needs`), references
+(`remoteGraphs`) and utilizes (`dependencies`): *"this harness knows that one,
+and where"*. And the owner has already said how it renders — *"Rendering one
+needs no network: the config panel draws these fields as declared, **marked
+remote**"* (issue #1146, 2026-09-23).
+
+**So "indicate if local or remote" already has a live answer on one surface and
+none on the navbar** — which is a different and much smaller gap than the item
+describes, and it has a real subject.
+
+### Put to the owner rather than chosen
+
+Which relation the navbar's local/remote tab is *about* decides what gets
+built, and the two are declared to be different things. Asked as a selection;
+not guessed. **Nothing built here** — this entry is the measurement.
+
