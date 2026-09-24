@@ -51,7 +51,7 @@
  * names carry hashes); its sizes are.
  *
  * Usage:
- *   bun run pagefind:bench [--items N] [--browser] [--queries N] [--index-ids] [--worker] [--out DIR]
+ *   bun run pagefind:bench [--items N] [--browser] [--queries N] [--index-ids] [--worker] [--via-html] [--out DIR]
  *   bun run pagefind:fixture                        # build the small committed fixture for the page
  *   bun run pagefind:fixture --write-fixture        # regenerate the fixture's records
  */
@@ -138,6 +138,45 @@ export async function buildPagefind(entries: IdEntry[], outDir: string, opts: { 
   await index.deleteIndex();
   await pagefind.close();
   return { addMs: t1 - t0, writeMs: t2 - t1, bundle };
+}
+
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/**
+ * The other route Pagefind offers: minimal static HTML pages on disk, one per
+ * node, indexed with `addDirectory` (the CLI's own path, which parallelises
+ * the parsing). Written under `outDir/site/`, a scratch directory. Measured
+ * for build time and size only: the result urls are the local pages', not
+ * the source's, so recall is read off the custom-record build.
+ */
+export async function buildPagefindFromHtml(entries: IdEntry[], outDir: string): Promise<{ addMs: number; writeMs: number; emitMs: number; bundle: string }> {
+  if (entries.length === 0) throw new Error("refusing to build a Pagefind index over zero records");
+  const site = join(outDir, "site");
+  rmSync(site, { recursive: true, force: true });
+  const t0 = performance.now();
+  entries.forEach((e, i) => {
+    const d = join(site, "n", String(Math.floor(i / 1000)));
+    if (i % 1000 === 0) mkdirSync(d, { recursive: true });
+    const t = esc(e.title);
+    writeFileSync(join(d, `${i}.html`), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${t}</title></head><body><h1>${t}</h1></body></html>`);
+  });
+  const emitMs = performance.now() - t0;
+  const pagefind = await import("pagefind");
+  const bundle = join(outDir, "pagefind");
+  rmSync(bundle, { recursive: true, force: true });
+  const t1 = performance.now();
+  const { index, errors } = await pagefind.createIndex({ forceLanguage: "en" });
+  if (!index || errors.length) throw new Error(`pagefind.createIndex: ${errors.join("; ")}`);
+  const r = await index.addDirectory({ path: site });
+  if (r.errors.length) throw new Error(`pagefind.addDirectory: ${r.errors.join("; ")}`);
+  if (r.page_count !== entries.length) throw new Error(`pagefind.addDirectory indexed ${r.page_count} pages of ${entries.length}`);
+  const t2 = performance.now();
+  const w = await index.writeFiles({ outputPath: bundle });
+  if (w.errors.length) throw new Error(`pagefind.writeFiles: ${w.errors.join("; ")}`);
+  const t3 = performance.now();
+  await index.deleteIndex();
+  await pagefind.close();
+  return { emitMs, addMs: t2 - t1, writeMs: t3 - t2, bundle };
 }
 
 /** Which part of the bundle a file is. `ui` is Pagefind's optional prebuilt UI, which a search does not load. */
@@ -488,12 +527,18 @@ if (import.meta.main) {
   const entries = corpus(items);
   const keep = process.argv.includes("--out");
   const dir = keep ? resolve(arg("out", "")) : mkdtempSync(join(tmpdir(), "pagefind-bench-"));
-  const result: { size?: PagefindSizeReport; recall?: ReturnType<typeof recall>; browser?: Array<Omit<BrowserReport, "results">> } = {};
+  const result: { viaHtml?: PagefindSizeReport & { emitMs: number }; size?: PagefindSizeReport; recall?: ReturnType<typeof recall>; browser?: Array<Omit<BrowserReport, "results">> } = {};
   try {
-    const t = await buildPagefind(entries, dir, { indexIds });
-    result.size = sizeReport(t.bundle, entries, t, indexIds);
+    if (process.argv.includes("--via-html")) {
+      const t = await buildPagefindFromHtml(entries, dir);
+      rmSync(join(dir, "site"), { recursive: true, force: true });
+      result.viaHtml = { emitMs: t.emitMs, ...sizeReport(t.bundle, entries, t, false) };
+    } else {
+      const t = await buildPagefind(entries, dir, { indexIds });
+      result.size = sizeReport(t.bundle, entries, t, indexIds);
+    }
     writeFileSync(join(dir, "blank.html"), "<!doctype html><title>bench</title>");
-    if (process.argv.includes("--browser")) {
+    if (process.argv.includes("--browser") && result.size) {
       const queries = sampleQueries(entries, nq);
       const worker = process.argv.includes("--worker");
       const reports = await browserRun(dir, queries, worker ? ["unthrottled"] : ["unthrottled", "slow-4g"], worker);

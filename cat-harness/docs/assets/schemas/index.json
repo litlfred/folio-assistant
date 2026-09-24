@@ -10,7 +10,7 @@
       "unit": "modules"
     },
     "large-datasets-schemas": {
-      "count": 5,
+      "count": 6,
       "unit": "modules"
     }
   },
@@ -1584,6 +1584,15 @@
       "graphNode": "schema",
       "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "isTest": false
+    },
+    {
+      "module": "large-datasets/schemas/pagefind.test.ts",
+      "instance": "large-datasets",
+      "name": "pagefind.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The Pagefind prototype's method and fixture — bean `folio-assistant-4pm8`.",
+      "isTest": true
     },
     {
       "module": "large-datasets/schemas/source-descriptor.test.ts",

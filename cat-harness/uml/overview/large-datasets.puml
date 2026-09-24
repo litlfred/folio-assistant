@@ -43,10 +43,14 @@ package "large-datasets/large-datasets-scripts" as pkg_large_datasets_large_data
 package "large-datasets/large-datasets-id-lookup" as pkg_large_datasets_large_datasets_id_lookup <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_large_datasets_large_datasets_id_lookup_code
 }
+package "large-datasets/large-datasets-pagefind" as pkg_large_datasets_large_datasets_pagefind <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_large_datasets_large_datasets_pagefind_code
+}
 
 large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1 *-- "1..*" large_datasets_large_datasets_sources_folio_source_descriptor_v1_Identifier : identifiers
-' grid: portrait, 2 column(s) — pkg_large_datasets_large_datasets_schemas pkg_large_datasets_large_datasets_sources pkg_large_datasets_large_datasets_skills pkg_large_datasets_large_datasets_scripts pkg_large_datasets_large_datasets_id_lookup
+' grid: portrait, 2 column(s) — pkg_large_datasets_large_datasets_schemas pkg_large_datasets_large_datasets_sources pkg_large_datasets_large_datasets_skills pkg_large_datasets_large_datasets_scripts pkg_large_datasets_large_datasets_id_lookup pkg_large_datasets_large_datasets_pagefind
 pkg_large_datasets_large_datasets_schemas -[hidden]down- pkg_large_datasets_large_datasets_skills
 pkg_large_datasets_large_datasets_sources -[hidden]down- pkg_large_datasets_large_datasets_scripts
 pkg_large_datasets_large_datasets_skills -[hidden]down- pkg_large_datasets_large_datasets_id_lookup
+pkg_large_datasets_large_datasets_scripts -[hidden]down- pkg_large_datasets_large_datasets_pagefind
 @enduml
