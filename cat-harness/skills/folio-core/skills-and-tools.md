@@ -278,18 +278,21 @@ still swallowed.
 ### A `satisfies` edge is checkable against the skill's own contract
 
 **`satisfies` is the one part of a Tool node a schema cannot check, and it was
-being written on judgement alone.** `bun run check:tools` now compares a Tool's
-`io` against `schemas/skills/<skill>/input.schema.json` for every skill it
-claims: **every `required` property of the contract must appear as an input on
-the Tool.** If it does not, the Tool cannot exercise the skill and the edge is
-false.
+being written on judgement alone.** `bun run check:tools` compares a Tool's
+`io` against the input contract of every skill it claims — the contract the
+skill names in its own front matter (`input:`), never one found by directory
+name (#1168). Two rules: **every `required` property of the contract must
+appear as an input on the Tool**, and **where a Tool input and a contract
+property share a name, their JSON types must agree** (an `integer` port may
+serve a `number` property). If either fails, the Tool cannot exercise the skill
+and the edge is false.
 
-**What is compared, and what deliberately is not.** Names only. A skill's
-contract is free-form JSON Schema; a Tool's `io` is named ports referencing
-shared `$defs` IRIs. The shapes are not structurally comparable, and pretending
-otherwise gives a check that is either vacuous or wrong. Types are excluded on
-*evidence*: measured across the 22 contracts here, nearly every property is a
-bare `{"type": "string"}`, so a type comparison would pass on anything.
+**What is compared, and what is not.** A skill's contract is free-form JSON
+Schema; a Tool's `io` is named ports referencing shared `$defs` IRIs, so they
+meet only at names and at the JSON type each port's vocabulary type projects
+to. The type rule is weak — nearly every contract property here is a bare
+`{"type": "string"}` — but not vacuous: it catches an `array` contract served
+by a `string` port, which the name rule passes.
 
 A mismatch that is "only" a naming difference — `path` against `targetPath` — is
 a **finding**, not a false positive to suppress. Two names for one input, across
@@ -297,8 +300,9 @@ a skill and the Tool claiming to implement it, means an agent reading the
 contract cannot call the Tool.
 
 **Three states, as everywhere.** No contract (the common case, not a defect) is
-`undefined`; a contract requiring nothing is `[]` and passes; a contract present
-but unparseable is reported and **fails**, never counted as agreement.
+`undefined`; a contract requiring nothing is `[]` and passes; a contract that is
+declared but missing or unparseable is reported and **fails**, never counted as
+agreement. An external `https://` contract is not fetched by this offline check.
 
 **It caught two edges on its first run, both written the previous day and both
 wrong.** `translation-validate` claimed `content-validate`, whose contract

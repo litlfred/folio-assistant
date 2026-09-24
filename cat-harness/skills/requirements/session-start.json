@@ -17,12 +17,6 @@
       "label": "Detect user role",
       "conformance": "SHALL",
       "requirement": "The agent MUST determine the user's role at session start by checking identity sources against the role assignment table.",
-      "satisfiedBy": [
-        {
-          "kind": "skill",
-          "ref": "role-model"
-        }
-      ],
       "_comment": "Was `capability:role-detection`, which has never existed. Capabilities in this instance are ENVIRONMENT PROBES \u2014 `detection: { method: \"command\" }` \u2014 and role detection is not one: it is the actor registry plus `role-assignments.json` read against the session's identity. The skill that documents that mechanism is what an agent opens to satisfy this statement. Corrected 2026-09-18, bean m4zg."
     },
     {
