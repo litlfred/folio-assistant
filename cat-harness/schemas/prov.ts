@@ -16,7 +16,7 @@
  * | `prov:qualifiedAssociation.prov:hadPlan` | the BPMN task: `<process>#<task id>` |
  * | `prov:actedOnBehalfOf` | the person an agent worked for |
  * | `prov:used` / `prov:generated` | the graph nodes read and written |
- * | `cat-harness:underPolicy` | the ODRL policy it acted under: the one non-PROV term |
+ * | `cat-harness:underPolicy` | the ODRL policy (or policies) it acted under: the one non-PROV term |
  *
  * `hadPlan` is PROV-O's own term for "the plan an agent followed". A BPMN task
  * is exactly that, so no new term is minted for it.
@@ -51,8 +51,14 @@ export const ProvActivitySchema = z
     "prov:actedOnBehalfOf": z.string().min(1).optional(),
     "prov:used": z.array(z.string().min(1)).optional(),
     "prov:generated": z.array(z.string().min(1)).optional(),
-    /** The ODRL policy uid the run was under. Required: a run under no policy cannot be checked. */
-    "cat-harness:underPolicy": z.string().min(1),
+    /**
+     * The ODRL policy uid(s) the run was under. Required: a run under no policy
+     * cannot be checked. An array when several policies were in force, which is
+     * how JSON-LD writes several values of one property: `decide` evaluates
+     * every policy an instance holds, so naming only one would misstate what
+     * the verdict was computed against.
+     */
+    "cat-harness:underPolicy": z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]),
   })
   .strict()
   .refine((a) => !a["prov:endedAtTime"] || a["prov:endedAtTime"] >= a["prov:startedAtTime"], {
