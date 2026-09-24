@@ -30,7 +30,7 @@ import {
   type ExternalSchema,
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
-import { FOLIO_BPMN_NS, isOwnExtensionNamespace, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
+import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
@@ -438,10 +438,11 @@ function run(argv: string[]): number {
   }
 
   if (drifted.length > 0) {
-    console.error(`\n✗ our OWN namespace is spelt ${drifted.length + 1} ways, not one:`);
-    console.error(`    ${FOLIO_BPMN_NS}   (canonical — schemas/namespaces.ts)`);
-    for (const ns of drifted) console.error(`    ${ns}   ✗`);
-    console.error("  Rebind every `xmlns:folio` to the canonical IRI. This is not cosmetic:");
+    console.error(`\n✗ a diagram binds ${drifted.length} of our namespace(s) that is not active:`);
+    for (const ns of OWN_BPMN_EXTENSION_NAMESPACES) console.error(`    ${ns}   (active — schemas/namespaces.ts)`);
+    for (const ns of drifted) console.error(`    ${ns}   ✗ retired`);
+    console.error("  Bind bootstrap.processes: for skill, role and precondition, and");
+    console.error("  cat-harness.processes: for every other element (bean 12s9). This is not cosmetic:");
     console.error("  an extension element under the other IRI is invisible to a consumer");
     console.error("  matching on this one, and the file still parses.");
   }

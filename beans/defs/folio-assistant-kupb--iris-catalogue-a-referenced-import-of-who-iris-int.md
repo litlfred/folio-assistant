@@ -80,3 +80,13 @@ differently.
 **`kupb` still does not close**: four open children remain, and they are the
 four this epic is actually about. What changed is that GOAL 3 is now reachable
 by finishing IRIS-catalogue work, instead of waiting on a CDN.
+
+## 2026-09-24 — three children added from the `v048` roast, by the owner's choice
+
+`v048` recorded 13 objections, 10 open. Asked where the three that matter
+most should go, the owner chose **"Under kupb"**: GOAL 3 stays open until
+publication respects the licence gates, referenced pointers survive the
+host, and a sample import has actually run. The alternatives offered were a
+new epic beside `kupb`, which would have let GOAL 3 close now, or filing
+nothing. This reverses the direction of the 09-22 narrowing on purpose, and
+this note exists so the next reader does not "fix" it.
