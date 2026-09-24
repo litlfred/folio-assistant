@@ -96,7 +96,7 @@ No file under `bootstrap/` carries `folio:` or `folio-*/v1`, and the ALLOW list 
 - **Found:** two TEST files, `processes-viz` and `skill-coverage`, read the real diagrams with a raw `folio:` regex. After the rename they counted zero, and three of the processes-viz tests **still passed**. All are fixed, and the gate now covers test files, matches only real element names, and ignores error-message matchers.
 
 ## Next
-- [ ] 4. Folios in other repositories (qou needs the owner's go-ahead first), then retire the old `…/bpmn` address. The 15 test fixtures that still bind it are part of that.
+- [x] 4. Folios in other repositories (qou needs the owner's go-ahead first), then retire the old `…/bpmn` address. The 15 test fixtures that still bind it are part of that.
 
 ### Stage 4 plan — measured 2026-09-24
 The owner chose "plan all repos first". I listed every `litlfred` repository and read the recently active candidates (shallow, read-only). Only each repository's own tracked files were counted; a vendored platform submodule was not.
@@ -110,7 +110,7 @@ The owner chose "plan all repos first". I listed every `litlfred` repository and
 | smart-trust, smart-immunizations | 0 | 0 | 0 |
 | cat-harness-test | empty repository | | |
 
-- [ ] 4a. ihris: `gen_bpmn.py` emits `xmlns:bootstrap.processes` (skill, role) and `xmlns:cat-harness.processes` (no-skill); regenerate the 3 diagrams. One PR, which needs the owner's go-ahead because it is another repository.
+- [x] 4a. ihris: `gen_bpmn.py` emits `xmlns:bootstrap.processes` (skill, role) and `xmlns:cat-harness.processes` (no-skill); regenerate the 3 diagrams. One PR, which needs the owner's go-ahead because it is another repository.
 - [x] 4a. ihris PR: litlfred/ihris#24 (generator plus 3 regenerated diagrams; parsed models identical, 14 skill refs and 40 role refs; ihris `validate.py` OK).
 - [x] 4b-i. The test fixtures here moved off the old address: 13 of 14 files. `extension-namespace.test.ts` keeps it on purpose, because it tests that the old address is still accepted. Tags are rewritten only inside quoted fixtures, never inside regex literals, which match the code's error messages.
 - [x] 4b-ii. Messages: the parser's errors still tell an author to write `<folio:fulfilment …>` or `declare <folio:adjudication codes …>`. They should name the new prefix. The tests that match them change with them.
