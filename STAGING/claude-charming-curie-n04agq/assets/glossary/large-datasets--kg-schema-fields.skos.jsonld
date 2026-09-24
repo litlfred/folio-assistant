@@ -107,6 +107,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.identry.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IdEntry.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`kind/local`, lower-case, as the catalogue names the node."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#IdEntry.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.identry.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IdEntry.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the node is held: the source's own page for it."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#IdEntry.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.idlookupmanifestschema.selection",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IdLookupManifestSchema.selection"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.selection",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.idlookupmanifestschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IdLookupManifestSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The corpus this indexes, by its instance name."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.namespaceindexschema.shards",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NamespaceIndexSchema.shards"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema.shards",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/id-lookup.shardschema.entries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ShardSchema.entries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
+        }
+      ],
+      "dcterms:source": "large-datasets/schemas/id-lookup.ts#ShardSchema.entries",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/large-datasets/ns#glossary/kg-schema-fields/source-descriptor.identifiersystemschema.authoritative",
       "@type": "skos:Concept",
       "skos:inScheme": {

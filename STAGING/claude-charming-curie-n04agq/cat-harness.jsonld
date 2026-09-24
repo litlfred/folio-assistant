@@ -273,15 +273,15 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T18:58:15.503Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/978b6d08558e3f92656e56598d2f12d0fef16cea",
-  "sourceCommitSha": "978b6d08558e3f92656e56598d2f12d0fef16cea",
-  "sourceCommitAt": "2026-09-24T18:49:16Z",
+  "generatedAt": "2026-09-24T20:42:32.862Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/411ac8dff5148c4c1a177448e6bd29c38da379e3",
+  "sourceCommitSha": "411ac8dff5148c4c1a177448e6bd29c38da379e3",
+  "sourceCommitAt": "2026-09-24T20:40:21Z",
   "sourceTreeDirty": true,
-  "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
+  "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 260,
-    "Actor": 35,
+    "Skill": 261,
+    "Actor": 36,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
@@ -289,8 +289,8 @@
     "SequenceFlow": 908,
     "Role": 148,
     "ProcessNode": 860,
-    "Tool": 83,
-    "Schema": 117,
+    "Tool": 84,
+    "Schema": 121,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -360,7 +360,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/theming"
       ],
       "instructionsPath": "skills/theming/theme-art-intake.md",
-      "instructionLines": 176,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -547,7 +547,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "instructionLines": 182,
+      "instructionLines": 268,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -582,7 +582,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/smart-stack-layering.md",
-      "instructionLines": 162,
+      "instructionLines": 165,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -857,7 +857,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/issue-working.md",
-      "instructionLines": 132,
+      "instructionLines": 134,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1210,7 +1210,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/voice-editorial-review.md",
-      "instructionLines": 113,
+      "instructionLines": 115,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1227,7 +1227,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/agent-memory.md",
-      "instructionLines": 192,
+      "instructionLines": 195,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1594,12 +1594,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "glossary-terms",
       "title": "Glossary terms",
-      "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary.",
+      "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 131,
+      "instructionLines": 210,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1734,7 +1734,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/schema-management.md",
-      "instructionLines": 438,
+      "instructionLines": 441,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1751,7 +1751,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/content-profiles.md",
-      "instructionLines": 97,
+      "instructionLines": 99,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1835,7 +1835,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 502,
+      "instructionLines": 505,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1852,7 +1852,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/review-heatmap.md",
-      "instructionLines": 106,
+      "instructionLines": 119,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1868,7 +1868,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 116,
+      "instructionLines": 132,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1952,7 +1952,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 517,
+      "instructionLines": 519,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2172,7 +2172,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/swimlane-glossary.md",
-      "instructionLines": 168,
+      "instructionLines": 170,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2257,7 +2257,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 367,
+      "instructionLines": 369,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2325,7 +2325,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 527,
+      "instructionLines": 529,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2358,7 +2358,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 186,
+      "instructionLines": 195,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2527,7 +2527,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/methodology-adoption.md",
-      "instructionLines": 200,
+      "instructionLines": 202,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2789,6 +2789,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/archiving-arxiv"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/instance-publication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "instance-publication",
+      "title": "instance-publication — draft is a state, not an absence of one",
+      "description": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/instance-publication.md",
+      "instructionLines": 175,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-publication"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/mcp-contract",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "mcp-contract",
@@ -2915,7 +2932,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 631,
+      "instructionLines": 636,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2927,12 +2944,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "task-authorization",
       "title": "Task authorization — four questions before every task",
-      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 190,
+      "instructionLines": 347,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3000,7 +3017,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/code-lists.md",
-      "instructionLines": 59,
+      "instructionLines": 61,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3017,7 +3034,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/voice-authoring-guidance.md",
-      "instructionLines": 92,
+      "instructionLines": 94,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3253,7 +3270,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/visual-diff.md",
-      "instructionLines": 121,
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4292,7 +4309,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/document-intake.md",
-      "instructionLines": 423,
+      "instructionLines": 438,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4462,7 +4479,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 189,
+      "instructionLines": 191,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4705,7 +4722,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 224,
+      "instructionLines": 226,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4754,6 +4771,21 @@
         "stakeholder"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/stakeholder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#actor/claude",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "claude",
+      "actorKind": "agent",
+      "title": "Claude (agent session)",
+      "description": "The LLM agent that works in this repository's sessions, under the name it writes into workflow history (`actor: \"claude\"` in `beans/workflows/*.json`). Declared so the PROV-O QA/QC report can resolve that name to an actor (owner, 2026-09-24: \"Declare both\"). The id is the name the agent asserts, not a login: history records it as `asserted` and nothing here authenticates it, and which session or account it was is the data store's to know. `roles` are the lanes its history entries occupy and whose role admits an agent: `authoring-agent` (every code-change-review step it recorded, and the CRDM agent steps) `code-reviewer` (`Task_Review` in code-change-review) and `business-analyst` (below). It also recorded one `BA_Submit` in the `business-analyst` lane, and the owner ruled on 2026-09-24 (*\"Allow agents as BA\"*) that the role admits agents, so it is listed. What it may DO is in the ODRL policies, and none grants it anything yet.",
+      "hasCapability": [],
+      "roleName": [
+        "authoring-agent",
+        "business-analyst",
+        "code-reviewer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/claude"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#actor/board-renderer",
@@ -5079,7 +5111,8 @@
       "permissionName": [
         "content-authoring",
         "review-comments",
-        "adjudication"
+        "adjudication",
+        "perform-task"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/collaborator"
     },
@@ -5089,13 +5122,14 @@
       "localId": "owner",
       "actorKind": "person",
       "title": "Owner (gateway session)",
-      "description": "The repository owner signed in through the auth-gateway's GitHub OAuth. The gateway's `owner` tier as an actor (issue #1207). Over HTTP it holds exactly what `collaborator` holds, because no route distinguishes them; `commit to main` is GitHub's branch protection, not a route. Its grants are cat-harness/policies/http-gateway.jsonld.",
+      "description": "The repository owner signed in through the auth-gateway's GitHub OAuth. The gateway's `owner` tier as an actor (issue #1207). Over HTTP it holds exactly what `collaborator` holds, because no route distinguishes them; `commit to main` is GitHub's branch protection, not a route. Its grants are cat-harness/policies/http-gateway.jsonld. Workflow history names this actor, never the login (owner, 2026-09-24): the repository owner's steps are recorded as `owner`, and the login-to-`owner` mapping is the data store's alone. Without a login the same person is a reader/browser (`cat-harness:anyone`: visualize and render only).",
       "hasCapability": [],
       "roleName": [],
       "permissionName": [
         "content-authoring",
         "review-comments",
-        "adjudication"
+        "adjudication",
+        "perform-task"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/owner"
     },
@@ -6081,6 +6115,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/incremental-render",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/instance-kinds",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/instance-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/integration-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/integration-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/integration-watch",
@@ -6127,7 +6162,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/review-heatmap",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/role-model",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/serving-renderings",
@@ -6140,6 +6174,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/swot-analysis",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/symbiotic-interaction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/tabular-metadata",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/technical-documentation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/test-engineer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/theme-ui-review",
@@ -38825,6 +38860,79 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/skill-list"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#tool/user-auth",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "user-auth",
+      "title": "Who is asking, and what may they do",
+      "description": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "auth_whoami"
+        },
+        "inProcess": {
+          "module": "src/tools/auth.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "A declared actor the caller is acting as.",
+            "required": false
+          },
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "An ODRL action to ask about, e.g. content-authoring.",
+            "required": false
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "Process id, to scope the question or check a task.",
+            "required": false
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "Node id; with process, runs the task-authorization check.",
+            "required": false
+          },
+          {
+            "name": "role",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "The role the lane binds.",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
+            "description": "The content acted on.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Markdown",
+            "description": "Identity, GitHub role, ODRL grants and decisions, and what GitHub's grain cannot express."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/task-authorization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/deployment-auth"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/user-auth"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#tool/stakeholder-map",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "stakeholder-map",
@@ -39380,7 +39488,7 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
-            "description": "The declared actor who would perform it; checked against the lane's role and the ODRL policies (issue #1207).",
+            "description": "Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for (issue #1207).",
             "required": false
           },
           {
@@ -39459,7 +39567,7 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/tool-types.schema.json#/$defs/Text",
-            "description": "The declared actor who performed the step. Checked against the lane's role and the ODRL policies before anything is recorded (issue #1207).",
+            "description": "Who you say performed the step, written to the history. Authorization is decided on the principal GitHub vouches for, in strict mode (issue #1207).",
             "required": false
           },
           {
@@ -39880,6 +39988,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/intake",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "intake",
+      "title": "An intake record — what one capture put into `uploads/<doc>/`, and where it",
+      "module": "schemas/intake.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/intake"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/interaction",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "interaction",
@@ -40160,6 +40277,15 @@
       "module": "schemas/session-context.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/site-indexes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "site-indexes",
+      "title": "The published index files the site's viewers read — each `$schema` family",
+      "module": "schemas/site-indexes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/skill-package",
@@ -40444,6 +40570,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/withheld",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "withheld",
+      "title": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
+      "module": "schemas/withheld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "adjudication",
@@ -40559,6 +40694,15 @@
       "module": "../large-datasets/schemas/artifact-store.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/large-datasets-schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/artifact-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/id-lookup",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "id-lookup",
+      "title": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
+      "module": "../large-datasets/schemas/id-lookup.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/large-datasets-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/id-lookup"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#schema/source-descriptor",
@@ -41072,7 +41216,8 @@
       "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
       "sourceKind": "role-registry",
       "actorKinds": [
-        "person"
+        "person",
+        "agent"
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bpmn-authoring",
@@ -42296,8 +42441,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "e86f12973e867449e12417402fc06a8836be1983",
+    "sha": "fb98f99c8e73a270dcd32bae7b982c134b826365",
     "pr": "1306/merge",
-    "run": "36044692329"
+    "run": "36056459814"
   }
 }

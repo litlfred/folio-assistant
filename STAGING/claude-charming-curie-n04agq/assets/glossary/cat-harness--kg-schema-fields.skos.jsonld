@@ -5522,25 +5522,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.publishable",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "CatHarnessDeclaration.publishable"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Is this instance PUBLISHED for consumers outside this repository?"
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.remotegraphs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5747,25 +5728,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.publishable",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "CatHarnessDeclarationSchema.publishable"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Is this instance PUBLISHED for consumers outside this repository?"
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable",
       "skos:note": "candidate"
     },
     {
@@ -6263,6 +6225,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.publication.host",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publication.host"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#Publication.host",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.publication.state",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publication.state"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHAT STATE this instance's publication is in. `draft`, always, today."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#Publication.state",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.remotegraph.graphkinds",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6488,25 +6488,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.serialisations",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.skill",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SubgraphCoverageSchema.skill"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The skill that governs it, by NAME rather than by path, so no base applies."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.skill",
       "skos:note": "candidate"
     },
     {
@@ -12362,6 +12343,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.validatornotapplicable",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.validatorNotApplicable"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHY a runtime validator does not apply to this kind — a reason, not a flag."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/harness-config.closedcontenttype.own",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13594,6 +13594,177 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakefileschema.role",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeFileSchema.role"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeFileSchema.role",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakefileschema.type",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeFileSchema.type"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the file is: `publication`, `full-item-record`, `item-page`, `upload`…"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeFileSchema.type",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema._comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema._comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Authored context for a person reading the file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema._comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.doc_id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.doc_id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The upload directory's name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.doc_id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.item",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.item"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The catalogue node this capture is of, by its `id` (`item/<uuid>`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.item",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.record"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Dublin Core record describing it, relative to this file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A title — only for a capture nothing else describes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakesourceschema.capturedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSourceSchema.capturedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The capture moment — not when this record was written."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakesourceschema.capturedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSourceSchema.capturedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who or what captured it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedBy",
       "skos:note": "candidate"
     },
     {
@@ -18176,6 +18347,158 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repository-relative path of the bean file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.parent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.parent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`\"\"` when the bean has no parent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.preview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.preview"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The body, trimmed to its first 400 characters."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.referencedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.referencedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent means the reference scan did not run — a third state, not \"none\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.badges",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.badges"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page's slug."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.changedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.changedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`YYYY-MM-DD`: the day the counts last changed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The translations directory counted, repository-relative."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/skill-package.actordefinitionschema.permissions",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19959,6 +20282,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/theme.ts#ThemeBackdropSchema.scrim",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/theme.themedtodofieldsschema.layout",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThemedTodoFieldsSchema.layout"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which of the theme's three crops this sticky shows. ABSENT means the square `card` crop, on every screen — owner, 2026-09-24: *\"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified.\"* Absent rather than defaulted, for the same reason as `theme`: \"the author chose card\" and \"nobody chose\" stay distinguishable."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/theme.ts#ThemedTodoFieldsSchema.layout",
       "skos:note": "candidate"
     },
     {
@@ -25830,6 +26172,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/webpage.ts#WebPageNode.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/withheld.withheldentryschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relative to the directory holding the file; a directory takes its whole subtree."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/withheld.withheldentryschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
       "skos:note": "candidate"
     }
   ]

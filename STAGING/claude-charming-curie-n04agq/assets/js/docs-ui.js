@@ -3368,16 +3368,25 @@
    * says everything. A description of the cat would be read out before every
    * todo on the board.
    */
-  function buildBackdrop(art) {
+  /* THE SQUARE CROP, ON EVERY SCREEN, UNLESS THE TODO NAMES ONE.
+   *
+   * Owner, 2026-09-24: "i want sticky themes to by default use the square
+   * avatar layout but mostly faded, if not specified." This used to swap in the
+   * tall `mobile` crop below 30rem, which made one sticky show two different
+   * pictures depending on the window — and the square is the crop the avatar
+   * is cut from, so it is the one that reads as this theme's cat.
+   *
+   * "Mostly faded" is the theme's scrim, unchanged: `--fa-sticky-scrim` covers
+   * 82–86% of the art, and its AAA-over-pure-black guarantee travels with it.
+   *
+   * `layout` on the todo picks another crop when an author asks for one. A
+   * name the theme has no crop for falls back to the square rather than to no
+   * art. */
+  function buildBackdrop(art, layout) {
     var pic = el("picture", { "aria-hidden": "true" });
-    if (art.mobile) {
-      var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
-      pic.appendChild(src);
-    }
-    // `card` when there is one, else whatever the theme did supply — the
-    // generator only publishes complete sets, so this fallback is reached only
-    // by a hand-written index.
-    var chosen = art.card || art.mobile || art.laptop;
+    // The generator only publishes complete sets, so the later fallbacks are
+    // reached only by a hand-written index.
+    var chosen = (layout && art[layout]) || art.card || art.mobile || art.laptop;
     pic.appendChild(el("img", { class: "fa-sticky-art", src: chosen, alt: "", loading: "lazy" }));
     return pic;
   }
@@ -3526,7 +3535,7 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art));
+    if (art) card.appendChild(buildBackdrop(art, todo.layout));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -4233,6 +4242,50 @@
       });
   }
 
+  /**
+   * Where the handle lives: IN THE LEFT NAVBAR. Owner, 2026-09-24: *"folio
+   * handle on LHS on navbar"*.
+   *
+   * Fixed at the top centre, it sat over whatever a page put there: a
+   * viewer's h1 (bean `015u`) and a replica's INGESTED COPY banner (bean
+   * `269z`). Each fix moved the PAGE or the handle around the other; this
+   * gives the handle a place of its own, in the navigation every page
+   * already has.
+   *
+   *  - the harness rail (`.fa-nav`, standalone viewers and mounted pages):
+   *    at the top, right under the ☰ head;
+   *  - the theme's sidebar (`.side-bar`, just-the-docs pages): under its
+   *    icon row, or under the site header when the page has no row.
+   *
+   * A page with NEITHER keeps the old place, fixed at the top centre, so the
+   * glass is never unreachable. `fa-glass-handle--in-nav` is the only
+   * difference in styling, and it is set here, where the decision is made.
+   */
+  function placeHandle(handle) {
+    var railTop = document.querySelector(".fa-nav .fa-nav-top");
+    if (railTop) {
+      var head = railTop.querySelector(".fa-nav-head");
+      handle.classList.add("fa-glass-handle--in-nav");
+      if (head) head.insertAdjacentElement("afterend", handle);
+      else railTop.insertBefore(handle, railTop.firstChild);
+      return;
+    }
+    // In the theme's sidebar, AFTER the icon row when there is one. The ☰ is
+    // painted absolutely at a fixed offset, and the icon row is the element
+    // built to clear it; right after the header, the handle's position
+    // depended on the header's height and could land on the ☰ and take its
+    // clicks (measured in `navbar-row.e2e`). The row is mounted before the
+    // glass (`mountNavIconRow` runs first in `init`).
+    var sideRow = document.querySelector(".side-bar > .fa-nav-icons");
+    var siteHeader = document.querySelector(".side-bar > .site-header");
+    if (sideRow || siteHeader) {
+      handle.classList.add("fa-glass-handle--in-nav");
+      (sideRow || siteHeader).insertAdjacentElement("afterend", handle);
+      return;
+    }
+    document.body.appendChild(handle);
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -4274,8 +4327,14 @@
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    }, "▾ Folio");
-    document.body.appendChild(handle);
+    });
+    // A MARK and a LABEL, not one string: in a navbar strip at rest only
+    // marks show (the owner's "only icons/avatars so compat"), so the label
+    // must be separable from the ▾. The accessible name is the aria-label.
+    handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
+    handle.appendChild(document.createTextNode(" "));
+    handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
+    placeHandle(handle);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
