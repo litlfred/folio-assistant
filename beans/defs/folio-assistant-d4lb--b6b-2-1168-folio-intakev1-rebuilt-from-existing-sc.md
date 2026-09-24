@@ -1,11 +1,11 @@
 ---
 # folio-assistant-d4lb
 title: 'B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T18:42:45Z
-updated_at: 2026-09-24T18:51:25Z
+updated_at: 2026-09-24T19:50:21Z
 parent: folio-assistant-tr05
 ---
 

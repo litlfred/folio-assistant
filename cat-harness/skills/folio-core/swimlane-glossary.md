@@ -1,5 +1,7 @@
 ---
 name: swimlane-glossary
+graph-kinds:
+  - swimlane-glossary
 ---
 
 # Swimlane Glossary Skill

@@ -8,6 +8,8 @@ description: >
 adapters: [document, paper, dak]
 profiles: [document, paper]
 consulted: true
+graph-kinds:
+  - processes
 ---
 
 # Processes are BPMN, and the diagrams are executable

@@ -12,9 +12,6 @@
       "graphKinds": [
         "fhir-artifact-index"
       ],
-      "coverage": {
-        "skill": "ig-artifact-ingestion"
-      },
       "readOnly": true,
       "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened."
     }
