@@ -75,12 +75,21 @@ test.describe("the glass exists on a page that is not the harness's", () => {
     expect(await page.locator(".fa-sticky-board").count()).toBe(0);
   });
 
-  // Bean `015u`. With no theme header to sit in, the handle landed on the
-  // page's first content: the library viewer's h1 and the who-iris replica's
-  // "INGESTED COPY" banner. The page must reserve the handle's band.
+  // Bean `015u`. A harness VIEWER has no theme header, so the handle landed
+  // on its h1. A viewer carries the fixture's own mark, and with it the page
+  // reserves the handle's band. The REPLICA above carries no mark and must
+  // stay unchanged (`folio-mount.e2e`, bean `jpjt`).
   for (const width of [1280, 390]) {
-    test(`the handle covers none of the page's first content at ${width} px`, async ({ page }) => {
+    test(`on a VIEWER the handle covers none of the first content at ${width} px`, async ({ page }) => {
+      await page.route("http://replica.test/viewer.html", (route) =>
+        route.fulfill({
+          contentType: "text/html",
+          body: REPLICA.replace("<style>", "<style data-folio-narrow-viewport></style><style>"),
+        }),
+      );
       await page.setViewportSize({ width, height: 800 });
+      await page.goto("http://replica.test/viewer.html");
+      await page.waitForSelector(handle, { state: "attached" });
       const hb = await page.locator(handle).boundingBox();
       const h1 = await page.locator("h1").boundingBox();
       expect(hb).not.toBeNull();
