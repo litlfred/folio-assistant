@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j820
 title: 'PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T21:14:17Z
-updated_at: 2026-09-24T05:10:40Z
+updated_at: 2026-09-24T13:46:41Z
 parent: folio-assistant-slw1
 ---
 
