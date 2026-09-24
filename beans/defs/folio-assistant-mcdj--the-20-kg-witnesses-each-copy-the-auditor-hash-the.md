@@ -90,10 +90,67 @@ narrower and costs a panel change. Both are the owner's, and the wrong order —
 changing the schema before asking whether the files need committing — is the one
 `cflw` explicitly warned against.
 
+## 2026-09-23 — the prior question is ANSWERED: the published site does not need them
+
+The owner ruled the ORDER: establish whether the witnesses need committing
+before touching the shared schema. Established, from the workflows and the
+generator rather than from reasoning about them.
+
+### The site regenerates them; it does not serve the committed copies
+
+`docs-site.yml` runs `gen-docs-pages.ts` at **line 140** and copies
+`test/results/witnesses/` into `_site/assets/qa/` at **line 532** — generator
+first, same job. `feature-staging.yml` is the same shape (204, then 893). So
+what a reader fetches is **regenerated at publish**, never the committed bytes.
+
+`gen-docs-pages.ts` says so in its own header, and it is right:
+
+> *"`docs-site.yml` and `feature-staging.yml` both run this generator in full
+> before copying `test/results/witnesses/` into `_site/assets/qa/`, so the
+> projections a reader actually fetches are regenerated at publish. **The
+> committed copies are a cache for local work and for review.**"*
+
+**A correction I am keeping.** My first reading of `docs-site.yml` stopped at the
+`cp -rT` and concluded the committed copies ARE the published artefact, so
+option A would 404 every badge. That was wrong — I had read the copy step and
+not looked for what ran before it, which is the grep-and-stop failure this bean
+already records once, in a second form. The workflow line numbers above are the
+check I should have run first.
+
+### So the committed copies buy exactly two things
+
+1. **A reviewer can see a kg verdict move in a diff.** Real, and the reason this
+   is a question rather than a deletion.
+2. **`d2kp`'s existence gate.** `emit(..., "verdict")` gates these on EXISTENCE
+   only and deliberately not on contents — *"a missing file IS an omission: the
+   badge would point at a 404 forever"*. That guard catches a generator that
+   stopped emitting, and it needs a committed file to exist.
+
+**Their contents are gated by nothing.** `d2kp` is explicit that gating them
+could only ever fire on a graph that changed. So the 20 files churn on every
+auditor edit while no check reads what is in them, and the site never sees them.
+
+### What that does to the three options
+
+| option | now known |
+|---|---|
+| **A — stop committing** | the **published site is unaffected**, proven above. Costs the diff-review benefit AND `d2kp`'s existence guard, which would need somewhere else to live |
+| **B — omit `scriptHash` on the kg branch** | **not free**: `docs-ui.js:7312-7314` renders it as a *"checker source hash"* field, so the panel must read the manifest for kg subjects instead. Exactly the e2e surface `cflw` flagged |
+| **C — leave it** | 21 files churn per auditor edit, and every open branch touching the graph is invalidated |
+
+**Still not choosing.** A is cheaper than it looked and costs a guard nobody has
+re-homed; B is narrower and costs a panel change. Both are the owner's, and both
+are now informed rather than guessed.
+
 ## Done when
 
+- [x] The prior question is answered with evidence, not reasoning: the published
+      site regenerates the witnesses and does not serve the committed copies
+      (`docs-site.yml` 140 then 532; `feature-staging.yml` 204 then 893)
 - [ ] The owner has ruled between A, B and C — asked as selectable options, with
-      this measurement, not as a description of the code
+      this measurement, not as a description of the code. **A is cheaper than it
+      read and costs `d2kp`'s existence guard; B costs a panel change at
+      `docs-ui.js:7312`**
 - [ ] Whichever is chosen is measured with the same probe: an auditor-only edit
       changes **1** file, or the reason it still changes more is written down
 - [ ] The `script_hash` / `scriptHash` spelling trap is closed or recorded where

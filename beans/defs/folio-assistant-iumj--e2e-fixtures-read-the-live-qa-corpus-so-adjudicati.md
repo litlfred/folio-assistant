@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T01:17:56Z
-updated_at: 2026-09-23T09:58:54Z
+updated_at: 2026-09-24T05:28:12Z
 parent: folio-assistant-1swy
 ---
 
@@ -153,3 +153,49 @@ sidecar and asserting what it says, which is the case that took `main` red.
 - `cat-harness/scripts/tests/e2e-corpus-coupling.test.ts`: the new guard with
   its fires / does-not-fire tests and a per-spec check over the real suite.
 - Issue #1043.
+
+---
+
+## Closed 2026-09-24 on EVIDENCE, by stream 4 (`kpcl`) — which did not build any of it
+
+This bean reached the stale-claim sweep's candidate set — `in-progress`,
+untouched, no open PR — and it is a fifth thing that can mean: **finished, and
+never closed.** Re-derived rather than taken from the notes above, on `main` at
+`6099ff34`:
+
+| claim | re-derived |
+|---|---|
+| `test/support/qa-fixture.ts` exists | present |
+| `scripts/tests/e2e-corpus-coupling.test.ts` exists and passes | **44 pass, 0 fail**, 14 expect() calls |
+| every Done-when box | 4 of 4 ticked, none open |
+
+`bean-coordination` §"Closing a bean whose work has already landed" is explicit
+that the test is **evidence, not authorship**. Stream 4 wrote none of this; the
+guard runs here now, which is the evidence.
+
+### What it costs to leave a finished bean open, measured
+
+`iumj` sat `in-progress` in a store where **99 beans claimed to be live work and
+77 had not moved in a day**. A sibling session reading the work plan could not
+tell it from abandoned work, and `check:bean-rollup`'s first two rules could not
+either — they judge a bean against its **subtree**, and a leaf has none.
+
+So this bean produced a third rule in the gate that found it:
+**`open-leaf-complete-checklist`** — an open bean with no children and every
+checklist item ticked is a status its own **body** refutes. Clock-free, like the
+other two. Measured over 243 open beans: 4 such beans, of which `5a3l` is a
+container and excluded, leaving 3 — a finding about three specific beans rather
+than a wall, which is the ratio `beans.ts` names when it keeps
+`blocked-without-expiry` at 4 of 239.
+
+The rule does **not** say "close this bean". Closing is the owner's act on
+evidence, and adding the box that is actually still open is as good an answer.
+
+## Summary of Changes
+
+Nothing was built here by this session. The bean is closed because its work
+landed (#1043) and its guard was re-run rather than trusted: 44 tests green, the
+fixture helper and the coupling guard both present on `main`. Its remaining
+value is the rule it produced in `check:bean-rollup`, which exists so the next
+finished-and-open bean is visible on the day it happens instead of at the next
+sweep.

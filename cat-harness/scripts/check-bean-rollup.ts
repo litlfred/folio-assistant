@@ -53,9 +53,23 @@
  * |---|---|
  * | `open-container-closed-subtree` | open, has children, **none** open — it asserts live work its own subtree denies |
  * | `closed-container-open-subtree` | closed, and **some** child is open — the roadmap reads the area as finished |
+ * | `open-leaf-complete-checklist` | open, no children, **every** box ticked — its own BODY says there is nothing left |
  *
- * Measured on the store the day this shipped: **0** and **1**. The one is
- * `5a3l` (DEPLOYMENT), `completed` with **12** open children — baselined,
+ * The third was added 2026-09-24, by a bean the first two could not see.
+ * `iumj` sat `in-progress` in the candidate set of the very sweep below —
+ * untouched, no open PR — and was neither abandoned nor blocked: it was
+ * **finished and never closed**, its work landed in #1043 and its guard green.
+ * The container rules judge a bean against its SUBTREE, and a leaf has none, so
+ * the instrument written to make `in-progress` mean something was blind to the
+ * commonest way it lies.
+ *
+ * Measured on the store the day this shipped: **0** and **1**; the third
+ * fires on **3** of 243 open beans, which is a finding about three specific
+ * beans rather than a wall somebody switches off — the ratio `beans.ts` names
+ * when it keeps `blocked-without-expiry` at 4 of 239. One of the three was
+ * closed on re-derived evidence and two are baselined, both belonging to other
+ * streams. The original `1` was `5a3l` (DEPLOYMENT), `completed` with **12**
+ * open children — baselined,
  * because whether those twelve are unfinished work or should be re-parented is
  * a judgement about `5a3l`, and that belongs to its owner.
  *
@@ -100,7 +114,7 @@ const STALE_DAYS = 1;
 export interface RollupFinding {
   /** `<rule>:<bean-id>` — stable across a title edit, because a title is prose. */
   key: string;
-  kind: "open-container-closed-subtree" | "closed-container-open-subtree";
+  kind: "open-container-closed-subtree" | "closed-container-open-subtree" | "open-leaf-complete-checklist";
   bean: string;
   message: string;
 }
@@ -133,6 +147,18 @@ export interface BeanRollupReport {
   } | null;
 }
 
+/**
+ * Every `- [ ]` / `- [x]` item in a bean's body, as the tick characters.
+ *
+ * Deliberately not a markdown parse: the store writes one shape, and a reader
+ * that accepted more would disagree with `check:bean-bodies`, which finds the
+ * same items the same way. Two readers of one structure with different keys is
+ * the `nytj` family.
+ */
+export function checklist(body: string): string[] {
+  return [...body.matchAll(/^\s*-\s\[( |x|X)\]/gm)].map((m) => m[1]!);
+}
+
 /** Bean id → the ids naming it as `parent`. Built once; inverting it wrongly is silent. */
 export function childrenOf(beans: BeanNode[]): Map<string, BeanNode[]> {
   const out = new Map<string, BeanNode[]>();
@@ -158,7 +184,43 @@ export function rollupFindings(beans: BeanNode[]): RollupFinding[] {
   const out: RollupFinding[] = [];
   for (const b of beans) {
     const children = kids.get(b.id) ?? [];
-    if (children.length === 0) continue;
+    /* THE LEAF RULE — a status its own BODY refutes, where the two above are
+     * about a status its SUBTREE refutes. Same shape, one level down, and
+     * clock-free for the same reason.
+     *
+     * Leaves only, and the filter is load-bearing rather than tidy: `5a3l` has
+     * every box in its own checklist ticked AND twelve open children, so on a
+     * container "all ticked" means nothing — its subtree is what says whether
+     * the work is done, which is what the two rules above already ask. Without
+     * this filter the rule reports the one bean the gate already handles
+     * correctly, in the opposite direction.
+     *
+     * Measured 2026-09-23 over 243 open beans: 4 with every box ticked, of
+     * which 1 is `5a3l` and excluded here, leaving 3. A finding about three
+     * specific beans rather than a wall somebody switches off — the ratio
+     * `beans.ts` names when it keeps `blocked-without-expiry` at 4 of 239.
+     *
+     * It does NOT say "close this bean". Closing is the owner's act on
+     * evidence, never a gate's demand, and `ready-to-close` exists for the
+     * case the evidence cannot be re-derived. It says the bean's own body and
+     * its status disagree, which is a fact rather than an instruction — and
+     * adding the box that is actually still open is as good an answer as
+     * closing it. */
+    if (children.length === 0) {
+      const ticks = checklist(b.body);
+      if (isOpen(b) && ticks.length > 0 && ticks.every((t) => t.toLowerCase() === "x")) {
+        out.push({
+          key: `open-leaf-complete-checklist:${b.id}`,
+          kind: "open-leaf-complete-checklist",
+          bean: b.id,
+          message:
+            `${b.id} (${b.title.slice(0, 60)}): \`${b.status}\` with all ` +
+            `${ticks.length} checklist item(s) ticked and no children — its own body says ` +
+            `there is nothing left. Close it on evidence, or add the box that is still open`,
+        });
+      }
+      continue;
+    }
     const open = children.filter(isOpen);
     if (isOpen(b) && open.length === 0) {
       out.push({
@@ -323,7 +385,18 @@ function formatReport(r: BeanRollupReport): string {
   } else {
     for (const p of r.problems) out.push(`  ✗ ${p}`);
     out.push("");
-    out.push("  Close the container, or re-open/re-parent the children that disagree with it.");
+    /* THE REMEDY DEPENDS ON THE RULE, and one footer for three rules told a
+     * reader with a ticked-out leaf to "re-parent the children" it does not
+     * have. A remediation line that does not fit the finding is read as noise,
+     * and then so is the finding. */
+    if (r.problems.some((p) => p.includes("checklist item(s) ticked"))) {
+      out.push("  A ticked-out bean: close it ON EVIDENCE — re-derived, not taken from its own");
+      out.push("  notes — or add the box that is actually still open. `ready-to-close` is for the");
+      out.push("  case the evidence cannot be re-derived; it is not a parking space.");
+    }
+    if (r.problems.some((p) => p.includes("child(ren)"))) {
+      out.push("  A container: close it, or re-open / re-parent the children that disagree with it.");
+    }
     out.push("  Never delete a bean — unwanted work is `scrapped`, with its reasons.");
   }
   // Listed, never failed, and never silent: hiding a baselined defect makes

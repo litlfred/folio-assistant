@@ -21,7 +21,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { readBeans } from "../beans.ts";
-import { ageDays, rollupFindings, sweep } from "../check-bean-rollup.ts";
+import { ageDays, checklist, rollupFindings, sweep } from "../check-bean-rollup.ts";
 
 const made: string[] = [];
 afterEach(() => {
@@ -106,6 +106,67 @@ describe("a status its own subtree refutes", () => {
       read(store([["ep1", "completed", "epic", ""], ["t1", "todo", "task", "ep1"]])),
     );
     expect(f[0]!.key).toBe("closed-container-open-subtree:ep1");
+  });
+});
+
+describe("a status its own BODY refutes — the leaf rule", () => {
+  /** A store where the bean's body, not just its front matter, is set. */
+  function bodied(beans: Array<[string, string, string, string, string]>): string {
+    const r = mkdtempSync(join(tmpdir(), "beanrollup-"));
+    made.push(r);
+    const dir = join(r, "beans", "defs");
+    mkdirSync(dir, { recursive: true });
+    for (const [id, status, type, parent, body] of beans) {
+      writeFileSync(
+        join(dir, `${id}.md`),
+        `---\n# ${id}\ntitle: '${id}'\nstatus: ${status}\ntype: ${type}\n` +
+          (parent ? `parent: ${parent}\n` : "") +
+          `updated_at: 2026-09-22T18:00:00Z\n---\n\n${body}\n`,
+      );
+    }
+    return r;
+  }
+
+  test("an open leaf with every box ticked is reported", () => {
+    const f = rollupFindings(read(bodied([["t1", "in-progress", "task", "", "- [x] a\n- [x] b"]])));
+    expect(f.map((x) => x.kind)).toEqual(["open-leaf-complete-checklist"]);
+    expect(f[0]!.message).toContain("all 2 checklist item(s) ticked");
+  });
+
+  test("one unticked box is silence", () => {
+    expect(rollupFindings(read(bodied([["t1", "in-progress", "task", "", "- [x] a\n- [ ] b"]])))).toEqual([]);
+  });
+
+  test("a bean with NO checklist is silence — absent is not complete", () => {
+    expect(rollupFindings(read(bodied([["t1", "in-progress", "task", "", "prose only"]])))).toEqual([]);
+  });
+
+  test("a closed bean is not reported — its status already says so", () => {
+    expect(rollupFindings(read(bodied([["t1", "completed", "task", "", "- [x] a"]])))).toEqual([]);
+  });
+
+  /* THE LEAF FILTER IS LOAD-BEARING. `5a3l` has every box in its OWN checklist
+   * ticked and twelve open children: on a container "all ticked" means nothing,
+   * because the subtree is what says whether the work is done — which the two
+   * container rules already ask, in the opposite direction. Without this filter
+   * the rule reports the one bean the gate handles correctly. */
+  test("a container with every box ticked and an open child is NOT reported by this rule", () => {
+    const f = rollupFindings(
+      read(bodied([
+        ["ep1", "in-progress", "epic", "", "- [x] a\n- [x] b"],
+        ["t1", "todo", "task", "ep1", "- [ ] work"],
+      ])),
+    );
+    expect(f).toEqual([]);
+  });
+
+  test("the key is the rule and the id", () => {
+    const f = rollupFindings(read(bodied([["t1", "in-progress", "task", "", "- [x] a"]])));
+    expect(f[0]!.key).toBe("open-leaf-complete-checklist:t1");
+  });
+
+  test("checklist() reads the store's one shape and ignores prose that looks like it", () => {
+    expect(checklist("- [x] a\n  - [ ] b\ntext - [x] not an item")).toEqual(["x", " "]);
   });
 });
 
