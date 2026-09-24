@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 268,
+      "count": 273,
       "unit": "beans"
     }
   },
@@ -1259,6 +1259,20 @@
       "file": "beans/defs/folio-assistant-b7wh--ingest-arxiv260714456v1-specialist-bpmn-compiled-a.md"
     },
     {
+      "id": "folio-assistant-b91x",
+      "title": "Decide: keep beans (hmans) or move to Beads (gastownhall/beads)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-8jt6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:03:47Z",
+      "updatedAt": "2026-09-23T22:32:13Z",
+      "preview": "Raised 2026-09-23 while writing cat-harness/docs/prior-art.md (bean vq8o). hmans/beans has had no commit since 2026-04-06 (v0.4.2, pre-1.0); Beads is very active (v1.3.0, atomic claim, leases) but stores in Dolt and has had a retracted release and data-loss/merge issues after its SQLite->Dolt migration (gastownhall/beads #2251, #4259, #4356). No importer between the two exists. Owner decision; not",
+      "file": "beans/defs/folio-assistant-b91x--decide-keep-beans-hmans-or-move-to-beads-gastownha.md"
+    },
+    {
       "id": "folio-assistant-b963",
       "title": "COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path",
       "status": "in-progress",
@@ -2271,6 +2285,20 @@
       "file": "beans/defs/folio-assistant-mylx--raw-markdown-backticks-show-in-rendered-text.md"
     },
     {
+      "id": "folio-assistant-n2l9",
+      "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-23T22:52:59Z",
+      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
+      "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
+    },
+    {
       "id": "folio-assistant-n5be",
       "title": "glossary visualiser: 6 wireframe findings",
       "status": "todo",
@@ -2551,6 +2579,20 @@
       "updatedAt": "2026-09-23T17:58:25Z",
       "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *\"bootstrap/README need propeor one voice revieqw. not condensed very repetative.\"*\n\n`bootstrap/README.md` is 252 lines. The owner reads it as repetitive and not condensed. This is repetition INSIDE one page. That is a different measurement from the one parent `88mg` made, which compared `docs/` with `skills/` and found little overlap.\n\n## Done",
       "file": "beans/defs/folio-assistant-pv51--bootstrap-readme-one-voice-rewrite-repetitive-and.md"
+    },
+    {
+      "id": "folio-assistant-q2aj",
+      "title": "Recheck Beads (gastownhall/beads) maturity against beans",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-8jt6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:32:13Z",
+      "updatedAt": "2026-09-23T22:32:13Z",
+      "preview": "Follow-up to b91x (owner decision 2026-09-23: keep beans, recheck in ~3 months, i.e. on or after 2026-12-23). Evidence baseline: cat-harness/docs/research-and-analysis/prior-art.md.\n\n## Done when\n- [ ] Beads' storage-layer issues re-measured (retractions, data-loss / dolt-pull issues since 2026-09-23) and hmans/beans activity re-measured\n- [ ] findings added to the prior-art page's health table wi",
+      "file": "beans/defs/folio-assistant-q2aj--recheck-beads-gastownhallbeads-maturity-against-be.md"
     },
     {
       "id": "folio-assistant-q2wm",
@@ -2933,6 +2975,20 @@
       "file": "beans/defs/folio-assistant-t3n8--the-archive-rung-stages-but-can-never-promote-and.md"
     },
     {
+      "id": "folio-assistant-t490",
+      "title": "Task authorization: authN + role + ODRL + content access before every BPMN task; rbac.ts on ODRL",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:16:45Z",
+      "updatedAt": "2026-09-23T22:52:49Z",
+      "preview": "Issue #1207 (child of #1180). Owner decisions 2026-09-23: advisory rollout (deny/role-mismatch refuse, unknown recorded), action always perform-task, authN is the BPMN executor's responsibility with git/GitHub as today's identity + access control, rbac.ts replaced by ODRL now.\n\n## Done when\n- [x] engine checks in workflow_gate + workflow_complete, verdict in history\n- [x] rbac.ts routes on ODRL, g",
+      "file": "beans/defs/folio-assistant-t490--task-authorization-authn-role-odrl-content-access.md"
+    },
+    {
       "id": "folio-assistant-t8g3",
       "title": "Translation support foundation (issue #206)",
       "status": "in-progress",
@@ -3229,6 +3285,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"need fixed\nand generated data sets skills\" and \"need generate data sets (e.g. fhir data\ntemplating system, etc) so need egneral processes and specialization for content\nttype, subprocess etc.\"\n\n## Two kinds, and they are not degrees of the same thing\n\n**Fixed** data is committed, reviewed, and cited. It is evidence: an SME looke",
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
+    },
+    {
+      "id": "folio-assistant-vq8o",
+      "title": "Prior-art page: open-source projects taking a similar approach",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:53:16Z",
+      "updatedAt": "2026-09-23T22:03:23Z",
+      "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
+      "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
     },
     {
       "id": "folio-assistant-vsv4",

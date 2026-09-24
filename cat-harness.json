@@ -269,15 +269,15 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T01:12:20.864Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3f454c7426257507a147f12999efa42b150f1a82",
-  "sourceCommitSha": "3f454c7426257507a147f12999efa42b150f1a82",
-  "sourceCommitAt": "2026-09-24T03:09:58+02:00",
+  "generatedAt": "2026-09-24T05:09:58.723Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cfbbd477660fe0d5494e90273c799abe348de9a3",
+  "sourceCommitSha": "cfbbd477660fe0d5494e90273c799abe348de9a3",
+  "sourceCommitAt": "2026-09-24T07:07:09+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 257,
-    "Actor": 33,
+    "Skill": 258,
+    "Actor": 35,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
@@ -714,7 +714,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 221,
+      "instructionLines": 230,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -763,7 +763,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 157,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1660,7 +1660,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 357,
+      "instructionLines": 367,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2106,7 +2106,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 623,
+      "instructionLines": 631,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2533,7 +2533,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 173,
+      "instructionLines": 186,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2819,6 +2819,22 @@
       ],
       "instructionsPath": "skills/folio-core/test-engineer.md",
       "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "task-authorization",
+      "title": "Task authorization — four questions before every task",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/task-authorization.md",
+      "instructionLines": 156,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3277,7 +3293,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/placement.md",
-      "instructionLines": 335,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4397,6 +4413,36 @@
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/who-iris-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/collaborator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "collaborator",
+      "actorKind": "person",
+      "title": "Collaborator (gateway session)",
+      "description": "A person signed in through the auth-gateway's GitHub OAuth and listed in deploy/github-collaborators.txt. The gateway's `collaborator` tier as an actor (issue #1207): what it may do over HTTP is cat-harness/policies/http-gateway.jsonld, not a rung compared in code. Takes on no BPMN role; a person who works in a lane does so as the actor that lane's role names.",
+      "hasCapability": [],
+      "roleName": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/owner",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "owner",
+      "actorKind": "person",
+      "title": "Owner (gateway session)",
+      "description": "The repository owner signed in through the auth-gateway's GitHub OAuth. The gateway's `owner` tier as an actor (issue #1207). Over HTTP it holds exactly what `collaborator` holds, because no route distinguishes them; `commit to main` is GitHub's branch protection, not a route. Its grants are cat-harness/policies/http-gateway.jsonld.",
+      "hasCapability": [],
+      "roleName": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/review-agent",
@@ -5781,6 +5827,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/serving-renderings",
@@ -36926,13 +36973,25 @@
             "arg": {
               "positional": 1
             }
+          },
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The declared actor who would perform it; checked against the lane's role and the ODRL policies (issue #1207).",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The content it would act on, for the access check.",
+            "required": false
           }
         ],
         "outputs": [
           {
             "name": "verdict",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
-            "description": "Permitted, refused with the reason, or advisory."
+            "description": "Permitted, refused with the reason, or advisory — and the task-authorization verdict."
           }
         ]
       },
@@ -36996,7 +37055,13 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
-            "description": "Who performed the step, for the audit record.",
+            "description": "The declared actor who performed the step. Checked against the lane's role and the ODRL policies before anything is recorded (issue #1207).",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The content the step acted on, for the access check.",
             "required": false
           },
           {
@@ -38407,6 +38472,7 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/confirmation-waiver"
       ]
@@ -39019,7 +39085,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/diff",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/corpus-grep",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization"
       ]
     },
     {
@@ -39617,8 +39684,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "3f454c7426257507a147f12999efa42b150f1a82",
+    "sha": "cfbbd477660fe0d5494e90273c799abe348de9a3",
     "pr": "main",
-    "run": "35941715795"
+    "run": "35958539523"
   }
 }

@@ -26,7 +26,7 @@ the <code>.ts</code> is for programmatic registry, routing, and validation.</p>
 </div></div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">SkillDefinition</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#allowedtools">allowedTools</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#dependson">dependsOn</a><span class="tsd-signature-symbol">?:</span> <a href="assistant-types.SkillDependency.html" class="tsd-signature-type tsd-kind-interface">SkillDependency</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#description">description</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#lifecyclestages">lifecycleStages</a><span class="tsd-signature-symbol">?:</span> (<br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;plan&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;author&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;validate&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;review&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;test&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;publish&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feedback&quot;</span><br/>        <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;retire&quot;</span><br/>    )<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#name">name</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#package">package</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#requiredcapabilities">requiredCapabilities</a><span class="tsd-signature-symbol">:</span> <a href="assistant-types.SkillCapabilityRef.html" class="tsd-signature-type tsd-kind-interface">SkillCapabilityRef</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#roles">roles</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#routingpatterns">routingPatterns</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#tags">tags</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L388">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:388</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L388">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:388</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -55,28 +55,28 @@ the <code>.ts</code> is for programmatic registry, routing, and validation.</p>
 <div class="tsd-comment tsd-typography"><p>Tools the agent is allowed to use when this skill is active.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L421">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:421</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L422">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:422</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="dependson"><code class="tsd-tag">Optional</code><span>depends<wbr/>On</span><a href="#dependson" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">dependsOn</span><span class="tsd-signature-symbol">?:</span> <a href="assistant-types.SkillDependency.html" class="tsd-signature-type tsd-kind-interface">SkillDependency</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Dependencies on other skills or requirements.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L419">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:419</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L420">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:420</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="description"><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>What this skill does.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L394">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:394</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L394">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:394</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Unique skill identifier.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L390">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:390</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L390">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:390</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="lifecyclestages"><code class="tsd-tag">Optional</code><span>lifecycle<wbr/>Stages</span><a href="#lifecyclestages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">lifecycleStages</span><span class="tsd-signature-symbol">?:</span> (<br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;plan&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;author&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;validate&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;review&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;test&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;publish&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;feedback&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;retire&quot;</span><br/>)<span class="tsd-signature-symbol">[]</span></div>
@@ -87,28 +87,28 @@ had to read it off an <code>any</code>. That script never ran and was retired to
 <code>fsh-guts/scripts/</code> on 2026-09-20, so nothing reads this field now.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L440">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:440</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L441">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:441</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="name"><span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Human-readable name.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L392">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:392</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L392">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:392</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="package"><code class="tsd-tag">Optional</code><span>package</span><a href="#package" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">package</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>External package this skill belongs to (undefined = local).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L427">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:427</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L428">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:428</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="requiredcapabilities"><span>required<wbr/>Capabilities</span><a href="#requiredcapabilities" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">requiredCapabilities</span><span class="tsd-signature-symbol">:</span> <a href="assistant-types.SkillCapabilityRef.html" class="tsd-signature-type tsd-kind-interface">SkillCapabilityRef</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Capabilities this skill needs to function.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L417">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:417</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L418">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:418</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="roles"><code class="tsd-tag">Optional</code><span class="deprecated">roles</span><a href="#roles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">roles</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -121,8 +121,9 @@ names THREE vocabularies in seven words — and the 54 values on disk used
 two of them: 51 were the HTTP access tier from <code>src/types.ts</code>
 (<code>UserRole</code>), 3 were BPMN roles. Eight of the 51 were <code>reader</code>, which is
 not a <code>UserRole</code> either; that tier is spelled <code>viewer</code>.</p>
-<p>And nothing enforced any of it. <code>src/core/rbac.ts</code> is header-driven and
-every route hardcodes its own minimum, so a skill declaring
+<p>And nothing enforced any of it. <code>src/core/rbac.ts</code> was header-driven and
+every route hardcoded its own minimum (it asks the ODRL policies since
+issue #1207), so a skill declaring
 <code>roles: [&quot;reader&quot;, &quot;collaborator&quot;, &quot;owner&quot;]</code> beside a working RBAC module
 read as gated and was not. That is why it was removed rather than left:
 dead weight is cheap, but a false claim of enforcement is not.</p>
@@ -131,21 +132,21 @@ dead weight is cheap, but a false claim of enforcement is not.</p>
 SchemaRef was retired under hours earlier.</p>
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L415">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:415</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L416">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:416</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="routingpatterns"><code class="tsd-tag">Optional</code><span>routing<wbr/>Patterns</span><a href="#routingpatterns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">routingPatterns</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Regex patterns for routing user requests to this skill.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L423">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:423</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L424">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:424</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="tags"><code class="tsd-tag">Optional</code><span>tags</span><a href="#tags" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">tags</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Searchable tags.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/assistant-types.ts#L425">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:425</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/assistant-types.ts#L426">work/folio-assistant/folio-assistant/cat-harness/schemas/assistant-types.ts:426</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

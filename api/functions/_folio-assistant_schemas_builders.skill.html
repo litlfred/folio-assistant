@@ -46,7 +46,8 @@ without this makes <code>skill()</code> throw on every definition.</p>
 <p>Record: <code>fsh-guts/retired/skill-definition-roles.md</code>. Short version — it
 mixed an HTTP access tier (<code>owner</code>, <code>collaborator</code>, and <code>reader</code>, which
 is not even a <code>UserRole</code>) with BPMN roles, and <code>src/core/rbac.ts</code> never
-consulted it: routes hardcode <code>hasRole(req, &quot;collaborator&quot;)</code>. A field
+consulted it: routes hardcoded <code>hasRole(req, &quot;collaborator&quot;)</code> (they name an
+ODRL action since issue #1207). A field
 that reads as enforcement and enforces nothing is worse than an absent
 one. Reinstating it means writing the consumer first, and deciding which
 of the two vocabularies it speaks.</p>
@@ -82,7 +83,8 @@ without this makes <code>skill()</code> throw on every definition.</p>
 <p>Record: <code>fsh-guts/retired/skill-definition-roles.md</code>. Short version — it
 mixed an HTTP access tier (<code>owner</code>, <code>collaborator</code>, and <code>reader</code>, which
 is not even a <code>UserRole</code>) with BPMN roles, and <code>src/core/rbac.ts</code> never
-consulted it: routes hardcode <code>hasRole(req, &quot;collaborator&quot;)</code>. A field
+consulted it: routes hardcoded <code>hasRole(req, &quot;collaborator&quot;)</code> (they name an
+ODRL action since issue #1207). A field
 that reads as enforcement and enforces nothing is worse than an absent
 one. Reinstating it means writing the consumer first, and deciding which
 of the two vocabularies it speaks.</p>
@@ -92,7 +94,7 @@ of the two vocabularies it speaks.</p>
 <li class="tsd-parameter">
 <h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">tags</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3f454c7426257507a147f12999efa42b150f1a82/cat-harness/schemas/builders.ts#L93">work/folio-assistant/folio-assistant/cat-harness/schemas/builders.ts:93</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/cfbbd477660fe0d5494e90273c799abe348de9a3/cat-harness/schemas/builders.ts#L93">work/folio-assistant/folio-assistant/cat-harness/schemas/builders.ts:93</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
