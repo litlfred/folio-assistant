@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logging what you are doing</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1b1f23; --bg: #ffffff; --muted: #57606a; --line: #d0d7de; --link: #0b5cad; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e6edf3; --bg: #0d1117; --muted: #8d96a0; --line: #30363d; --link: #58a6ff; } }
+  body { font: 16px/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); max-width: 50rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  a { color: var(--link); }
+  code, pre { font-family: ui-monospace, monospace; font-size: 0.92em; }
+  pre { overflow-x: auto; padding: 0.75rem; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--line); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  blockquote { margin-left: 0; padding-left: 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+  hr { border: 0; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<h1>Logging what you are doing</h1>
+<p><strong>You are the author of a log line; the Logger is where it goes.</strong> That is the
+whole reason <code>actor</code> is an input you supply rather than something the Logger
+fills in: it receives, records and decides nothing, so it cannot know who acted.
+A line that named the Logger would record that logging happened and nothing
+about what did.</p>
+<p>It is carried out as a <strong>sub-process</strong>: nobody starts there. A task in another
+process calls it, and the calling task's diagram says so; this skill does not
+list its callers or the process that implements it (data-modelling, step 8).</p>
+<h2>The message</h2>
+<p>Five strings, all required, and one optional markdown body.</p>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>what it answers</th>
+<th>shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>timestamp</code></td>
+<td>when</td>
+<td>an ISO-8601 instant, e.g. <code>2026-09-20T14:03:11Z</code></td>
+</tr>
+<tr>
+<td><code>actor</code></td>
+<td>who was acting</td>
+<td>the acting actor's id — <strong>never the Logger's</strong></td>
+</tr>
+<tr>
+<td><code>process</code></td>
+<td>inside which process</td>
+<td>a process id, e.g. <code>my-process</code></td>
+</tr>
+<tr>
+<td><code>task</code></td>
+<td>at which step of it</td>
+<td>a node id within that process, e.g. <code>A_DoTheThing</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>what happened</td>
+<td>one line, no newline</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>the detail, if any</td>
+<td>markdown, optional</td>
+</tr>
+</tbody>
+</table>
+<p><strong>All five are required because each answers a question a reader will otherwise
+guess, and a guessed answer in a log is worse than a missing one.</strong> A line
+without <code>task</code> says something happened somewhere in a process; a reader cannot
+tell it from a line about a different step, and the log stops being evidence.</p>
+<p><strong><code>body</code> is the one place free prose belongs.</strong> A diff, an error, the contents
+of a file that was not where it should have been. Keep <code>message</code> to the line
+somebody scanning will read, and put everything else here.</p>
+<h2>When to log</h2>
+<p><strong>Optionally, from any task in any process.</strong> You need no permission and no
+element in the diagram: an actor saying what it is doing is always in order.</p>
+<p><strong>Required where a diagram says so</strong>, which it says by drawing the call
+explicitly — a <code>callActivity</code> whose <code>calledElement</code> is <code>Process_LogMessage</code>.
+If the diagram drew it, logging is a step, not a courtesy.</p>
+<p>The difference between the two is only whether the caller drew it. It is the
+same sub-process either way, and it takes the same six fields.</p>
+<h2>If you cannot complete the message</h2>
+<p><strong>Do not log, and say that you could not.</strong> The <code>End_NotLogged</code> branch is a real
+outcome, not an error path to route around.</p>
+<p>A line missing its <code>actor</code> or its <code>task</code> still <em>looks</em> like a record. A reader
+scanning the log cannot tell it from a complete one, so it answers nothing while
+occupying the space where an answer would be. Silence is recoverable — somebody
+notices a gap. A misleading entry is not.</p>
+<p>The same holds if the Logger is unreachable: say so, in the place you would have
+logged to, and carry on with the task. <strong>Logging is not a gate.</strong> A failure to
+log has never been a reason to abandon an install.</p>
+<h2>The one destination bootstrap has</h2>
+<p><strong>The discussion with the human actor.</strong> A Bootstrapping Agent has no log file, no
+service and no work plan — the only place it can put a line where a person will
+see it is the conversation it is already in.</p>
+<p>That is the <code>log-message</code> Tool: it takes the six fields and writes them into the
+chat. <code>invoke</code> is <code>manual</code>, and honestly so — there is no command; the agent
+composes the line and sends it. A harness that installs a real log sink adds a
+Tool beside it; this one keeps working, because the skill says what a message
+<em>is</em> and leaves where it lands to the Tool.</p>
+<h2>What this skill is NOT</h2>
+<p>It is <strong>not</strong> the work plan. A bean says what is being worked on and survives
+the session; a log line says what an actor did at a moment and does not claim
+to. A Bootstrapping Agent has no beans at all, which is the clearest case: it can log
+every step of an install and still have nowhere to record that the install is
+outstanding.</p>
+<p>It is also not a status report to the Requestor. Logging is not asking. If a
+step needs a judgement, that is <a href="confirm-harness.html"><code>confirm-harness</code></a>, and no
+number of log lines substitutes for it.</p>
+
+</body>
+</html>

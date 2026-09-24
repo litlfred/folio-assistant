@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/skills/latex-authoring/output.schema.json",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-einstein-970n6g",
+    "sha": "f757aafcaea9a286e68085a22148b0f9f79d7b5c",
+    "pr": "1239/merge",
+    "run": "35964094265"
+  }
+}
