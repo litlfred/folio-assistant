@@ -16,15 +16,15 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-4 instance(s), 55 step(s) checked, 55 `prov:Activity` emitted, 123 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+5 instance(s), 59 step(s) checked, 59 `prov:Activity` emitted, 131 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 55 | the actor is not declared in `.claude/skills/actors/` |
+| `undeclared-actor` | 59 | the actor is not declared in `.claude/skills/actors/` |
 | `not-eligible` | 0 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 55 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 59 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
@@ -80,6 +80,21 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `code-change-review--issue-1015-prefix-is-stub` | 8 | `Task_PrepareMerge` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_PrepareMerge as authoring-agent |
 | `code-change-review--issue-1015-prefix-is-stub` | 9 | `Task_CloseBean` | `undeclared-actor` | "claude" is not a declared actor |
 | `code-change-review--issue-1015-prefix-is-stub` | 9 | `Task_CloseBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_CloseBean as authoring-agent |
+
+### code-change-review--issue-1190-bean-restates-skill
+
+4 step(s) checked, 4 `prov:Activity` emitted, 8 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1190-bean-restates-skill.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `code-change-review--issue-1190-bean-restates-skill` | 1 | `Task_ClaimBean` | `undeclared-actor` | "claude" is not a declared actor |
+| `code-change-review--issue-1190-bean-restates-skill` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
+| `code-change-review--issue-1190-bean-restates-skill` | 2 | `Task_BranchAndAnnounce` | `undeclared-actor` | "claude" is not a declared actor |
+| `code-change-review--issue-1190-bean-restates-skill` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
+| `code-change-review--issue-1190-bean-restates-skill` | 3 | `Task_Implement` | `undeclared-actor` | "claude" is not a declared actor |
+| `code-change-review--issue-1190-bean-restates-skill` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
+| `code-change-review--issue-1190-bean-restates-skill` | 4 | `Task_RunGates` | `undeclared-actor` | "claude" is not a declared actor |
+| `code-change-review--issue-1190-bean-restates-skill` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
 
 ### crdm--folio-assistant-6lb8
 
