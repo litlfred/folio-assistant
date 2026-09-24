@@ -279,10 +279,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-24T06:24:44.376Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4387fa21331088716d329cecd081b57bb74a0b41",
-  "sourceCommitSha": "4387fa21331088716d329cecd081b57bb74a0b41",
-  "sourceCommitAt": "2026-09-24T06:22:23Z",
+  "generatedAt": "2026-09-24T17:29:14.240Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f221872c74540aa9a9004d00c0e13b91f03e94ff",
+  "sourceCommitSha": "f221872c74540aa9a9004d00c0e13b91f03e94ff",
+  "sourceCommitAt": "2026-09-24T17:26:30Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -1536,7 +1536,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
       ],
-      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing.",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-hand-check-beans-restating-skills/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
@@ -1599,8 +1599,8 @@
   ],
   "staging": {
     "branch": "claude/hand-check-beans-restating-skills",
-    "sha": "a8c47cbad3b2044ad72bf2bf462c1a8a06eb43fe",
+    "sha": "2b7cef39bb7d5bb0db772f43fbab7f82a661c528",
     "pr": "1188/merge",
-    "run": "35964177155"
+    "run": "36034348045"
   }
 }

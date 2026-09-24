@@ -16,6 +16,21 @@
   border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
 }
 #blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
+/* EXTRACT AND AGENT SUMMARY, SIDE BY SIDE -- owner, 2026-09-24: "the extract
+   of a node is shown, but no agentic summary". Beside, never instead: the
+   extract is the source's words and the summary is an agent's account of
+   them, so a reader must be able to hold one against the other. Two columns
+   where there is room, stacked on a phone, extract first either way. */
+#blocks td { white-space: normal; vertical-align: top; }
+#blocks td.bt { min-width: 15rem; }
+#blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+@media (min-width: 760px) { #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#blocks .pair > div { min-width: 0; }
+#blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; }
+#blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
+  font-size: 13px; line-height: 1.5; }
+#blocks .sum p { margin: .35rem 0 0; }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -93,6 +108,84 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 td.lib-first { white-space:nowrap; }
 .card .lib-ava { width:56px; height:76px; }
 </style>
+<style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style>
 </head>
 <body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
@@ -143,7 +236,7 @@ function go(){
 }
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">smart-base</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../cat-harness/voices/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">V</span><span class="fa-nav-label">voices</span></a></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">smart-base</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../cat-harness/voices/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">V</span><span class="fa-nav-label">voices</span></a></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
 <header>
   <h1>Library — the L1 corpus</h1>
   <p class="empty" id="status" style="padding:0">loading…</p>
@@ -338,6 +431,7 @@ function renderDesk(){
       '<div class="rows">' +
         "<span>sections</span><b>"+e.sections+"</b>" +
         "<span>blocks</span><b>"+e.blocks+"</b>" +
+        (e.summaries && e.summaries.prose ? "<span>summarised</span><b>"+e.summaries.summarised+" / "+e.summaries.prose+"</b>" : "") +
         "<span>images</span><b>"+e.images+"</b>" +
         "<span>pages</span><b>"+(e.pageStart==null?"—":e.pageStart+"–"+e.pageEnd)+"</b>" +
         "<span>words</span><b>"+e.words.toLocaleString()+"</b>" +
@@ -449,9 +543,18 @@ function renderBlocks(id, data, err){
       ' has no blocks. Nothing failed — the entry carries none.</p>';
     return;
   }
+  /* THE DRAIN, for this entry -- counted over the rows below, so the line and
+     the table cannot disagree. Advisory: a backlog is work nobody has done
+     yet, not a defect. */
+  var sums = bs.filter(function(b){ return b.summary; }).map(function(b){ return b.summary.status; });
+  var prose = sums.filter(function(x){ return x !== "empty" && x !== "unreadable"; }).length;
+  var done = sums.filter(function(x){ return x === "draft" || x === "confirmed"; }).length;
+  var drain = prose ? '<p class="note">Agent summaries: <b>' + done + '</b> of ' + prose +
+    ' prose block(s) summarised, <b>' + (prose - done) + '</b> still in the queue. ' +
+    'Summaries are drafted by an agent a few at a time and confirmed only by a person.</p>' : '';
   el.innerHTML = '<h2>Blocks — ' + esc(id) + ' <span class="note">(' + bs.length +
-    ', in page order)</span></h2><table><thead><tr>' +
-    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative</th></tr></thead><tbody>' +
+    ', in page order)</span></h2>' + drain + '<table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative / summary</th></tr></thead><tbody>' +
     bs.map(function(b){
       /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
          something without knowing our vocabulary, and showing only ours
@@ -461,7 +564,8 @@ function renderBlocks(id, data, err){
       /* A narrative state is three-valued and none of them is an error:
          not-authored means nobody has written one, which is a fact rather
          than a gap. Rendered as plain text for that reason. */
-      var nar = b.narrative == null ? '—' : esc(b.narrative);
+      var nar = b.summary ? summaryBadge(b.summary)
+        : b.narrative == null ? '—' : esc(b.narrative);
       /* THE CONTENT IS BEHIND A NATIVE <details> — bean lrmo.
          The owner opened this view and said "i expected to be able to see
          narrative content of extracted node": a row carrying only a state
@@ -477,9 +581,13 @@ function renderBlocks(id, data, err){
       var title = esc(b.title || '—');
       var body;
       if (b.content) {
+        var extract = '<pre>' + esc(b.content) + '</pre>' +
+          (b.truncated ? '<p class="note">Excerpt — the first 600 characters. The section file holds the rest.</p>' : '');
         body = '<details><summary>' + title + '</summary><div class="block-body">' +
-          '<pre>' + esc(b.content) + '</pre>' +
-          (b.truncated ? '<p class="note">Excerpt — the first 600 characters. The section file holds the rest.</p>' : '') +
+          (b.summary
+            ? '<div class="pair"><div><p class="lbl">Extract</p>' + extract + '</div>' +
+              '<div><p class="lbl">Agent summary</p>' + summaryPanel(b.summary) + '</div></div>'
+            : extract) +
           '</div></details>';
       } else {
         /* No content is a DETERMINED answer for a page-scan or an image with
@@ -487,9 +595,51 @@ function renderBlocks(id, data, err){
         body = title + ' <span class="note">(no content carried)</span>';
       }
       return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
-        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td>' + body +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td class="bt">' + body +
         '</td><td>' + nar + '</td></tr>';
     }).join("") + '</tbody></table>';
+}
+/* A BLOCK SUMMARY'S STATE, in words. Owner, 2026-09-24. Every state is said
+   as text rather than colour alone, and none is styled as an error: "not yet
+   summarised" is the drain's backlog, which is expected and slow on purpose.
+   A draft names its MODEL, because "a model wrote this" without which one is
+   the provenance gap schemas/attribution.ts closes. */
+function summaryLabel(s){
+  var d = s.draftedBy;
+  switch (s.status) {
+    case "draft":
+      return { cls: "info", t: d && d.kind === "agent"
+        ? "agent draft (model " + (d.model || "unknown") + ")"
+        : "draft by " + (d ? d.id : "unknown") };
+    case "confirmed": return { cls: "ok", t: "confirmed by " + (s.confirmedBy || "a person") };
+    case "stale": return { cls: "warn", t: "stale: source changed" };
+    case "rejected": return { cls: "warn", t: "rejected — back in the queue" };
+    case "empty": return { cls: "", t: "no text to summarise" };
+    case "unreadable": return { cls: "warn", t: "text unreadable" };
+    default: return { cls: "", t: "not yet summarised" };
+  }
+}
+function summaryBadge(s){
+  var l = summaryLabel(s);
+  return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
+}
+function summaryPanel(s){
+  var why = {
+    "not-summarised": "No agent has summarised this block yet. The queue is drained a few blocks at a time.",
+    "empty": "The block holds no text, so there is nothing to summarise.",
+    "unreadable": "The block names a text file that could not be read."
+  }[s.status];
+  var who = s.draftedBy
+    ? "Drafted by " + s.draftedBy.kind + " " + s.draftedBy.id +
+      (s.draftedBy.model ? ", model " + s.draftedBy.model : "") + (s.draftedAt ? ", " + s.draftedAt : "") + ". " +
+      (s.status === "confirmed" ? "Confirmed by " + (s.confirmedBy || "a person") + "."
+        : s.status === "stale" ? "The block's text has changed since; this summary may no longer match it."
+        : s.status === "rejected" ? "Rejected by a person: " + (s.rejectionReason || "no reason recorded") + "."
+        : "Not yet confirmed by a person.")
+    : "";
+  return '<div class="sum">' + summaryBadge(s) +
+    (s.text ? '<p>' + esc(s.text) + '</p>' : '<p>' + esc(why || "") + '</p>') +
+    (who ? '<p class="note">' + esc(who) + '</p>' : '') + '</div>';
 }
 function loadBlocks(id){
   fetch(blocksHref(id), {cache: "no-store"})
@@ -525,6 +675,17 @@ fetch(DATA_HREF).then(function(r){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\"color:var(--muted)\">of "+q.total+"</span></span>";
   }).join("");
+  /* THE SUMMARY DRAIN'S BACKLOG, for the entries this page shows. Advisory,
+     like every drain here: styled as a count, never as a failure. Absent
+     when the projection carries no count -- nobody counted is not zero. */
+  var counted = scoped.filter(function(e){ return e.summaries; });
+  if (counted.length) {
+    var sb = counted.reduce(function(n,e){ return n + e.summaries.backlog; }, 0);
+    var sp = counted.reduce(function(n,e){ return n + e.summaries.prose; }, 0);
+    var sd = counted.reduce(function(n,e){ return n + e.summaries.draft; }, 0);
+    $("badges").innerHTML += '<span class="badge"><b>' + sb + "</b> of " + sp +
+      " prose block(s) not yet summarised" + (sd ? ", <b>" + sd + "</b> agent draft(s) awaiting a person" : "") + "</span>";
+  }
   if (G.refScan) {
     var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
     $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
