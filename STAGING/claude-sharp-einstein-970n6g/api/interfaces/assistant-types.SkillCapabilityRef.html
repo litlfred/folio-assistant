@@ -105,7 +105,7 @@ was added that day to say so, and <strong>removed the same day</strong> — bean
 can it be computed, i dont like duplicate data maintenace issues&quot;</em>.</p>
 <p><strong>It can, exactly.</strong> The diagram already carries it, executably:
 <code>Gateway_SigningRoute</code> branches to <code>Task_HumanSign</code>, a <code>userTask</code>, in
-<code>Lane_Human</code>, which binds <code>&lt;folio:role ref=&quot;publication-manager&quot;/&gt;</code>. So
+<code>Lane_Human</code>, which binds <code>&lt;bootstrap.processes:role ref=&quot;publication-manager&quot;/&gt;</code>. So
 the fallback role is <em>the role of a lane holding a task only a person can
 fill</em> — <code>fulfilmentKindsForBpmnType</code>, which the diagram's own
 documentation already relies on to stop the air-gapped route quietly

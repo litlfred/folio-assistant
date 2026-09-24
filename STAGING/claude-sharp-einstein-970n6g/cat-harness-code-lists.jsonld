@@ -564,12 +564,13 @@
       "@type": "skos:Concept",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#own-namespaces",
       "notation": "folio-bpmn",
-      "prefLabel": "BPMN extension elements",
-      "definition": "The XML namespace folio:skill, folio:bean, folio:adjudication and the other BPMN extension elements are in.",
+      "prefLabel": "retired single BPMN extension address",
+      "definition": "The one XML namespace every BPMN extension element was in until 2026-09-24. Retired then (bean 12s9): each element is now in the namespace of the Subgraph that declares it, bootstrap-processes or cat-harness-processes. Listed so a check can name it when a diagram still binds it.",
       "rdf:value": "https://litlfred.github.io/folio-assistant/bpmn",
       "source": {
         "@id": "https://github.com/litlfred/folio-assistant/issues/1140"
-      }
+      },
+      "deprecated": true
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#own-namespaces/bootstrap-processes",

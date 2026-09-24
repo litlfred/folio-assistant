@@ -13,10 +13,26 @@
 
   <style id="jtd-nav-activation">
   
-    .site-nav ul li a {
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(68)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
       background-image: none;
     }
 
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(68) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(68) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(68) > ul.nav-list {
+      display: block;
+    }
   </style>
 
   
@@ -34,16 +50,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Related work: find, sort, summarize, ask to coordinate | folio-assistant</title>
+<title>Which top-level directories are not declared subgraphs? | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Related work: find, sort, summarize, ask to coordinate" />
+<meta property="og:title" content="Which top-level directories are not declared subgraphs?" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Related work: find, sort, summarize, ask to coordinate" />
+<meta property="twitter:title" content="Which top-level directories are not declared subgraphs?" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -767,120 +783,865 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <blockquote class="note">
-  <p>Generated from <code class="language-plaintext highlighter-rouge">cat-harness/processes/related-work.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a></p>
-</blockquote>
-<h1 id="related-work-find-sort-summarize-ask-to-coordinate">
+            <h1 id="which-top-level-directories-are-not-declared-subgraphs">
   
   
-    <a href="#related-work-find-sort-summarize-ask-to-coordinate" class="anchor-heading" aria-labelledby="related-work-find-sort-summarize-ask-to-coordinate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related work: find, sort, summarize, ask to coordinate
+    <a href="#which-top-level-directories-are-not-declared-subgraphs" class="anchor-heading" aria-labelledby="which-top-level-directories-are-not-declared-subgraphs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which top-level directories are not declared subgraphs?
   
   
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_RelatedWork</code> · strict (defaulted) · 5 step(s)</p>
+<p>Issue <a href="https://github.com/litlfred/folio-assistant/issues/1223">#1223</a> · feature bean <code class="language-plaintext highlighter-rouge">0uu2</code> · parent epic <code class="language-plaintext highlighter-rouge">zzmr</code>.</p>
 
-<p>Before new work takes shape, find the work it touches. When a requirement is initiated or updated through a human-agent chat (CRDM), or a method is adopted from a source, search the beans and the repository’s issues and open PRs for relevance. Categorize and summarize every hit, then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation; the user decides the coordination. Owner, 2026-09-23 (issue #1023): ‘existing beans need to be searched for relevance and categorized (and summarized), same for issues (e.g. github). ask user if they want to coordinate. judgement is used to determine how’. Operating skill: related-work-coordination.</p>
+<p>The owner, 2026-09-23:</p>
 
-<p><img src="../assets/img/workflows/related-work.svg" alt="BPMN diagram: Related work: find, sort, summarize, ask to coordinate" style="max-width:100%" /></p>
-<h2 id="how-it-connects">
+<blockquote>
+  <p>bootstrap/ should be its own subgraph…. in fact QA: in harness <code class="language-plaintext highlighter-rouge">&lt;stub&gt;/*.*</code> should be a subgraph.</p>
+</blockquote>
+
+<p>This proposal answers the <strong>first</strong> half: which top-level directories are not
+declared, and what each should become. The second half — <em>“if sub1 depends
+(directly or through chain) stub0, no references/context etc points stub0 →
+sub1”</em> — is a separate question with its own session and is not touched here.</p>
+<h2 id="why-an-undeclared-directory-is-a-defect-and-not-an-untidiness">
   
   
-    <a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
+    <a href="#why-an-undeclared-directory-is-a-defect-and-not-an-untidiness" class="anchor-heading" aria-labelledby="why-an-undeclared-directory-is-a-defect-and-not-an-untidiness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why an undeclared directory is a defect and not an untidiness
+  
+  
+</h2>
+    
+
+<p>Discovery in this repository reads <strong>declarations</strong>, not the tree.
+<code class="language-plaintext highlighter-rouge">resolveDirectories</code> walks the <code class="language-plaintext highlighter-rouge">directories</code> list an instance declares; nothing
+walks <code class="language-plaintext highlighter-rouge">readdirSync</code> looking for graphs. So a directory that is not declared is
+not part of the graph however many files sit in it — the <code class="language-plaintext highlighter-rouge">v8gh</code> property this
+corpus already relies on everywhere else: <strong>an undeclared file is one no
+checker has a reason to look at.</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">dh4f</code> is its mirror: declared and absent, where a consumer scans nothing and
+reports a clean run over it. That direction already has a gate —
+<code class="language-plaintext highlighter-rouge">check:declared-dirs</code>, which also catches the quieter second case of an
+<code class="language-plaintext highlighter-rouge">absent</code> exemption that outlived its cause. <strong>Nothing gates this direction.</strong></p>
+<h2 id="what-the-question-has-to-be-asked-over-or-the-answer-is-wrong">
+  
+  
+    <a href="#what-the-question-has-to-be-asked-over-or-the-answer-is-wrong" class="anchor-heading" aria-labelledby="what-the-question-has-to-be-asked-over-or-the-answer-is-wrong"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the question has to be asked over, or the answer is wrong
+  
+  
+</h2>
+    
+
+<p>Three framings of “undeclared” give three different answers, and only the third
+is the defect.</p>
+
+<ol>
+  <li><strong>Top-level directories of the repository root.</strong> Wrong: it counts the 16
+sibling instances as subdirectories of the root instance. They are instances
+in their own right, with their own declarations. This framing reported
+<strong>38 directories holding 13,315 files</strong> and every one of the sixteen was an
+artefact of the framing.</li>
+  <li><strong>Top-level directories of each instance, minus that instance’s own
+<code class="language-plaintext highlighter-rouge">directories</code> list.</strong> Better, and still wrong, for a reason worth writing
+down: a declaration entry may carry <code class="language-plaintext highlighter-rouge">scope: "repository"</code>, which resolves
+against the <strong>repository</strong> root rather than the declaring instance’s root.
+Eight root-level directories are declared exactly this way — by
+<code class="language-plaintext highlighter-rouge">cat-harness</code>, not by the root instance — so joining each entry onto its
+declarer’s root loses them. This framing reported 20, of which 8 were
+phantom.</li>
+  <li><strong>Files covered by no declared directory, wherever declared from.</strong> This is
+the one that matches what a consumer actually does. A directory is only
+interesting here if something inside it is invisible.</li>
+</ol>
+
+<p>Framing 2’s error is the same shape as the one <code class="language-plaintext highlighter-rouge">check-declared-dirs.ts</code> records
+in its own header, where a first measurement joined repo-scoped paths onto the
+instance root and reported ten phantom absences out of 35. It is an easy error
+to make twice, which is the argument for <code class="language-plaintext highlighter-rouge">resolveDeclaredPath</code> being exported
+and named.</p>
+<h2 id="measured-2026-09-23-on-7c4c7fd23-and-re-measured-after-merging-main">
+  
+  
+    <a href="#measured-2026-09-23-on-7c4c7fd23-and-re-measured-after-merging-main" class="anchor-heading" aria-labelledby="measured-2026-09-23-on-7c4c7fd23-and-re-measured-after-merging-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured, 2026-09-23, on <code class="language-plaintext highlighter-rouge">7c4c7fd23</code>, and re-measured after merging <code class="language-plaintext highlighter-rouge">main</code>
+  
+  
+</h2>
+    
+
+<p>Instances discovered with <code class="language-plaintext highlighter-rouge">instanceRootsIn</code>, never by globbing — a path literal
+is what <code class="language-plaintext highlighter-rouge">check:declared-paths</code> refuses, and one written earlier was silently
+missing six nodes (64 → 70 once resolved properly).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>instances discovered:                        17
+top-level directories across them:           80
+covered by a declared subgraph:              62
+undeclared as a directory:                   18
+  ...of which hold zero uncovered files:      6
+DIRECTORIES HOLDING UNCOVERED FILES:         12   (744 files)
+  ...of which is cat-harness/content:         1   (718 files — bean ylj7)
+THE REMAINING GAP:                           11   (26 files)
+</code></pre></div></div>
+
+<p>Re-derive rather than quoting; these move, and this document is a claim about
+one commit. They moved during the writing of it: after merging <code class="language-plaintext highlighter-rouge">origin/main</code> and
+removing the three QOU directories below, the same script reports <strong>82 top-level
+directories, 72 fully covered, 9 holding an uncovered file</strong> (excluding the
+gitignored <code class="language-plaintext highlighter-rouge">node_modules/</code>) — <code class="language-plaintext highlighter-rouge">cat-harness/content</code> plus <strong>8 directories holding
+22 files</strong>. <code class="language-plaintext highlighter-rouge">main</code> declared several <code class="language-plaintext highlighter-rouge">&lt;instance&gt;/skills/</code> and <code class="language-plaintext highlighter-rouge">library/</code>
+directories in the interval, which is also how the double-declaration below came
+into view.</p>
+<h3 id="three-corrections-and-why-they-are-in-the-proposal-rather-than-a-footnote">
+  
+  
+    <a href="#three-corrections-and-why-they-are-in-the-proposal-rather-than-a-footnote" class="anchor-heading" aria-labelledby="three-corrections-and-why-they-are-in-the-proposal-rather-than-a-footnote"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three corrections, and why they are in the proposal rather than a footnote
+  
+  
+</h3>
+    
+
+<p>An earlier pass reported <strong>19 directories holding 1,731 files</strong>. Each of the
+three ways that was wrong is an instance of the thing being fixed.</p>
+
+<p><strong>One — repository-scoped entries were read as undeclared.</strong> <code class="language-plaintext highlighter-rouge">memory/</code> (44
+files), <code class="language-plaintext highlighter-rouge">fsh-guts/</code> (27), <code class="language-plaintext highlighter-rouge">issue-marks/</code> (2) and root <code class="language-plaintext highlighter-rouge">docs/</code> were all reported
+as gaps. All four are declared, by <code class="language-plaintext highlighter-rouge">cat-harness</code>, with <code class="language-plaintext highlighter-rouge">scope: "repository"</code>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>directory</th>
+      <th>id</th>
+      <th>graph kinds</th>
+      <th>declared by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">beans/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans</code></td>
+      <td><code class="language-plaintext highlighter-rouge">beans</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">todos/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">todos</code></td>
+      <td><code class="language-plaintext highlighter-rouge">todos</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">memory/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">memory</code></td>
+      <td><code class="language-plaintext highlighter-rouge">memory</code>, <code class="language-plaintext highlighter-rouge">waiver</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">interaction/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">interaction</code></td>
+      <td><code class="language-plaintext highlighter-rouge">interaction</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">issue-marks/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">issue-marks</code></td>
+      <td><code class="language-plaintext highlighter-rouge">issue-marks</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fsh-guts/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">fsh-guts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">fsh-guts</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">docs/</code></td>
+      <td><code class="language-plaintext highlighter-rouge">root-docs</code></td>
+      <td><code class="language-plaintext highlighter-rouge">docs</code></td>
+      <td>cat-harness</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-kg/methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-kg-methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">methodology</code></td>
+      <td>cat-harness</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>This also settles a question that was posed as open: whether <strong>self-declaration</strong>
+in a directory’s own <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> is sufficient, or whether the parent must
+also list it. The question is moot as asked, because the parent already does.
+<code class="language-plaintext highlighter-rouge">beans/beans.json</code> and the <code class="language-plaintext highlighter-rouge">beans</code> entry above are not competing answers and
+neither is redundant — the repository-scoped entry says <em>this directory is part
+of the graph</em>, and <code class="language-plaintext highlighter-rouge">beans/beans.json</code> says <em>these are its internal nodes</em>
+(<code class="language-plaintext highlighter-rouge">defs/</code>, <code class="language-plaintext highlighter-rouge">workflows/</code>). One fact, one place, at each of two levels. The same
+holds for <code class="language-plaintext highlighter-rouge">todos/</code> and <code class="language-plaintext highlighter-rouge">interaction/</code>.</p>
+
+<p><strong>Two — <code class="language-plaintext highlighter-rouge">issue-marks</code> and <code class="language-plaintext highlighter-rouge">fsh-guts</code> were reported as undeclared while their
+graph KINDS were already registered.</strong> Both are in
+<code class="language-plaintext highlighter-rouge">schemas/graph-kind-registry.ts</code>. A registered kind with no declaring directory
+would have been a genuine and sharper finding than the one reported; the
+registry is where to look before concluding that a directory has no model.</p>
+
+<p><strong>Three — the headline arithmetic disagreed with its own table.</strong> The prose said
+19; the table beneath it listed 17 rows. 19 came from subtracting 3
+self-declaring directories from 22, where 22 still included <code class="language-plaintext highlighter-rouge">_kg/</code> and
+<code class="language-plaintext highlighter-rouge">test-results/</code> — the two the same paragraph had just excluded as gitignored.
+The table was right. This is precisely the failure <code class="language-plaintext highlighter-rouge">bpmn-processes</code> names when
+it says <strong>count the directory rather than quoting a number from this paragraph</strong>,
+and the reason no count in this document is written without the command that
+produced it.</p>
+<h3 id="six-directories-that-are-undeclared-and-hold-nothing-uncovered">
+  
+  
+    <a href="#six-directories-that-are-undeclared-and-hold-nothing-uncovered" class="anchor-heading" aria-labelledby="six-directories-that-are-undeclared-and-hold-nothing-uncovered"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Six directories that are undeclared and hold nothing uncovered
+  
+  
+</h3>
+    
+
+<p>These are pass-through containers: every file inside is covered by a declared
+child.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>directory</th>
+      <th>files</th>
+      <th>the declared child that covers them</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/</code></td>
+      <td>36</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/voices</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">who-style-guide/skills/</code></td>
+      <td>6</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/voices</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/voices</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base/skills/</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/voices</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agent-skills/skills/</code></td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">skills/voices</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-kg/</code></td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">smart-kg/methodologies</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>In all six the parent holds <strong>no files of its own</strong> — <code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/</code>
+contains exactly one entry, <code class="language-plaintext highlighter-rouge">voices/</code>, and nothing else. They are therefore not
+the <code class="language-plaintext highlighter-rouge">v8gh</code> defect: no file is invisible. Whether the ruling nonetheless wants a
+declaration on the parent is a real question, but it is a question about the
+<em>model</em>, not about a gap, and it is the one question in this document that five
+instances would answer identically. It is listed separately for that reason.</p>
+<h2 id="the-split">
+  
+  
+    <a href="#the-split" class="anchor-heading" aria-labelledby="the-split"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The split
+  
+  
+</h2>
+    
+<h3 id="not-mine--1-directory-718-files">
+  
+  
+    <a href="#not-mine--1-directory-718-files" class="anchor-heading" aria-labelledby="not-mine--1-directory-718-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> not mine — 1 directory, 718 files
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">cat-harness/content/</code>.</strong> Bean <code class="language-plaintext highlighter-rouge">ylj7</code> found 304 <code class="language-plaintext highlighter-rouge">.ts</code> there accounted for by
+nothing and deferred it explicitly, with the reason recorded: the directory
+holds <code class="language-plaintext highlighter-rouge">content/pipeline/</code> (core’s subject) beside <code class="language-plaintext highlighter-rouge">content/docs/</code> (folio
+content), so declaring it needs the repo-partition split settled first.
+Declaring it now would either give one directory two kinds or pre-empt a
+boundary <code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code> exists to enforce. Left alone.</p>
+
+<p><code class="language-plaintext highlighter-rouge">folio-assistant-sci/content/</code> (1 file, <code class="language-plaintext highlighter-rouge">pipeline/qa-checkers-cost.ts</code>) is the
+same question one instance along and travels with it.</p>
+<h3 id="declare--4-directories-13-files">
+  
+  
+    <a href="#declare--4-directories-13-files" class="anchor-heading" aria-labelledby="declare--4-directories-13-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> declare — 4 directories, 13 files
+  
+  
+</h3>
+    
+
+<p>Real content, actively referenced, belongs in the graph.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>directory</th>
+      <th>files</th>
+      <th>evidence it is live</th>
+      <th>proposed kind</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/ns/</code></td>
+      <td>1</td>
+      <td>copied into <code class="language-plaintext highlighter-rouge">_site/ns/content/v1.jsonld</code> by <code class="language-plaintext highlighter-rouge">docs-site.yml</code> and <code class="language-plaintext highlighter-rouge">feature-staging.yml</code>; watched by <code class="language-plaintext highlighter-rouge">jsonld-gen-check.yml</code>; <strong>8 commits, last 2026-09-23</strong></td>
+      <td>needs a decision — see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/ui/</code></td>
+      <td>5</td>
+      <td>the Folio Assistant SPA; shipped in <code class="language-plaintext highlighter-rouge">package.json</code> <code class="language-plaintext highlighter-rouge">files</code>; three assertions in <code class="language-plaintext highlighter-rouge">test-server.e2e.ts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">code</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/deploy/</code></td>
+      <td>6</td>
+      <td><code class="language-plaintext highlighter-rouge">deploy-access.json</code> capability detects on <code class="language-plaintext highlighter-rouge">cat-harness/deploy/.env</code></td>
+      <td><code class="language-plaintext highlighter-rouge">code</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tools/</code> (root)</td>
+      <td>1</td>
+      <td>the Tool barrel; imported by five modules (<code class="language-plaintext highlighter-rouge">check-tools</code>, <code class="language-plaintext highlighter-rouge">kg-export</code>, <code class="language-plaintext highlighter-rouge">harness-schema-export</code>, <code class="language-plaintext highlighter-rouge">tool-coverage</code>, the MCP projection); in <code class="language-plaintext highlighter-rouge">tsconfig.json</code> <code class="language-plaintext highlighter-rouge">include</code></td>
+      <td><code class="language-plaintext highlighter-rouge">code</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness/ns/</code> is the one that needs thought rather than a row. It holds the
+JSON-LD <code class="language-plaintext highlighter-rouge">@context</code> the whole graph is published against — which is not code,
+not a folio, and not a skill. Issue #1078 and bean <code class="language-plaintext highlighter-rouge">ovkk</code> are both about that
+file’s contents disagreeing with the graph. Whatever kind it gets must decide
+<code class="language-plaintext highlighter-rouge">renderable</code> and <code class="language-plaintext highlighter-rouge">holds</code>, and both are required, so a kind that has not decided
+does not compile. Registering a kind for a single file is exactly the ceremony
+§3.1 of <code class="language-plaintext highlighter-rouge">instance-versioning.md</code> objected to — but this file is served at a
+public URL and validated by CI, which is a reader, so the objection does not
+land here.</p>
+<h3 id="fold--1-directory-2-files">
+  
+  
+    <a href="#fold--1-directory-2-files" class="anchor-heading" aria-labelledby="fold--1-directory-2-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> fold — 1 directory, 2 files
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">cat-harness/types/</code></strong> — <code class="language-plaintext highlighter-rouge">bpmn-moddle.d.ts</code> and <code class="language-plaintext highlighter-rouge">dmn-moddle.d.ts</code>, ambient
+module declarations for two untyped dependencies. They are already named by
+<code class="language-plaintext highlighter-rouge">tsconfig.json</code> (<code class="language-plaintext highlighter-rouge">cat-harness/types/**/*.d.ts</code>), so the compiler finds them and
+no discovery is involved. Folding them into <code class="language-plaintext highlighter-rouge">cat-harness/src/</code> puts them inside
+an already-declared <code class="language-plaintext highlighter-rouge">code</code> directory and removes a tsconfig entry. Declaring
+them instead would be a graph of two ambient declarations that nothing
+traverses.</p>
+<h3 id="remove--4-directories-9-files-528k">
+  
+  
+    <a href="#remove--4-directories-9-files-528k" class="anchor-heading" aria-labelledby="remove--4-directories-9-files-528k"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> remove — 4 directories, 9 files, 528K
+  
+  
+</h3>
+    
+
+<p><strong>Nothing here is deleted by this proposal.</strong> <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code>
+governs: sizes and ages are reported, and the owner decides. All four are QOU
+folio content that the 2026-09-20 partition moved into the platform stub — which
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code>’s own banner forbids in as many words: <em>“folio-assistant is the
+platform, not the content. … If you are about to write subject matter here … you
+are either in the wrong repo.”</em></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>directory</th>
+      <th>files</th>
+      <th>size</th>
+      <th>content</th>
+      <th>referenced by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/blueprint/</code></td>
+      <td>4</td>
+      <td>72K</td>
+      <td>the QOU formalization blueprint. <code class="language-plaintext highlighter-rouge">src/content.tex</code> is 1,192 lines of <code class="language-plaintext highlighter-rouge">\begin{definition}[Frobenius–Hopf Data]</code> with <code class="language-plaintext highlighter-rouge">\lean{QOU.FrobeniusHopfData}</code> refs; <code class="language-plaintext highlighter-rouge">web.tex</code> titles itself <em>“Quantum Observable Universe — Formalization Blueprint”</em></td>
+      <td><strong>nothing</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/home_page/</code></td>
+      <td>2</td>
+      <td>12K</td>
+      <td>a Jekyll site root with <code class="language-plaintext highlighter-rouge">baseurl: "/qou"</code>, <code class="language-plaintext highlighter-rouge">title: "litlfred's Papers"</code>, and a table linking one paper</td>
+      <td><strong>nothing</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/latex/</code></td>
+      <td>1</td>
+      <td>48K</td>
+      <td><code class="language-plaintext highlighter-rouge">preamble.tex</code>, 830 lines, self-described as <em>“Shared LaTeX preamble for all papers in the folio”</em></td>
+      <td>four workflow steps and a skill — <strong>by a path that does not resolve</strong>; see below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/computations/</code></td>
+      <td>1</td>
+      <td>8K</td>
+      <td>one <code class="language-plaintext highlighter-rouge">wall-violations.witness.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">wall-violations-sweep.ts</code> — <strong>by a path that does not resolve</strong>; see below. Two <code class="language-plaintext highlighter-rouge">fsh-guts/scripts/</code> documents already note the directory: <em>“Their subject is absent. <code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> holds one file, a <code class="language-plaintext highlighter-rouge">.witness.json</code>, and no Python…”</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>On <strong>age</strong>, honestly: this clone’s history begins 2026-09-19 (2,601 commits in
+four days), and the 2026-09-20 partition <code class="language-plaintext highlighter-rouge">git mv</code>‘d these into <code class="language-plaintext highlighter-rouge">cat-harness/</code>,
+so every one shows a single commit and a first-seen date that is the move, not
+the origin. What can be said is narrower and is the part that matters: <strong>none of
+the four has changed since the partition</strong>, and <code class="language-plaintext highlighter-rouge">git log --follow</code> on
+<code class="language-plaintext highlighter-rouge">blueprint/src/content.tex</code> reaches the shallow boundary without finding an edit.
+True ages need a full clone.</p>
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> is also named in AGENTS.md as the reason the
+<code class="language-plaintext highlighter-rouge">witness-refresh</code> workflow fails by design here — <em>“the second needs
+<code class="language-plaintext highlighter-rouge">folio-assistant/computations/</code>, and the platform carries no folio.”</em> That is
+about the folio-side path, but it is the same observation: the witness belongs
+where the computations are, and they are not here.</p>
+<h3 id="the-sharp-one--1-directory-2-files-396k">
+  
+  
+    <a href="#the-sharp-one--1-directory-2-files-396k" class="anchor-heading" aria-labelledby="the-sharp-one--1-directory-2-files-396k"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> the sharp one — 1 directory, 2 files, 396K
+  
+  
+</h3>
+    
+
+<p><strong><code class="language-plaintext highlighter-rouge">cat-harness/viewer/</code></strong> does not fit any of the four, and is the decision this
+proposal most wants a person for.</p>
+
+<ul>
+  <li>Its <code class="language-plaintext highlighter-rouge">package.json</code> reads <code class="language-plaintext highlighter-rouge">"name": "qou-viewer"</code>, <code class="language-plaintext highlighter-rouge">"description": "Pure SPA
+viewer for QOU content objects."</code></li>
+  <li><code class="language-plaintext highlighter-rouge">index.html</code> is 7,973 lines and hardcodes <code class="language-plaintext highlighter-rouge">'quantum-observable-universe'</code> as
+the fallback paper id in four places, and downloads <code class="language-plaintext highlighter-rouge">qou-latex-source.sh</code>.</li>
+  <li><strong>And it is live</strong>: <code class="language-plaintext highlighter-rouge">test-server.e2e.ts</code> asserts <code class="language-plaintext highlighter-rouge">/cat-harness/viewer/</code> serves,
+and bean <code class="language-plaintext highlighter-rouge">1dfh</code> cites it as the implementation of <em>“a viewer over it”</em>.</li>
+</ul>
+
+<p>So it is simultaneously folio-specific content in the platform repo <em>and</em> a
+tested platform artefact. It is the largest single directory in the gap by bytes
+and the only one where <code class="language-plaintext highlighter-rouge">declare</code>, <code class="language-plaintext highlighter-rouge">fold</code> and <code class="language-plaintext highlighter-rouge">remove</code> are all defensible. It is
+plausibly the pre-split ancestor of <code class="language-plaintext highlighter-rouge">cat-harness/ui/</code>, which is the same kind of
+thing with none of the QOU hardcoding — but that is a guess, and this proposal
+does not act on guesses.</p>
+<h3 id="corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them">
+  
+  
+    <a href="#corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them" class="anchor-heading" aria-labelledby="corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Corrected: two of the four ARE referenced — by paths that cannot reach them
+  
+  
+</h3>
+    
+
+<p>A first sweep of this document searched for the literal prefixes
+<code class="language-plaintext highlighter-rouge">cat-harness/latex/</code> and <code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> and reported both as
+referenced by nothing. That was wrong, and the way it was wrong is the same
+mistake the measurement section already records once: <strong>searching for the path
+a file is at rather than the path a consumer writes.</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--preamble ../latex/preamble.tex</code> appears in <code class="language-plaintext highlighter-rouge">lean_ci.yml</code>, <code class="language-plaintext highlighter-rouge">publish.yml</code>,
+<code class="language-plaintext highlighter-rouge">blueprint.yml</code> and <code class="language-plaintext highlighter-rouge">lean-build.yml</code>, and in
+<code class="language-plaintext highlighter-rouge">skills/folio-core/docs-generation.md</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">folio-assistant/computations/wall-violations.witness.json</code> is the default
+output path in <code class="language-plaintext highlighter-rouge">content/pipeline/wall-violations-sweep.ts</code>.</li>
+</ul>
+
+<p>Neither resolves. The four workflow steps carry no <code class="language-plaintext highlighter-rouge">working-directory</code>, so they
+run at the repository root, where <code class="language-plaintext highlighter-rouge">../latex/preamble.tex</code> points <strong>above the
+checkout</strong> — and the file is at <code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code>. The witness
+path names <code class="language-plaintext highlighter-rouge">folio-assistant/computations/</code>, and the file is at
+<code class="language-plaintext highlighter-rouge">cat-harness/computations/</code>. Both are the folio-side layout, left behind by the
+2026-09-20 partition; AGENTS.md already records the same shape for
+<code class="language-plaintext highlighter-rouge">witness-refresh</code>, which <em>“needs <code class="language-plaintext highlighter-rouge">folio-assistant/computations/</code>, and the
+platform carries no folio.”</em></p>
+
+<p>So the finding is sharper than “unreferenced”: these are files no consumer
+scans (<code class="language-plaintext highlighter-rouge">v8gh</code>) named by consumers that scan nothing and report a clean run
+(<code class="language-plaintext highlighter-rouge">dh4f</code>) — <strong>both defects over one pair of files</strong>. The workflow step is
+<code class="language-plaintext highlighter-rouge">continue-on-error: true</code> and guarded by <code class="language-plaintext highlighter-rouge">if [ ! -d content ]</code>, so nothing ever
+went red over it.</p>
+
+<p>Fixing those five dangling references is <strong>not</strong> part of this proposal. They are
+qou-shaped invocations in a repository that carries no folio, and they are
+listed here so the next reader does not rediscover them.</p>
+<h2 id="verified-against-litlfredqou-2026-09-24">
+  
+  
+    <a href="#verified-against-litlfredqou-2026-09-24" class="anchor-heading" aria-labelledby="verified-against-litlfredqou-2026-09-24"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verified against <code class="language-plaintext highlighter-rouge">litlfred/qou</code>, 2026-09-24
+  
+  
+</h2>
+    
+
+<p>The owner chose: check that <code class="language-plaintext highlighter-rouge">litlfred/qou</code> already holds each removal candidate,
+and remove only what it does. Checked against qou’s default branch <code class="language-plaintext highlighter-rouge">main</code>
+(<code class="language-plaintext highlighter-rouge">7aafd8dbe</code>) and its <code class="language-plaintext highlighter-rouge">gh-pages</code> branch. qou carries 6,443 branches, so this is
+a claim about those two and not about all of them.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>candidate</th>
+      <th>in <code class="language-plaintext highlighter-rouge">litlfred/qou</code>?</th>
+      <th>verdict</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/computations/wall-violations.witness.json</code></td>
+      <td><strong>yes</strong>, at the same relative path, <code class="language-plaintext highlighter-rouge">computations/wall-violations.witness.json</code></td>
+      <td><strong>removed</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code></td>
+      <td><strong>yes</strong>, as <code class="language-plaintext highlighter-rouge">qou/main.tex</code> — 811 of its 830 lines are common</td>
+      <td><strong>removed</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/blueprint/</code></td>
+      <td><strong>no</strong> — no <code class="language-plaintext highlighter-rouge">blueprint/</code> on <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">gh-pages</code></td>
+      <td><strong>held</strong> — pushed to qou as <a href="https://github.com/litlfred/qou/pull/7453">qou#7453</a>; removed here once that merges</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/home_page/</code></td>
+      <td><strong>no</strong> — qou holds no <code class="language-plaintext highlighter-rouge">_config.yml</code> at all</td>
+      <td><strong>held</strong>, like <code class="language-plaintext highlighter-rouge">blueprint/</code> — removed here only once qou has it. Reversed once; see below</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two of the four are not a matter of degree, and both are worth stating exactly.</p>
+
+<p><strong>The witness is not a duplicate; it is a zero-run.</strong> qou’s copy was computed
+<code class="language-plaintext highlighter-rouge">2026-05-02</code> and reports <code class="language-plaintext highlighter-rouge">fileCount: 9, totalHits: 20</code>. The folio-assistant copy
+is <em>later</em> — <code class="language-plaintext highlighter-rouge">2026-08-08</code> — and reports <code class="language-plaintext highlighter-rouge">fileCount: 0, totalHits: 0</code>, with every
+category zeroed. It is the sweep run in the platform repo against the folio that
+is not there. Nothing is lost by removing it and the real one is in qou.</p>
+
+<p><strong>The preamble in this repository is the SUPERSEDED one, and the divergence is
+a mathematical correctness fix.</strong> qou’s <code class="language-plaintext highlighter-rouge">main.tex</code> removed a block of 16 macros
+on 2026-08-22 and replaced it with a comment saying why, which is still there:</p>
+
+<blockquote>
+  <p>This block defined 16 macros whose names are author typos — a control
+sequence written without the space that separates it from the next token
+(<code class="language-plaintext highlighter-rouge">\pi c_s</code> → <code class="language-plaintext highlighter-rouge">\pic_s</code>, <code class="language-plaintext highlighter-rouge">\xi Z</code> → <code class="language-plaintext highlighter-rouge">\xiZ</code>, <code class="language-plaintext highlighter-rouge">\lambda L</code> → <code class="language-plaintext highlighter-rouge">\lambdaL</code>). Defining
+the glued name makes the page compile, and that is the problem: it converts a
+loud failure into silently-wrong printed mathematics. Two did exactly that.
+<code class="language-plaintext highlighter-rouge">\pic</code> expanded to <code class="language-plaintext highlighter-rouge">\pi</code>, so <code class="language-plaintext highlighter-rouge">2\pic_s</code> printed <code class="language-plaintext highlighter-rouge">2\pi_s</code> and the sound speed
+vanished from a Hawking-temperature denominator … Every source site is fixed;
+<strong>do not restore these.</strong></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code> still defines all sixteen. It is not a spare
+copy of a live file; it is the version qou deliberately reverted, sitting in a
+repository whose own banner says it should hold no folio content. Keeping it is
+the standing risk that something restores it.</p>
+<h3 id="both-blueprint-and-home_page-go-to-qou-first">
+  
+  
+    <a href="#both-blueprint-and-home_page-go-to-qou-first" class="anchor-heading" aria-labelledby="both-blueprint-and-home_page-go-to-qou-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Both <code class="language-plaintext highlighter-rouge">blueprint/</code> and <code class="language-plaintext highlighter-rouge">home_page/</code> go to qou first
+  
+  
+</h3>
+    
+
+<p>The owner’s decision, 2026-09-24, in two rounds — the second of which reversed
+the first: push <strong>both</strong> to the folio repository that owns them, and remove them
+here only once they are there. The first round dropped the site index; §”<code class="language-plaintext highlighter-rouge">home_page/</code>
+was removed, and that was reversed” below records why that was overturned.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">blueprint/</code> is not stale, and the first measurement of it here was wrong.</strong>
+<code class="language-plaintext highlighter-rouge">content.tex</code> carries 128 distinct <code class="language-plaintext highlighter-rouge">\lean{QOU.*}</code> references. A first pass
+searched for the fully-qualified string — <code class="language-plaintext highlighter-rouge">QOU.Boson</code> — against qou’s 3,971
+<code class="language-plaintext highlighter-rouge">.lean</code> files and found 33, which would have argued for discarding the file.
+That was a defect in the search: <strong>Lean writes <code class="language-plaintext highlighter-rouge">namespace QOU</code> and then the
+unqualified declaration</strong>, so the qualified form never appears in source.
+Matched by bare declaration name after a declaration keyword:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resolve to a live declaration in qou:   111 / 128   (87%)
+do not resolve:                          17
+</code></pre></div></div>
+
+<p>Read 111 as an <strong>upper bound</strong>, not a verification — it is a name match, so two
+declarations sharing a name in different namespaces both count, and only the
+elaborator could say whether a reference binds to the object the blueprint
+means. That caveat travels with the file: it is in the imported README and in
+the PR.</p>
+
+<p>This is the third measurement in this document to come out wrong on a first
+pass and be corrected on a second, and all three failed the same way — <strong>asking
+about the string a path or a name is written as, rather than the string a
+consumer writes.</strong> The repository-scope join, the <code class="language-plaintext highlighter-rouge">../latex/preamble.tex</code>
+reference, and this. That is the finding under the finding.</p>
+
+<p>One more thing settles the direction. <code class="language-plaintext highlighter-rouge">web.tex</code> and <code class="language-plaintext highlighter-rouge">print.tex</code> both
+<code class="language-plaintext highlighter-rouge">\bibliography{../../references}</code>, which from <code class="language-plaintext highlighter-rouge">blueprint/src/</code> is the
+repository root. <strong>qou has <code class="language-plaintext highlighter-rouge">references.bib</code> there; folio-assistant has none
+anywhere.</strong> The blueprint’s own relative paths resolve in the folio repository
+and do not resolve here — it was written for that checkout.</p>
+
+<p>So it is imported rather than deleted: <a href="https://github.com/litlfred/qou/issues/7452">qou#7452</a>,
+<a href="https://github.com/litlfred/qou/pull/7453">qou#7453</a>. <code class="language-plaintext highlighter-rouge">cat-harness/blueprint/</code>
+stays here until that PR merges, and is removed in a follow-up rather than in
+this one — deleting the only copy on the strength of an unmerged PR is the
+thing <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> exists to prevent.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">home_page/</code> was removed, and that was reversed.</strong> Two files: a Jekyll
+<code class="language-plaintext highlighter-rouge">_config.yml</code> with <code class="language-plaintext highlighter-rouge">baseurl: "/qou"</code> and an <code class="language-plaintext highlighter-rouge">index.md</code> linking to <code class="language-plaintext highlighter-rouge">papers/…</code>,
+<code class="language-plaintext highlighter-rouge">blueprint/</code> and <code class="language-plaintext highlighter-rouge">blueprint.pdf</code>. Checked against qou’s <code class="language-plaintext highlighter-rouge">gh-pages</code>, which is the
+site those links would have to land on: it carries <code class="language-plaintext highlighter-rouge">papers/</code>, and it carries
+<strong>no <code class="language-plaintext highlighter-rouge">blueprint/</code> and no <code class="language-plaintext highlighter-rouge">blueprint.pdf</code></strong>. The page indexes a site missing two
+of the three things it points at, in a repository that does not publish it — so
+the first decision was to drop it rather than push it anywhere.</p>
+
+<p>That was overruled, and the reason given is the one that governs both
+directories rather than just one: <strong>qou does not have these files, so removing
+them here loses them.</strong> It applies to <code class="language-plaintext highlighter-rouge">home_page/</code> exactly as to <code class="language-plaintext highlighter-rouge">blueprint/</code>.
+The dead links are an argument about the file’s <em>value</em>, which is a question for
+whoever reviews it in qou; they are not an argument for destroying the only
+copy, which is a question about <em>reversibility</em>, and the two were being
+conflated.</p>
+
+<p>So <code class="language-plaintext highlighter-rouge">home_page/</code> is restored and travels with <code class="language-plaintext highlighter-rouge">blueprint/</code>: it leaves this
+repository once qou has it and <strong>that has been confirmed</strong>, not merely opened as
+a PR. Restoring cost nothing and the end state is identical under either
+reading — both have the directory gone from here — so the ordering was the whole
+disagreement, and the safer order wins.</p>
+
+<p><strong>One thing the qou reviewer should know before deciding where it lands</strong>: those
+two dead links. <code class="language-plaintext highlighter-rouge">index.md</code> points at <code class="language-plaintext highlighter-rouge">blueprint/</code> and <code class="language-plaintext highlighter-rouge">blueprint.pdf</code>, and
+neither is published on qou’s <code class="language-plaintext highlighter-rouge">gh-pages</code> today. Importing the page does not make
+them resolve. It is carried here rather than buried, because a page whose links
+do not resolve is a different artefact from one whose links do, and the person
+choosing its home should be choosing with that in front of them.</p>
+<h2 id="the-mirror-defect-15-paths-are-declared-twice-and-the-gate-counts-them-as-15-extra-directories">
+  
+  
+    <a href="#the-mirror-defect-15-paths-are-declared-twice-and-the-gate-counts-them-as-15-extra-directories" class="anchor-heading" aria-labelledby="the-mirror-defect-15-paths-are-declared-twice-and-the-gate-counts-them-as-15-extra-directories"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The mirror defect: 15 paths are declared TWICE, and the gate counts them as 15 extra directories
+  
+  
+</h2>
+    
+
+<p>A sibling session working the same ruling flagged one double declaration and
+suggested counting the rest was worth more than the files still uncovered. It
+was. Measured on this branch:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>declared directory ENTRIES:                                      91
+distinct PATHS declared:                                         76
+paths carrying more than one entry:                              15
+  ...sharing ONE id, so the by-id override collapses them:        4
+  ...with DIFFERENT ids on the same path:                        11
+</code></pre></div></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">bun run check:declared-dirs</code> reports <code class="language-plaintext highlighter-rouge">91 declared director(ies) across 17
+instance(s) … 0 finding(s)</code>.</strong> Seventy-six directories exist. The gate that
+guards the declaration layer counts fifteen of them twice and calls the result
+clean, because the only question it asks is whether each declared path is on
+disk — and a path declared twice is on disk twice over.</p>
+
+<p>Every one of the fifteen has the same shape: <strong><code class="language-plaintext highlighter-rouge">cat-harness</code> declares the
+directory with <code class="language-plaintext highlighter-rouge">scope: "repository"</code>, and the instance that owns it declares it
+too</strong>, at instance scope.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>path</th>
+      <th>cat-harness’s id</th>
+      <th>the owner’s id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">agent-skills/library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">agent-skills-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">library</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">who-iris/library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">who-iris-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">library</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci/library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">library</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">core-library</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base/library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-base-library</code></td>
+      <td><code class="language-plaintext highlighter-rouge">library</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base/methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-base-methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">methodologies</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">smart-base/methodologies/processes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">smart-base-processes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">processes</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core-methodologies</code></td>
+      <td><code class="language-plaintext highlighter-rouge">core-methodologies</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core-skills</code></td>
+      <td><code class="language-plaintext highlighter-rouge">core-skills</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assist-core-schemas</code></td>
+      <td><code class="language-plaintext highlighter-rouge">core-schemas</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core/processes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core-processes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">core-processes</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Why the differing id is the whole problem, and not a cosmetic one.</strong> AGENTS.md
+states the resolution rule: <em>“Overrides match on the entry’s <code class="language-plaintext highlighter-rouge">id</code>, not its
+<code class="language-plaintext highlighter-rouge">path</code> — matching on path makes two knowledge graphs out of one relocation, and
+every consumer then scans a directory that is not there.”</em> That rule is right,
+and it is exactly what makes these eleven bite: <strong>two entries with different ids
+over one path are not one entry overriding another. They are two graphs.</strong> A
+consumer that fans out over instances resolves both and scans the directory
+twice.</p>
+
+<p>The remaining four — <code class="language-plaintext highlighter-rouge">bootstrap-tools/schemas</code>, <code class="language-plaintext highlighter-rouge">large-datasets/skills</code>,
+<code class="language-plaintext highlighter-rouge">who-iris/skills</code>, <code class="language-plaintext highlighter-rouge">large-datasets/schemas</code> — carry the <strong>same</strong> id on both
+sides, so the by-id override does collapse them to one. They are duplicates in
+the file and not in the resolved set. That distinction is the finding: the same
+surface shape has two very different consequences, and only the id says which.</p>
+
+<p><code class="language-plaintext highlighter-rouge">directory-conventions</code> permits an unavoidable duplicate and refuses an
+unchecked one. These are unchecked: nothing reports them, and the gate nearest
+to them reports a count that already includes them.</p>
+
+<p><strong>Not fixed here</strong>, because the fix is a decision and not an edit. Deleting
+cat-harness’s repository-scoped copy is the obvious move and it is not
+obviously right: those entries are what let the root instance see a sibling’s
+directories without depending on it, which is the same mechanism that correctly
+declares <code class="language-plaintext highlighter-rouge">beans/</code>, <code class="language-plaintext highlighter-rouge">memory/</code> and <code class="language-plaintext highlighter-rouge">issue-marks/</code>. Whether the duplicate should be
+removed, or the ids reconciled so the override collapses them, or the checker
+taught to report a path with two entries, is one question with three answers and
+it belongs to whoever owns the declaration schema.</p>
+<h2 id="coordination--a-sibling-session-declared-three-of-these">
+  
+  
+    <a href="#coordination--a-sibling-session-declared-three-of-these" class="anchor-heading" aria-labelledby="coordination--a-sibling-session-declared-three-of-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Coordination — a sibling session declared three of these
+  
+  
+</h2>
+    
+
+<p>Branch <code class="language-plaintext highlighter-rouge">claude/declare-three-subgraphs-clean</code>, commit <code class="language-plaintext highlighter-rouge">675ffa4f8</code>, pushed and
+not merged at the time of writing, declares <code class="language-plaintext highlighter-rouge">cat-harness/deploy/</code>,
+<code class="language-plaintext highlighter-rouge">cat-harness/ui/</code> and <code class="language-plaintext highlighter-rouge">cat-harness/blueprint/</code> as <code class="language-plaintext highlighter-rouge">graphKinds: ["code"]</code>. It
+reached the <code class="language-plaintext highlighter-rouge">scope: "repository"</code> correction independently, which is worth
+recording: two sessions measuring the same thing found the same bug, so it is a
+property of the model rather than of one agent’s carelessness.</p>
+
+<p>Two things need saying across that boundary.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">blueprint/</code> should not be declared, because it is leaving.</strong> It is imported
+to <a href="https://github.com/litlfred/qou/pull/7453">qou#7453</a> and removed here once
+that merges. Declaring a directory that is about to be deleted mints the <code class="language-plaintext highlighter-rouge">dh4f</code>
+defect the same commit’s message cites — declared and absent, every consumer
+scanning nothing and reporting clean. <code class="language-plaintext highlighter-rouge">deploy/</code> and <code class="language-plaintext highlighter-rouge">ui/</code> are unaffected and
+their reasoning holds; only the third entry conflicts.</p>
+
+<p><strong>The two preambles are not two copies of one file, and the question that
+blocked <code class="language-plaintext highlighter-rouge">latex/</code> has an answer.</strong> That commit recorded the open question
+faithfully — <code class="language-plaintext highlighter-rouge">blueprint/src/preamble.tex</code> is 26 lines, <code class="language-plaintext highlighter-rouge">latex/preamble.tex</code> is
+830, they differ, nothing says which is live — and deliberately left <code class="language-plaintext highlighter-rouge">latex/</code>
+undeclared so it stayed visible. Measured:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">blueprint/src/preamble.tex</code> is the <strong>blueprint’s own</strong> preamble. <code class="language-plaintext highlighter-rouge">web.tex</code>
+and <code class="language-plaintext highlighter-rouge">print.tex</code> each <code class="language-plaintext highlighter-rouge">\input{preamble}</code>, resolving to the sibling in
+<code class="language-plaintext highlighter-rouge">blueprint/src/</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">latex/preamble.tex</code> is the <strong>shared paper</strong> preamble, self-described as such,
+and it is <code class="language-plaintext highlighter-rouge">qou/main.tex</code> — 811 of its 830 lines in common.</li>
+</ul>
+
+<p>They share a basename and nothing else: one is 26 lines of blueprint setup, the
+other 830 lines of document-class, packages and macros. Both were live, for
+different documents. <code class="language-plaintext highlighter-rouge">latex/</code> is now removed rather than declared, because qou
+holds the newer and corrected copy.</p>
+<h2 id="what-would-falsify-this">
+  
+  
+    <a href="#what-would-falsify-this" class="anchor-heading" aria-labelledby="what-would-falsify-this"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What would falsify this
   
   
 </h2>
     
 
 <ul>
-  <li><strong>Called by:</strong> <a href="crdm-issue-linking.html">CRDM — link the work to an issue</a>, <a href="methodology-from-source.html">Adopt a methodology from a source document</a></li>
-  <li><strong>Calls:</strong> none</li>
-  <li><strong>Presented on:</strong> no docs page section shows this diagram</li>
+  <li><strong>If any of the four <code class="language-plaintext highlighter-rouge">remove</code> candidates is reachable from a workflow, a
+script or a published page that the reference scan missed</strong>, it is not dead
+and the classification is wrong. The scan covered <code class="language-plaintext highlighter-rouge">*.ts</code>, <code class="language-plaintext highlighter-rouge">*.json</code>, <code class="language-plaintext highlighter-rouge">*.md</code>,
+<code class="language-plaintext highlighter-rouge">*.yml</code>, <code class="language-plaintext highlighter-rouge">*.yaml</code>, excluding the directory itself and the generated
+<code class="language-plaintext highlighter-rouge">docs-auto</code>/<code class="language-plaintext highlighter-rouge">docs/reference</code> trees. It did not cover <code class="language-plaintext highlighter-rouge">.tex</code> <code class="language-plaintext highlighter-rouge">\input</code>, shell,
+or HTML <code class="language-plaintext highlighter-rouge">src</code>/<code class="language-plaintext highlighter-rouge">href</code>.</li>
+  <li><strong>Checked, and it decided two of the four</strong>: qou carries the witness and the
+preamble and does not carry <code class="language-plaintext highlighter-rouge">blueprint/</code> or <code class="language-plaintext highlighter-rouge">home_page/</code>. The check covered
+qou’s <code class="language-plaintext highlighter-rouge">main</code> and <code class="language-plaintext highlighter-rouge">gh-pages</code> only; it holds 6,443 branches and one of them
+could carry either.</li>
+  <li><strong>If the pass-through <code class="language-plaintext highlighter-rouge">skills/</code> parents turn out to be read by something that
+walks declarations one level deep</strong>, they stop being a model question and
+become a real gap.</li>
 </ul>
-<h2 id="lanes--who-acts">
+<h2 id="what-this-does-not-do">
   
   
-    <a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>lane</th>
-      <th>role</th>
-      <th>what it does here</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
-      <td>Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work’s owners.</td>
-    </tr>
-    <tr>
-      <td>User</td>
-      <td><code class="language-plaintext highlighter-rouge">user</code></td>
-      <td>Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="steps">
-  
-  
-    <a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+    <a href="#what-this-does-not-do" class="anchor-heading" aria-labelledby="what-this-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not do
   
   
 </h2>
     
 
-<p><strong>1</strong> of 5 step(s) carry no documentation — <code class="language-plaintext highlighter-rouge">activity-documented</code> lists them.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>step</th>
-      <th>lane</th>
-      <th>skill / sub-process</th>
-      <th>what it does</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Search beans for relevance</strong><br /><code class="language-plaintext highlighter-rouge">A_SearchBeans</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/related-work-coordination.html"><code class="language-plaintext highlighter-rouge">related-work-coordination</code></a></td>
-      <td>beans list –json / beans query over titles AND bodies, open and recently completed. A completed bean is evidence of a decision already made.</td>
-    </tr>
-    <tr>
-      <td><strong>Search issues and open PRs</strong><br /><code class="language-plaintext highlighter-rouge">A_SearchIssues</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/related-work-coordination.html"><code class="language-plaintext highlighter-rouge">related-work-coordination</code></a></td>
-      <td>The repository’s issues (open and closed) and its open pull requests. An open PR touching the same files is the collision most worth finding early.</td>
-    </tr>
-    <tr>
-      <td><strong>Categorize and summarize</strong><br /><code class="language-plaintext highlighter-rouge">A_Categorize</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/related-work-coordination.html"><code class="language-plaintext highlighter-rouge">related-work-coordination</code></a></td>
-      <td>Each hit gets a category (overlaps: coordinate; affected by; out of scope; unrelated) and a one-line summary with its state. Judgement, not a keyword score: say why each is in its category.</td>
-    </tr>
-    <tr>
-      <td><strong>Coordinate? How?</strong><br /><code class="language-plaintext highlighter-rouge">U_Coordinate</code></td>
-      <td>User</td>
-      <td>—</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><strong>Record and act on the answer</strong><br /><code class="language-plaintext highlighter-rouge">A_Record</code></td>
-      <td>Agent</td>
-      <td><a href="../reference/skill-instructions/related-work-coordination.html"><code class="language-plaintext highlighter-rouge">related-work-coordination</code></a></td>
-      <td>Write the chosen coordination where it will be found: bean links (–blocked-by, –parent), a line in the issue or PR body, or ‘note only’. A declined coordination is recorded too.</td>
-    </tr>
-  </tbody>
-</table></div>
+<p>No declaration is added by this proposal. No file is moved and none is deleted.
+The one thing it changes on disk is itself.</p>
 
           
 
