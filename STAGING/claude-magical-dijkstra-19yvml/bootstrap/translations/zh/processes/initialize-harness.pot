@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: initialize-harness\n"
-"POT-Creation-Date: 2026-09-23T22:56:19.955Z\n"
+"POT-Creation-Date: 2026-09-24T11:59:35.712Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: processes/initialize-harness.bpmn:14
 #. Diagram element documentation
-msgid "THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces. PRECONDITIONS are DECLARED below as folio:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind=\"stated\": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here. NO folio:bean on any activity: a bean is work-plan machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive."
+msgid "THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces. PRECONDITIONS are DECLARED below as bootstrap.processes:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind=\"stated\": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here. NO work-plan element on any activity: a bean is work-plan machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive."
 msgstr ""
 
 #: processes/initialize-harness.bpmn:75
