@@ -63,6 +63,20 @@ describe("the themes page", () => {
     for (const rel of links) expect({ rel, exists: existsSync(join(SITE, rel)) }).toEqual({ rel, exists: true });
   });
 
+  it("shows each themed sample sticky with that theme's SQUARE crop behind it", () => {
+    // Owner, 2026-09-24: "themes/ pages should show sticky as square", with the
+    // square crop as the default art. Checked per theme with a backdrop, so a
+    // sample that fell back to another crop — or to none — fails by name.
+    const themed = THEMES.filter((t) => t.backdrop !== undefined);
+    expect(themed.length).toBeGreaterThan(0);
+    for (const t of themed) {
+      const row = md.slice(md.indexOf(`<tr id="theme-${t.id}">`));
+      const demo = row.slice(row.indexOf(`<div class="demo"`), row.indexOf("</tr>"));
+      const art = /<img class="demo-art" src="([^"]+)"/.exec(demo)?.[1] ?? "";
+      expect({ id: t.id, square: /-card\.webp' \| relative_url/.test(art) }).toEqual({ id: t.id, square: true });
+    }
+  });
+
   it("reports an unreadable image as unreadable, never as a link", () => {
     const { html } = sheetBody(ROOT, () => undefined);
     expect(html).toContain("could not read");

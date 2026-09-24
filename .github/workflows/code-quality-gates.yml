@@ -907,7 +907,19 @@ jobs:
           bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
-          bun run check:kind-validators
+          # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
+          # is meant to be closed" and could NEVER have passed: all seven kinds it
+          # counted were either not JSON (`.bpmn`, `.puml`, `.md`, `.ts`) or had no
+          # nodes at all, so the count read as a seven-item backlog over a real
+          # backlog of zero. Each now declares WHY a runtime validator cannot
+          # apply, naming the file format or the absent subject — a fact a reader
+          # can check, so "not applicable" cannot launder a real gap.
+          #
+          # Safe to wire because it is GREEN on this tree, as with `check:skills`:
+          # it locks in a property the repo HAS. What it buys is that a kind added
+          # tomorrow without deciding shows up as `undeclared` rather than joining
+          # a backlog nobody reads.
+          bun run check:kind-validators:require-all
           # The UML overview is drawn from the declarations and the kind
           # validators just checked, so it goes stale when either changes.
           bun run uml:overview:check
@@ -925,6 +937,10 @@ jobs:
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
           bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
