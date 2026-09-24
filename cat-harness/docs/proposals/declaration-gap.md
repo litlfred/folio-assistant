@@ -320,10 +320,12 @@ copy of a live file; it is the version qou deliberately reverted, sitting in a
 repository whose own banner says it should hold no folio content. Keeping it is
 the standing risk that something restores it.
 
-### `blueprint/` goes to qou; `home_page/` goes
+### Both `blueprint/` and `home_page/` go to qou first
 
-The owner's second decision, 2026-09-24: push the blueprint to the folio
-repository that owns it, and drop the site index.
+The owner's decision, 2026-09-24, in two rounds — the second of which reversed
+the first: push **both** to the folio repository that owns them, and remove them
+here only once they are there. The first round dropped the site index; §"`home_page/`
+was removed, and that was reversed" below records why that was overturned.
 
 **`blueprint/` is not stale, and the first measurement of it here was wrong.**
 `content.tex` carries 128 distinct `\lean{QOU.*}` references. A first pass
