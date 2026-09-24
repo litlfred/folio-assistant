@@ -11,13 +11,13 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 84 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 2 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 89 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 2 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 99 terms and is 64 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 104 terms and is 67 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">99</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">104</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -489,6 +489,13 @@ Open a render <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-P">P</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-tools--package-release-manual" data-fa-state="extracted" data-fa-gloss="">
+Package release by hand <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `&lt;package&gt;-v&lt;version&gt;`, and creates the release on the host. The same four steps with nothing to configure.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#package-release-manual</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--paper-latex-build" data-fa-state="extracted" data-fa-gloss="">
 Paper build to LaTeX chapters <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -566,6 +573,13 @@ Record what the publish branch served <span class="fa-gloss-status">candidate, e
 <dd>
 <p>Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#render-log</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--release-please" data-fa-state="extracted" data-fa-gloss="">
+release-please (declared, not configured here) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#release-please</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--paper-preferences" data-fa-state="extracted" data-fa-gloss="">
 Rendering preferences <span class="fa-gloss-status">candidate, extracted</span>
@@ -707,6 +721,27 @@ Tool node schema <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#tool-schema</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-faster-whisper" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — faster-whisper (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-faster-whisper</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-vosk" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — vosk (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-vosk</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-whisper-cpp" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — whisper.cpp (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-whisper-cpp</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--translation-status" data-fa-state="extracted" data-fa-gloss="">
 Translation coverage <span class="fa-gloss-status">candidate, extracted</span>
