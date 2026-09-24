@@ -137,6 +137,17 @@ export interface SchemaField {
   /** First line of the field's own doc comment, when it has one. */
   doc?: string;
   /**
+   * The first prose PARAGRAPH of the field's doc comment, its lines joined by
+   * one space: everything up to the first blank line or tag line.
+   *
+   * `doc` is the first LINE, which is right for a detail panel and wrong for
+   * a definition: measured 2026-09-24, 177 of 1,515 documented fields break
+   * their first sentence across lines, so `doc` ends mid-clause ("OPTIONAL
+   * because folio"). The glossary's extracted schema-field terms (bean `lqo9`)
+   * read this instead. Not carried into the published projection.
+   */
+  paragraph?: string;
+  /**
    * The declaration this field's STRING ID points at, when the field declares
    * one with `@ref <Name>`.
    *
@@ -288,6 +299,32 @@ function firstProse(block: string): string | undefined {
     .find((l) => l.length > 0 && !l.startsWith("@"));
 }
 
+/** The first prose paragraph of a JSDoc block: {@link firstProse}'s line and the lines that continue it. */
+function firstParagraph(block: string): string | undefined {
+  const lines = block
+    .replace(/^\/\*\*+/, "")
+    .replace(/\*+\/\s*$/, "")
+    .split("\n")
+    .map((l) => l.replace(/^\s*\*+\s?/, "").trim());
+  const start = lines.findIndex((l) => l.length > 0 && !l.startsWith("@"));
+  if (start < 0) return undefined;
+  const out: string[] = [];
+  for (const l of lines.slice(start)) {
+    if (l.length === 0 || l.startsWith("@")) break;
+    out.push(l);
+  }
+  return out.join(" ");
+}
+
+/** The first prose paragraph of the JSDoc block immediately above a node. */
+function paragraphOf(node: ts.Node, text: string): string | undefined {
+  const ranges = ts.getLeadingCommentRanges(text, node.getFullStart());
+  const last = ranges?.[ranges.length - 1];
+  if (!last) return undefined;
+  const raw = text.slice(last.pos, last.end);
+  return raw.startsWith("/**") ? firstParagraph(raw) : undefined;
+}
+
 /**
  * The `@ref <Name>` a field declares, if any.
  *
@@ -421,6 +458,7 @@ function zodFields(lit: ts.ObjectLiteralExpression, text: string): SchemaField[]
       array: chain.includes("array"),
       names: namesIn(p.initializer),
       doc: docOf(p, text),
+      paragraph: paragraphOf(p, text),
       ref: refTagOf(p, text),
     });
   }
@@ -523,6 +561,7 @@ function typeMembers(members: ts.NodeArray<ts.TypeElement>, text: string): Schem
       array: ts.isArrayTypeNode(m.type),
       names: namesIn(m.type),
       doc: docOf(m, text),
+      paragraph: paragraphOf(m, text),
       ref: refTagOf(m, text),
     });
   }

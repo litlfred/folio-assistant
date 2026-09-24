@@ -21,6 +21,7 @@ published reference can never drift from what the framework actually validates.
 | [Content Review](content-review.html) | `content-review` | Input schema for formal content review and approval workflow. |
 | [Content Test](content-test.html) | `content-test` | Input schema for end-to-end content testing. |
 | [Content Validate](content-validate.html) | `content-validate` | Input schema for content validation. |
+| [CRDM Detect](crdm-detect.html) | `crdm-detect` | One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request? |
 | [DMN Authoring](dmn-authoring.html) | `dmn-authoring` | Input schema for DMN (Decision Model and Notation) decision table authoring. |
 | [Document Authoring](document-authoring.html) | `document-authoring` | Input schema for the document-authoring skill: create or revise one content block in a document folio. |
 | [Document Publishing](document-publishing.html) | `document-publishing` | Input schema for the document-publishing skill: render a document folio without a TeX installation. |
