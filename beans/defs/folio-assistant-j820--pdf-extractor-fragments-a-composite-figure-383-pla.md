@@ -208,3 +208,64 @@ a page whose image count is an order of magnitude above its caption count?
 - [ ] `arxiv-2510.21603v1` either promotes, or carries a recorded reason it cannot
 - [ ] `arxiv-2312.07755v1` is re-examined — it is ALREADY PROMOTED with 76
       drafted narratives over one fragmented page, and nobody knew
+
+## Summary of Changes — 2026-09-24
+
+Owner: *"dedup everything, migrating the narratives."*
+
+**`schemas/document-image.ts`** gains `PlacementSchema` and an optional
+`placements[]`, with a refinement holding `placements[0]` to the placement
+`basis` describes. Absent on a singly-placed image, so ~90 % of entries are
+unchanged and all 16 existing readers of `basis.page` keep working.
+
+**`scripts/pdf-images.py`** emits one entry per distinct image. **Keyed on the
+PDF's own `xref`, not a content hash** — two placements of one image object ARE
+one image by the document's own account. Checked before choosing: on
+arXiv:2510.21603v1 the PDF holds 51 objects whose decoded bytes are 37
+distinct, so hashing would merge images the PDF keeps apart. Its summary line
+now prints distinct AND placements, because the gap between them is the finding.
+
+**`scripts/migrate-image-placements.py`** carries the committed corpus onto the
+new shape. It re-derives nothing: it groups by the bytes on disk and moves what
+is already there.
+
+| | |
+|---|---|
+| sidecars collapsed | **10** of 29 |
+| entries | **809 → 279** |
+| placements preserved | all of them |
+| placement notes written | 13 |
+| duplicate PNGs removed | **530** |
+| `ingest-staging/` | 17 MB → **6.7 MB** |
+
+All 29 sidecars validate against the new schema.
+
+### Three things worth keeping
+
+**No narrative was lost and none was invented.** All 463 were `draft` and none
+`confirmed`, so no human judgement was overwritten. A later placement's text
+becomes `placements[].note`; where the split would have produced a fragment the
+whole sentence is kept instead. Three notes the heuristic mangled were rewritten
+by hand and are named in the commit.
+
+**The collapse EXPOSED a defect nothing else could find.**
+`9789240081949-eng` holds five byte-identical QR codes described as if each
+encoded a different category — and a sixth note calls one *"a second square QR
+code… describing how the CDISAH classification was developed"*. One image, five
+incompatible claims. Preserved verbatim in the notes rather than tidied away;
+somebody has to decide what that code actually points at.
+
+**The tests exist because the change passed without them.** Schema, generator,
+29 rewritten sidecars and 530 deleted files went green across all 138 gates on
+the first run — the `1xhc` shape. `scripts/tests/image-placements.test.ts`
+holds the assertions that would have gone red, and one of them immediately
+found a real bug: the refinement dereferenced `placements[0]` before `.min(1)`
+could reject an empty array, so the schema CRASHED instead of refusing.
+
+### Still open
+
+- `arxiv-2510.21603v1` is now 50 images rather than 383, all
+  `not-authored`. Describing 50 is ordinary work and would promote it; nobody
+  has done it.
+- The QR-code contradiction above.
+- MAPS's blank cover fragments survive dedup and remain `m4xy`'s.
