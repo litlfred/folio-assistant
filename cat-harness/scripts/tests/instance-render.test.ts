@@ -173,9 +173,9 @@ describe("this repository's own instances", () => {
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
-      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
-      // that is correct — it declares no `harness.json`, so it is a directory
-      // rather than an instance.
+      // between `large-datasets` and `who-iris`. A directory with no
+      // `harness.json` is not an instance and is correctly absent — `smart-kg/`
+      // was the example until it was removed (bean `wg7r`).
       // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
       // the owner has since ruled that a per-IG harness should not exist at all
       // (bean nsbb), so this entry and `smart-trust` below are both expected to

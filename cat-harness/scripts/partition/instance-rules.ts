@@ -435,7 +435,7 @@ export const RULES: Rule[] = [
       // declaration for the `methodology` and `library` graphs and fans out
       // over every declared library, and it has nothing to say about any
       // folio's content — the methodologies it reads are the harness's own
-      // judgement methods, which is why `smart-kg` carries GRADE separately.
+      // judgement methods; WHO guideline method (GRADE) is a skill, not a node here.
       "scripts/check-methodology-evidence.ts",
       // The layout norm — no declared directory inside another declared
       // directory. Harness for the plainest reason in this block: its whole
