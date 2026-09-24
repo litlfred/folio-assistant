@@ -19,6 +19,7 @@ What a reader does to a board and what the renderer does back: every card rests 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

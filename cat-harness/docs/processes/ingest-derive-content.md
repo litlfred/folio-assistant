@@ -19,6 +19,7 @@ folio-assistant — Ingestion subprocess — derive content from the assets. Sou
 
 - **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
 - **Calls:** none
+- **Presented on:** [Document ingestion — Derive content](../document-ingestion.html#derive-content)
 
 ## Lanes — who acts
 

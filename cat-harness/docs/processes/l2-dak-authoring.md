@@ -19,6 +19,7 @@ folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
 - **Skill:** [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html)
 
 ## Lanes — who acts
