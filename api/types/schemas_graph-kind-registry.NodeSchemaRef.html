@@ -11,7 +11,7 @@
 <li><a href="../modules/schemas_graph-kind-registry.html">schemas/graph-kind-registry</a></li>
 <li><a href="" aria-current="page">NodeSchemaRef</a></li></ul>
 <h1>Type Alias NodeSchemaRef</h1></div>
-<div class="tsd-signature"><span class="tsd-kind-type-alias">NodeSchemaRef</span><span class="tsd-signature-symbol">:</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">writtenBy</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">writtenBy</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span> <span class="tsd-signature-symbol">}</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">writtenBy</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">writtenBy</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span> <span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-signature"><span class="tsd-kind-type-alias">NodeSchemaRef</span><span class="tsd-signature-symbol">:</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span> <span class="tsd-signature-symbol">}</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">external</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">shape</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">validator</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">never</span> <span class="tsd-signature-symbol">}</span></div>
 <div class="tsd-comment tsd-typography"><p>Where ONE <code>$schema</code> family of a graph kind is defined. Bean <code>rdkm</code>.</p>
 <p>Three forms, because the corpus has all three and collapsing them would
 make two of them lie:</p>
@@ -35,24 +35,22 @@ make two of them lie:</p>
 <td><code>qa-witness/v1</code> → <code>QaWitness</code></td>
 </tr>
 <tr>
-<td><code>writtenBy</code></td>
-<td>no declared type at all; the module that writes it — or, for an authored file, the one that consumes it</td>
-<td><code>folio-qa-index/v1</code></td>
-</tr>
-<tr>
 <td><code>external</code></td>
 <td>a specification nobody here types; the node conforms to it</td>
 <td>a JSON Schema document, <code>https://json-schema.org/draft/2020-12/schema</code></td>
 </tr>
 </tbody>
 </table>
-<p><code>writtenBy</code> is a finding recorded as data rather than a gap hidden by
-omission: the family exists on disk and nothing types it. <code>external</code> is
-not a gap — the shape is somebody else's, and it is named rather than
-restated.</p>
+<p><code>external</code> is not a gap — the shape is somebody else's, and it is named
+rather than restated.</p>
+<p>There was a fourth, <code>writtenBy</code>: no type at all, just the module that wrote
+the family. It recorded the gap as data, and it was also this registry — a
+<code>@general</code> node — naming its dependent. #1168 B6b typed all nine families
+that used it (beans <code>dv8v</code>, <code>d4lb</code>) and removed the form, so an untyped
+family can no longer be registered: it is either typed or it is not listed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/c9c00f623da4e3968a84a9a9ba0ad335c85e4f0a/cat-harness/schemas/graph-kind-registry.ts#L130">work/folio-assistant/folio-assistant/cat-harness/schemas/graph-kind-registry.ts:130</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/b9e61d992509e1f4d2455b6fdba085902fa9cd78/cat-harness/schemas/graph-kind-registry.ts#L133">work/folio-assistant/folio-assistant/cat-harness/schemas/graph-kind-registry.ts:133</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
