@@ -1,0 +1,120 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-source-licence.ts",
+    "script_hash": "e2c118a72f11"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "library-source-licences"
+  },
+  "updated_at": "2026-09-23T22:07:36.832Z",
+  "families": {
+    "malformed": {
+      "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
+      "count": 0,
+      "entries": []
+    },
+    "not-recorded": {
+      "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
+      "count": 28,
+      "entries": [
+        {
+          "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
+        },
+        {
+          "entry": "agent-skills/library/agent-skills---google-antigravity-docs"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2602.12670v4"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2607.25032v1"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2608.08453v1"
+        },
+        {
+          "entry": "agent-skills/library/best-practices---google-antigravity-docs"
+        },
+        {
+          "entry": "agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro"
+        },
+        {
+          "entry": "agent-skills/library/rfc2119-key-words-requirement-levels"
+        },
+        {
+          "entry": "agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words"
+        },
+        {
+          "entry": "agent-skills/library/skill-authoring-best-practices---claude-platform-docs"
+        },
+        {
+          "entry": "agent-skills/library/skills-in-openai-api"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2312.07755v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2508.05192v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2607.14456v1"
+        },
+        {
+          "entry": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci"
+        },
+        {
+          "entry": "cat-harness/library/gurel-tat-2017-swot-analysis"
+        },
+        {
+          "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
+        },
+        {
+          "entry": "folio-assistant-sci/library/milnorlink"
+        },
+        {
+          "entry": "smart-base/library/9789240010567-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240081949-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240093362-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240120747-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241509510-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241511766-eng"
+        },
+        {
+          "entry": "smart-base/library/who-rhr-1806-eng"
+        },
+        {
+          "entry": "who-iris/library/9789241548960-eng"
+        },
+        {
+          "entry": "who-iris/library/who-pub-tps-931"
+        },
+        {
+          "entry": "who-iris/library/wpr-rdo-2020-003-eng"
+        }
+      ]
+    },
+    "stated": {
+      "summary": "The licence is known, and the record says where it is stated.",
+      "count": 0,
+      "entries": []
+    },
+    "unknown": {
+      "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 28
+}
