@@ -74,6 +74,16 @@
       }
     },
     {
+      "code": "bootstrap-processes",
+      "label": "bootstrap's BPMN extension elements",
+      "definition": "The XML namespace of the BPMN extension elements bootstrap declares for its own diagrams: skill, role and precondition. Its prefix names the declaring Subgraph, bootstrap.processes.",
+      "value": "https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#",
+      "source": {
+        "href": "https://github.com/litlfred/folio-assistant/issues/971",
+        "note": "bean 12s9 stage 2, owner 2026-09-24: prefix = declaring Subgraph (dotted path), address option 1 (…/ns#)"
+      }
+    },
+    {
       "code": "legacy-folio-bpmn",
       "label": "never-ours BPMN spelling",
       "definition": "A spelling of the extension namespace on a domain this project does not own. Listed only so a check can name it when it reappears.",
