@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 266,
+      "count": 267,
       "unit": "beans"
     }
   },
@@ -419,14 +419,14 @@
     {
       "id": "folio-assistant-46nf",
       "title": "B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:20:00Z",
-      "updatedAt": "2026-09-23T22:20:00Z",
+      "updatedAt": "2026-09-23T22:49:20Z",
       "preview": "Part of s4sp (plan B). The 35 role voice sentences become one-rule voice profiles in folio-assistant-core (activeIn.roles to the cat-harness role); the 107 useCases become scenarios/stories.json UserStory nodes pointing at their role. Role.skills typed SkillNameSchema. kg-audit role-declares-voice and role-has-use-cases replaced by role-has-story and story-role-resolves; check:voices resolves acti",
       "file": "beans/defs/folio-assistant-46nf--b2-1168-voices-and-user-stories-point-at-their-rol.md"
     },
@@ -2297,6 +2297,20 @@
       "updatedAt": "2026-09-18T17:18:22Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
+    },
+    {
+      "id": "folio-assistant-nm7l",
+      "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T23:20:35Z",
+      "updatedAt": "2026-09-23T23:20:35Z",
+      "preview": "Part of s4sp (plan B3, split: B3a arrows, B3b skill I/O contracts). Skill scripts/validators/mcpServices removed (26 skills, no live reader); the 6 real scripts become Tools (content-graph-analysis, pages-index, proof-dependency-graph, proof-objects-extract, proof-status-update, paper-latex-build) and content-manifest-validate also satisfies content-validation. Requirement statements lose satisfie",
+      "file": "beans/defs/folio-assistant-nm7l--b3a-1168-scriptsvalidatorsmcpservices-become-tools.md"
     },
     {
       "id": "folio-assistant-nnpk",
