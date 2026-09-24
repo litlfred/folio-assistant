@@ -113,7 +113,7 @@ now a verdict rather than a bound. That is what closing a denominator is for.
 |---|---|---|
 | `no-directory` | no instance declares one of this kind | `bean-defs`, declared inside `beans/beans.json`, reached through its parent — and carrying 8 gates |
 | `empty` | a directory exists and holds nothing | a determined empty |
-| `typed-only` | a declared validator TYPES its nodes; nothing judges them | `health`, `interaction`, `issue-marks`, `todos` |
+| `typed-only` | a declared validator TYPES its nodes; nothing judges them | none here, since bean `h1wq` |
 | `unaudited` | files, and nothing at all — not even a validator | none here, since bean `3oqj` |
 
 `bean-defs` is why the first state is not a gap: it has coverage and no
@@ -141,6 +141,11 @@ own design, and it would contradict the paragraph above about
 What the state buys is telling two different pieces of work apart: *a schema
 parses these nodes and no criterion reads them* is not *nothing whatsoever
 reaches this kind*.
+
+**And it got closed.** The owner asked for all four to be judged (bean `h1wq`),
+so `check:harness-state` now carries one family per kind and `--strict` is green
+and wired in CI. The state stays, because the next kind to arrive will pass
+through it — and the flag is what stops it resting there.
 
 ### The two kinds that were genuinely untyped
 
