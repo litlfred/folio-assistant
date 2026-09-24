@@ -114,8 +114,39 @@ It answers in three states: `authenticated`, `unauthenticated`, and `unknown`
 (GitHub could not be asked). `unknown` is never shown as a pass. A role that
 cannot be read stays unknown and maps to nobody; it is never guessed. An actor
 you name is reported as **claimed**, because GitHub vouched for the login, not
-for the BPMN actor. Mapping a login to a finer actor is still open (bean
-`n2l9`).
+for the BPMN actor.
+
+**There is no login-to-actor table, and there will not be one.** Owner,
+2026-09-24: *"just use github accounts and standard personal account
+permission levels"*. This repository is owned by a personal account, and
+GitHub gives such a repository exactly three levels. They are the whole
+mapping (`PERSONAL_ACCOUNT_LEVELS` in `src/core/github-auth.ts`):
+
+| GitHub level | GitHub role | actor |
+|---|---|---|
+| owner | `admin` | `owner` |
+| collaborator | `write` | `collaborator` |
+| anyone else, public repository | `read` | `viewer` |
+| anyone else, private repository | `none` | nobody |
+
+The consequence is stated in every `auth_whoami` answer: there is no
+read-only or triage collaborator on a personal-account repository, so **every
+collaborator can write the whole graph**. Telling an author from a reviewer is
+left to the per-lane ODRL rules.
+
+**Owner rulings on the analysis, 2026-09-24:**
+
+- **The actors are `owner`, `collaborator` and `viewer`.** They are the
+  personal-account levels above, and nothing finer is mapped from a login.
+- **Access granularity is a property of the tool that holds the data, not of
+  the actor.** Writing the static KG through a GitHub-backed tool is `owner` or
+  `collaborator`, and GitHub makes that write **all or nothing** for the whole
+  repository. A different tool, such as a future data store in front of the
+  graph, may offer finer grain. The same actor then gets a different
+  granularity from that tool.
+- **Every write role collapses into `collaborator`.** At the GitHub level,
+  author, reviewer, adjudicator and release manager are all `collaborator`.
+  Sign-off stays with `owner` by the merge, as the CRDM process has it.
 
 ## GitHub as the auth layer: what it is good at, and where it stops
 

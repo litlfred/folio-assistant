@@ -74,6 +74,14 @@ export interface GithubIdentity {
   via?: "token" | "actions";
   /** Why the answer is not `authenticated` with a role, in words. */
   reason?: string;
+  /**
+   * Who owns the repository: a personal account (`User`) or an
+   * `Organization`. It decides which roles can occur at all (see
+   * {@link PERSONAL_ACCOUNT_LEVELS}).
+   */
+  ownerType?: "User" | "Organization";
+  /** `public` or `private`: whether read needs any GitHub role at all. */
+  visibility?: string;
 }
 
 type Env = Readonly<Record<string, string | undefined>>;
@@ -82,6 +90,20 @@ type FetchLike = (url: string, init?: { headers?: Record<string, string> }) => P
   status: number;
   json(): Promise<unknown>;
 }>;
+
+/**
+ * Owner, 2026-09-24: *"just use github accounts and standard personal account
+ * permission levels"*. So there is no login-to-actor table anywhere: GitHub's
+ * own levels ARE the mapping. A repository owned by a personal account has
+ * exactly these levels. `triage`, `maintain` and a read-only collaborator exist
+ * only for organization repositories.
+ */
+export const PERSONAL_ACCOUNT_LEVELS: ReadonlyArray<{ level: string; role: GithubRole; actor: string | null }> = [
+  { level: "owner", role: "admin", actor: "owner" },
+  { level: "collaborator", role: "write", actor: "collaborator" },
+  { level: "anyone else, on a public repository", role: "read", actor: "viewer" },
+  { level: "anyone else, on a private repository", role: "none", actor: null },
+];
 
 /** `owner/name` from `GITHUB_REPOSITORY`, or from a GitHub remote URL. */
 export function repoSlug(env: Env, remoteUrl?: string): string | undefined {
@@ -141,6 +163,7 @@ export async function githubIdentity(opts: {
     }
     const via = actionsLogin ? ("actions" as const) : ("token" as const);
     let raw: string | undefined;
+    let repoFacts: Pick<GithubIdentity, "ownerType" | "visibility"> = {};
     if (via === "token") {
       // The token IS the caller's, so the repository's own `permissions` block
       // answers for them. It needs only read access to the repository, where
@@ -150,7 +173,16 @@ export async function githubIdentity(opts: {
       if (!res.ok) {
         return { status: "authenticated", login, repo, via, reason: `the role could not be read: GET /repos/${repo} answered ${res.status}` };
       }
-      const perms = ((await res.json()) as { permissions?: Record<string, boolean> }).permissions ?? {};
+      const body = (await res.json()) as {
+        permissions?: Record<string, boolean>;
+        owner?: { type?: string };
+        visibility?: string;
+      };
+      repoFacts = {
+        ownerType: body.owner?.type === "User" || body.owner?.type === "Organization" ? body.owner.type : undefined,
+        visibility: body.visibility,
+      };
+      const perms = body.permissions ?? {};
       // `push` and `pull` are the REST names for `write` and `read`.
       const byName: Record<string, GithubRole> = { admin: "admin", maintain: "maintain", push: "write", triage: "triage", pull: "read" };
       raw = Object.keys(byName).find((k) => perms[k]);
@@ -179,6 +211,7 @@ export async function githubIdentity(opts: {
       repo,
       role,
       via,
+      ...repoFacts,
       ...(role ? {} : { reason: `GitHub returned a role this module does not know: "${raw}"` }),
     };
   } catch (e) {
@@ -189,8 +222,9 @@ export async function githubIdentity(opts: {
 /**
  * The principal GitHub vouches for. The GitHub role decides the actor; an actor
  * the caller claims rides along only as `claimed`, because GitHub vouched for a
- * login, not for a BPMN actor. Mapping a login to a finer actor is the data
- * store's job and is not built (bean `n2l9`).
+ * login, not for a BPMN actor. There is deliberately no finer login-to-actor
+ * table: the owner ruled that GitHub's own personal-account levels are the
+ * mapping ({@link PERSONAL_ACCOUNT_LEVELS}).
  */
 export function principalFromGithub(id: GithubIdentity): Principal {
   if (id.status !== "authenticated") return { actor: null, authenticatedBy: "none" };

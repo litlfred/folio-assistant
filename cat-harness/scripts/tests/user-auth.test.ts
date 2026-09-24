@@ -99,3 +99,24 @@ test("repoSlug reads GITHUB_REPOSITORY first, then a GitHub remote", () => {
   expect(repoSlug({}, "git@github.com:c/d.git")).toBe("c/d");
   expect(repoSlug({}, "https://example.org/c/d")).toBeUndefined();
 });
+
+describe("personal-account levels are the mapping (owner, 2026-09-24)", () => {
+  test("the repository's owner type is read, and the answer names the personal-account levels", async () => {
+    const { f } = fakeGithub({
+      "/user": { body: { login: "octo" } },
+      "/repos/o/r": { body: { owner: { type: "User" }, visibility: "public", permissions: { push: true, pull: true } } },
+    });
+    const id = await githubIdentity({ env: { GH_TOKEN: "t" }, repo: "o/r", fetch: f });
+    expect(id).toMatchObject({ role: "write", ownerType: "User", visibility: "public" });
+    expect(whoami(CTX, id, {})).toContain("**Personal-account repository** (public)");
+  });
+
+  test("every personal-account level maps to a declared actor or to nobody", async () => {
+    const { PERSONAL_ACCOUNT_LEVELS } = await import("../../src/core/github-auth.js");
+    expect(PERSONAL_ACCOUNT_LEVELS.length).toBe(4);
+    for (const l of PERSONAL_ACCOUNT_LEVELS) {
+      expect(GITHUB_ROLE_ACTOR[l.role]).toBe(l.actor);
+      if (l.actor) expect(CTX.actors.has(l.actor)).toBe(true);
+    }
+  });
+});

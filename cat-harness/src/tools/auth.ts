@@ -64,6 +64,13 @@ export function whoami(ctx: AccessContext, id: GithubIdentity, input: WhoamiInpu
         ? `- **Repository role:** \`${id.role}\` on \`${id.repo}\` → gateway actor \`${gh.actor ?? "(nobody)"}\`.`
         : `- **Repository role:** not known${id.reason ? `: ${id.reason}` : ""}.`,
     );
+    if (id.ownerType === "User") {
+      lines.push(
+        `- **Personal-account repository** (${id.visibility ?? "visibility unknown"}): GitHub's only levels here are ` +
+          `owner (\`admin\`), collaborator (\`write\`) and everyone else (\`read\` if public). ` +
+          `There is no read-only or triage collaborator, so every collaborator can write the whole graph.`,
+      );
+    }
   } else {
     lines.push(`- **GitHub:** ${id.status}${id.reason ? `: ${id.reason}` : ""}.`);
   }
@@ -73,7 +80,7 @@ export function whoami(ctx: AccessContext, id: GithubIdentity, input: WhoamiInpu
     lines.push(
       claimed
         ? `- **Acting as:** \`${input.actor}\` (declared; may take ${claimed.roles?.length ? claimed.roles.map((r) => `\`${r}\``).join(", ") : "any role"}). ` +
-            `GitHub vouched for the login, not for this actor. Mapping a login to an actor is not built yet (bean \`n2l9\`).`
+            `GitHub vouched for the login, not for this actor. By the owner's ruling, GitHub's own levels are the only mapping, so the claim is not verified.`
         : `- **Acting as:** \`${input.actor}\`, which is **not a declared actor**.`,
     );
   }
