@@ -31,9 +31,9 @@ different point, and none of them refers to the others:
 
 | mechanism | what it fixes | where |
 |---|---|---|
-| `folio:policy enforcement` | whether a step that is not enabled is **refused** or merely noted | per process, `strict` or `advisory` |
+| `cat-harness.processes:policy enforcement` | whether a step that is not enabled is **refused** or merely noted | per process, `strict` or `advisory` |
 | `relaxable="false"` | whether a package may **negotiate** a base step away | per activity |
-| `folio:decision` | whether the branch is **computed** from a table, refusing a hand-supplied outcome | per exclusive gateway |
+| `cat-harness.processes:decision` | whether the branch is **computed** from a table, refusing a hand-supplied outcome | per exclusive gateway |
 | `check-corpus-gate` | whether the **write** is refused at the commit boundary, by something that is not the agent | outside the process |
 
 They are not one axis, and treating them as one is the first thing to get
@@ -62,7 +62,7 @@ noticed, not what exists.
 **Measured**, by `bun run check:workflow-refs` — ask it, not this page:
 
 - Exclusive gateways split three ways: **computed** by a DMN table, **declared
-  judgement** (`folio:judgement`, with a reason), and **undeclared**.
+  judgement** (`cat-harness.processes:judgement`, with a reason), and **undeclared**.
 - The undeclared set is a **backlog**, not a finding. Every gateway predating
   the marker lands there, and it is the number this agenda most needs to
   shrink: an undeclared gateway is one where nobody has said whether a table
@@ -110,7 +110,7 @@ test this at the same time: ask of each whether its output is a result or a
 rule.
 
 **What it does not settle.** Which of the four axes dominates, whether "rule"
-is even well-defined for the judgements this repository makes (a `folio:raci`
+is even well-defined for the judgements this repository makes (a `cat-harness.processes:raci`
 annotation is not obviously either), and whether the distinction survives
 contact with a step whose output is prose. **Open.**
 
@@ -208,12 +208,55 @@ either. It is one variable now named, where before it was absent.
 **No experiment has been run.** Anyone reading this as a finding is reading it
 wrong.
 
+### One experiment now exists, and it is somebody else's
+
+**Measured, by Borman et al., not here** — arXiv:2607.14456v1, ingested
+2026-09-23 and rendered as
+[`specification-compiled-agents`](specification-compiled-agents.md). It is the
+first ingested source that bears on the question above with an experiment
+rather than an intuition, and it answers a narrow slice of it: ten BPMN
+workflows, three systems, 300 generated agents over 30,543 test cases, holding
+the foundation model constant.
+
+What it supports, stated no wider than it was measured:
+
+- **Externalising control flow reduces VARIANCE**, and that is the claim that
+  survives their own per-workflow breakdown. The coefficient of variation of
+  tool-use exactness across independent generations was 0.63 for the compiled
+  system against 0.86 and 1.05 for the two generalist baselines.
+- **The generation-side results are the robust ones**: zero repair iterations,
+  and an order of magnitude fewer tokens. Those are properties of the pipeline,
+  not of the agent it produced, which is why they do not vary the way the run
+  metrics do.
+
+What it does NOT answer, which is most of the agenda above:
+
+- **Nothing about safety risk.** The metrics are exactness, adherence, latency
+  and cost. "Which are safety risks" is untouched.
+- **Nothing about how much needs to be deterministic**, because every workflow
+  they evaluated was deterministic by construction. The authors say so. The
+  question above is precisely about the part they excluded.
+- **Nothing about models compared across sub-workflows**, and nothing about a
+  controlled context overlay — though their per-node context scoping is the
+  closest thing to an overlay anyone has built, and their citation that
+  performance degrades as the window fills is the same confound named above,
+  arriving from a second direction.
+
+**And their aggregate is not uniform.** On three of the ten workflows the
+compiled system is not best, and on Tournament it is 46.2 % against 94.9 % and
+99.4 %. The methodology node carries that reading in full. It matters here
+because it is the first hint of an ANSWER to the second question: the two
+workflows that invert are both shallow and branch-heavy, which is the regime
+where a compiled plan has least to contribute. That is a hypothesis drawn from
+their diagrams, not a finding of theirs — but it is a testable one, which is
+more than this page had before.
+
 ## What this means when you author a step
 
 The practical half, and the only part that is not research:
 
-**Say which point you are at.** A gateway is `folio:decision`, or
-`folio:judgement` with a reason, and an undeclared one is a gap somebody will
+**Say which point you are at.** A gateway is `cat-harness.processes:decision`, or
+`cat-harness.processes:judgement` with a reason, and an undeclared one is a gap somebody will
 have to measure later. The reason is what makes the corpus countable — and a
 corpus that cannot enumerate its judgement points cannot answer any of the
 three questions above.
@@ -229,7 +272,7 @@ consulted it; `workflow_gate` only answers agents that ask.
 ## See also
 
 - [`session-state-machine`](session-state-machine.md) — the worked case, and
-  where `folio:judgement` came from.
+  where `cat-harness.processes:judgement` came from.
 - [`bpmn-processes`](bpmn-processes.md) — strict vs advisory, the four steps no
   package may relax, and the commit-boundary gate.
 - [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)

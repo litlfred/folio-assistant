@@ -83,6 +83,7 @@
  * Exit: 0 every bean parses (or no store), 1 one does not, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-front-matter
+ * @covers bean-defs, beans
  */
 
 import { join, resolve } from "node:path";

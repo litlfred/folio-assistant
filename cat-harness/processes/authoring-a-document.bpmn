@@ -11,15 +11,16 @@
   run without a Lean toolchain or a TeX installation, because it is what keeps
   a document folio from quietly acquiring content that would need them.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_DocumentAuthoring"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -36,25 +37,29 @@
       check, which is what keeps a document folio publishable without either toolchain.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_DocumentAuthoring_LaneSet">
       <bpmn:lane id="Lane_Author" name="Author (person)">
         <bpmn:documentation>The only place a person acts before the process becomes agent- and pipeline-driven: Task_Plan sets the chapters, the blocks each needs and which statements are normative, once, before Lane_WorkPlan seeds a bean and Lane_Agent takes over every later edit, including every iteration the review and profile-check loops send back.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_NewDocument</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Touched exactly once in this process — Task_SeedPlan turns the plan into a bean right after Task_Plan, so a resumed session or a sibling agent can pick the authoring loop up without re-deriving what was decided at the top.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent (system)">
         <bpmn:documentation>Task_AuthorBlocks is where every loop in this process lands — a profile violation from Lane_Build and an iterate from Lane_Reviewer both come back here — so this lane, not either gate, is what actually turns a rejection into a fixed block; Task_Scaffold runs once, before either loop exists.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Scaffold</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AuthorBlocks</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Build pipeline — validate · render · publish">
         <bpmn:documentation>Owns the one gate this process has that the paper process does not — the profile check — so nothing with a math kind, a lean field or a .lean sibling reaches Task_Validate or Task_Render pretending to be document content; everything downstream of Gateway_ProfileClean assumes that profile.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ProfileCheck</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ProfileClean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
@@ -64,6 +69,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / subject-matter expert">
         <bpmn:documentation>Owns the one gate that decides publish or iterate, and is deliberately unspecialised: this process relaxes the paper process's clinical-SME lane into whichever reviewer a given document actually binds, because no single expertise fits every document the way it does a guideline.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ReviewOutcome</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -74,7 +80,7 @@
     <bpmn:userTask id="Task_Plan" name="1 · Plan the document&#10;[content-plan]">
       <bpmn:documentation>Scope it: chapters, the blocks each needs, which statements are normative.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-plan" />
+        <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>
       <bpmn:incoming>D01</bpmn:incoming>
       <bpmn:outgoing>D02</bpmn:outgoing>
@@ -82,8 +88,8 @@
     <bpmn:task id="Task_SeedPlan" name="2 · Seed the work plan&#10;[todo-manager]">
       <bpmn:documentation>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>D02</bpmn:incoming>
       <bpmn:outgoing>D03</bpmn:outgoing>
@@ -91,7 +97,7 @@
     <bpmn:serviceTask id="Task_Scaffold" name="3 · Scaffold the folio&#10;[folio_init]">
       <bpmn:documentation>folio_init writes content/, uploads/, library/, the manifests, the builder shim and AGENTS.md. Skipped when the folio already exists.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-structure" />
+        <bootstrap.processes:skill ref="document-structure" />
       </bpmn:extensionElements>
       <bpmn:incoming>D03</bpmn:incoming>
       <bpmn:outgoing>D04</bpmn:outgoing>
@@ -99,8 +105,8 @@
     <bpmn:serviceTask id="Task_AuthorBlocks" name="4 · Author blocks&#10;[document-authoring]">
       <bpmn:documentation>Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement goes through normative-statements.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-authoring" />
-        <folio:skill ref="normative-statements" />
+        <bootstrap.processes:skill ref="document-authoring" />
+        <bootstrap.processes:skill ref="normative-statements" />
       </bpmn:extensionElements>
       <bpmn:incoming>D04</bpmn:incoming>
       <bpmn:incoming>D07</bpmn:incoming>
@@ -110,7 +116,7 @@
     <bpmn:serviceTask id="Task_ProfileCheck" name="5 · Check the profile&#10;[content-validate]">
       <bpmn:documentation>content_profile_check: no math kind, no lean field, no .lean sibling. This is the step a paper folio does not have, and the reason a document folio never needs Lean or TeX to publish.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>D05</bpmn:incoming>
       <bpmn:outgoing>D06</bpmn:outgoing>
@@ -124,7 +130,7 @@
     <bpmn:serviceTask id="Task_Validate" name="6 · Validate&#10;[content-validate]">
       <bpmn:documentation>Schema and constraint checks over every block.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>D08</bpmn:incoming>
       <bpmn:outgoing>D09</bpmn:outgoing>
@@ -132,7 +138,7 @@
     <bpmn:serviceTask id="Task_Render" name="7 · Render MD / HTML / PDF&#10;[document-publishing]">
       <bpmn:documentation>Assemble to Markdown, then pandoc. The PDF goes through an HTML engine — never latexmk.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-publishing" />
+        <bootstrap.processes:skill ref="document-publishing" />
       </bpmn:extensionElements>
       <bpmn:incoming>D09</bpmn:incoming>
       <bpmn:outgoing>D10</bpmn:outgoing>
@@ -140,7 +146,7 @@
     <bpmn:userTask id="Task_Review" name="8 · Review and feedback&#10;[content-review]">
       <bpmn:documentation>The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>D10</bpmn:incoming>
       <bpmn:outgoing>D11</bpmn:outgoing>
@@ -154,7 +160,7 @@
     <bpmn:serviceTask id="Task_Publish" name="9 · Publish&#10;[content-publish]">
       <bpmn:documentation>See draft-to-publication.bpmn for the review and release path this expands into. Release authorisation is not relaxable.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>D13</bpmn:incoming>
       <bpmn:outgoing>D14</bpmn:outgoing>

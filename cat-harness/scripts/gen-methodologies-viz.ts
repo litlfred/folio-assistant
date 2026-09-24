@@ -4,6 +4,7 @@
  * came from, and whether this checkout holds the source it rests on.
  *
  * @module cat-harness/scripts/gen-methodologies-viz
+ * @covers methodology
  *
  * ## The gap this closes
  *
@@ -80,7 +81,7 @@ export interface MethodologyRow {
   readonly origin: string;
   readonly appliesWhen: string;
   /**
-   * WHICH instance declared it — `cat-harness`, `smart-base`, `smart-kg`.
+   * WHICH instance declared it — `cat-harness`, `smart-base`, `folio-assistant-core`.
    *
    * The graph spans all three, and a page that did not say which would make
    * `grade` read as this instance's own adoption when it is the WHO material's.

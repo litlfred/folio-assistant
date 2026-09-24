@@ -340,6 +340,37 @@ applied to the tool that most wants to break it — the skill's own worked
 example is `plj1`, a workflow whose shape deleted every open PR's preview
 without anybody deciding it.
 
+## Audit coverage — which audits reach which KIND of node
+
+`check:ci-health` asks whether the workflows pass; `bun run health` asks about
+the repository. **`bun run audit:coverage` asks what is audited at all** — per
+declared graph kind, how many directories are declared, how many files they
+hold, how many `kg-audit` criteria reach the kind, and how many CI gates
+**declare** they cover it. Written as a committed sidecar under
+`cat-harness/test/results/`, because a printed verdict cannot tell "never
+audited" from "audited clean".
+
+It exists because the question got answered by inference instead. An agent
+counted `kg-qa` sidecars over the bean store, found zero, and reported beans
+"effectively unaudited" — to the owner, as a premise. Eight gates audit them.
+
+**Not a second answer to `check:kind-validators`**, which asks whether a kind can
+be *typed*. This asks who *judges* it, and the two come apart: a kind can be
+perfectly typed and audited by nothing.
+
+**The discipline is in the skill, not here** —
+[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+carries why the gate half is **declared** rather than inferred
+(a grep fails in both directions), the four per-kind states that must not
+collapse into one zero — including why `typed-only` is still a **finding**,
+since typing a node is not judging it — and the rules building it paid for: a
+measurement must not be a term in itself, a docblock that documents a tag
+necessarily contains the tag, and a validator over the nodes nobody produces is
+not coverage.
+
+Every gate now declares (bean `3srh`), so `audit:coverage:require-all` is what
+CI runs and the findings are verdicts rather than upper bounds.
+
 ## Actors, roles and skills — a role is a swimlane
 
 One sentence, and every word in it is a distinct declared object:
@@ -441,7 +472,7 @@ the full six-phase process is in
 `processes/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
-agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
+agent's lane carries `<bootstrap.processes:skill ref>`, so `workflow_next` returns the skill
 to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
 `A_Close` also carry the bean operation the engine performs. `crdm_start` and
 `crdm_status` are documented as **proposed** in older text and should not be
@@ -611,12 +642,12 @@ to spend the words: **do not start the topic.**
   `workflow_complete` (MCP) run one — all five declared as Tool nodes — and
   state is committed under `beans/workflows/` so a sibling session sees the
   same position. **Which store answers which question**, what
-  `<folio:bean op>` actually performs, and why an instance and a bean must be
+  `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two, are in
   [`workflow-state`](cat-harness/skills/workflow/workflow-state.md).
   **The discipline is in the skill, not here** —
   [`bpmn-processes`](cat-harness/skills/workflow/bpmn-processes.md) carries how to author
-  an activity (`<folio:skill ref>` and `<folio:bean>`, both required), strict
+  an activity (`<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>`, both required), strict
   vs advisory and the four steps no package may relax, the commit-boundary
   corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
   why a hand-supplied outcome is refused, and what a bean-marked step actually

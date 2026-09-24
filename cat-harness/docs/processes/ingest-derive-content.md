@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_DeriveContent` · advisory · 6 step(s)
 
-folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/ingest-derive-content.svg" alt="BPMN diagram: Ingestion subprocess — derive content from the assets" style="max-width:100%">
 
@@ -19,12 +19,13 @@ folio-assistant — Ingestion subprocess — derive content from the assets. Sou
 
 - **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
 - **Calls:** none
+- **Presented on:** [Document ingestion — Derive content](../document-ingestion.html#derive-content)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Ingestion Engine (agent, runs unattended) | — | The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material. |
 
 ## Steps
 

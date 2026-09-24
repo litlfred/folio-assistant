@@ -5,6 +5,8 @@
  * binds it, with our own namespaces spelt as their instance stubs.
  *
  * @module scripts/check-context-emission
+ * @covers schemas — the thing graded is `CONTENT_CONTEXT` in `schemas/jsonld.ts`: a prefix it
+ *   binds that nothing emits, and a prefix a document speaks that it does not bind
  *
  * ## The defect, and why nothing broke
  *
@@ -51,7 +53,7 @@
  * that indistinguishable from an oversight — which is the whole shape of the
  * bug. So a forward declaration is declared, with a reason naming what would
  * emit it, in {@link FORWARD_DECLARED}. Reason required, same discipline as
- * `command-path-ok:` and `<folio:no-skill reason="…"/>`: silencing the check
+ * `command-path-ok:` and `<cat-harness.processes:no-skill reason="…"/>`: silencing the check
  * costs more than satisfying it, and the exempted set is REPORTED rather than
  * disappearing.
  *

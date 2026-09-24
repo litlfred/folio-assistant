@@ -148,6 +148,27 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
+    // `as-is.html` and bootstrap's `.md`-rendered siblings — which inherit no
+    // layout and so no sidebar.
+    //
+    // `ci-only` for the same reason as `mount-instance-docs`: it WRITES INTO a
+    // built `./_site`, which only the deploy and staging jobs produce, so there
+    // is nothing for it to operate on in the fast set. Its logic is pinned by
+    // `standalone-rail.test.ts` in `bun test`, over a fixture site carrying one
+    // page per case, and `bun run preview:site` builds a site to run it on.
+    //
+    // Its ORDERING is the part no unit test can hold: it must run after every
+    // generator that writes a page, and a version that ran 142 lines earlier
+    // missed ten pages silently. That is asserted by
+    // `check:invocation-parity`, which requires both workflows to run it.
+    match: "rail-standalone-pages",
+    kind: "ci-only",
+    reason:
+      "writes into the built ./_site that only the deploy and staging jobs produce; its logic is " +
+      "pinned by standalone-rail.test.ts in `bun test`, and its ordering by check:invocation-parity",
+  },
+  {
     // The unattended PR sweep and its `gh` plumbing. `ci-only` rather than a
     // gate, for the same reason the script itself is exempt: a CI job asking
     // whether a commit has a CI run has already answered it. Bean `3pqn`.
@@ -155,6 +176,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
+  },
+  {
+    // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
+    // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
+    // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
+    // and `bun run preview:site` builds a site to run it on locally.
+    match: "check:duplicate-ids",
+    kind: "ci-only",
+    reason:
+      "runs on the built ./_site that only the staging job produces; its scanner and the " +
+      "nav include's one-checkbox rule are pinned by duplicate-ids.test.ts in `bun test`",
   },
   {
     // Mounts each instance's rendered content into the built site. It COPIES
@@ -414,6 +446,13 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "site-links.ts",
     kind: "ci-only",
     reason: "takes `--site ./_site`: it resolves links in the BUILT site, which Jekyll produces in CI",
+  },
+  {
+    match: "publish-verify.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
+      "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
   },
   {
     match: "strip-preview-seo.ts",
@@ -727,6 +766,12 @@ export interface ScriptExemption {
  * whole difference, since the comment silently covered six of nine.
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  {
+    script: "audit:coverage:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `audit:coverage:require-all`, which CI runs: that is the same script with `--check --require-all`, so it performs this check's entire job and one more assertion on top. Kept as a script because it is what a contributor runs locally when they want the staleness answer WITHOUT being told about a gate somebody else left undeclared — the two questions have different owners. Bean `3srh`",
+  },
   {
     script: "schema:viz:check",
     kind: "covered-by",

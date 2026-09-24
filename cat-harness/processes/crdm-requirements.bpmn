@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_CRDM" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM">
@@ -17,16 +18,18 @@
            stakeholder asks for afterwards. Explicit opt-in per the owner;
            an unmarked process leaves capture undetermined and reaches no
            data store either way. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CRDM">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>The one activity in this diagram that is not a subprocess call: states the capability gap in its own words and, per its own documentation, does not need to know any of what follows is called CRDM. The six phases translate the need into that vocabulary, not the other way round.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_BA</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>BA_Submit</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Holds the one gate whose "no" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Detect</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Feature</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Content</bpmn:flowNodeRef>
@@ -45,12 +48,12 @@
 (chat, issue, discussion)">
       <bpmn:documentation>The BA describes the capability gap in their own words.
 They do not need to know it is called CRDM.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Detect" name="Detect feature request
 (crdm-detect skill)">
       <bpmn:documentation>Recognise the request as a platform capability change rather than content work, from crdm-detect's signals. Never call it "CRDM" to the person. Mid-content-work, ask whether to pause for requirements now or record a bean for later — do not switch on your own.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-detect"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-detect"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Feature" name="Feature?">
       <bpmn:documentation>Answered by crdm-detect: is this request a feature request, a change to the platform, rather than content work? `no` continues authoring; `yes` enters CRDM, starting by linking the work to an issue.</bpmn:documentation>
@@ -58,31 +61,31 @@ They do not need to know it is called CRDM.</bpmn:documentation>
     <bpmn:endEvent id="End_Content" name="Continue authoring"/>
     <bpmn:callActivity id="Call_Issue" name="Link the work&#10;to an issue" calledElement="Process_CRDM_Issue">
       <bpmn:documentation>Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Needs" name="Phase 1&#10;Needs" calledElement="Process_CRDM_Needs">
       <bpmn:documentation>Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Requirements" name="Phases 2–4&#10;BPA + requirements" calledElement="Process_CRDM_Requirements">
       <bpmn:documentation>Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_DataModel" name="Data model&#10;Entities + cardinalities" calledElement="Process_CRDM_DataModel">
       <bpmn:documentation>Between requirements and sign-off, and the order is the argument: requirements are statements about things, and the model says what the things ARE. Drafted earlier it is invented from nothing, since the entities come from the phase-2 BPA; drafted later, sign-off approves requirements whose nouns were never pinned — which is how two stakeholders approve one sentence meaning different things. Owner, 2026-09-20.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Signoff" name="Phase 5&#10;Beans + sign-off" calledElement="Process_CRDM_Signoff">
       <bpmn:documentation>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue. The announcement is on the single edge into delivery, so the three loops back into implementation do not re-announce.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Deliver" name="Phase 6&#10;Implement + acceptance" calledElement="Process_CRDM_Deliver">
       <bpmn:documentation>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Close" name="Close-out" calledElement="Process_CRDM_Close">
       <bpmn:documentation>The stakeholders sign off, the BA confirms every criterion is met, and only then does the agent close the issue. Never the other way round: an agent must never assume completion.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:endEvent id="End_CRDM" name="Feature delivered"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_1" sourceRef="Start_BA" targetRef="BA_Submit"/>

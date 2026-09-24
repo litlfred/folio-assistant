@@ -3,6 +3,8 @@
  * The swimlane glossary — the personas a corpus's diagrams put in lanes, as SKOS.
  *
  * @module scripts/glossary-export
+ * @covers glossary, swimlane-glossary, scenarios — it writes the glossary graph AND
+ *   the retirement ledger that `swimlane-glossary` holds
  *
  * Issue #596, bean `lqo9` slice 2. The owner named the source in their own
  * words: *"a bpmn diagram swimlane has title/description"*, and *"name,
@@ -120,11 +122,13 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
+import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
+import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
+import { buildCodeListsDoc } from "./code-lists.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const SKOS = "http://www.w3.org/2004/02/skos/core#";
@@ -232,8 +236,8 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
           laneId,
           laneName: /name="([^"]+)"/.exec(attrs)?.[1] ?? null,
           documentation: doc !== undefined && doc.length > 0 ? doc : null,
-          roleRef: /<folio:role[^>]*\bref="([^"]+)"/.exec(body)?.[1],
-          performerVaries: /<folio:role[^>]*\bvariable="true"/.test(body),
+          roleRef: ownElementPattern(xml, "role", String.raw`[^>]*\bref="([^"]+)"`, "").exec(body)?.[1],
+          performerVaries: ownElementPattern(xml, "role", String.raw`[^>]*\bvariable="true"`, "").test(body),
           activities: [...members].filter((x) => acts.has(x)).length,
         });
       }
@@ -293,8 +297,6 @@ export interface GlossaryReport {
   readonly usages: number;
   /** Declared roles no task-containing lane in this instance draws. */
   readonly undrawn: string[];
-  /** ...of those, whose `lanes[]` names a lane no diagram contains at all. */
-  readonly danglingLaneBindings: { role: string; lane: string }[];
   /** Lanes whose binding is dangling or contradictory — reported, not gated. */
   readonly problems: string[];
   /** True when the ledger on disk differs from the one this run computed. */
@@ -396,7 +398,7 @@ export function buildGlossary(opts: {
         varying.push(l);
         break;
       case "dangling":
-        problems.push(`${l.file}#${l.laneId}: <folio:role ref="${b.ref}"/> names no declared role`);
+        problems.push(`${l.file}#${l.laneId}: <bootstrap.processes:role ref="${b.ref}"/> names no declared role`);
         break;
       case "contradictory":
         problems.push(`${l.file}#${l.laneId}: declares both ref="${b.ref}" and variable="true"`);
@@ -539,21 +541,13 @@ export function buildGlossary(opts: {
   const ledger: Ledger = { $schema: LEDGER_SCHEMA, instance: id.stub, concepts };
   const ledgerStale = JSON.stringify(prior.concepts) !== JSON.stringify(concepts) || prior.instance !== id.stub;
 
-  // Declared but undrawn, split by CAUSE — the two need different fixes.
-  const drawnNames = new Set(swimlanes.map((l) => l.laneName).filter((n): n is string => n !== null));
-  const allLaneNames = new Set(lanes.map((l) => l.laneName).filter((n): n is string => n !== null));
+  // Declared but undrawn. A role no longer lists lanes (data-modelling step 8,
+  // #1168), so a "role names a lane no diagram contains" (`fd6i`) cannot occur
+  // any more: a lane names its role, and a lane naming no declared role is a
+  // dangling `ref`, reported with the other problems.
   const undrawn: string[] = [];
-  const danglingLaneBindings: { role: string; lane: string }[] = [];
   for (const r of roles) {
-    if (occurrences.has(r.id)) continue;
-    undrawn.push(r.id);
-    for (const l of r.lanes ?? []) {
-      // A role naming a lane that appears in NO diagram is `fd6i` — declared
-      // and never used. A role whose lane exists but holds no task is not:
-      // `check-lane-documentation` scopes to task-containing lanes for the
-      // same reason, and an `actedUpon` lane holds none BY CONSTRUCTION.
-      if (!drawnNames.has(l) && !allLaneNames.has(l)) danglingLaneBindings.push({ role: r.id, lane: l });
-    }
+    if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
 
   const doc = {
@@ -605,7 +599,6 @@ export function buildGlossary(opts: {
       restored,
       usages,
       undrawn,
-      danglingLaneBindings,
       problems,
       ledgerStale,
     },
@@ -634,9 +627,6 @@ if (import.meta.main) {
   if (report.undrawn.length > 0) {
     console.log(`  ${report.undrawn.length} declared role(s) no swimlane draws: ${report.undrawn.join(", ")}`);
   }
-  for (const d of report.danglingLaneBindings) {
-    console.log(`    DANGLING: role "${d.role}" binds lane ${JSON.stringify(d.lane)}, which no diagram contains`);
-  }
   for (const p of report.problems) console.log(`  PROBLEM: ${p}`);
 
   // An EMPTY corpus is `6tkl`: every assertion below is vacuously satisfied
@@ -657,6 +647,21 @@ if (import.meta.main) {
 
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(doc, null, 2)}\n`);
+
+  // The instance's CODE LISTS, as SKOS, beside the glossary — the same run and
+  // the same predicates (owner, 2026-09-23: use the existing SKOS tooling).
+  // A separate document because this one IS the swimlane scheme; code lists
+  // are schemes of their own. Written only when the instance can see a list.
+  const lists = [...loadCodeLists(await codeListDirs(instanceDir)).values()];
+  if (lists.length > 0) {
+    // Named and addressed BESIDE the glossary — derived from its path and
+    // `@id`, so wherever a workflow's `--out` puts one, the other follows.
+    const sibling = (s: string) => s.replace(/-glossary\.jsonld$/, "-code-lists.jsonld");
+    const clOut = out.endsWith("-glossary.jsonld") ? sibling(out) : join(dirname(out), `${ledger.instance}-code-lists.jsonld`);
+    const clIri = sibling(doc["@id"] as string);
+    writeFileSync(clOut, `${JSON.stringify(buildCodeListsDoc(lists, clIri), null, 2)}\n`);
+    console.log(`  code lists → ${relative(repoRootFor(ROOT), clOut)} (${lists.length})`);
+  }
   const lp = ledgerPath(instanceDir);
   mkdirSync(dirname(lp), { recursive: true });
   writeFileSync(lp, `${JSON.stringify(ledger, null, 2)}\n`);

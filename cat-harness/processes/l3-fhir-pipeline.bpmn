@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_L3Fhir"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -29,26 +30,29 @@
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
-      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L3Fhir_LaneSet">
       <bpmn:lane id="Lane_Modeller" name="FHIR modeller">
         <bpmn:documentation>Task_AuthorFsh is the single re-entry point for both failure paths in this diagram — an invalid-FHIR loop from Gateway_Valid with no record left behind, and a QC failure that arrives only after Task_QcBeans has filed it — so the lane has to be able to tell a mechanical re-run from a finding that needs to be read, and the diagram gives it no other signal than which edge fired.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="fhir-modeller"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_L2Ready</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_MapL2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AuthorFsh</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>The only failure this diagram writes down: an invalid-FHIR loop at Gateway_Valid sends the modeller straight back with nothing recorded, but a QC finding always passes through here first, becoming a bean before Task_AuthorFsh sees it again — so a QC failure is discoverable outside the session that produced it and an invalid-FHIR one is not.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_QcBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Build pipeline — SUSHI · validator · IG Publisher">
         <bpmn:documentation>Two different jobs share this lane rather than one continuous run. Task_Sushi and Task_Validate turn FSH into validated FHIR JSON and loop straight back to the modeller lane on failure with no bean filed — re-running compile-and-validate is cheap enough that a durable finding would be noise. Task_IgPublisher is the other job, reached only once Lane_Qc has passed, and its output is what Lane_PubMgr actually publishes.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Sushi</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Valid</bpmn:flowNodeRef>
@@ -56,11 +60,13 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Qc" name="QC reviewer">
         <bpmn:documentation>The single gate between a syntactically valid FHIR JSON and the full IG Publisher build — Task_IgPublisher runs only once this lane says clean, so a QC finding here is what keeps a compiling-but-wrong profile from ever reaching a publishable IG rather than being caught only after the whole site is built.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="qc-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_QcGates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_QcPass</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager">
         <bpmn:documentation>The last lane and the only one with no path back into the loop — reaching it means Task_IgPublisher already succeeded on Lane_Qc's clean verdict. It does not itself decide whether the release is authorised: that call is draft-to-publication.bpmn's, and Task_PublishIg only executes what that separate process has already cleared.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_PublishIg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_IgPublished</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -72,7 +78,7 @@
     <bpmn:userTask id="Task_MapL2" name="Map L2 → L3&#10;[l3-fhir-authoring]">
       <bpmn:documentation>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l3-fhir-authoring" />
+        <bootstrap.processes:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>C01</bpmn:incoming>
       <bpmn:outgoing>C02</bpmn:outgoing>
@@ -80,7 +86,7 @@
     <bpmn:userTask id="Task_AuthorFsh" name="Author FSH profiles&#10;[l3-fhir-authoring]">
       <bpmn:documentation>Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l3-fhir-authoring" />
+        <bootstrap.processes:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>C02</bpmn:incoming>
       <bpmn:incoming>C06</bpmn:incoming>
@@ -90,7 +96,7 @@
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI compile → FHIR JSON&#10;[l3-fhir-authoring]">
       <bpmn:documentation>Compile the FSH to FHIR JSON with SUSHI. Compiling is not conformance: a green SUSHI result goes on to validation and never stands in for it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l3-fhir-authoring" />
+        <bootstrap.processes:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>C03</bpmn:incoming>
       <bpmn:outgoing>C04</bpmn:outgoing>
@@ -98,7 +104,7 @@
     <bpmn:serviceTask id="Task_Validate" name="Validate against profiles&#10;[fhir-validation]">
       <bpmn:documentation>Validate the compiled resources against their profiles and the packages they constrain. A validator that could not start is could-not-determine, never a pass with an empty findings list. Failures return to authoring.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="fhir-validation" />
+        <bootstrap.processes:skill ref="fhir-validation" />
       </bpmn:extensionElements>
       <bpmn:incoming>C04</bpmn:incoming>
       <bpmn:outgoing>C05</bpmn:outgoing>
@@ -112,7 +118,7 @@
     <bpmn:userTask id="Task_QcGates" name="QC gates&#10;[quality-control]">
       <bpmn:documentation>The QC reviewer rules on the aggregate QA against the publication gates. Emitting the QA report is mechanical; ruling on it is a decision, which is why it sits in the reviewer's lane rather than the build's.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="quality-control" />
+        <bootstrap.processes:skill ref="quality-control" />
       </bpmn:extensionElements>
       <bpmn:incoming>C07</bpmn:incoming>
       <bpmn:outgoing>C08</bpmn:outgoing>
@@ -126,8 +132,8 @@
     <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
       <bpmn:documentation>QC findings do not stay in a report nobody re-reads — each becomes a bean the modeller and the agents both see.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>C09</bpmn:incoming>
       <bpmn:outgoing>C10</bpmn:outgoing>
@@ -135,7 +141,7 @@
     <bpmn:serviceTask id="Task_IgPublisher" name="IG Publisher build&#10;[ig-publication]">
       <bpmn:documentation>Run the IG Publisher: it renders output/, writes each resource's JSON, the package, canonicals and qa.json, and does the two things no cache can — validates every resource against its profiles and resolves the dependency closure with terminology expansion.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>C11</bpmn:incoming>
       <bpmn:outgoing>C12</bpmn:outgoing>
@@ -143,9 +149,9 @@
     <bpmn:serviceTask id="Task_PublishIg" name="Publish the IG site&#10;[content-publish]">
       <bpmn:documentation>Release authorisation and review follow draft-to-publication.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:fulfilment kinds="person system" reason="publishing the built IG site is mechanical; the lane records who is accountable for what is live, and a publication manager may also publish by hand." />
-        <folio:skill ref="content-publish" />
-        <folio:skill ref="ig-publication" />
+        <cat-harness.processes:fulfilment kinds="person system" reason="publishing the built IG site is mechanical; the lane records who is accountable for what is live, and a publication manager may also publish by hand." />
+        <bootstrap.processes:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>C12</bpmn:incoming>
       <bpmn:outgoing>C13</bpmn:outgoing>

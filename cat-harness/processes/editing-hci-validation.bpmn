@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_FolioEditing"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,20 +29,21 @@
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
-      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
       <!-- Capture ON: the HCI validation gate is the step whose outcome a reviewer
            is most often asked to justify after the fact, and the editor's decision
            is the thing a log can evidence and prose cannot. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Editing_LaneSet">
       <bpmn:lane id="Lane_Editor" name="Editor / author (person)">
         <bpmn:documentation>Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_EditRequested</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewFindings</bpmn:flowNodeRef>
@@ -52,12 +54,14 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_LogFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ResolveBean</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent (system)">
         <bpmn:documentation>Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_DraftEdit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ProposalReady</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviseEdit</bpmn:flowNodeRef>
@@ -65,18 +69,21 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="HCI validation pipeline (system)">
         <bpmn:documentation>Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="validation-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_ValidationFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ValidationJoin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CollateFindings</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Mechanical" name="Mechanical validation (system)">
         <bpmn:documentation>Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="validation-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SchemaValidate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SyntaxSpell</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildGates</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_NonMechanical" name="Non-mechanical validation (review agent or SME)">
         <bpmn:documentation>Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_ReviewerKind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AgentReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SmeReview</bpmn:flowNodeRef>
@@ -84,6 +91,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Corpus" name="Corpus (versioned store)">
         <bpmn:documentation>Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Commit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_InCorpus</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -94,7 +102,7 @@
     <bpmn:userTask id="Task_DescribeChange" name="Describe the intended change">
       <bpmn:documentation>The editor states the change in natural language; no content has moved yet.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="The editor states the change they intend. Origination of intent, not execution of a method — nothing for an instruction body to say." />
+        <cat-harness.processes:no-skill reason="The editor states the change they intend. Origination of intent, not execution of a method — nothing for an instruction body to say." />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_01</bpmn:incoming>
       <bpmn:outgoing>Flow_02</bpmn:outgoing>
@@ -102,8 +110,8 @@
     <bpmn:task id="Task_ClaimBean" name="Claim or open the bean&#10;[todo-manager]">
       <bpmn:documentation>Every edit is tracked as a bean in beans/. Check for an existing bean by exact title first; claim it (status in-progress) rather than minting a duplicate.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
@@ -112,16 +120,13 @@
       <bpmn:documentation>Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate's authority resolved against its publisher's own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded.
 
 This step has nothing to do for content that carries no recommendations -- a mathematics folio has none -- and is skipped there rather than satisfied vacuously.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <folio:link href="evidence.html#the-subprocess" />
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_03</bpmn:incoming>
       <bpmn:outgoing>Flow_Evidence</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:serviceTask id="Task_DraftEdit" name="Draft the block edit&#10;[content-author]">
       <bpmn:documentation>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-author" />
+        <bootstrap.processes:skill ref="content-author" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_Evidence</bpmn:incoming>
       <bpmn:outgoing>Flow_04</bpmn:outgoing>
@@ -141,7 +146,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_SchemaValidate" name="Schema and constraint checks&#10;[content-validate]">
       <bpmn:documentation>Block schema, label prefixes, required fields, constraint rules.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_06</bpmn:incoming>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
@@ -149,7 +154,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_SyntaxSpell" name="Syntax, spelling and links&#10;[content-validate]">
       <bpmn:documentation>Syntax, spelling, cross-references, citation and link resolution.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_07</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
@@ -157,7 +162,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_BuildGates" name="Build and QA gates&#10;[content-test]">
       <bpmn:documentation>Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-test" />
+        <bootstrap.processes:skill ref="content-test" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_08</bpmn:incoming>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
@@ -171,7 +176,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_AgentReview" name="Agent review of the change&#10;[content-review]">
       <bpmn:documentation>A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
@@ -179,7 +184,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:userTask id="Task_SmeReview" name="Human / SME review&#10;[content-review]">
       <bpmn:documentation>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11</bpmn:incoming>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>
@@ -199,9 +204,9 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_CollateFindings" name="Collate findings into a report">
       <bpmn:documentation>Mechanical results and review findings are merged into one report against the proposed change.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
-        <folio:skill ref="content-validate" />
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_19</bpmn:outgoing>
@@ -209,8 +214,8 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:serviceTask id="Task_LogFindings" name="Log findings on the bean&#10;[todo-manager]">
       <bpmn:documentation>Findings are appended to the bean, so the next agent or human sees what is outstanding.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_19</bpmn:incoming>
       <bpmn:outgoing>Flow_20</bpmn:outgoing>
@@ -218,10 +223,10 @@ This step has nothing to do for content that carries no recommendations -- a mat
     <bpmn:userTask id="Task_ReviewFindings" name="Review the findings">
       <bpmn:documentation>THE GATE: the editor sees every finding BEFORE anything reaches the corpus.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
-        <folio:skill ref="decision-audit" />
-        <folio:skill ref="decision-audit" />
-        <folio:policy relaxable="false" />
+        <bootstrap.processes:skill ref="decision-audit" />
+        <bootstrap.processes:skill ref="decision-audit" />
+        <bootstrap.processes:skill ref="decision-audit" />
+        <cat-harness.processes:policy relaxable="false" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_20</bpmn:incoming>
       <bpmn:outgoing>Flow_21</bpmn:outgoing>
@@ -240,8 +245,8 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
     <bpmn:userTask id="Task_RecordDecision" name="Record the decision and its audit note&#10;[decision-audit]">
       <bpmn:documentation>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
-        <folio:policy relaxable="false" />
+        <bootstrap.processes:skill ref="decision-audit" />
+        <cat-harness.processes:policy relaxable="false" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_21</bpmn:incoming>
       <bpmn:outgoing>Flow_21b</bpmn:outgoing>
@@ -249,7 +254,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
       <bpmn:documentation>The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:policy relaxable="false" />
+        <cat-harness.processes:policy relaxable="false" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_21b</bpmn:incoming>
       <bpmn:outgoing>Flow_22</bpmn:outgoing>
@@ -259,7 +264,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
     <bpmn:serviceTask id="Task_ReviseEdit" name="Revise the proposed change&#10;[content-author]">
       <bpmn:documentation>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-author" />
+        <bootstrap.processes:skill ref="content-author" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_22</bpmn:incoming>
       <bpmn:outgoing>Flow_23</bpmn:outgoing>
@@ -270,7 +275,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
     <bpmn:serviceTask id="Task_Commit" name="Commit into the corpus">
       <bpmn:documentation>Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:policy relaxable="false" />
+        <cat-harness.processes:policy relaxable="false" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_25</bpmn:incoming>
       <bpmn:outgoing>Flow_26</bpmn:outgoing>
@@ -278,8 +283,8 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
     <bpmn:task id="Task_ResolveBean" name="Resolve or re-open the bean&#10;[todo-manager]">
       <bpmn:documentation>Resolved when the change landed clean; left open with the residue when it did not.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="resolve" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="resolve" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_26</bpmn:incoming>
       <bpmn:outgoing>Flow_27</bpmn:outgoing>

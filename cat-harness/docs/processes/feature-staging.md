@@ -20,14 +20,15 @@ THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, own
 - **Called by:** no call activity names this process
 - **Calls:** none
 - **Names the `feature-staging` skill without calling this process:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Publishing the docs site, and keeping the previews alive](docs-site-publish.html), [Adopting an upstream version bump](upstream-version-adoption.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`feature-staging`](../reference/skill-instructions/feature-staging.html)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why. |
-| Human actor | — | The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted. |
+| CI/CD Pipeline | `build-pipeline` | Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why. |
+| Human actor | `user` | The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted. |
 
 ## Steps
 

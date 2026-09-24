@@ -15,7 +15,7 @@ import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
 import { buildExport, publishedDocument } from "../kg-export.js";
-import { BootstrapGraphDocumentSchema } from "../../../bootstrap-tools/schemas/bootstrap-graph.js";
+import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
 import { isSkillMd } from "../known-skills.js";
 import {
   repoRootFor,
@@ -239,7 +239,7 @@ describe("what it contains, and what it admits it did not look at", () => {
     // the same count-vs-property failure as the skills above, and the count
     // was ALSO stating a rule it could not enforce. "One process" was never
     // the constraint; "one place to START" is. A sub-process is a second
-    // diagram and does not compete for being the thing an Initiator begins.
+    // diagram and does not compete for being the thing a Bootstrapping Agent begins.
     const doc = await buildCatBootstrapDocument();
     const counts = doc["counts"] as Record<string, number>;
     expect({

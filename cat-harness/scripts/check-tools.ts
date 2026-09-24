@@ -27,6 +27,7 @@
  * shared vocabulary actually declares — the half that can be known offline.
  *
  * @module scripts/check-tools
+ * @covers tools, skills
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -34,8 +35,10 @@ import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/discover.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
+import { toJsonSchema } from "../schemas/to-json-schema.js";
+import { contractFile, skillContracts } from "./skill-contracts.js";
 import { knownSkills as knownSkillsIn } from "./known-skills.js";
-import { instanceDirectoryForGraph, instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
+import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
 
 /**
  * THIS INSTANCE'S OWN `schemas` directory, or the convention.
@@ -55,10 +58,6 @@ import { instanceDirectoryForGraph, instanceRootsIn, repoRootFor } from "../sche
  * happens to order the root's own declarations first; a reordering would have
  * sent this generator's output into another checkout, silently. Bean `a02m`.
  */
-function schemasRoot(root: string): string {
-  return instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas");
-}
-
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -163,28 +162,57 @@ export function knownSkills(): Set<string> {
 }
 
 /**
+ * A skill's input contract, parsed, or why it could not be.
+ *
+ * Found through the skill's own front matter (`input:`), never by a directory
+ * name (#1168, B3b). `absent` is the common case and not a defect: most skills
+ * declare no contract. `unreadable` covers a declared file that is missing or
+ * does not parse, and `external` an https IRI this offline check cannot fetch —
+ * both are reported, never counted as agreement.
+ */
+export type InputContract =
+  | { kind: "absent" }
+  | { kind: "external"; ref: string }
+  | { kind: "unreadable"; ref: string }
+  | { kind: "ok"; required: string[]; types: Map<string, string> };
+
+export function inputContract(root: string, skill: string): InputContract {
+  const ref = skillContracts(root).get(skill)?.input;
+  if (ref === undefined) return { kind: "absent" };
+  const f = contractFile(root, ref);
+  if (f === undefined) return { kind: "external", ref };
+  if (!existsSync(f)) return { kind: "unreadable", ref };
+  try {
+    const d = JSON.parse(readFileSync(f, "utf-8")) as { required?: unknown; properties?: Record<string, { type?: unknown }> };
+    const required = Array.isArray(d.required) ? d.required.filter((x): x is string => typeof x === "string") : [];
+    const types = new Map<string, string>();
+    for (const [k, v] of Object.entries(d.properties ?? {})) if (typeof v?.type === "string") types.set(k, v.type);
+    return { kind: "ok", required, types };
+  } catch {
+    return { kind: "unreadable", ref };
+  }
+}
+
+/**
  * What a skill's input contract requires, by property name.
  *
- * Reads `schemas/skills/<skill>/input.schema.json` — the same directory
- * `.claude/skills/local/<skill>.json` points at with `schemaRef`, and the same
- * one `kg-export` publishes. Returns `undefined` for a skill with no contract,
- * which is the common case and not a defect: most skills declare none.
- *
  * **`undefined` and `[]` are different answers and both are kept.** A skill
- * with no contract cannot be checked; a skill whose contract requires nothing
- * is checked and passes. Collapsing them would turn an unreadable file into a
- * silent pass, which is the "could not determine rendered as green" failure
- * this repo keeps writing down.
+ * with no readable contract cannot be checked; a skill whose contract requires
+ * nothing is checked and passes. Collapsing them would turn an unreadable file
+ * into a silent pass, which is the "could not determine rendered as green"
+ * failure this repo keeps writing down.
  */
 export function contractRequires(root: string, skill: string): string[] | undefined {
-  const f = join(schemasRoot(root), "skills", skill, "input.schema.json");
-  if (!existsSync(f)) return undefined;
-  try {
-    const d = JSON.parse(readFileSync(f, "utf-8")) as { required?: unknown };
-    return Array.isArray(d.required) ? d.required.filter((x): x is string => typeof x === "string") : [];
-  } catch {
-    return undefined;
-  }
+  const c = inputContract(root, skill);
+  return c.kind === "ok" ? c.required : undefined;
+}
+
+/** The JSON Schema `type` a shared vocabulary type projects to, when it has one. */
+function jsonTypeOf(vocabularyName: string): string | undefined {
+  const z = (TOOL_TYPES as Record<string, Parameters<typeof toJsonSchema>[0]>)[vocabularyName];
+  if (z === undefined) return undefined;
+  const t = toJsonSchema(z).type;
+  return typeof t === "string" ? t : undefined;
 }
 
 export interface ToolCheck {
@@ -200,6 +228,12 @@ export interface ToolCheck {
    * Tool cannot exercise it and the edge is false.
    */
   unmetContracts: Array<{ tool: string; skill: string; missing: string[]; has: string[] }>;
+  /**
+   * A Tool input whose type contradicts the contract property of the same name
+   * — the contract says `array`, the port takes a `string` — so the Tool
+   * cannot receive what the skill is specified to take.
+   */
+  mistypedContracts: Array<{ tool: string; skill: string; port: string; contract: string; tool_type: string }>;
   /** Skills whose contract could not be read — never counted as agreement. */
   unreadableContracts: string[];
   /**
@@ -270,6 +304,7 @@ export function checkTools(): ToolCheck {
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
   const unsafeArgs: Array<{ tool: string; port: string; type: string }> = [];
   const unmetContracts: ToolCheck["unmetContracts"] = [];
+  const mistypedContracts: ToolCheck["mistypedContracts"] = [];
   const unreadable = new Set<string>();
   const covered = new Set<string>();
   const danglingAlternatives: ToolCheck["danglingAlternatives"] = [];
@@ -283,32 +318,40 @@ export function checkTools(): ToolCheck {
       // real and this instance is not accountable for the skill.
       else if (!resolvable.has(s)) dangling.push({ tool: t.id, skill: s });
 
-      // ## What is compared, and what deliberately is not
+      // ## What is compared
       //
-      // NAMES ONLY. A skill's contract is free-form JSON Schema; a Tool's `io`
-      // is named ports referencing shared `$defs` IRIs. The two shapes are not
-      // structurally comparable and pretending otherwise would produce a check
-      // that is either vacuous or wrong.
+      // NAMES, then TYPES of the names both sides share. A skill's contract is
+      // free-form JSON Schema; a Tool's `io` is named ports referencing shared
+      // `$defs`. They meet at two points: a required property must have a port
+      // of that name, and where a port and a property share a name, the JSON
+      // type the port's vocabulary type projects to must be the property's.
       //
-      // Types are excluded on evidence rather than on principle: measured
-      // across the 22 contracts in this repo, nearly every property is a bare
-      // `{"type": "string"}`, so a type comparison would pass on anything.
+      // Types were once excluded as vacuous — nearly every contract property
+      // is a bare `{"type": "string"}`. That makes the comparison WEAK, not
+      // empty: it still catches an `array` contract served by a `string` port,
+      // or a `string` served by a boolean `Flag`, which is a Tool that cannot
+      // receive what the skill takes (#1168, B3b).
       //
       // A name mismatch that is only a naming difference (`path` vs
-      // `targetPath`) is a FINDING here rather than a false positive to
-      // suppress. Two names for one input across a skill and the Tool that
-      // claims to implement it is itself worth fixing — an agent reading the
-      // contract cannot call the Tool.
-      const required = contractRequires(ROOT, s);
-      if (required === undefined) {
-        // No contract at all is the common case and not a defect. A contract
-        // that exists but will not parse IS one, and is reported separately.
-        if (existsSync(join(ROOT, "schemas", "skills", s, "input.schema.json"))) unreadable.add(s);
+      // `targetPath`) is a FINDING rather than a false positive to suppress.
+      const contract = inputContract(ROOT, s);
+      if (contract.kind === "absent" || contract.kind === "external") continue;
+      if (contract.kind === "unreadable") {
+        unreadable.add(s);
         continue;
       }
-      const missing = required.filter((r) => !portNames.has(r));
+      const missing = contract.required.filter((r) => !portNames.has(r));
       if (missing.length > 0) {
         unmetContracts.push({ tool: t.id, skill: s, missing, has: [...portNames] });
+      }
+      for (const i of t.io.inputs) {
+        const want = contract.types.get(i.name);
+        const have = jsonTypeOf(i.schema.split("#/$defs/")[1] ?? "");
+        // An integer IS a number; the reverse does not hold.
+        const compatible = want === have || (want === "number" && have === "integer");
+        if (want !== undefined && have !== undefined && !compatible) {
+          mistypedContracts.push({ tool: t.id, skill: s, port: i.name, contract: want, tool_type: have });
+        }
       }
     }
     for (const p of [...t.io.inputs, ...t.io.outputs]) {
@@ -352,6 +395,7 @@ export function checkTools(): ToolCheck {
     unknownTypes,
     unsafeArgs,
     unmetContracts,
+    mistypedContracts,
     unreadableContracts: [...unreadable].sort(),
     danglingAlternatives,
     asymmetricAlternatives,
@@ -414,6 +458,13 @@ if (import.meta.main) {
       "    A `satisfies` edge asserts the Tool is one concrete way to exercise the skill.\n" +
         "    Either the Tool needs the input, or the edge is wrong and should be dropped.",
     );
+  }
+  if (r.mistypedContracts.length > 0) {
+    bad = true;
+    console.error(`\n✗ ${r.mistypedContracts.length} Tool input(s) whose type contradicts the skill's contract:`);
+    for (const m of r.mistypedContracts) {
+      console.error(`    ${m.tool}.${m.port} → ${m.skill}: contract says ${m.contract}, the port takes ${m.tool_type}`);
+    }
   }
   if (r.unreadableContracts.length > 0) {
     // Never rendered as agreement. A contract that will not parse is a third

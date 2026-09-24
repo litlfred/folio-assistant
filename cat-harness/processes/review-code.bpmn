@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_CodeReview"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -36,6 +36,7 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
     <bpmn:laneSet id="LaneSet_CodeReview">
       <bpmn:lane id="Lane_CodeReviewer" name="Code reviewer">
         <bpmn:documentation>Forks on node kind but never on verdict: Task_ReviewTool catches a skill that is satisfied but whose mechanism is reachable from nowhere, Task_ReviewSchema catches a visual fact with two homes instead of one, and both branches converge on the same Task_RecordVerdict — so whichever kind of node changed, the reader of the finding sees one recording discipline, not two.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="code-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_CodeNodes</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RunNodeAudits</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_NodeKind</bpmn:flowNodeRef>
@@ -55,7 +56,7 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
         than the summary: it is written per node so an inherited defect and a
         new one are distinguishable.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="code-node-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="code-node-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_NodeKind" name="Which node kind?">
@@ -72,7 +73,7 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
         mechanism while the mechanism itself is reachable from no node, and
         check:tools reports it as covered and is right to.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="skills-and-tools"/><folio:skill ref="covered-is-not-reachable"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="skills-and-tools"/><bootstrap.processes:skill ref="covered-is-not-reachable"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_ReviewSchema" name="Review the schema definition node">
@@ -85,7 +86,7 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
         glyph, a theme's tokens — does a Tool maintain that artefact, and does the
         visual fact have only one home? The node decides; the stylesheet reports.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="code-node-review"/><folio:skill ref="site-presentation-assets"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="code-node-review"/><bootstrap.processes:skill ref="site-presentation-assets"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Join"/>
@@ -95,7 +96,7 @@ The gateway picks by node KIND because the questions differ. A Tool is judged on
         Findings are advice, not commits — the same separation the generic
         reviewer lane keeps. Record them where the next reader meets the node.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="code-node-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="code-node-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_CodeReviewed" name="Code nodes&#10;reviewed"/>

@@ -20,16 +20,17 @@ A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fall
 - **Called by:** [Watching a pinned upstream dependency](upstream-pin-watch.html)
 - **Calls:** [Options analysis](options-analysis.html)
 - **Names the `upstream-version-adoption` skill without calling this process:** [Watching a pinned upstream dependency](upstream-pin-watch.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent | — | Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely. |
-| CI/CD Pipeline | — | Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one. |
-| Reviewer / SME | — | Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it. |
-| Publication manager | — | Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository. |
+| Agent | `authoring-agent` | Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely. |
+| CI/CD Pipeline | `build-pipeline` | Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one. |
+| Reviewer / SME | `reviewer` | Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it. |
+| Publication manager | `publication-manager` | Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository. |
 
 ## Steps
 

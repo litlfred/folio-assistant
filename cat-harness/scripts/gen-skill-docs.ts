@@ -20,6 +20,7 @@
  * Dependency-free (bun + fs only). Never hand-edit the output.
  *
  * @module scripts/gen-skill-docs
+ * @covers skills, docs
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
@@ -326,6 +327,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // collision `todo-manager` and `bean-coordination` are listed for below, and
   // it is resolved the same way.
   "kg-navigation": "Knowledge-graph navigation (tooled)",
+  // folio-assistant-core’s own `skills/`, keyed by DECLARED ID for the same
+  // reason as the two below it: the directory moves when core splits out and
+  // the id does not. A LABEL is data, not a dependency — nothing here imports
+  // core, so naming its package does not invert the layer order that
+  // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
+  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
@@ -340,7 +347,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  * `authoring-who-smart-guidelines` (9) were absent, so all twelve of their
  * instruction bodies were NEVER PUBLISHED — and four of them
  * (`fhir-validation`, `l2-dak-authoring`, `bpmn-authoring`,
- * `latex-authoring`) are named by `<folio:skill ref>` in the BPMN diagrams.
+ * `latex-authoring`) are named by `<bootstrap.processes:skill ref>` in the BPMN diagrams.
  * An agent following `workflow_next` to one of those steps is handed a skill
  * whose published reference page 404s.
  *
@@ -525,7 +532,7 @@ function escapePipes(s: string): string {
 /**
  * The processes that run a skill, appended to its page (bean `ooq3`).
  *
- * The reverse of `<folio:skill ref>`, which `processes/index.md` tabulates and
+ * The reverse of `<bootstrap.processes:skill ref>`, which `processes/index.md` tabulates and
  * which a reader standing on the skill could not see. When a process shares the
  * skill's name it is the skill's OWN procedure, so its diagram is embedded
  * here rather than only linked — that is the case `adjudication` was in: a

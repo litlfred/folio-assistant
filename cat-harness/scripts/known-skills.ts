@@ -47,8 +47,8 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
  *
  * `requirements/` is the one that looks most like skills and is least like
  * them. Its entries are `{ id: "req:commit-hygiene", statements: [{ conformance:
- * "SHALL", … }], satisfiedBy: [{ kind: "skill", ref: "content-plan" }] }` — a
- * requirement points **at** a skill; it is not one. Reading the four of them as
+ * "SHALL", … }] }` — a skill points at a requirement statement it satisfies
+ * (`satisfies:`, #1168); a requirement is not a skill. Reading the four of them as
  * skills is what made `commit-hygiene`, `content-lifecycle`, `lean-verification`
  * and `session-start` appear as reachable skill names with nothing behind them.
  */
@@ -282,7 +282,7 @@ export function isSkillMd(path: string): boolean {
   // corpus read 150 skills where it holds 149. Now `bootstrap/README.md` is
   // the entry point an agent with no context reads first, and declaring
   // `bootstrap/` as a knowledge graph would have admitted it as a skill named
-  // `README`, making `<folio:skill ref="README"/>` resolve and handing
+  // `README`, making `<bootstrap.processes:skill ref="README"/>` resolve and handing
   // `kg-audit` a sidecar asserting heading and brevity rules against a
   // README. Requiring every README to carry a `$schema` disclaimer instead
   // would mean inventing a schema so that a file can say it is not something
@@ -649,7 +649,7 @@ export function knownSkills(root: string): Set<string> {
   // holds environment probes (`docker`, `pandoc`, `python3`), `roles/` holds an
   // assignment table and `hooks/` holds a shell script. Scanning all of them
   // put 46 non-skills into the skill set — which means a diagram could have
-  // referenced `<folio:skill ref="viewer"/>` or `ref="latex-compiler"` and the
+  // referenced `<bootstrap.processes:skill ref="viewer"/>` or `ref="latex-compiler"` and the
   // reference checker would have called it resolved.
   //
   // The list is a deny-list of the groups that are known not to be skills

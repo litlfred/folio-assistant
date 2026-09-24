@@ -28,6 +28,7 @@
  *   PRs' `STAGING/` previews across.** Bean `plj1`.
  *
  * @module scripts/check-workflows
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { parse, parseDocument } from "yaml";

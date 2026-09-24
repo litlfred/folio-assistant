@@ -3,6 +3,7 @@
  * A process must DEFINE itself — its name is not what it is for.
  *
  * @module scripts/check-process-documentation
+ * @covers processes
  *
  * Bean `7rna`. The sibling of `check-lane-documentation`, one level up: that
  * one asks whether a swimlane says what its persona is accountable for, this

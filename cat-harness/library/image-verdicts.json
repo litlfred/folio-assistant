@@ -1,0 +1,84 @@
+{
+  "$schema": "folio-image-verdicts/v1",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it.",
+  "inspected_by": {
+    "kind": "agent",
+    "id": "claude",
+    "model": "claude-opus-5"
+  },
+  "inspected_at": "2026-09-23",
+  "verdicts": {
+    "arxiv-2607.14456v1": {
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "a left-to-right pipeline diagram of five numbered steps, its two inputs drawn as document shapes",
+        "draft": "Figure 1, the proposed system architecture. Two inputs enter on the left as document shapes: \"Business Process Modelling Notation (BPMN) XML — Multi-step workflow\" and \"API Specifications — 20+ endpoints\". Five numbered boxes follow, each split into what the LLM does (white) and what it emits (tinted). Step 1, Workflow Breakdown: the LLM agent extracts sequential steps, output \"Structured Steps with conditions\", the box giving as its example \"Step 2 ---> Step 3 / If True ---> Step 5\". Step 2, Create API Service: the LLM generates a Python wrapper class, output \"service.py — Class with methods per endpoint\". Steps 1 and 2 both feed Step 3, Tool/Context: the LLM generates async tools plus context, output \"tools.py — async functions, Tool context class\". Step 4, Agent Prompt: the LLM creates structured instructions, output \"{agent_prompt}.md — Workflow logic map, Tool usage rules\". Step 5, Execution Wrapper: the LLM adapts a FastAPI template, output \"agent.py — Rest API service\". The final box, shaded green, reads \"Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper\". The flow is strictly forward; no arrow returns to an earlier step, so the iterative refinement the text describes in step 4 of §3.3 is not drawn here."
+      },
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "a 2x2 panel of grouped bar charts comparing three systems on generation cost, labelled (a) to (d)",
+        "draft": "Figure 2, agent generation metrics, in four panels. Each groups three bars — Cline (green), Custom (orange, the specialist system) and Roo (blue). (a) Total tokens per generation, per workflow, with the axis in thousands and ↓ better: the orange bar is lowest in every one of the ten workflows, the widest gaps at Weather (Custom 9.2 vs Cline 2498.0 and Roo 4662.4) and Tournament (27.7 vs 1849.1 and 4362.1). (b) Repair iterations per workflow, ↓ better: Custom reads 0.00 for all ten; Cline and Roo reach 6.00 (Deal and Weather respectively). (c) Total tokens across all workflows: Cline 1021.8k, Custom 53.8k, Roo 1468.6k. (d) Repair iterations across all workflows: Cline 1.85, Custom 0.00, Roo 2.04. NOTE, as a reading of the chart rather than a claim about the work: §4.3.1 of the text gives the aggregate repair figures as \"2.08 for Roo and 1.89 for Cline\", where panel (d) is labelled 2.04 and 1.85."
+      },
+      "img-p011-1": {
+        "role": "figure",
+        "saw": "a 2x2 panel of per-workflow grouped bar charts on agent-run metrics, labelled (a) to (d)",
+        "draft": "Figure 3, per-workflow agent-run evaluation, in four panels, each with ten workflow groups of three bars — Cline (green), Custom (orange) and Roo (blue). (a) Tool-Use Exactness, % of runs with zero tool errors, ↑ better. (b) Tool-call errors, mean error count, ↓ better. (c) Latency, seconds per effective step, ↓ better. (d) Process adherence, % of runs with no process deviation, ↑ better. READ OFF THE CHART, and recorded because the surrounding text does not say it: the specialist system is NOT best everywhere. In panel (a) it is lowest of the three on Cost (49.6 against Cline 76.0 and Roo 67.6) and on Tournament (46.2 against 99.4 and 94.9), and second on Weather (81.8 against Cline 90.1). In panel (b) it has the MOST errors on Cost (1.43 against 0.55 and 0.34), on Tournament (0.93 against 0.01 and 0.13) and on Weather (0.62 against 0.1 and 0.72, where it is second). In panel (d) it is lowest on Cost (57.2 against 87.1 and 76.2) and on Tournament (55.2, the other two near 90). The aggregate advantage in Figure 4 is carried disproportionately by two workflows: on Risk, panel (b) shows 0.20 errors against 13.19 and 11.94, and panel (a) 98.6% against 0.4% and 0.9%."
+      },
+      "img-p013-1": {
+        "role": "figure",
+        "saw": "a 2x2 panel of three-bar charts giving one aggregate number per system per metric",
+        "draft": "Figure 4, key metrics by approach, aggregated over all ten workflows. Three bars per panel — Cline (green), Custom (orange), Roo (blue). (a) Tool-Use Exactness, ↑ better: Cline 48.6, Custom 57.7, Roo 38.1. (b) Tool-call errors, mean count, ↓ better: Cline 3.19, Custom 1.27, Roo 3.22. (c) Latency, seconds per effective step, ↓ better: Cline 6.59, Custom 2.49, Roo 9.08. (d) Process adherence, ↑ better: Cline 51.6, Custom 54.7, Roo 42.4. The specialist system leads on all four. Figure 3 gives the per-workflow breakdown behind these, and it is not uniform."
+      },
+      "img-p015-1": {
+        "role": "figure",
+        "saw": "a very tall single-column flowchart of an order-fulfilment process, in the pale purple of the appendix diagrams",
+        "draft": "Figure 6, the Cart workflow — the largest in the benchmark at 52 nodes and 60 edges. From \"Start: Order recieved\" (spelt so in the diagram) it validates cart and pricing, checks the customer account, runs fraud screening and requests payment authorisation. A \"Payment authorized\" gateway branches to auth-failure handling, customer notification, order cancellation and a recorded cancellation on No. On Yes it reserves inventory and asks \"All items in stock?\"; No triggers a backorder flow, notifies the customer, offers alternatives and asks what the customer chooses, with substitution, cancellation and reorder paths. The fulfilment spine then runs pick list, picker assignment, packing and weight confirmation, carrier rate-shopping, carrier selection, shipping label, handover confirmation, shipment notification, inventory decrement, payment capture, bookkeeping entry, loyalty points, invoice PDF and the tracking email. Delivery monitoring follows, with a \"Delivered?\" gateway and a lost/delayed branch carrying carrier tickets, SLA checks, reroute attempts, escalation, a loss claim and a refund-or-reorder decision, all converging on customer feedback and \"End: End\"."
+      },
+      "img-p016-1": {
+        "role": "figure",
+        "saw": "a flowchart of four stacked diamond decisions fanning into six terminal return boxes",
+        "draft": "Figure 7, the Cost workflow. It starts by getting all rules and selecting the highest-ranked rules, then descends through four decisions: \"Check for Fraud Flag\", \"Check if Payment Declined\", \"Check if Recoverable\" and \"Check if Refundable\". Six outcomes are returned rather than computed onward — \"Return No Action\", \"Return Operational Cost\" (twice, from different paths), \"Return Operational Cost + Payment Amount\", and \"Return Operational cost - Customer Experience Penalty\" on the No branch of the fraud check. All six converge on End. Every branch is a rule lookup returning a figure, which is what makes the workflow deterministic in the paper's sense."
+      },
+      "img-p017-1": {
+        "role": "figure",
+        "saw": "a flowchart whose first gateway has three outgoing branches, two of them sharing a label",
+        "draft": "Figure 8, the Deal workflow. From Start it receives a deal-type preference as input and reaches a \"Deal Type Preference?\" gateway with three outgoing edges: \"Online\" to Fetch Online Deals, \"In-Store\" to Fetch In-Store Deals, and a third also labelled \"In-Store\" to Fetch Both Types of Deals — two edges carrying the same label to different tasks, which as drawn does not determine a unique path. All three converge on a \"Deals Found?\" gateway; Yes filters by user preferences, ranks by discount and relevance and presents the best deals, No informs the user there are none, and both reach End."
+      },
+      "img-p018-1": {
+        "role": "figure",
+        "saw": "a flowchart of nested eligibility checks ending in four labelling boxes, two of them duplicated",
+        "draft": "Figure 9, the Label workflow. From \"Start: start\" it gets details and checks eligibility, then \"Check if funded\". The Yes branch asks whether it was funded within the correct period, labelling \"Exclude\" on Yes and \"Disengaged\" on No. The No branch gets status, checks whether it is closed, and on Yes checks whether it was dropped — \"Disengaged\" on Yes, \"Exclude\" on No — while the closed check's own No also reaches \"Exclude\". Four terminal boxes for two distinct labels, reached by four distinct paths, all converging on End."
+      },
+      "img-p019-1": {
+        "role": "figure",
+        "saw": "a very tall flowchart with a retry loop and a per-provider pagination loop",
+        "draft": "Figure 10, the News workflow. It receives a data_source_plan and an expanded_query_set, validates the payloads, initialises a run context with run_id and timestamps, loads provider config and API credentials, selects providers, builds base query parameters (keywords, date range, regions) and applies source-specific constraints (rate limits, page size, caps). It then sends a request to provider 1 and asks \"Response success?\". On success it parses the payload, asks whether it contains articles, extracts and normalises the article fields (title, url, source, timestamp, language), filters unsupported languages and appends to a collection buffer; \"Is there a next page token?\" and \"Can request next page?\" form the pagination loop back to the request. On failure it increments error_count and records the error. \"More providers to query?\" loops through \"Select next provider\" and \"Update metrics for provider switch\" back to the top; the No branch closes open sessions, builds the unified raw_news_articles structure, attaches run metadata, persists metrics to a monitoring API, builds a run summary and emits a summary event."
+      },
+      "img-p020-1": {
+        "role": "figure",
+        "saw": "a single-column flowchart with three sequential threshold gateways and no loops",
+        "draft": "Figure 11, the Risk workflow — a risk-and-opportunity classifier. It receives trend, sentiment and metrics data, validates payloads and schema, initialises a run context, loads classifier config (thresholds, weights, labels) and domain rules, preprocesses signals by normalising scales and handling missing values, builds feature vectors per entity or trend, and computes a risk score and an opportunity score. Two threshold gateways follow — \"Risk score above risk_threshold?\" tagging risk_candidate or not_risk_candidate, then \"Opportunity score above opportunity_threshold?\" tagging opportunity_candidate or not — after which a final label is derived from {risk, opportunity, mixed, neutral}. A materiality gateway assigns LOW priority or HIGH/MEDIUM, and the run builds and persists a risk_opportunity record with scores, labels and reasons. This is the workflow on which Figure 3 shows the specialist system's largest advantage."
+      },
+      "img-p021-1": {
+        "role": "figure",
+        "saw": "a very tall flowchart with several No branches converging on one metrics-update box",
+        "draft": "Figure 12, the Social workflow. It receives a data_source_plan and an expanded_query_set, validates payloads, initialises a run context, loads social provider config and credentials, selects platforms and builds base query parameters (keywords, hashtags, accounts, date range). \"Any platforms selected?\" gates the rest. On Yes it initialises metrics (request_count, post_count, error_count), expands queries into platform-specific search terms, constructs and sends the first platform request and receives a response. Four gateways follow in sequence — \"Response success?\", \"Payload contains items?\", \"Language and region allowed?\" and \"Any items remain after filters?\" — with extraction of raw social items (posts, comments, threads) and normalisation of id, text, author, timestamp, engagement and platform between them. Accepted items append to a collection buffer. Every No branch converges on \"Update metrics and diagnostics (requests, posts, errors)\", after which the buffer is aggregated into a unified raw_social_data structure and a run summary is built and persisted."
+      },
+      "img-p022-1": {
+        "role": "figure",
+        "saw": "a flowchart that splits into two symmetric value-tier branches and rejoins at an urgency gateway",
+        "draft": "Figure 13, captioned \"Customer promotion workflow\". From \"Start: Start - Receive CIF\" it fetches and validates the customer profile; an Invalid/Inactive edge returns 'No Deals Found'. Otherwise it retrieves order history, determines total spend and gets the loyalty points balance, then \"Check Promo Eligibility (Accepts point balance and total spent)\" splits into two symmetric branches — \"Low Value Customer (Bronze/Silver)\" to a standard discount and standard recommendations, and \"High Value Customer (Platinum/Gold)\" to a premium discount and premium recommendations. Both rejoin at \"Is promotion Urgent\", which sends either a scheduled or an immediate notification before End Process. NOTE, as an observation about the paper rather than about the diagram: the ten workflows are figured in alphabetical order (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) and this is the eighth, the position of the workflow the results call \"Spam\"; the caption calls it a customer promotion workflow and the diagram shows one. Which name is intended is not established here."
+      },
+      "img-p023-1": {
+        "role": "figure",
+        "saw": "a flowchart of four sequential eligibility and availability gateways with four terminal informing boxes",
+        "draft": "Figure 14, the Tournament workflow. From \"Start: Player login\" it gathers the player profile and asks \"Is Player Eligible?\"; No goes straight to End. Yes fetches available tournaments and asks \"Matching Tournament Found?\", with No informing the player there are none. Yes checks slot availability and asks \"Slots Available?\", with No informing the player there are none. Yes submits the registration and asks \"Registration Confirmed?\" — and the two outcomes are crossed relative to the reading one would expect: the No edge reaches \"Inform Registered\" and the Yes edge reaches \"Provide Hot line number to call and register.\" All four terminal boxes converge on End. Recorded as drawn; whether the crossing is intended is not established here. This is one of the two workflows on which Figure 3 shows the specialist system performing worst of the three."
+      },
+      "img-p024-1": {
+        "role": "figure",
+        "saw": "a small flowchart of two gateways and three terminal displays — the smallest diagram in the appendix",
+        "draft": "Figure 15, the Weather workflow — the smallest in the benchmark at 9 nodes and 10 edges. From \"Start: Recieve location input\" (spelt so in the diagram) it fetches weather data and asks \"Data Retrieved Successfully?\". No informs of a connection failure. Yes parses the weather conditions and asks \"[P] Is Severe Weather Expected?\", the bracketed P marking it as a predicate in the authors' notation; Yes displays a severe-weather alert and No displays the regular forecast. All three terminal boxes converge on End."
+      }
+    }
+  }
+}

@@ -19,13 +19,14 @@ The nine-chapter sequence of the WHO/ITU Digital Implementation Investment Guide
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Programme manager | — | DIIG Table 2.1.1 names the key roles and their descriptions. The lane is the ROLE, taken on for its duration — the same actor is a business analyst in the next lane along, and on a small team frequently is. There is NO stakeholder lane, and the first draft of this diagram had one. A lane is who PERFORMS the task, not who receives its output: Chapter 9's value proposition is made BY the implementing team TO whoever pays, so the activity belongs here and the stakeholder is its audience. `kg:audit` caught it as `role-carries-activity-skill` — the stakeholder role carries no skills at all, which is the shape of a role that acts on nothing. |
-| Business analyst | — | DIIG's own description of the role, verbatim from `sections/page-031.md`: "Analyses and documents workflow of the clinical care and health programme processes and recommends digital health interventions relative to the prioritized business requirements." Chapters 3, 4 and 6 are that work. |
+| Programme manager | `programme-manager` | DIIG Table 2.1.1 names the key roles and their descriptions. The lane is the ROLE, taken on for its duration — the same actor is a business analyst in the next lane along, and on a small team frequently is. There is NO stakeholder lane, and the first draft of this diagram had one. A lane is who PERFORMS the task, not who receives its output: Chapter 9's value proposition is made BY the implementing team TO whoever pays, so the activity belongs here and the stakeholder is its audience. `kg:audit` caught it as `role-carries-activity-skill` — the stakeholder role carries no skills at all, which is the shape of a role that acts on nothing. |
+| Business analyst | `business-analyst` | DIIG's own description of the role, verbatim from `sections/page-031.md`: "Analyses and documents workflow of the clinical care and health programme processes and recommends digital health interventions relative to the prioritized business requirements." Chapters 3, 4 and 6 are that work. |
 
 ## Steps
 

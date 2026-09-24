@@ -25,6 +25,7 @@ function fixtures(): MaterializedRecord[] {
     { ...base, id: "arch", localPath: "old.bin", abs: join(dir, "old.bin"), record: { state: "materialized", purpose: "archival" } },
     { ...base, id: "exp", localPath: "old.bin", abs: join(dir, "old.bin"), record: { state: "materialized", purpose: "working", expiresAt: "2000-01-01T00:00:00Z" } },
     { ...base, id: "fresh", localPath: "old.bin", abs: join(dir, "old.bin"), record: { state: "materialized", purpose: "working", expiresAt: "2999-01-01T00:00:00Z" } },
+    { ...base, id: "olean", localPath: "old.bin", abs: join(dir, "old.bin"), record: { state: "materialized", purpose: "compiled", inputs: { toolchain: "lean4:v4.24.0", sourceRevision: "abc" } } },
   ];
 }
 
@@ -50,8 +51,8 @@ describe("size: recorded, measured, directory, absent", () => {
   });
   test("the total counts known sizes only, and says how many it could not", () => {
     const s = summarise(rows);
-    expect(s.knownBytes).toBe(999 + 5 + 10 + 10 + 10);
-    expect(s.bySizeBasis).toEqual({ recorded: 1, measured: 4, directory: 1, absent: 1 });
+    expect(s.knownBytes).toBe(999 + 5 + 10 + 10 + 10 + 10);
+    expect(s.bySizeBasis).toEqual({ recorded: 1, measured: 5, directory: 1, absent: 1 });
   });
 });
 
@@ -77,6 +78,9 @@ describe("eviction reports, and never names what must stay", () => {
   });
   test("a fresh copy is never a candidate", () => {
     expect(ids).not.toContain("fresh");
+  });
+  test("a compiled copy is not a no-expiry candidate: its lifetime is its inputs (bean gpdo)", () => {
+    expect(ids).not.toContain("olean");
   });
   test("every candidate carries its reason", () => {
     expect(evict.every((e) => e.reason.length > 0)).toBe(true);

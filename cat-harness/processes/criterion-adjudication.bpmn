@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_CriterionAdjudication"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -49,7 +50,7 @@ The three outcomes are legitimate in the same way, and it is not which one is ch
 
 ADVISORY at the process level, for the reason the adjudication itself is: a judgement cannot be gated, since the whole reason it was entered is that the mechanism ran out of facts. What is NOT relaxable is A_RecordEntry. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_CriterionAdjudication">
@@ -57,7 +58,7 @@ ADVISORY at the process level, for the reason the adjudication itself is: a judg
         <bpmn:documentation>One lane, because every step here is the adjudicator's: asking the question, choosing among the answers, and writing the entry. The feedback provider's lane is in `adjudication.bpmn`, where stating a finding happens — a provider has no entitlement to settle what it reported, and drawing it here would suggest otherwise.
 
 The role admits person and agent. `refresh-materialized` already gives the reason in its own words — "a human or agentic decision, never a merge rule" — and the steps are plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="adjudicator"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="adjudicator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_CriterionDisagreement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Adjudicate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Outcome</bpmn:flowNodeRef>
@@ -74,13 +75,13 @@ The role admits person and agent. `refresh-materialized` already gives the reaso
     </bpmn:startEvent>
 
     <bpmn:callActivity id="Call_Adjudicate" name="Adjudicate the criterion disagreement" calledElement="Process_Adjudication">
-      <bpmn:documentation>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `folio:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two.
+      <bpmn:documentation>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two.
 
 `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="stands scope dispensation"/>
-        <folio:fulfilment kinds="person agent" reason="the same restriction the called process states on A_Adjudicate, restated here because this is where the enum is declared and a step naming permitted answers without saying who may choose among them has restricted nobody. It cannot drift wrong: the engine refuses `system` or `external` on any step carrying `folio:adjudication`, so the only failure available is absence, and absence is refused too."/>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:adjudication codes="stands scope dispensation" list="adjudication-criterion"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="the same restriction the called process states on A_Adjudicate, restated here because this is where the enum is declared and a step naming permitted answers without saying who may choose among them has restricted nobody. It cannot drift wrong: the engine refuses `system` or `external` on any step carrying `cat-harness.processes:adjudication`, so the only failure available is absence, and absence is refused too."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_C1</bpmn:incoming>
       <bpmn:outgoing>F_C2</bpmn:outgoing>
@@ -88,7 +89,7 @@ The role admits person and agent. `refresh-materialized` already gives the reaso
 
     <bpmn:exclusiveGateway id="GW_Outcome" name="Which of the three?">
       <bpmn:extensionElements>
-        <folio:judgement reason="This is THE judgement — the branch the whole process exists to take, and the one thing nothing here can compute. A table deciding it would decide the case that, by the entry condition, no mechanism could: the checker and the reviewer both read the artefact and reached different answers, so a rule keying on either would be picking a side by construction rather than by reason."/>
+        <cat-harness.processes:judgement reason="This is THE judgement — the branch the whole process exists to take, and the one thing nothing here can compute. A table deciding it would decide the case that, by the entry condition, no mechanism could: the checker and the reviewer both read the artefact and reached different answers, so a rule keying on either would be picking a side by construction rather than by reason."/>
       </bpmn:extensionElements>
       <bpmn:documentation>The three are legitimate in the same way: what makes an outcome sound is not which one it is but that its reason was recorded. All three converge on A_RecordEntry for exactly that reason.</bpmn:documentation>
       <bpmn:incoming>F_C2</bpmn:incoming>
@@ -99,7 +100,7 @@ The role admits person and agent. `refresh-materialized` already gives the reaso
 
     <bpmn:task id="A_ScopeCriterion" name="Scope the criterion so it stops applying here">
       <bpmn:documentation>One edit to the criterion rather than ten overrules on the blocks it should never have covered. This branch is the one an adjudicator under time pressure converts into a dispensation, and the conversion is a defect: a dispensation lapses when the source moves, so a mis-scoped criterion granted its way past comes back every time anybody touches the block.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="adjudication"/></bpmn:extensionElements>
       <bpmn:incoming>F_Scope</bpmn:incoming>
       <bpmn:outgoing>F_C5</bpmn:outgoing>
     </bpmn:task>
@@ -109,8 +110,8 @@ The role admits person and agent. `refresh-materialized` already gives the reaso
 
 A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:policy relaxable="false"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Exception</bpmn:incoming>
       <bpmn:outgoing>F_C6</bpmn:outgoing>
@@ -121,8 +122,8 @@ A dispensation with no `notes` is not a dispensation. It is an override somebody
 
 Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:policy relaxable="false"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Stands</bpmn:incoming>
       <bpmn:incoming>F_C5</bpmn:incoming>
@@ -138,13 +139,13 @@ Do not resolve the disagreement away: both entries stay, the adjudication on top
     <bpmn:sequenceFlow id="F_C1" sourceRef="Start_CriterionDisagreement" targetRef="Call_Adjudicate"/>
     <bpmn:sequenceFlow id="F_C2" sourceRef="Call_Adjudicate" targetRef="GW_Outcome"/>
     <bpmn:sequenceFlow id="F_Stands" name="the finding stands" sourceRef="GW_Outcome" targetRef="A_RecordEntry">
-      <bpmn:extensionElements><folio:adjudication code="stands"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="stands"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="F_Scope" name="the criterion does not apply here" sourceRef="GW_Outcome" targetRef="A_ScopeCriterion">
-      <bpmn:extensionElements><folio:adjudication code="scope"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="scope"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="F_Exception" name="it applies; this is an exception" sourceRef="GW_Outcome" targetRef="A_Dispensation">
-      <bpmn:extensionElements><folio:adjudication code="dispensation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="dispensation"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="F_C5" sourceRef="A_ScopeCriterion" targetRef="A_RecordEntry"/>
     <bpmn:sequenceFlow id="F_C6" sourceRef="A_Dispensation" targetRef="A_RecordEntry"/>

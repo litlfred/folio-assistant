@@ -19,6 +19,7 @@ folio-assistant — KG to public portal. Six stages: select, serialize, package,
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html)
 
 ## Lanes — who acts

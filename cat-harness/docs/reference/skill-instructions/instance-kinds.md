@@ -85,7 +85,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap`, `bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
@@ -219,7 +219,7 @@ currently tells a new owner which.
 
 ### `bootstrap/README.md` is the first one
 
-It is the page an Initiator reads before it knows anything — *"you have been
+It is the page a Bootstrapping Agent reads before it knows anything — *"you have been
 pointed at a repository, you know nothing about it"* — and it is written for
 **this** repository. Measured 2026-09-21: it resolves **13 links into
 `../cat-harness/`**, across **6 distinct files**:

@@ -19,16 +19,17 @@ What an agent writes down about its own run, and what a person can do with it af
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`activity-log`](../reference/skill-instructions/activity-log.html)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent (this session) | — | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
-| Activity log | — | — |
-| Log operator (human) | — | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
-| Scheduled log sweep | — | — |
+| Agent (this session) | `authoring-agent` | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
+| Activity log | `log` | — |
+| Log operator (human) | `user` | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
+| Scheduled log sweep | `build-pipeline` | — |
 
 ## Steps
 
@@ -40,7 +41,7 @@ Every one of the 8 step(s) is documented.
 | **Do the work**<br>`A_DoWork` | Agent (this session) | — | The task itself. This diagram says nothing about how it is done; it only brackets it, so that a reader of the log can tell where one run of work began and ended. |
 | **Log a message or an error**<br>`A_LogMessage` | Agent (this session) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Write a message or error entry whenever a later reader would need it. A command run goes in `execution` (command, exit code, where output went) — never the output itself, and never a secret, token or credential: capture on puts entries in git. |
 | **Log task-end**<br>`A_LogEnd` | Agent (this session) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Write a task-end entry, with the outcome in the detail. The step is the unit: an entry per step, not one when the whole process finishes, or every intermediate entry is lost. |
-| **Persist the log to the data store**<br>`A_PersistLog` | Agent (this session) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Capture is explicitly on — by <folio:log capture="on"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything. |
+| **Persist the log to the data store**<br>`A_PersistLog` | Agent (this session) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Capture is explicitly on — by <cat-harness.processes:log capture="on"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything. |
 | **Report the capture state**<br>`A_ReportCaptureState` | Agent (this session) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief. |
 | **Discard one entry by id**<br>`A_EmptyOne` | Log operator (human) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Remove one entry by its stable id, with emptyLog({ id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory. |
 | **Discard all entries, or a whole session**<br>`A_EmptyAll` | Log operator (human) | [`activity-log`](../reference/skill-instructions/activity-log.html) | Remove every entry, one session's, or those before a date — emptyLog with { all }, { session } or { before }; there is no default selector. A file that will not parse is kept, and the result must say what was refused and why, not only what was removed. |

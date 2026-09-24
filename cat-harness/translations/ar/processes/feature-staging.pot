@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feature-staging\n"
-"POT-Creation-Date: 2026-09-23T08:48:43.937Z\n"
+"POT-Creation-Date: 2026-09-24T17:33:06.953Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,137 +14,137 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/feature-staging.bpmn:62
+#: processes/feature-staging.bpmn:59
 #. Diagram element documentation
 msgid "`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one&#x27;s concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled."
 msgstr ""
 
-#: processes/feature-staging.bpmn:69
+#: processes/feature-staging.bpmn:66
 #. Diagram label
 msgid "Append `rendered` to the render log"
 msgstr ""
 
-#: processes/feature-staging.bpmn:119
+#: processes/feature-staging.bpmn:113
 #. Diagram label
 msgid "Append `retained`, with why it stays"
 msgstr ""
 
-#: processes/feature-staging.bpmn:53
+#: processes/feature-staging.bpmn:50
 #. Diagram label
 msgid "Build the docs site Jekyll · TypeDoc · KG export"
 msgstr ""
 
-#: processes/feature-staging.bpmn:54
+#: processes/feature-staging.bpmn:51
 #. Diagram element documentation
 msgid "Build the preview from the PR's head: regenerate the generated docs, trim what this preview does not need, render the BPMN diagrams, then Jekyll, TypeDoc and the knowledge-graph export, with the staging banner and SEO identity claims stripped."
 msgstr ""
 
-#: processes/feature-staging.bpmn:145
+#: processes/feature-staging.bpmn:136
 #. Diagram label
 msgid "Check the slug&#x27;s SHAPE and that the confirmation repeats it"
 msgstr ""
 
-#: processes/feature-staging.bpmn:18
+#: processes/feature-staging.bpmn:16
 #. Diagram label
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/feature-staging.bpmn:197
+#: processes/feature-staging.bpmn:188
 #. Diagram label
 msgid "closed unmerged, no label"
 msgstr ""
 
-#: processes/feature-staging.bpmn:77
+#: processes/feature-staging.bpmn:74
 #. Diagram label
 msgid "Comment the preview URL on the PR"
 msgstr ""
 
-#: processes/feature-staging.bpmn:94
+#: processes/feature-staging.bpmn:88
 #. Diagram label
 msgid "Derive the slug from the head ref"
 msgstr ""
 
-#: processes/feature-staging.bpmn:95
+#: processes/feature-staging.bpmn:89
 #. Diagram element documentation
 msgid "Derive the slug from the PR's head ref: every character outside [a-zA-Z0-9._-] becomes '-', runs of '-' collapse, and leading or trailing '-' is trimmed. It must be one safe path segment, checked by value."
 msgstr ""
 
-#: processes/feature-staging.bpmn:138
+#: processes/feature-staging.bpmn:132
 #. Diagram label
 msgid "Dispatched with cleanup_slug"
 msgstr ""
 
-#: processes/feature-staging.bpmn:146
+#: processes/feature-staging.bpmn:137
 #. Diagram element documentation
 msgid "Guarded three ways because a dispatch input is a DELETION TRIGGER. `workflow_dispatch` is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with `.` and `..` refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview."
 msgstr ""
 
-#: processes/feature-staging.bpmn:42
+#: processes/feature-staging.bpmn:41
 #. Diagram label
 msgid "Human actor"
 msgstr ""
 
-#: processes/feature-staging.bpmn:70
+#: processes/feature-staging.bpmn:67
 #. Diagram element documentation
 msgid "Its OWN commit, not part of the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/<slug>/_render-log/` — inside the directory a cleanup removes, which is the one place a record of the removal must not be. `continue-on-error`: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy."
 msgstr ""
 
-#: processes/feature-staging.bpmn:205
+#: processes/feature-staging.bpmn:196
 #. Diagram label
 msgid "live, OR could not tell"
 msgstr ""
 
-#: processes/feature-staging.bpmn:195
+#: processes/feature-staging.bpmn:186
 #. Diagram label
 msgid "merged, or labelled"
 msgstr ""
 
-#: processes/feature-staging.bpmn:203
+#: processes/feature-staging.bpmn:194
 #. Diagram label
 msgid "no signal — safe to remove"
 msgstr ""
 
-#: processes/feature-staging.bpmn:109
+#: processes/feature-staging.bpmn:103
 #. Diagram element documentation
 msgid "ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean `plj1` left the branch in. `render-log.ts` refuses a `removed` entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why."
 msgstr ""
 
-#: processes/feature-staging.bpmn:127
+#: processes/feature-staging.bpmn:121
 #. Diagram label
 msgid "Post the retention notice on the PR"
 msgstr ""
 
-#: processes/feature-staging.bpmn:78
+#: processes/feature-staging.bpmn:75
 #. Diagram element documentation
 msgid "Post, or update in place, one comment on the PR giving the preview URL (STAGING/<slug>/) and the commit it was built from. Pull-request events only."
 msgstr ""
 
-#: processes/feature-staging.bpmn:175
+#: processes/feature-staging.bpmn:166
 #. Diagram label
 msgid "Preview gone"
 msgstr ""
 
-#: processes/feature-staging.bpmn:116
+#: processes/feature-staging.bpmn:110
 #. Diagram label
 msgid "Preview gone, with its reason"
 msgstr ""
 
-#: processes/feature-staging.bpmn:135
+#: processes/feature-staging.bpmn:129
 #. Diagram label
 msgid "Preview kept"
 msgstr ""
 
-#: processes/feature-staging.bpmn:85
+#: processes/feature-staging.bpmn:82
 #. Diagram label
 msgid "Preview live"
 msgstr ""
 
-#: processes/feature-staging.bpmn:61
+#: processes/feature-staging.bpmn:58
 #. Diagram label
 msgid "Publish to STAGING/&lt;slug&gt;"
 msgstr ""
 
-#: processes/feature-staging.bpmn:88
+#: processes/feature-staging.bpmn:85
 #. Diagram label
 msgid "Pull request closed"
 msgstr ""
@@ -154,92 +154,92 @@ msgstr ""
 msgid "Pull request opened, synchronised or reopened"
 msgstr ""
 
-#: processes/feature-staging.bpmn:153
+#: processes/feature-staging.bpmn:144
 #. Diagram label
 msgid "Re-evaluate liveness AT REMOVAL TIME"
 msgstr ""
 
-#: processes/feature-staging.bpmn:154
+#: processes/feature-staging.bpmn:145
 #. Diagram element documentation
 msgid "Re-evaluated AT REMOVAL TIME, through the same `previewLiveness` the health sweep uses rather than a second implementation of it. The sweep runs daily and proposes; this acts. Between them a branch can come back to life — bean `w2g5` documents exactly that, a session reusing one branch across five successive pull requests."
 msgstr ""
 
-#: processes/feature-staging.bpmn:178
+#: processes/feature-staging.bpmn:169
 #. Diagram label
 msgid "REFUSED — nothing removed"
 msgstr ""
 
-#: processes/feature-staging.bpmn:102
+#: processes/feature-staging.bpmn:96
 #. Diagram label
 msgid "Removal confirmed?"
 msgstr ""
 
-#: processes/feature-staging.bpmn:128
+#: processes/feature-staging.bpmn:122
 #. Diagram element documentation
 msgid "Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm."
 msgstr ""
 
-#: processes/feature-staging.bpmn:167
+#: processes/feature-staging.bpmn:158
 #. Diagram label
 msgid "Remove it AND append `removed` — one commit"
 msgstr ""
 
-#: processes/feature-staging.bpmn:108
+#: processes/feature-staging.bpmn:102
 #. Diagram label
 msgid "Remove the preview AND append `removed` — one commit"
 msgstr ""
 
-#: processes/feature-staging.bpmn:181
+#: processes/feature-staging.bpmn:172
 #. Diagram label
 msgid "Repeat the slug, exactly, to confirm"
 msgstr ""
 
-#: processes/feature-staging.bpmn:19
+#: processes/feature-staging.bpmn:17
 #. Diagram element documentation
 msgid "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why."
 msgstr ""
 
-#: processes/feature-staging.bpmn:168
+#: processes/feature-staging.bpmn:159
 #. Diagram element documentation
 msgid "Say what is going — size and file count — then remove STAGING/<slug>/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard."
 msgstr ""
 
-#: processes/feature-staging.bpmn:10
+#: processes/feature-staging.bpmn:11
 #. Diagram label
 msgid "Staging a feature branch preview, and taking it down"
 msgstr ""
 
-#: processes/feature-staging.bpmn:161
+#: processes/feature-staging.bpmn:152
 #. Diagram label
 msgid "Still in use?"
 msgstr ""
 
-#: processes/feature-staging.bpmn:120
+#: processes/feature-staging.bpmn:114
 #. Diagram element documentation
 msgid "The event that makes the log worth reading. A removal was CONSIDERED and refused; without an entry that leaves no trace on the branch at all, and the next person asking *\"why is this preview still up\"* has only a comment on a pull request that may itself be closed."
 msgstr ""
 
-#: processes/feature-staging.bpmn:13
+#: processes/feature-staging.bpmn:14
 #. Diagram element documentation
 msgid "THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, owner: \"make sure all workflows documented as bpmn\". This is the first `.github/workflows/*.yml` documented here, and it was chosen because its shape was the least visible: three jobs, eight `if:` branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment. Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean `w2g5`: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing. TWO GATEWAYS, and both are three-state rather than yes/no. `Removal confirmed?` reads a merge as confirmation in its own right (bean `1feu`) while still requiring a label for a close without a merge. `Still in use?` refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission. EVERY PATH THAT CHANGES `STAGING/` WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean `plj1` left the publish branch in for months. The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes `build-pipeline` the right lane rather than a convenient one."
 msgstr ""
 
-#: processes/feature-staging.bpmn:182
+#: processes/feature-staging.bpmn:173
 #. Diagram element documentation
 msgid "The one step in this process that is a person&#x27;s. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview."
 msgstr ""
 
-#: processes/feature-staging.bpmn:43
+#: processes/feature-staging.bpmn:42
 #. Diagram element documentation
 msgid "The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted."
 msgstr ""
 
-#: processes/feature-staging.bpmn:103
+#: processes/feature-staging.bpmn:97
 #. Diagram element documentation
 msgid "THREE inputs, two outcomes, and bean `1feu` set the split: a MERGED pull request needs no label, because the merge IS the confirmation — a person decided the content belongs on `main`, which says more about the preview than a label does. A pull request closed WITHOUT merging still needs `staging:cleanup`, because there the preview is the only rendering of that work: not redundant, the last copy. The branch taken is emitted as `reason=merged | labelled | closed-unmerged-and-unlabelled` and written into the log entry, so an audit of a removal can tell which rule did it."
 msgstr ""
 
-#: processes/feature-staging.bpmn:162
+#: processes/feature-staging.bpmn:153
 #. Diagram element documentation
 msgid "THREE states, and the third is why this gateway exists. Still in use → refuse, exit 1. COULD NOT TELL → refuse, exit 2. Only a determined absence of every liveness signal removes anything. Refusing to delete is the only recoverable direction, and a preflight that has gone blind must not read as permission."
 msgstr ""

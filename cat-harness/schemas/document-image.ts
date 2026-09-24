@@ -261,6 +261,65 @@ export type ImageBasis = z.infer<typeof ImageBasisSchema>;
 export type GeometryBasis = z.infer<typeof GeometryBasisSchema>;
 export type CaptureBasis = z.infer<typeof CaptureBasisSchema>;
 
+/**
+ * ONE PLACEMENT of an image on a page.
+ *
+ * ## Why this exists — bean `j820`, issue #1234
+ *
+ * `pdf-images.py` emitted one entry per PLACEMENT, so an image used many times
+ * became many images. Measured 2026-09-24 across every `images.json` in the
+ * tree: **383 placements of `arxiv-2510.21603v1` are 50 distinct images**, and
+ * page 3's 335 are 22, each placed about fifteen times. `9789241509510-eng`
+ * is 161 → 102, `9789241511766-eng` 99 → 44, `arxiv-2312.07755v1` 84 → 28.
+ *
+ * That was diagnosed first as a composite figure shattered into fragments, and
+ * that reading was WRONG — the pieces are whole clip-art icons, placed
+ * repeatedly. The correction is on `doc-researcher.md`, kept rather than
+ * deleted, because it was a description asserted from file sizes instead of
+ * from looking.
+ *
+ * ## The narrative splits in two, and the corpus said so before this did
+ *
+ * Collapsing duplicates looked destructive until the narratives were read. Of
+ * 49 duplicate groups, 5 carried differing text — and every one differs the
+ * same way. `9789240010567-eng` has seven byte-identical copies of the
+ * Principles for Digital Development logo whose descriptions open with the
+ * SAME clause verbatim and then each name the principle on their own page:
+ *
+ * > *"…used as a recurring header graphic for principle 8, 'Build for
+ * > sustainability'."* / *"…for the principle 'Reuse and improve'."*
+ *
+ * So a description does two jobs: **what the image IS**, which is one fact and
+ * belongs on the image, and **what THIS copy serves**, which is per placement
+ * and is genuinely lost if the copies are merged. Hence {@link note}.
+ *
+ * It is also a QUALITY CHECK nothing else performs. `9789240081949-eng` has
+ * five byte-identical QR codes described as if each encoded a different
+ * category — one image, five incompatible claims. Byte-identical images with
+ * materially different descriptions is a findable error class, and dedup is
+ * what finds it.
+ *
+ * @graphNode schema
+ */
+export const PlacementSchema = z.object({
+  /** The page it sits on, 1-based as a reader counts. */
+  page: z.number().int().min(1),
+  /** Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use. */
+  coverage: z.number().min(0),
+  /** How many images share this page. */
+  imagesOnPage: z.number().int().min(1),
+  /**
+   * What this copy serves HERE — never what the image is, which is the
+   * narrative's job. "a recurring header for principle 8" belongs here;
+   * "an irregular grid of coloured squares" belongs on the image.
+   *
+   * Optional, and absent is the normal case: most images are placed once, and
+   * a second placement of a logo usually serves nothing worth saying.
+   */
+  note: z.string().min(1).optional(),
+});
+export type Placement = z.infer<typeof PlacementSchema>;
+
 export const DocumentImageSchema = z
   .object({
     /** Stable within the document: `img-p007-1`. */
@@ -272,7 +331,38 @@ export const DocumentImageSchema = z
     basis: ImageBasisSchema.optional(),
     /** Present only where a description is worth having — see `role`. */
     narrative: NarrativeSchema.optional(),
+    /**
+     * Every place this image appears, the first one included.
+     *
+     * Absent on a singly-placed image, so the overwhelming majority of entries
+     * are unchanged and every existing reader of `basis.page` keeps working —
+     * see {@link PlacementSchema} for why it exists at all.
+     */
+    placements: z.array(PlacementSchema).min(1).optional(),
   })
+  // `basis` DESCRIBES THE FIRST PLACEMENT, and the two must not drift. Without
+  // this, a migration could collapse duplicates while leaving `basis` pointing
+  // at a page no longer listed, and every consumer reading `basis.page` would
+  // silently disagree with every consumer reading `placements`.
+  .refine(
+    (i) =>
+      i.placements === undefined ||
+      // LENGTH FIRST. `.min(1)` and this refinement run in the same pass, so
+      // an empty array reaches here and `placements[0]!.page` throws before
+      // `.min(1)` can reject it -- a schema that crashes instead of returning
+      // a refusal. Caught by the test asserting an empty array is refused,
+      // which is the one assertion in that file that looked redundant.
+      i.placements.length === 0 ||
+      i.basis === undefined ||
+      !("page" in i.basis) ||
+      i.placements[0]!.page === i.basis.page,
+    {
+      message:
+        "`placements[0]` must be the placement `basis` describes — two " +
+        "spellings of where an image first appears is one fact in two places",
+      path: ["placements", 0, "page"],
+    },
+  )
   // A role that was DECIDED must show its working; `undetermined` has none to
   // show. Without this a caller cannot tell a measured verdict from a default.
   .refine((i) => (i.role === "undetermined") === (i.basis === undefined), {

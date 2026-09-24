@@ -421,7 +421,7 @@ export function declaredGraphs(
  *   root.
  */
 /** Where a kind opens, or why it does not. Never both — see the loop below. */
-type GraphFallback = { href?: string; note?: string };
+export type GraphFallback = { href?: string; note?: string };
 
 /**
  * WHAT THE PUBLISHED SITE KNOWS about each of an instance's declared kinds —
@@ -482,7 +482,7 @@ type GraphFallback = { href?: string; note?: string };
  * kind gains a link the moment it gains a viewer — is the rule being kept
  * here, against a witness that can actually see one.
  */
-function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
+export function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
   const out = new Map<string, GraphFallback>();
   const prefix = publishedDocsPrefix(REPO, built);
   if (prefix === undefined) return out;
@@ -513,7 +513,7 @@ function publishedGraphs(built: string, instanceName: string, toRoot: string): M
   return out;
 }
 
-function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
+export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
   // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
   // was the first version and `check:declared-paths` refused it -- rightly,
   // and pointedly, because `publishedDocsPrefix` exists a few lines up in this
@@ -673,6 +673,163 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
     }
   }
   return { injected, skipped, unpublished };
+}
+
+/**
+ * Pages the SITE publishes that Jekyll never laid out — bean `oi1y`.
+ *
+ * ## The gap, and why it is not the mount gap
+ *
+ * {@link injectRails} walks MOUNT ROUTES. A page that is neither a mount nor a
+ * generated viewer falls between both: Jekyll copies a committed `.html`
+ * through verbatim, so it inherits no layout and therefore no sidebar, and
+ * nothing else puts one on it.
+ *
+ * A wireframe directory is the clearest case, because it holds both halves:
+ * `as-is.html` beside `intent.md`, same subject, same directory. The `.md` is
+ * laid out and wears the theme's sidebar; the `.html` wears nothing — **no
+ * navigation and no outward link at all**, not even back to the wireframe it
+ * belongs to. Measured on the published site: 23 wireframe pages and 10 under
+ * `bootstrap/`.
+ *
+ * ## Why a pass and not 33 edits
+ *
+ * That is `edx7`'s argument, one directory over: hand-editing the committed
+ * files fixes today's 33 and leaves the 34th wireframe to forget. These are
+ * hand-authored — `check-wireframes.ts` validates them and writes nothing — so
+ * `edx7`'s `emit` fixture cannot reach them either. What is left is the
+ * mechanism this file already implements for mounts: inject after the build.
+ *
+ * ## The objection that a drawing should not wear real chrome
+ *
+ * Six of the 23 DRAW a sidebar as part of the mockup, which puts a real rail
+ * beside a drawn one — the shape of the IRIS-replica case, where folio
+ * chrome on a replica is the opposite of what a replica is for.
+ *
+ * It does not apply, and the repository settled it before this pass existed:
+ * `navbar/intent.md` also depicts and discusses the navbar, **and wears the
+ * theme sidebar**, and nobody has called that wrong. A replica impersonates
+ * somebody else's site; a wireframe is this site documenting itself, and the
+ * drawing is content inside the page rather than a claim about what the page
+ * is.
+ *
+ * ## Already-navigated pages are LEFT ALONE, and both navigations count
+ *
+ * A page carrying the theme's `<nav id="site-nav">` is not missing anything,
+ * and neither is one already carrying `<nav class="fa-nav">`. Conflating those
+ * two is what made the measurement behind this function wrong four times
+ * running: `docs-ui.css` styles the theme's sidebar with `fa-nav-*` class
+ * names, so a substring test for `fa-nav` reports a themed page as railed —
+ * and reports a page that merely MENTIONS `.fa-nav-toggle` in prose as railed
+ * too, which is what the navbar wireframe does.
+ */
+const NAVIGATED = /<nav class="fa-nav"|id="site-nav"/;
+
+/**
+ * Where this pass does NOT go — **empty, and that is the answer rather than an
+ * oversight**.
+ *
+ * `api/` held the only entry. TypeDoc's 1816 pages already carry a toolbar, a
+ * module list and a search dialog, so a second navigation there was a LAYOUT
+ * question rather than a missing-navigation defect, and it was kept out of the
+ * first pass so the question could be answered where a reviewer sees it.
+ *
+ * **It was answered by rendering, not by argument.** A real published TypeDoc
+ * page was railed locally and both versions opened in a browser at 1280px:
+ *
+ * | | harness rail | TypeDoc toolbar | horizontal scroll |
+ * |---|---|---|---|
+ * | before | — | x=0, w=1280 | none |
+ * | after | x=0, **w=56** | x=56, w=1224 | none |
+ *
+ * The rail renders as its 56px COLLAPSED STRIP and the toolbar reflows beside
+ * it; `scrollWidth` equals `innerWidth` in both, so nothing is pushed off the
+ * page. TypeDoc's module list keeps its own column to the right of the strip.
+ * Two navigations, neither obscuring the other.
+ *
+ * The constant stays rather than being deleted, because the NEXT family that
+ * needs excluding should find a documented place to say so and a test that
+ * makes the exclusion visible — which is what an empty array with this comment
+ * provides and a removed one does not.
+ */
+const NOT_THIS_PASS: readonly string[] = [];
+
+export function railStandalonePages(
+  siteAbs: string,
+  built: string,
+  instanceName: string,
+  mountRoutes: readonly string[],
+): { injected: number; alreadyNavigated: number; skipped: string[] } {
+  const skipped: string[] = [];
+  let injected = 0;
+  let alreadyNavigated = 0;
+
+  const owned = (rel: string): boolean =>
+    mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    NOT_THIS_PASS.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    rel === "STAGING" ||
+    rel.startsWith("STAGING/");
+
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith(".")) continue;
+      const abs = join(dir, e.name);
+      const rel = abs.slice(siteAbs.length + 1);
+      if (e.isDirectory()) {
+        if (!owned(rel)) walk(abs);
+        continue;
+      }
+      if (!e.name.endsWith(".html") || owned(rel)) continue;
+
+      const before = readFileSync(abs, "utf-8");
+      if (NAVIGATED.test(before)) {
+        alreadyNavigated++;
+        continue;
+      }
+      // `..` per directory the page sits under; the filename is not one.
+      const depth = rel.split("/").length - 1;
+      const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
+      const harnesses = instantiatedHarnesses(built, toRoot);
+      const after = injectRail(before, {
+        instance: instanceName,
+        toRoot,
+        links,
+        ...(harnesses ? { harnesses } : {}),
+      });
+      if (after === undefined) {
+        skipped.push(rel);
+        continue;
+      }
+      writeFileSync(abs, after);
+      injected++;
+    }
+  };
+  if (existsSync(siteAbs)) walk(siteAbs);
+  return { injected, alreadyNavigated, skipped };
+}
+
+/**
+ * The routes the MOUNT pass owns, computed by the pipeline that owns them.
+ *
+ * `rail-standalone-pages.ts` must leave these alone, because {@link injectRails}
+ * has already railed them with a PER-INSTANCE model; a second rail there would
+ * carry the ROOT instance's graphs instead of the mounted instance's.
+ *
+ * It is derived rather than guessed, and the first version guessed. It took a
+ * directory in the site to be a mount when a same-named `<name>/<name>.json`
+ * existed in the repository — which is true of `bootstrap`, an instance that
+ * declares no renderable docs and is therefore **never mounted**. The guess
+ * excluded exactly the ten pages the pass was extended to reach.
+ *
+ * `mountable()` requires a rendered `index.html`, `withRoutes` assigns the
+ * route and `resolve_` refuses a collision. Asking them is one answer; a
+ * predicate over filenames is a second one, free to disagree.
+ */
+export function mountRoutes(built: string): string[] {
+  const found = mountable().filter((m) => !(m.name === built && m.kind === "docs"));
+  const { candidates } = withRoutes(found);
+  return resolve_(candidates).mounts.map((m) => m.route);
 }
 
 function mountable(): Mountable[] {
@@ -859,6 +1016,14 @@ function main(): number {
     for (const f of railed.skipped.slice(0, 5)) console.log(`      ${f}`);
     if (railed.skipped.length > 5) console.log(`      … and ${railed.skipped.length - 5} more`);
   }
+  // {@link railStandalonePages} is NOT called here, and that is the fix rather
+  // than an omission. It runs from `rail-standalone-pages.ts` as a LAST step,
+  // because this script runs at line 284 of `docs-site.yml` while
+  // `publish-instance-files.ts` writes bootstrap's pages at line 426 — so a
+  // call here walks the site before ten of its subjects exist. Measured on a
+  // staged build: 23 wireframes railed, 10 bootstrap pages missed, and the
+  // fixture could not see it because a fixture is always finished.
+
   for (const m of mounts) {
     console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
   }

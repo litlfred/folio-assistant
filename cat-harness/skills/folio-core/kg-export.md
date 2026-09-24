@@ -352,11 +352,12 @@ worth a pipeline. What makes the export worth having is the relations that
 already exist on disk and that **no tool surfaces**:
 
 - **activity → skill.** Every BPMN activity may carry
-  `<folio:skill ref="…"/>`, so the export can say which process step is
+  `<bootstrap.processes:skill ref="…"/>`, so the export can say which process step is
   implemented by which skill.
 - **activity → role.** A BPMN lane is the role that performs the step.
 - **skill → package**, and a skill's **two facets**: its instruction body
-  (`<name>.md`) and its I/O contract (`schemas/skills/<name>/`).
+  (`<name>.md`) and the I/O contract it names in its front matter
+  (`input:`/`output:`, usually `schemas/skills/<name>/`).
 
 That last one is the one to understand before editing the exporter. **A name
 may have an instruction body, an I/O contract, or both — they are facets of one

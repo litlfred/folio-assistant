@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_ActivityLog"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -49,12 +50,13 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
            not be refused, and a missing entry is a gap in a record rather
            than an unauthorised write. The base content processes are the
            ones that gate. -->
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_ActivityLog">
       <bpmn:lane id="Lane_Agent" name="Agent (this session)">
         <bpmn:documentation>Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Task</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_LogStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DoWork</bpmn:flowNodeRef>
@@ -66,7 +68,9 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
         <bpmn:flowNodeRef>End_Task</bpmn:flowNodeRef>
       </bpmn:lane>
       <!-- Written to, never acts. No flowNodeRef, deliberately. -->
-      <bpmn:lane id="Lane_Log" name="Activity log"/>
+      <bpmn:lane id="Lane_Log" name="Activity log">
+        <bpmn:extensionElements><bootstrap.processes:role ref="log"/></bpmn:extensionElements>
+      </bpmn:lane>
       <!-- ONE LANE, ONE ROLE. This was a single "Operator (human or
            scheduled sweep)" lane, which conflated a person with a
            mechanical timer — and the role model binds a lane to exactly one
@@ -75,6 +79,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
            runs a fixed program and chooses nothing. -->
       <bpmn:lane id="Lane_Operator" name="Log operator (human)">
         <bpmn:documentation>The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Empty</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_EmptyScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_EmptyOne</bpmn:flowNodeRef>
@@ -82,6 +87,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
         <bpmn:flowNodeRef>End_Emptied</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Sweep" name="Scheduled log sweep">
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -94,7 +100,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
 
     <bpmn:task id="A_LogStart" name="Log task-start">
       <bpmn:documentation>Write a task-start entry before touching anything: summary, actor, and the process/task/bean/branch/session it belongs to where they exist. role, process and task are optional on purpose — do not invent a lane for work done outside a process.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
@@ -104,7 +110,7 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
       <bpmn:extensionElements>
         <!-- The work itself belongs to whatever process called this one; the
              log has nothing to say about how it is done. -->
-        <folio:no-skill reason="the task being logged is the caller's, and its skill is named there"/>
+        <cat-harness.processes:no-skill reason="the task being logged is the caller's, and its skill is named there"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_2</bpmn:incoming>
       <bpmn:incoming>F_3b</bpmn:incoming>
@@ -114,14 +120,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
 
     <bpmn:task id="A_LogMessage" name="Log a message or an error">
       <bpmn:documentation>Write a message or error entry whenever a later reader would need it. A command run goes in `execution` (command, exit code, where output went) — never the output itself, and never a secret, token or credential: capture on puts entries in git.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_3b</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_LogEnd" name="Log task-end">
       <bpmn:documentation>Write a task-end entry, with the outcome in the detail. The step is the unit: an entry per step, not one when the whole process finishes, or every intermediate entry is lost.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_4</bpmn:incoming>
       <bpmn:outgoing>F_5</bpmn:outgoing>
     </bpmn:task>
@@ -136,15 +142,15 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_PersistLog" name="Persist the log to the data store">
-      <bpmn:documentation>Capture is explicitly on — by &lt;folio:log capture="on"/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:documentation>Capture is explicitly on — by &lt;cat-harness.processes:log capture="on"/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_On</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_ReportCaptureState" name="Report the capture state">
       <bpmn:documentation>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_OffOrUnknown</bpmn:incoming>
       <bpmn:outgoing>F_7</bpmn:outgoing>
     </bpmn:task>
@@ -174,14 +180,14 @@ This is not the work plan. `beans` records WHAT is being worked on and survives 
 
     <bpmn:task id="A_EmptyOne" name="Discard one entry by id">
       <bpmn:documentation>Remove one entry by its stable id, with emptyLog({ id }). Logs are the one exception to the never-delete rule because an entry records no decision; the exception covers files that declare folio-log/v1, not the directory.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_E_One</bpmn:incoming>
       <bpmn:outgoing>F_E2</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_EmptyAll" name="Discard all entries, or a whole session">
       <bpmn:documentation>Remove every entry, one session's, or those before a date — emptyLog with { all }, { session } or { before }; there is no default selector. A file that will not parse is kept, and the result must say what was refused and why, not only what was removed.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="activity-log"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="activity-log"/></bpmn:extensionElements>
       <bpmn:incoming>F_E_All</bpmn:incoming>
       <bpmn:incoming>F_S1</bpmn:incoming>
       <bpmn:outgoing>F_E3</bpmn:outgoing>

@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_BuildL1Kg"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,15 +29,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-  that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
   work plan in beans/.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_BuildL1Kg_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Derived2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Dublin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Manifest</bpmn:flowNodeRef>
@@ -45,6 +47,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Corpus — L1 source knowledge graph">
         <bpmn:documentation>The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Link</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_KgBuilt</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -55,7 +58,7 @@
     <bpmn:serviceTask id="Task_Dublin" name="Write dublin-core.jsonld
 (the record of truth)">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.</bpmn:documentation>
@@ -66,7 +69,7 @@
 referencing it">
       <bpmn:documentation>Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:incoming>Flow_k2</bpmn:incoming>
@@ -75,7 +78,7 @@ referencing it">
     <bpmn:serviceTask id="Task_Assets" name="Record assets[] —
 local path or remote URL">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync.</bpmn:documentation>
@@ -86,7 +89,7 @@ local path or remote URL">
 to the bibliography slug">
       <bpmn:documentation>Bind the folder name to the document's bibliography slug, so library/&lt;bib-slug&gt;/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:incoming>Flow_k4</bpmn:incoming>
@@ -95,7 +98,7 @@ to the bibliography slug">
     <bpmn:task id="Task_Link" name="Link L1 nodes into
 the corpus graph">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/.</bpmn:documentation>

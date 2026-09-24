@@ -44,6 +44,35 @@ CLI/API clients can skip OAuth entirely:
 curl -H 'Authorization: Bearer <FOLIO_API_TOKEN>' https://<folio-domain>/mcp
 ```
 
+## The API decides with ODRL (issues #1180, #1207)
+
+**Half built, 2026-09-23 (#1207).** The API server no longer compares a
+viewer < collaborator < owner ladder. `src/core/rbac.ts` treats the gateway's
+tier as a declared actor (`viewer`, `collaborator`, `owner` in
+`.claude/skills/actors/`), each route names the ODRL **action** it performs,
+and `policies/http-gateway.jsonld` says which tier holds which action. It
+reproduces what the ladder allowed. An explicit `X-User-Actor` header, once the
+gateway sends one, takes precedence over the tier. What is still to build is
+steps 1 and 4 below: the gateway mapping a login to a finer-grained actor, and
+a relationship engine. The same policies govern BPMN task execution
+([`task-authorization`](task-authorization.md)).
+
+The target, per the owner's 2026-09-23 decisions:
+
+1. **The data store authenticates** (the auth-gateway here) and maps the login
+   to an **actor id**. That mapping lives in the data store only; no actor file
+   and no policy carries a login.
+2. **It authorizes with the instance's ODRL policies** in `policies/`, by
+   calling `permits()` (`schemas/odrl.ts`) with the actor, the action and the
+   scope. `unknown` is a refusal, never a pass.
+3. **An unauthenticated request is `cat-harness:anyone`**, which the policies allow to
+   `visualize` and `render`, and nothing else.
+4. **A relationship engine (OpenFGA) is later**, and the policies do not change
+   when it arrives: the data store would compile them.
+
+Until then the whitelists stay authoritative, and the table below still
+describes the running gateway.
+
 ## CRITICAL: Whitelist Protection
 
 **NEVER modify these files:**
@@ -56,14 +85,18 @@ self-updater will pick up changes within 60 seconds.
 
 ## API Permission Matrix
 
-| Endpoint | Method | Min Role | Notes |
-|----------|--------|----------|-------|
-| `/api/paper`, `/api/folio` | GET | viewer | Read-only |
-| `/api/feedback` | GET | viewer | Read feedback |
-| `/api/feedback` | POST | viewer | Create feedback (author attached) |
-| `/api/feedback` | DELETE | collaborator | Delete feedback items |
-| `/api/block/save` | POST | collaborator | Edit markdown content |
+| Endpoint | Method | ODRL action (held by) | Notes |
+|----------|--------|-----------|-------|
+| `/api/paper`, `/api/folio` | GET | — (anyone) | Read-only |
+| `/api/feedback` | GET | — (anyone) | Read feedback |
+| `/api/feedback` | POST | — (anyone) | Create feedback (author attached) |
+| `/api/feedback` | DELETE | `review-comments` (collaborator, owner) | Delete feedback items |
+| `/api/block/save`, revert, upload, glossary curation | POST | `content-authoring` (collaborator, owner) | Edit content |
+| relevance adjudication | POST | `adjudication` (collaborator, owner) | Adjudicate a verdict |
 | `/mcp` | POST | viewer (OAuth) or bearer token | MCP protocol |
+
+Who holds what is `policies/http-gateway.jsonld`; change it there, not in a
+route.
 
 ## Unified Docker Image
 

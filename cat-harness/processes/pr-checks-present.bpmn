@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_PrChecksPresent" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_PrChecksPresent">
@@ -18,12 +19,12 @@
            the clean path &#8212; which CLOSES the tracking issue &#8212;
            without the gateway that separates "every head has a run" from
            "nobody could look". -->
-      <folio:policy enforcement="strict"/>
-      <folio:implements workflow=".github/workflows/pr-checks-present.yml"/>
+      <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PrChecksPresent">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
         <bpmn:documentation>Three exit states, and the job's own colour tracks none of them the way a reader would expect: a finding is fully recorded — issue tracked, PR commented — and the job still ends GREEN, because the finding is the repository's problem to see in the tracking issue, not this lane's to fail on. Only UNKNOWN turns the job itself RED, and one unreadable PR is enough to fail the whole sweep — this lane never reports a partial clean.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
@@ -38,15 +39,12 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Hourly (:37),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <folio:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Sweep" name="Ask, per open PR, whether its&amp;#10;HEAD has a run &amp;#8212; skipping&amp;#10;heads younger than 15 min">
       <bpmn:documentation>Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
@@ -63,7 +61,7 @@
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
       <bpmn:documentation>Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
@@ -77,7 +75,7 @@
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
       <bpmn:documentation>Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -88,7 +86,7 @@
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
       <bpmn:documentation>Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
@@ -96,7 +94,7 @@
     <bpmn:task id="Task_Comment" name="Comment ONCE per&amp;#10;(PR, head sha)">
       <bpmn:documentation>Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="issue-working"/>
+        <bootstrap.processes:skill ref="issue-working"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>

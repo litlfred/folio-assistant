@@ -39,12 +39,12 @@ the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.jso
 
 | Role | who plays it |
 |---|---|
-| **Initiator** | you: the agent setting the repository up |
+| **Bootstrapping Agent** | you: the agent setting the repository up |
 | **Requestor** | the person who asked for it. Only the Requestor chooses the Harness. |
 | **Knowledge Graph Data Store** | a repository: the one being set up, and any a Harness is read from |
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
-As the Initiator you have no Harness yet, so you have no
+As the Bootstrapping Agent you have no Harness yet, so you have no
 [Tools](schemas/graph.schema.json#/$defs/Tool) (programs to call). If a step
 seems to need one, it belongs to the Harness you are about to set up, not to
 this one.
@@ -53,7 +53,7 @@ this one.
 
 ## User story
 
-> **As** the Initiator, **I want** to set up the repository I was handed as
+> **As** the Bootstrapping Agent, **I want** to set up the repository I was handed as
 > the Harness the Requestor chooses, **so that** everything added to it later
 > is built on the right Harness.
 
@@ -142,3 +142,4 @@ a step can name it: Functional Requirement 1 is FR-1.
 | [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | diagram | the steps above |
 | [`processes/discussion.bpmn`](processes/discussion.bpmn) | diagram | asking the Requestor (step 2) |
 | [`processes/log-message.bpmn`](processes/log-message.bpmn) | diagram | recording what you are doing, and any failure |
+| [`processes/ns.jsonld`](processes/ns.jsonld) | data | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` |

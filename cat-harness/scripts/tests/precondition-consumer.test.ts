@@ -5,7 +5,7 @@
  *
  * ## What this is for
  *
- * `<folio:precondition>` (bean `lv3j`) was parsed, three-valued and tested
+ * `<bootstrap.processes:precondition>` (bean `lv3j`) was parsed, three-valued and tested
  * from the day it landed, and had **zero non-test callers** until #853
  * requirement 3. `precondition.test.ts` covers the evaluator; nothing covered
  * whether anything ASKED it. That is `a58y`'s defect exactly — a declaration
@@ -55,13 +55,13 @@ function writeProcess(dir: string, requiredFile: string): void {
     join(dir, "gated.bpmn"),
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/ns"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Defs_Gated" targetNamespace="urn:test">
   <bpmn:process id="Process_Gated" name="Gated">
     <bpmn:extensionElements>
-      <folio:precondition id="needs-the-file" kind="checkable" check="file-exists" ref="${requiredFile}"
+      <bootstrap.processes:precondition id="needs-the-file" kind="checkable" check="file-exists" ref="${requiredFile}"
         text="The file this process needs is present in this checkout."/>
-      <folio:precondition id="knows-what-it-is-doing" kind="stated"
+      <bootstrap.processes:precondition id="knows-what-it-is-doing" kind="stated"
         text="The actor understands the task it is about to begin."/>
     </bpmn:extensionElements>
     <bpmn:startEvent id="Start_G" name="Start">
@@ -71,7 +71,7 @@ function writeProcess(dir: string, requiredFile: string): void {
       <bpmn:incoming>F1</bpmn:incoming>
       <bpmn:outgoing>F2</bpmn:outgoing>
       <bpmn:extensionElements>
-        <folio:no-skill reason="fixture"/>
+        <cat-harness.processes:no-skill reason="fixture"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_G" name="Done">

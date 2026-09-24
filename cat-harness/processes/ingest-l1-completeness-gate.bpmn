@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_L1Gate"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,15 +29,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-  that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
   work plan in beans/.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L1Gate_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Runs both QA checks unattended and hands off exactly where the role's persona says it must: Gateway_Drift's 'drift' branch leaves this lane the moment a passage needs a judgement about which of two readings is right, rather than guessing — but Task_Verdict, which records the outcome either way, stays in this lane, so Lane_1 adjudicates a single passage while this lane still owns the completeness verdict as a whole.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_KgBuilt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CheckDerived</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RoundTrip</bpmn:flowNodeRef>
@@ -46,6 +48,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Reviewer (SME or editor)">
         <bpmn:documentation>The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_FlagDrift</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_DriftOutcome</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -56,7 +59,7 @@
     <bpmn:serviceTask id="Task_CheckDerived" name="Is every derived
 artefact present?">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational.</bpmn:documentation>
@@ -65,7 +68,7 @@ artefact present?">
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_RoundTrip" name="Round-trip translation QA">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see.</bpmn:documentation>
@@ -82,10 +85,10 @@ terminology?">
     <bpmn:callActivity id="Task_FlagDrift" calledElement="Process_Adjudication" name="Adjudicate the
 flagged passage">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
-        <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="real spurious source-wrong"/>
-        <folio:fulfilment kinds="person agent" reason="this step's own documentation is the constraint — `a machine can detect that two readings differ; which one is right is a human call` — and Gateway_Drift's `drift` branch exists precisely to leave the unattended lane here."/>
+        <bootstrap.processes:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:adjudication codes="real spurious source-wrong" list="adjudication-translation-drift"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="this step's own documentation is the constraint — `a machine can detect that two readings differ; which one is right is a human call` — and Gateway_Drift's `drift` branch exists precisely to leave the unattended lane here."/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>A machine can detect that two readings differ. Which one is right is a human call.</bpmn:documentation>
@@ -94,7 +97,7 @@ flagged passage">
     </bpmn:callActivity>
     <bpmn:exclusiveGateway id="GW_DriftOutcome" name="Which reading was right?">
       <bpmn:extensionElements>
-        <folio:judgement reason="By the entry condition the back-translation and the source disagree, so any rule keying on either is picking a side by construction. Which reading is right depends on what the passage means, which is the fact neither reading carries."/>
+        <cat-harness.processes:judgement reason="By the entry condition the back-translation and the source disagree, so any rule keying on either is picking a side by construction. Which reading is right depends on what the passage means, which is the fact neither reading carries."/>
       </bpmn:extensionElements>
       <bpmn:documentation>All three converge on Task_Verdict, and that is deliberate rather than the codes being decoration: this lane adjudicates ONE passage while Lane_0 still owns the completeness verdict as a whole, so the outcome of a passage is a REASON recorded against that verdict, never a different next step. The same shape criterion-adjudication uses, where three outcomes converge on one write because what makes an outcome legitimate is that its reason was recorded.
 
@@ -108,8 +111,8 @@ What differs is what gets written and what it obliges. `real` is drift to fix in
 completeness verdict">
       <bpmn:documentation>Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="document-intake"/>
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_g5</bpmn:incoming>
       <bpmn:incoming>Flow_g6</bpmn:incoming>
@@ -124,13 +127,13 @@ completeness verdict">
     <bpmn:sequenceFlow id="Flow_g4" name="drift" sourceRef="Gateway_Drift" targetRef="Task_FlagDrift" />
     <bpmn:sequenceFlow id="Flow_g5" sourceRef="Task_FlagDrift" targetRef="GW_DriftOutcome" />
     <bpmn:sequenceFlow id="Flow_DriftReal" name="the drift is real" sourceRef="GW_DriftOutcome" targetRef="Task_Verdict">
-      <bpmn:extensionElements><folio:adjudication code="real"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="real"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_DriftSpurious" name="false positive" sourceRef="GW_DriftOutcome" targetRef="Task_Verdict">
-      <bpmn:extensionElements><folio:adjudication code="spurious"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="spurious"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_SourceWrong" name="the SOURCE is wrong" sourceRef="GW_DriftOutcome" targetRef="Task_Verdict">
-      <bpmn:extensionElements><folio:adjudication code="source-wrong"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication code="source-wrong"/></bpmn:extensionElements>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_g6" name="clean" sourceRef="Gateway_Drift" targetRef="Task_Verdict" />
     <bpmn:sequenceFlow id="Flow_g7" sourceRef="Task_Verdict" targetRef="EndEvent_Verdict" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -20,6 +21,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     <bpmn:laneSet id="LaneSet_ContentChangeReview">
       <bpmn:lane id="Lane_Author" name="Content Author">
         <bpmn:documentation>Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Author</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewStaging</bpmn:flowNodeRef>
@@ -30,6 +32,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Folio-Assistant Agent">
         <bpmn:documentation>Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Agent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DetectScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CreateBranch</bpmn:flowNodeRef>
@@ -43,6 +46,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Review Committee">
         <bpmn:documentation>Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, "Approve and merge", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Reviewer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CompareBeforeAfter</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_ReviewSlices</bpmn:flowNodeRef>
@@ -59,6 +63,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Runs build, stage, comment and watch once per push, re-entering from Task_Iterate on every later revision rather than only the first. GW_Merged sits downstream of Task_Approve in the Reviewer's lane, so it is checking whether that approval actually resulted in a merge rather than deciding whether to approve one, and a "No" ends the pipeline quietly instead of looping back into review.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Pipeline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DeployStaging</bpmn:flowNodeRef>
@@ -73,6 +78,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Coordinator" name="Review Coordinator">
         <bpmn:documentation>Organises a review large enough to need organising, and decides nothing about the content: ingests the reviewers' tagged comments, slices the change into pieces a reviewer can hold, assigns each slice to a review lane, and watches coverage until every changed block has a verdict or a reasoned waiver. A separate role from the editor on the owner's ruling of 2026-09-23 (bean en2d): organising a review and deciding its outcome are different accountabilities, and a process where one lane did both could not say which it was doing.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="review-coordinator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_IngestComments</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SliceAndAssign</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Covered</bpmn:flowNodeRef>
@@ -90,7 +96,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         Example: "Update the immunization schedule to add a booster at 18 months."
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="The author states, in their own words, the change they want. There is no procedure that produces somebody's intent for them." />
+        <cat-harness.processes:no-skill reason="The author states, in their own words, the change they want. There is no procedure that produces somebody's intent for them." />
       </bpmn:extensionElements>
       <bpmn:incoming>f1</bpmn:incoming>
       <bpmn:outgoing>f2</bpmn:outgoing>
@@ -98,7 +104,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_ReviewStaging" name="Review staged rendering">
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="staging-review"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -123,7 +129,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         Agent iterates on the feature branch.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="staging-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>f4</bpmn:incoming>
       <bpmn:outgoing>f5</bpmn:outgoing>
@@ -135,7 +141,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         The STAGING URL is the review surface.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="staging-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>f6</bpmn:incoming>
       <bpmn:outgoing>f7</bpmn:outgoing>
@@ -154,7 +160,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_DetectScope" name="Detect change scope &amp; impact">
       <bpmn:extensionElements>
-        <folio:skill ref="semantic-review-scoping"/>
+        <bootstrap.processes:skill ref="semantic-review-scoping"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -170,7 +176,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_CreateBranch" name="Create feature branch">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -184,7 +190,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_EditContent" name="Edit narrative content blocks">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -198,7 +204,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_EditLogic" name="Edit deterministic logic (if needed)">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -214,7 +220,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_AssessImpact" name="Assess downstream impact">
       <bpmn:extensionElements>
-        <folio:skill ref="content-graph"/>
+        <bootstrap.processes:skill ref="content-graph"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -240,7 +246,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:callActivity>
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge-auto"/>
+        <bootstrap.processes:skill ref="prepare-merge-auto"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -254,7 +260,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_Iterate" name="Iterate on author feedback">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -279,8 +285,8 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_CompareBeforeAfter" name="Compare main vs staging">
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
-        <folio:skill ref="visual-diff"/>
+        <bootstrap.processes:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="visual-diff"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -300,7 +306,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_IngestComments" name="Ingest tagged review comments&#10;[folio-review-comments]">
       <bpmn:documentation>Every PR conversation comment that starts with `block: &lt;label&gt;` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="review-comments" />
+        <bootstrap.processes:skill ref="review-comments" />
       </bpmn:extensionElements>
       <bpmn:incoming>r2</bpmn:incoming>
       <bpmn:outgoing>c1</bpmn:outgoing>
@@ -309,8 +315,8 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_SliceAndAssign" name="Slice the change and assign reviewers">
       <bpmn:documentation>From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="review-heatmap" />
-        <folio:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="review-heatmap" />
+        <bootstrap.processes:skill ref="staging-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>c1</bpmn:incoming>
       <bpmn:incoming>c8</bpmn:incoming>
@@ -320,8 +326,8 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:callActivity id="Call_ReviewSlices" name="Review each slice&#10;[review-task]" calledElement="Process_Review">
       <bpmn:documentation>review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
-        <folio:skill ref="review-comments" />
+        <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="review-comments" />
       </bpmn:extensionElements>
       <bpmn:incoming>c2</bpmn:incoming>
       <bpmn:outgoing>c3</bpmn:outgoing>
@@ -337,7 +343,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_WithdrawComment" name="Withdraw a review comment&#10;[folio-review-comment-move]">
       <bpmn:documentation>The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="review-comments" />
+        <bootstrap.processes:skill ref="review-comments" />
       </bpmn:extensionElements>
       <bpmn:incoming>c4</bpmn:incoming>
       <bpmn:outgoing>c6</bpmn:outgoing>
@@ -356,9 +362,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
 Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="adjudication" />
-        <folio:adjudication codes="stands withdrawn"/>
-        <folio:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying folio:adjudication."/>
+        <bootstrap.processes:skill ref="adjudication" />
+        <cat-harness.processes:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying cat-harness.processes:adjudication."/>
       </bpmn:extensionElements>
       <bpmn:incoming>c7</bpmn:incoming>
       <bpmn:outgoing>c10</bpmn:outgoing>
@@ -367,7 +373,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
     <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block reviewed?">
       <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate" />
+        <cat-harness.processes:decision ref="decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate" />
       </bpmn:extensionElements>
       <bpmn:incoming>c9</bpmn:incoming>
       <bpmn:incoming>c10</bpmn:incoming>
@@ -377,7 +383,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_ReviewImpact" name="Review impact assessment">
       <bpmn:extensionElements>
-        <folio:skill ref="content-review"/>
+        <bootstrap.processes:skill ref="content-review"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -403,8 +409,8 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
         Author and agent iterate further.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>r4</bpmn:incoming>
       <bpmn:outgoing>r5</bpmn:outgoing>
@@ -420,7 +426,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
         owner's explicit confirmation whoever approved.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
+        <bootstrap.processes:skill ref="decision-audit" />
       </bpmn:extensionElements>
       <bpmn:incoming>r6</bpmn:incoming>
       <bpmn:outgoing>r8</bpmn:outgoing>
@@ -436,7 +442,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
            as the review record.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge" />
+        <bootstrap.processes:skill ref="prepare-merge" />
       </bpmn:extensionElements>
       <bpmn:incoming>r8</bpmn:incoming>
       <bpmn:outgoing>r7</bpmn:outgoing>
@@ -456,7 +462,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_BuildStaging" name="Build staging site">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -473,7 +479,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_DeployStaging" name="Deploy to STAGING/&lt;slug&gt;/">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -487,7 +493,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_CommentPR" name="Comment staging URL on PR">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -500,9 +506,9 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
         <bpmn:task id="Task_WatchBranchCI" name="Open the branch-watch bean&#10;[watch]">
       <bpmn:extensionElements>
-        <folio:skill ref="watch" />
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="watch" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -532,7 +538,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_CleanupStaging" name="Remove STAGING/&lt;slug&gt;/">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -546,7 +552,7 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
     <bpmn:task id="Task_RebuildMain" name="Rebuild main site">
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish"/>
+        <bootstrap.processes:skill ref="content-publish"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -560,9 +566,9 @@ Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is r
 
         <bpmn:task id="Task_WatchMainCI" name="Note the main-branch watch&#10;[watch]">
       <bpmn:extensionElements>
-        <folio:skill ref="watch" />
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="watch" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>

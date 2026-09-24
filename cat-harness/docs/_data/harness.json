@@ -76,22 +76,24 @@
     "beans",
     "cat-harness",
     "code",
+    "code-list",
     "docs",
     "external-schema",
     "folio",
     "fsh-guts",
-    "glossary",
     "health",
     "interaction",
     "issue-marks",
     "library",
     "memory",
     "methodology",
+    "policies",
     "processes",
     "qa",
     "scenarios",
     "schemas",
     "skills",
+    "swimlane-glossary",
     "todos",
     "tools",
     "translation-sources",
@@ -144,36 +146,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 669,
+      "count": 307,
       "unit": "beans"
-    },
-    {
-      "id": "bootstrap-tools-schemas",
-      "directory": "bootstrap-tools-schemas",
-      "title": "bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hidden": false,
-      "count": 3,
-      "unit": "modules"
-    },
-    {
-      "id": "cat-harness",
-      "directory": "cat-harness",
-      "title": "Skills — cat-harness",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
-      "hidden": false
     },
     {
       "id": "docs",
@@ -228,7 +202,7 @@
       ],
       "href": "/cat-harness/schemas/folio-assistant-core/",
       "hidden": false,
-      "count": 17,
+      "count": 22,
       "unit": "modules"
     },
     {
@@ -261,19 +235,6 @@
       "publish": "staging-only"
     },
     {
-      "id": "glossary",
-      "directory": "glossary",
-      "title": "glossary",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/glossary/glossary/",
-      "hidden": false
-    },
-    {
       "id": "large-datasets-schemas",
       "directory": "large-datasets-schemas",
       "title": "large-datasets-schemas",
@@ -285,7 +246,7 @@
       ],
       "href": "/cat-harness/schemas/large-datasets/",
       "hidden": false,
-      "count": 2,
+      "count": 3,
       "unit": "modules"
     },
     {
@@ -313,7 +274,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 5,
+      "count": 6,
       "unit": "entries"
     },
     {
@@ -355,8 +316,34 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 136,
+      "count": 166,
       "unit": "modules"
+    },
+    {
+      "id": "skills",
+      "directory": "skills",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
+      "hidden": false
+    },
+    {
+      "id": "swimlane-glossary",
+      "directory": "swimlane-glossary",
+      "title": "swimlane-glossary",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/glossary/glossary/",
+      "hidden": false
     },
     {
       "id": "todos",
@@ -585,56 +572,6 @@
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "bootstrap-tools",
-      "title": "bootstrap-tools",
-      "label": "bootstrap-tools",
-      "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/bootstrap-tools/"
-        }
-      ],
-      "findings": [
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/bootstrap-tools/) rather than the instance's own themed root.",
-        "bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
       "navbarIcons": [
         "close",
@@ -1290,35 +1227,35 @@
       ],
       "icon": null,
       "avatar": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "tone": 212,
@@ -1331,17 +1268,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 11
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1358,8 +1295,28 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "glossary",
+          "path": "/glossary/"
+        },
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/folio-assistant-core/"
+        },
+        {
+          "kind": "methodology",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
         },
         {
           "kind": "tools",
@@ -1371,7 +1328,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 3 graph(s) with no published viewer — code, folio, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1397,35 +1354,35 @@
         "title": "c@t"
       },
       "avatar": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "tone": 268,
@@ -1438,12 +1395,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 39
+          "value": 43
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 25
+          "value": 27
         },
         {
           "id": "views",
@@ -1465,6 +1422,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "code-list",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "docs",
           "path": "/cat-harness/docs-auto/index/docs/docs/"
         },
@@ -1480,10 +1441,6 @@
           "kind": "fsh-guts",
           "path": "/fsh-guts/",
           "stagingOnly": true
-        },
-        {
-          "kind": "glossary",
-          "path": "/glossary/"
         },
         {
           "kind": "health",
@@ -1510,6 +1467,10 @@
           "path": "/methodologies/"
         },
         {
+          "kind": "policies",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "processes",
           "path": "/processes/"
         },
@@ -1527,7 +1488,11 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+        },
+        {
+          "kind": "swimlane-glossary",
+          "path": "/swimlane-glossary/"
         },
         {
           "kind": "todos",
@@ -1555,7 +1520,9 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 6 graph(s) with no published viewer — code, interaction, memory, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness/skills: declares visualiser \"Skills — cat-harness\" at \"cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html\", which does not resolve on disk.",
+        "cat-harness/swimlane-glossary: declares visualiser \"swimlane-glossary\" at \"cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html\", which does not resolve on disk."
       ],
       "navbarIcons": [
         "close",
@@ -1610,7 +1577,7 @@
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/bootstrap/initialization.html",
+      "href": "/bootstrap/README.html",
       "hrefKind": "handled",
       "stats": [
         {
@@ -1630,10 +1597,6 @@
         }
       ],
       "visualisations": [
-        {
-          "kind": "glossary",
-          "note": "no viewer by design"
-        },
         {
           "kind": "models",
           "note": "no viewer by design"
@@ -1655,13 +1618,17 @@
           "note": "no viewer by design"
         },
         {
+          "kind": "swimlane-glossary",
+          "note": "no viewer by design"
+        },
+        {
           "kind": "translation-sources",
           "note": "no viewer by design"
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — glossary, models, processes, scenarios, schemas, skills, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
-        "bootstrap: renders nothing of its own (render-exempt), so its tab opens the page another instance publishes about it (/bootstrap/initialization.html), declared as `reachableAt`."
+        "bootstrap: 7 graph(s) render no viewer — models, processes, scenarios, schemas, skills, swimlane-glossary, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: renders nothing of its own (render-exempt), so its tab opens one of its own files as published (/bootstrap/README.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
         "close",
@@ -1703,6 +1670,10 @@
         "note": "no viewer yet"
       },
       {
+        "kind": "code-list",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "docs",
         "path": "/cat-harness/docs-auto/index/docs/docs/"
       },
@@ -1718,10 +1689,6 @@
         "kind": "fsh-guts",
         "path": "/fsh-guts/",
         "stagingOnly": true
-      },
-      {
-        "kind": "glossary",
-        "path": "/glossary/"
       },
       {
         "kind": "health",
@@ -1748,6 +1715,10 @@
         "path": "/methodologies/"
       },
       {
+        "kind": "policies",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "processes",
         "path": "/processes/"
       },
@@ -1765,7 +1736,11 @@
       },
       {
         "kind": "skills",
-        "path": "/cat-harness/docs-auto/index/skills/cat-harness/"
+        "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+      },
+      {
+        "kind": "swimlane-glossary",
+        "path": "/swimlane-glossary/"
       },
       {
         "kind": "todos",
@@ -2036,14 +2011,6 @@
           {
             "key": "needs",
             "summary": "smart-ig"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-trust"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2070,48 +2037,6 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.agent-skills"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "bootstrap-tools",
-        "title": "bootstrap-tools",
-        "group": "checkout",
-        "declaredIn": "bootstrap-tools/bootstrap-tools.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/bootstrap-tools.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap-tools/bootstrap-tools.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "bootstrap-tools"
-          },
-          {
-            "key": "description",
-            "summary": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap know…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "directories",
-            "summary": "1: bootstrap-tools-schemas"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.bootstrap-tools"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2138,14 +2063,6 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.folio-assistant-sci"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2172,14 +2089,6 @@
           {
             "key": "directories",
             "summary": "3: large-datasets-schemas, large-datasets-sources, large-datasets-skills"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.large-datasets"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2214,14 +2123,6 @@
           {
             "key": "directories",
             "summary": "7: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.who-iris"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2248,14 +2149,6 @@
           {
             "key": "directories",
             "summary": "1: voices"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.who-style-guide"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2286,14 +2179,6 @@
           {
             "key": "needs",
             "summary": "smart-ig"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-immunizations"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2324,14 +2209,6 @@
           {
             "key": "needs",
             "summary": "smart-base"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-l1"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2362,14 +2239,6 @@
           {
             "key": "needs",
             "summary": "smart-base"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-ig"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2400,14 +2269,6 @@
           {
             "key": "needs",
             "summary": "smart-base"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-dak"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2446,14 +2307,6 @@
           {
             "key": "needs",
             "summary": "fhir-harness"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.smart-base"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2492,14 +2345,6 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.folio-assistant"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2538,14 +2383,6 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.fhir-harness"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2571,7 +2408,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: core-schemas, folios, voices, core-tools, core-scripts"
+            "summary": "10: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
           },
           {
             "key": "stickies",
@@ -2580,14 +2417,6 @@
           {
             "key": "needs",
             "summary": "cat-harness"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.folio-assistant-core"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2613,7 +2442,7 @@
           },
           {
             "key": "images",
-            "summary": "24: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
+            "summary": "27: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
           },
           {
             "key": "assets",
@@ -2641,7 +2470,7 @@
           },
           {
             "key": "directories",
-            "summary": "39: tools, external-schemas, schemas, uml, cat-harness, scenarios, processes, methodologies, …"
+            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",
@@ -2654,14 +2483,6 @@
           {
             "key": "needs",
             "summary": "bootstrap"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.cat-harness"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       },
@@ -2691,7 +2512,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: cat-harness, schemas, scenarios, processes, models, glossary, bootstrap-translations"
+            "summary": "7: skills, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translations"
           },
           {
             "key": "stickies",
@@ -2700,14 +2521,6 @@
           {
             "key": "renderExemption",
             "summary": "{ of, reason, owes, reachableAt }"
-          },
-          {
-            "key": "id",
-            "summary": "io.github.litlfred.folio-assistant.bootstrap"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
           }
         ]
       }

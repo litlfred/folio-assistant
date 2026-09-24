@@ -52,7 +52,7 @@ prevents is stated beside it.
    than one kind of edge ([`edge-kinds-and-blast-radius`](edge-kinds-and-blast-radius.md)).
    Editorial `uses[]` and formal Lean edges, enforced and prose-only
    references, and a field-carried link versus one declared elsewhere (the
-   UML's dashed `folio:skill` edge) each get their own line style and a
+   UML's dashed `bootstrap.processes:skill` edge) each get their own line style and a
    legend. Merging two kinds into one line destroys the signal every metric
    on that graph is computed from.
 5. **Pick the layout engine by what the graph is, and write down why.**
@@ -74,7 +74,9 @@ prevents is stated beside it.
    block-graph SVGs do this through `scripts/plantuml-render.ts`, which every
    PlantUML generator shares, with its pinned jar and one JVM for all diagrams.
 9. **Show it in a zoomable figure.** On the site, use the `bpmn-figure`
-   markup so `docs-ui.js` adds zoom, reset and full-width controls. A pages
+   markup so `docs-ui.js` adds zoom, reset and full-width controls, and the
+   export ones: download the SVG, download a 2× PNG, or copy it (as an image
+   where the browser allows, else as SVG text, and it says which; #1270). A pages
    template missing `layout: default` renders with no site script and so no
    controls, and nothing reports it.
 10. **Put the measurement on the drawing.** When a graph is being partitioned,

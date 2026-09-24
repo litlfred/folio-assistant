@@ -39,6 +39,7 @@ import type { z } from "zod";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 
 import { ActorDefSchema, RoleDefSchema } from "../schemas/role-graph.js";
+import { UserStorySchema } from "../schemas/user-story.js";
 import { SkillDefinitionSchema } from "../schemas/skill-package.js";
 import { TaskRefSchema } from "../schemas/carried-note.js";
 import { TodoNodeSchema } from "../schemas/todo.js";
@@ -51,7 +52,6 @@ import { readUmlPalette } from "./uml-palette.js";
 const HARNESS = resolve(import.meta.dir, "..");
 /** Colours from `uml.css`, the one place they are declared. */
 const PALETTE = readUmlPalette(HARNESS);
-const REPO = resolve(HARNESS, "..");
 /**
  * In THIS instance's declared `uml` directory, beside the per-sub-graph
  * diagrams `gen-uml-overview.ts` writes under `uml/overview/`.
@@ -60,10 +60,6 @@ const OUT = join(
   // declared-path-literal: the conventional fallback when no declaration names the directory
   instanceDirectoryForGraph(HARNESS, "uml") ?? join(HARNESS, "uml"),
   "harness-object-model.puml",
-);
-const DAK_USER_STORY = join(
-  REPO,
-  "smart-base/fhir-artifact-index/dak/StructureDefinition-FunctionalRequirement.schema.json",
 );
 const BPMN_RECORD = join(
   instanceDirectoryForGraph(HARNESS, "external-schema") ?? join(HARNESS, "external-schemas"),
@@ -197,10 +193,9 @@ function build(beans: Attr[] | null): { classes: ClassDef[]; edges: Edge[] } {
     { id: "Role", title: "Role", pkg: "scenario", source: "json: RoleDefSchema", attrs: attrsOf(fromZod(RoleDefSchema)) },
     { id: "Skill", title: "Skill", pkg: "scenario", source: "json: SkillDefinitionSchema", attrs: attrsOf(fromZod(SkillDefinitionSchema)) },
     {
-      id: "UserStory", title: "User Story", pkg: "scenario",
-      source: "ext: SMART DAK FunctionalRequirement",
-      attrs: attrsOf(readJson(DAK_USER_STORY)),
-      note: "As a <actor> I want <capability>\nso that <benefit> — smart-base SGUserStory.\nThe harness itself still holds stories as\nRole.useCases (free text).",
+      id: "UserStory", title: "User Story", pkg: "scenario", source: "json: UserStorySchema",
+      attrs: attrsOf(fromZod(UserStorySchema)),
+      note: "As a <role> I want <want> so that <soThat>.\nscenarios/stories.json; the role names none.\nSMART DAK's SGUserStory is the external shape.",
     },
     {
       id: "Process", title: "Process", pkg: "process",
@@ -230,9 +225,9 @@ function build(beans: Attr[] | null): { classes: ClassDef[]; edges: Edge[] } {
     { from: "Actor", to: "Role", path: "roles", label: "takes on", mult: "0..*" },
     { from: "Role", to: "Role", path: "inherits", label: "inherits", mult: "0..*" },
     { from: "Role", to: "Skill", path: "skills", label: "carries", mult: "0..*" },
-    { from: "UserStory", to: "Role", path: "actor", label: "as a", mult: "0..*" },
+    { from: "UserStory", to: "Role", path: "role.role", label: "as a", mult: "1" },
     { from: "Task", to: "Process", path: "process", label: "in", mult: "1" },
-    { from: "Task", to: "Role", via: "folio:role ref on the lane / Role.lanes", label: "in lane of", mult: "1" },
+    { from: "Task", to: "Role", via: "folio:role ref on the lane", label: "in lane of", mult: "1" },
     { from: "Task", to: "Skill", via: "folio:skill ref", label: "uses", mult: "1" },
     { from: "Task", to: "Bean", via: "folio:bean op", label: "bean op", mult: "0..1" },
     { from: "Todo", to: "Role", path: "tags.roles", label: "tags", mult: "0..*" },
@@ -241,6 +236,7 @@ function build(beans: Attr[] | null): { classes: ClassDef[]; edges: Edge[] } {
     { from: "Todo", to: "Actor", path: "tags.identities", label: "identities[].actor", mult: "0..*" },
     { from: "Bean", to: "Bean", path: "parentId", label: "parent", mult: "0..1" },
     { from: "Bean", to: "Bean", path: "blockingIds", label: "blocks", mult: "0..*" },
+    { from: "TestRun", to: "Skill", path: "skill", label: "tests", mult: "1" },
     { from: "KgQaReport", to: "Role", path: "subject.kind", label: "audits", mult: "1" },
     { from: "KgQaReport", to: "Process", path: "subject.kind", label: "audits", mult: "1" },
     { from: "KgQaReport", to: "Skill", path: "subject.kind", label: "audits", mult: "1" },
@@ -386,10 +382,6 @@ export function schemasViewPuml(writer: string): string {
 // run rewrote the generated files on import (in CI, where the output differs).
 function main(): void {
   const check = process.argv.includes("--check");
-  if (!existsSync(DAK_USER_STORY)) {
-    console.error(`could not determine: ${DAK_USER_STORY} is missing`);
-    process.exit(2);
-  }
   const beans = beanAttrs();
   const { classes, edges } = build(beans);
   const problems = assertEdges(classes, edges);

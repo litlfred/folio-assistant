@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_Process_RenderLog" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_RenderLog">
@@ -16,6 +16,7 @@ The question it exists to answer: what happened to STAGING/&lt;slug&gt;, and why
     <bpmn:laneSet id="LaneSet_Process_RenderLog">
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_RenderLog</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_What</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_LogRendered</bpmn:flowNodeRef>
@@ -39,13 +40,13 @@ happening?">
 
     <bpmn:task id="A_LogRendered" name="Append `rendered`">
       <bpmn:documentation>A re-deploy is a rendering, so it gets its own entry rather than overwriting the last. "When was this last built" is then answerable without diffing commits.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="A_Preflight" name="Preflight:
 is the preview live?">
       <bpmn:documentation>`previewLiveness` — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. Bean `w2g5`: a preview whose pull request is closed is NOT an abandoned one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Live" name="Any liveness
@@ -56,23 +57,23 @@ signal fired?">
     <bpmn:task id="A_LogRetained" name="Append `retained`
 with the reason">
       <bpmn:documentation>THE ENTRY THAT MAKES THE LOG WORTH READING. A preview still standing because a signal fired leaves no trace otherwise, and the next person asking "why is this still up" has nothing to consult. A reason is REQUIRED — the tool refuses without one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="A_LogRemoved" name="Append `removed`
 with the reason">
       <bpmn:documentation>BEFORE the removal, not after: a job that dies mid-step must leave a record of the intent rather than an artefact that vanished with no entry. A reason is REQUIRED — an entry saying an artefact went and not why is the ambiguity this log exists to prevent.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="A_Remove" name="Remove the artefact">
       <bpmn:documentation>`rm -rf STAGING/&lt;slug&gt;`. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="A_LogRestored" name="Append `restored`">
       <bpmn:documentation>A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because "somebody pushed this branch" and "an unrelated merge nearly deleted it" are different facts — and bean `plj1` is what happens when the second is invisible.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="render-logging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-logging"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Process_RenderLog" name="Entry appended;

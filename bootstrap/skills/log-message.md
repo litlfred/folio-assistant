@@ -68,7 +68,7 @@ log has never been a reason to abandon an install.
 
 ## The one destination bootstrap has
 
-**The discussion with the human actor.** An Initiator has no log file, no
+**The discussion with the human actor.** A Bootstrapping Agent has no log file, no
 service and no work plan — the only place it can put a line where a person will
 see it is the conversation it is already in.
 
@@ -82,7 +82,7 @@ Tool beside it; this one keeps working, because the skill says what a message
 
 It is **not** the work plan. A bean says what is being worked on and survives
 the session; a log line says what an actor did at a moment and does not claim
-to. An Initiator has no beans at all, which is the clearest case: it can log
+to. A Bootstrapping Agent has no beans at all, which is the clearest case: it can log
 every step of an install and still have nowhere to record that the install is
 outstanding.
 

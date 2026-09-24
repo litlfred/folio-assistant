@@ -15,6 +15,7 @@
  *     bun run check:voices
  *
  * @module scripts/check-voices
+ * @covers voices
  */
 
 import { existsSync, readdirSync } from "node:fs";
@@ -22,7 +23,8 @@ import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/sc
 import { join, relative, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
-import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../schemas/cat-harness.ts";
+import { readRoleGraph, type RoleGraph } from "../schemas/role-graph";
 
 const ROOT = resolve(import.meta.dir, "..");
 /** The checkout, one level out: a cross-instance citation is resolved against sibling instances. */
@@ -118,6 +120,22 @@ function instanceRootFor(instance: string | undefined, ownRoot: string): string 
     if (readDeclaration(root)?.name === instance) return root;
   }
   return undefined;
+}
+
+/**
+ * An instance's role graph, from its declared `scenarios` directory, or
+ * `undefined` when it declares none. Cached: every voice addressing a role in
+ * the same instance would otherwise re-read the same file.
+ */
+const roleGraphs = new Map<string, RoleGraph | undefined>();
+function roleGraphOf(instanceRoot: string): RoleGraph | undefined {
+  if (!roleGraphs.has(instanceRoot)) {
+    const dir = resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).find(
+      (d) => d.id === "scenarios" && d.own && d.scope !== "repository",
+    )?.absPath;
+    roleGraphs.set(instanceRoot, dir === undefined ? undefined : readRoleGraph(dir));
+  }
+  return roleGraphs.get(instanceRoot);
 }
 
 function main(): number {
@@ -264,8 +282,40 @@ function main(): number {
       // Against the DECLARING instance: a `kgRef` is a node of the voice's own
       // knowledge graph, so looking for it under the platform would report a
       // who-style-guide voice's own node as missing.
-      if (s.kgRef && !existsSync(join(rootOf.get(v.id)!, s.kgRef.split("#")[0]!))) {
-        problems.push(`${v.id}: names source ${s.kgRef}, which does not exist`);
+      // Through the NAMED instance when the source names one, exactly as a
+      // rule's `kgRef` is resolved above: a voice addressing a role cites the
+      // role graph that declares it, which is the dependency's, not its own.
+      if (s.kgRef) {
+        const citedRoot = instanceRootFor(s.instance, rootOf.get(v.id)!);
+        if (citedRoot === undefined) {
+          problems.push(`${v.id}: names source ${s.kgRef} in instance "${s.instance}", which is not an instance of this repository`);
+        } else if (!existsSync(join(citedRoot, s.kgRef.split("#")[0]!))) {
+          problems.push(`${v.id}: names source ${s.instance ? `${s.instance}:` : ""}${s.kgRef}, which does not exist`);
+        }
+      }
+    }
+  }
+
+  // ── A voice points at the roles it addresses, and each must resolve ─────
+  //
+  // `activeIn.roles` is the pointer from the dependent (the voice) to the
+  // general node (the role) — #1168, B2. A role id that resolves to nothing
+  // scopes the voice to a lane nobody can act in, which switches it off in
+  // silence; that is a problem, not a note.
+  const addressed = new Map<string, Set<string>>(); // instance root -> role ids some voice addresses
+  for (const { voice: v, root } of loaded) {
+    for (const ref of v.activeIn?.roles ?? []) {
+      const rolesRoot = instanceRootFor(ref.instance, root);
+      const graph = rolesRoot === undefined ? undefined : roleGraphOf(rolesRoot);
+      const from = ref.instance ? `${ref.instance}:` : "";
+      if (rolesRoot === undefined) {
+        problems.push(`${v.id}: addresses role ${from}${ref.role}, but "${ref.instance}" is not an instance of this repository`);
+      } else if (graph === undefined) {
+        problems.push(`${v.id}: addresses role ${from}${ref.role}, but that instance declares no role graph`);
+      } else if (!graph.roles.some((r) => r.id === ref.role)) {
+        problems.push(`${v.id}: addresses role ${from}${ref.role}, which that instance's role graph does not declare`);
+      } else {
+        (addressed.get(rolesRoot) ?? addressed.set(rolesRoot, new Set()).get(rolesRoot)!).add(ref.role);
       }
     }
   }
@@ -280,6 +330,24 @@ function main(): number {
     );
   }
   console.log();
+
+  // Coverage, reported and never failed: which roles that READ prose no voice
+  // addresses. It was the audit criterion \`role-declares-voice\` while the
+  // role carried its voice; now the voice points at the role, from an
+  // instance the role graph cannot see, so it is answered here, where both
+  // are visible. Only for instances some voice already addresses — a role
+  // graph no voice reaches is not this check's to grade.
+  for (const [rolesRoot, ids] of addressed) {
+    const unaddressed = (roleGraphOf(rolesRoot)?.roles ?? [])
+      .filter((r) => !r.actedUpon && r.persona !== undefined && !ids.has(r.id))
+      .map((r) => r.id);
+    const name = readDeclaration(rolesRoot)?.name ?? relative(REPO_ROOT, rolesRoot);
+    console.log(
+      `  ${name}: ${ids.size} role(s) addressed by a voice` +
+        (unaddressed.length ? `; ${unaddressed.length} with a persona and no voice: ${unaddressed.join(", ")}` : ""),
+    );
+  }
+  if (addressed.size > 0) console.log();
 
   if (problems.length > 0) {
     console.error(`${problems.length} problem(s):`);

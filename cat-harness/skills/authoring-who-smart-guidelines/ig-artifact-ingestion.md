@@ -1,3 +1,8 @@
+---
+graph-kinds:
+  - fhir-artifact-index
+---
+
 # ig-artifact-ingestion
 
 > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` ·

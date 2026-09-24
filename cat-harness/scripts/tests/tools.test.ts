@@ -60,6 +60,13 @@ describe("tools", () => {
     expect(checkTools().unmetContracts).toEqual([]);
   });
 
+  test("where a Tool input and a contract property share a name, their types agree", () => {
+    // The type half of the comparison (#1168, B3b). Weak — most contract
+    // properties are bare strings — but it catches an `array` contract served
+    // by a `string` port, which the name check alone passes.
+    expect(checkTools().mistypedContracts).toEqual([]);
+  });
+
   test("a contract that is present but unreadable is never counted as agreement", () => {
     // The third state. `undefined` (no contract) and `[]` (a contract
     // requiring nothing) are different answers and the checker keeps them

@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_L2Dak"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,25 +29,28 @@
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
-      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_L2Dak_LaneSet">
       <bpmn:lane id="Lane_Programme" name="Programme manager / technical officer">
         <bpmn:documentation>Sets the scope once, before the fork into six parallel authoring tracks. The actors and processes enumerated here are what everything downstream, including the terminology and clinical lanes, is scoped against, and nothing later in this diagram revisits that boundary.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="programme-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Guideline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ScopeDak</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>A single claim made once, right after scoping and before the parallel fork. Unlike the per-edit lifecycle in editing-hci-validation, this diagram seeds one bean for the whole DAK and never returns here to log or resolve it, so tracking any one track's own progress is not this lane's concern.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Analyst" name="Business analyst">
         <bpmn:documentation>Opens the parallel fork into six authoring tracks — five landing here, the sixth (terminology) crossing into a separate lane — and re-enters that same fork whenever clinical validation sends work back, so a fix after Gateway_Accurate revisits every track it is entangled with rather than patching only the one SME flagged. Performs the final assemble-and-validate once accuracy holds.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_AuthorMerge</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_AuthorFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Personas</bpmn:flowNodeRef>
@@ -60,10 +64,12 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Terminologist" name="Terminologist">
         <bpmn:documentation>One parallel branch of the fork, producing bindings the other five tracks cite rather than author themselves. Kept a separate lane rather than folded into the analyst's because governance of a code binding is deliberately independent of the artefact that cites it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="terminologist"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Terminology</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Sme" name="Clinical SME">
         <bpmn:documentation>The one gate every authored track must clear before assembly: a "no" here does not return to the specific task that erred but loops back through Gateway_AuthorMerge into the fork itself, so this lane's judgement — not the analyst's — decides whether personas, BPMN, DMN, data dictionary and indicators all get revisited together.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="clinical-sme"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SmeValidate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -74,7 +80,7 @@
     <bpmn:userTask id="Task_ScopeDak" name="Scope the DAK&#10;[content-plan]">
       <bpmn:documentation>Enumerate the processes, decisions and data elements the guideline implies; identify the actors.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-plan" />
+        <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>
       <bpmn:incoming>B01</bpmn:incoming>
       <bpmn:outgoing>B02</bpmn:outgoing>
@@ -82,8 +88,8 @@
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
       <bpmn:documentation>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>B02</bpmn:incoming>
       <bpmn:outgoing>B03</bpmn:outgoing>
@@ -105,7 +111,7 @@
     <bpmn:userTask id="Task_Personas" name="Personas and scenarios&#10;[l2-dak-authoring]">
       <bpmn:documentation>Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l2-dak-authoring" />
+        <bootstrap.processes:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B05</bpmn:incoming>
       <bpmn:outgoing>B11</bpmn:outgoing>
@@ -113,7 +119,7 @@
     <bpmn:userTask id="Task_Bpmn" name="Business processes · BPMN 2.0&#10;[bpmn-authoring]">
       <bpmn:documentation>Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="bpmn-authoring" />
+        <bootstrap.processes:skill ref="bpmn-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B06</bpmn:incoming>
       <bpmn:outgoing>B12</bpmn:outgoing>
@@ -121,7 +127,7 @@
     <bpmn:userTask id="Task_Dmn" name="Decision logic · DMN tables&#10;[dmn-authoring]">
       <bpmn:documentation>Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="dmn-authoring" />
+        <bootstrap.processes:skill ref="dmn-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B07</bpmn:incoming>
       <bpmn:outgoing>B13</bpmn:outgoing>
@@ -129,7 +135,7 @@
     <bpmn:userTask id="Task_DataDict" name="Data dictionary and core data elements&#10;[l2-dak-authoring]">
       <bpmn:documentation>Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l2-dak-authoring" />
+        <bootstrap.processes:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B08</bpmn:incoming>
       <bpmn:outgoing>B14</bpmn:outgoing>
@@ -137,7 +143,7 @@
     <bpmn:userTask id="Task_Indicators" name="Indicators and requirements&#10;[l2-dak-authoring]">
       <bpmn:documentation>Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l2-dak-authoring" />
+        <bootstrap.processes:skill ref="l2-dak-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>B09</bpmn:incoming>
       <bpmn:outgoing>B15</bpmn:outgoing>
@@ -145,7 +151,7 @@
     <bpmn:userTask id="Task_Terminology" name="Terminology bindings&#10;[terminology-management]">
       <bpmn:documentation>ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="terminology-management" />
+        <bootstrap.processes:skill ref="terminology-management" />
       </bpmn:extensionElements>
       <bpmn:incoming>B10</bpmn:incoming>
       <bpmn:outgoing>B16</bpmn:outgoing>
@@ -162,7 +168,7 @@
     <bpmn:userTask id="Task_SmeValidate" name="Clinical validation&#10;[content-review]">
       <bpmn:documentation>Ground truth: does the DAK say what the guideline says?</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>B17</bpmn:incoming>
       <bpmn:outgoing>B18</bpmn:outgoing>
@@ -176,7 +182,7 @@
     <bpmn:userTask id="Task_AssembleDak" name="Assemble and validate the DAK&#10;[content-validate]">
       <bpmn:documentation>Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>B20</bpmn:incoming>
       <bpmn:outgoing>B21</bpmn:outgoing>

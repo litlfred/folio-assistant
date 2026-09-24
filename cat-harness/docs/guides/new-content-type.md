@@ -89,8 +89,10 @@ the existing manifests (`authoring-math`, `authoring-who-smart-guidelines`):
 ## 3. The skill schemas
 
 For each skill, add `schemas/skills/<skill>/input.schema.json` and
-`output.schema.json` (JSON Schema draft-07). These are the typed contract the
-LLM works against. Then regenerate the reference:
+`output.schema.json` (JSON Schema draft-07), and name them in the skill's own
+front matter (`input: schemas/skills/<skill>/input.schema.json`, `output: …`).
+These are the typed contract the LLM works against; a contract no skill names is
+reported as unclaimed. Then regenerate the reference:
 
 ```sh
 bun run scripts/gen-schema-docs.ts
