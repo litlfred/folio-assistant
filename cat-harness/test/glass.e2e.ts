@@ -97,6 +97,29 @@ test.describe("the glass exists on a page that is not the harness's", () => {
       expect(h1!.y).toBeGreaterThanOrEqual(hb!.y + hb!.height);
     });
   }
+
+  // Bean `269z`. A REPLICA (it carries the folio mount) cannot reserve a band
+  // (bean `jpjt`), so its handle is a tab at the bottom right, off the banner.
+  for (const width of [1280, 390]) {
+    test(`on a REPLICA the handle is a bottom-right tab, off the top content, at ${width} px`, async ({ page }) => {
+      await page.route("http://replica.test/mounted.html", (route) =>
+        route.fulfill({
+          contentType: "text/html",
+          body: REPLICA.replace("<script>", "<script data-fa-folio-mount></script><script>"),
+        }),
+      );
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto("http://replica.test/mounted.html");
+      await page.waitForSelector(handle, { state: "attached" });
+      const hb = (await page.locator(handle).boundingBox())!;
+      const h1 = (await page.locator("h1").boundingBox())!;
+      expect(Math.round(hb.x + hb.width)).toBe(width);
+      expect(Math.round(hb.y + hb.height)).toBe(800);
+      // The page itself did not move: no band on a replica.
+      expect(await page.evaluate(() => getComputedStyle(document.body).paddingTop)).toBe("0px");
+      expect(h1.y + h1.height).toBeLessThanOrEqual(hb.y);
+    });
+  }
 });
 
 test.describe("pulled down, and put away", () => {
