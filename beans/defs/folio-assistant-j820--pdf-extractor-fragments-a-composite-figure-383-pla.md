@@ -1,17 +1,55 @@
 ---
 # folio-assistant-j820
 title: 'PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-23T21:14:17Z
-updated_at: 2026-09-23T21:15:20Z
+updated_at: 2026-09-24T05:10:40Z
 parent: folio-assistant-slw1
 ---
 
 Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out
 rather than worked around, because routing around it would have meant writing 383
 image descriptions from nothing.
+
+## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG
+
+Everything below the next heading was written on 2026-09-23 from counts and
+file sizes. **Two file reads falsified it**, and the corrected finding is
+better: it names a mechanical fix where the original named an open judgement.
+
+| the bean said | what looking showed |
+|---|---|
+| "fragments of one composite architecture figure" | **clip-art icons** — a newspaper, a picture placeholder — the icons Figure 1 uses to depict document types in its pipeline |
+| "many byte-identical in size", implying blank pieces | distinct and meaningful; the identical sizes are the SAME icon placed repeatedly |
+| "383 descriptions would be fabrication" | **383 placements are 50 DISTINCT images**. Page 3's 335 are **22**, each placed ~15 times. Describing 50 is ordinary work |
+
+**The defect is duplicate placement, not fragmentation.** The extractor emits
+one entry per PLACEMENT rather than per distinct image, and it is general:
+
+| document | placed | distinct by content hash |
+|---|---:|---:|
+| `arxiv-2510.21603v1` | 383 | **50** |
+| `9789241509510-eng` MAPS | 161 | **102** |
+| `9789241511766-eng` M&E guide | 99 | **44** |
+| `arxiv-2312.07755v1` | 84 | **28** |
+| `arxiv-2607.14456v1` | 14 | 14 (clean) |
+
+**So the bean's own question is answered: EXTRACTION-side, by deduplicating on
+content hash.** No threshold, no judgement, no corpus-specific number — the
+thing four separate geometric rules could not give (see the next section). It
+cuts this document from 383 to 50 and makes it promotable.
+
+**A residue remains and is NOT this.** MAPS's 63 blank cover pieces survive
+dedup, because blank rectangles of differing dimensions hash differently. That
+is `m4xy`'s vector/furniture finding and stays with `m4xy`.
+
+**`arxiv-2312.07755v1` is not the fourth instance this bean claimed.** Its 76
+images on page 10 are 28 distinct icons in Table 2, *"the 10 most common icon
+semantics"* — each already carrying an accurate individual narrative. A crowded
+page can be legitimately crowded, which is one more reason no count-based rule
+works.
 
 ## Measured
 
@@ -47,6 +85,109 @@ extractor is producing a subject the gate cannot honestly clear.
 
 The three are siblings under `slw1` and each needs its own answer.
 
+## MEASURED 2026-09-24 across 29 documents in 5 libraries — and every geometric rule FAILED
+
+The bean asked for the ratio across the staged corpus. That question was the
+wrong one twice over, and reading before building is what caught both.
+
+**First: the survey already existed.** `m4xy` did it 2026-09-22 over all seven
+WHO entries (issue #877), and its table already holds a SECOND instance of this
+pathology — `9789241509510-eng` MAPS Toolkit, 4 declared figures, 161 placed
+images, **63 of them blank fragments of one title page**. So this was never a
+one-document finding; it was a one-document *rediscovery*.
+
+**Second: `m4xy` explicitly forbids the metric this bean proposed.**
+`check-l1-complete.ts` says it in its own docstring — *"It does not compare
+counts. Declared figures and placed images are not commensurable and a ratio
+between them asserts a coverage this cannot establish."* A placed-vs-captioned
+ratio was the one thing not to build.
+
+So the measurement was re-aimed at PER-PAGE GEOMETRY, which is a different
+question and needs no caption counts. Four candidate discriminators were tested
+over every `images.json` in the tree, excluding `method: "capture"` and the
+`chrome`/`page-scan` roles that `r8br` already handles.
+
+| candidate rule | result |
+|---|---|
+| busiest page's **share** of the document's images | **fails** — a one-image document is trivially 100 %, so five healthy entries tie with the worst offenders |
+| **absolute max images on one page** | a real gap at 7 → 26, but both 26-image cases are the Antigravity browser captures, already `role: chrome`. It separates a class that is already separated |
+| **total coverage of a page's images together** | continuous, 0.0059 → 0.6099, no gap. And inverted: the WORST page (MAPS cover, 63 pieces) has the HIGHEST total, 0.61, because the fragments tile the cover |
+| **per-image coverage** | **the two classes overlap completely** — see below |
+
+### The decisive one
+
+Splitting every figure-role image by whether its page is crowded (≥20 images):
+
+```
+crowded pages   n=621   coverage 2.70e-05 .. 6.03e-01
+uncrowded       n=144   coverage 2.80e-05 .. 5.04e-01
+```
+
+The ranges are the same to within 4 %. **All 144 uncrowded-page images sit below
+the highest crowded-page one.** No threshold on coverage can separate a fragment
+from a figure, in either direction.
+
+### `m4xy`'s gap is REAL, and it is corpus-specific
+
+Checked against the same 296 images `m4xy` pooled: its stated empty stretch
+≈ 0.00012 .. 0.00033 **is genuinely empty** — values sit at 1.21e-04, then
+nothing, then 3.36e-04. An earlier reading of mine that put 7 images inside it
+was an artefact of rounding `≈0.00012` down; corrected here rather than left
+standing.
+
+But the 469 figure-role images OUTSIDE `smart-base/` have a MINIMUM coverage of
+**1.81e-04** — above the gap entirely, with nothing below it. So a threshold
+placed in `m4xy`'s gap would be **inert on every non-WHO document**, including
+the two with the worst fragmentation:
+
+| page | pieces | median coverage each |
+|---|---:|---|
+| `9789241509510-eng` p1 (WHO) | 63 | 1.12e-04 |
+| `9789241511766-eng` p1 (WHO) | 71 | 1.15e-04 |
+| `arxiv-2312.07755v1` p10 | 76 | 1.81e-04 |
+| `arxiv-2510.21603v1` p3 | 335 | 4.79e-04 |
+
+WHO fragments and arXiv fragments live a half-order of magnitude apart. One
+number cannot catch both, and `m4xy`'s own objection — *"a threshold chosen
+after seeing this corpus is a number chosen to fit the answer"* — is now
+measured rather than suspected.
+
+## Crowded pages, and what each one actually is
+
+Written before the correction at the top of this bean, which reclassifies two
+of these. Kept because the list is the evidence the geometric rules were tested
+against, and because “crowded” turns out NOT to be one condition:
+
+| page | placed | distinct | what it is |
+|---|---:|---:|---|
+| `9789241509510-eng` p1 | 63 | — | blank cover fragments (`m4xy`'s finding, survives dedup) |
+| `9789241511766-eng` p1 | 71 | — | blank cover fragments |
+| `arxiv-2312.07755v1` p10 | 76 | **28** | **legitimately crowded** — a table of icon semantics, each icon real and already accurately described |
+| `arxiv-2510.21603v1` p3 | 335 | **22** | one icon set, each placed ~15 times |
+
+Three different things behind one symptom, which is the whole reason a
+count-based rule fails.
+
+## What this means for the bean's own question
+
+The bean asked “extraction-side or classification-side?” **On this evidence it
+is neither, as an automatic rule.** Every geometric signal available is
+continuous across the two classes, which is precisely the situation
+`document-image.ts` was built for: it refuses `logo` and `decorative` on a
+geometry basis *because no measurement of a placed rectangle can make those
+calls*, and `apply-image-verdicts.ts` records an `inspection` basis naming who
+looked. That mechanism is correct and this measurement is evidence FOR it.
+
+What is missing is not a threshold. It is:
+
+1. **No `fragment` role.** `IMAGE_ROLES` is `page-scan | figure | chrome | logo
+   | decorative | undetermined`. An inspector who can see that 335 images are
+   one diagram in pieces has nowhere to record it, so the only way to clear
+   `image-descriptions` is to write 335 descriptions — which is the fabrication
+   the inspection basis exists to refuse.
+2. **No way to inspect a page as a group.** Verdicts are per image id. The
+   judgement “these 335 are one figure” is a statement about a PAGE.
+
 ## Open, and NOT decided here
 
 Whether the fix is at extraction (merge drawing objects that share a page region
@@ -58,8 +199,12 @@ a page whose image count is an order of magnitude above its caption count?
 
 ## Done when
 
-- [ ] the fragment/composite ratio is measured across every staged document, not
-      just this one
-- [ ] extraction-side vs classification-side is decided with the owner, on that
-      measurement
+- [x] measured across every ingested document — 29 in 5 libraries, not just
+      this one, and not as a ratio (`m4xy` forbids that comparison)
+- [x] four geometric discriminators tested; all four fail, and the failure is
+      the finding
+- [ ] the owner rules on a `fragment` role + page-level verdicts, which is what
+      the measurement points at instead of a threshold
 - [ ] `arxiv-2510.21603v1` either promotes, or carries a recorded reason it cannot
+- [ ] `arxiv-2312.07755v1` is re-examined — it is ALREADY PROMOTED with 76
+      drafted narratives over one fragmented page, and nobody knew
