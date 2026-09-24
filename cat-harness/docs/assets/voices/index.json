@@ -2,7 +2,7 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 42,
+      "count": 43,
       "unit": "voices"
     }
   },
@@ -28,6 +28,7 @@
         "address-clinical-sme",
         "address-code-reviewer",
         "address-compute-authoring-agent",
+        "address-deep-researcher",
         "address-docs-authoring-agent",
         "address-editor",
         "address-editorial-authoring-agent",
@@ -347,6 +348,39 @@
           "cites": "scenarios/roles.json",
           "citesInstance": "cat-harness",
           "quote": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
+        }
+      ]
+    },
+    {
+      "id": "address-deep-researcher",
+      "title": "Addressing the Deep researcher",
+      "description": "How to write for a reader acting as Deep researcher. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+      "instance": "folio-assistant-core",
+      "path": "folio-assistant-core/skills/voices/address-deep-researcher",
+      "provenance": "house",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-address-deep-researcher",
+      "sources": [
+        {
+          "title": "Role `deep-researcher` — its persona, in the cat-harness role graph"
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "address-deep-researcher-register",
+          "title": "Cite to a location, and mark a synthesis as one",
+          "description": "Cite to a location, not to a document — the page a claim was made on, so a reader can verify it where it was made rather than being sent to a PDF. Distinguish what a source says from what it implies, and never let a synthesis read as a quotation.",
+          "category": "register",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": true,
+          "citation": "kg-node",
+          "cites": "scenarios/roles.json",
+          "citesInstance": "cat-harness",
+          "quote": "Cites to a location, not to a document. Distinguishes what a source says from what it implies, and marks a synthesis as a synthesis rather than letting it read as a quotation."
         }
       ]
     },
@@ -2347,10 +2381,10 @@
     }
   ],
   "totals": {
-    "voices": 42,
-    "rules": 101,
+    "voices": 43,
+    "rules": 102,
     "citingLibrary": 63,
-    "citingKgNode": 38,
+    "citingKgNode": 39,
     "mechanical": 12
   }
 }
