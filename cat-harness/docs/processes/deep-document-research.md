@@ -19,6 +19,7 @@ Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`deep-document-research`](../reference/skill-instructions/deep-document-research.html)
 
 ## Lanes — who acts

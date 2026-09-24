@@ -85,6 +85,7 @@ import {
   type SkillProvenance,
 } from "../schemas/role-graph.js";
 import { ownElementPattern } from "../schemas/namespaces.js";
+import { processPresentations, type Presentation } from "./process-presentations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -645,8 +646,18 @@ export function page(rows: readonly ProcessRow[]): string {
  *
  * `skillPages` is the set of skills with a generated instruction page; a skill
  * without one is shown as code rather than as a link that 404s.
+ *
+ * `presentedOn` is the docs page sections whose `asset.source` names this
+ * diagram — read from the PAGES, so the process names none of them (bean
+ * `rdy0`). It is also where a subprocess box lands when more than one section
+ * presents the process (`processTarget`), so the list is the disambiguation.
  */
-export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillPages: ReadonlySet<string>): string {
+export function processPage(
+  row: ProcessRow,
+  rows: readonly ProcessRow[],
+  skillPages: ReadonlySet<string>,
+  presentedOn: readonly Presentation[] = [],
+): string {
   const byId = new Map(rows.map((r) => [r.id, r]));
   const skill = (s: string): string =>
     skillPages.has(s) ? `[\`${s}\`](../reference/skill-instructions/${s}.html)` : `\`${s}\``;
@@ -693,6 +704,15 @@ export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillP
         "`activity-calls-skill-process` asks whether each should be a call activity.",
     );
   }
+  L.push(
+    `- **Presented on:** ${
+      presentedOn.length
+        ? presentedOn
+            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.page}.html#${p.node})`)
+            .join(", ")
+        : "no docs page section shows this diagram"
+    }`,
+  );
   if (skillPages.has(row.stem)) L.push(`- **Skill:** ${skill(row.stem)}`);
   L.push("");
 
@@ -795,9 +815,17 @@ if (import.meta.main) {
   const skillPages = new Set(
     existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
   );
+  // Which page sections present each diagram, keyed repository-relative so it
+  // matches `row.file` — a page spells its source relative to its OWN instance.
+  const presented = new Map<string, Presentation[]>();
+  for (const root of instanceRoots(REPO)) {
+    for (const [source, list] of await processPresentations(root)) {
+      presented.set(relative(REPO, join(root, source)), list);
+    }
+  }
   const pages = new Map<string, string>([[out, html]]);
   for (const r of rows.filter((x) => x.loadError === undefined)) {
-    pages.set(join(dirname(out), `${r.stem}.md`), processPage(r, rows, skillPages));
+    pages.set(join(dirname(out), `${r.stem}.md`), processPage(r, rows, skillPages, presented.get(r.file)));
   }
   // A page whose diagram is gone is REPORTED, never deleted — the
   // deletion-requires-confirmation rule, applied to generated output too.

@@ -19,6 +19,7 @@ The generic review position: classify what changed, descend into the review that
 
 - **Called by:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html)
 - **Calls:** [Code node review](review-code.html), [Prose and the code it describes](narrative-code-review.html), [Narrative review](review-narrative.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rn3o
 title: 'Diagrams: download PNG, download SVG, copy to clipboard on every figure'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-24T12:41:53Z
-updated_at: 2026-09-24T13:16:02Z
+updated_at: 2026-09-24T13:54:05Z
 parent: folio-assistant-2upx
 ---
 

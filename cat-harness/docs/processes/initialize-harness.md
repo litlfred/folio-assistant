@@ -19,6 +19,7 @@ THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that ha
 
 - **Called by:** no call activity names this process
 - **Calls:** [Log a message](log-message.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

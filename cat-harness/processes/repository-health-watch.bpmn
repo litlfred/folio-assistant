@@ -20,7 +20,6 @@
            omission. Advisory would make the shape of the process negotiable
            at exactly the point the skill says it is not. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/health-check.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_RepoHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
@@ -39,9 +38,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Daily (06:41 UTC),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run the health checks,&amp;#10;keeping the report either way">
