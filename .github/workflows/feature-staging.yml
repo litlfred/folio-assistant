@@ -558,6 +558,14 @@ jobs:
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
 
+      # No built page may carry the same `id` twice (bean `uknu`). Only a BUILD
+      # shows this class: `nav_footer_custom.html` declared its checkbox once,
+      # just-the-docs rendered the include twice, and 429 of 1,283 pages carried
+      # `id="fa-nav-open"` twice while `gates` stayed green. Placed after the
+      # mount so instance-rendered pages are checked too.
+      - name: No page carries a duplicate id
+        run: bun run check:duplicate-ids ./_site
+
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
       # `jekyll-seo-tag` ships in the `github-pages` gem set that
@@ -874,6 +882,10 @@ jobs:
           bun run cat-harness/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
           bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
+          # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
+          # LAST, and it never overwrites the graph's `.json` copy above.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

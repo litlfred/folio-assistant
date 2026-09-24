@@ -33,12 +33,5 @@ export const contentGraph: SkillDefinition = {
     "merge.*section",
     "concrete.*reorg",
   ],
-  scripts: [
-    {
-      path: "content/pipeline/content-graph-analysis.py",
-      runtime: "python3",
-      phase: "execute",
-    },
-  ],
   tags: ["analysis", "editorial", "graph", "organisation", "dependencies"],
 };

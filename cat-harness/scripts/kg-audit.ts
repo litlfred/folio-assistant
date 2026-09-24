@@ -42,6 +42,9 @@
  */
 
 import { createHash } from "node:crypto";
+import { parse as parseYaml } from "yaml";
+import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
@@ -99,8 +102,9 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
+import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
 const ENGINE_VERSION = "1";
 
@@ -1052,8 +1056,16 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  storiesPath: string,
 ): KgQaReport[] {
-  const hash = sha256(readFileSync(graphPath, "utf-8"));
+  // Both files: `role-has-story` reads the stories, which point at the role
+  // (#1168), so a story added or removed changes a role's verdict without
+  // touching roles.json.
+  const hash = sha256(
+    readFileSync(graphPath, "utf-8") + (existsSync(storiesPath) ? readFileSync(storiesPath, "utf-8") : ""),
+  );
+  const toldAs = new Set((stories?.stories ?? []).filter((s) => s.role.instance === undefined).map((s) => s.role.role));
   const rel = relative(root, graphPath);
 
   const explicitRefs = new Set<string>();
@@ -1091,19 +1103,16 @@ function auditRoles(
               ? []
               : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
           ),
-      "role-declares-voice": !readsProse(r)
+      // No `role-declares-voice`: a voice points at the role it addresses
+      // (`activeIn.roles`), and the voices graph is a DEPENDENT instance's, so
+      // this instance cannot see it — `check:voices` reports which roles no
+      // voice addresses, from the side that can (#1168, B2).
+      "role-has-story": !readsProse(r)
         ? entry([], false)
         : entry(
-            r.voice && r.voice.trim().length > 0
+            toldAs.has(r.id)
               ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
-          ),
-      "role-has-use-cases": !readsProse(r)
-        ? entry([], false)
-        : entry(
-            (r.useCases ?? []).length > 0
-              ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+              : [{ where: r.id, detail: `no user story in scenarios/stories.json is told as role "${r.id}" — nothing says what this reader came to do.` }],
           ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
@@ -1193,7 +1202,7 @@ interface LoadedRequirement {
     id?: string;
     derivedFrom?: string[];
     actors?: string[];
-    statements?: { key?: string; conformance?: string; actors?: string[]; satisfiedBy?: { kind?: string; ref?: string }[] }[];
+    statements?: { key?: string; conformance?: string; actors?: string[] }[];
   };
 }
 
@@ -1212,23 +1221,126 @@ function readRequirements(): LoadedRequirement[] {
   return out;
 }
 
-function auditRequirements(
-  reqs: LoadedRequirement[],
-  skills: Set<string>,
-  actors: LoadedActor[],
-): KgQaReport[] {
-  const capabilities = new Set<string>();
-  if (existsSync(CAPABILITY_DIR)) {
-    for (const f of readdirSync(CAPABILITY_DIR)) {
-      if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+/**
+ * Every value of a list-valued front-matter key across the skill files, with
+ * the file that declares it. A front matter that does not parse is skipped:
+ * that is `check:skill-front-matter`'s finding, not this one's.
+ */
+function frontMatterLists(key: string): { value: string; from: string }[] {
+  const out: { value: string; from: string }[] = [];
+  const line = new RegExp(`^${key}:`, "m");
+  for (const file of skillFiles()) {
+    const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(file, "utf-8"));
+    if (!fm || !line.test(fm[1]!)) continue;
+    let parsed: unknown;
+    try {
+      parsed = parseYaml(fm[1]!);
+    } catch {
+      continue;
+    }
+    const values = (parsed as Record<string, unknown>)[key];
+    for (const v of Array.isArray(values) ? values : []) out.push({ value: String(v), from: relative(root, file) });
+  }
+  return out;
+}
+
+/**
+ * The `graph-kinds:` a skill names that are not registered kinds (#1168, B3).
+ * The skill says which kinds it reads; the kind names no skill.
+ */
+function unknownSkillGraphKinds(): KgFinding[] {
+  return frontMatterLists("graph-kinds")
+    .filter(({ value }) => !defaultGraphKinds.has(value))
+    .map(({ value, from }) => ({ where: from, detail: `names graph kind "${value}", which is not registered.` }));
+}
+
+/**
+ * A skill's `input:`/`output:` that is malformed or names a local file that is
+ * not there (#1168, B3b). An external https IRI is not fetched here.
+ */
+function brokenSkillContracts(): KgFinding[] {
+  const out: KgFinding[] = [];
+  for (const c of skillContracts(root).values()) {
+    for (const io of ["input", "output"] as const) {
+      const ref = c[io];
+      if (ref === undefined) continue;
+      const shape = contractRefProblem(ref);
+      const file = contractFile(root, ref);
+      if (shape) out.push({ where: c.from, detail: `${io}: ${ref} — ${shape}.` });
+      else if (file !== undefined && !existsSync(file)) {
+        out.push({ where: c.from, detail: `${io}: ${ref} — no such file in this instance.` });
+      }
     }
   }
+  return out;
+}
+
+/**
+ * A contract file no skill names (#1168, B3b). The skill points at its
+ * contract, so a contract nothing points at is specified for nobody.
+ */
+function unclaimedSkillContracts(): KgFinding[] {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const dir = join(instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas"), "skills");
+  if (!existsSync(dir)) return [];
+  const claimed = new Set<string>();
+  for (const c of skillContracts(root).values()) {
+    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
+  }
+  const out: KgFinding[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    for (const f of readdirSync(join(dir, e.name))) {
+      if (!f.endsWith(".schema.json")) continue;
+      const ref = relative(root, join(dir, e.name, f));
+      if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+    }
+  }
+  return out;
+}
+
+/** One declared `satisfies` ref, and who declared it. */
+interface Satisfier {
+  /** `req:<requirement>#<statement key>`. */
+  ref: string;
+  /** The declaring file, repo-relative — a skill `.md` or a capability `.json`. */
+  from: string;
+}
+
+/**
+ * Every `satisfies` ref a skill or capability declares (#1168, B3).
+ *
+ * The satisfier holds the pointer; the requirement statement names nobody. A
+ * skill declares it in its front matter, a capability in its JSON.
+ */
+function readSatisfiers(): Satisfier[] {
+  const out: Satisfier[] = frontMatterLists("satisfies").map(({ value, from }) => ({ ref: value, from }));
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) {
+      if (!f.endsWith(".json")) continue;
+      const path = join(CAPABILITY_DIR, f);
+      const refs = (JSON.parse(readFileSync(path, "utf-8")) as { satisfies?: unknown }).satisfies;
+      for (const r of Array.isArray(refs) ? refs : []) out.push({ ref: String(r), from: relative(root, path) });
+    }
+  }
+  return out;
+}
+
+function auditRequirements(
+  reqs: LoadedRequirement[],
+  actors: LoadedActor[],
+  satisfiers: Satisfier[],
+): KgQaReport[] {
   const actorIds = new Set(actors.map((a) => a.id));
   const reqIds = new Set(reqs.map((r) => r.id));
 
   return reqs.map((r) => {
-    const hash = sha256(readFileSync(r.path, "utf-8"));
-    const satisfied: KgFinding[] = [];
+    const mine = satisfiers.filter((s) => s.ref.startsWith(`${r.id}#`)).sort((x, y) => (x.ref + x.from).localeCompare(y.ref + y.from));
+    // The requirement file AND the satisfiers that name it: a skill that
+    // starts or stops satisfying a statement changes this verdict without
+    // touching the requirement.
+    const hash = sha256(readFileSync(r.path, "utf-8") + JSON.stringify(mine));
+    const unsatisfied: KgFinding[] = [];
     const badActors: KgFinding[] = [];
     const ungraded: KgFinding[] = [];
 
@@ -1243,15 +1355,11 @@ function auditRequirements(
       for (const a of st.actors ?? []) {
         if (!actorIds.has(a)) badActors.push({ where: `${r.id}/${key}`, detail: `binds actor "${a}", which the registry does not declare.` });
       }
-      for (const sb of st.satisfiedBy ?? []) {
-        const ref = sb.ref ?? "";
-        const ok = sb.kind === "skill" ? skills.has(ref) : sb.kind === "capability" ? capabilities.has(ref) : true;
-        if (!ok) {
-          satisfied.push({
-            where: `${r.id}/${key}`,
-            detail: `is satisfiedBy ${sb.kind} "${ref}", which does not exist — the thing claimed to discharge this statement cannot be opened.`,
-          });
-        }
+      if (!mine.some((s) => s.ref === `${r.id}#${key}`)) {
+        unsatisfied.push({
+          where: `${r.id}/${key}`,
+          detail: `no skill or capability declares \`satisfies: ${r.id}#${key}\` — nothing is recorded as discharging this statement.`,
+        });
       }
     }
     const badParents = (r.raw.derivedFrom ?? [])
@@ -1259,13 +1367,24 @@ function auditRequirements(
       .map((d) => ({ where: r.id, detail: `derives from "${d}", which is not a declared requirement.` }));
 
     const criteria: Record<string, KgCriterionEntry> = {
-      "requirement-satisfied-by-resolves": entry(satisfied),
+      "requirement-statement-satisfied": entry(unsatisfied, (r.raw.statements ?? []).length > 0),
       "requirement-actors-resolve": entry(badActors),
       "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
       "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
     };
     return report("requirement", r.id, relative(root, r.path), hash, criteria);
   });
+}
+
+/** The satisfies refs that name no declared requirement statement. */
+function danglingSatisfies(reqs: LoadedRequirement[], satisfiers: Satisfier[]): KgFinding[] {
+  const declared = new Set(reqs.flatMap((r) => (r.raw.statements ?? []).map((st) => `${r.id}#${st.key ?? ""}`)));
+  return satisfiers
+    .filter((s) => !declared.has(s.ref))
+    .map((s) => ({
+      where: s.from,
+      detail: `declares \`satisfies: ${s.ref}\`, which is not a declared requirement statement — the claim cannot be checked against anything.`,
+    }));
 }
 
 // ── Graph roll-up ───────────────────────────────────────────────
@@ -1472,6 +1591,8 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  badSatisfies: KgFinding[],
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -1706,6 +1827,26 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      // A story points at its role (#1168); a story whose role is not declared
+      // is told as nobody. Only this instance's roles are judged — see
+      // `danglingStoryRoles`.
+      "story-role-resolves": !stories
+        ? entry([], false)
+        : graph
+        ? entry(
+            danglingStoryRoles(stories, graph).map((st) => ({
+              where: st.id,
+              detail: `user story "${st.id}" is told as role "${st.role.role}", which the role graph does not declare.`,
+            })),
+          )
+        : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve story roles against." }] },
+      // A skill or capability claiming a requirement statement that is not
+      // declared (#1168, B3). The statement names no satisfier, so this is
+      // the only place a mistyped claim can be caught.
+      "satisfies-resolves": entry(badSatisfies),
+      "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
+      "skill-contract-resolves": entry(brokenSkillContracts()),
+      "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
@@ -1797,12 +1938,23 @@ const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.fil
 const docs = docsSurface();
 for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
-if (graph) {
-  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
+const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
+let stories: UserStoryGraph | undefined;
+try {
+  stories = readUserStories(SCENARIO_DIR);
+} catch (e) {
+  console.error(`Could not read the user stories: ${e instanceof Error ? e.message : String(e)}`);
+  console.error("This is NOT a pass. Nothing was audited against stories.");
+  process.exit(2);
 }
-reports.push(...auditRequirements(readRequirements(), skills, actors));
+if (graph) {
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills, stories, storiesPath));
+}
+const requirements = readRequirements();
+const satisfiers = readSatisfiers();
+reports.push(...auditRequirements(requirements, actors, satisfiers));
 reports.push(...auditSkills());
-reports.push(auditGraph(graph, processes, actors, skills));
+reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools());
 
 // Write or compare.

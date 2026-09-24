@@ -124,6 +124,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
+| [Glossary terms](glossary-terms.html) | `glossary-terms` | — | The owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
 | [Harness requirements](harness-requirements.html) | `harness-requirements` | — | **Declaring a directory is a promise.** It says this instance holds a graph of |
 | [A tile is the harness's, not the node's](harness-tiles.html) | `harness-tiles` | — | The owner, 2026-09-20, correcting the question rather than answering it: |
@@ -189,6 +190,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Running a SWOT scan](swot-analysis.html) | `swot-analysis` | — | **The method is not in this file.** It is the `swot` node in the `methodology` |
 | [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
+| [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
 | [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
@@ -330,7 +332,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
+| [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](../../methodologies/specification-compile |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
+
+## Content layer (folio-assistant-core)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Deep document research](deep-document-research.html) | `deep-document-research` | — | Renders `methodologies/doc-researcher.md` — Dong et al., arXiv:2510.21603v1 — |
 
 ## Large data sets (subsetting, materializing, publishing)
 

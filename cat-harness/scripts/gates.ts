@@ -157,6 +157,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
+    // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
+    // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
+    // and `bun run preview:site` builds a site to run it on locally.
+    match: "check:duplicate-ids",
+    kind: "ci-only",
+    reason:
+      "runs on the built ./_site that only the staging job produces; its scanner and the " +
+      "nav include's one-checkbox rule are pinned by duplicate-ids.test.ts in `bun test`",
+  },
+  {
     // Mounts each instance's rendered content into the built site. It COPIES
     // rather than checks, so there is no verdict for a contributor to run —
     // and it is meaningless outside a job that has just built `_site/`.
@@ -762,7 +773,7 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     script: "check:reference-direction",
     kind: "report",
     reason:
-      "ADVISORY BECAUSE THE COUNT IS NOT ZERO YET, and for no other reason \u2014 534 wrong-direction occurrences across 162 files, measured 2026-09-24. The repository's own precedent settles this: the ruff comment in `code-quality-gates.yml`, and `repo-partition.ts`'s note that its two axes were each enforced only as they reached zero. Turning a red gate on just teaches the next agent to append `|| true`. It is built so an advisory run CANNOT be mistaken for a clean one: the summary always prints `undetermined \u2014 NOT clean` with its count and what landed there, and 3,139 occurrences do, chiefly because `folio-assistant` names the repository, the published product AND the root instance, whose directory IS the repository root. `--strict` exits 1 on any wrong-direction occurrence and is what flips this to `kind: \"gate\"` once the backlog is drained. What IS enforced on every run today, without waiting: the PENDING set, which fails on a stale entry, and the IMPORT half of the same arrow \u2014 `check:partition`, 0/0 and enforcing both axes, computing direction through the very same `layer-direction.ts` this consumes. Issue #1219, bean `zhg2`",
+      "ADVISORY BECAUSE THE COUNT IS NOT ZERO YET, and for no other reason \u2014 564 wrong-direction occurrences across 168 files, measured 2026-09-24 after merging origin/main. The repository's own precedent settles this: the ruff comment in `code-quality-gates.yml`, and `repo-partition.ts`'s note that its two axes were each enforced only as they reached zero. Turning a red gate on just teaches the next agent to append `|| true`. It is built so an advisory run CANNOT be mistaken for a clean one: the summary always prints `undetermined \u2014 NOT clean` with its count and what landed there, and 3,139 occurrences do, chiefly because `folio-assistant` names the repository, the published product AND the root instance, whose directory IS the repository root. `--strict` exits 1 on any wrong-direction occurrence and is what flips this to `kind: \"gate\"` once the backlog is drained. What IS enforced on every run today, without waiting: the PENDING set, which fails on a stale entry, and the IMPORT half of the same arrow \u2014 `check:partition`, 0/0 and enforcing both axes, computing direction through the very same `layer-direction.ts` this consumes. Issue #1219, bean `zhg2`",
   },
   {
     script: "ingest:ig-menu:check",
@@ -808,7 +819,7 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     script: "check:reference-direction:strict",
     kind: "report",
     reason:
-      "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 instead of 0 on a wrong-direction occurrence. It is the form this becomes a gate in, kept runnable and wired to nothing while the count is 534: a gate that fails on a backlog is a gate somebody switches off. Run it by hand, or from `/prepare-merge`, to see what enforcement would say today. Flipping the advisory entry above to `kind: \"gate\"` and pointing it here is the whole of the change once the backlog is drained. Bean `zhg2`",
+      "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 instead of 0 on a wrong-direction occurrence. It is the form this becomes a gate in, kept runnable and wired to nothing while the count is 564: a gate that fails on a backlog is a gate somebody switches off. Run it by hand, or from `/prepare-merge`, to see what enforcement would say today. Flipping the advisory entry above to `kind: \"gate\"` and pointing it here is the whole of the change once the backlog is drained. Bean `zhg2`",
   },
   {
     script: "check:partition:edges",

@@ -79,6 +79,15 @@ something to act on rather than a bare step name.
 **Completion refuses a step that is not enabled.** That is what makes the
 diagram a control rather than a picture.
 
+**Completion also checks WHO.** Before any task or decision is recorded, the
+engine asks four questions: is the actor authenticated, eligible for the role
+the lane binds (`roleRef`), permitted by an ODRL policy to `perform-task` in
+this process and task, and allowed to touch the target content? This is
+generic engine behaviour, so **do not draw an authorization task into a
+diagram**: a check drawn into some processes is a check missing from the rest.
+What a diagram owes the check is a lane bound to a declared role. See
+[`task-authorization`](../folio-core/task-authorization.md).
+
 **Instance state is committed**, alongside the work plan, so a sibling session
 sees the same position. That is the whole reason not to hand-roll a second
 tracker: a second answer to *where are we* is free to disagree with the first.

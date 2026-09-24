@@ -63,8 +63,8 @@
  *
  * Exit: 0 written or up to date · 1 stale under `--check`.
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { basename, join, relative } from "node:path";
 
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
@@ -74,6 +74,7 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.js";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -292,18 +293,16 @@ ${mount}
 }
 
 let stale = 0;
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
+/**
+ * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ *
+ * `emit` writes what it is given; `emitPage` is the same write with the rail,
+ * and takes the nav per call because a SUBJECT page lists that subject's
+ * graphs while the index lists this instance's. Both are facts this generator
+ * already holds, and neither is parsed back out of a path it just composed.
+ */
+const emit = makeEmit({ check, onStale: () => { stale++; } });
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
@@ -328,7 +327,8 @@ if (import.meta.main) {
   const mount = folioMountFragment(new RegExp(`^(.*?)${handler}\\/${seg}\\/`));
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref, mount));
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, mount));
 
   const absent = g.directories.filter((d) => !d.present).length;
   console.log(

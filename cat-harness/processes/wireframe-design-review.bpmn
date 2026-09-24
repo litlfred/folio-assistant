@@ -60,7 +60,11 @@
       <bpmn:documentation>Do the blind reviewers' entries agree? `no` goes to adjudication; `yes` goes to choosing a candidate.</bpmn:documentation>
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_Adjudicate" name="Adjudication" calledElement="Process_CriterionAdjudication">
-      <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason.</bpmn:documentation>
+      <bpmn:documentation>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason.
+
+FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When `bvuk` moved the outcome half out of `adjudication.bpmn`, #1074 reported that all four remaining callers "no longer reach A_ScopeCriterion or A_Dispensation" and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it.
+
+The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes `no` here, and `Process_CriterionAdjudication` starts at "entries for one criterion disagree" — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else.</bpmn:documentation>
       <bpmn:extensionElements><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:callActivity id="Call_Choose" name="Choose a candidate" calledElement="Process_OptionsAnalysis">

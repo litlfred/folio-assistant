@@ -1,3 +1,8 @@
+---
+input: schemas/skills/l3-fhir-authoring/input.schema.json
+output: schemas/skills/l3-fhir-authoring/output.schema.json
+---
+
 # l3-fhir-authoring
 
 > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` ·

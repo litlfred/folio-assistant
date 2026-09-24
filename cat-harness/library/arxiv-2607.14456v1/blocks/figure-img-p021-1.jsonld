@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p021-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p021-1.png",
+  "pageStart": 21,
+  "pageEnd": 21,
+  "narrative": {
+    "text": "Figure 12, the Social workflow. It receives a data_source_plan and an expanded_query_set, validates payloads, initialises a run context, loads social provider config and credentials, selects platforms and builds base query parameters (keywords, hashtags, accounts, date range). \"Any platforms selected?\" gates the rest. On Yes it initialises metrics (request_count, post_count, error_count), expands queries into platform-specific search terms, constructs and sends the first platform request and receives a response. Four gateways follow in sequence — \"Response success?\", \"Payload contains items?\", \"Language and region allowed?\" and \"Any items remain after filters?\" — with extraction of raw social items (posts, comments, threads) and normalisation of id, text, author, timestamp, engagement and platform between them. Accepted items append to a collection buffer. Every No branch converges on \"Update metrics and diagnostics (requests, posts, errors)\", after which the buffer is aggregated into a unified raw_social_data structure and a run summary is built and persisted.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-021",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}
