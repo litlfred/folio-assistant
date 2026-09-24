@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sop8
 title: 'B7c (#1168): docs pages declare what they document (documents:); coverage.docs removed'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-24T19:50:21Z
-updated_at: 2026-09-24T19:50:21Z
+updated_at: 2026-09-24T19:59:59Z
 parent: folio-assistant-tr05
 ---
 

@@ -57,6 +57,7 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { orderedDependencies } from "../schemas/harness-config.js";
+import { docsPages, documentingPages } from "./docs-declarations.js";
 import { governingSkills, skillGovernance } from "./skill-governance.js";
 
 import {
@@ -351,8 +352,8 @@ function trackedFiles(repoRoot: string): string[] {
       ls.exitCode === 0
         ? new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean)
         : // Not a git checkout (a scratch repository in a test): the skills
-          // are whatever markdown sits under a `skills/` directory.
-          [...new Bun.Glob("**/skills/**/*.md").scanSync({ cwd: repoRoot })];
+          // and pages are whatever markdown and HTML sit on disk.
+          [...new Bun.Glob("**/*.{md,html}").scanSync({ cwd: repoRoot })].filter((f) => !f.includes("node_modules/"));
     trackedCache.set(repoRoot, files);
   }
   return files;
@@ -402,6 +403,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   // Without the last, an instance declaring no dependencies (`agent-skills`)
   // was out of reach of the platform's own `library-ingestion`.
   const skills = skillGovernance(repoRoot, trackedFiles(repoRoot));
+  const pages = docsPages(repoRoot, trackedFiles(repoRoot));
   const reach = [root, ...dependencyRoots(root), resolve(import.meta.dir, "..")];
 
   for (const dir of dirs) {
@@ -430,7 +432,12 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
       if (criterion === "skill") {
         if (governingSkills({ instance, id: dir.id, graphKinds: dir.graphKinds }, skills, repoRoot, reach).length > 0) continue;
       }
-      const declared = criterion === "skill" ? undefined : dir.coverage?.[criterion];
+      // The DOCS page is read from the pages the same way (#1168 B7c): a page
+      // says what it documents, and the directory names no page.
+      if (criterion === "docs") {
+        if (documentingPages({ instance, id: dir.id, graphKinds: dir.graphKinds }, pages, repoRoot, reach).length > 0) continue;
+      }
+      const declared = criterion === "skill" || criterion === "docs" ? undefined : dir.coverage?.[criterion];
       if (declared === undefined) {
         // An UNMET OBLIGATION outranks an unanswered question.
         //

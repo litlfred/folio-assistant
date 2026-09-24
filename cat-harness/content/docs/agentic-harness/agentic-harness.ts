@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "agentic-harness",
   title: "Agentic harness",
+  documents: ["interaction"],
   navOrder: 5,
   nodes: [
     {

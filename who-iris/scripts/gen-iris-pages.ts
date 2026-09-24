@@ -712,6 +712,12 @@ function page(
    * `/<handler>/<kind>/<subject>/` — a different site, with its own chrome.
    */
   side: "library" | "docs" | "harness",
+  /**
+   * The graph kinds this page documents, as `<meta name="documents">` — the
+   * page names what it is about, so the directory need not name the page
+   * (#1168 B7c). Only the docs index carries one.
+   */
+  documents: readonly string[] = [],
 ): string {
   /* A CRUMB WITH NO HREF IS A LABEL, never `<a href="#">`.
    *
@@ -741,7 +747,7 @@ function page(
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)} — ingested IRIS replica</title>
+<title>${esc(title)} — ingested IRIS replica</title>${documents.length ? `\n<meta name="documents" content="${esc(documents.join(" "))}">` : ""}
 <meta name="description" content="A replica of a WHO IRIS page, rendered from this repository's ingested catalogue. Not WHO, and not live.">
 <style>
   :root {
@@ -2203,7 +2209,7 @@ function main(): number {
 
   files.set(
     "docs/index.html",
-    page("who-iris — documentation", [{ label: "Documentation" }], docsIndex(), "docs"),
+    page("who-iris — documentation", [{ label: "Documentation" }], docsIndex(), "docs", ["catalogue"]),
   );
 
   files.set(

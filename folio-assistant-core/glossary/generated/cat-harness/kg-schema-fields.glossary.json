@@ -2379,13 +2379,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.subgraphcoverageschema.docs",
-      "prefLabel": "SubgraphCoverageSchema.docs",
-      "definition": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}.",
-      "source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.docs",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.subgraphcoverageschema.serialisations",
       "prefLabel": "SubgraphCoverageSchema.serialisations",
       "definition": "What produces this directory's SERIALISATIONS — `json`, `jsonld` and `schema.json` at the directory's own URL.",
@@ -9551,6 +9544,13 @@
       "prefLabel": "WaiverNodeSchema.scope",
       "definition": "How far it reaches.",
       "source": "cat-harness/schemas/waiver.ts#WaiverNodeSchema.scope",
+      "status": "candidate"
+    },
+    {
+      "id": "webpage.webpage.documents",
+      "prefLabel": "WebPage.documents",
+      "definition": "What this page documents: graph kinds (`library`), or one directory as `<instance>/<id>` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).",
+      "source": "cat-harness/schemas/webpage.ts#WebPage.documents",
       "status": "candidate"
     },
     {
