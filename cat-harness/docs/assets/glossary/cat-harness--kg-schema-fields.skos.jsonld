@@ -18176,6 +18176,158 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Repository-relative path of the bean file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.parent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.parent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`\"\"` when the bean has no parent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.beanindexitemschema.preview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexItemSchema.preview"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The body, trimmed to its first 400 characters."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.referencedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.referencedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent means the reference scan did not run — a third state, not \"none\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.badges",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.badges"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.qaindexschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QaIndexSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page's slug."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.changedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.changedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`YYYY-MM-DD`: the day the counts last changed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.translationstatusschema.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationStatusSchema.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The translations directory counted, repository-relative."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/skill-package.actordefinitionschema.permissions",
       "@type": "skos:Concept",
       "skos:inScheme": {

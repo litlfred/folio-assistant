@@ -608,18 +608,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-semantic-zoom/v1": { validator: "schemas/semantic-zoom.ts#SemanticZoomSchema" },
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
-      "folio-bean-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
-      "folio-translation-status/v1": { writtenBy: "scripts/gen-translation-status.ts" },
-      "folio-schema-graph/v1": { writtenBy: "scripts/gen-schema-viz.ts" },
-      "folio-library-index/v1": { writtenBy: "scripts/gen-library-viz.ts" },
+      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema" },
+      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema" },
+      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema" },
+      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema" },
       // The per-entry block graph, one file per library entry (bean `7nvr`).
       // Same writer as the index and deliberately a SEPARATE family: the index
       // answers "what entries are there" and this answers "what is in one",
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
-      "folio-library-entry/v1": { writtenBy: "scripts/gen-library-viz.ts" },
-      "folio-voices-index/v1": { writtenBy: "scripts/gen-voices-viz.ts" },
-      "folio-graph-projection/v1": { writtenBy: "scripts/gen-folio-viz.ts" },
+      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema" },
+      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema" },
+      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema" },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +
@@ -735,7 +735,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Written inline by two call sites and typed by neither — recorded,
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
-      "folio-qa-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
+      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema" },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
