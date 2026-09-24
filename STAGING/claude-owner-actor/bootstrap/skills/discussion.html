@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>discussion — settling what an agent cannot read off disk</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1b1f23; --bg: #ffffff; --muted: #57606a; --line: #d0d7de; --link: #0b5cad; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e6edf3; --bg: #0d1117; --muted: #8d96a0; --line: #30363d; --link: #58a6ff; } }
+  body { font: 16px/1.6 system-ui, sans-serif; color: var(--fg); background: var(--bg); max-width: 50rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  a { color: var(--link); }
+  code, pre { font-family: ui-monospace, monospace; font-size: 0.92em; }
+  pre { overflow-x: auto; padding: 0.75rem; border: 1px solid var(--line); border-radius: 6px; }
+  table { border-collapse: collapse; display: block; overflow-x: auto; }
+  th, td { border: 1px solid var(--line); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+  blockquote { margin-left: 0; padding-left: 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+  hr { border: 0; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}.fa-nav-kids{grid-column:1/-1}.fa-nav-action{display:none;background:none;border:0;cursor:pointer;padding:0 12px;font-size:13px;line-height:1;color:inherit;opacity:.7}.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
+<h1>discussion — settling what an agent cannot read off disk</h1>
+<p>An agent that has just read <code>bootstrap/README.md</code> knows the shape of a
+harness and nothing about <strong>this</strong> one. Two questions have no answer in any
+file it can reach:</p>
+<ul>
+<li><strong>which harness</strong> this repository should become: <code>bootstrap</code> itself, or
+any Harness built on it;</li>
+<li><strong>which repositories</strong> are involved — where the dependency is read from,
+where the new declaration is written to, and whether they are the same.</li>
+</ul>
+<p>No instruction body produces those. They are judgements held by whoever asked
+for the harness, and the only way to obtain one is to <strong>ask</strong>. This skill is
+how that asking is performed, and what it must produce.</p>
+<h2>What a skill is, and where the tool comes in</h2>
+<blockquote>
+<p>A skill declares an <strong>input schema</strong> and an <strong>output schema</strong>. The actor
+applies <strong>judgement</strong> to take action in a task, <strong>using tools</strong>, and the
+declared outputs are <strong>generated by those tools</strong> while performing the task,
+<strong>in the context of a given process</strong>.</p>
+</blockquote>
+<p>Each clause does work here:</p>
+<table>
+<thead>
+<tr>
+<th>clause</th>
+<th>in this skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>input schema</strong></td>
+<td><code>discussion.input.schema.json</code> — what is known before asking</td>
+</tr>
+<tr>
+<td><strong>judgement</strong></td>
+<td>which question to put, to whom, and when one answer is enough</td>
+</tr>
+<tr>
+<td><strong>using tools</strong></td>
+<td>the <code>discuss</code> tool: put a question to a participant, receive an answer</td>
+</tr>
+<tr>
+<td><strong>output schema</strong></td>
+<td><code>discussion.output.schema.json</code> — the harness and repositories, <strong>determined</strong></td>
+</tr>
+<tr>
+<td><strong>in a process</strong></td>
+<td>always inside one: the process's task points at this skill, never the reverse</td>
+</tr>
+</tbody>
+</table>
+<p>The distinction the table makes is the one worth holding: <strong>the tool does not
+decide.</strong> It carries a question out and an answer back. Judgement chooses what
+to ask and rules on when the answer settles the matter. An agent that treats
+the tool as the decision has skipped the skill.</p>
+<p>And the output schema is why this is a skill rather than a conversation: the
+task is not finished when a pleasant exchange has occurred, it is finished
+when a document conforming to <code>discussion.output.schema.json</code> exists. That is
+checkable; "we discussed it" is not.</p>
+<h2>The participants are symmetric</h2>
+<p>Both directions are the same skill:</p>
+<ul>
+<li><strong>human ↔ agent</strong> — the Requestor is a person; the Bootstrapping Agent asks.</li>
+<li><strong>agent ↔ agent</strong> — a sibling session already holds the answer; the
+Bootstrapping Agent asks it rather than re-deriving it.</li>
+</ul>
+<p>The output records <strong>who</strong> answered (<code>kind: person | agent</code>), because an
+answer from a sibling agent is evidence of a different weight from an answer
+by the person who wants the harness. Neither is refused; they are not
+conflated.</p>
+<h2>Rules</h2>
+<p><strong>Ask the fewest questions that settle it.</strong> The Bootstrapping Agent's persona is
+"asks exactly one question when it must". Narrow the candidate list from
+context first (a repository whose root already holds a declaration,
+<code>&#x3C;name>.json</code>, is not a blank slate) and put the residue as one question with the
+candidates named. A question a reader must go and research is not ready.</p>
+<p><strong>Never infer the answer from a default.</strong> If nothing is known, the output's
+<code>determinedBy</code> is <code>asked</code>, not <code>assumed</code>. <code>assumed</code> is permitted exactly once,
+for the case the README already states, and it must carry the reason.</p>
+<p><strong>Record repositories as pairs, not as a list.</strong> <code>read from</code> and <code>written to</code>
+can be the same repository or two; a flat list loses which is which, and the
+whole point of determining them is to know where the declaration lands.</p>
+<p><strong>A refusal is an outcome.</strong> If the participant declines to settle it, that is
+<code>outcome: "unsettled"</code> with what was asked and what is still open — not a
+guess, and not an error. The process has an end for it.</p>
+<h2>Inputs and outputs</h2>
+<ul>
+<li><code>discussion.input.schema.json</code> — the question's occasion: what the agent
+already knows, and which of the two unknowns is open.</li>
+<li><code>discussion.output.schema.json</code> — <code>harness</code>, <code>repositories[]</code>, <code>outcome</code>,
+<code>determinedBy</code>, <code>answeredBy</code>, and the <code>exchange</code> that produced it.</li>
+</ul>
+<p>Both sit beside this file, in <code>bootstrap/skills/</code>, and are plain JSON Schema.
+That is deliberate: a Bootstrapping Agent has no MCP server and no validator, so the
+contract has to be something it can <strong>read</strong>, not something it must call.</p>
+<h2>Why this is in bootstrap at all</h2>
+<p><code>bootstrap/</code> is meant to be as small as it can be, so anything in it has to
+earn its place against that.</p>
+<p>The owner's rule for the neighbouring case is worth stating exactly, because
+half of it decides nothing and the whole of it decides everything:</p>
+<blockquote>
+<p>logging is optional, <strong>unless indicated on tasks</strong>.</p>
+</blockquote>
+<p><code>log-message</code> is in <code>bootstrap/</code> for precisely that reason — bootstrap's own
+tasks indicate it, and drawing the call is how a task says so.
+"Optional" is a property of the blanket feature, not of a step whose
+instructions require it.</p>
+<p><code>discussion</code> earns its place on a different footing, and a narrower one: an
+agent that cannot determine which harness and which repositories are involved
+cannot take the first step of installing a harness at all, and no amount of
+reading will supply it. Not indicated by a task — presupposed by every one of
+them.</p>
+
+</body>
+</html>
