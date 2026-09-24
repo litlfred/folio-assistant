@@ -850,3 +850,61 @@ describe("inertNote — why a row does not open", () => {
     expect(new Set(all).size).toBe(4);
   });
 });
+
+describe("what a harness knows and does NOT hold — `603s` item 4", () => {
+  // The owner's ask: *"a tab for all materizled local subgraphs and declared
+  // remote graphs. opening up content should indicate if local or remote"*.
+  // The local half is `visualisations`; these are the other two relations.
+
+  test("an associated harness is carried as declared, and nothing is fetched", () => {
+    const f = fixture({
+      host: host({
+        associatedHarnesses: [
+          {
+            name: "ihris",
+            title: "iHRIS Knowledge Base",
+            url: "https://example.invalid/ihris/",
+            repository: "https://example.invalid/ihris-repo",
+            relation: "folio-of",
+          },
+        ],
+      }),
+    });
+    const [tile] = tilesOf(f);
+    expect(tile?.associated).toEqual([
+      {
+        name: "ihris",
+        title: "iHRIS Knowledge Base",
+        url: "https://example.invalid/ihris/",
+        repository: "https://example.invalid/ihris-repo",
+        relation: "folio-of",
+      },
+    ]);
+  });
+
+  test("the two relations stay TWO fields — an association is not a remote graph", () => {
+    // `AssociatedHarness`'s docstring rules on exactly this: *"a separate
+    // list, not a `RemoteGraph` with more fields"*. One field carrying both
+    // would make every consumer re-derive which it is holding.
+    const f = fixture({
+      host: host({
+        associatedHarnesses: [{ name: "a", title: "A", url: "https://example.invalid/a/" }],
+        remoteGraphs: [{ id: "g", url: "https://example.invalid/g/", graphKinds: ["beans"] }],
+      }),
+    });
+    const [tile] = tilesOf(f);
+    expect(tile?.associated.map((a) => a.name)).toEqual(["a"]);
+    expect(tile?.remoteGraphs.map((g) => g.id)).toEqual(["g"]);
+  });
+
+  test("declaring NEITHER gives `[]` and never `undefined` — the empty group must be renderable", () => {
+    // Owner ruling on #1238: a relation with nothing declared gets a row
+    // SAYING so rather than a silent absence. An absent field and an empty one
+    // render identically in Liquid and mean different things, so the generator
+    // answers `[]` — the same distinction `visualisationsOf` already protects.
+    const [tile] = tilesOf(fixture({ host: host() }));
+    expect(tile?.associated).toEqual([]);
+    expect(tile?.remoteGraphs).toEqual([]);
+  });
+});
+

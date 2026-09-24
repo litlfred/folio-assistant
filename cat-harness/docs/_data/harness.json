@@ -458,6 +458,8 @@
       "needs": [
         "smart-ig"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "avatar": {
         "src": "/assets/img/harness/landing-operations-card.webp",
@@ -549,6 +551,8 @@
       "label": "agent-skills",
       "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -603,6 +607,8 @@
       "label": "bootstrap-tools",
       "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -653,6 +659,8 @@
       "label": "folio-assistant-sci",
       "description": "Scientific source material used by folios that formalise mathematics — one document today.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -707,6 +715,8 @@
       "label": "large-datasets",
       "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -766,6 +776,8 @@
       "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 199,
       "reads": "an open book — a repository of published documents, in WHO blue",
@@ -842,6 +854,8 @@
       "label": "who-style-guide",
       "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
       "footer": false,
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -895,6 +909,8 @@
       "needs": [
         "smart-ig"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -947,6 +963,8 @@
       "needs": [
         "smart-base"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -991,6 +1009,8 @@
       "needs": [
         "smart-base"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -1035,6 +1055,8 @@
       "needs": [
         "smart-base"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -1079,6 +1101,8 @@
       "needs": [
         "fhir-harness"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 199,
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
@@ -1153,6 +1177,8 @@
       "needs": [
         "folio-assistant-core"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "avatar": {
         "src": "/assets/img/harness/landing-engineer-card.webp",
@@ -1236,6 +1262,8 @@
       "needs": [
         "folio-assistant-core"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
@@ -1290,6 +1318,8 @@
       "needs": [
         "cat-harness"
       ],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "avatar": {
         "src": "/assets/img/harness/landing-library-card.webp",
@@ -1414,6 +1444,16 @@
       "needs": [
         "bootstrap"
       ],
+      "associated": [
+        {
+          "name": "ihris",
+          "title": "iHRIS Knowledge Base",
+          "url": "https://litlfred.github.io/ihris/",
+          "repository": "https://github.com/litlfred/ihris",
+          "relation": "folio-of"
+        }
+      ],
+      "remoteGraphs": [],
       "icon": {
         "src": "/assets/img/icons/cat-mark.svg",
         "title": "c@t"
@@ -1605,6 +1645,8 @@
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],
+      "associated": [],
+      "remoteGraphs": [],
       "icon": null,
       "avatar": {
         "src": "/assets/img/harness/landing-bootstrap-card.webp",

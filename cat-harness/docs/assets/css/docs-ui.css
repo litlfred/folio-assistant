@@ -7379,3 +7379,29 @@ a.fa-harness-tab__body:focus-visible {
   outline: 3px dashed var(--fa-glass-accent);
   outline-offset: -3px;
 }
+
+/* THE REMOTE GROUP — what a harness knows and does not hold.
+ *
+ * `603s` item 4, owner ruling on #1238: associated harnesses render, and
+ * `remoteGraphs` — which nothing in this tree declares — gets a row saying
+ * "none declared" rather than a silent absence.
+ *
+ * IT REUSES `.fa-harness-tab__graphs` AND ADDS ONLY A HEADING. A second list
+ * appearance for a second list meaning is two things a reader has to learn,
+ * and the rows here ARE the same kind of row — a name, and a note saying what
+ * state it is in. The modifier exists to be selectable, not to restyle.
+ *
+ * `gjli`: the local/remote distinction is carried by the HEADING, in words. An
+ * outward `↗` sits in each link and is `aria-hidden`, so a screen reader gets
+ * the heading rather than a glyph to interpret. Nothing here distinguishes
+ * local from remote by colour, which was the one thing this surface could not
+ * do and stay usable. */
+.fa-harness-tab__remote-heading {
+  margin: 0.5rem 0 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+

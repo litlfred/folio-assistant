@@ -249,8 +249,62 @@ export type HarnessTile = {
    * instance asserting it sits on nothing.
    */
   needs?: readonly string[];
+  /**
+   * Harnesses this one is ASSOCIATED with — known, and held nowhere here.
+   * {@link AssociatedHarness}, issue #1146.
+   */
+  associated: HarnessAssociated[];
+  /**
+   * Graph kinds this instance REFERENCES at a URL and does not hold.
+   * {@link RemoteGraph}.
+   *
+   * `[]` today for every instance in this tree, and that is the point rather
+   * than an oversight — see {@link HarnessAssociated} for why the two are two
+   * fields.
+   */
+  remoteGraphs: HarnessRemoteGraph[];
   /** Candidates with no published page, and any other honest gap. */
   findings: string[];
+};
+
+/**
+ * One associated harness, as the navbar needs it.
+ *
+ * ## Why this is NOT merged with {@link HarnessRemoteGraph}
+ *
+ * Both are "somewhere else", and that similarity is the trap.
+ * `AssociatedHarness`'s own docstring rules on it:
+ *
+ * > {@link RemoteGraph} is a GRAPH known but not held: graph kinds at a URL.
+ * > An associated harness is an INSTANCE — a declaration of its own — so it is
+ * > a separate list, not a `RemoteGraph` with more fields.
+ *
+ * They are the fourth and third relations of four — associated and
+ * references, beside depends (`needs`) and utilizes (`dependencies`). One
+ * field carrying both would make every consumer re-derive which it is holding,
+ * which is the same defect `ContentDirectory.path` was protected from when
+ * `RemoteGraph` was given its own node kind rather than an optional `url`.
+ *
+ * ## Nothing here fetches anything
+ *
+ * The owner, on #1146: *"Rendering one needs no network: the config panel
+ * draws these fields as declared, marked remote."* This carries the declared
+ * fields and no more; `url` is where a READER goes.
+ */
+export type HarnessAssociated = {
+  name: string;
+  title: string;
+  /** Where a reader goes. Followed by a person, never by this generator. */
+  url: string;
+  repository?: string;
+  relation?: string;
+};
+
+/** One referenced graph: kinds at a URL, with no bytes in this checkout. */
+export type HarnessRemoteGraph = {
+  id: string;
+  url: string;
+  graphKinds: readonly string[];
 };
 
 /**
@@ -996,6 +1050,28 @@ function tileFor(
     description: decl.description ?? "",
     footer: isExemptFrom(decl, "visualiser"),
     ...(decl.needs ? { needs: decl.needs } : {}),
+    /* REFERENCED, NEVER LOADED — both lists are the declaration, copied.
+     *
+     * `[]` rather than absent for each, because the navbar renders the section
+     * either way: the owner ruled on #1238 that a relation with nothing
+     * declared gets a row SAYING so rather than a silent absence, which is the
+     * 2026-09-22 inert-and-labelled ruling applied one level up. An absent
+     * field and an empty one would render identically and mean different
+     * things, which is the distinction `visualisationsOf` already protects
+     * ("`[]` for a directory that declares none — that is a real answer").
+     */
+    associated: (decl.associatedHarnesses ?? []).map((a) => ({
+      name: a.name,
+      title: a.title ?? a.name,
+      url: a.url,
+      ...(a.repository ? { repository: a.repository } : {}),
+      ...(a.relation ? { relation: a.relation } : {}),
+    })),
+    remoteGraphs: (decl.remoteGraphs ?? []).map((g) => ({
+      id: g.id,
+      url: g.url,
+      graphKinds: g.graphKinds,
+    })),
     // `avatarRegion` rides the ICON too, when the icon image declares one.
     // None does today; the THEME avatar below is where the declared crops
     // actually live. Kept because the two are different questions: an instance

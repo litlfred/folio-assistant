@@ -342,6 +342,85 @@
         </li>
       {%- endfor -%}
       </ul>
+
+      {%- comment -%}
+        WHAT THE HARNESS KNOWS AND DOES NOT HOLD — the other half of the
+        owner's ask for this list: *"a tab for all materizled local subgraphs
+        and declared remote graphs. opening up content should indicate if
+        local or remote"* (`603s`, item 4).
+
+        The local half is the `<ul>` above. This is the remote half, and it is
+        TWO relations rather than one, because the schema says they are two:
+
+          associatedHarnesses  an INSTANCE elsewhere, with its own declaration
+          remoteGraphs         graph KINDS at a URL, no declaration of ours
+
+        `AssociatedHarness`'s docstring refuses the merge outright -- *"a
+        separate list, not a `RemoteGraph` with more fields"* -- so this
+        renders two groups and never one.
+
+        NOTHING HERE FETCHES ANYTHING. The owner, on #1146: *"Rendering one
+        needs no network: the config panel draws these fields as declared,
+        marked remote."* Both groups are the declaration, rendered.
+
+        THE MARK IS A WORD, NOT A COLOUR. `remote` is written in the group
+        heading and `↗` is decorative beside each outward link, because `gjli`
+        is a standing rule and the one thing this surface must not do is carry
+        "local or remote" in a shade. The glyph is `aria-hidden`: a screen
+        reader gets the heading, not a symbol it has to interpret.
+
+        AN EMPTY GROUP SAYS SO. Owner ruling on #1238: `remoteGraphs` has zero
+        declarations anywhere in this tree, and the choice made was to render
+        the group with a row saying "none declared" rather than to omit it.
+        That is the 2026-09-22 inert-and-labelled ruling one level up -- a
+        silent absence cannot be told from a relation nobody has thought
+        about -- and it reuses the SAME row shape as an unlinked graph above,
+        so a reader learns one appearance rather than two.
+      {%- endcomment -%}
+      {%- assign _fa_assoc = t.associated | default: empty -%}
+      {%- assign _fa_rgraphs = t.remoteGraphs | default: empty -%}
+      {%- comment -%}
+        `aria-label`, NOT `aria-labelledby` — and this was a real defect caught
+        by building the page rather than by reading this file.
+
+        The first version gave the heading `id="fa-remote-{{ t.name }}"` and
+        pointed the list at it. **This include renders TWICE per page** (two
+        `<details class="fa-harness-tabs">` in the built `index.html`), so every
+        one of those ids was emitted twice and each `aria-labelledby` resolved
+        to whichever came first. That is the defect AGENTS.md names as the
+        reason `preview:site` exists — *"a generator once emitted raw `<h3>`
+        blocks giving 22 headings the SAME anchor, and `gates --all` was green
+        across it"*. It was green across this too.
+
+        `aria-label` carries the same name with no id to collide, so the list is
+        named for a screen reader whatever the page does with the include. The
+        visible heading stays: it is what a SIGHTED reader reads, and `gjli` is
+        why the local/remote split is words rather than a shade.
+      {%- endcomment -%}
+      <p class="fa-harness-tab__remote-heading" aria-hidden="true">Known elsewhere &mdash; remote</p>
+      <ul class="fa-harness-tab__graphs fa-harness-tab__graphs--remote"
+          aria-label="{{ t.label | default: t.title }} — known elsewhere, remote">
+        {%- for a in _fa_assoc -%}
+        <li class="fa-harness-graph">
+          <a class="fa-harness-graph__link" href="{{ a.url }}"
+             rel="noopener">{{ a.title | default: a.name }}<span aria-hidden="true"> &#x2197;</span></a>
+          <span class="fa-harness-graph__note">{{ a.relation | default: 'associated' }}</span>
+        </li>
+        {%- endfor -%}
+        {%- for g in _fa_rgraphs -%}
+        <li class="fa-harness-graph">
+          <a class="fa-harness-graph__link" href="{{ g.url }}"
+             rel="noopener">{{ g.id }}<span aria-hidden="true"> &#x2197;</span></a>
+          <span class="fa-harness-graph__note">referenced, not held</span>
+        </li>
+        {%- endfor -%}
+        {%- if _fa_assoc == empty and _fa_rgraphs == empty -%}
+        <li class="fa-harness-graph">
+          <span class="fa-harness-graph__link fa-harness-graph__link--unlinked">remote graphs</span>
+          <span class="fa-harness-graph__note">none declared</span>
+        </li>
+        {%- endif -%}
+      </ul>
       {%- endif -%}
     </li>
   {%- endfor -%}
