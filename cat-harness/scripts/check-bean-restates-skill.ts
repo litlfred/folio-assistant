@@ -160,6 +160,8 @@
  * Exit: 0 clean, 1 a real defect, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-restates-skill
+ * @covers bean-defs, beans, skills — it reads a bean against the skill it cites, so a finding
+ *   is about the pair
  */
 
 import { resolve } from "node:path";
