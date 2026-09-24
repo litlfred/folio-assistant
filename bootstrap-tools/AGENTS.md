@@ -6,7 +6,7 @@ both are about a boundary that is easy to erase by accident.
 
 ## Nothing you add here may make `bootstrap` need a tool
 
-That instance's README promises an Initiator **no harness, no server, no tools
+That instance's README promises a Bootstrapping Agent **no harness, no server, no tools
 and no work plan**, and that what it reads is *"a file you read, not something
 you run"*. This instance exists so that promise can stay true while its shapes
 are still first-class.

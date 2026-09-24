@@ -11,10 +11,6 @@
   "dependsOn": [
     { "ref": "req:fhir-validation", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/sushi-build.sh", "runtime": "bash", "phase": "validate" },
-    { "path": "scripts/ig-publisher-build.sh", "runtime": "bash", "phase": "validate" }
-  ],
   "routingPatterns": ["validate FHIR", "QA", "sushi", "IG Publisher", "conformance"],
   "tags": ["smart-guidelines", "fhir", "validation", "qa"],
   "package": "authoring-who-smart-guidelines",

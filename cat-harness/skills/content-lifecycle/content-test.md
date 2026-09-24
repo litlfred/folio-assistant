@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#test-before-publish"
+---
+
 # Content Testing
 
 End-to-end testing of content artifacts in realistic scenarios.

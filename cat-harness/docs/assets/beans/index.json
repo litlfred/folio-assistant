@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 259,
+      "count": 262,
       "unit": "beans"
     }
   },
@@ -133,6 +133,20 @@
       "updatedAt": "2026-09-22T18:09:11Z",
       "preview": "## What this is\n\nStream 2 of 3 in the 2026-09-22 consolidation (see the sibling claims under\n`vuip` and `yg29` for the stall measurement that prompted it). It owns **GOAL 2\n(`p5wm`) — 39 open beans**, the largest single group in the store.\n\nThis is the stream where the artefact a reader judges actually appears: the LHS\nnavbar, the visualisers, the stickies, avatars and themes.\n\n## What this stream",
       "file": "beans/defs/folio-assistant-10uc--stream-23-goal-2-the-rendered-surface-navbar-visua.md"
+    },
+    {
+      "id": "folio-assistant-12s9",
+      "title": "PREFIX = DECLARING SUBGRAPH: rename the folio: BPMN prefix and folio-*/v1 schema ids to the path of the Subgraph that declares them (owner ruling iwtn #1)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:03:10Z",
+      "updatedAt": "2026-09-23T21:03:10Z",
+      "preview": "## Owner ruling, 2026-09-23 (bean iwtn, ruling 1 of 4)\n\n> use `<sub>:` as prefix when assets are declared/instantiated in `<sub>`. what patterns for sub-sub-graphs? `<path>:<in>:<graph>:` or so?\n\nA nested Subgraph uses its **path of Subgraph ids joined with dots**. XML forbids a colon inside a prefix, so `a:b:c:` cannot be used. The owner chose this pattern on 2026-09-23 over \"Harness name only\" a",
+      "file": "beans/defs/folio-assistant-12s9--prefix-declaring-subgraph-rename-the-folio-bpmn-pr.md"
     },
     {
       "id": "folio-assistant-12ws",
@@ -347,6 +361,20 @@
       "file": "beans/defs/folio-assistant-30hn--bpmn-16-of-33-processes-are-strict-by-omission-not.md"
     },
     {
+      "id": "folio-assistant-319n",
+      "title": "ZOD IS IN CAT-HARNESS: move bootstrap-tools' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:17Z",
+      "updatedAt": "2026-09-23T22:52:17Z",
+      "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
+      "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
+    },
+    {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
       "status": "in-progress",
@@ -391,14 +419,14 @@
     {
       "id": "folio-assistant-46nf",
       "title": "B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:20:00Z",
-      "updatedAt": "2026-09-23T22:20:00Z",
+      "updatedAt": "2026-09-23T22:49:20Z",
       "preview": "Part of s4sp (plan B). The 35 role voice sentences become one-rule voice profiles in folio-assistant-core (activeIn.roles to the cat-harness role); the 107 useCases become scenarios/stories.json UserStory nodes pointing at their role. Role.skills typed SkillNameSchema. kg-audit role-declares-voice and role-has-use-cases replaced by role-has-story and story-role-resolves; check:voices resolves acti",
       "file": "beans/defs/folio-assistant-46nf--b2-1168-voices-and-user-stories-point-at-their-rol.md"
     },
@@ -1599,14 +1627,14 @@
     {
       "id": "folio-assistant-fz39",
       "title": "DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:00:43Z",
-      "updatedAt": "2026-09-23T18:00:43Z",
+      "updatedAt": "2026-09-23T21:53:32Z",
       "preview": "Found by the ojcx rehearsal, 2026-09-23. A document folio's `table` block, with its rows written as a Markdown table in `<block>.md`, renders in the staging site as a paragraph of raw `| a | b |` text, not as a `<table>`.\n\n**Cause:** `cat-harness/scripts/build-document-site.ts` runs `remark().use(remarkHtml)` without GitHub-flavoured Markdown, so pipe tables, strikethrough and task lists are not p",
       "file": "beans/defs/folio-assistant-fz39--document-site-markdown-tables-render-as-raw-pipe-t.md"
     },
@@ -2213,6 +2241,20 @@
       "updatedAt": "2026-09-18T17:18:22Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
+    },
+    {
+      "id": "folio-assistant-nm7l",
+      "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T23:20:35Z",
+      "updatedAt": "2026-09-23T23:20:35Z",
+      "preview": "Part of s4sp (plan B3, split: B3a arrows, B3b skill I/O contracts). Skill scripts/validators/mcpServices removed (26 skills, no live reader); the 6 real scripts become Tools (content-graph-analysis, pages-index, proof-dependency-graph, proof-objects-extract, proof-status-update, paper-latex-build) and content-manifest-validate also satisfies content-validation. Requirement statements lose satisfie",
+      "file": "beans/defs/folio-assistant-nm7l--b3a-1168-scriptsvalidatorsmcpservices-become-tools.md"
     },
     {
       "id": "folio-assistant-nnpk",

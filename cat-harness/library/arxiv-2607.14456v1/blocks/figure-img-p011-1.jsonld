@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p011-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p011-1.png",
+  "pageStart": 11,
+  "pageEnd": 11,
+  "narrative": {
+    "text": "Figure 3, per-workflow agent-run evaluation, in four panels, each with ten workflow groups of three bars — Cline (green), Custom (orange) and Roo (blue). (a) Tool-Use Exactness, % of runs with zero tool errors, ↑ better. (b) Tool-call errors, mean error count, ↓ better. (c) Latency, seconds per effective step, ↓ better. (d) Process adherence, % of runs with no process deviation, ↑ better. READ OFF THE CHART, and recorded because the surrounding text does not say it: the specialist system is NOT best everywhere. In panel (a) it is lowest of the three on Cost (49.6 against Cline 76.0 and Roo 67.6) and on Tournament (46.2 against 99.4 and 94.9), and second on Weather (81.8 against Cline 90.1). In panel (b) it has the MOST errors on Cost (1.43 against 0.55 and 0.34), on Tournament (0.93 against 0.01 and 0.13) and on Weather (0.62 against 0.1 and 0.72, where it is second). In panel (d) it is lowest on Cost (57.2 against 87.1 and 76.2) and on Tournament (55.2, the other two near 90). The aggregate advantage in Figure 4 is carried disproportionately by two workflows: on Risk, panel (b) shows 0.20 errors against 13.19 and 11.94, and panel (a) 98.6% against 0.4% and 0.9%.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-011",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

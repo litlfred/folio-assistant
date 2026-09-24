@@ -59,9 +59,6 @@ export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
 export const ActorKindSchema = z.enum(ACTOR_KINDS);
 export const ConformanceSchema = z.enum(["SHALL", "SHOULD", "MAY", "SHALL NOT"]);
 export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallback"]);
-export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
-export const ScriptPhaseSchema = z.enum(["pre", "execute", "validate", "post"]);
-export const ValidatorScopeSchema = z.enum(["file", "block", "chapter", "project"]);
 /**
  * The lifecycle points a hook can bind to.
  *
@@ -85,7 +82,6 @@ export const HookEventSchema = z.enum([
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",
 ]);
-export const SatisfiedByKindSchema = z.enum(["skill", "capability", "requirement-statement"]);
 export const DependencyKindSchema = z.enum(["skill", "requirement"]);
 export const LifecycleStageSchema = z.enum([
   "plan", "author", "validate", "review", "test", "publish", "feedback", "retire",
@@ -150,6 +146,11 @@ export const CapabilityDefinitionSchema = z.object({
    * the fallback never fires. `check:fallback-roles` reports that.
    */
   fallbackTo: z.string().min(1).optional(),
+  /**
+   * The requirement statements this capability discharges. See
+   * {@link RequirementStatementRefSchema}.
+   */
+  satisfies: z.array(z.lazy(() => RequirementStatementRefSchema)).optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────
@@ -178,20 +179,6 @@ export const SkillDependencySchema = z.object({
   ref: z.string(),
   kind: DependencyKindSchema,
   conformance: ConformanceSchema,
-});
-
-export const SkillScriptSchema = z.object({
-  path: z.string(),
-  runtime: ScriptRuntimeSchema,
-  phase: ScriptPhaseSchema,
-  args: z.array(z.string()).optional(),
-});
-
-export const SkillValidatorSchema = z.object({
-  id: z.string(),
-  path: z.string(),
-  runtime: ScriptRuntimeSchema,
-  scope: ValidatorScopeSchema,
 });
 
 /** Mirrors `SkillSchemaRef` — a TS module + the type names a skill touches. */
@@ -224,9 +211,11 @@ export const SkillDefinitionSchema = z.object({
   requiredCapabilities: z.array(SkillCapabilityRefSchema),
   dependsOn: z.array(SkillDependencySchema).optional(),
   allowedTools: z.array(z.string()).optional(),
-  scripts: z.array(SkillScriptSchema).optional(),
-  mcpServices: z.array(z.string()).optional(),
-  validators: z.array(SkillValidatorSchema).optional(),
+  // No `scripts`, `mcpServices` or `validators` (#1168, B3). Each named a
+  // mechanism FROM the skill, the general node pointing at its dependents:
+  // a new script meant editing the skill, and nothing read any of the three.
+  // A mechanism is a Tool that names the skill it `satisfies`
+  // (`schemas/tool.ts`); a Tool reachable only over MCP is refused there.
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
@@ -246,10 +235,22 @@ export const SkillDefinitionSchema = z.object({
 
 // ─── Requirement ─────────────────────────────────────────────────────────────
 
-export const SatisfiedByRefSchema = z.object({
-  kind: SatisfiedByKindSchema,
-  ref: z.string(),
-});
+/**
+ * A pointer AT one requirement statement: `req:<requirement id>#<statement key>`.
+ *
+ * Held by what SATISFIES the statement — a skill in its front matter
+ * (`satisfies:`), a capability in its JSON — never by the statement (#1168,
+ * B3). A requirement is the general node: it is written once, and skills and
+ * capabilities come to discharge it later, so a statement listing its
+ * satisfiers had to be edited every time one was added. FHIR R5's
+ * `Requirements.statement.satisfiedBy` is the inverse of this relation and is
+ * derivable from it for a projection that needs it.
+ *
+ * @ref RequirementStatementSchema
+ */
+export const RequirementStatementRefSchema = z
+  .string()
+  .regex(/^req:[a-z0-9-]+#[a-z0-9-]+$/, "a requirement statement ref is req:<requirement>#<statement key>");
 
 export const RequirementStatementSchema = z.object({
   key: z.string().min(1),
@@ -257,7 +258,6 @@ export const RequirementStatementSchema = z.object({
   conformance: ConformanceSchema,
   requirement: z.string(),
   actors: z.array(z.string()).optional(),
-  satisfiedBy: z.array(SatisfiedByRefSchema).optional(),
   dependsOn: z.array(z.string()).optional(),
 });
 
@@ -426,13 +426,10 @@ export type Conformance = z.infer<typeof ConformanceSchema>;
 export type DegradationStrategy = z.infer<typeof DegradationStrategySchema>;
 
 /** Script execution runtimes. */
-export type ScriptRuntime = z.infer<typeof ScriptRuntimeSchema>;
 
 /** Lifecycle phase in which a script runs. */
-export type ScriptPhase = z.infer<typeof ScriptPhaseSchema>;
 
 /** Scope of a validator's operation. */
-export type ValidatorScope = z.infer<typeof ValidatorScopeSchema>;
 
 /** Hook events that trigger session lifecycle actions. */
 export type HookEvent = z.infer<typeof HookEventSchema>;
@@ -441,7 +438,6 @@ export type HookEvent = z.infer<typeof HookEventSchema>;
 export type IdentitySource = z.infer<typeof IdentitySourceSchema>;
 
 /** What satisfies a requirement statement. */
-export type SatisfiedByKind = z.infer<typeof SatisfiedByKindSchema>;
 
 /** Dependency target kind. */
 export type DependencyKind = z.infer<typeof DependencyKindSchema>;
@@ -480,9 +476,7 @@ export type SkillCapabilityRef = z.infer<typeof SkillCapabilityRefSchema>;
 
 export type SkillDependency = z.infer<typeof SkillDependencySchema>;
 
-export type SkillScript = z.infer<typeof SkillScriptSchema>;
 
-export type SkillValidator = z.infer<typeof SkillValidatorSchema>;
 
 /**
  * The core type. A skill has typed metadata (who can invoke it, what it needs,
@@ -490,7 +484,7 @@ export type SkillValidator = z.infer<typeof SkillValidatorSchema>;
  */
 export type SkillDefinition = z.infer<typeof SkillDefinitionSchema>;
 
-export type SatisfiedByRef = z.infer<typeof SatisfiedByRefSchema>;
+export type RequirementStatementRef = z.infer<typeof RequirementStatementRefSchema>;
 
 export type RequirementStatement = z.infer<typeof RequirementStatementSchema>;
 

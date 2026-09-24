@@ -12,6 +12,8 @@ be followed mechanically rather than inferred:
 | Workflow lane | `<folio:role ref>` | Role |
 | Workflow activity | `<folio:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
+| Skill, Capability | `satisfies` | Requirement statement |
+| Skill | `graph-kinds` | Graph kind |
 | Test | exercises | Skill |
 | any content node | `$schema` | Schema |
 | Folio | the board layer | Board, then Position, then Note |

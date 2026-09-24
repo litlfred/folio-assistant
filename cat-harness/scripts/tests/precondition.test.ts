@@ -58,7 +58,7 @@ describe("the real diagram — `initialize-harness`", () => {
     expect(m.preconditions).toHaveLength(4);
     expect(m.preconditions.filter((p) => p.kind === "stated").map((p) => p.id)).toEqual([
       "knows-the-vocabulary",
-      "told-it-is-an-initiator",
+      "told-it-is-a-bootstrapping-agent",
       "at-the-start",
     ]);
     expect(m.preconditions.filter((p) => p.kind === "checkable")).toHaveLength(1);
@@ -69,13 +69,13 @@ describe("the real diagram — `initialize-harness`", () => {
     const v = evaluatePreconditions(m, ROOT);
     expect(v.filter((x) => x.verdict === "could-not-determine").map((x) => x.precondition.id)).toEqual([
       "knows-the-vocabulary",
-      "told-it-is-an-initiator",
+      "told-it-is-a-bootstrapping-agent",
       "at-the-start",
     ]);
   });
 
   test("the one claim about the WORLD is answered, and answers what it says", async () => {
-    // It checks that README.md EXISTS. Whether the Initiator READ it is not
+    // It checks that README.md EXISTS. Whether the Bootstrapping Agent READ it is not
     // observable, and the declaration says so rather than implying otherwise.
     const m = await loadProcessModel(REAL);
     const readme = evaluatePreconditions(m, ROOT).find((x) => x.precondition.id === "readme-present")!;

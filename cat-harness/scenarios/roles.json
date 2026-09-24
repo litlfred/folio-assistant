@@ -442,6 +442,19 @@
       "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
     },
     {
+      "id": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "deep-document-research"
+      ],
+      "persona": "Stops on a stated condition rather than on a feeling of having read enough. Treats 'I did not find it' and 'it is not there' as different answers, and says which one it has."
+    },
+    {
       "id": "evidence-agent",
       "title": "Evidence agent",
       "description": "Retrieves and appraises external evidence for a guideline claim.",

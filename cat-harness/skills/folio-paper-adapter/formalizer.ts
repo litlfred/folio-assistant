@@ -13,7 +13,6 @@ export const formalizer: SkillDefinition = {
   dependsOn: [
     { ref: "content-validation", kind: "skill", conformance: "SHALL" },
   ],
-  mcpServices: ["lean-lsp"],
   routingPatterns: [
     "fill\\s+in.*proof",
     "prove",

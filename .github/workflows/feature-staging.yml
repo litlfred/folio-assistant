@@ -882,6 +882,10 @@ jobs:
           bun run cat-harness/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
           bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
+          # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
+          # LAST, and it never overwrites the graph's `.json` copy above.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.

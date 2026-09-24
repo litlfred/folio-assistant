@@ -6,6 +6,8 @@ description: >
   that is the seam the just-the-docs transition cuts at. Read before changing a
   post-processing step, and before assuming the Publisher produced something it
   did not.
+graph-kinds:
+  - qa-report
 ---
 
 # dak-postprocessing

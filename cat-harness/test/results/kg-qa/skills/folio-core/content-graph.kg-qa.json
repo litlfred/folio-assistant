@@ -34,8 +34,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-core/content-graph.ts",
+          "detail": "cat-harness/skills/folio-core/content-graph.ts changed since cat-harness/skills/folio-core/content-graph.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -43,8 +48,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 2,
+    "pass": 3,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   },

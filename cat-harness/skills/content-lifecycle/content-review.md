@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#review-before-test"
+---
+
 # Content Review
 
 Formal review and approval of validated content before publication.
