@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -74,6 +75,7 @@ permissions:
 
 jobs:
   lean-bare-import:
+    # bpmn-node: Task_Lean
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
@@ -131,6 +133,7 @@ jobs:
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
   python-imports:
+    # bpmn-node: Task_Python
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
@@ -213,6 +216,7 @@ jobs:
           exit $rc
 
   typescript:
+    # bpmn-node: Task_TypeScript
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
@@ -1289,6 +1293,7 @@ jobs:
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
   e2e:
+    # bpmn-node: Task_E2E
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
@@ -1319,6 +1324,7 @@ jobs:
         run: bunx playwright test
 
   rust-wildcard:
+    # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
@@ -1355,6 +1361,7 @@ jobs:
           fi
 
   dependency-advisories:
+    # bpmn-node: Task_Advisories
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:

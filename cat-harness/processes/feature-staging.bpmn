@@ -12,9 +12,6 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_FeatureStaging" name="Staging a feature branch preview, and taking it down" isExecutable="false">
     <bpmn:documentation>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, owner: &quot;make sure all workflows documented as bpmn&quot;. This is the first `.github/workflows/*.yml` documented here, and it was chosen because its shape was the least visible: three jobs, eight `if:` branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment.&#10;&#10;Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean `w2g5`: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing.&#10;&#10;TWO GATEWAYS, and both are three-state rather than yes/no. `Removal confirmed?` reads a merge as confirmation in its own right (bean `1feu`) while still requiring a label for a close without a merge. `Still in use?` refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission.&#10;&#10;EVERY PATH THAT CHANGES `STAGING/` WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean `plj1` left the publish branch in for months.&#10;&#10;The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes `build-pipeline` the right lane rather than a convenient one.</bpmn:documentation>
-    <bpmn:extensionElements>
-      <cat-harness.processes:implements workflow=".github/workflows/feature-staging.yml"/>
-    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_FeatureStaging">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</bpmn:documentation>
@@ -48,9 +45,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_PR" name="Pull request opened,&#10;synchronised or reopened">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="stage"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Build" name="Build the docs site&#10;Jekyll · TypeDoc · KG export">
@@ -89,9 +83,6 @@
       <bpmn:incoming>Flow_4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Closed" name="Pull request&#10;closed">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="cleanup"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Slug" name="Derive the slug&#10;from the head ref">
@@ -139,9 +130,6 @@
       <bpmn:incoming>Flow_11</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Dispatch" name="Dispatched with&#10;cleanup_slug">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="cleanup-dispatch"/>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
     </bpmn:startEvent>
