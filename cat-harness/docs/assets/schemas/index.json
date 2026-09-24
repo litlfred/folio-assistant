@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 167,
+      "count": 168,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1365,6 +1365,14 @@
       "name": "window-stack",
       "graphNode": "schema",
       "summary": "Which cards are OPEN on a board, and in what order they stack.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/withheld.ts",
+      "instance": "cat-harness",
+      "name": "withheld",
+      "graphNode": "schema",
+      "summary": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
       "isTest": false
     },
     {
@@ -27469,6 +27477,13 @@
           "type": "z .string() .regex(/^[a-z][a-z0-9-]*$/, \"a theme id is lowercase kebab-case\") .optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "layout",
+          "type": "z.enum(THEME_LAYOUTS).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which of the theme's three crops this sticky shows. ABSENT means the"
         }
       ],
       "extendsNames": [],
@@ -27476,6 +27491,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "THEME_LAYOUTS",
         "z"
       ],
       "exported": true
@@ -34321,6 +34337,85 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#Withheld",
+      "name": "Withheld",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "name": "WithheldEntrySchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Relative to the directory holding the file; a directory takes its whole subtree."
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/withheld.ts#WithheldSchema",
+      "name": "WithheldSchema",
+      "module": "cat-harness/schemas/withheld.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-withheld/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "paths",
+          "type": "z.array(WithheldEntrySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/withheld.ts#WithheldEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -43518,6 +43613,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/withheld.ts#WithheldSchema",
+      "to": "cat-harness/schemas/withheld.ts#WithheldEntrySchema",
+      "via": "paths",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "folio-assistant-core/schemas/adjudication.ts#AdjudicationRequestSchema",

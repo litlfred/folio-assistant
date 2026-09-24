@@ -7,7 +7,7 @@ priority: normal
 tags:
     - roast
 created_at: 2026-09-20T18:03:45Z
-updated_at: 2026-09-24T12:00:00Z
+updated_at: 2026-09-24T14:00:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -751,6 +751,41 @@ Owner, 2026-09-23: *"everything extracted to glosasay / skos? accesible in ihris
 `docs/glossary/` now shows the counts by state. Each extracted row carries a "candidate, extracted" badge, and a **Show** choice (all / authored only / extracted only) sits beside the text filter. The Sources section splits into authored and extracted, with an instance × asset-type table of counts linked to each SKOS file. schema.org `DefinedTermSet` carries the **authored terms only**: it is what a search engine reads as "this site defines X", and a candidate is not a curated definition. The SKOS carries everything, with `skos:note "candidate"`.
 
 **Size, measured:** the page went from **9 KB (7 terms) to 1.4 MB (2,428 terms)** before compression. It is fetched in one request and the page states that near the top. It keeps A–Z and the filter. No search engine was added (bean `4pm8`: Pagefind only in the large-datasets sub-graph). To keep the size down, an extracted row does not print its term IRI, because that was the largest cost per row. An authored row still prints it. The generated schemes are 1.0 MB and the SKOS 1.9 MB, both committed. `{` is escaped on the page, because an extracted `{{` would be read as Liquid.
+
+**Superseded 2026-09-24 by the split below.** The Show choice is gone and the single page is now an index plus one page per asset type.
+
+### SPLIT PER ASSET TYPE, 2026-09-24 (owner decision)
+
+The owner, asked what to do about the 1.4 MB page (1.5 MB by the time it was split), chose **"Split per asset type"**:
+
+- `docs/glossary/` (the index) keeps the authored terms, the counts, the Sources, and a Pages table linking each asset type's page with its term count and size.
+- `docs/glossary/<type>/` for skills, tools, bpmn-activities, dmn-decisions and schema-fields each holds that type's extracted candidates from every instance, with A–Z, the text filter and the "candidate, extracted" badge. The Show choice went: each page now holds one state.
+- The SKOS files are unchanged.
+
+**Sizes, measured before compression:**
+
+| page | before | after |
+|---|---|---|
+| `glossary/` | 1.5 MB (1,522,496 B, all 2,439 terms) | 16 KB (15,998 B; 7 authored terms, in 2 schemes after the ownership rule below) |
+| `glossary/skills/` | — | 192 KB (196,833 B; 271) |
+| `glossary/tools/` | — | 63 KB (64,772 B; 98) |
+| `glossary/bpmn-activities/` | — | 403 KB (412,891 B; 531) |
+| `glossary/dmn-decisions/` | — | 7 KB (7,057 B; 9) |
+| `glossary/schema-fields/` | — | 823 KB (842,971 B; 1,523) |
+
+**Budgets:** 64 KB for the index and 1 MB for an asset type's page (`PAGE_BUDGET` in `glossary-page.ts`). Each page states its size and budget, and `check:glossary` fails a page over budget. A page that outgrows its budget is split further, not given a larger one. Schema fields is the closest, at 80% of its budget.
+
+**Tests** (`glossary.test.ts`, "the glossary pages"): every term appears exactly once across all the pages, on the page its scheme belongs to; the index holds authored terms only and each type page only its type's extracted terms; each page is under its budget and says so; the index links every type page and each links back; every page keeps the filter and A–Z. Mutation-checked by hand, 4 ways, each red: a type's terms also rendered on the index (4 tests), a type link dropped from the index (1), a budget halved (1), a type page's term list dropped (4).
+
+The wireframe `docs/wireframes/glossary-page/` now has two candidates, `as-is.html` (the index) and `as-is-type-page.html` (Schema fields), each checked at web 1280 and mobile 390.
+
+### Terms minted by the instance that owns their source, 2026-09-24 (owner rule)
+
+Owner: *"make sure all glossary terms properly localed to ihris so [no] collision w/ other subgraphs. general rule/skill"*. A scheme and its terms live in the namespace of the instance whose root holds the source asset. In a folio with sub-instances that is the sub-instance, never the root, even when the `glossary/` directory is declared at the root. A code list extended by several packages belongs to the instance that defines it, which the scheme names with its own `source`. The rule is in `glossary-terms.md` § Conventions.
+
+- `collect()` now places an authored scheme with `schemeOwner`: the instance its own `source` names, otherwise the one instance holding every term's source, otherwise the declaring instance. It refuses a scheme sourced in several instances with no defining source.
+- `check:glossary` adds three checks over every instance: (a) no two schemes mint one scheme IRI; (b) no two instances resolve to one namespace; (c) every term with a repository source, authored or extracted, has its IRI in the owning instance's namespace. `glossary.test.ts` recomputes ownership independently of `collect()`. Each check was mutation-tested by hand and went red: a duplicate scheme, `bootstrap` given cat-harness's stub, authored schemes minted in the declaring instance, and extracted schemes minted in core.
+- **One authored scheme broke the rule.** Core's `platform` scheme had 6 of its 7 terms sourced in cat-harness. It is now split: `folio-assistant-core/glossary/cat-harness.glossary.json` (cat-harness's `platform`, 6 terms) and core's `platform` (1 term, `glossary`). **Six published IRIs moved** from `…/folio-assistant-core/ns#glossary/platform/<id>` to `…/cat-harness/ns#glossary/platform/<id>`, one day after they were first published. The SKOS gained `cat-harness--platform.skos.jsonld`. Extracted terms were already compliant.
 
 ### docs-auto: considered and not used, and why
 
