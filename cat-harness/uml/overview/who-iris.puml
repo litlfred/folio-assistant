@@ -20,6 +20,15 @@ package "who-iris/library" as pkg_who_iris_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Path" as who_iris_library_folio_withheld_v1_Path <<json: WithheldSchema>> #f4f4f1 {
+    path [1] : string
+    reason [1] : string
+  }
+  class "folio-withheld/v1" as who_iris_library_folio_withheld_v1_folio_withheld_v1 <<json: WithheldSchema>> #f4f4f1 {
+    $schema [1] : 'folio-withheld/v1'
+    _comment [0..1] : string
+    paths [0..*] : Path[]
+  }
 }
 package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catalogue>> {
   class "Value" as who_iris_who_iris_catalogue_folio_dublin_core_v1_Value <<json: DublinCoreRecordSchema>> #f4f4f1 {
@@ -140,6 +149,7 @@ package "who-iris/who-iris-scripts" as pkg_who_iris_who_iris_scripts <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_scripts_code
 }
 
+who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
 who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
 who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Field : fields
 who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream *-- "1..*" who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion : maskedRegions

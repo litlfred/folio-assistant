@@ -24,10 +24,10 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>17</b><span>specifications</span></div>
+<div class="xs-stat"><b>16</b><span>specifications</span></div>
 <div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>36</b><span>declared dependents</span></div>
-<div class="xs-stat"><b>0</b><span>dependents that no longer resolve</span></div>
+<div class="xs-stat"><b>182</b><span>declared uses</span></div>
+<div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
 ## The specifications
@@ -41,7 +41,6 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
-| **[Data Catalog Vocabulary (DCAT) - Version 3](#w3c-dcat-3)**<br>`w3c-dcat-3` | W3C | [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) | `cites` — it is referenced, and nothing here is validated against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
 | **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
@@ -52,20 +51,16 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
 | **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [unpinned](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
-## Does every declared dependent still exist?
+## Who declares each specification
 
-`usedBy` is the blast radius of a version bump, and it is hand-written. A
-path that has since been renamed leaves the record claiming a dependency
-that is not there — which reads as a resolved reference in every listing,
-the same way a dangling citation does one graph over.
+A user declares the specification it depends on; the record names no user.
+That is data-modelling step 8 — the dependent holds the pointer — and it is
+why this list cannot drift from the code: a file that stops declaring stops
+being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`
+front-matter list, an `xmlns` binding, and a graph kind whose typing module
+declares the spec (bean `u63y`).
 
-**Three states, and the middle one is not a finding.** A glob or a path with
-a note after it names something this cannot open and is written that way on
-purpose; reporting it as broken would teach a reader to ignore the column.
-
-Every one of the **30** entries spelled as a path
-resolves in this checkout. **6** name a set or
-carry a note and were not checked.
+Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -75,7 +70,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**18 declared and not in use.** Not a defect on its own: a
+**17 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -92,7 +87,6 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/2002/07/owl#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
-- `http://www.w3.org/ns/dcat#`
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
@@ -113,11 +107,11 @@ a registry nobody prunes is one that stops describing the repository.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `folio-assistant-core/schemas/dublin-core.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `who-iris/catalogue/records/*.dc.json` | <span class="xs-tag xs-na">not a path</span> |
-| `who-iris/skills/iris-dspace.md` | <span class="xs-tag xs-ok">resolves</span> |
+| `folio-assistant-core/schemas/dublin-core.ts` | `@conformsTo` tag |
+| `folio-dublin-core/v1 nodes` | through the module that types it (`folio-assistant-core/schemas/dublin-core.ts`) |
+| `who-iris/skills/iris-dspace.md` | `conformsTo:` front matter |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -160,9 +154,9 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -185,11 +179,14 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `processes/*.bpmn` | <span class="xs-tag xs-na">not a path</span> |
-| `src/workflow/ — the engine that executes them` | <span class="xs-tag xs-na">not a path</span> |
-| `scripts/render-bpmn.ts — the published SVGs` | <span class="xs-tag xs-na">not a path</span> |
+| `bootstrap/processes/*.bpmn (3)` | `xmlns` binding |
+| `cat-harness/processes/*.bpmn (69)` | `xmlns` binding |
+| `cat-harness/scripts/render-bpmn.ts` | `@conformsTo` tag |
+| `cat-harness/src/workflow/process-model.ts` | `@conformsTo` tag |
+| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -233,10 +230,13 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `processes/*.bpmn — the BPMNDI layout every diagram carries` | <span class="xs-tag xs-na">not a path</span> |
-| `scripts/render-bpmn.ts — bpmn-js reads DI to place shapes` | <span class="xs-tag xs-na">not a path</span> |
+| `bootstrap/processes/*.bpmn (3)` | `xmlns` binding |
+| `cat-harness/processes/*.bpmn (69)` | `xmlns` binding |
+| `cat-harness/scripts/render-bpmn.ts` | `@conformsTo` tag |
+| `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -254,9 +254,9 @@ graph. That is a determined zero, not an unfilled field.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 
 **Operative terms (4).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -283,9 +283,9 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
 
 **Operative terms (7).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -311,9 +311,9 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
 
 **Operative terms (1).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -322,26 +322,6 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
-
-### Data Catalog Vocabulary (DCAT) - Version 3 {#w3c-dcat-3}
-
-`w3c-dcat-3` — W3C, edition [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) — `cites`, meaning it is referenced, and nothing here is validated against it.
-
-**Namespaces.**
-
-- `http://www.w3.org/ns/dcat#`
-
-**Note.** REFERENCE ONLY — owner, 2026-09-23, on bean 4sim: 'Reference only'. Pinned so that the day a glossary or terminology RELEASE is described (a dcat:Dataset per published graph document, a dcat:Distribution per serialisation), the edition is already chosen and named, not guessed. Nothing in this repository emits a DCAT term today, so there are no operative terms. DCAT is also one more TARGET vocabulary for the ETL Tools of bean k74z.
-
-**What depends on it.**
-
-| entry | |
-|---|---|
-| `beans/defs/folio-assistant-4sim--dcat-describe-a-release-of-the-glossary-terminolog.md` | <span class="xs-tag xs-ok">resolves</span> |
-
-**No operative terms.** This repository conforms to the specification
-without branching on any of its terms, so none is materialised into the
-graph. That is a determined zero, not an unfilled field.
 
 ### ODRL Information Model 2.2 {#w3c-odrl}
 
@@ -355,10 +335,10 @@ graph. That is a determined zero, not an unfilled field.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/policies/folio-defaults.jsonld` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/schemas/odrl.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/odrl.ts` | `@conformsTo` tag |
+| `policies graph` | through the module that types it (`cat-harness/schemas/odrl.ts`) |
 
 **Operative terms (14).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -391,11 +371,12 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/scripts/code-lists.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/glossary-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/code-lists.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
+| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (3).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -417,11 +398,11 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/gen-bootstrap-graph.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/gen-bootstrap-graph.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 
 **Operative terms (3).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -443,10 +424,10 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/scripts/code-lists.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/code-lists.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
 
 **Operative terms (2).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -467,11 +448,12 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/scripts/glossary-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
+| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (5).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -495,14 +477,13 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/scripts/glossary-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/ns-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/schemas/vocabulary.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/glossary/glossary-ledger.json` | <span class="xs-tag xs-ok">resolves</span> |
-| `bootstrap/glossary/glossary-ledger.json` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
+| `cat-harness/schemas/vocabulary.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
+| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (14).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -535,9 +516,9 @@ a subset of the edition rather than a transcription of it.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -553,10 +534,10 @@ graph. That is a determined zero, not an unfilled field.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
-| `cat-harness/scripts/kg-export.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
+| `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -574,9 +555,9 @@ graph. That is a determined zero, not an unfilled field.
 
 **What depends on it.**
 
-| entry | |
+| user | declared by |
 |---|---|
-| `cat-harness/schemas/jsonld.ts` | <span class="xs-tag xs-ok">resolves</span> |
+| `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

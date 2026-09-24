@@ -849,22 +849,6 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
   {
-    script: "check:theme-art:check",
-    kind: "report",
-    // NOT a permanent exemption, and the unblocking condition is exact rather
-    // than "when somebody gets round to it": it refuses `landing-architecture`,
-    // which is declared with laptop and card and NO mobile crop.
-    // `resolveThemeBackdrop` refuses an incomplete backdrop wholesale, so that
-    // theme would render with no art at all — a real finding, not a false one.
-    //
-    // Gating on it today would make CI red over art that is MISSING rather than
-    // over a regression somebody introduced, which is the one thing a ratchet
-    // must not do. Wire it the moment the architecture mobile crop lands, or
-    // the incomplete declaration is withdrawn.
-    reason:
-      "refuses `landing-architecture`, whose mobile crop has never been supplied; gating would make CI red over missing art rather than over a regression. Wire it when that crop lands",
-  },
-  {
     script: "check:undeclared-files",
     kind: "report",
     reason:

@@ -87,8 +87,10 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : Record<string, TranslationQaEntry[]>
     updated_at [1] : string
   }
-  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4e6e6 {
-    //no schema declared, shape is whatever scripts/gen-docs-pages.ts writes//
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1 <<json: QaIndexSchema>> #f4e6e6 {
+    $schema [1] : 'folio-qa-index/v1'
+    page [1] : string
+    badges [1] : map<object>
   }
   class "folio-detangle-sidecar/v1" as cat_harness_qa_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> #f4e6e6 {
     $schema [1] : 'folio-detangle-sidecar/v1'

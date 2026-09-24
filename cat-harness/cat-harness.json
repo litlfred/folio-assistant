@@ -142,7 +142,13 @@
       "width": 1671,
       "height": 941,
       "title": "The architect, wide",
-      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content."
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, a rolled blueprint under one arm, notepad and pens in the pocket, under the same thought-cloud in the rain. Complete since 2026-09-24, when the owner supplied the portrait crop and a matching square one; before that the set was laptop + card only (commit 1b62b57 delivered two byte-identical files), so no `architecture` backdrop could be declared. The text region sits BELOW the @ mark and was found by rendering candidate boxes over each crop and looking at them. Wide crop: the cloud is pushed right by the cat, so the box starts clear of its ear.",
+      "textRegion": {
+        "x": 0.34,
+        "y": 0.3,
+        "w": 0.56,
+        "h": 0.26
+      }
     },
     {
       "id": "landing-architecture-card",
@@ -152,12 +158,34 @@
       "width": 1254,
       "height": 1254,
       "title": "The architect, square",
-      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, rolled drawings under one arm, notepad and pens in the pocket, under the same thought-cloud. INCOMPLETE SET, recorded here rather than left to be discovered: there is no portrait crop, so no `architecture` theme is declared. `theme.ts` refuses a theme missing any of its three layouts, and refusing is right - a theme that renders wrong on a phone ships, while one that will not load is noticed. These two are declared so they are inside a directory a gate scans; the theme follows when the mobile crop arrives. No `textRegion`: this art is a sticky backdrop, and a sticky sizes to its content.",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, a rolled blueprint under one arm, notepad and pens in the pocket, under the same thought-cloud in the rain. Complete since 2026-09-24, when the owner supplied the portrait crop and a matching square one; before that the set was laptop + card only (commit 1b62b57 delivered two byte-identical files), so no `architecture` backdrop could be declared. The text region sits BELOW the @ mark and was found by rendering candidate boxes over each crop and looking at them. Square crop: REPLACED 2026-09-24 by the owner's new square, composed to match the portrait; the earlier square is in git history. The avatar region opens above the hat's crown so the frame has headroom.",
+      "textRegion": {
+        "x": 0.3,
+        "y": 0.25,
+        "w": 0.62,
+        "h": 0.22
+      },
       "avatarRegion": {
-        "x": 0,
-        "y": 0.36,
-        "w": 0.46,
-        "h": 0.46
+        "x": 0.02,
+        "y": 0.38,
+        "w": 0.44,
+        "h": 0.44
+      }
+    },
+    {
+      "id": "landing-architecture-mobile",
+      "src": "docs/assets/img/harness/landing-architecture-mobile.webp",
+      "role": "landing-architecture",
+      "layout": "mobile",
+      "width": 941,
+      "height": 1672,
+      "title": "The architect, tall",
+      "description": "The grumpy cat as an architect: white hard hat carrying the c@t mark, white coat, a rolled blueprint under one arm, notepad and pens in the pocket, under the same thought-cloud in the rain. Complete since 2026-09-24, when the owner supplied the portrait crop and a matching square one; before that the set was laptop + card only (commit 1b62b57 delivered two byte-identical files), so no `architecture` backdrop could be declared. The text region sits BELOW the @ mark and was found by rendering candidate boxes over each crop and looking at them. Portrait crop: the cloud fills the upper half and the cat stands below it.",
+      "textRegion": {
+        "x": 0.1,
+        "y": 0.215,
+        "w": 0.8,
+        "h": 0.18
       }
     },
     {

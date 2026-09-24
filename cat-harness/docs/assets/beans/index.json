@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 307,
+      "count": 311,
       "unit": "beans"
     }
   },
@@ -11,15 +11,15 @@
     {
       "id": "folio-assistant-015u",
       "title": "The fixed '▾ Folio' handle covers page titles and content",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-23T10:36:13Z",
-      "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.",
+      "updatedAt": "2026-09-24T17:45:58Z",
+      "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] No pag",
       "file": "beans/defs/folio-assistant-015u--the-fixed-folio-handle-covers-page-titles-and-cont.md"
     },
     {
@@ -275,6 +275,20 @@
       "updatedAt": "2026-09-19T08:12:02Z",
       "preview": "THE RULE, from the owner 2026-09-19: 'if the witnesses were generated as a QA reviewer primarily then it should be under test/results/ as part of a QA process.'\n\nPlacement follows PROVENANCE, not file family and not consumption. An artefact that is primarily the output of a QA review belongs under `test/results/`, whatever fetches it afterwards.\n\n## What exists today, measured 2026-09-19 on main\n\n",
       "file": "beans/defs/folio-assistant-2634--qa-outputs-live-under-testresults-verdicts-and-wit.md"
+    },
+    {
+      "id": "folio-assistant-269z",
+      "title": "Folio handle covers the who-iris replica's INGESTED COPY banner — conflicts with jpjt 'replica unchanged'",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:04:45Z",
+      "updatedAt": "2026-09-24T18:04:45Z",
+      "preview": "Found by bean 015u (2026-09-24). On the who-iris replica the fixed ▾ Folio handle covers the 'INGESTED COPY — not WHO' banner at 390 px, and at 1280 px a link sits centred under it, so a click there opens the glass instead.\n\nThe obvious fix, reserving the handle's band with top padding, is ruled out by an existing rule: `folio-mount.e2e` asserts a replica is UNCHANGED while the glass is closed (be",
+      "file": "beans/defs/folio-assistant-269z--folio-handle-covers-the-who-iris-replicas-ingested.md"
     },
     {
       "id": "folio-assistant-2b5s",
@@ -1581,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-ceud",
+      "title": "CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:00Z",
+      "updatedAt": "2026-09-24T17:30:00Z",
+      "preview": "Measured 2026-09-24, working PR #1241.\n\n`6603c3fbc4d` was pushed to `claude/cool-fermi-htir5p`, an open PR branch.\n**No workflow fired for it at all** — not `code-quality-gates`, not\n`jsonld-gen-check`, not `feature-staging`. The latest run of every workflow\nstayed on the previous SHA, `f1fb1556576`, for 35 minutes.\n\n## What was ruled out\n\n- **The push landed.** `git ls-remote origin claude/cool-f",
+      "file": "beans/defs/folio-assistant-ceud--ci-a-push-to-a-pr-branch-fired-no-workflow-at-all.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -1723,6 +1751,20 @@
       "file": "beans/defs/folio-assistant-d3yq--testing-theme-an-engineering-grumpy-cat-theme-and.md"
     },
     {
+      "id": "folio-assistant-d4lb",
+      "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
+      "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
+      "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
+    },
+    {
       "id": "folio-assistant-d5f1",
       "title": "INGEST: narrative description per image, localized, including images extracted from PDFs",
       "status": "in-progress",
@@ -1794,15 +1836,15 @@
     },
     {
       "id": "folio-assistant-dv8v",
-      "title": "B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed",
-      "status": "todo",
+      "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
@@ -1865,14 +1907,14 @@
     {
       "id": "folio-assistant-epbt",
       "title": "B6c (#1168): prose may name a file as explanation, references go in data — rule + advisory stale-name criterion",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:57Z",
-      "updatedAt": "2026-09-24T18:07:57Z",
+      "updatedAt": "2026-09-24T18:25:14Z",
       "preview": "## Owner decision 2026-09-24\n\"Rule + stale check\": keep explanations; state the rule in data-modelling.md; add an advisory (minor, not gated) kg-audit criterion that flags a file named in a general node's prose that no longer resolves.\n\n## Measured\n22 diagrams' <bpmn:documentation> name 29 implementation files; GraphKindDef's field docs name 4 modules.\n\n## Done when\n- data-modelling.md states the ",
       "file": "beans/defs/folio-assistant-epbt--b6c-1168-prose-may-name-a-file-as-explanation-refe.md"
     },
@@ -2001,6 +2043,20 @@
       "updatedAt": "2026-09-23T02:45:00Z",
       "preview": "Owner, 2026-09-20: 'noting cacheing olean stragety for \"compiled/compuable\" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'\n\nA THIRD KIND OF REMOTE CONTENT, and `materialization.ts` currently has two purposes (`working`, `archival`) with no room for it. A COMPILED artefact is neither:\n- it is DERIVED, so it is not archival — the source is e",
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
+    },
+    {
+      "id": "folio-assistant-h1wq",
+      "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:16Z",
+      "updatedAt": "2026-09-24T17:40:31Z",
+      "preview": "From `audit-coverage`'s `typed-only` finding. Four kinds declare a validator that\nparses their nodes, and nothing had an opinion about what those nodes SAY. The\nowner chose all four (2026-09-24), having been told the risk: `health` and\n`todos` already have machinery, so a criterion here could be a second answer to\na settled question.\n\n## Summary of Changes\n\n`cat-harness/scripts/check-harness-state",
+      "file": "beans/defs/folio-assistant-h1wq--judge-the-four-typed-only-kinds-health-todos-inter.md"
     },
     {
       "id": "folio-assistant-h2s9",
@@ -3427,14 +3483,14 @@
     {
       "id": "folio-assistant-u63y",
       "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:42:44Z",
       "preview": "## Owner decision 2026-09-24\n\"B: users declare it\" — each dependent declares the spec, not the spec its users (36 hand-written usedBy entries over 16 records).\n\n## Plan\n- TS: `@conformsTo <spec-id>` in the module doc comment.\n- Skill .md: `conformsTo:` front matter.\n- BPMN: the `xmlns` binding already declares the namespace in-file.\n- JSON-LD: a namespace IRI in `@context` declares it; plain JSON ",
       "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },

@@ -3453,16 +3453,25 @@
    * says everything. A description of the cat would be read out before every
    * todo on the board.
    */
-  function buildBackdrop(art) {
+  /* THE SQUARE CROP, ON EVERY SCREEN, UNLESS THE TODO NAMES ONE.
+   *
+   * Owner, 2026-09-24: "i want sticky themes to by default use the square
+   * avatar layout but mostly faded, if not specified." This used to swap in the
+   * tall `mobile` crop below 30rem, which made one sticky show two different
+   * pictures depending on the window — and the square is the crop the avatar
+   * is cut from, so it is the one that reads as this theme's cat.
+   *
+   * "Mostly faded" is the theme's scrim, unchanged: `--fa-sticky-scrim` covers
+   * 82–86% of the art, and its AAA-over-pure-black guarantee travels with it.
+   *
+   * `layout` on the todo picks another crop when an author asks for one. A
+   * name the theme has no crop for falls back to the square rather than to no
+   * art. */
+  function buildBackdrop(art, layout) {
     var pic = el("picture", { "aria-hidden": "true" });
-    if (art.mobile) {
-      var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
-      pic.appendChild(src);
-    }
-    // `card` when there is one, else whatever the theme did supply — the
-    // generator only publishes complete sets, so this fallback is reached only
-    // by a hand-written index.
-    var chosen = art.card || art.mobile || art.laptop;
+    // The generator only publishes complete sets, so the later fallbacks are
+    // reached only by a hand-written index.
+    var chosen = (layout && art[layout]) || art.card || art.mobile || art.laptop;
     pic.appendChild(el("img", { class: "fa-sticky-art", src: chosen, alt: "", loading: "lazy" }));
     return pic;
   }
@@ -3611,7 +3620,7 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art));
+    if (art) card.appendChild(buildBackdrop(art, todo.layout));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {

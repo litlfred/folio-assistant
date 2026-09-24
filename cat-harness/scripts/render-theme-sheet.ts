@@ -138,6 +138,32 @@ function artCell(img: KgImage, src: ImageSource): string {
     `<div class="frame"><img src="${uri}" alt="${img.title ?? img.id}" loading="lazy">${regions}</div>${avatar}</td>`;
 }
 
+/**
+ * The sample sticky: SQUARE, with the theme's square crop behind the text,
+ * faded by the theme's own scrim — the default a todo gets.
+ *
+ * Owner, 2026-09-24: *"i want sticky themes to by default use the square
+ * avatar layout but mostly faded, if not specified. themes/ pages should show
+ * sticky as square."* So the sample is the thing a reader will actually meet on
+ * a board, not a strip of colour: same crop, same scrim, same ink. A theme with
+ * no art shows a plain square in its palette.
+ */
+function demoSticky(
+  t: (typeof THEMES)[number],
+  p: (typeof THEMES)[number]["palette"],
+  card: KgImage | undefined,
+  src: ImageSource,
+): string {
+  const uri = card === undefined ? undefined : src(card);
+  const art =
+    uri === undefined || t.backdrop === undefined
+      ? ""
+      : `<img class="demo-art" src="${uri}" alt="" loading="lazy">` +
+        `<span class="demo-scrim" style="background:${t.backdrop.scrim}"></span>`;
+  return `<div class="demo" style="background:${p.surface};color:${p.ink};border-color:${p.edge};border-left-color:${p.accent}">` +
+    `${art}<span class="demo-text"><b>A sticky on this theme.</b><br>Square crop, faded by the theme's scrim.</span></div>`;
+}
+
 /** Which landing-board cards wear each theme, by theme id. */
 export function wornBy(root: string): Map<string, string[]> {
   const out = new Map<string, string[]>();
@@ -202,7 +228,7 @@ export function sheetBody(
       `<div class="swatches">${swatch("surface", p.surface)}${swatch("ink", p.ink)}` +
       `${swatch("edge", p.edge)}${swatch("accent", p.accent)}</div>` +
       `<div class="contrast">${contrastCell}</div>` +
-      `<div class="demo" style="background:${p.surface};color:${p.ink};border-color:${p.edge};border-left-color:${p.accent}">A sticky on this theme.</div>` +
+      demoSticky(t, p, backdrop.art.get("card") as KgImage | undefined, src) +
       `</td>${art}</tr>`;
   }).join("\n");
 
@@ -237,7 +263,10 @@ export function sheetBody(
 .fa-theme-sheet .contrast{font-size:.85rem;margin:.5rem 0}
 .fa-theme-sheet .pass{color:#1d7a3e}.fa-theme-sheet .fail{color:#c0272d}
 .fa-theme-sheet .none,.fa-theme-sheet .undet,.fa-theme-sheet .note{opacity:.75;font-size:.78rem;display:block}
-.fa-theme-sheet .demo{margin-top:.6rem;padding:.6em .7em;border:1px solid;border-left-width:5px;border-radius:6px;font-size:.85rem}
+.fa-theme-sheet .demo{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1/1;width:12rem;max-width:100%;margin-top:.6rem;padding:.7em .8em;border:1px solid;border-left-width:5px;border-radius:6px;font-size:.85rem;box-sizing:border-box}
+.fa-theme-sheet .demo-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;max-width:none}
+.fa-theme-sheet .demo-scrim{position:absolute;inset:0;z-index:-1}
+.fa-theme-sheet .demo-text{position:relative;display:block}
 .fa-theme-sheet .art{width:22%}
 .fa-theme-sheet .layout{font-size:.72rem;opacity:.75;margin-bottom:.3rem}
 .fa-theme-sheet .frame{position:relative}

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The catalogue, as a graph — ingested IRIS replica</title>
@@ -417,14 +419,14 @@ so a small number here is the design rather than a shortfall.</p>
 
 <h2>What the gates say about the 6 held bitstream(s)</h2>
 
-<p><strong>Not everything permitted is everything known.</strong> <code>restrictions</code> is unknown on 6, <code>sourceLoss</code> is unknown on 3, <code>copyright</code> is unknown on 6 of them. A gate that returned <em>unknown</em> is a question
+<p><strong>Not everything permitted is everything known.</strong> <code>sourceLoss</code> is unknown on 3 of them. A gate that returned <em>unknown</em> is a question
 nobody has answered — which is a different state from a gate that was asked and
 said yes, and collapsing the two would turn an open question into a clearance.</p>
 
 <table class="kg">
 <tr><th>gate</th><th>verdicts</th></tr>
-<tr><td><code>copyright</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
-<tr><td><code>restrictions</code></td><td><span class="state unknown">unknown</span> 6</td></tr>
+<tr><td><code>copyright</code></td><td><span class="state materialized">permitted</span> 2 <span class="state referenced">refused</span> 4</td></tr>
+<tr><td><code>restrictions</code></td><td><span class="state materialized">permitted</span> 2 <span class="state referenced">refused</span> 4</td></tr>
 <tr><td><code>retention</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
 <tr><td><code>size</code></td><td><span class="state materialized">permitted</span> 6</td></tr>
 <tr><td><code>sourceLoss</code></td><td><span class="state materialized">permitted</span> 3 <span class="state unknown">unknown</span> 3</td></tr>

@@ -87,9 +87,11 @@ classDiagram
       criteria [1] Record~string, TranslationQaEntry[]~
       updated_at [1] string
     }
-    class cat_harness_qa_folio_qa_index_v1["folio-qa-index/v1"] {
-      <<untyped: written by scripts/gen-docs-pages.ts>>
-      no schema declared, shape is whatever scripts/gen-docs-pages.ts writes
+    class cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1["folio-qa-index/v1"] {
+      <<json: QaIndexSchema>>
+      $schema [1] 'folio-qa-index/v1'
+      page [1] string
+      badges [1] map~object~
     }
     class cat_harness_qa_folio_detangle_sidecar_v1["folio-detangle-sidecar/v1"] {
       <<ts: DetangleSidecar>>
@@ -130,7 +132,7 @@ classDiagram
   cssClass "cat_harness_qa_qa_witness_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_translation_qa_v1" fa_uml_kind_qa
-  cssClass "cat_harness_qa_folio_qa_index_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_detangle_sidecar_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_Page" fa_uml_kind_qa
   cssClass "cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1" fa_uml_kind_qa
