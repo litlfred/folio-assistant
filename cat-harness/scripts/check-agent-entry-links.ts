@@ -3,6 +3,7 @@
  * Every link out of the files an agent reads FIRST still resolves.
  *
  * @module scripts/check-agent-entry-links
+ * @covers docs, skills
  *
  * Bean `v8gh`. `AGENTS.md` is the file every agent opens before anything
  * else, and nothing checked the links OUT of it. Measured 2026-09-19: it

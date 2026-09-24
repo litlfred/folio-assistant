@@ -45,6 +45,8 @@
  * Usage:  bun run folio-assistant-core/scripts/glossary-page.ts [--check]
  *
  * @module folio-assistant-core/scripts/glossary-page
+ * @covers glossary, swimlane-glossary, docs — it reads every instance's glossary
+ *   directory and links the harness's ledger without copying it
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";

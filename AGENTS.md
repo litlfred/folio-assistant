@@ -340,6 +340,33 @@ applied to the tool that most wants to break it — the skill's own worked
 example is `plj1`, a workflow whose shape deleted every open PR's preview
 without anybody deciding it.
 
+## Audit coverage — which audits reach which KIND of node
+
+`check:ci-health` asks whether the workflows pass; `bun run health` asks about
+the repository. **`bun run audit:coverage` asks what is audited at all** — per
+declared graph kind, how many directories are declared, how many files they
+hold, how many `kg-audit` criteria reach the kind, and how many CI gates
+**declare** they cover it. Written as a committed sidecar under
+`cat-harness/test/results/`, because a printed verdict cannot tell "never
+audited" from "audited clean".
+
+It exists because the question got answered by inference instead. An agent
+counted `kg-qa` sidecars over the bean store, found zero, and reported beans
+"effectively unaudited" — to the owner, as a premise. Eight gates audit them.
+
+**Not a second answer to `check:kind-validators`**, which asks whether a kind can
+be *typed*. This asks who *judges* it, and the two come apart: a kind can be
+perfectly typed and audited by nothing.
+
+**The discipline is in the skill, not here** —
+[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+carries why the gate half is **declared** rather than inferred
+(a grep fails in both directions), why an undeclared gate is counted so every
+"unaudited" reads as an upper bound, the three per-kind states that must not
+collapse into one zero, and the two rules building it paid for — a measurement
+must not be a term in itself, and a docblock that documents a tag necessarily
+contains the tag.
+
 ## Actors, roles and skills — a role is a swimlane
 
 One sentence, and every word in it is a distinct declared object:

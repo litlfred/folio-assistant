@@ -36,6 +36,7 @@
  * Exit: 0 clean (or no store), 1 a real defect, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-bodies
+ * @covers bean-defs, beans
  */
 
 import { existsSync, readFileSync } from "node:fs";

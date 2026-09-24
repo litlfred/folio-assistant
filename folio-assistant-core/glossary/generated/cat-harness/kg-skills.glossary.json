@@ -69,6 +69,14 @@
       "status": "candidate"
     },
     {
+      "id": "audit-coverage",
+      "prefLabel": "audit-coverage",
+      "definition": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "notation": "audit-coverage",
+      "source": "cat-harness/skills/folio-core/audit-coverage.md",
+      "status": "candidate"
+    },
+    {
       "id": "bean-blocking",
       "prefLabel": "bean-blocking",
       "definition": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",

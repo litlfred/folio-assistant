@@ -13,6 +13,8 @@
  * day it was needed.
  *
  * Usage:  bun run check:workflow-policy
+ *
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { resolve } from "node:path";
 import { workflowFiles } from "./known-skills.js";
