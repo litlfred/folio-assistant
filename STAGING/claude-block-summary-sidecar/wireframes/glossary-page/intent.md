@@ -4,14 +4,16 @@
 
 **Who it is for:** anyone who meets a word in a folio and wants to know what it means: a reader, an author choosing a term, or an agent binding a term to an external concept. Owner, 2026-09-23: *"it should be part of general pracice w/ glossary/ page"*.
 
-**What they need to do:** find a term fast, read its definition, see its code, see which external concept it matches, and tell an authored definition from a candidate.
+**What they need to do:** find a term fast, read its definition, see its code, see which external concept it matches, and tell an authored definition from a candidate extracted from a knowledge-graph asset.
 
 **What it must show:**
-- a filter box with a live count;
+- the counts by state (authored, candidate extracted, could-not-extract), and the page's size and load cost;
+- a filter box with a live count, and a "Show" choice of all, authored only, or extracted only;
 - an A–Z letter bar;
-- per term: the label, the code (`notation`), a status badge when not `authored`, the definition, the scheme, the term IRI, the source, and the external matches as links;
+- per term: the label, the code (`notation`) when the label and source do not already say it, a status badge when not `authored` (an extracted term reads "candidate, extracted"), the definition, the scheme, the term IRI for an authored term, the source as a link to the asset, and the external matches as links;
 - a Sources list: each scheme with its SKOS JSON-LD link, the swimlane ledgers (linked, never copied), and the external schemes referenced through `remoteGraphs`;
-- schema.org `DefinedTermSet` JSON-LD for search engines.
+- a table of the extracted schemes, instance by asset type, each count linked to its SKOS;
+- schema.org `DefinedTermSet` JSON-LD for search engines, carrying the authored terms only.
 
 ## What it answers from the earlier glossary wireframe (`glossary/`, bean `n5be`)
 
@@ -20,3 +22,7 @@ That page's first finding was *"There is no way to find a term except scrolling 
 ## Observed on the branch
 
 7 terms from 1 scheme (core's platform terms), 2 swimlane ledgers, and 0 external schemes. At 390 px, the term IRI wraps anywhere rather than widening the page.
+
+## Observed after piece 1 as posed (bean `lqo9`, 2026-09-24)
+
+2428 terms: 7 authored, 2421 extracted as candidates from skills (269), Tools (98), BPMN activities (530), DMN decisions (9) and documented schema fields (1515). The page is 1.4 MB before compression, so it keeps the A–Z bar and the filter, adds the "Show" choice, and says its size near the top. No search engine is added: bean `4pm8` admits Pagefind only in the large-datasets sub-graph. An extracted term's IRI is left to its scheme's SKOS rather than printed on every row; that was the largest cost per row.
