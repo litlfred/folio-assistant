@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 164,
+      "count": 165,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -391,6 +391,14 @@
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/extension-namespace.test.ts",
+      "instance": "cat-harness",
+      "name": "extension-namespace.test",
+      "graphNode": "undeclared",
+      "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/folio-dir.test.ts",
