@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2480 terms: **7 authored** in 1 glossary, and **2473 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2461 terms: **7 authored** in 1 glossary, and **2454 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2473</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2454</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2480 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2461 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2480</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2461</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -5401,12 +5401,12 @@ ffi-roundtrip-audit <span class="fa-gloss-status">candidate, extracted</span>
 <p>Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/ffi-roundtrip-audit.md"><code>cat-harness/skills/folio-paper-adapter/ffi-roundtrip-audit.md</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
 fhir-client-operations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/fhir-client-operations.md"><code>fhir-harness/skills/fhir-client/fhir-client-operations.md</code></a></p>
+<p>STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/fhir-client-operations.md"><code>cat-harness/skills/remote-stubs/fhir-client-operations.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--fhir-validation" data-fa-state="extracted" data-fa-gloss="">
 fhir-validation <span class="fa-gloss-status">candidate, extracted</span>
@@ -6225,12 +6225,12 @@ GraphKindDef.validator <span class="fa-gloss-status">candidate, extracted</span>
 <p>What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validator</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.within" data-fa-state="extracted" data-fa-gloss="">
-GraphKindDef.within <span class="fa-gloss-status">candidate, extracted</span>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.validatornotapplicable" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.validatorNotApplicable <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The kind this one is a SUB-GRAPH of, when it is one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within</code></a></p>
+<p>WHY a runtime validator does not apply to this kind — a reason, not a flag.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphkinds" data-fa-state="extracted" data-fa-gloss="">
 GraphNodeDirectory.graphKinds <span class="fa-gloss-status">candidate, extracted</span>
@@ -6513,8 +6513,8 @@ Human eyes on the rendered artefact <span class="fa-gloss-status">candidate, ext
 hypothesis-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/hypothesis-generation/hypothesis-generation.md"><code>cat-harness/skills/hypothesis-generation/hypothesis-generation.md</code></a></p>
+<p>STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/hypothesis-generation.md"><code>cat-harness/skills/remote-stubs/hypothesis-generation.md</code></a></p>
 </dd>
 </dl>
 
@@ -9481,20 +9481,6 @@ Overrule.note <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-P">P</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-tools--package-release-manual" data-fa-state="extracted" data-fa-gloss="">
-Package release by hand <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `&lt;package&gt;-v&lt;version&gt;`, and creates the release on the host. The same four steps with nothing to configure.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#package-release-manual</code></a></p>
-</dd>
-<dt id="cat-harness--kg-skills--package-release" data-fa-state="extracted" data-fa-gloss="">
-package-release <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/package-release.md"><code>cat-harness/skills/folio-core/package-release.md</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_package" data-fa-state="extracted" data-fa-gloss="">
 Package: files plus a manifest of digests <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -11640,13 +11626,6 @@ Relations and cardinalities, both ways <span class="fa-gloss-status">candidate, 
 <p>Stated in both directions, because &quot;one attestation per report&quot; and &quot;one report per attestation&quot; are different claims and a model with only the first cannot say whether a re-signature is an update or a second row.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-data-model.bpmn"><code>cat-harness/processes/crdm-data-model.bpmn#A_Relations</code></a></p>
 </dd>
-<dt id="cat-harness--kg-tools--release-please" data-fa-state="extracted" data-fa-gloss="">
-release-please (declared, not configured here) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#release-please</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--bib-verification.relevanceassessment.assessed_at" data-fa-state="extracted" data-fa-gloss="">
 RelevanceAssessment.assessed_at <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -12214,34 +12193,6 @@ Requirement.title <span class="fa-gloss-status">candidate, extracted</span>
 <p>Human-readable title.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#Requirement.title</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.derivedfrom" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.derivedFrom <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Broader requirements this one specialises, by id.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.id" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>`req:&lt;slug&gt;`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.proposedin" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.proposedIn <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.proposedIn</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.supersededby" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.supersededBy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>When `superseded`: what replaced it.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.supersededBy</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--assistant-types.requirementstatement.actors" data-fa-state="extracted" data-fa-gloss="">
 RequirementStatement.actors <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -12283,69 +12234,6 @@ RequirementStatement.requirement <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Full requirement text.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#RequirementStatement.requirement</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.activity" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.activity <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — the activity the statement is part of.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.activity</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.actors" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.actors <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The roles it is about, by id in the harness's own role registry.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.actors</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.benefit" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.benefit <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — why (&quot;so that …&quot;).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.capability" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.capability <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — what the actor wants to be able to do (&quot;I want …&quot;).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.capability</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.category" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.category <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>NON-FUNCTIONAL — which quality it constrains.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.category</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.conformance" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.conformance <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.dependson" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.dependsOn <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Other statements this one presupposes, by &#123;@link requirementRef}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.key" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.key <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Unique within its requirement; with the requirement's id it is the statement's address.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.key</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.requirement" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.requirement <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The statement itself, as one sentence a reviewer can say yes or no to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_resolvebean" data-fa-state="extracted" data-fa-gloss="">
 Resolve or re-open the bean [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -13252,15 +13140,15 @@ scientific-accuracy <span class="fa-gloss-status">candidate, extracted</span>
 scientific-critical-thinking <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md"><code>cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md</code></a></p>
+<p>STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-critical-thinking.md"><code>cat-harness/skills/remote-stubs/scientific-critical-thinking.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--scientific-visualization" data-fa-state="extracted" data-fa-gloss="">
 scientific-visualization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-visualization/scientific-visualization.md"><code>cat-harness/skills/scientific-visualization/scientific-visualization.md</code></a></p>
+<p>STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-visualization.md"><code>cat-harness/skills/remote-stubs/scientific-visualization.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_criterionadjudication.a_scopecriterion" data-fa-state="extracted" data-fa-gloss="">
 Scope the criterion so it stops applying here <span class="fa-gloss-status">candidate, extracted</span>
@@ -14095,12 +13983,12 @@ smart-base-tools <span class="fa-gloss-status">candidate, extracted</span>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md"><code>cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-skills--smart-launch" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--smart-launch" data-fa-state="extracted" data-fa-gloss="">
 smart-launch <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md"><code>fhir-harness/skills/fhir-client/smart-launch.md</code></a></p>
+<p>STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md"><code>cat-harness/skills/remote-stubs/smart-launch.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--smart-stack-layering" data-fa-state="extracted" data-fa-gloss="">
 smart-stack-layering <span class="fa-gloss-status">candidate, extracted</span>
@@ -15101,13 +14989,6 @@ TestRunSchema.process <span class="fa-gloss-status">candidate, extracted</span>
 <p>WHAT TESTED IT — runner, configuration, scenario bank.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.process</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--test-run.testrunschema.requirements" data-fa-state="extracted" data-fa-gloss="">
-TestRunSchema.requirements <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164): *&quot;put requirements in Test schema as array&quot;*, as REFERENCES (`req:&lt;slug&gt;` or `req:&lt;slug&gt;#&lt;statement-key&gt;`), never copies: the requirement's text lives in one place, and a copy in every run is a copy free to disagree with it.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.requirements</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--test-run.testrunschema.skill" data-fa-state="extracted" data-fa-gloss="">
 TestRunSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -15807,27 +15688,6 @@ Transcribe and translate audio <span class="fa-gloss-status">candidate, extracte
 <dd>
 <p>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-derive-content.bpmn"><code>cat-harness/processes/ingest-derive-content.bpmn#Task_Audio</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-faster-whisper" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — faster-whisper (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-faster-whisper</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-vosk" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — vosk (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-vosk</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-whisper-cpp" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — whisper.cpp (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-whisper-cpp</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extensions <span class="fa-gloss-status">candidate, extracted</span>
@@ -17311,6 +17171,13 @@ Which uncovered skills warrant a Tool? <span class="fa-gloss-status">candidate, 
 <p>Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to &quot;which of these still have their mechanism inlined in their prose&quot;.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#tool-coverage</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--user-auth" data-fa-state="extracted" data-fa-gloss="">
+Who is asking, and what may they do <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#user-auth</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--wireframe-check" data-fa-state="extracted" data-fa-gloss="">
 Wireframe check at web and mobile viewports <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -17513,13 +17380,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>254 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>88 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1385 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>84 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1371 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>162 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>272</strong></td><td><strong>103</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1559</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>99</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1545</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">

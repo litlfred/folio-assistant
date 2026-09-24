@@ -599,6 +599,11 @@ export const RULES: Rule[] = [
       // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
       // rather than guessing them, and which it deliberately runs after.
       "scripts/rail-standalone-pages.ts",
+      // The Jekyll sidebar's navbar, rendered by the shared module rather
+      // than composed in Liquid (bean `sjic`). Core beside `lib/navbar.ts`,
+      // which it calls: a generator that lived elsewhere would be a second
+      // place deciding what a harness row contains, which is the defect.
+      "scripts/gen-navbar-include.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -888,6 +893,9 @@ export const RULES: Rule[] = [
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
+      // User authN/authZ (issue #1207): asks GitHub and the ODRL policies,
+      // the harness's own declarations, and needs no folio.
+      "src/tools/auth.ts",
       "src/tools/folio-init.ts",
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",

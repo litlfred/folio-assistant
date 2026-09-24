@@ -654,6 +654,14 @@
       "status": "candidate"
     },
     {
+      "id": "user-auth",
+      "prefLabel": "Who is asking, and what may they do",
+      "definition": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      "notation": "user-auth",
+      "source": "cat-harness/tools/mcp.ts#user-auth",
+      "status": "candidate"
+    },
+    {
       "id": "wireframe-check",
       "prefLabel": "Wireframe check at web and mobile viewports",
       "definition": "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
