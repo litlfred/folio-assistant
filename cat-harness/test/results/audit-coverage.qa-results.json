@@ -2,16 +2,16 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "19894772a7d2"
+    "script_hash": "a612c50bdbcd"
   },
   "subject": {
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T13:04:39.686Z",
+  "updated_at": "2026-09-24T17:19:04.149Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 145 gate(s), 67 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 146 gate(s), 67 criteria.",
       "count": 42,
       "entries": [
         {
@@ -30,6 +30,7 @@
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
           ],
+          "typed": false,
           "hasFiles": false
         },
         {
@@ -51,6 +52,7 @@
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -60,6 +62,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": false
         },
         {
@@ -71,6 +74,7 @@
           "gates": [
             "bun run boards:default:check"
           ],
+          "typed": true,
           "hasFiles": false
         },
         {
@@ -106,6 +110,8 @@
             "graph"
           ],
           "gates": [
+            "bun run check:asset-roles",
+            "bun run check:avatar-instances",
             "bun run check:declaration-claims",
             "bun run check:declaration-filename",
             "bun run check:declared-assets",
@@ -113,6 +119,7 @@
             "bun run check:declared-paths",
             "bun run check:graph-kind-work",
             "bun run check:harness-dirs",
+            "bun run check:image-roles",
             "bun run check:instance-config",
             "bun run check:instance-graph",
             "bun run check:instance-render",
@@ -125,6 +132,7 @@
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
             "bun run check:version-bump",
+            "bun run check:wireframes",
             "bun run harness:dirs:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -133,6 +141,7 @@
             "bun run kg:schema:check",
             "bun run ns:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -148,6 +157,7 @@
             "bun run iris:covers:check",
             "bun run iris:pages:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -165,15 +175,18 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:agents-claims",
             "bun run check:code-accounting",
             "bun run check:dependency-advisories",
             "bun run check:lockfile-pinning",
             "bun run check:module-scope-resolution",
+            "bun run check:partition",
             "bun run check:portable-paths",
             "bun run check:python-deps",
             "bun run check:secret-leaks",
             "bun run deps:python:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -187,6 +200,7 @@
           "gates": [
             "bun run code-lists:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -215,6 +229,8 @@
             "bun run check:glossary",
             "bun run check:instance-render",
             "bun run check:viewer-backticks",
+            "bun run check:viewer-nav",
+            "bun run check:wireframes",
             "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run gen:jsonld:check",
@@ -225,6 +241,7 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -239,6 +256,7 @@
             "bun run external-schemas:check",
             "bun run external-schemas:viz:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -255,6 +273,7 @@
             "bun run check:artifact-index",
             "bun run smart-trust:pages:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -273,6 +292,7 @@
             "bun run landing:data:check",
             "bun run landing:sticky:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -286,6 +306,7 @@
           "gates": [
             "bun run fsh-guts:viz:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -301,39 +322,43 @@
             "bun run glossary:check",
             "bun run glossary:check:bootstrap"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
           "kind": "health",
-          "state": "unaudited",
+          "state": "typed-only",
           "directories": [
             "cat-harness/test/health/results"
           ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": true
         },
         {
           "kind": "interaction",
-          "state": "unaudited",
+          "state": "typed-only",
           "directories": [
             "interaction"
           ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": true
         },
         {
           "kind": "issue-marks",
-          "state": "unaudited",
+          "state": "typed-only",
           "directories": [
             "issue-marks"
           ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -356,6 +381,7 @@
             "bun run check:source-licence",
             "bun run gen:jsonld:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -369,6 +395,7 @@
           "gates": [
             "bun run agent-memory:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -385,6 +412,7 @@
             "bun run check:methodology-evidence",
             "bun run methodologies:viz:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -398,6 +426,7 @@
           "gates": [
             "bun run check:model-languages"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -412,6 +441,7 @@
             "bun run check:prov-qaqc",
             "bun run check:qa-reviewer-permission"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -468,6 +498,7 @@
             "bun run translate-bpmn:bootstrap:check",
             "bun run translate-bpmn:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -484,6 +515,7 @@
             "bun run check:tabular-stubs",
             "bun run translation:block-qa:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -493,6 +525,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": false
         },
         {
@@ -502,6 +535,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": false
         },
         {
@@ -534,6 +568,7 @@
             "bun run glossary:check:bootstrap",
             "bun run kg:audit:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -551,10 +586,12 @@
           "gates": [
             "bun run bootstrap:schemas:check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
+            "bun run check:context-emission",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
             "bun run kg:schema:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -564,6 +601,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": false,
           "hasFiles": false
         },
         {
@@ -610,6 +648,7 @@
             "bun run kg:audit:check",
             "bun run kg:detangle:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -626,6 +665,7 @@
             "bun run glossary:check",
             "bun run glossary:check:bootstrap"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -637,8 +677,10 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run theme:page:check",
             "bun run themes:css:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -648,6 +690,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": false
         },
         {
@@ -657,17 +700,19 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": false
         },
         {
           "kind": "todos",
-          "state": "unaudited",
+          "state": "typed-only",
           "directories": [
             "todos"
           ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -697,6 +742,7 @@
             "bun run kg:audit:check",
             "bun run tools:viz:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -717,6 +763,7 @@
             "bun run translation:index:check",
             "bun run translation:status:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -730,6 +777,7 @@
           "gates": [
             "bun run uml:overview:check"
           ],
+          "typed": false,
           "hasFiles": true
         },
         {
@@ -747,6 +795,7 @@
             "bun run gen:jsonld:check",
             "bun run iris:covers:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -766,6 +815,7 @@
             "bun run check:voices",
             "bun run voices:viz:check"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -779,6 +829,7 @@
           "gates": [
             "bun run check:waivers"
           ],
+          "typed": true,
           "hasFiles": true
         },
         {
@@ -790,92 +841,15 @@
           "gates": [
             "bun run check:prov-qaqc"
           ],
+          "typed": true,
           "hasFiles": false
         }
       ]
     },
     "gates-undeclared": {
       "summary": "A gate CI runs whose script carries no @covers line. Reported and never failed by default (--require-all fails it): the gap is real, and hiding it would render an unmeasured corpus as clean.",
-      "count": 11,
-      "entries": [
-        {
-          "command": "bun run check:agents-claims",
-          "scripts": [
-            "cat-harness/scripts/check-agents-claims.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:context-emission",
-          "scripts": [
-            "cat-harness/scripts/check-context-emission.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:image-roles",
-          "scripts": [
-            "cat-harness/scripts/check-image-roles.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:avatar-instances",
-          "scripts": [
-            "cat-harness/scripts/check-avatar-instances.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:asset-roles",
-          "scripts": [
-            "cat-harness/scripts/check-asset-roles.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:retired-front-matter",
-          "scripts": [
-            "cat-harness/scripts/check-retired-front-matter.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:wireframes",
-          "scripts": [
-            "cat-harness/scripts/check-wireframes.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:partition",
-          "scripts": [
-            "cat-harness/scripts/repo-partition.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run avatars:css:check",
-          "scripts": [
-            "cat-harness/scripts/gen-avatars-css.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run navbar:geometry:check",
-          "scripts": [
-            "cat-harness/scripts/gen-navbar-geometry-css.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:viewer-nav",
-          "scripts": [
-            "cat-harness/scripts/check-viewer-nav.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
@@ -946,8 +920,8 @@
         }
       ]
     },
-    "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that no kg-audit criterion and no gate declaring @covers reaches. An UPPER bound while gates remain undeclared: 11 of 145 gate(s) have not said what they cover.",
+    "kinds-typed-only": {
+      "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
       "count": 4,
       "entries": [
         {
@@ -975,7 +949,12 @@
           ]
         }
       ]
+    },
+    "kinds-unaudited": {
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 146 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "count": 0,
+      "entries": []
     }
   },
-  "total": 66
+  "total": 55
 }

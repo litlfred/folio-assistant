@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 289,
+      "count": 290,
       "unit": "beans"
     }
   },
@@ -419,14 +419,14 @@
     {
       "id": "folio-assistant-3oqj",
       "title": "FOUR KINDS NOTHING AUDITS: health, interaction, issue-marks, todos - 13 files, 0 criteria, 0 gates",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:17Z",
-      "updatedAt": "2026-09-24T05:44:17Z",
+      "updatedAt": "2026-09-24T13:08:49Z",
       "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph kinds hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
       "file": "beans/defs/folio-assistant-3oqj--four-kinds-nothing-audits-health-interaction-issue.md"
     },
@@ -447,14 +447,14 @@
     {
       "id": "folio-assistant-3srh",
       "title": "TEN GATES HAVE NOT DECLARED @covers, so every audit-coverage verdict is an upper bound",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:18Z",
-      "updatedAt": "2026-09-24T05:44:18Z",
+      "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
     },
@@ -727,14 +727,14 @@
     {
       "id": "folio-assistant-61n5",
       "title": "qa-results parity test fails intermittently under bun run gates (2 of 4 local runs), never alone or in CI",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:09:46Z",
-      "updatedAt": "2026-09-23T07:09:46Z",
+      "updatedAt": "2026-09-24T12:40:45Z",
       "preview": "The test \"every family in the committed result matches the export's own field\" in cat-harness/scripts/tests/qa-results.test.ts failed in 2 of 4 local `bun run gates` runs on 2026-09-23, on diffs that don't touch kg-export (the a1lq and 423d work). It passed 3 of 3 plain `bun test` runs, passes when run alone, and passed in CI every time.\n\nIt compares the committed kg-export.qa-results.json against",
       "file": "beans/defs/folio-assistant-61n5--qa-results-parity-test-fails-intermittently-under.md"
     },
@@ -3201,6 +3201,20 @@
       "file": "beans/defs/folio-assistant-txut--review-visualiser-a-review-page-per-folio-showing.md"
     },
     {
+      "id": "folio-assistant-u19y",
+      "title": "THEMES PAGE: publish the theme sheet as themes/ on the site",
+      "status": "completed",
+      "type": "feature",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T13:46:49Z",
+      "updatedAt": "2026-09-24T13:46:49Z",
+      "preview": "Owner 2026-09-24: \"have the themes harness make themes/ page to browse\".\n\n## Summary of Changes\n- render-theme-sheet.ts: one renderer (sheetBody) now feeds both outputs — the standalone theme:sheet (images inlined) and a new site page, docs/themes/index.md (images linked via relative_url). Adds a \"worn by\" line per theme, read from the landing board's declared contributions, and each crop's pixel ",
+      "file": "beans/defs/folio-assistant-u19y--themes-page-publish-the-theme-sheet-as-themes-on-t.md"
+    },
+    {
       "id": "folio-assistant-u2ol",
       "title": "TYPESCRIPT 7: the compiler API exists, and every path to it is namespaced `unstable/`",
       "status": "todo",
@@ -3835,14 +3849,14 @@
     {
       "id": "folio-assistant-xutg",
       "title": "AUDIT COVERAGE: no command says which audits reach a kind, so coverage gets inferred from a sidecar count",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:25:17Z",
-      "updatedAt": "2026-09-24T05:25:57Z",
+      "updatedAt": "2026-09-24T12:57:26Z",
       "preview": "On 2026-09-23 an agent reported that beans were \"effectively unaudited\". The\nevidence was a count of `kg-qa` sidecars over them: zero. The conclusion was\nwrong — **five** gates audit beans (`check:bean-bodies`,\n`check:bean-front-matter`, `check:bean-issue-links`, `check:bean-parents`,\n`check:bean-rollup`), plus `check:subgraphs` over the links in their bodies.\n\nThe defect is not the count. It is t",
       "file": "beans/defs/folio-assistant-xutg--audit-coverage-no-command-says-which-audits-reach.md"
     },
