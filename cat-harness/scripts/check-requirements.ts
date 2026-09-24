@@ -2,6 +2,8 @@
 /**
  * A FILED REQUIREMENT IS A VALID REQUIREMENT, AND NO TWO DOCUMENTS SHARE A NAME.
  *
+ * @covers proposals, requirements
+ *
  * Owner, 2026-09-23 (issue #1164): when a harness feature ships, its proposal
  * is moved from `docs/proposals/` to `docs/requirements/` and filed against
  * the bootstrap `Requirement` schema — and, asked what happens on the move,

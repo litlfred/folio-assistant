@@ -2,6 +2,8 @@
 /**
  * A BOOTSTRAP SCHEMA NAMES NO OUTSIDE CONCEPT.
  *
+ * @covers schemas — bootstrap's declared schema directories and the Zod sources they are generated from
+ *
  * Owner, 2026-09-23 (issue #1164): *"make sure no DAK/L2 smart who etc
  * refences in bootrap schemas. no external concepts."*
  *

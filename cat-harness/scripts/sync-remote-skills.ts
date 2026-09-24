@@ -4,6 +4,7 @@
  * `skill_fetch` can serve them.
  *
  * @module cat-harness/scripts/sync-remote-skills
+ * @covers skills — the synced packages a remote-package wrapper declares, at their pin
  *
  * Issue #556, bean `wlqd`. Owner, 2026-09-24:
  *
