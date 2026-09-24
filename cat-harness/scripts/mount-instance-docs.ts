@@ -792,6 +792,29 @@ export function railStandalonePages(
   return { injected, alreadyNavigated, skipped };
 }
 
+/**
+ * The routes the MOUNT pass owns, computed by the pipeline that owns them.
+ *
+ * `rail-standalone-pages.ts` must leave these alone, because {@link injectRails}
+ * has already railed them with a PER-INSTANCE model; a second rail there would
+ * carry the ROOT instance's graphs instead of the mounted instance's.
+ *
+ * It is derived rather than guessed, and the first version guessed. It took a
+ * directory in the site to be a mount when a same-named `<name>/<name>.json`
+ * existed in the repository — which is true of `bootstrap`, an instance that
+ * declares no renderable docs and is therefore **never mounted**. The guess
+ * excluded exactly the ten pages the pass was extended to reach.
+ *
+ * `mountable()` requires a rendered `index.html`, `withRoutes` assigns the
+ * route and `resolve_` refuses a collision. Asking them is one answer; a
+ * predicate over filenames is a second one, free to disagree.
+ */
+export function mountRoutes(built: string): string[] {
+  const found = mountable().filter((m) => !(m.name === built && m.kind === "docs"));
+  const { candidates } = withRoutes(found);
+  return resolve_(candidates).mounts.map((m) => m.route);
+}
+
 function mountable(): Mountable[] {
   const out: Mountable[] = [];
   for (const e of readdirSync(REPO, { withFileTypes: true })) {
@@ -976,20 +999,13 @@ function main(): number {
     for (const f of railed.skipped.slice(0, 5)) console.log(`      ${f}`);
     if (railed.skipped.length > 5) console.log(`      … and ${railed.skipped.length - 5} more`);
   }
-  // The pages that are neither a mount nor a generated viewer — bean `oi1y`.
-  const standalone = railStandalonePages(siteAbs, built, built, mounts.map((m) => m.route));
-  console.log(
-    `  standalone pages: harness rail on ${standalone.injected}, ` +
-      `${standalone.alreadyNavigated} already navigated`,
-  );
-  if (standalone.skipped.length) {
-    // NAMED, never summed into a total, for the reason stated on the mount
-    // pass: a file with no <body> is not a page this rail belongs on, and a
-    // bare count could not be told from a bug.
-    console.log(`  ${standalone.skipped.length} standalone file(s) took no rail (no <body>):`);
-    for (const f of standalone.skipped.slice(0, 5)) console.log(`      ${f}`);
-    if (standalone.skipped.length > 5) console.log(`      … and ${standalone.skipped.length - 5} more`);
-  }
+  // {@link railStandalonePages} is NOT called here, and that is the fix rather
+  // than an omission. It runs from `rail-standalone-pages.ts` as a LAST step,
+  // because this script runs at line 284 of `docs-site.yml` while
+  // `publish-instance-files.ts` writes bootstrap's pages at line 426 — so a
+  // call here walks the site before ten of its subjects exist. Measured on a
+  // staged build: 23 wireframes railed, 10 bootstrap pages missed, and the
+  // fixture could not see it because a fixture is always finished.
 
   for (const m of mounts) {
     console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);

@@ -16,7 +16,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { railStandalonePages } from "../mount-instance-docs.js";
+import { mountRoutes, railStandalonePages } from "../mount-instance-docs.js";
 
 const page = (body: string): string =>
   `<!doctype html>\n<html><head><title>t</title></head><body>${body}</body></html>\n`;
@@ -140,5 +140,31 @@ describe("what it reports", () => {
     run(root);
     const second = run(root);
     expect(second.injected).toBe(0);
+  });
+});
+
+describe("the mount routes are ASKED for, not guessed", () => {
+  test("`bootstrap` is not a mount route, so the pass must not skip it", () => {
+    // The regression this exists for, and it cost a wrong claim on the PR.
+    //
+    // The first version decided a site directory was a mount when a same-named
+    // `<name>/<name>.json` existed in the repository. `bootstrap/bootstrap.json`
+    // does — but bootstrap declares no renderable docs, so `mountable()` never
+    // mounts it, and the guess excluded exactly the ten pages the pass had just
+    // been extended to reach.
+    //
+    // Asserted against the REAL repository rather than a fixture, because the
+    // defect was that a plausible predicate disagreed with the real pipeline.
+    expect(mountRoutes("cat-harness")).not.toContain("bootstrap");
+  });
+
+  test("it returns the routes the mount pass actually owns", () => {
+    // Not pinned to a list: which instances are mountable is a property of the
+    // repository and changes when one is added. What must hold is that every
+    // route names a directory the mount pass would copy, and that the root
+    // instance's own docs are not among them — it is already the site root.
+    const routes = mountRoutes("cat-harness");
+    expect(routes.every((r) => r.length > 0 && !r.startsWith("/"))).toBe(true);
+    expect(routes).not.toContain("cat-harness");
   });
 });
