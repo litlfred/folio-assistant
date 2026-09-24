@@ -25,6 +25,7 @@ import { join } from "node:path";
 import {
   checkBeanRestatesSkill,
   contractTables,
+  formatReport,
   parseTables,
   skillPathsNamed,
 } from "../check-bean-restates-skill.ts";
@@ -248,6 +249,34 @@ prose between them
 
   test("a line of pipes with no separator row is not a table", () => {
     expect(parseTables("| not | a | table |\nsome prose\n")).toHaveLength(0);
+  });
+});
+
+describe("the report names a disagreement, never a direction — `ekp9` point 4", () => {
+  test("it does not tell anyone to delete the bean's copy", () => {
+    const r = formatReport({
+      store: true,
+      examined: 1,
+      findings: [{ id: "aaaa", table: "| phase | does | exit criterion |", line: 4, skills: ["cat-harness/skills/folio-core/todo-manager.md"] }],
+    });
+    // The hand-check measured 5 drifted pairs and found the SKILL wrong in 3.
+    // A report that says "delete the copy" sends somebody to edit the correct
+    // text, so the word must not appear.
+    expect(r).not.toContain("Delete the copy");
+    expect(r).toContain("RECONCILE");
+    expect(r).toContain("read both before editing either");
+    // Both sides are named, so the reader can go and look at each.
+    expect(r).toContain("aaaa");
+    expect(r).toContain("cat-harness/skills/folio-core/todo-manager.md");
+  });
+
+  test("the clean line claims only what was measured", () => {
+    const r = formatReport({ store: true, examined: 258, findings: [] });
+    // `ekp9` found 3 live restatements this rule cannot reach. A green that
+    // read "no bean restates a skill" would be a clean run over what was
+    // never examined.
+    expect(r).toContain("no open bean carries a phase-contract table");
+    expect(r).not.toContain("no bean restates");
   });
 });
 

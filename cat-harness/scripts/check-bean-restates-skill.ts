@@ -112,6 +112,42 @@
  * MEANING, which is the dead end above wearing a different hat. Left to the
  * reader, deliberately, and said here rather than silently omitted.
  *
+ * ## WHAT IT CANNOT REACH — named, because a green run must not overclaim
+ *
+ * The hand-check in bean `ekp9` (PR #1188) read 50 candidates by hand and is
+ * the ground truth this rule is measured against. It found **3 live
+ * restatements that this rule does not flag, and cannot**:
+ *
+ * | bean | skill | the shape it is in |
+ * |---|---|---|
+ * | `xies` | `kg-to-portal` | the settled-and-open contract as prose plus a `\| stage \| here \|` status table |
+ * | `tfo1` | `theme-art-intake` | a bulleted constraint list and the refuse-vs-warn split |
+ * | `lqo9` | `swimlane-glossary` | the SKOS mapping and a measurement block |
+ *
+ * None is a phase table with a per-row exit condition, so no tightening of
+ * {@link contractTables} reaches them; reaching them means reading MEANING,
+ * which is the Jaccard dead end above. **So the clean line this check prints
+ * says "no open bean carries a phase-contract table" and deliberately not "no
+ * bean restates a skill".** A check whose green reads wider than what it
+ * measured is the `dh4f` defect — a clean run reported over what was never
+ * examined.
+ *
+ * `ekp9` also falsified the CANDIDATE SET this rule's false-positive rate was
+ * measured over: `kn0t` pre-repair shares only **22** ten-word runs with its
+ * skill, below the `>=25` threshold, so the calibration case was never in the
+ * candidate set at all. Their conclusion, and it is the sharpest sentence in
+ * either investigation: **the more dangerous a restatement is, the fewer
+ * shingles it shares** — because drift is what destroys the overlap. The
+ * false-positive figure that survives is the unconditional one, 0 of 888.
+ *
+ * ## THE DIRECTION IS NOT ASSUMED
+ *
+ * `AGENTS.md` says the skill wins, and that is the right default. But `ekp9`
+ * measured 5 already-drifted pairs and found the **skill** wrong in 3 of them
+ * (`hajp`, `g196`, `06e3`). A check that reports "the bean restates the skill"
+ * and stops sends somebody to edit the correct text, so {@link formatReport}
+ * reports a DISAGREEMENT and names both sides.
+ *
  * **It does not repair anything.** Same rule as `check:bean-bodies` and
  * `bun run health`: the finding names something a *person* does, and the
  * person is the bean's owner. See
@@ -274,14 +310,16 @@ export function formatReport(r: RestatesSkillReport): string {
     out.push(`  ✗ ${f.id} line ${f.line}: ${f.table}`);
     out.push(
       f.skills.length
-        ? `      the contract has a home — ${f.skills.join(", ")}. Delete the copy; keep the link.`
+        ? `      also stated in ${f.skills.join(", ")}. RECONCILE the two — read both before editing either.`
         : "      the bean names NO skill. The contract belongs in one; the bean keeps a pointer to it.",
     );
   }
   out.push("");
   out.push("  A bean is a WORK PLAN: what is outstanding, and what constrains it. A skill carries the");
-  out.push("  CONTRACT. Where the two disagree the skill wins and the copy is wrong (AGENTS.md).");
-  out.push("  `kn0t` is the worked example, before and after PR #1185.");
+  out.push("  CONTRACT. `kn0t` is the worked example, before and after PR #1185.");
+  out.push("  THE DIRECTION IS NOT ASSUMED. AGENTS.md says the skill wins, and that is the right default,");
+  out.push("  but the hand-check in bean `ekp9` measured 5 drifts and found the SKILL wrong in 3 of them.");
+  out.push("  So this reports a DISAGREEMENT, never an instruction to edit the bean.");
   out.push("  Repaired by the bean's OWNER, not by this check and not by whoever ran it.");
   return out.join("\n");
 }

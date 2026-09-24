@@ -143,8 +143,25 @@ finding names something the bean's OWNER does.
 - [x] tests over synthetic trees only — nothing walks `beans/`, after a prior session's
       real-tree tests pushed a sibling past its 5 s timeout
 - [x] registered in `.github/workflows/code-quality-gates.yml`, so `gates.ts` derives it
-- [ ] the sibling session's hand-check of the same candidate set reconciled against this
-      rule — **their hand-check is ground truth where we disagree**
+- [x] the sibling hand-check reconciled — **DONE 2026-09-24, and it went against this
+      rule.** `ekp9` read 50 candidates and found **3 live restatements this rule does
+      not flag and cannot**: `xies` (prose + a `| stage | here |` status table), `tfo1`
+      (a bulleted constraint list and the refuse-vs-warn split), `lqo9` (the SKOS
+      mapping and a measurement block). None is a phase table with a per-row exit
+      condition, so no tightening reaches them; reaching them means reading MEANING,
+      which is the Jaccard dead end. **Recorded in the module docs and reflected in the
+      clean line**, which says *"no open bean carries a phase-contract table"* and
+      deliberately not *"no bean restates a skill"* — a green that reads wider than
+      what was measured is the `dh4f` defect
+- [x] `ekp9` point 4 applied — **the report now names a disagreement, never a
+      direction.** It measured 5 drifted pairs and found the **skill** wrong in 3
+      (`hajp`, `g196`, `06e3`), so *"Delete the copy"* would have sent somebody to edit
+      the correct text. Two tests pin it
+- [x] `ekp9`'s calibration finding recorded: `kn0t` pre-repair shares only **22**
+      ten-word runs with its skill, below the `>=25` threshold — so the candidate set
+      never contained the calibration case. *The more dangerous a restatement is, the
+      fewer shingles it shares*, because drift is what destroys the overlap. The
+      false-positive figure that survives is the unconditional 0 of 888
 - [x] owner's call on whether the gate's narrowness is right — **SETTLED 2026-09-24:
       ship as is.** Asked as a five-column comparison of four options (ship as is /
       widen to a bulleted phase list / downgrade to `kind: "report"` / defer to the
