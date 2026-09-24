@@ -21,6 +21,7 @@ import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
@@ -123,10 +124,11 @@ for (const file of sources) {
  */
 function subprocessLinks(xml: string): Map<string, string> {
   const out = new Map<string, string>();
+  const link = ownElementPattern(xml, "link", String.raw`\s+href="([^"]+)"\s*\/?>`, "");
   for (const m of xml.matchAll(/<bpmn:callActivity\b([^>]*)>([\s\S]*?)<\/bpmn:callActivity>/g)) {
     const id = /\sid="([^"]+)"/.exec(m[1])?.[1];
     if (!id) continue;
-    const explicit = /<folio:link\s+href="([^"]+)"\s*\/?>/.exec(m[2])?.[1];
+    const explicit = link.exec(m[2])?.[1];
     if (explicit) {
       out.set(id, explicit);
       continue;
