@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — folio-assistant-core/core-schemas"
 nav_exclude: true
 ---
