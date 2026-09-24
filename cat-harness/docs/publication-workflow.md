@@ -242,21 +242,23 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 **The CI workflows themselves** — `.github/workflows/*.yml` are processes
 too, with triggers, gateways and compensation paths, and until 2026-09-20 none
 was drawn. `bun run check:workflow-coverage` measures how many are, in three
-states; a diagram declares its subject with
-`<cat-harness.processes:implements workflow="…"/>` rather than being matched on its filename,
-because a mention is not coverage.
+states; a workflow names the diagram it implements with a
+`# bpmn: cat-harness/processes/….bpmn` line rather than being matched on its
+filename, because a mention is not coverage. The pointer is on the workflow
+because the workflow depends on the process it carries out, and the dependent
+holds the pointer (bean `61ca`; the diagram carried it until 2026-09-24).
 
 **Coverage alone would not have been worth having.** Bean `7yvd`: *"a diagram
 that is drawn once and then drifts is worse than none, because it is
-consulted."* So the node standing for a job declares it —
-`<cat-harness.processes:job name="stage"/>` — and the same check compares the two sets in
+consulted."* So each job names the node it stands for —
+`# bpmn-node: Start_PR` inside the job — and the same check compares the two in
 **both** directions: a job with no node is a diagram that has gone stale, a
-node naming a job the workflow does not have is one that was stale already.
-Both exit 1, in the same tier as a dangling `<cat-harness.processes:implements>`, because
+node the diagram does not have is one that was stale already. Both exit 1, in
+the same tier as a `# bpmn:` line naming a diagram that is not there, because
 both mislead a reader who follows them.
 
-Declaring is opt-in per diagram, and a covered workflow whose diagram names
-no job is reported as **undeclared** rather than as fully drifted: "nobody has
+Declaring is opt-in per workflow, and a covered workflow none of whose jobs
+names a node is reported as **undeclared** rather than as fully drifted: "nobody has
 said yet" and "said, and wrong" are different answers, and only the second is
 a finding. What is never allowed is a diagram declaring *some* of a
 workflow's jobs and reading as complete.
@@ -271,7 +273,7 @@ workflow's jobs and reading as complete.
 | `code-quality-gates.bpmn` | **Five independent jobs, and nothing in the YAML says so in one place.** No job declares `needs:`, so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one (`rust-wildcard`) is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on |
 | `ci-health-watch.bpmn` | Is CI actually working on `main`? **Only `unknown` fails the job** — a red `main` records the issue and this workflow stays green, which is invisible from the run list. `Could we tell?` is not simply the exit code: `bun` exits 1 on a crash too, so the REPORT FILE separates "found something red" from "crashed" |
 | `repository-health-watch.bpmn` | The same shape one level out — the repository rather than the workflows. **It reports and never acts**: there is no removal task on the diagram, and its absence is `deletion-requires-confirmation` being followed rather than an omission |
-| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no `<cat-harness.processes:job>`, so a job added here would tell nobody — not for exposition |
+| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one its job names no node, so a job added here would tell nobody — not for exposition |
 | `atomic-mass-drift-check.bpmn` | Is `AtomicMass.lean` still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above |
 | `pr-checks-present.bpmn` | Which open pull requests have **no CI run on their head** — bean `3pqn`. Measured 2026-09-20: two of six had none. The **15-minute age gate** is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only `unknown` fails the job; a finding records itself and the workflow stays green. Two channels: the issue **edited in place**, the PR comment **once per (PR, head sha)** |
 

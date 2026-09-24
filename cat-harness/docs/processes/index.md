@@ -99,7 +99,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 ## What runs this skill?
 
-The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
+The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
 **99** distinct skill(s) are named by an activity.
 
@@ -207,7 +207,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 
 ## Who appears in a process?
 
-A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty lanes spell two dozen positions — so `<folio:role ref>` is the join that does not depend on spelling, and it is reported separately below rather than merged into the name.
+A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty lanes spell two dozen positions — so `<bootstrap.processes:role ref>` is the join that does not depend on spelling, and it is reported separately below rather than merged into the name.
 
 **105** distinct lane name(s).
 
@@ -321,7 +321,7 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 
 ## Which steps touch the work plan?
 
-`<folio:bean op>` — the audit trail for who reserves and resolves work.
+`<cat-harness.processes:bean op>` — the audit trail for who reserves and resolves work.
 
 | op | diagrams |
 |---|---|
@@ -342,7 +342,7 @@ Three states, not two. `loadProcessModel` reads an undeclared policy as `strict`
 
 Every one of the **74** diagrams has a rendered SVG.
 
-### Activities carrying no `<folio:skill ref>` — a census, not a gap list
+### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list
 
 **43** across **25** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
 
@@ -365,5 +365,5 @@ Every one of the **74** diagrams has a rendered SVG.
 | Trusted registries and observatories (external) | 1 |
 | User | 1 |
 
-**No verdict is offered on which of these is a gap**, and that is the honest state rather than a hedge: distinguishing a person's judgement step from an agent step somebody forgot needs the lane's actor KIND, which a free-text lane name does not give — `process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is the join that would answer it, and it is present on **27** of these **27** steps — which is the measurement, not an impression. An earlier draft of this sentence said *few of these* and was counting whether the lane had a NAME, a different question with a different answer.
+**No verdict is offered on which of these is a gap**, and that is the honest state rather than a hedge: distinguishing a person's judgement step from an agent step somebody forgot needs the lane's actor KIND, which a free-text lane name does not give — `process-model.ts` notes sixty lanes spell two dozen positions. `<bootstrap.processes:role ref>` is the join that would answer it, and it is present on **27** of these **27** steps — which is the measurement, not an impression. An earlier draft of this sentence said *few of these* and was counting whether the lane had a NAME, a different question with a different answer.
 

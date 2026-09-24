@@ -7738,7 +7738,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable id, referenced by `<folio:convention ref=\"…\"/>`."
+          "@value": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/convention.ts#ConventionSchema.id",
@@ -17485,7 +17485,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable id. Referenced by `<folio:role ref>` and by `inherits`."
+          "@value": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDef.id",
@@ -17580,7 +17580,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Display text. Not used for matching: a lane binds by `<folio:role ref>`."
+          "@value": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDef.title",
@@ -25769,7 +25769,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `<folio:link>` hrefs — resolve against."
+          "@value": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against."
         }
       ],
       "dcterms:source": "cat-harness/schemas/webpage.ts#WebPageNode.id",

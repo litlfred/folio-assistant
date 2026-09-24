@@ -19,6 +19,7 @@ Judging changed CODE NODES — Tool definitions and schema definition nodes — 
 
 - **Called by:** [Review task](review-task.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

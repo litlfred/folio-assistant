@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:4fd130dad9f6876e007e63619e5675bae873864c60361743af35c66b448bd242",
+  "source_hash": "sha256:7ea553b86eff4f264cf106d51fa2ec2d125139fa12a9768f1304e1fedbeeb0b8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,7 +101,7 @@
       "findings": [
         {
           "where": "H_Confirm",
-          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },
@@ -157,8 +157,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
-      "prose_hash": "4fd130dad9f6",
-      "code_hash": "febb84641f75",
+      "prose_hash": "7ea553b86eff",
+      "code_hash": "df24d472051f",
       "by": "baseline"
     }
   ]

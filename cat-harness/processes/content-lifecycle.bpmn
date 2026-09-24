@@ -101,7 +101,6 @@
     <bpmn:callActivity id="CallActivity_Editing" name="Editing and HCI validation&#10;[content-author]" calledElement="Process_Editing">
       <bpmn:documentation>See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="publication-workflow.html#editing-and-the-hci-validation-gate" />
         <bootstrap.processes:skill ref="content-author" />
         <bootstrap.processes:skill ref="content-validate" />
         <bootstrap.processes:skill ref="content-review" />
@@ -121,7 +120,6 @@
     <bpmn:callActivity id="CallActivity_Publication" name="Draft, review and publish&#10;[content-publish]" calledElement="Process_Publication">
       <bpmn:documentation>See draft-to-publication.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="publication-workflow.html#from-corpus-to-published-folio" />
         <bootstrap.processes:skill ref="content-review" />
         <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>

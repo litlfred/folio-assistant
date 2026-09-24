@@ -30,7 +30,7 @@
  *    line or the line above. The base cases are here: the module that supplies
  *    the defaults, the scaffolder that CREATES the layout, the partition plan
  *    that describes a layout this repo does not have yet. Same shape as
- *    `<folio:no-skill reason="…"/>`: exempt, but the reason is required, so
+ *    `<cat-harness.processes:no-skill reason="…"/>`: exempt, but the reason is required, so
  *    silencing the check costs more than satisfying it, and the marked sites
  *    are COUNTED in the summary rather than disappearing.
  *

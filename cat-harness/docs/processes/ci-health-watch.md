@@ -19,6 +19,7 @@ A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow her
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

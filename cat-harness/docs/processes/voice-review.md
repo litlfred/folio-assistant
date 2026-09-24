@@ -19,6 +19,7 @@ The voice axis: load whichever editorial voices are active, run each rule's mech
 
 - **Called by:** [Narrative review](review-narrative.html)
 - **Calls:** [Criterion adjudication](criterion-adjudication.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
