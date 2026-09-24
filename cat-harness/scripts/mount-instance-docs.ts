@@ -675,6 +675,123 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
   return { injected, skipped, unpublished };
 }
 
+/**
+ * Pages the SITE publishes that Jekyll never laid out — bean `oi1y`.
+ *
+ * ## The gap, and why it is not the mount gap
+ *
+ * {@link injectRails} walks MOUNT ROUTES. A page that is neither a mount nor a
+ * generated viewer falls between both: Jekyll copies a committed `.html`
+ * through verbatim, so it inherits no layout and therefore no sidebar, and
+ * nothing else puts one on it.
+ *
+ * A wireframe directory is the clearest case, because it holds both halves:
+ * `as-is.html` beside `intent.md`, same subject, same directory. The `.md` is
+ * laid out and wears the theme's sidebar; the `.html` wears nothing — **no
+ * navigation and no outward link at all**, not even back to the wireframe it
+ * belongs to. Measured on the published site: 23 wireframe pages and 10 under
+ * `bootstrap/`.
+ *
+ * ## Why a pass and not 33 edits
+ *
+ * That is `edx7`'s argument, one directory over: hand-editing the committed
+ * files fixes today's 33 and leaves the 34th wireframe to forget. These are
+ * hand-authored — `check-wireframes.ts` validates them and writes nothing — so
+ * `edx7`'s `emit` fixture cannot reach them either. What is left is the
+ * mechanism this file already implements for mounts: inject after the build.
+ *
+ * ## The objection that a drawing should not wear real chrome
+ *
+ * Six of the 23 DRAW a sidebar as part of the mockup, which puts a real rail
+ * beside a drawn one — the shape of the IRIS-replica case, where folio
+ * chrome on a replica is the opposite of what a replica is for.
+ *
+ * It does not apply, and the repository settled it before this pass existed:
+ * `navbar/intent.md` also depicts and discusses the navbar, **and wears the
+ * theme sidebar**, and nobody has called that wrong. A replica impersonates
+ * somebody else's site; a wireframe is this site documenting itself, and the
+ * drawing is content inside the page rather than a claim about what the page
+ * is.
+ *
+ * ## Already-navigated pages are LEFT ALONE, and both navigations count
+ *
+ * A page carrying the theme's `<nav id="site-nav">` is not missing anything,
+ * and neither is one already carrying `<nav class="fa-nav">`. Conflating those
+ * two is what made the measurement behind this function wrong four times
+ * running: `docs-ui.css` styles the theme's sidebar with `fa-nav-*` class
+ * names, so a substring test for `fa-nav` reports a themed page as railed —
+ * and reports a page that merely MENTIONS `.fa-nav-toggle` in prose as railed
+ * too, which is what the navbar wireframe does.
+ */
+const NAVIGATED = /<nav class="fa-nav"|id="site-nav"/;
+
+/**
+ * Where this pass does NOT go, with the reason, and meant to be emptied.
+ *
+ * `api/` is TypeDoc's own site: 1816 pages that already carry a toolbar, a
+ * sidebar and a search dialog. Putting a second navigation beside those is a
+ * LAYOUT question rather than a missing-navigation defect, and the owner asked
+ * for it as its own change so the question can be answered where a reviewer
+ * sees it. One entry, named rather than silently skipped, and this constant
+ * goes away when it is decided.
+ */
+const NOT_THIS_PASS = ["api"];
+
+export function railStandalonePages(
+  siteAbs: string,
+  built: string,
+  instanceName: string,
+  mountRoutes: readonly string[],
+): { injected: number; alreadyNavigated: number; skipped: string[] } {
+  const skipped: string[] = [];
+  let injected = 0;
+  let alreadyNavigated = 0;
+
+  const owned = (rel: string): boolean =>
+    mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    NOT_THIS_PASS.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    rel === "STAGING" ||
+    rel.startsWith("STAGING/");
+
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith(".")) continue;
+      const abs = join(dir, e.name);
+      const rel = abs.slice(siteAbs.length + 1);
+      if (e.isDirectory()) {
+        if (!owned(rel)) walk(abs);
+        continue;
+      }
+      if (!e.name.endsWith(".html") || owned(rel)) continue;
+
+      const before = readFileSync(abs, "utf-8");
+      if (NAVIGATED.test(before)) {
+        alreadyNavigated++;
+        continue;
+      }
+      // `..` per directory the page sits under; the filename is not one.
+      const depth = rel.split("/").length - 1;
+      const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
+      const harnesses = instantiatedHarnesses(built, toRoot);
+      const after = injectRail(before, {
+        instance: instanceName,
+        toRoot,
+        links,
+        ...(harnesses ? { harnesses } : {}),
+      });
+      if (after === undefined) {
+        skipped.push(rel);
+        continue;
+      }
+      writeFileSync(abs, after);
+      injected++;
+    }
+  };
+  if (existsSync(siteAbs)) walk(siteAbs);
+  return { injected, alreadyNavigated, skipped };
+}
+
 function mountable(): Mountable[] {
   const out: Mountable[] = [];
   for (const e of readdirSync(REPO, { withFileTypes: true })) {
@@ -859,6 +976,21 @@ function main(): number {
     for (const f of railed.skipped.slice(0, 5)) console.log(`      ${f}`);
     if (railed.skipped.length > 5) console.log(`      … and ${railed.skipped.length - 5} more`);
   }
+  // The pages that are neither a mount nor a generated viewer — bean `oi1y`.
+  const standalone = railStandalonePages(siteAbs, built, built, mounts.map((m) => m.route));
+  console.log(
+    `  standalone pages: harness rail on ${standalone.injected}, ` +
+      `${standalone.alreadyNavigated} already navigated`,
+  );
+  if (standalone.skipped.length) {
+    // NAMED, never summed into a total, for the reason stated on the mount
+    // pass: a file with no <body> is not a page this rail belongs on, and a
+    // bare count could not be told from a bug.
+    console.log(`  ${standalone.skipped.length} standalone file(s) took no rail (no <body>):`);
+    for (const f of standalone.skipped.slice(0, 5)) console.log(`      ${f}`);
+    if (standalone.skipped.length > 5) console.log(`      … and ${standalone.skipped.length - 5} more`);
+  }
+
   for (const m of mounts) {
     console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
   }
