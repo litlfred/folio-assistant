@@ -82,8 +82,8 @@ this was written, and finding out why was worth more than the fence.
 `folioOptionalAxes()` resolves its config through `findContentRepoRoot()`,
 which stopped at the nearest declared folio directory — `cat-harness/folio/` —
 while the config sat one level up. So it read no config at all here, and
-neither did `readDeclaredFolioProfile()`: it returned `"undetermined (no
-<name>.config.json)"` from the resolved root and `"document"` from the actual
+neither did `readDeclaredFolioProfile()`: it returned
+`"undetermined (no <name>.config.json)"` from the resolved root and `"document"` from the actual
 repository root.
 
 > **Re-measured 2026-09-21, and the resolution half no longer reproduces.**
