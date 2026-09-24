@@ -1,0 +1,270 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-oe98-schema-docs-prefix/skills/content-review/output.schema.json",
+  "title": "Content Review Output",
+  "description": "What a review produces: findings, a decision about them, and the audit notes that justify it. A finding is an observation; a decision is an act about a set of findings; neither determines the other. Mirrors schemas/qa-review.ts — see skills/folio-core/decision-audit.md.",
+  "type": "object",
+  "required": [
+    "findings",
+    "decision",
+    "notes"
+  ],
+  "properties": {
+    "findings": {
+      "type": "array",
+      "description": "One entry per observation. Immutable once raised: to disagree with one, overrule it in the decision.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "subject",
+          "reviewer",
+          "detail"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Block label, skill name or repo-relative path."
+          },
+          "criterion": {
+            "type": "string"
+          },
+          "reviewer": {
+            "type": "object",
+            "required": [
+              "kind",
+              "id"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "script",
+                  "agent",
+                  "human"
+                ]
+              },
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor"
+            ],
+            "description": "Machine axis — what kind of breakage. Required of a script reviewer."
+          },
+          "weight": {
+            "type": "string",
+            "enum": [
+              "blocking",
+              "suggestion",
+              "praise"
+            ],
+            "description": "Human axis — what the reviewer asks of the gate. Required of a human reviewer. `praise` has no image under the machine axis."
+          },
+          "detail": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/citation"
+            }
+          },
+          "raised_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "outcome",
+        "role",
+        "by",
+        "considered",
+        "notes"
+      ],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "approve",
+            "request-changes",
+            "reject"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "description": "Role id from schemas/role-graph.ts — the lane this was decided in."
+        },
+        "by": {
+          "type": "object",
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "script",
+                "agent",
+                "human"
+              ]
+            },
+            "id": {
+              "type": "string"
+            }
+          }
+        },
+        "considered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Finding ids weighed, overruled or not."
+        },
+        "overrules": {
+          "type": "array",
+          "description": "Findings the decision went against. The finding stays on the record; the note says why.",
+          "items": {
+            "type": "object",
+            "required": [
+              "finding",
+              "note"
+            ],
+            "properties": {
+              "finding": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Audit-note ids. At least one."
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "description": "Why the decision was made, and why each overruled finding was left.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "author",
+          "rationale",
+          "cites"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "author": {
+            "type": "object",
+            "required": [
+              "kind",
+              "id"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "script",
+                  "agent",
+                  "human"
+                ]
+              },
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "cites": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/citation"
+            },
+            "description": "A rationale with no citation is an assertion."
+          },
+          "proposed_by": {
+            "type": "string",
+            "description": "The agent that assembled the citations. Never the author — searching the corpus is clerical work."
+          },
+          "written_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "citation": {
+      "type": "object",
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "witness",
+            "finding",
+            "qa-report",
+            "block",
+            "file",
+            "bib",
+            "workflow-instance"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/oe98-schema-docs-prefix",
+    "sha": "c029bb7dd0087d5fb1d74a73317af2285dbf2039",
+    "pr": "1251/merge",
+    "run": "35962949909"
+  }
+}
