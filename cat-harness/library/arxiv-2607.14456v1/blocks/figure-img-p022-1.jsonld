@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p022-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p022-1.png",
+  "pageStart": 22,
+  "pageEnd": 22,
+  "narrative": {
+    "text": "Figure 13, captioned \"Customer promotion workflow\". From \"Start: Start - Receive CIF\" it fetches and validates the customer profile; an Invalid/Inactive edge returns 'No Deals Found'. Otherwise it retrieves order history, determines total spend and gets the loyalty points balance, then \"Check Promo Eligibility (Accepts point balance and total spent)\" splits into two symmetric branches — \"Low Value Customer (Bronze/Silver)\" to a standard discount and standard recommendations, and \"High Value Customer (Platinum/Gold)\" to a premium discount and premium recommendations. Both rejoin at \"Is promotion Urgent\", which sends either a scheduled or an immediate notification before End Process. NOTE, as an observation about the paper rather than about the diagram: the ten workflows are figured in alphabetical order (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) and this is the eighth, the position of the workflow the results call \"Spam\"; the caption calls it a customer promotion workflow and the diagram shows one. Which name is intended is not established here.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-022",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

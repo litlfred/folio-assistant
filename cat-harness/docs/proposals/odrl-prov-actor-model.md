@@ -169,6 +169,10 @@ See [BPMN execution: one skill, two engines](../agentic-harness.html#bpmn-execut
 - **The deterministic engine** reads the ODRL policy **before** each task and
   refuses one that no permission covers. It writes the `prov:Activity` as it
   runs.
+  *Built 2026-09-23, advisory (issue #1207): the engine refuses a `deny` or a
+  role mismatch and records `unknown`, because no policy yet grants
+  `perform-task` for any lane. See the `task-authorization` skill. The PROV
+  activity is not written yet.*
 - **The agentic swarm** acts first. Its QA/QC report reads the PROV-O log
   **after**, and every `prov:Activity` with no matching ODRL permission, or a
   `hadRole` the lane does not bind, is a finding.

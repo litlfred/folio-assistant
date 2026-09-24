@@ -13,7 +13,7 @@ A feature starts as a **proposal** in [Proposals]({{ '/proposals/' | relative_ur
 
 ## What a page here must carry
 
-The front matter is checked by `bun run check:requirements` against the bootstrap schema, `bootstrap/schemas/requirement.ts`:
+The front matter is checked by `bun run check:requirements` against the bootstrap schema, `bootstrap/schemas/requirement.schema.json`:
 
 - `id`: `req:<slug>`, and the slug is the file name. No two documents in either sub-graph share a slug, so a filed proposal can never land on an existing requirement.
 - `title`, `description` and `actors`: the roles it is about, by id.

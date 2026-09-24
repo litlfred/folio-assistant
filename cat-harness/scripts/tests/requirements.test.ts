@@ -6,11 +6,13 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import Ajv from "ajv";
+
 import {
   RequirementRefSchema,
   RequirementSchema,
   requirementRef,
-} from "../../../bootstrap/schemas/requirement.ts";
+} from "../../../bootstrap-tools/schemas/requirement.ts";
 import { RequirementSchema as HarnessRequirementSchema } from "../../schemas/skill-package.ts";
 import { TestRunSchema } from "../../schemas/test-run.ts";
 import { checkRequirementPage, collisions, declaredDirFor } from "../check-requirements.ts";
@@ -84,6 +86,28 @@ describe("the bootstrap Requirement", () => {
     expect(RequirementRefSchema.safeParse("req:glass-navigation").success).toBe(true);
     expect(RequirementRefSchema.safeParse("req:glass-navigation#zoom").success).toBe(true);
     expect(RequirementRefSchema.safeParse("glass-navigation#zoom").success).toBe(false);
+  });
+});
+
+describe("the PUBLISHED schema refuses what the Zod refuses (FR-7: bootstrap holds only the JSON)", () => {
+  const published = JSON.parse(readFileSync(join(REPO, "bootstrap", "schemas", "requirement.schema.json"), "utf8"));
+  const validate = new Ajv({ allErrors: true }).compile(published);
+  test("a valid requirement passes", () => {
+    expect(validate(base)).toBe(true);
+  });
+  test("a non-functional statement cannot want", () => {
+    const bad = structuredClone(base);
+    (bad.statements[1] as Record<string, unknown>).capability = "go faster";
+    expect(validate(bad)).toBe(false);
+  });
+  test("a functional statement has no quality category", () => {
+    const bad = structuredClone(base);
+    (bad.statements[0] as Record<string, unknown>).category = "performance";
+    expect(validate(bad)).toBe(false);
+  });
+  test("superseded names what superseded it", () => {
+    expect(validate({ ...base, status: "superseded" })).toBe(false);
+    expect(validate({ ...base, status: "superseded", supersededBy: "req:x" })).toBe(true);
   });
 });
 

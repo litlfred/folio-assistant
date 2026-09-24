@@ -5,6 +5,8 @@ description: >
   question. The three records a step may touch, the one it may not, what
   `<folio:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two.
+graph-kinds:
+  - workflow-state
 ---
 
 # State in a running process

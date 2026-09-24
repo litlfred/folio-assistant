@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p015-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p015-1.png",
+  "pageStart": 15,
+  "pageEnd": 15,
+  "narrative": {
+    "text": "Figure 6, the Cart workflow — the largest in the benchmark at 52 nodes and 60 edges. From \"Start: Order recieved\" (spelt so in the diagram) it validates cart and pricing, checks the customer account, runs fraud screening and requests payment authorisation. A \"Payment authorized\" gateway branches to auth-failure handling, customer notification, order cancellation and a recorded cancellation on No. On Yes it reserves inventory and asks \"All items in stock?\"; No triggers a backorder flow, notifies the customer, offers alternatives and asks what the customer chooses, with substitution, cancellation and reorder paths. The fulfilment spine then runs pick list, picker assignment, packing and weight confirmation, carrier rate-shopping, carrier selection, shipping label, handover confirmation, shipment notification, inventory decrement, payment capture, bookkeeping entry, loyalty points, invoice PDF and the tracking email. Delivery monitoring follows, with a \"Delivered?\" gateway and a lost/delayed branch carrying carrier tickets, SLA checks, reroute attempts, escalation, a loss claim and a refund-or-reorder decision, all converging on customer feedback and \"End: End\".",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-015",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

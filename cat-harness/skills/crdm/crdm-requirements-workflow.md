@@ -1,3 +1,10 @@
+---
+name: crdm-requirements-workflow
+graph-kinds:
+  - proposals
+  - requirements
+---
+
 # CRDM requirements workflow
 
 Once a feature request is detected (see `crdm-detect.md`), the agent follows
@@ -289,7 +296,7 @@ to merge:
 1. `git mv docs/proposals/<slug>.md docs/requirements/<slug>.md`, so
    `git log --follow` walks the requirement back through its argument.
 2. Add the `Requirement` fields to its front matter, from
-   `bootstrap/schemas/requirement.ts`:
+   `bootstrap/schemas/requirement.schema.json`:
    - `id: req:<slug>`. The id IS the file name.
    - `status: in-force`
    - `proposedIn`: the old path.

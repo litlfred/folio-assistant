@@ -84,7 +84,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { RequirementRefSchema } from "../../bootstrap/schemas/requirement.ts";
+import { RequirementRefSchema } from "../../bootstrap-tools/schemas/requirement.ts";
 
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
@@ -130,7 +130,7 @@ export const TestRunSchema = z.object({
    * free to disagree with it.
    *
    * The test points at the requirement, not the reverse (see
-   * `bootstrap/schemas/requirement.ts`). Optional so that a run recorded
+   * `bootstrap/schemas/requirement.schema.json` (Zod source: `bootstrap-tools/schemas/requirement.ts`)). Optional so that a run recorded
    * before the field existed still parses; a new run should say what it is
    * evidence FOR.
    */

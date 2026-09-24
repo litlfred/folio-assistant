@@ -461,7 +461,7 @@ export interface ProcessModel {
    * Empty for every diagram that declares none, which is most of them: a
    * process running inside a harness has already had its actor established.
    * `initialize-harness` is the case that motivated this — it runs BEFORE a
-   * harness exists, so nothing established who the Initiator is or what it
+   * harness exists, so nothing established who the Bootstrapping Agent is or what it
    * knows, and the claim lived in documentation prose an engine cannot read.
    */
   preconditions: Precondition[];

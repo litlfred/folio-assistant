@@ -69,6 +69,21 @@ describe("bootstrap/README.md is self-definitional", () => {
   });
 });
 
+describe("FR-7: bootstrap holds no program code", () => {
+  test("no file in bootstrap/ is a program", () => {
+    const code: string[] = [];
+    const walk = (d: string) => {
+      for (const f of readdirSync(d)) {
+        const p = join(d, f);
+        if (statSync(p).isDirectory()) walk(p);
+        else if (/\.(m?[jt]sx?|py|sh)$/.test(f)) code.push(p.slice(BOOTSTRAP.length + 1));
+      }
+    };
+    walk(BOOTSTRAP);
+    expect(code).toEqual([]);
+  });
+});
+
 describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   /**
    * What is allowed, and why. Anything else that matches LEAKS fails.
@@ -88,9 +103,6 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
   const PENDING = [
-    'bootstrap.json: "id": "cat-harness",',
-    'bootstrap.json: "reachableAt": "cat-harness/docs/bootstrap/initialization.md",',
-    "schemas/model-registry.ts: * would otherwise answer**. A model registry in cat-harness would be",
   ];
   const files: string[] = [];
   const walk = (d: string) => {

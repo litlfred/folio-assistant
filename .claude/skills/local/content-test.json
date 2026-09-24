@@ -8,12 +8,8 @@
     { "ref": "content-validate", "kind": "skill", "conformance": "SHALL" },
     { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/run-tests.sh", "runtime": "bash", "phase": "execute" }
-  ],
   "routingPatterns": ["test", "integration test", "regression", "test plan"],
   "tags": ["lifecycle", "testing"],
   "package": "content-lifecycle",
-  "lifecycleStages": ["test"],
-  "schemaRef": "schemas/skills/content-test"
+  "lifecycleStages": ["test"]
 }

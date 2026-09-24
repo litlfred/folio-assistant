@@ -136,7 +136,7 @@ const OUTPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
 ];
 
 const INPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
-  { why: "the minimum an Initiator can populate", doc: { open: ["harness"], askedOf: participant }, valid: true },
+  { why: "the minimum a Bootstrapping Agent can populate", doc: { open: ["harness"], askedOf: participant }, valid: true },
   {
     why: "with everything it might have narrowed from context",
     doc: {

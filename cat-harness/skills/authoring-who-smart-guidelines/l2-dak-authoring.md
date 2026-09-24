@@ -1,3 +1,8 @@
+---
+input: schemas/skills/l2-dak-authoring/input.schema.json
+output: schemas/skills/l2-dak-authoring/output.schema.json
+---
+
 # l2-dak-authoring
 
 > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` ·

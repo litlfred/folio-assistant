@@ -17,7 +17,7 @@ import {
 } from "../core/feedback.js";
 import type { FeedbackItem } from "../../schemas/types.js";
 import type { ContentAdapter } from "../types.js";
-import { getUserName, getUserEmail, hasRole, forbidden } from "../core/rbac.js";
+import { getUserName, getUserEmail, allows, forbidden } from "../core/rbac.js";
 import { log } from "../core/logging.js";
 import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
@@ -132,8 +132,8 @@ export async function handleFeedbackPost(
 
   // ── Delete feedback (collaborator+) ──────────────────────────
   if (path === "/api/feedback/delete") {
-    if (!hasRole(req, "collaborator")) {
-      return forbidden("deleting feedback", "collaborator");
+    if (!allows(req, "review-comments")) {
+      return forbidden("deleting feedback", "review-comments");
     }
     try {
       const body = (await req.json()) as {

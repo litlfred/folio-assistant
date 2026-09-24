@@ -7,7 +7,7 @@
  *
  * ## Why the source and the output are in different instances
  *
- * `bootstrap/README.md` promises an Initiator **no harness, no server, no
+ * `bootstrap/README.md` promises a Bootstrapping Agent **no harness, no server, no
  * tools and no work plan**, and that what it reads is "a file you read, not
  * something you run". That directory holds `.md`, `.json` and `.bpmn` and no
  * executable code. So the Zod lives in `bootstrap-tools/` and the JSON
@@ -51,6 +51,11 @@ import {
   JSON_SCHEMA_CONDITIONALS,
 } from "../../bootstrap-tools/schemas/discussion.ts";
 import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
+import { ModelRegistrySchema } from "../schemas/model-registry.ts";
+import {
+  REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
+  RequirementSchema,
+} from "../../bootstrap-tools/schemas/requirement.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const check = process.argv.includes("--check");
@@ -99,7 +104,7 @@ const TARGETS = [
     id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
     title: "Discussion Input",
     description:
-      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — an Initiator has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
+      "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
     schema: DiscussionInputSchema,
     conditionals: [] as readonly unknown[],
     terms: {} as Readonly<Record<string, string>>,
@@ -128,6 +133,32 @@ const TARGETS = [
     schema: KnowledgeGraphDeclarationSchema,
     conditionals: [] as readonly unknown[],
     terms: BOOTSTRAP_TERMS as Readonly<Record<string, string>>,
+  },
+  {
+    // The shape of `models/models.json`. Its Zod source moved out of bootstrap
+    // into cat-harness on 2026-09-23 (bean iwtn, FR-7: bootstrap holds no
+    // code); this document is what a reader with nothing installed opens.
+    file: "schemas/model-registry.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+    title: "Model Registry",
+    description:
+      "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
+    schema: ModelRegistrySchema,
+    conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
+  },
+  {
+    // What a harness, or something built with one, must do (issue #1164).
+    // Bootstrap publishes it because a harness states its requirements before
+    // anything above bootstrap has loaded; the Zod is in bootstrap-tools (FR-7).
+    file: "schemas/requirement.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/requirement.schema.json",
+    title: "Requirement",
+    description:
+      "What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT) and one sentence. A test run points at a statement as `req:<slug>#<key>`; the requirement does not list its tests. Statement keys are unique within a requirement.",
+    schema: RequirementSchema,
+    conditionals: REQUIREMENT_JSON_SCHEMA_CONDITIONALS as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
   },
 ] as const;
 

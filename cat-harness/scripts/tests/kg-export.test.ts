@@ -442,7 +442,9 @@ describe("kg export", () => {
     // string-manipulate or infer a rule to follow a link. So the preview→
     // canonical relation is written out per node, not left derivable.
     const preview = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
-    const canonical = await buildExport();
+    // The shared fixture IS the canonical export; building it again here put
+    // this test at ~5.2 s alone, over bun's timeout (bean `w82m`).
+    const canonical = EXPORT;
 
     expect(Array.isArray(preview["@type"])).toBe(true);
     expect(preview["@type"]).toContain(termIri("PreviewGraph"));
@@ -476,27 +478,30 @@ describe("kg export", () => {
 });
 
 describe("source provenance — what the graph was generated FROM", () => {
+  // Read off the shared canonical export: each of these once rebuilt it, and
+  // one rebuild costs about bun's 5 s per-test timeout on a session container
+  // (bean `w82m`). Provenance is fixed per checkout, so one build answers all.
   // `generatedAt` says WHEN the export ran, which does not identify what it
   // ran over: two graphs differing in content are indistinguishable from two
   // runs of the same content, and a consumer holding a published .jsonld has
   // no way back to the tree that produced it.
 
-  test("the commit SHA is carried, unabbreviated", async () => {
-    const d = await buildExport();
+  test("the commit SHA is carried, unabbreviated", () => {
+    const d = EXPORT;
     expect(d.sourceCommitSha).toMatch(/^[0-9a-f]{40}$/);
   });
 
-  test("it is the commit this checkout is actually on", async () => {
+  test("it is the commit this checkout is actually on", () => {
     const head = spawnSync("git", ["rev-parse", "HEAD"], {
       cwd: resolve(import.meta.dir, "../.."),
       encoding: "utf-8",
     }).stdout.trim();
-    const d = await buildExport();
+    const d = EXPORT;
     expect(d.sourceCommitSha).toBe(head);
   });
 
-  test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", async () => {
-    const d = await buildExport();
+  test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", () => {
+    const d = EXPORT;
     expect(d.sourceCommit).toContain(d.sourceCommitSha);
     expect(d.sourceCommit).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
     const ctx = d["@context"] as Record<string, { "@id"?: string; "@type"?: string }>;
@@ -504,13 +509,13 @@ describe("source provenance — what the graph was generated FROM", () => {
     expect(ctx.sourceCommit?.["@type"]).toBe("@id");
   });
 
-  test("the commit's own time is distinct from the export's", async () => {
-    const d = await buildExport();
+  test("the commit's own time is distinct from the export's", () => {
+    const d = EXPORT;
     expect(d.sourceCommitAt).toBeDefined();
     expect(d.sourceCommitAt).not.toBe(d.generatedAt);
   });
 
-  test("a dirty tree is a typed flag, NOT a `problems` entry", async () => {
+  test("a dirty tree is a typed flag, NOT a `problems` entry", () => {
     // A SHA reported from a tree with uncommitted changes names a commit that
     // does not contain what was exported, so the flag rides beside the SHA
     // rather than suppressing it. It stays out of `problems`, whose contract
@@ -518,23 +523,23 @@ describe("source provenance — what the graph was generated FROM", () => {
     // state of a developer's machine, and putting it there would make
     // `problems: []` fail on every local run and train the reader to ignore
     // the field that reports real failures.
-    const d = await buildExport();
+    const d = EXPORT;
     expect(typeof d.sourceTreeDirty).toBe("boolean");
     expect(d.problems.some((p) => /uncommitted|dirty/i.test(p))).toBe(false);
   });
 
-  test("an absent SHA carries its own reason, not a placeholder", async () => {
-    const d = await buildExport();
+  test("an absent SHA carries its own reason, not a placeholder", () => {
+    const d = EXPORT;
     // Exactly one of the two is present — a consumer never has to infer why a
     // field is missing, and never parses a placeholder as a commit.
     expect(Boolean(d.sourceCommitSha) !== Boolean(d.sourceCommitUnavailable)).toBe(true);
   });
 
-  test("every provenance term is declared in @context", async () => {
+  test("every provenance term is declared in @context", () => {
     // An undeclared term is dropped on expansion, so a field present in the
     // JSON would be absent from the RDF — the graph would silently lose its
     // own provenance.
-    const d = await buildExport();
+    const d = EXPORT;
     const ctx = d["@context"] as Record<string, unknown>;
     for (const k of ["sourceCommit", "sourceCommitSha", "sourceCommitAt", "sourceTreeDirty"]) {
       expect(ctx[k]).toBeDefined();
@@ -906,7 +911,7 @@ describe("exporting ANOTHER instance's graph", () => {
 
   test("a Tool satisfying a sibling's skill links into the SIBLING's document", async () => {
     // The edge `pve3` created: the skills live in bootstrap so an
-    // Initiator can read them with nothing installed, the Tool nodes live here
+    // Bootstrapping Agent can read them with nothing installed, the Tool nodes live here
     // because a Tool is cat-harness's vocabulary (`gn4l`).
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE });

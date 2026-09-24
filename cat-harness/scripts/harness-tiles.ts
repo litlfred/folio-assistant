@@ -51,7 +51,7 @@
  * `GENERIC`, which is reported as a finding rather than rendered as a blank.
  */
 import { existsSync, readdirSync } from "node:fs";
-import { join, relative } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
@@ -61,6 +61,7 @@ import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
   type CatHarnessDeclaration,
   type NavbarIcon,
+  artefactStub,
   resolveNavbarIcons,
   findDeclarationFile,
   isExemptFrom,
@@ -242,9 +243,10 @@ export type HarnessTile = {
    *
    * - `folio`   — the instance's own themed root
    * - `viewer`  — a kind handler's view of one of its graphs
-   * - `handled` — a page ANOTHER instance publishes about it, named by its
-   *               own `renderExemption.reachableAt`. Only a render-exempt
-   *               instance can have this, and it is the last resort.
+   * - `handled` — one of the instance's OWN files, published for it by the
+   *               site build and named by its `renderExemption.reachableAt`.
+   *               Only a render-exempt instance can have this, and it is the
+   *               last resort.
    */
   hrefKind?: "folio" | "viewer" | "handled";
   stats: HarnessStat[];
@@ -865,33 +867,35 @@ function tileFor(
    * is `flh4`'s defect and a DIFFERENT finding from "nothing is published":
    * one says the declaration is wrong, the other says nobody built it. Both
    * leave the tab unlinked, which is correct either way.
+   *
+   * RELATIVE TO THE INSTANCE, and inside it (owner, 2026-09-23, bean iwtn:
+   * "bootstrap is bootstrap"). It named a page in the site-owning harness's
+   * docs until then, which made the floor of the stack point at a layer above
+   * it. It now names one of the instance's OWN files, which the site build
+   * publishes at `<base>/<stub>/` (`publish-instance-files.ts`), `.md`
+   * rendered as `.html`.
    */
   let handled: string | undefined;
   const reachable = decl.renderExemption?.reachableAt;
   if (folio === undefined && firstViewer === undefined && reachable !== undefined) {
-    // `sitePrefix`, the same repo-relative site directory the declared
-    // visualisers were rebased onto above — one computation, so the two
-    // cannot disagree about where the site is.
-    const prefix = sitePrefix;
-    const onDisk = join(repoRoot, reachable);
-    if (!existsSync(onDisk)) {
+    const onDisk = resolve(instanceDir, reachable);
+    const inside = !isAbsolute(reachable) && !relative(instanceDir, onDisk).startsWith("..");
+    if (!inside) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `outside the instance. It must name one of the instance's own files, relative to ` +
+          `its own directory, so the tab stays unlinked.`,
+      );
+    } else if (!existsSync(onDisk)) {
       findings.push(
         `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
           `not a file. The tab stays unlinked — a declared path that does not resolve is a ` +
           `wrong declaration, which is a different problem from nothing being published.`,
       );
-    } else if (!reachable.startsWith(prefix)) {
-      findings.push(
-        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
-          `outside the site-owning harness's site directory (${prefix}), so it is not published ` +
-          `and cannot be linked to.`,
-      );
     } else {
-      // `.md` is published as `.html` by Jekyll; anything else is served as
-      // it sits. Deriving the extension rather than assuming one keeps this
-      // honest if an exemption ever points at an already-built page.
-      const rest = reachable.slice(prefix.length);
-      handled = `/${rest.replace(/\.md$/, ".html")}`;
+      // `.md` is published as `.html` (`publish-instance-files.ts`); anything
+      // else is served as it sits.
+      handled = `/${artefactStub(decl)}/${reachable.replace(/\.md$/, ".html")}`;
     }
   }
 
@@ -1011,8 +1015,8 @@ function tileFor(
   }
   if (handled !== undefined) {
     findings.push(
-      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens the page ` +
-        `another instance publishes about it (${handled}), declared as \`reachableAt\`.`,
+      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens one of its ` +
+        `own files as published (${handled}), declared as \`reachableAt\`.`,
     );
   }
 
