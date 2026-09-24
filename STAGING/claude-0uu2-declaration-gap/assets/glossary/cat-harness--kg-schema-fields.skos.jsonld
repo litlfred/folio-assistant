@@ -4173,6 +4173,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummariessidecarschema.entry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummariesSidecarSchema.entry"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library entry's slug — the directory this file sits in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema.entry",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.block",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.block"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block's `@id`, e.g. `library/<slug>/blocks/prose-sec-000`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.block",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.narrative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The summary itself, with its state and its author."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.source_hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.source_hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha256 of {@link proseBody} of `source` when the summary was drafted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source_hash",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.superseded",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.superseded"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Earlier narratives this one replaced — a rejected draft, or one whose source changed. Kept so a rejection's reason is not lost when the block is redrafted: a rejection that vanishes lets the next agent write the identical thing again."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.superseded",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/board-positions.boardpositionschema.x",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -9246,6 +9360,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.documentimageschema.placements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DocumentImageSchema.placements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every place this image appears, the first one included."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.placements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.geometrybasisschema.coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -9395,6 +9528,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/document-image.ts#InspectionBasisSchema.saw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.coverage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.imagesonpage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.imagesOnPage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many images share this page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this copy serves HERE — never what the image is, which is the narrative's job. \"a recurring header for principle 8\" belongs here; \"an irregular grid of coloured squares\" belongs on the image."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page it sits on, 1-based as a reader counts."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
       "skos:note": "candidate"
     },
     {
@@ -13385,6 +13594,120 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionnodeschema.default",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionNodeSchema.default"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What to assume for somebody with no entry above."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.default",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionnodeschema.dollar-comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionNodeSchema.$comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Prose for a reader who opens the file; never read by a process."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.$comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionnodeschema.users",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionNodeSchema.users"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keyed by the identity the agent can resolve — an email today."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionprofileschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionProfileSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the profile means for this person, in their terms or the agent's."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionprofileschema.profiles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionProfileSchema.profiles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.profiles",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/interaction.interactionprofileschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InteractionProfileSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How it came to be known — `stated by the user`, a policy, an inference."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.source",
       "skos:note": "candidate"
     },
     {
