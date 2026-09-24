@@ -9,9 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/interaction" as pkg_cat_harness_interaction <<interaction>> {
-  class "interaction" as cat_harness_interaction_interaction_shape <<schema: schemas/harness-config.ts>> #f6eedf {
-    //fields not machine-readable: schemas/harness-config.ts names no exported schema//
-  }
+  note "interaction: no node schema declared\n(no node here carries a $schema family interaction names (1 named): could not determine)" as n_cat_harness_interaction_interaction
 }
 
 @enduml

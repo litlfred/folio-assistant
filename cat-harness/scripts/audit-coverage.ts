@@ -130,7 +130,8 @@
  * Usage:
  *   bun run audit:coverage                 # print the report, write the sidecar
  *   bun run audit:coverage --check         # ...and fail if the committed sidecar is stale
- *   bun run audit:coverage --strict        # ...and fail on a kind nothing audits
+ *   bun run audit:coverage --strict        # ...and fail on a kind nothing JUDGES
+ *                                          #    (unaudited or typed-only alike)
  *   bun run audit:coverage --require-all   # ...and on any gate that has not declared
  *
  * @module scripts/audit-coverage
@@ -164,7 +165,24 @@ export type KindState =
   | "empty"
   /** Files, and at least one criterion or gate reaching them. */
   | "covered"
-  /** Files, and nothing reaching them. The finding. */
+  /**
+   * Files that a declared validator TYPES, and nothing judges.
+   *
+   * Bean `3oqj`. The first version had no such state, so `health` and `todos`
+   * read `unaudited` — and that over-reported: both declare a validator, and
+   * `check:kind-validators` parses their nodes against it. They read as reached
+   * by nothing only because the gate that types them declares
+   * `@covers computed`, which this report counts as neither coverage nor gap.
+   *
+   * **It is still a finding.** `--strict` fails on it, recorded as its own
+   * family. Typing is not judging — that is this report's whole thesis, and a
+   * state that turned a finding into a pass would be `dh4f` wearing this
+   * script's own design. What it buys is telling "a schema parses these nodes
+   * and no criterion reads them" from "nothing whatsoever reaches this kind",
+   * which are different pieces of work.
+   */
+  | "typed-only"
+  /** Files, and nothing reaching them at all — not even a validator. */
   | "unaudited";
 
 export interface KindCoverage {
@@ -182,6 +200,17 @@ export interface KindCoverage {
   gates: string[];
   /** QA sidecars found under its directories. Printed, never committed. */
   sidecars: number;
+  /**
+   * Does the registry declare something that RUNTIME-VALIDATES a node of this
+   * kind — a `validator`, or a `nodeSchemas` family?
+   *
+   * Read from the registry's own declaration rather than resolved here.
+   * `check:kind-validators` already fails the build on a declared validator
+   * that does not load, so re-resolving would be a second answer to a question
+   * that gate settles — the drift `kg-audit`'s `tool-*` criteria exist to
+   * avoid. What this reads is the CLAIM; that gate is what keeps the claim true.
+   */
+  typed: boolean;
 }
 
 /** A row without its census — what the sidecar records. See the docblock. */
@@ -446,8 +475,19 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
     }
     const crit = criteriaByGraph.get(kind);
     const gs = gatesByKind.get(kind) ?? [];
+    const def = defaultGraphKinds.get(kind);
+    const typed = Boolean(def?.validator) || Boolean(def?.nodeSchemas);
+    const judged = (crit?.ids.length ?? 0) > 0 || gs.length > 0;
     const state: KindState =
-      dirs.size === 0 ? "no-directory" : files === 0 ? "empty" : (crit?.ids.length ?? 0) > 0 || gs.length > 0 ? "covered" : "unaudited";
+      dirs.size === 0
+        ? "no-directory"
+        : files === 0
+          ? "empty"
+          : judged
+            ? "covered"
+            : typed
+              ? "typed-only"
+              : "unaudited";
     rows.push({
       kind,
       state,
@@ -457,6 +497,7 @@ export function coverage(repo: string): { rows: KindCoverage[]; gates: GateCover
       subjectKinds: [...(crit?.subjects ?? [])].sort(),
       gates: gs.sort(),
       sidecars,
+      typed,
     });
   }
   return { rows, gates, universe };
@@ -514,7 +555,11 @@ function main(): number {
 
   console.log(`    ${pad("kind", 20)} ${" ".repeat(1)}files  crit  gates  sidecars  state`);
   for (const r of rows) {
-    const mark = r.state === "unaudited" ? "✗" : r.state === "no-directory" ? "·" : r.state === "empty" ? "·" : "✓";
+    // `typed-only` is marked `~` rather than `✓` or `✗`: it is a finding, and
+    // it is a DIFFERENT one from `unaudited`. A shared mark would put the two
+    // pieces of work in one bucket, which is what this state exists to undo.
+    const mark =
+      r.state === "unaudited" ? "✗" : r.state === "typed-only" ? "~" : r.state === "covered" ? "✓" : "·";
     console.log(
       `  ${mark} ${pad(r.kind, 20)} ${num(r.files, 6)} ${num(r.criteria.length, 5)} ${num(r.gates.length, 6)} ${num(r.sidecars, 9)}  ${r.state}`,
     );
@@ -522,11 +567,16 @@ function main(): number {
   console.log("");
 
   const unaudited = byState("unaudited");
+  const typedOnly = byState("typed-only");
   if (unaudited.length > 0) {
-    console.log(`✗ ${unaudited.length} kind(s) hold files that NO criterion and NO gate reach:`);
+    console.log(`✗ ${unaudited.length} kind(s) hold files that NOTHING reaches — no criterion, no gate, not even a validator:`);
     for (const r of unaudited) console.log(`    · ${r.kind}: ${r.files} file(s) under ${r.directories.join(", ")}`);
   } else {
-    console.log("✓ every kind with files is reached by a criterion or a declared gate");
+    console.log("✓ every kind with files is reached by a criterion, a gate, or a declared validator");
+  }
+  if (typedOnly.length > 0) {
+    console.log(`~ ${typedOnly.length} kind(s) are TYPED and judged by nothing — a schema parses their nodes, no criterion reads them:`);
+    for (const r of typedOnly) console.log(`    · ${r.kind}: ${r.files} file(s) under ${r.directories.join(", ")}`);
   }
 
   const undeclared = gates.filter((g) => g.state === "undeclared");
@@ -555,10 +605,20 @@ function main(): number {
     families: {
       "kinds-unaudited": {
         summary:
-          `A declared kind whose directories hold files that no kg-audit criterion and no gate ` +
-          `declaring @covers reaches. An UPPER bound while gates remain undeclared: ` +
-          `${undeclared.length} of ${gates.length} gate(s) have not said what they cover.`,
+          `A declared kind whose directories hold files that NOTHING reaches — no kg-audit ` +
+          `criterion, no gate declaring @covers, and no declared validator. ` +
+          (undeclared.length > 0
+            ? `An UPPER bound while gates remain undeclared: ${undeclared.length} of ${gates.length} have not said what they cover.`
+            : `All ${gates.length} gate(s) have declared, so this is a verdict rather than an upper bound (bean \`3srh\`).`),
         entries: unaudited.map((r) => ({ kind: r.kind, directories: r.directories })),
+      },
+      "kinds-typed-only": {
+        summary:
+          `A declared kind whose nodes a declared validator TYPES and no criterion or gate ` +
+          `JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, ` +
+          `and still a finding — \`--strict\` fails on it. Typing is not judging: a kind can ` +
+          `parse perfectly against its schema while nothing has an opinion about what it says.`,
+        entries: typedOnly.map((r) => ({ kind: r.kind, directories: r.directories })),
       },
       "kinds-no-directory": {
         summary:
@@ -612,7 +672,9 @@ function main(): number {
   }
 
   if (check && state !== "current") return 1;
-  if (strict && unaudited.length > 0) return 1;
+  // `typed-only` fails `--strict` too. It is a finding, so a flag that passed
+  // over it would launder the gap the state was introduced to make visible.
+  if (strict && (unaudited.length > 0 || typedOnly.length > 0)) return 1;
   if (requireAll && undeclared.length > 0) return 1;
   return 0;
 }

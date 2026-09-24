@@ -54,6 +54,8 @@
  * the same argument `kg:audit` makes for writing sidecars rather than printing.
  *
  * @module scripts/check-viewer-nav
+ * @covers docs — it walks the whole docs tree, one finding per generated viewer page whose
+ *   navbar regressed
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";

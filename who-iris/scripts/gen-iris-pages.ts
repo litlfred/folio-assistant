@@ -690,6 +690,11 @@ function page(
     color: var(--iris-ink); background: var(--iris-surface);
   }
   .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  /* A long path in inline code has no break opportunity, and at a 390 px
+     viewport three of them made kg-to-portal 566 px wide (bean xwrt). These
+     pages are mounted verbatim, so the harness's narrow-viewport.css never
+     reaches them. Breaking the string beats widening the page. */
+  :not(pre) > code { overflow-wrap: anywhere; }
   a { color: var(--iris-accent); text-decoration: none; }
   a:hover, a:focus { text-decoration: underline; }
 
