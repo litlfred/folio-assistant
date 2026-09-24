@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 267,
+      "count": 275,
       "unit": "beans"
     }
   },
@@ -741,7 +741,7 @@
     {
       "id": "folio-assistant-6o1z",
       "title": "crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
@@ -991,6 +991,20 @@
       "updatedAt": "2026-09-19T11:43:44Z",
       "preview": "Notes that a participant carries, attached to a node of the graph.\n\n`h32d` is the schema both halves share; `5oai` is the relation that lets one\nattach to a content block and move between them. The 2x2 that governs this is\nmemory-vs-workflow and human-vs-agent: todos are human memory, `MEMORY.md` is\nagent memory, beans are agent workflow, and human workflow is deliberately\nempty.\n\n`4kiw` and `0j8h",
       "file": "beans/defs/folio-assistant-8jt6--memory-todos-notes-an-agent-or-a-person-carries-at.md"
+    },
+    {
+      "id": "folio-assistant-8v0y",
+      "title": "A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:07:00Z",
+      "updatedAt": "2026-09-23T21:07:04Z",
+      "preview": "Issue [#1190](https://github.com/litlfred/folio-assistant/issues/1190).\n\nA bean that carries a **skill's contract** instead of pointing at it. `AGENTS.md`'s\nbanner already states the rule — *where a skill and a copy disagree, the skill wins\nand the copy is wrong* — and nothing could read it.\n\n## The defect, already paid for\n\n`kn0t` held a second copy of\n[`fhir-harness/skills/fhir-ig-base/ig-publis",
+      "file": "beans/defs/folio-assistant-8v0y--a-bean-that-restates-a-live-skills-contract-is-unc.md"
     },
     {
       "id": "folio-assistant-8xtj",
@@ -1257,6 +1271,20 @@
       "updatedAt": "2026-09-24T00:15:16Z",
       "preview": "Owner, 2026-09-23: *\"ingest into library for use as evidence and skills as\nsubgraph on processes in cat-harness\"*.\n\nBorman, Wandabwa, Yu, Kannangara, Liu, Leontjeva and Ng, **\"Beyond Generalist\nLLMs: Specialist Agentic Systems for Structured Code Workflow Execution\"**,\nCommonwealth Bank of Australia. Workshop paper at SCALE, ICML 2026 (PMLR 306);\narXiv:2607.14456v1 [cs.SE], 16 July 2026. Open acce",
       "file": "beans/defs/folio-assistant-b7wh--ingest-arxiv260714456v1-specialist-bpmn-compiled-a.md"
+    },
+    {
+      "id": "folio-assistant-b91x",
+      "title": "Decide: keep beans (hmans) or move to Beads (gastownhall/beads)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-8jt6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:03:47Z",
+      "updatedAt": "2026-09-23T22:32:13Z",
+      "preview": "Raised 2026-09-23 while writing cat-harness/docs/prior-art.md (bean vq8o). hmans/beans has had no commit since 2026-04-06 (v0.4.2, pre-1.0); Beads is very active (v1.3.0, atomic claim, leases) but stores in Dolt and has had a retracted release and data-loss/merge issues after its SQLite->Dolt migration (gastownhall/beads #2251, #4259, #4356). No importer between the two exists. Owner decision; not",
+      "file": "beans/defs/folio-assistant-b91x--decide-keep-beans-hmans-or-move-to-beads-gastownha.md"
     },
     {
       "id": "folio-assistant-b963",
@@ -1765,6 +1793,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hj9d",
+      "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T00:26:28Z",
+      "updatedAt": "2026-09-24T00:26:28Z",
+      "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
+      "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
+    },
+    {
       "id": "folio-assistant-hs08",
       "title": "MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio",
       "status": "in-progress",
@@ -2257,6 +2299,20 @@
       "file": "beans/defs/folio-assistant-mylx--raw-markdown-backticks-show-in-rendered-text.md"
     },
     {
+      "id": "folio-assistant-n2l9",
+      "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-23T22:52:59Z",
+      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
+      "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
+    },
+    {
       "id": "folio-assistant-n5be",
       "title": "glossary visualiser: 6 wireframe findings",
       "status": "todo",
@@ -2301,14 +2357,14 @@
     {
       "id": "folio-assistant-nm7l",
       "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T23:20:35Z",
-      "updatedAt": "2026-09-23T23:20:35Z",
+      "updatedAt": "2026-09-23T23:56:10Z",
       "preview": "Part of s4sp (plan B3, split: B3a arrows, B3b skill I/O contracts). Skill scripts/validators/mcpServices removed (26 skills, no live reader); the 6 real scripts become Tools (content-graph-analysis, pages-index, proof-dependency-graph, proof-objects-extract, proof-status-update, paper-latex-build) and content-manifest-validate also satisfies content-validation. Requirement statements lose satisfie",
       "file": "beans/defs/folio-assistant-nm7l--b3a-1168-scriptsvalidatorsmcpservices-become-tools.md"
     },
@@ -2537,6 +2593,20 @@
       "updatedAt": "2026-09-23T17:58:25Z",
       "preview": "Owner, 2026-09-23 (session_017nyJj3PsjvszpF3DyGeBgE): *\"bootstrap/README need propeor one voice revieqw. not condensed very repetative.\"*\n\n`bootstrap/README.md` is 252 lines. The owner reads it as repetitive and not condensed. This is repetition INSIDE one page. That is a different measurement from the one parent `88mg` made, which compared `docs/` with `skills/` and found little overlap.\n\n## Done",
       "file": "beans/defs/folio-assistant-pv51--bootstrap-readme-one-voice-rewrite-repetitive-and.md"
+    },
+    {
+      "id": "folio-assistant-q2aj",
+      "title": "Recheck Beads (gastownhall/beads) maturity against beans",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-8jt6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:32:13Z",
+      "updatedAt": "2026-09-23T22:32:13Z",
+      "preview": "Follow-up to b91x (owner decision 2026-09-23: keep beans, recheck in ~3 months, i.e. on or after 2026-12-23). Evidence baseline: cat-harness/docs/research-and-analysis/prior-art.md.\n\n## Done when\n- [ ] Beads' storage-layer issues re-measured (retractions, data-loss / dolt-pull issues since 2026-09-23) and hmans/beans activity re-measured\n- [ ] findings added to the prior-art page's health table wi",
+      "file": "beans/defs/folio-assistant-q2aj--recheck-beads-gastownhallbeads-maturity-against-be.md"
     },
     {
       "id": "folio-assistant-q2wm",
@@ -2919,6 +2989,20 @@
       "file": "beans/defs/folio-assistant-t3n8--the-archive-rung-stages-but-can-never-promote-and.md"
     },
     {
+      "id": "folio-assistant-t490",
+      "title": "Task authorization: authN + role + ODRL + content access before every BPMN task; rbac.ts on ODRL",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:16:45Z",
+      "updatedAt": "2026-09-23T22:52:49Z",
+      "preview": "Issue #1207 (child of #1180). Owner decisions 2026-09-23: advisory rollout (deny/role-mismatch refuse, unknown recorded), action always perform-task, authN is the BPMN executor's responsibility with git/GitHub as today's identity + access control, rbac.ts replaced by ODRL now.\n\n## Done when\n- [x] engine checks in workflow_gate + workflow_complete, verdict in history\n- [x] rbac.ts routes on ODRL, g",
+      "file": "beans/defs/folio-assistant-t490--task-authorization-authn-role-odrl-content-access.md"
+    },
+    {
       "id": "folio-assistant-t8g3",
       "title": "Translation support foundation (issue #206)",
       "status": "in-progress",
@@ -3217,6 +3301,20 @@
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
     },
     {
+      "id": "folio-assistant-vq8o",
+      "title": "Prior-art page: open-source projects taking a similar approach",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:53:16Z",
+      "updatedAt": "2026-09-24T05:25:53Z",
+      "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
+      "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
+    },
+    {
       "id": "folio-assistant-vsv4",
       "title": "voices visualiser: 7 wireframe findings",
       "status": "todo",
@@ -3275,7 +3373,7 @@
     {
       "id": "folio-assistant-w82m",
       "title": "TEST COST: kg-export 'a preview says so' builds the export twice and sits at bun's 5 s timeout (fails alone, locally, on main too)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -3299,6 +3397,20 @@
       "updatedAt": "2026-09-23T21:44:43Z",
       "preview": "Owner authorised `beans archive` 2026-09-23, the last outstanding\n`bean-store` finding on [#860](https://github.com/litlfred/folio-assistant/issues/860).\nIt ran, it moved 631 beans, and it left two things behind that are worth\nrecording rather than quietly repairing.\n\n## 1. A moved bean's relative links break — measured, not predicted\n\n`check:subgraphs` was **GREEN before the archive and RED after",
       "file": "beans/defs/folio-assistant-wekz--archive-moving-a-bean-one-level-deeper-breaks-its.md"
+    },
+    {
+      "id": "folio-assistant-wg7r",
+      "title": "MISFILED: smart-kg/methodologies/grade.md belongs in a skill + SKOS code list, and smart-kg/ leaves this repo",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:50Z",
+      "updatedAt": "2026-09-23T22:52:50Z",
+      "preview": "Owner, 2026-09-23: *\"misfiled smart-kg/methodologies/grade.md, needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\"*.\n\n## What is wrong\n\n- `smart-kg/methodologies/grade.md` (85 lines, `folio-methodology/v1`) is the only file under `smart-kg/`, a directory named after a repository that **already exists on its own**. Keeping a stub of it here is a second h",
+      "file": "beans/defs/folio-assistant-wg7r--misfiled-smart-kgmethodologiesgrademd-belongs-in-a.md"
     },
     {
       "id": "folio-assistant-wggr",
@@ -3766,12 +3878,6 @@
   "findings": [
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-6o1z",
-      "blocks": "folio-assistant-vjbl",
-      "detail": "blocks `folio-assistant-vjbl` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
       "blocks": "folio-assistant-p67i",
       "detail": "blocks `folio-assistant-p67i` and states no expiry, so the block cannot be told from abandoned work"
@@ -3787,6 +3893,12 @@
       "bean": "folio-assistant-tfo1",
       "blocks": "folio-assistant-d3yq",
       "detail": "blocks `folio-assistant-d3yq` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-6o1z",
+      "blocks": "folio-assistant-vjbl",
+      "detail": "is completed but still blocks `folio-assistant-vjbl`, which is todo"
     }
   ]
 }
