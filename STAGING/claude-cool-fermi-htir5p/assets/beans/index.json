@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 284,
+      "count": 285,
       "unit": "beans"
     }
   },
@@ -911,14 +911,14 @@
     {
       "id": "folio-assistant-7h1c",
       "title": "publish-verify scope misses our own SKOS code-lists document",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:40:40Z",
-      "updatedAt": "2026-09-24T05:40:40Z",
+      "updatedAt": "2026-09-24T11:55:19Z",
       "preview": "Found 2026-09-24 while working `wg7r`. `publish-verify`'s `isOurs` counts a JSON-LD document as ours only when its `@context` names our content context or binds one of our namespaces. `<stub>-code-lists.jsonld` (glossary-export) binds only `skos`, `dcterms`, `owl` and `rdf`, so the verifier counts it **out of scope (not ours)**, even though its `@id` sits under our published base and we author eve",
       "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
     },
@@ -3663,6 +3663,20 @@
       "updatedAt": "2026-09-18T15:28:10Z",
       "preview": "## What\n\nInstall folio-assistant's skills into whichever agent is running (Claude Code,\nGemini CLI, Antigravity, Cursor, Copilot), across the whole dependency tree —\na folio links the platform as submodule or sibling, so the skill set is a union\nacross checkouts rather than one directory listing. Prefix every emitted skill\n`fa-` so the host's namespace does not collide.\n\nNot started. The issue rec",
       "file": "beans/defs/folio-assistant-x4mt--cross-agent-skill-install-fa-prefix.md"
+    },
+    {
+      "id": "folio-assistant-x80s",
+      "title": "INGEST: agent summaries of prose blocks, a QA sidecar drained slowly during ingestion",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:54:04Z",
+      "updatedAt": "2026-09-24T05:54:04Z",
+      "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
+      "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
     {
       "id": "folio-assistant-x89g",
