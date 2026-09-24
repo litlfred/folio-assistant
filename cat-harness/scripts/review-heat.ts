@@ -22,7 +22,7 @@
  * the diff renderers, so the function tested here is the one the page runs.
  */
 export interface HeatRow {
-  /** `<manifest dir>::<section label>`, or `(listed in no section)`. */
+  /** `{manifest dir}::{section label}`, or `(listed in no section)`. */
   section: string;
   changed: number;
   open: number;

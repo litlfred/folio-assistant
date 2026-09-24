@@ -67,6 +67,7 @@
  *   bun run kg:audit                 # the same rule, written to sidecars
  *
  * @module scripts/raci-chart
+ * @covers processes, scenarios
  */
 import { resolve } from "node:path";
 

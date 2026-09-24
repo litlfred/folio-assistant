@@ -98,7 +98,7 @@ These run alongside the content processes rather than inside them:
 | `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
 | `diig-investment-path.bpmn` | WHO's Digital Implementation Investment Guide as a process: nine chapters from forming the team to the value proposition, with the Guide's OWN progress checks at 4.5 and 8.5 as gateways rather than gates added here. Chapter 3 builds on CRDM, which is why it sits beside the diagrams above. Lives in `smart-base`, because a domain method belongs to the repository that owns the domain |
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
-| `session-state-machine.bpmn` | An agent **playing** a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is **which enabled branch the agent takes**. Both gateways carry `folio:judgement`, the marker added with this diagram so that "no table because this is somebody's call" stops being indistinguishable from "no table yet". The machine **records** that a bean was claimed; it never claims one |
+| `session-state-machine.bpmn` | An agent **playing** a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is **which enabled branch the agent takes**. Both gateways carry `cat-harness.processes:judgement`, the marker added with this diagram so that "no table because this is somebody's call" stops being indistinguishable from "no table yet". The machine **records** that a bean was claimed; it never claims one |
 | `activity-log.bpmn` | When does an agent write a log entry, and when is one kept? Persistence is **off by default**, and the gateway reads a three-valued setting — `off`, `on`, `unknown` — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of `fsh-guts/` |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
 | `code-change-review.bpmn` | The same loop for a change to the **platform** rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean `haya` after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a *content* change as its subject. **No deployment lane**: that is the one part whose activities differ per topology |
@@ -206,16 +206,16 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 too, with triggers, gateways and compensation paths, and until 2026-09-20 none
 was drawn. `bun run check:workflow-coverage` measures how many are, in three
 states; a diagram declares its subject with
-`<folio:implements workflow="…"/>` rather than being matched on its filename,
+`<cat-harness.processes:implements workflow="…"/>` rather than being matched on its filename,
 because a mention is not coverage.
 
 **Coverage alone would not have been worth having.** Bean `7yvd`: *"a diagram
 that is drawn once and then drifts is worse than none, because it is
 consulted."* So the node standing for a job declares it —
-`<folio:job name="stage"/>` — and the same check compares the two sets in
+`<cat-harness.processes:job name="stage"/>` — and the same check compares the two sets in
 **both** directions: a job with no node is a diagram that has gone stale, a
 node naming a job the workflow does not have is one that was stale already.
-Both exit 1, in the same tier as a dangling `<folio:implements>`, because
+Both exit 1, in the same tier as a dangling `<cat-harness.processes:implements>`, because
 both mislead a reader who follows them.
 
 Declaring is opt-in per diagram, and a covered workflow whose diagram names
@@ -234,7 +234,7 @@ workflow's jobs and reading as complete.
 | `code-quality-gates.bpmn` | **Five independent jobs, and nothing in the YAML says so in one place.** No job declares `needs:`, so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one (`rust-wildcard`) is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on |
 | `ci-health-watch.bpmn` | Is CI actually working on `main`? **Only `unknown` fails the job** — a red `main` records the issue and this workflow stays green, which is invisible from the run list. `Could we tell?` is not simply the exit code: `bun` exits 1 on a crash too, so the REPORT FILE separates "found something red" from "crashed" |
 | `repository-health-watch.bpmn` | The same shape one level out — the repository rather than the workflows. **It reports and never acts**: there is no removal task on the diagram, and its absence is `deletion-requires-confirmation` being followed rather than an omission |
-| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no `<folio:job>`, so a job added here would tell nobody — not for exposition |
+| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no `<cat-harness.processes:job>`, so a job added here would tell nobody — not for exposition |
 | `atomic-mass-drift-check.bpmn` | Is `AtomicMass.lean` still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above |
 | `pr-checks-present.bpmn` | Which open pull requests have **no CI run on their head** — bean `3pqn`. Measured 2026-09-20: two of six had none. The **15-minute age gate** is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only `unknown` fails the job; a finding records itself and the workflow stays green. Two channels: the issue **edited in place**, the PR comment **once per (PR, head sha)** |
 

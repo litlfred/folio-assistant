@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_DeriveContent` · advisory · 6 step(s)
 
-folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — Ingestion subprocess — derive content from the assets. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/ingest-derive-content.svg" alt="BPMN diagram: Ingestion subprocess — derive content from the assets" style="max-width:100%">
 

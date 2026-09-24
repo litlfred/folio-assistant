@@ -55,6 +55,7 @@ import { join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { KG_GRAPH_KIND } from "./cat-harness";
 import { portableSegment } from "./portable-path";
 
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
@@ -307,6 +308,56 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
  */
 export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph", "tool"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
+
+/**
+ * Which declared GRAPH KIND a subject of each kind lives in.
+ *
+ * Two vocabularies meet here and they are not the same axis. `KG_SUBJECT_KINDS`
+ * above says what this audit judges — a process, a role, a skill. The graph-kind
+ * registry (`BASE_GRAPH_KINDS`) says what an instance DECLARES a directory of.
+ * A `skill` subject inhabits a `skills` graph; a `tool` subject inhabits a
+ * `tools` graph; nothing named `skill` or `tool` is a graph kind.
+ *
+ * ## Why this is declared and not derived
+ *
+ * `audit-coverage.ts` has to answer "how many criteria reach this KIND of
+ * directory", and the only bridge between the two vocabularies was the
+ * directory constants inside `kg-audit.ts` — resolved there, per subject, with
+ * no exported statement of the correspondence. Reading it back out of those
+ * constants means re-deriving a mapping from the shape of the code that uses
+ * it, which is a guess dressed as a lookup: `DECISION_DIR` is
+ * `join(WORKFLOW_DIR, "decisions")`, so a deriver sees a path and has to decide
+ * whether that is its own kind. It is not — there is no `decisions` graph kind,
+ * and a DMN file sits inside the `processes` graph.
+ *
+ * So the subject kind states which graph it inhabits, once, here. Every entry
+ * must name a registered graph kind, and `kg-qa.test.ts` checks that against
+ * the registry — a name that stops being a kind fails at the keyboard rather
+ * than becoming a coverage row about a graph that does not exist.
+ *
+ * `Record<KgSubjectKind, string>` and not a partial map, so adding a subject
+ * kind without saying where it lives does not compile. That is the
+ * `GraphKindDef.holds` discipline: a required field makes "did not say"
+ * impossible, where an optional one makes it indistinguishable from a default.
+ */
+export const KG_SUBJECT_GRAPH_KINDS: Readonly<Record<KgSubjectKind, string>> = {
+  // A `.bpmn` file in the `processes` graph.
+  process: "processes",
+  // A `.dmn` file in `processes/decisions/` — INSIDE the processes graph, and
+  // not a kind of its own. See the note above.
+  decision: "processes",
+  // `scenarios/roles.json`. Roles moved out of the skills tree 2026-09-21.
+  role: "scenarios",
+  // `skills/requirements/` — a requirement is authored beside the skills that
+  // satisfy it, and the skills tree is the `skills` graph.
+  requirement: "skills",
+  skill: "skills",
+  // The knowledge graph AS A WHOLE — the `graph` subject's findings are about
+  // the joins between nodes rather than about any one node, so its home is the
+  // kg graph itself rather than the directory its sidecar happens to sit in.
+  graph: KG_GRAPH_KIND,
+  tool: "tools",
+};
 
 /** Outcome of one criterion. `unknown` is never a pass. */
 export const KG_RESULTS = ["pass", "fail", "n/a", "unknown"] as const;
@@ -1086,6 +1137,39 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A contract under `schemas/skills/` that no skill names as its `input:` or `output:` — specified " +
       "for nobody. The skill points at its contract, so this is visible only from the contract's side.",
+  },
+  {
+    id: "test-run-skill-resolves",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A recorded test run does not parse, or names a skill that does not exist — a result attributed to " +
+      "nothing. The run points at the skill it tests; the skill names no test.",
+  },
+  {
+    id: "test-run-conforms",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A recorded test run's cases violate the input or output contract of the skill it names, so it " +
+      "measured something other than that skill as specified.",
+  },
+  {
+    id: "test-run-checkable",
+    applies: ["graph"],
+    severity: "minor",
+    summary:
+      "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
+      "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
+  },
+  {
+    id: "arrow-direction",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A general node names one of its dependents: a `@general` schema `@ref`s a declaration that is not " +
+      "general, or a BPMN process points at something that implements or documents it. The dependent " +
+      "should hold the pointer (data-modelling step 8).",
   },
   {
     id: "story-role-resolves",

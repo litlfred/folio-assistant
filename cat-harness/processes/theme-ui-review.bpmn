@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_ThemeUIReview" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_ThemeUIReview">
@@ -22,12 +23,12 @@ WHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice rema
     <bpmn:laneSet id="LaneSet_Process_ThemeUIReview">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer">
         <bpmn:documentation>The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the ingested assets as a whole, in the design they are for — not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean ingest, a passing accessibility check and a correct branding pass can each be true and still miss what only laying the assets out and looking catches.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>R_Judge</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_TUR</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Inventory</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Accessibility</bpmn:flowNodeRef>
@@ -41,24 +42,24 @@ WHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice rema
     <bpmn:startEvent id="Start_TUR" name="Graphical assets&#10;ingested"/>
     <bpmn:task id="A_Inventory" name="Inventory the&#10;ingested assets">
       <bpmn:documentation>Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Accessibility" name="Accessibility:&#10;measure, do not assert">
       <bpmn:documentation>Contrast COMPUTED against the real ground, including the worst case a backdrop can present; a non-colour channel wherever colour carries meaning (SC 1.4.1); an accessible name on every region; keyboard and focus order. An automated pass is necessary and not sufficient — axe accepts a non-empty placeholder as an accessible name, and a CSS selector that matches nothing raises no error at all.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Branding" name="Branding:&#10;does it read as this instance?">
       <bpmn:documentation>Marks, palettes and art against the instance's own declaration rather than a remembered style. The question a downstream folio makes sharp: would this instance inherit something it did not choose?</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Locales" name="Languages: extracted,&#10;rendered, and RTL">
       <bpmn:documentation>Every user-facing string reaches the .pot; every declared locale renders without clipping or overflow; right-to-left is laid out rather than mirrored by accident. New UI is where untranslated strings enter, because nothing was stale — there was nothing there before.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="R_Judge" name="Judge the assets&#10;in their design">
       <bpmn:documentation>A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A person exercising judgement over a rendered artefact. The skill governs what the agent PREPARES and measures for them, which is the four steps before this one."/>
+        <cat-harness.processes:no-skill reason="A person exercising judgement over a rendered artefact. The skill governs what the agent PREPARES and measures for them, which is the four steps before this one."/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Findings" name="Findings?">
@@ -66,7 +67,7 @@ WHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice rema
     </bpmn:exclusiveGateway>
     <bpmn:task id="A_RaiseFindings" name="Raise findings&#10;before the assets land">
       <bpmn:documentation>Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="theme-ui-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="theme-ui-review"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_TUR" name="Assets reviewed"/>
     <bpmn:sequenceFlow id="SF_TUR_1" sourceRef="Start_TUR" targetRef="A_Inventory"/>

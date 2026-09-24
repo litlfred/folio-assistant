@@ -174,6 +174,15 @@ export interface SchemaDecl {
   note?: string;
   /** First prose line of the declaration's doc comment. */
   doc?: string;
+  /**
+   * `true` when the declaration's doc comment carries `@general` — a node
+   * others DEPEND on (a Role, a Skill, a Requirement statement), which may
+   * point only at other general nodes and never at its dependents
+   * (data-modelling step 8; #1168, B5). Read from the tag, never inferred:
+   * which nodes are general is a modelling decision, and `arrow-direction`
+   * checks the arrows against it.
+   */
+  general?: true;
   fields: SchemaField[];
   /**
    * Names this declaration extends or merges — the generalisation arrow.
@@ -340,6 +349,15 @@ function refTagOf(node: ts.Node, text: string): string | undefined {
   if (!raw.startsWith("/**")) return undefined;
   const m = /@ref\s+([A-Za-z_$][\w$]*)/.exec(raw);
   return m?.[1];
+}
+
+/** Whether the JSDoc block immediately above a node carries `@general`. */
+function generalTagOf(node: ts.Node, text: string): true | undefined {
+  const ranges = ts.getLeadingCommentRanges(text, node.getFullStart());
+  const last = ranges?.[ranges.length - 1];
+  if (!last) return undefined;
+  const raw = text.slice(last.pos, last.end);
+  return raw.startsWith("/**") && /(^|\s)@general\b/m.test(raw) ? true : undefined;
 }
 
 /** The JSDoc block immediately above a node, as source text. */
@@ -670,6 +688,7 @@ function readModule(
           kind: read.kind,
           note: read.note,
           doc: docOf(st, text),
+          ...(generalTagOf(st, text) ? { general: true as const } : {}),
           fields: read.fields,
           extendsNames: read.extendsNames,
           values:
@@ -701,6 +720,7 @@ function readModule(
         module: moduleRel,
         kind: "interface",
         doc: docOf(st, text),
+        ...(generalTagOf(st, text) ? { general: true as const } : {}),
         fields: typeMembers(st.members, text),
         extendsNames: heritage,
         values: [],
@@ -724,6 +744,7 @@ function readModule(
         module: moduleRel,
         kind: "type-alias",
         doc: docOf(st, text),
+        ...(generalTagOf(st, text) ? { general: true as const } : {}),
         fields,
         extendsNames: [],
         values,

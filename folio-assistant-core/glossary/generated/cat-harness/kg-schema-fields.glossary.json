@@ -1539,6 +1539,48 @@
       "status": "candidate"
     },
     {
+      "id": "block-summary.blocksummariessidecarschema.entry",
+      "prefLabel": "BlockSummariesSidecarSchema.entry",
+      "definition": "The library entry's slug — the directory this file sits in.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema.entry",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.block",
+      "prefLabel": "BlockSummarySchema.block",
+      "definition": "The block's `@id`, e.g. `library/<slug>/blocks/prose-sec-000`.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.block",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.narrative",
+      "prefLabel": "BlockSummarySchema.narrative",
+      "definition": "The summary itself, with its state and its author.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.source",
+      "prefLabel": "BlockSummarySchema.source",
+      "definition": "The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.source_hash",
+      "prefLabel": "BlockSummarySchema.source_hash",
+      "definition": "sha256 of {@link proseBody} of `source` when the summary was drafted.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source_hash",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.superseded",
+      "prefLabel": "BlockSummarySchema.superseded",
+      "definition": "Earlier narratives this one replaced — a rejected draft, or one whose source changed. Kept so a rejection's reason is not lost when the block is redrafted: a rejection that vanishes lets the next agent write the identical thing again.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.superseded",
+      "status": "candidate"
+    },
+    {
       "id": "board-positions.boardpositionschema.x",
       "prefLabel": "BoardPositionSchema.x",
       "definition": "Horizontal position in board units.",
@@ -3408,6 +3450,13 @@
       "status": "candidate"
     },
     {
+      "id": "document-image.documentimageschema.placements",
+      "prefLabel": "DocumentImageSchema.placements",
+      "definition": "Every place this image appears, the first one included.",
+      "source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.placements",
+      "status": "candidate"
+    },
+    {
       "id": "document-image.geometrybasisschema.coverage",
       "prefLabel": "GeometryBasisSchema.coverage",
       "definition": "Placed area over page area. The number the role was computed from.",
@@ -3461,6 +3510,34 @@
       "prefLabel": "InspectionBasisSchema.saw",
       "definition": "What was seen, in a few words. NOT the description — the reason.",
       "source": "cat-harness/schemas/document-image.ts#InspectionBasisSchema.saw",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.coverage",
+      "prefLabel": "PlacementSchema.coverage",
+      "definition": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.coverage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.imagesonpage",
+      "prefLabel": "PlacementSchema.imagesOnPage",
+      "definition": "How many images share this page.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.note",
+      "prefLabel": "PlacementSchema.note",
+      "definition": "What this copy serves HERE — never what the image is, which is the narrative's job. \"a recurring header for principle 8\" belongs here; \"an irregular grid of coloured squares\" belongs on the image.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.page",
+      "prefLabel": "PlacementSchema.page",
+      "definition": "The page it sits on, 1-based as a reader counts.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
       "status": "candidate"
     },
     {
@@ -7034,6 +7111,13 @@
       "status": "candidate"
     },
     {
+      "id": "test-run.testrunschema.cases",
+      "prefLabel": "TestRunSchema.cases",
+      "definition": "The cases, when the runner records them. Absent is a real state: a run that only records aggregates cannot be checked against the contract, and `test-run-conforms` says so rather than passing it.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.cases",
+      "status": "candidate"
+    },
+    {
       "id": "test-run.testrunschema.data",
       "prefLabel": "TestRunSchema.data",
       "definition": "WHAT was tested.",
@@ -7052,6 +7136,13 @@
       "prefLabel": "TestRunSchema.process",
       "definition": "WHAT TESTED IT — runner, configuration, scenario bank.",
       "source": "cat-harness/schemas/test-run.ts#TestRunSchema.process",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testrunschema.skill",
+      "prefLabel": "TestRunSchema.skill",
+      "definition": "The skill this run tests, by name.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.skill",
       "status": "candidate"
     },
     {

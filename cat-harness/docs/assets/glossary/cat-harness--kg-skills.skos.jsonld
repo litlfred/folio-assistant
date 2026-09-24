@@ -167,6 +167,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/audit-coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "audit-coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census."
+        }
+      ],
+      "skos:notation": "audit-coverage",
+      "dcterms:source": "cat-harness/skills/folio-core/audit-coverage.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/bean-blocking",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1814,6 +1834,26 @@
       ],
       "skos:notation": "goal-review",
       "dcterms:source": "cat-harness/skills/folio-core/goal-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/grade",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "grade"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength."
+        }
+      ],
+      "skos:notation": "grade",
+      "dcterms:source": "cat-harness/skills/authoring-who-smart-guidelines/grade.md",
       "skos:note": "candidate"
     },
     {
@@ -3829,7 +3869,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf."
+          "@value": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf."
         }
       ],
       "skos:notation": "session-state-machine",
@@ -4304,7 +4344,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them."
+          "@value": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them."
         }
       ],
       "skos:notation": "theme-ui-review",
@@ -4814,7 +4854,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two."
+          "@value": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two."
         }
       ],
       "skos:notation": "workflow-state",

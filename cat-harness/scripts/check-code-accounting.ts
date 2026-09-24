@@ -52,6 +52,7 @@
  * a gate that fails on a backlog is a gate somebody switches off.
  *
  * @module scripts/check-code-accounting
+ * @covers code
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";

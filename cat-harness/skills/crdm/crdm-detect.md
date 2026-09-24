@@ -1,3 +1,8 @@
+---
+input: schemas/skills/crdm-detect/input.schema.json
+output: schemas/skills/crdm-detect/output.schema.json
+---
+
 # Feature-request detection (CRDM trigger)
 
 Detect when a user request is a **feature request** (platform capability change)

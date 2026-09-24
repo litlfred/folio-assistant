@@ -6,8 +6,8 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 
   Bean j66n. A theme is ingested from a SOURCE the same way a document is, and
@@ -20,7 +20,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_IngestTheme"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -34,19 +35,19 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-  that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
   work plan in beans/.
 
   Bean j66n. One Theme node with kind sticky | webpage | publication, not three
   node kinds: the palette vocabulary is shared and only the GEOMETRY varies.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_IngestTheme_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Every step in this diagram is this lane's, and each treats the source as evidence to be recorded rather than resolved: contradictions in the source are kept as data rather than silently picked, values the source is silent on are marked as a choice rather than dressed up as a measurement, and a missing layout ends in refusal rather than a theme quietly degraded to the ones that were supplied.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Source</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Kind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadStylesheet</bpmn:flowNodeRef>
@@ -73,7 +74,7 @@ stated?">
 stylesheet's declarations">
       <bpmn:documentation>Read the ROLE, never the prettiest value. Bootstrap's --blue is a scale entry and --primary is the role; DSpace sets them differently, and taking the brand-looking one is the hardcoding schemas/theme.ts exists to end. Column widths come from declared columns, never from breakpoints: a breakpoint is a viewport.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="theme-art-intake" />
+        <bootstrap.processes:skill ref="theme-art-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_t2</bpmn:incoming>
       <bpmn:outgoing>Flow_t4</bpmn:outgoing>
@@ -82,7 +83,7 @@ stylesheet's declarations">
 own stated rules">
       <bpmn:documentation>From the INGESTED document's sections, not from a screenshot and not inferred from a site that happens to use the brand. Units stay as the source gives them: rewriting 29.7cm as millimetres is a conversion nobody asked for and a chance to be wrong.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="theme-art-intake" />
+        <bootstrap.processes:skill ref="theme-art-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_t3</bpmn:incoming>
       <bpmn:outgoing>Flow_t5</bpmn:outgoing>
@@ -91,7 +92,7 @@ own stated rules">
 shared palette ROLES">
       <bpmn:documentation>surface / ink / edge / accent, shared across every kind. A palette per kind would be three spellings of "accent colour", free to disagree about what an accent IS. Where the source is SILENT on a role, say so and mark the value a choice rather than dressing an invention as a measurement.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="theme-art-intake" />
+        <bootstrap.processes:skill ref="theme-art-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_t4</bpmn:incoming>
       <bpmn:incoming>Flow_t5</bpmn:incoming>
@@ -101,7 +102,7 @@ shared palette ROLES">
 IN the source">
       <bpmn:documentation>A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="theme-art-intake" />
+        <bootstrap.processes:skill ref="theme-art-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_t6</bpmn:incoming>
       <bpmn:outgoing>Flow_t7</bpmn:outgoing>
@@ -127,7 +128,7 @@ WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step,
 
 THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. "A theme sets the stripe's hue; it never sets its width to zero" — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees ("Never red with green, never blue with yellow"). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="theme-ui-review" />
+        <bootstrap.processes:skill ref="theme-ui-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_t8</bpmn:incoming>
       <bpmn:outgoing>Flow_t10</bpmn:outgoing>

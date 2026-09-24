@@ -52,7 +52,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 9 | — |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 10 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
@@ -160,7 +160,7 @@ The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a sk
 | `l3-fhir-authoring` | `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
 | `latex-authoring` | `authoring-a-paper.bpmn` |
 | `lean-formalization` | `authoring-a-paper.bpmn` |
-| `library-ingestion` | `content-acquisition.bpmn` |
+| `library-ingestion` | `content-acquisition.bpmn`, `document-ingestion.bpmn` |
 | `literature-search` | `options-analysis.bpmn` |
 | `log-message` | `initialize-harness.bpmn`, `log-message.bpmn` |
 | `materialize-remote` | `materialize-remote.bpmn`, `refresh-materialized.bpmn`, `sample-import.bpmn` |

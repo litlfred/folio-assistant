@@ -3,6 +3,7 @@
  * Render smart-trust's reader-facing pages from the artefact index.
  *
  * @module smart-trust/scripts/gen-smart-trust-pages
+ * @covers fhir-artifact-index
  *
  * ## Why this exists
  *

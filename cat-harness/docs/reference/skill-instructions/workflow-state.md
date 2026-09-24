@@ -60,7 +60,7 @@ retroactively took a different path.
 to*. Those must be one answer or they diverge, and a work plan that disagrees
 with itself is worse than one that is merely coarse.
 
-The loop is closed by `<folio:bean op="…">` on an activity. **A bean-marked
+The loop is closed by `<cat-harness.processes:bean op="…">` on an activity. **A bean-marked
 step is not a step *about* the work plan — it IS the work-plan operation**, so
 completing the step performs it:
 

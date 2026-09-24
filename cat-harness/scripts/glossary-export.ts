@@ -3,6 +3,8 @@
  * The swimlane glossary — the personas a corpus's diagrams put in lanes, as SKOS.
  *
  * @module scripts/glossary-export
+ * @covers glossary, swimlane-glossary, scenarios — it writes the glossary graph AND
+ *   the retirement ledger that `swimlane-glossary` holds
  *
  * Issue #596, bean `lqo9` slice 2. The owner named the source in their own
  * words: *"a bpmn diagram swimlane has title/description"*, and *"name,
@@ -120,7 +122,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
+import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
@@ -234,8 +236,8 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
           laneId,
           laneName: /name="([^"]+)"/.exec(attrs)?.[1] ?? null,
           documentation: doc !== undefined && doc.length > 0 ? doc : null,
-          roleRef: /<folio:role[^>]*\bref="([^"]+)"/.exec(body)?.[1],
-          performerVaries: /<folio:role[^>]*\bvariable="true"/.test(body),
+          roleRef: ownElementPattern(xml, "role", String.raw`[^>]*\bref="([^"]+)"`, "").exec(body)?.[1],
+          performerVaries: ownElementPattern(xml, "role", String.raw`[^>]*\bvariable="true"`, "").test(body),
           activities: [...members].filter((x) => acts.has(x)).length,
         });
       }

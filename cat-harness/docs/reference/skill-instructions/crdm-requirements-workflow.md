@@ -77,7 +77,7 @@ Three specific traps:
   posting a question whose answer requires reading it is how a one-character
   decision becomes a twenty-minute one.
 - **Options without their costs.** "A or B" is not a choice; "A, which changes
-  nothing here, or B, which rewrites every `folio:skill` ref in the diagrams"
+  nothing here, or B, which rewrites every `bootstrap.processes:skill` ref in the diagrams"
   is. The BA is deciding on the consequences, so the consequences are the
   question.
 

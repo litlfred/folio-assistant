@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_SessionStateMachine"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -23,17 +24,17 @@
        and what varies is WHICH ENABLED BRANCH THE AGENT TAKES and what
        it writes. That distinction is the whole design, and it needed no
        change to the engine — an exclusive gateway with no
-       `folio:decision` was ALREADY the case where the caller supplies
+       `cat-harness.processes:decision` was ALREADY the case where the caller supplies
        the outcome.
 
-       WHAT DID NEED ADDING is `<folio:judgement reason="…"/>`. Without
+       WHAT DID NEED ADDING is `<cat-harness.processes:judgement reason="…"/>`. Without
        it, "no table because this is somebody's call" and "no table
        because nobody wrote one yet" are indistinguishable — the gap
-       `folio:no-skill` closed for activities, one element type along.
+       `cat-harness.processes:no-skill` closed for activities, one element type along.
        Every gateway below carries it, because every one of them is a
        reading of intent that no table can make.
 
-       THE MACHINE CLAIMS NOTHING. No `folio:bean` anywhere: this
+       THE MACHINE CLAIMS NOTHING. No `cat-harness.processes:bean` anywhere: this
        process RECORDS that an actor claimed a bean, it does not claim
        one. A machine that quietly claimed on the actor's behalf would
        make the claim's owner unrecoverable, and a claim ANNOUNCES
@@ -57,13 +58,13 @@ You are in this process for the whole of a session, underneath whatever else you
 
 The distinction between refreshing a timestamp and writing what changed is the diagram's whole content. A session record that logs every turn as a change cannot be read for what happened, and one that logs none cannot be read at all.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_SessionStateMachine">
       <bpmn:lane id="Lane_Machine" name="Agent (playing the machine)">
         <bpmn:documentation>Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Session</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_IdentifyActor</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ActorKnown</bpmn:flowNodeRef>
@@ -77,13 +78,13 @@ The distinction between refreshing a timestamp and writing what changed is the d
       </bpmn:lane>
       <bpmn:lane id="Lane_Human" name="Human actor">
         <bpmn:documentation>Entered only when Gateway_ActorKnown cannot confirm an actor — the one fact in this whole record that the machine cannot recover by reading the repository — and answered once: the response is recorded so this lane is never re-entered for the same session, which is what keeps asking who is acting from becoming a repeated interruption.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_AskWhoIsActing</bpmn:flowNodeRef>
       </bpmn:lane>
       <!-- Written to, decides nothing. No flowNodeRef, which is what
            `actedUpon` means. -->
       <bpmn:lane id="Lane_Record" name="Session record">
-        <bpmn:extensionElements><folio:role ref="session-record"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="session-record"/></bpmn:extensionElements>
       </bpmn:lane>
     </bpmn:laneSet>
 
@@ -93,7 +94,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
 
     <bpmn:task id="A_IdentifyActor" name="Establish who is acting">
       <bpmn:documentation>The first step and not a formality: `actor` is the one field of the record that nothing else can supply. Every other field is recoverable by reading the repository; who is acting is not.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="session-context"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="session-context"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:incoming>F_4</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
@@ -102,7 +103,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
     <bpmn:exclusiveGateway id="Gateway_ActorKnown" name="Actor established?">
       <bpmn:documentation>Is it established who is acting? `no` asks; `yes` opens the session record. A session is never opened for an actor it has not identified.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:judgement reason="Only the discussion says who is acting, and it rarely says so in a field. A table would need a name to read; this branch is the reading."/>
+        <cat-harness.processes:judgement reason="Only the discussion says who is acting, and it rarely says so in a field. A table would need a name to read; this branch is the reading."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_2</bpmn:incoming>
       <bpmn:outgoing>F_3</bpmn:outgoing>
@@ -111,14 +112,14 @@ The distinction between refreshing a timestamp and writing what changed is the d
 
     <bpmn:userTask id="A_AskWhoIsActing" name="Ask who is acting">
       <bpmn:documentation>The one step that needs a person. Asked ONCE and recorded, never re-asked: `interaction/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="interaction-modality"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="interaction-modality"/></bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>
     </bpmn:userTask>
 
     <bpmn:task id="A_OpenSession" name="Open the session record">
       <bpmn:documentation>Writes `id`, `actor` and `startedAt`, with `open` and `claimed` empty. An empty `open` is the NORMAL state, not an unfinished one: an agent reading, answering or deciding is in no process at all.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="session-context"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="session-context"/></bpmn:extensionElements>
       <bpmn:incoming>F_5</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:task>
@@ -126,7 +127,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
     <bpmn:task id="A_ReadTurn" name="Take in the turn">
       <bpmn:documentation>A turn is anything that arrives — a person's message, a tool result, a notification. The machine advances on turns rather than on a clock, because a session that has been told nothing has not changed.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="reading what a turn said is the agent's ordinary comprehension, not a procedure an instruction body could add anything to"/>
+        <cat-harness.processes:no-skill reason="reading what a turn said is the agent's ordinary comprehension, not a procedure an instruction body could add anything to"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_6</bpmn:incoming>
       <bpmn:incoming>F_9</bpmn:incoming>
@@ -137,7 +138,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
     <bpmn:exclusiveGateway id="Gateway_TurnEffect" name="What did the turn change?">
       <bpmn:documentation>THE non-deterministic point, and the reason this process exists. Three branches, and the agent chooses.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:judgement reason="Whether a turn changed the session's state is a reading of intent — 'I might look at X later' and 'start X' differ by nothing a table can key on. Getting it wrong is recoverable: the next turn corrects it, which is why this is judgement rather than a gate."/>
+        <cat-harness.processes:judgement reason="Whether a turn changed the session's state is a reading of intent — 'I might look at X later' and 'start X' differ by nothing a table can key on. Getting it wrong is recoverable: the next turn corrects it, which is why this is judgement rather than a gate."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_7</bpmn:incoming>
       <bpmn:outgoing>F_8</bpmn:outgoing>
@@ -147,7 +148,7 @@ The distinction between refreshing a timestamp and writing what changed is the d
 
     <bpmn:task id="A_Touch" name="Refresh `updatedAt` only">
       <bpmn:documentation>Nothing changed, and saying so is the point. A record that stops being written looks exactly like an abandoned session; a refreshed timestamp with no other change says the session is alive and idle, which is a different fact and the commonest one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="session-context"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="session-context"/></bpmn:extensionElements>
       <bpmn:incoming>F_8</bpmn:incoming>
       <bpmn:outgoing>F_9</bpmn:outgoing>
     </bpmn:task>
@@ -155,15 +156,15 @@ The distinction between refreshing a timestamp and writing what changed is the d
     <bpmn:task id="A_UpdateSession" name="Write what changed">
       <bpmn:documentation>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them.
 
-NO `folio:bean` on this step. It records that a claim happened; it does not claim.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="session-context"/></bpmn:extensionElements>
+NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="session-context"/></bpmn:extensionElements>
       <bpmn:incoming>F_10</bpmn:incoming>
       <bpmn:outgoing>F_11</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_CloseSession" name="Close the session">
       <bpmn:documentation>Records that the actor stopped. It does NOT resolve beans or complete instances: those outlive the session by design, and a machine that closed them on the way out would be asserting work finished because somebody went away.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="session-context"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="session-context"/></bpmn:extensionElements>
       <bpmn:incoming>F_12</bpmn:incoming>
       <bpmn:outgoing>F_13</bpmn:outgoing>
     </bpmn:task>

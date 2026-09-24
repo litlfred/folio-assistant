@@ -39,12 +39,17 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
+ * @covers processes, scenarios, skills, tools, cat-harness — the graph kinds
+ *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto
  */
 
 import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
+import { checkTestRuns } from "./test-run-conformance.js";
+import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
+import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
@@ -1299,6 +1304,44 @@ function unclaimedSkillContracts(): KgFinding[] {
   return out;
 }
 
+/**
+ * Every arrow from a general node, checked against the rule that the
+ * dependent holds the pointer (#1168, B5). `unknown` when the schema graph
+ * cannot be read: a check over nothing is not a pass.
+ */
+function arrowDirection(): KgCriterionEntry {
+  const graph = readSchemaGraph(root);
+  if (graph === null) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no schemas directory to read `@general` declarations from." }] };
+  }
+  const perFile = workflowFiles(root)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => processArrowFindings(relative(root, f), readFileSync(f, "utf-8")));
+  // Zero extension elements across every diagram means the reader matched
+  // nothing — the prefix-drift failure this check has already had once — so
+  // it is `unknown`, never a clean run.
+  if (perFile.reduce((n, r) => n + r.examined, 0) === 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no BPMN extension element was found in any diagram, so the process half checked nothing." }] };
+  }
+  return entry([...schemaArrowFindings(graph), ...perFile.flatMap((r) => r.findings)]);
+}
+
+/**
+ * The recorded test runs, followed to the skill each names and on to that
+ * skill's contract (#1168, B4). Three criteria rather than one, because
+ * "could not check" is a different finding from "checked and wrong".
+ */
+function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
+  const any = r.runs > 0;
+  return {
+    "test-run-skill-resolves": entry(r.unresolved, any),
+    "test-run-conforms": entry(r.nonconforming, any),
+    "test-run-checkable": entry(r.unchecked, any),
+  };
+}
+
 /** One declared `satisfies` ref, and who declared it. */
 interface Satisfier {
   /** `req:<requirement>#<statement key>`. */
@@ -1846,6 +1889,8 @@ function auditGraph(
       "satisfies-resolves": entry(badSatisfies),
       "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
       "skill-contract-resolves": entry(brokenSkillContracts()),
+      ...testRunCriteria(skills),
+      "arrow-direction": arrowDirection(),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },

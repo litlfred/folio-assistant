@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_IngestTheme` · advisory · 5 step(s)
 
-folio-assistant — Ingestion subprocess — ingest a theme. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/. Bean j66n. One Theme node with kind sticky | webpage | publication, not three node kinds: the palette vocabulary is shared and only the GEOMETRY varies.
+folio-assistant — Ingestion subprocess — ingest a theme. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/. Bean j66n. One Theme node with kind sticky | webpage | publication, not three node kinds: the palette vocabulary is shared and only the GEOMETRY varies.
 
 <img src="../assets/img/workflows/ingest-theme.svg" alt="BPMN diagram: Ingestion subprocess — ingest a theme" style="max-width:100%">
 

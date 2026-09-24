@@ -4,6 +4,7 @@
  * theirs, and build the SKOS document `glossary-export` publishes.
  *
  * @module scripts/code-lists
+ * @covers code-list
  *
  * Owner, 2026-09-23: *"list of codes and corresponding narrative desc and
  * source should be part of a node/asset"*, published through the existing
@@ -32,6 +33,7 @@ import { relative, resolve } from "node:path";
 
 import { codeListDirs, codeListToSkos, loadCodeLists, type CodeList } from "../schemas/code-list";
 import { workflowFiles } from "./known-skills";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -67,7 +69,8 @@ export function buildCodeListsDoc(lists: readonly CodeList[], docIri: string): R
 export function unlistedAdjudications(files: readonly string[], base: string): string[] {
   const out: string[] = [];
   for (const f of files.filter((f) => f.endsWith(".bpmn"))) {
-    for (const m of readFileSync(f, "utf-8").matchAll(/<folio:adjudication\b[^>]*>/g)) {
+    const xml = readFileSync(f, "utf-8");
+    for (const m of xml.matchAll(ownElementPattern(xml, "adjudication", "[^>]*>"))) {
       const tag = m[0]!;
       if (/\scodes="/.test(tag) && !/\slist="/.test(tag)) out.push(`${relative(base, f)}: ${tag}`);
     }
