@@ -10306,7 +10306,7 @@ ProvableBase.proofs <span class="fa-gloss-status">candidate, extracted</span>
 ProvActivitySchema.cat-harness:underPolicy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The ODRL policy uid the run was under. Required: a run under no policy cannot be checked.</p>
+<p>The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov.ts"><code>cat-harness/schemas/prov.ts#ProvActivitySchema.cat-harness:underPolicy</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--materialization.provenanceschema.local" data-fa-state="extracted" data-fa-gloss="">

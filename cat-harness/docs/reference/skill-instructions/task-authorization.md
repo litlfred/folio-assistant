@@ -144,11 +144,45 @@ pins that.
 3. **`deny`:** a prohibition was written on purpose. Ask the user; never
    remove it yourself ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
 
+## The after-check: the PROV-O QA/QC report
+
+The engine checks **before** a step. An agent swarm acts first, so the same
+policy is checked **after**, from the record (issue #1180, step 5;
+`content/docs/agentic-harness/bpmn-execution.md`).
+`scripts/prov-qaqc.ts` reads every instance in `beans/workflows/`, including
+its subprocesses, and for each history entry on an activity or decision:
+
+- writes one `prov:Activity` (`schemas/prov.ts`): `prov:agent` is the entry's
+  actor, `prov:hadRole` is the role the lane binds (`laneBinding`),
+  `prov:hadPlan` is `<process file stem>#<node id>`, and
+  `cat-harness:underPolicy` is every policy evaluated. One log per instance
+  goes to `docs/assets/prov/<instance>.prov.jsonld`;
+- re-runs `authorizeTask` itself, with the actor `asserted`, because history
+  records only a name.
+
+Findings: `unknown`, `deny`, `not-eligible`, `undeclared-actor`, a recorded
+`authz` that disagrees with the recomputed one (`authz-disagrees`), and gaps
+in the record itself: `no-actor`, `no-role`, `node-not-in-model`,
+`source-moved` and `source-missing`. **An entry with no actor, or in a lane
+that binds no role, gets no `prov:Activity`**, because the schema requires
+both and a guessed value is fabrication. It gets a finding instead.
+
+```sh
+bun run prov:qaqc          # write docs/prov-qaqc/index.md and the logs
+bun run check:prov-qaqc    # CI: fail when they are stale
+```
+
+It is **advisory**, like the engine: findings are listed on the
+`/prov-qaqc/` page and never fail the build. `check:prov-qaqc` fails only on
+stale outputs, a `prov:Activity` that does not validate, or an internal
+error. Quote the counts from a run, not from the page you remember.
+
 ## Code
 
 - `src/workflow/authorize.ts`: `authorizeTask`, `describeVerdict`
 - `src/core/access.ts`: `loadAccessContext`, `principalFromEnv`
 - `src/core/rbac.ts`: `principalOf`, `authorize`, `allows`, `forbidden`
 - `schemas/odrl.ts`: `decide` (every policy; any `deny` wins), `PERFORM_TASK`
-- tests: `scripts/tests/task-authorization.test.ts`
+- `scripts/prov-qaqc.ts`: `buildReport`, `reportInstance` (the after-check)
+- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/prov-qaqc.test.ts`
 {% endraw %}

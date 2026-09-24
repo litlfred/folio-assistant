@@ -16,3 +16,4 @@ Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 20
 - [ ] the 41 lanes with no eligible actor are either given one or recorded as by-design
 - [ ] authorizeTask mode flipped to strict in src/tools/workflow.ts once the count is 0
 - [ ] PROV activity written per verdict (#1180 step 5); GitHub login to actor mapping in the data store
+  (2026-09-24, bean `jwoc`: the after-check exists. `prov:qaqc` DERIVES the PROV log from history and re-runs `authorizeTask`. The engine writing a `prov:Activity` as it records each verdict is still open, and so is the login mapping.)

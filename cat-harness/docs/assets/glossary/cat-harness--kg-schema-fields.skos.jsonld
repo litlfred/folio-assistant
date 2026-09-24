@@ -15547,7 +15547,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The ODRL policy uid the run was under. Required: a run under no policy cannot be checked."
+          "@value": "The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against."
         }
       ],
       "dcterms:source": "cat-harness/schemas/prov.ts#ProvActivitySchema.cat-harness:underPolicy",
