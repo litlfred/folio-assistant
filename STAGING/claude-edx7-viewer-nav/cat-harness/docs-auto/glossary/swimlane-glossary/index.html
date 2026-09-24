@@ -92,7 +92,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><strong>swimlane-glossary</strong> <span class="p">cat-harness/glossary</span> <span class="n">47</span></li>
+<li><strong>swimlane-glossary</strong> <span class="p">cat-harness/glossary</span> <span class="n">48</span></li>
 </ul>
 
 <table>
@@ -145,6 +145,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/corpus"><code>Corpus</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/corpus</span></td>
   <td>The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.<div class="f"><span class="k">notation</span> role/corpus</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/deep-researcher"><code>Deep researcher</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/deep-researcher</span></td>
+  <td>Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `&lt;folio:role ref&gt;`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.<div class="f"><span class="k">notation</span> role/deep-researcher</div><div class="f"><span class="k">first seen</span> 2026-09-23</div><div class="f"><span class="k">status</span> current</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/docs-authoring-agent"><code>Docs authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/docs-authoring-agent</span></td>
