@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 320,
+      "count": 321,
       "unit": "beans"
     }
   },
@@ -2661,6 +2661,20 @@
       "updatedAt": "2026-09-20T17:06:37Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
+    },
+    {
+      "id": "folio-assistant-mkao",
+      "title": "LIBRARY VIEWER LEAK: withheld who-iris entries still published verbatim text and covers via /assets/library/",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:22:42Z",
+      "updatedAt": "2026-09-24T19:22:42Z",
+      "preview": "Found by the 2026-09-24 channel audit after cw35 (#1300) excluded refused items from the site mount.\n\nThe platform library viewer (gen-library-viz.ts) reads library entries directly and publishes them under /assets/library/, bypassing the mount's withheld.json:\n- entries/9789241548960-eng.json: ~124k chars of verbatim prose excerpts\n- entries/who-pub-tps-931.json: ~65k chars\n- avatars/who-iris/{bo",
+      "file": "beans/defs/folio-assistant-mkao--library-viewer-leak-withheld-who-iris-entries-stil.md"
     },
     {
       "id": "folio-assistant-mkqf",
