@@ -822,6 +822,9 @@ export const RULES: Rule[] = [
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
+      // The `# bpmn:` / `# bpmn-node:` lines a workflow names its diagram with
+      // (bean `61ca`). Same subject as the coverage check that reads them.
+      "scripts/workflow-bpmn.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)

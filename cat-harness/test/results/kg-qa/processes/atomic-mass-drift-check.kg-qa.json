@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "processes/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:84835348326a05c116f014ff874a59a8121e26f2c4f8f4e2d5f21a06ee766323",
+  "source_hash": "sha256:369def1e7d41111e2214d9656a548b4dba4e334fdf4b1a02dc6e157113e49f50",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -96,8 +96,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/atomic-mass-gen-check.yml",
+          "detail": ".github/workflows/atomic-mass-gen-check.yml changed since cat-harness/processes/atomic-mass-drift-check.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -105,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 0,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -115,8 +120,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/atomic-mass-drift-check.bpmn",
       "code": ".github/workflows/atomic-mass-gen-check.yml",
-      "prose_hash": "84835348326a",
-      "code_hash": "92f3675a0e49",
+      "prose_hash": "369def1e7d41",
+      "code_hash": "41177a8796ed",
       "by": "baseline"
     }
   ]

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: upstream-pin-watch\n"
-"POT-Creation-Date: 2026-09-24T12:30:55.706Z\n"
+"POT-Creation-Date: 2026-09-24T17:33:07.020Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,117 +14,117 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/upstream-pin-watch.bpmn:58
+#: processes/upstream-pin-watch.bpmn:52
 #. Diagram element documentation
 msgid "`git ls-remote --tags`, filtered by the row's `tagPattern` and ordered by version. Nothing is cloned and no API token is needed, so the check runs the same way on a laptop and in CI."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:84
+#: processes/upstream-pin-watch.bpmn:78
 #. Diagram label
 msgid "Adopt the version bump"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:38
+#: processes/upstream-pin-watch.bpmn:35
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:62
+#: processes/upstream-pin-watch.bpmn:56
 #. Diagram element documentation
 msgid "Asked of the `verdict` output of 'Check the pins' in .github/workflows/upstream-pins.yml, which runs `check:upstream-pins --out`. Exit 0 is every pin current, 1 at least one behind, 2 could not tell; an exit 1 with no report file is a crash and is reclassified as could-not-tell, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an undetermined pin' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `upstream-pin` label."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:66
+#: processes/upstream-pin-watch.bpmn:60
 #. Diagram element documentation
 msgid "Asked of the same `verdict`. `no` is verdict == 'current': the tracking issue is closed because every pin is current. `yes` is verdict == 'behind': the one tracking issue is opened or edited in place."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:65
+#: processes/upstream-pin-watch.bpmn:59
 #. Diagram label
 msgid "Behind a release?"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:25
+#: processes/upstream-pin-watch.bpmn:22
 #. Diagram label
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:68
+#: processes/upstream-pin-watch.bpmn:62
 #. Diagram label
 msgid "Close the tracking issue"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:69
+#: processes/upstream-pin-watch.bpmn:63
 #. Diagram element documentation
 msgid "Closed automatically when every pin is current, so the issue's existence is the state rather than a log of past states."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:61
+#: processes/upstream-pin-watch.bpmn:55
 #. Diagram label
 msgid "Could we tell?"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:88
+#: processes/upstream-pin-watch.bpmn:82
 #. Diagram label
 msgid "Decision recorded"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:39
+#: processes/upstream-pin-watch.bpmn:36
 #. Diagram element documentation
 msgid "Entered only once Lane_Ci has confirmed a pin is behind and filed the issue, never to make that determination itself: A_PickUp's claim is what stops two sessions adopting the same bump. The judgement of adoption is not drawn here either — Call_Adopt hands it to its own reusable process, so this lane is only the hand-off from mechanical detection to judgement, not the judgement itself."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:72
+#: processes/upstream-pin-watch.bpmn:66
 #. Diagram label
 msgid "Every pin current"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:57
+#: processes/upstream-pin-watch.bpmn:51
 #. Diagram label
 msgid "List upstream releases and compare to the pin"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:92
+#: processes/upstream-pin-watch.bpmn:86
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:74
+#: processes/upstream-pin-watch.bpmn:68
 #. Diagram element documentation
 msgid "One issue, edited in place. GitHub's own failure mail is the channel that was already ignored thirty times, so this adds none: an edit does not notify, and a pin that stays behind for two months stays one unread item rather than nine."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:73
+#: processes/upstream-pin-watch.bpmn:67
 #. Diagram label
 msgid "Open or EDIT the one tracking issue"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:26
+#: processes/upstream-pin-watch.bpmn:23
 #. Diagram element documentation
 msgid "Owns exactly three outcomes and must keep them visibly different: current closes the tracking issue, behind opens or edits it, and UNKNOWN leaves the issue untouched while failing the job anyway — a watchdog that goes blind must never read as clean, so this lane is the one place that distinction cannot be collapsed into a single pass or fail. It hands off at the first sign of judgement: the moment a bump needs adopting, that is Lane_Agent's, never this one's."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:77
+#: processes/upstream-pin-watch.bpmn:71
 #. Diagram label
 msgid "Pick up the stale pin claim a bean"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:53
+#: processes/upstream-pin-watch.bpmn:47
 #. Diagram label
 msgid "Read the pin registry upstream-pins.json"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:78
+#: processes/upstream-pin-watch.bpmn:72
 #. Diagram element documentation
 msgid "The hand-off from the mechanical lane to the one that can exercise judgement. Claiming the bean here is what stops two sessions adopting the same bump."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:54
+#: processes/upstream-pin-watch.bpmn:48
 #. Diagram element documentation
 msgid "The registry lists the tenants and says, per row, WHICH FILE holds the pin literal and how to read it. It deliberately does not store the version: one answer to \"what are we running\", read from the file the build reads."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:85
+#: processes/upstream-pin-watch.bpmn:79
 #. Diagram element documentation
 msgid "The reusable subprocess. Every pinned dependency enters it the same way, so a new tenant is a registry row and a call — never a second diagram saying the same thing in different words."
 msgstr ""
@@ -134,7 +134,7 @@ msgstr ""
 msgid "THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads. Everything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one. Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all. The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:64
+#: processes/upstream-pin-watch.bpmn:58
 #. Diagram label
 msgid "Unknown &#8212; issue untouched, job red"
 msgstr ""
@@ -144,17 +144,17 @@ msgstr ""
 msgid "Watching a pinned upstream dependency"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:50
+#: processes/upstream-pin-watch.bpmn:44
 #. Diagram element documentation
 msgid "Weekly and not daily, for the same reason `ci-health.yml` is weekly: the defect being guarded against is \"nobody noticed for months\", not \"nobody noticed for a day\", and a daily run turns the tracking issue into a feed."
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:46
+#: processes/upstream-pin-watch.bpmn:43
 #. Diagram label
 msgid "Weekly, or on dispatch"
 msgstr ""
 
-#: processes/upstream-pin-watch.bpmn:93
+#: processes/upstream-pin-watch.bpmn:87
 #. Diagram label
 msgid "yes"
 msgstr ""

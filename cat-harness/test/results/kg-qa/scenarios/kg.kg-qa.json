@@ -217,28 +217,12 @@
       "result": "fail",
       "findings": [
         {
-          "where": "processes/atomic-mass-drift-check.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/atomic-mass-gen-check.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/ci-health-watch.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/ci-health.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/code-quality-gates.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/code-quality-gates.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
           "where": "processes/content-lifecycle.bpmn",
           "detail": "<cat-harness.processes:link href=\"publication-workflow.html#editing-and-the-hci-validation-gate\"> — the process names a page about it. A process is general; the page should point at the process instead."
         },
         {
           "where": "processes/content-lifecycle.bpmn",
           "detail": "<cat-harness.processes:link href=\"publication-workflow.html#from-corpus-to-published-folio\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/docs-site-publish.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/docs-site.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
         },
         {
           "where": "processes/document-ingestion.bpmn",
@@ -271,26 +255,6 @@
         {
           "where": "processes/editing-hci-validation.bpmn",
           "detail": "<cat-harness.processes:link href=\"evidence.html#the-subprocess\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/feature-staging.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/feature-staging.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/jsonld-drift-check.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/jsonld-gen-check.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/pr-checks-present.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/pr-checks-present.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/repository-health-watch.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/health-check.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
-        },
-        {
-          "where": "processes/upstream-pin-watch.bpmn",
-          "detail": "<cat-harness.processes:implements workflow=\".github/workflows/upstream-pins.yml\"> — the process names something that implements or depends on it. A process is general; the implementation should point at the process instead."
         }
       ]
     },

@@ -768,7 +768,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // not cry wolf — the lesson of bean `77ex`.
     severity: "minor",
     summary:
-      "A declared prose ↔ code pair — a diagram's <folio:implements workflow>, or a skill .md beside its same-stem .ts — " +
+      "A declared prose ↔ code pair — a diagram and the workflow whose `# bpmn:` line names it, or a skill .md beside its same-stem .ts — " +
       "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
   },
@@ -784,7 +784,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "The prose of a declared prose ↔ code pair names something that does not exist: a symbol not declared in the module " +
       "it cites, a module missing from a directory that exists here, a `bun run` file that is not there, or a " +
-      "`<folio:job>` the workflow does not have. `unknown` when every parsed claim pointed outside this repository.",
+      "`# bpmn-node:` in the workflow naming an element the diagram does not have. `unknown` when every parsed claim pointed outside this repository.",
   },
   {
     id: "role-skills-resolve",
