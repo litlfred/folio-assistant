@@ -886,6 +886,11 @@ jobs:
           # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
           # LAST, and it never overwrites the graph's `.json` copy above.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
 
           # The harness rail on every standalone page — bean `oi1y`. LAST, after
           # every generator that writes one, for the reason stated at the same
