@@ -40,6 +40,7 @@
  *    a fact about this run. Three states again, one level up.
  *
  * @module scripts/check-publishable
+ * @covers cat-harness
  */
 
 import { relative, resolve } from "node:path";

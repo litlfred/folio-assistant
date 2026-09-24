@@ -48,6 +48,7 @@
  * Exit: 0 every checked path resolves, 1 one does not, 2 could not check.
  *
  * @module folio-assistant/scripts/check-command-paths
+ * @covers docs
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
