@@ -1237,6 +1237,11 @@ classDiagram
       bpmn:userTask [0..*] element
     }
   }
+  namespace cat_harness__cat_harness_deploy {
+    class n_cat_harness_cat_harness_deploy_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
@@ -1466,3 +1471,5 @@ classDiagram
   cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_undetermined
   cssClass "cat_harness_folio_assistant_core_processes_omg_bpmn_2_0" fa_uml_kind_processes
+  cssClass "n_cat_harness_cat_harness_deploy_code" fa_uml_kind_code
+  cssClass "n_cat_harness_cat_harness_deploy_code" fa_uml_undetermined

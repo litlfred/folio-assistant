@@ -1076,6 +1076,18 @@
       "coverage": {
         "skill": "bpmn-processes"
       }
+    },
+    {
+      "id": "cat-harness-deploy",
+      "path": "deploy/",
+      "dependents": "skip",
+      "description": "How a folio-assistant host is stood up and kept current: `provision.sh`, `deploy.sh`, `self-update.sh`, `docker-compose.yml`, `Caddyfile.template` and `GOOGLE_OAUTH_SETUP.md`. Reached from outside the graph today -- the `deploy-access` capability detects on `cat-harness/deploy/.env` -- which is exactly the shape of a directory no declaration-walking consumer could see. Its governing skill is `deployment-auth`, whose architecture diagram is of these files.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "deployment-auth"
+      }
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

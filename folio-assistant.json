@@ -18,6 +18,18 @@
         "docs": "cat-harness/docs/subgraph-viewers.md",
         "skill": "library-ingestion"
       }
+    },
+    {
+      "id": "root-tools",
+      "path": "tools/",
+      "dependents": "skip",
+      "description": "The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "skills-and-tools"
+      }
     }
   ],
   "_assets_comment": "THE REPOSITORY'S OWN TWO FILES, declared here as of 2026-09-20 (issue #592). Before that the root instance declared NO assets at all, and `cat-harness` declared both of these with `scope: \"repository\"` — so the file an agent reads first was simultaneously \"what this repository is\" and \"what the cat-harness layer is\", and no instance owned it. `check:subgraph-coverage` reported nothing, because the asset DID resolve; it resolved to the wrong file's job, which is a distinction that check could not make until this split gave it two files to tell apart. The owner settled the fork on 2026-09-20: split them, so every instance owns exactly one README and one AGENTS.md, the root's being the INDEX over the others.",
