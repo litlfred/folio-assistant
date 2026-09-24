@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T17:26:03.306Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/61c5255986c3260ed9d1b825d3b77cd7727b2e55",
-  "sourceCommitSha": "61c5255986c3260ed9d1b825d3b77cd7727b2e55",
-  "sourceCommitAt": "2026-09-24T17:23:24Z",
+  "generatedAt": "2026-09-24T17:37:42.692Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c52dbe5c675c7ce1c1d3adc5fb6e0d8cf00d5996",
+  "sourceCommitSha": "c52dbe5c675c7ce1c1d3adc5fb6e0d8cf00d5996",
+  "sourceCommitAt": "2026-09-24T17:33:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -290,7 +290,7 @@
     "Role": 148,
     "ProcessNode": 861,
     "Tool": 83,
-    "Schema": 116,
+    "Schema": 117,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -2764,7 +2764,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/audit-coverage.md",
-      "instructionLines": 191,
+      "instructionLines": 250,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39923,6 +39923,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#schema/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "interaction",
+      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "module": "schemas/interaction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -42328,8 +42337,8 @@
   ],
   "staging": {
     "branch": "claude/glossary-split-actors",
-    "sha": "1773b89eb94fc389178be14249b993177b45b938",
+    "sha": "7e1baa94a0de4daaa2df04af0dbf528a3d5f3bc7",
     "pr": "1278/merge",
-    "run": "36033973974"
+    "run": "36035369797"
   }
 }
