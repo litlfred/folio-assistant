@@ -41,7 +41,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
-import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
+import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   CLASS_GLOSSES,
@@ -338,6 +338,9 @@ export function buildVocabulary(
       notation: "skos:notation",
       title: "dcterms:title",
       inScheme: { "@id": "skos:inScheme", "@type": "@id" },
+      // Declared, not left bare: a JSON-LD processor DROPS an undeclared key,
+      // and this one was on all 159 terms (bean vigi, found by expanding).
+      layer: termIri("layer"),
     },
     "@id": docIri,
     // In `--exact` mode this document IS the layer's concept scheme (see

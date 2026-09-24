@@ -86,7 +86,7 @@ flagged passage">
       <bpmn:extensionElements>
         <folio:skill ref="document-intake"/>
         <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="real spurious source-wrong"/>
+        <folio:adjudication codes="real spurious source-wrong" list="adjudication-translation-drift"/>
         <folio:fulfilment kinds="person agent" reason="this step's own documentation is the constraint — `a machine can detect that two readings differ; which one is right is a human call` — and Gateway_Drift's `drift` branch exists precisely to leave the unattended lane here."/>
       </bpmn:extensionElements>
 

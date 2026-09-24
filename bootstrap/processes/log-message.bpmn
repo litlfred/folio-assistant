@@ -15,7 +15,7 @@
 
 It may be called OPTIONALLY from any task in any process — an actor logging what it is doing needs no permission — and a diagram may also REQUIRE it, which it says by drawing the call activity explicitly. The two are the same sub-process; the difference is whether the caller drew it.
 
-It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by an Initiator — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
+It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
 
 NO folio:bean, and isExecutable is false, for the same reasons as initialize-harness.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_LogMessage">

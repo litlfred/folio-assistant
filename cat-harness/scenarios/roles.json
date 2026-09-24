@@ -1,5 +1,5 @@
 {
-  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. `lanes` lists the EXACT lane names this role binds across processes/*.bpmn. It is a list because the corpus spells one position several ways — sixty distinct lane strings for roughly two dozen positions, measured 2026-09-18 — and declaring the synonyms resolves the existing diagrams without editing twenty BPMN files. A NEW diagram should bind explicitly with <folio:role ref=\"...\"/> on the lane and need not add a name here. `bun run kg:audit` reports any lane no role binds, any role no lane uses, and any activity whose skill its lane's role does not carry.",
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
   "name": "folio-assistant",
   "roles": [
     {
@@ -17,13 +17,7 @@
         "materialize-remote",
         "repo-conversion"
       ],
-      "persona": "Has a goal and no interest in the machinery. Types with difficulty and will not read three paragraphs to find a choice. Knows their own domain far better than the system, and will be right about it when the agent is not.",
-      "voice": "Plain and decisive. Lead with the answer, then the cost. Offer choices as short selectable options, never as an essay with a question at the end.",
-      "useCases": [
-        "Say what they want and get it, without learning the schema",
-        "Choose between real alternatives when the agent genuinely cannot decide",
-        "Find out what changed while they were away"
-      ]
+      "persona": "Has a goal and no interest in the machinery. Types with difficulty and will not read three paragraphs to find a choice. Knows their own domain far better than the system, and will be right about it when the agent is not."
     },
     {
       "id": "author",
@@ -42,13 +36,7 @@
         "staging-review",
         "voice-authoring-guidance"
       ],
-      "persona": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not.",
-      "voice": "Direct and second-person. Say what to do and what it costs. No preamble, no restating the task back at them.",
-      "useCases": [
-        "Change one block without breaking the blocks that depend on it",
-        "Find out which field carries a thing they already know they need",
-        "Tell whether a convention is a rule or a habit"
-      ]
+      "persona": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not."
     },
     {
       "id": "editor",
@@ -65,13 +53,7 @@
         "milnor-exposition-standard",
         "voice-authoring-guidance"
       ],
-      "persona": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument.",
-      "voice": "Findings first, each with its evidence and severity. Never bury a blocker in prose; never dress an opinion as a finding.",
-      "useCases": [
-        "Decide whether a finding blocks a change",
-        "See what a change affects beyond the file it touches",
-        "Accept or reject without re-running the checks"
-      ]
+      "persona": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument."
     },
     {
       "id": "reviewer",
@@ -98,13 +80,7 @@
         "visual-diff",
         "voice-overlay-review"
       ],
-      "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why.",
-      "voice": "Evidence first. State the finding, then the reasoning. Never make them reconstruct an argument to reach a verdict.",
-      "useCases": [
-        "See what changed since they last looked",
-        "Judge whether a finding is real without re-running the check",
-        "Find the one thing in a large diff that needs their judgement"
-      ]
+      "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why."
     },
     {
       "id": "review-coordinator",
@@ -120,13 +96,7 @@
         "staging-review",
         "visual-diff"
       ],
-      "persona": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves.",
-      "voice": "Counts, with what each count is and is not. 'Four changed blocks in 3.2 have no verdict' is actionable; 'most of it is reviewed' is not.",
-      "useCases": [
-        "Split a large change into slices a reviewer can finish",
-        "Find the sections nobody has read yet",
-        "Tell the committee the review is complete, and show why"
-      ]
+      "persona": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves."
     },
     {
       "id": "narrative-reviewer",
@@ -145,13 +115,7 @@
         "voice-editorial-review",
         "voice-overlay-review"
       ],
-      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding.",
-      "voice": "Quote the prose, then name what is wrong with it. A voice finding that does not show the sentence it is about is an opinion, and the author is entitled to disagree with it on those terms.",
-      "useCases": [
-        "Judge whether a block's register matches the folio's declared voice",
-        "Tell an editorial dependency a reader needs from one the author merely had in mind",
-        "Decide whether a translation says what the source says, not merely what it means"
-      ]
+      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding."
     },
     {
       "id": "code-reviewer",
@@ -169,13 +133,7 @@
         "skills-and-tools",
         "test-engineer"
       ],
-      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran.",
-      "voice": "Name the reference that does not resolve, and where it points. 'This looks wrong' is not reviewable; 'this declares X, and X is declared nowhere' is.",
-      "useCases": [
-        "Check that a Tool's declared inputs match what it is actually served as",
-        "Find a schema node that carries no declaration of its own kind",
-        "Tell a node that is unreachable from one that is reached by direct invocation"
-      ]
+      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
     },
     {
       "id": "qc-reviewer",
@@ -193,13 +151,7 @@
         "quality-control",
         "untainted-verification"
       ],
-      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid.",
-      "voice": "Concrete and artefact-anchored. Name the page, the build, the URL. A claim about source is not evidence about output.",
-      "useCases": [
-        "Confirm the published artefact matches what was approved",
-        "Find what a build changed in the output, not the input",
-        "Tell a rendering defect from a content defect"
-      ]
+      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
     },
     {
       "id": "clinical-sme",
@@ -212,13 +164,7 @@
         "reviewer"
       ],
       "skills": [],
-      "persona": "Expert in the subject, not in the system. Judges whether the content is clinically right; is not interested in FHIR profiles or schema fields and should not have to be.",
-      "voice": "Domain language, not implementation language. Say what the guidance CLAIMS before saying how it is encoded.",
-      "useCases": [
-        "Judge whether a recommendation matches practice",
-        "Review without learning the authoring tooling",
-        "Flag a clinical error in terms an author can act on"
-      ]
+      "persona": "Expert in the subject, not in the system. Judges whether the content is clinically right; is not interested in FHIR profiles or schema fields and should not have to be."
     },
     {
       "id": "administrator",
@@ -229,17 +175,11 @@
       ],
       "skills": [
         "role-model",
+        "task-authorization",
         "deletion-requires-confirmation",
         "confirmation-waiver"
       ],
-      "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later.",
-      "voice": "Names the actor, the role and the permission separately, because they are three different objects. States what a change makes possible, not what it was asked for.",
-      "useCases": [
-        "Add a participant and say which kind of thing it is",
-        "Open or close a role to an actor",
-        "Grant or revoke a permission, with the audit that follows it",
-        "Retire an actor without deleting what referenced it"
-      ]
+      "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
     },
     {
       "id": "programme-manager",
@@ -255,13 +195,7 @@
         "decision-audit",
         "methodology-adoption"
       ],
-      "persona": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank.",
-      "voice": "Status first, computed values only. Mark what is measured and leave judgements blank rather than guessing.",
-      "useCases": [
-        "See what is done, in flight and blocked",
-        "Tell a real blocker from slow progress",
-        "Report outward without reading the diffs"
-      ]
+      "persona": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
     },
     {
       "id": "publication-manager",
@@ -275,15 +209,10 @@
         "content-review",
         "ig-publication",
         "decision-audit",
-        "qa-report-signing"
+        "qa-report-signing",
+        "publish-verification"
       ],
-      "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them.",
-      "voice": "Release-shaped: what ships, what is held, what authorised it. Dates and refs, not adjectives.",
-      "useCases": [
-        "Confirm everything in a release was authorised",
-        "Find what is published but no longer approved",
-        "Hold a release on one unresolved item"
-      ]
+      "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
     },
     {
       "id": "business-analyst",
@@ -302,13 +231,7 @@
         "methodology-adoption",
         "opening-brief"
       ],
-      "persona": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ.",
-      "voice": "Requirement-shaped: the need, the constraint, the acceptance condition. Ambiguity named rather than resolved by assumption.",
-      "useCases": [
-        "Turn a request into something implementable",
-        "Find the requirement a change actually satisfies",
-        "Get stakeholder sign-off on scope before build"
-      ]
+      "persona": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ."
     },
     {
       "id": "terminologist",
@@ -320,13 +243,7 @@
       "skills": [
         "terminology-management"
       ],
-      "persona": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose.",
-      "voice": "Exact. Name the code system, the version, the binding. Never paraphrase a concept definition.",
-      "useCases": [
-        "Check a value set binds the concepts intended",
-        "Trace a code to its source and version",
-        "Find where a concept is used before changing it"
-      ]
+      "persona": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose."
     },
     {
       "id": "fhir-modeller",
@@ -338,13 +255,7 @@
       "skills": [
         "l3-fhir-authoring"
       ],
-      "persona": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource.",
-      "voice": "Specification register. Cardinalities, invariants, must-support. Assume the standard is known.",
-      "useCases": [
-        "Derive a profile from the L2 data dictionary",
-        "Find which element a requirement constrains",
-        "Validate the built IG against the model"
-      ]
+      "persona": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
     },
     {
       "id": "translation-coordinator",
@@ -356,13 +267,7 @@
       "skills": [
         "translation-manager"
       ],
-      "persona": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since.",
-      "voice": "Pipeline-shaped: state per locale, what moved, what is waiting. Never imply a translation is current when its source changed.",
-      "useCases": [
-        "See translation state per locale at a glance",
-        "Find strings that went stale after a source edit",
-        "Know what is waiting on which reviewer"
-      ]
+      "persona": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since."
     },
     {
       "id": "translator",
@@ -374,13 +279,7 @@
       "skills": [
         "translation-manager"
       ],
-      "persona": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong.",
-      "voice": "Source-faithful with context supplied. Give the surrounding sense and any term that must not be translated.",
-      "useCases": [
-        "Translate a string with enough context to be right",
-        "Know which terms are fixed and must not be localised",
-        "See what changed in a source string since last translated"
-      ]
+      "persona": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong."
     },
     {
       "id": "translation-adjudicator",
@@ -395,13 +294,7 @@
       "skills": [
         "translation-manager"
       ],
-      "persona": "Decides between competing translations, usually a subject expert in the target language. Arrives at a disagreement and needs both options and the reason each was offered.",
-      "voice": "Comparative. Present the alternatives side by side with what each preserves and loses. Do not pre-select.",
-      "useCases": [
-        "Choose between two defensible translations",
-        "Understand why a translator departed from the source",
-        "Record the decision so it is not re-litigated"
-      ]
+      "persona": "Decides between competing translations, usually a subject expert in the target language. Arrives at a disagreement and needs both options and the reason each was offered."
     },
     {
       "id": "adjudicator",
@@ -419,13 +312,7 @@
         "decision-audit",
         "untainted-verification"
       ],
-      "persona": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else.",
-      "voice": "States the outcome, then the reason, then what the reason is scoped to. Never \"this is fine\": a dispensation with no stated reason is an override nobody can review afterwards.",
-      "useCases": [
-        "Choose between a checker's finding and a reviewer's rebuttal, with a reason",
-        "Grant a dispensation scoped to the version it was granted against",
-        "Record the disagreement so re-running the check next month finds it rather than a clean pass"
-      ]
+      "persona": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else."
     },
     {
       "id": "feedback-provider",
@@ -441,13 +328,7 @@
         "todo-review",
         "wireframe-design-review"
       ],
-      "persona": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below.",
-      "voice": "The finding, then the evidence it rests on. A finding that does not show what it read is an opinion, and the author is entitled to disagree with it on those terms.",
-      "useCases": [
-        "State a finding against a named criterion so it can be adjudicated rather than argued",
-        "Say what was read, so an adjudicator can tell a real disagreement from two parties reading different things",
-        "Offer feedback as a reader without holding any entitlement to settle it"
-      ]
+      "persona": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below."
     },
     {
       "id": "stakeholder",
@@ -458,13 +339,7 @@
       ],
       "judgementOnly": true,
       "skills": [],
-      "persona": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history.",
-      "voice": "Self-contained at every checkpoint. Restate what is being asked and why it matters; never assume the last conversation is remembered.",
-      "useCases": [
-        "Confirm a needs statement reflects their reality",
-        "Test a delivered feature in their own context",
-        "Sign off without reconstructing the thread"
-      ]
+      "persona": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history."
     },
     {
       "id": "authoring-agent",
@@ -514,13 +389,7 @@
         "wireframe-design-review",
         "workflow-state"
       ],
-      "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code.",
-      "voice": "Imperative and checkable. Give the rule, the reason it exists, and what a violation looks like — a rule with no failure mode gets reasoned around.",
-      "useCases": [
-        "Find the governing skill for the task in front of it",
-        "Tell a convention from a preference",
-        "Know what would falsify its own approach before starting"
-      ]
+      "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
     },
     {
       "id": "onboarding-agent",
@@ -538,13 +407,7 @@
         "repo-conversion",
         "document-intake"
       ],
-      "persona": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most.",
-      "voice": "Orienting and ordered. Which repo this is, what to run first, where the governing skill lives. Say what NOT to do as explicitly as what to do.",
-      "useCases": [
-        "Tell which repository it is in and what that implies",
-        "Run the right first commands before touching anything",
-        "Find the skill that governs the task instead of improvising"
-      ]
+      "persona": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
     },
     {
       "id": "ingestion-agent",
@@ -560,13 +423,7 @@
         "paper-importer",
         "proof-status-tracking"
       ],
-      "persona": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later.",
-      "voice": "Provenance-carrying. Every extracted fact names where it came from and how confident the extraction was.",
-      "useCases": [
-        "Derive structure from an unreliable source document",
-        "Record where each extracted claim came from",
-        "Say clearly what could not be extracted"
-      ]
+      "persona": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later."
     },
     {
       "id": "librarian",
@@ -583,14 +440,20 @@
         "document-intake",
         "library-ingestion"
       ],
-      "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first.",
-      "voice": "Exact about what is claimed versus what is ours. An identifier is the publisher's; a slug is this corpus's. A capture is evidence of one thing and not of another, and says which.",
-      "useCases": [
-        "Capture a web page so it can be cited after the site changes",
-        "Materialize a paper from arXiv at a named version",
-        "Catalogue an arriving source in `dcterms`, and say where `dcterms` runs out",
-        "Decide whether a source may be redistributed, or record that a person must"
-      ]
+      "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
+    },
+    {
+      "id": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "deep-document-research"
+      ],
+      "persona": "Stops on a stated condition rather than on a feeling of having read enough. Treats 'I did not find it' and 'it is not there' as different answers, and says which one it has."
     },
     {
       "id": "evidence-agent",
@@ -602,13 +465,7 @@
       "skills": [
         "document-intake"
       ],
-      "persona": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used.",
-      "voice": "Appraising. State the question, the sources searched, what was found and what was discarded with the reason.",
-      "useCases": [
-        "Frame a searchable question from a vague one",
-        "Appraise source quality rather than just retrieve",
-        "Report an empty result as a real answer"
-      ]
+      "persona": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
     },
     {
       "id": "sibling-session",
@@ -620,13 +477,7 @@
       "skills": [
         "bean-coordination"
       ],
-      "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close.",
-      "voice": "Boundary-marking. State what is claimed, by whom, and on which branch. Never write as though their work were yours to resolve.",
-      "useCases": [
-        "Tell which work is already claimed",
-        "Hand off without losing the reasoning",
-        "Avoid resolving a bean somebody else owns"
-      ]
+      "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
     },
     {
       "id": "build-pipeline",
@@ -641,6 +492,7 @@
         "content-validate",
         "document-publishing",
         "feature-staging",
+        "publish-verification",
         "fhir-validation",
         "ig-publication",
         "l3-fhir-authoring",
@@ -815,13 +667,7 @@
         "bib-human-review",
         "bib-qa"
       ],
-      "persona": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it.",
-      "voice": "Specific and quotable. Name the sentence, say what breaks, propose the replacement. Never 'improve the flow'.",
-      "useCases": [
-        "Audit a block for single-topic coherence before it is reviewed for correctness",
-        "Find the forward reference that makes a chapter unreadable in order",
-        "Decide whether a reference has been verified or merely cited"
-      ]
+      "persona": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
     },
     {
       "id": "docs-authoring-agent",
@@ -842,13 +688,7 @@
         "deployment-auth",
         "editor"
       ],
-      "persona": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes.",
-      "voice": "Plain and orienting. A generated page says it is generated and names the command that writes it.",
-      "useCases": [
-        "Regenerate a reference without hand-editing the output",
-        "Place a sticky note on the right node with a reason",
-        "Decide whether an artefact is retired or merely unwanted"
-      ]
+      "persona": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes."
     },
     {
       "id": "platform-authoring-agent",
@@ -868,13 +708,7 @@
         "kg-viewer",
         "domain-fencing"
       ],
-      "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two.",
-      "voice": "Precise about what is guaranteed and what is merely usual. Name the state a consumer gets when the answer is unknown.",
-      "useCases": [
-        "Compose Tool nodes into one service without silent name collisions",
-        "Verify a served tool against the node that declares it",
-        "Serialize a graph and refuse to emit a partial one as whole"
-      ]
+      "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
     },
     {
       "id": "session-coordinator",
@@ -895,15 +729,10 @@
         "idle-backlog",
         "diff",
         "corpus-grep",
-        "process-state"
+        "process-state",
+        "task-authorization"
       ],
-      "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this.",
-      "voice": "Situational. State what is in flight, what this session is taking, and what it is explicitly not.",
-      "useCases": [
-        "Declare intent at session start and record results at the end",
-        "Pick up an open PR without duplicating a sibling's work",
-        "Choose useful work while blocked on a long-running task"
-      ]
+      "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
     },
     {
       "id": "integration-watcher",
@@ -928,13 +757,7 @@
         "proof-integration-watcher",
         "q-usage-watcher"
       ],
-      "persona": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised.",
-      "voice": "Finding-shaped: what landed, which axis it touches, what specifically is now wrong. No recommendations it has not checked.",
-      "useCases": [
-        "Detect that landed work invalidates an existing audit sidecar",
-        "Queue an axis for re-run without re-running everything",
-        "Refuse to report a finding the diff does not support"
-      ]
+      "persona": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
     },
     {
       "id": "lean-authoring-agent",
@@ -960,13 +783,7 @@
         "category-theory",
         "groebner-basis"
       ],
-      "persona": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure.",
-      "voice": "Mechanical and exact. Name the declaration, the error, and the tactic. A proof either elaborates or it does not.",
-      "useCases": [
-        "Turn a narrative theorem into a Lean declaration that elaborates",
-        "Get a red Lake build green without weakening a statement",
-        "Triage which `sorry` to discharge next"
-      ]
+      "persona": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
     },
     {
       "id": "proof-review-agent",
@@ -993,13 +810,7 @@
         "proposition-consolidation-audit",
         "critical-path-analysis"
       ],
-      "persona": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one.",
-      "voice": "Adversarial but specific. State the step that does not follow, or the hypothesis that makes the statement vacuous.",
-      "useCases": [
-        "Find a Lean declaration that is true only because its hypotheses are unsatisfiable",
-        "Detect where the narrative proof and the formal proof have drifted apart",
-        "Consolidate propositions that say the same thing twice"
-      ]
+      "persona": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
     },
     {
       "id": "compute-authoring-agent",
@@ -1021,13 +832,7 @@
         "simulator",
         "simulator-math-audit"
       ],
-      "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first.",
-      "voice": "Numeric and traceable. Every value names the computation that produced it and the commit it was produced at.",
-      "useCases": [
-        "Eliminate drift between a value in the prose and the script that computes it",
-        "Audit a compute script for a per-element FFI round trip",
-        "Check a simulator against the mathematics it claims to illustrate"
-      ]
+      "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
     }
   ]
 }

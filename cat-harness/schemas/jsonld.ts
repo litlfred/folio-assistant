@@ -72,7 +72,7 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
-import { CORE_NS } from "./namespaces";
+import { CORE_NS, FOLIO_BASE } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -122,7 +122,7 @@ export const CONTENT_CONTEXT_URL =
  * Base every minted `@id` is relative to. Declared in the context rather
  * than baked into emitted files — see the module docstring.
  */
-export const FOLIO_BASE = "https://litlfred.github.io/folio/";
+export { FOLIO_BASE };
 
 // ── Block kind → RDF types ───────────────────────────────────────
 

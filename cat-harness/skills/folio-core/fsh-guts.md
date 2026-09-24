@@ -13,6 +13,8 @@ description: >-
 # — which `isPublishedSkill` itself flags as the thing to replace: "if that
 # ever stops being true this needs its own list, not a cleverer derivation".
 published: false
+graph-kinds:
+  - fsh-guts
 ---
 
 # `fsh-guts/` — the trashcan that is kept
