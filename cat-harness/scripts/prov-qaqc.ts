@@ -47,7 +47,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 
 import { repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
-import { CAT_HARNESS_NS } from "../schemas/namespaces.js";
+import { CAT_HARNESS_NS, FOLIO_BASE } from "../schemas/namespaces.js";
 import { ProvActivitySchema, type ProvActivity } from "../schemas/prov.js";
 import { laneBinding, type RoleGraph } from "../schemas/role-graph.js";
 import { accessContext, type AccessContext, type Principal } from "../src/core/access.js";
@@ -307,7 +307,10 @@ export async function buildReport(
 /** The PROV JSON-LD log for one top-level instance and its subprocesses. */
 export function provDocument(id: string, parts: InstanceReport[]): Record<string, unknown> {
   return {
-    "@context": { prov: PROV_NS, "cat-harness": CAT_HARNESS_NS },
+    // `@base` as `schemas/jsonld.ts` emits it: an instance id and its `#<n>`
+    // entries are relative, and a JSON-LD processor must resolve them to IRIs
+    // (publish:verify expands every published file and refuses a relative @id).
+    "@context": { "@base": FOLIO_BASE, prov: PROV_NS, "cat-harness": CAT_HARNESS_NS },
     "@id": id,
     "@graph": parts.flatMap((p) => p.activities),
   };
