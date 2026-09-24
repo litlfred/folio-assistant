@@ -2,6 +2,7 @@
  * How a person wants to be asked — the `interaction` graph's one node kind.
  *
  * @module schemas/interaction
+ * @graphNode schema
  * @covers none — a schema module, not a gate. `check:kind-validators` is what
  *   runs it, and this file is the thing it runs.
  *
