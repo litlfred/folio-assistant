@@ -2,6 +2,7 @@
  * `folio-withheld/v1` — what a mounted directory must NOT publish.
  *
  * @module schemas/withheld
+ * @graphNode schema
  *
  * Bean `cw35`. The site mount (`scripts/mount-instance-docs.ts`) copies an
  * instance's directory wholesale, so a publication whose licence refuses
