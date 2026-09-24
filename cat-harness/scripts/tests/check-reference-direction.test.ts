@@ -153,7 +153,7 @@ afterEach(() => {
 });
 
 /** A repository holding `low` <- `high`, plus whatever files the caller wants. */
-function tree(files: Record<string, string>, lowDirs: unknown[] = []): string {
+function tree(files: Record<string, string>, lowDirs: unknown[] = [], highDirs: unknown[] = []): string {
   const root = mkdtempSync(join(tmpdir(), "refdir-"));
   made.push(root);
   const decl = (name: string, needs: string[] | undefined, dirs: unknown[] = []) => {
@@ -164,7 +164,7 @@ function tree(files: Record<string, string>, lowDirs: unknown[] = []): string {
     );
   };
   decl("low", [], lowDirs);
-  decl("high", ["low"]);
+  decl("high", ["low"], highDirs);
   for (const [rel, body] of Object.entries(files)) {
     const abs = join(root, rel);
     mkdirSync(join(abs, ".."), { recursive: true });
@@ -294,3 +294,33 @@ describe("a file that DECLARES itself generated is not read", () => {
 // second full walk of the corpus for no extra coverage. Measured when it was
 // briefly written that way: 5.89s for this file, against 198ms without it,
 // and a sibling test's budget is 5s.
+
+describe("a declared path resolves against the scope it declares, not against the declarer", () => {
+  // `scope: "repository"` resolves against the REPO ROOT, via `rootForScope`.
+  // 23 of the 45 entries in `cat-harness.json` carry it -- more than half,
+  // including `beans/`, `todos/`, `issue-marks/` and six `*/library/` trees.
+  // Composing `join(instanceRoot, path)` for those yields a directory that
+  // does not exist, so nothing is excluded and every file in it is read as
+  // authored prose: 923 files, measured 2026-09-24.
+
+  test("a repository-scoped machine-written directory is excluded from ANOTHER instance's tree", () => {
+    // `high` declares `low/out/` at repository scope. The files are low's by
+    // tree, and they are skipped because high's declaration says a process
+    // writes them.
+    const r = tree({ "low/out/x.md": "about high\n", "low/keep.md": "about high\n" }, [], [
+      { id: "out", path: "low/out/", scope: "repository", graphKinds: ["qa"] },
+    ]);
+    expect(verdicts(r)).toEqual(["low/keep.md wrong-direction"]);
+    expect(analyse(r).skippedMachineWritten).toBe(1);
+  });
+
+  test("the SAME entry at instance scope resolves under the declarer and excludes nothing", () => {
+    // `high/low/out/` does not exist, so the directory is not found and
+    // `low/out/x.md` is read -- the exact shape of the bug.
+    const r = tree({ "low/out/x.md": "about high\n", "low/keep.md": "about high\n" }, [], [
+      { id: "out", path: "low/out/", graphKinds: ["qa"] },
+    ]);
+    expect(verdicts(r).sort()).toEqual(["low/keep.md wrong-direction", "low/out/x.md wrong-direction"]);
+    expect(analyse(r).skippedMachineWritten).toBe(0);
+  });
+});

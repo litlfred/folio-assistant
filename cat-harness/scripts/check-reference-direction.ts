@@ -34,6 +34,7 @@ import {
   instanceRootsIn,
   isDerivedGraph,
   isStateGraph,
+  rootForScope,
 } from "../schemas/cat-harness.js";
 import { ancestorsOf, flattenDependencies } from "../schemas/dependency-order.js";
 import { allowedFromNeeds, type LayerRule } from "../schemas/layer-direction.js";
@@ -346,11 +347,20 @@ function instances(repoRoot: string): Instance[] {
     const decl = JSON.parse(readFileSync(join(root, findDeclarationFile(root)!), "utf-8")) as {
       name?: string;
       needs?: string[];
-      directories?: { path?: string; graphKinds?: string[] }[];
+      directories?: { path?: string; graphKinds?: string[]; scope?: "instance" | "repository" }[];
     };
+    // `rootForScope`, NEVER `join(root, path)`. A directory entry may carry
+    // `scope: "repository"`, and it then resolves against the REPO ROOT
+    // rather than against the declaring instance — 23 of the 45 entries in
+    // `cat-harness.json` do, more than half, including `beans/`, `todos/`,
+    // `issue-marks/` and six `*/library/` trees.
+    //
+    // Composing `join(root, path)` for those yields `cat-harness/beans/`,
+    // which does not exist, so the directory was not excluded and every file
+    // in it was read as authored prose. Measured cost below.
     const machineWritten = (decl.directories ?? [])
       .filter((d) => d.path !== undefined && declaresMachineWritten(d.graphKinds))
-      .map((d) => join(root, d.path!));
+      .map((d) => join(rootForScope(root, d.scope), d.path!));
     // A declaration with no `name` cannot be a reference TARGET (nothing to
     // match) and cannot own files by name either, so it is skipped rather
     // than given a fallback that would invent an instance.
