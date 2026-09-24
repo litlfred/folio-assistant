@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 268,
+      "count": 270,
       "unit": "beans"
     }
   },
@@ -2271,6 +2271,20 @@
       "file": "beans/defs/folio-assistant-mylx--raw-markdown-backticks-show-in-rendered-text.md"
     },
     {
+      "id": "folio-assistant-n2l9",
+      "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-23T22:52:59Z",
+      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
+      "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
+    },
+    {
       "id": "folio-assistant-n5be",
       "title": "glossary visualiser: 6 wireframe findings",
       "status": "todo",
@@ -2931,6 +2945,20 @@
       "updatedAt": "2026-09-22T22:17:51Z",
       "preview": "Measured 2026-09-22 while trying to ingest the MADR source (`adr/madr`, MIT OR CC0-1.0) as evidence for the `madr` methodology.\n\n## The pipeline cannot terminate for an archive\n\n```\n$ bun run ingest cat-harness/uploads/adr-madr-2026-09-22.zip --library library\n  rung: archive  —  sniffed application/zip, entries listed as data, not extracted\n  ok  adr-madr-2026-09-22   7 file(s), 1 dir(s)  [zip]\n ",
       "file": "beans/defs/folio-assistant-t3n8--the-archive-rung-stages-but-can-never-promote-and.md"
+    },
+    {
+      "id": "folio-assistant-t490",
+      "title": "Task authorization: authN + role + ODRL + content access before every BPMN task; rbac.ts on ODRL",
+      "status": "completed",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:16:45Z",
+      "updatedAt": "2026-09-23T22:52:49Z",
+      "preview": "Issue #1207 (child of #1180). Owner decisions 2026-09-23: advisory rollout (deny/role-mismatch refuse, unknown recorded), action always perform-task, authN is the BPMN executor's responsibility with git/GitHub as today's identity + access control, rbac.ts replaced by ODRL now.\n\n## Done when\n- [x] engine checks in workflow_gate + workflow_complete, verdict in history\n- [x] rbac.ts routes on ODRL, g",
+      "file": "beans/defs/folio-assistant-t490--task-authorization-authn-role-odrl-content-access.md"
     },
     {
       "id": "folio-assistant-t8g3",
