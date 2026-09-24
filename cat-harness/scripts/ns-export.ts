@@ -37,6 +37,11 @@
  *
  * @module scripts/ns-export
  * @covers cat-harness
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdf
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-skos
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
