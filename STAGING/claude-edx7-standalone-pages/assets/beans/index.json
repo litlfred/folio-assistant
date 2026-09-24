@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 278,
+      "count": 281,
       "unit": "beans"
     }
   },
@@ -373,6 +373,20 @@
       "updatedAt": "2026-09-24T05:45:45Z",
       "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
       "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
+    },
+    {
+      "id": "folio-assistant-391j",
+      "title": "REGEN BLIND SPOT: a :check enforced by a bun test (not a workflow step) is never asked by `bun run regen` — prov-qaqc turned main red",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T06:06:37Z",
+      "updatedAt": "2026-09-24T06:06:37Z",
+      "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
+      "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
     },
     {
       "id": "folio-assistant-3lbz",
@@ -867,6 +881,20 @@
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
     },
     {
+      "id": "folio-assistant-7h1c",
+      "title": "publish-verify scope misses our own SKOS code-lists document",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:40:40Z",
+      "updatedAt": "2026-09-24T05:40:40Z",
+      "preview": "Found 2026-09-24 while working `wg7r`. `publish-verify`'s `isOurs` counts a JSON-LD document as ours only when its `@context` names our content context or binds one of our namespaces. `<stub>-code-lists.jsonld` (glossary-export) binds only `skos`, `dcterms`, `owl` and `rdf`, so the verifier counts it **out of scope (not ours)**, even though its `@id` sits under our published base and we author eve",
+      "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
+    },
+    {
       "id": "folio-assistant-7po1",
       "title": "WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos",
       "status": "todo",
@@ -995,14 +1023,14 @@
     {
       "id": "folio-assistant-8v0y",
       "title": "A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:07:00Z",
-      "updatedAt": "2026-09-23T21:07:04Z",
+      "updatedAt": "2026-09-24T05:54:13Z",
       "preview": "Issue [#1190](https://github.com/litlfred/folio-assistant/issues/1190).\n\nA bean that carries a **skill's contract** instead of pointing at it. `AGENTS.md`'s\nbanner already states the rule — *where a skill and a copy disagree, the skill wins\nand the copy is wrong* — and nothing could read it.\n\n## The defect, already paid for\n\n`kn0t` held a second copy of\n[`fhir-harness/skills/fhir-ig-base/ig-publis",
       "file": "beans/defs/folio-assistant-8v0y--a-bean-that-restates-a-live-skills-contract-is-unc.md"
     },
@@ -1809,14 +1837,14 @@
     {
       "id": "folio-assistant-hj9d",
       "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T00:26:28Z",
-      "updatedAt": "2026-09-24T00:26:28Z",
+      "updatedAt": "2026-09-24T00:49:16Z",
       "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
       "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
     },
@@ -2210,7 +2238,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:03:45Z",
-      "updatedAt": "2026-09-20T23:04:43Z",
+      "updatedAt": "2026-09-24T12:00:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), queued for a ROAST before anything is built:\n\n> justthedocs docs/ rendering should include an index of all defined terms extracted from KG assets in the docs/ (e.g. a bpmn diagram swimlane has title/description). make translatable like all assets. make coded-glossary content kind that can be used in KG extraction and visualisation, re-used when",
       "file": "beans/defs/folio-assistant-lqo9--glossary-a-coded-versioned-glossary-content-kind-i.md"
     },
@@ -3443,14 +3471,14 @@
     {
       "id": "folio-assistant-wg7r",
       "title": "MISFILED: smart-kg/methodologies/grade.md belongs in a skill + SKOS code list, and smart-kg/ leaves this repo",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:50Z",
-      "updatedAt": "2026-09-23T22:52:50Z",
+      "updatedAt": "2026-09-24T05:19:30Z",
       "preview": "Owner, 2026-09-23: *\"misfiled smart-kg/methodologies/grade.md, needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\"*.\n\n## What is wrong\n\n- `smart-kg/methodologies/grade.md` (85 lines, `folio-methodology/v1`) is the only file under `smart-kg/`, a directory named after a repository that **already exists on its own**. Keeping a stub of it here is a second h",
       "file": "beans/defs/folio-assistant-wg7r--misfiled-smart-kgmethodologiesgrademd-belongs-in-a.md"
     },
@@ -3789,6 +3817,20 @@
       "updatedAt": "2026-09-22T19:30:00Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
+    },
+    {
+      "id": "folio-assistant-ygk5",
+      "title": "B4 (#1168): a test run names its skill; cases checked against the skill's contract",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:34:30Z",
+      "updatedAt": "2026-09-24T05:34:30Z",
+      "preview": "Part of s4sp (plan B4). TestRun.skill (required, SkillName) and optional cases[{input,output}]. crdm-detect gets input/output contracts (owner chose 'Also write a contract'); the eval records skill + all 27 cases. scripts/test-run-conformance.ts validates cases with Zod fromJSONSchema (no second schema, bean 319n). kg-audit: test-run-skill-resolves, test-run-conforms, test-run-checkable. tool-cove",
+      "file": "beans/defs/folio-assistant-ygk5--b4-1168-a-test-run-names-its-skill-cases-checked-a.md"
     },
     {
       "id": "folio-assistant-yhcq",
