@@ -1,57 +1,46 @@
-# QA-sweep nightly — keeps the integration-watcher sidecars current
+# QA-sweep nightly — keeps this folio's QA sidecars current
+#
+# Written by `folio_init` from the platform's template
+# (cat-harness/templates/document/github/workflows/qa-sweep-nightly.yml).
 #
 # Why this exists
 # ────────────────
-# Session 017uTFqMEnyAuPwyUtUQZ6oU (2026-06-02) found that ~60-70% of
-# open fails in the integration-watcher sidecars were STALE — content
-# had been fixed by merged PRs but the QA sweep was never re-run.
-# Documented in `docs/audits/2026-06-02-lean-discharge-queue-staleness-audit.md`
-# and `docs/audits/2026-06-02-qa-backlog-canonical-axis-staleness-audit.md`,
-# and confirmed empirically by PR #1737 (75 of 80 stale fails cleared
-# by a single post-merge re-sweep).
-#
-# This workflow runs the sweep nightly so the staleness doesn't
-# re-accumulate. The PR #1729 description recommended exactly this
-# (search "schedule `qa-sweep` as a nightly cron job").
+# A verdict is keyed on its block's content hash, so an edit that fixes a
+# finding leaves the old verdict STALE until the sweep runs again. Without a
+# periodic re-sweep, stale fails accumulate and the open-fail count reports
+# problems that merged pull requests already fixed. In the folio this
+# template came from, most open fails were stale by the time anyone looked,
+# and one post-merge re-sweep cleared nearly all of them.
 #
 # Triggers
 # ────────
-#   schedule — daily at 04:30 UTC (off-peak; after any other nightly
-#     content jobs have settled)
-#   workflow_dispatch — manual run for ad-hoc refresh
+#   workflow_dispatch — manual run, and the only trigger as written.
+#   To run it nightly, uncomment the `schedule` below (04:30 UTC, off-peak).
+#   It is off by default so a scaffolded folio spends no Actions minutes
+#   until its author chooses to.
 #
 # Steps
 # ─────
-#   1. Check out main with full history.
-#   2. Set up bun + install content deps.
-#   3. Run `bun content/pipeline/qa-sweep.ts content --axis <axis>` for
-#      each of the 5 non-proof axes (canonical / one-voice / q-usage /
-#      compute / detangler). Proof-lean-compiles is excluded; that one
-#      needs `./scripts/lean-compile-audit.sh` (full Lean toolchain;
-#      separate cron, owner-run).
-#   4. If any `*.qa.json` or `script-sidecars/*.script.json` changed:
-#      create branch `auto/qa-sweep-nightly-YYYY-MM-DD`, commit, push,
-#      open (or update) the rolling PR.
+#   1. Check out main with full history, and the platform.
+#   2. Set up bun + install the platform's dependencies.
+#   3. Run the platform's qa-sweep over `{{folio}}/` for each non-proof
+#      axis (canonical / one-voice / q-usage / compute / detangler). The
+#      proof axis needs a Lean toolchain and is left to the Lean workflows.
+#   4. If any `*.qa.json` changed: create branch
+#      `auto/qa-sweep-nightly-<run id>`, commit, push, open the rolling PR.
 #   5. If nothing changed: exit cleanly, no commit, no PR.
 #
 # What the workflow NEVER does
 # ────────────────────────────
 # - Never pushes to `main` directly.
 # - Never modifies content blocks (.md / .ts / .lean).
-# - Never modifies witnesses or computation scripts.
-# - Only touches `content/**/*.qa.json` + `content/pipeline/script-sidecars/`.
+# - Only touches `*.qa.json` sidecars.
 
 name: QA sweep nightly
 
-#
-# TRIGGERS, ACTUAL: `workflow_dispatch` only.
-# The triggers described above are the FOLIO's. This file was copied into the
-# platform in the repo split (109a4ff) with every trigger neutered to
-# dispatch, and the prose left as it was. It is correct here: this workflow
-# sweeps `content/<paper>/` blocks, and the platform carries no folio. The folio's copy holds the real
-# triggers. See bean `folio-assistant-5rfy`.
-
 on:
+  # schedule:
+  #   - cron: "30 4 * * *"
   workflow_dispatch:
     inputs:
       axes:
@@ -73,15 +62,21 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: "1.3.11"
 
-      - name: Install content deps
-        working-directory: content
-        run: bun install --frozen-lockfile
+      - name: Install the platform's dependencies
+        run: |
+          cd "{{assistant}}"
+          bun install --frozen-lockfile
 
       - name: Run QA sweep across non-proof axes
         env:
@@ -92,21 +87,17 @@ jobs:
           for axis in "${AXIS_LIST[@]}"; do
             axis_trim="$(echo "$axis" | xargs)"
             echo "::group::axis $axis_trim"
-            bun run content/pipeline/qa-sweep.ts content --axis "$axis_trim" --ci
+            bun run "{{assistant}}/cat-harness/content/pipeline/qa-sweep.ts" "{{folio}}" --axis "$axis_trim" --ci
             echo "::endgroup::"
           done
 
+      # Only sidecars count. A platform submodule shows in `git status` as one
+      # path, never as the files inside it, so the pathspec cannot match it.
       - name: Detect changes
         id: changes
         run: |
-          changed=$(git status --porcelain \
-            'content/**/*.qa.json' \
-            'content/pipeline/script-sidecars/' \
-            2>/dev/null | wc -l)
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "count<<$EOF" >> "$GITHUB_OUTPUT"
-          echo "$changed" >> "$GITHUB_OUTPUT"
-          echo "$EOF" >> "$GITHUB_OUTPUT"
+          changed=$(git status --porcelain -- '*.qa.json' 2>/dev/null | wc -l)
+          echo "count=$changed" >> "$GITHUB_OUTPUT"
           if [ "$changed" -eq 0 ]; then
             echo "No sidecar changes — exiting cleanly."
           else
@@ -128,7 +119,7 @@ jobs:
           # lookup so the rolling PR cycles through these branches
           # cleanly.
           git checkout -B "$BRANCH"
-          git add 'content/**/*.qa.json' content/pipeline/script-sidecars/ 2>/dev/null || true
+          git add -- '*.qa.json' 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "(post-stage diff is clean; nothing to commit)"
             echo "branch=" >> "$GITHUB_OUTPUT"
@@ -136,10 +127,7 @@ jobs:
           fi
           git commit -m "qa-sweep: nightly refresh ($(date -u +%Y-%m-%d))"
           git push -u origin "$BRANCH"
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "branch<<$EOF" >> "$GITHUB_OUTPUT"
-          echo "$BRANCH" >> "$GITHUB_OUTPUT"
-          echo "$EOF" >> "$GITHUB_OUTPUT"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
       - name: Open (or surface existing) PR
         if: steps.push.outputs.branch != ''
@@ -160,14 +148,12 @@ jobs:
           done
 
           # Write the PR body to a temp file. Using --body-file avoids
-          # YAML multi-line escaping inside the run: | block (single
-          # --body argument with embedded newlines de-indents lines
-          # that break out of the YAML block-literal).
+          # YAML multi-line escaping inside the run: | block.
           BODY_FILE=$(mktemp)
           cat > "$BODY_FILE" <<'PRBODY_EOF'
-          Automated nightly QA-sweep refresh per the recommendation in #1729 / #1737.
+          Automated nightly QA-sweep refresh.
 
-          Refreshes `*.qa.json` sidecars + script-sidecar caches for the 5 non-proof axes (canonical / one-voice / q-usage / compute / detangler). Proof-lean-compiles is owner-run via `./scripts/lean-compile-audit.sh`.
+          Refreshes `*.qa.json` sidecars for the non-proof axes (canonical / one-voice / q-usage / compute / detangler). The proof axis needs a Lean toolchain and is run by the Lean workflows.
 
           If this PR has zero new fail signals (just metadata churn), it's safe to rebase-merge. If new fails surfaced, triage the offending blocks before merging.
 
