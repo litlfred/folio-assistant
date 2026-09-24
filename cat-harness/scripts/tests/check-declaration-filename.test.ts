@@ -211,6 +211,23 @@ describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
   });
 });
 
+/**
+ * The scan of THIS repository, computed once for the three tests that read it
+ * — bean `61n5`.
+ *
+ * It walks every workflow, source file and markdown file, which measured
+ * 3.4 s on its own (2026-09-24) — and each of the three tests used to run it
+ * afresh. Under a full `bun test` that crossed bun's 5 s default, and a
+ * TIMEOUT was the whole of the intermittent failure: `this repository's own
+ * workflows carry no USE` failed at 5.56 s in 1 of 4 full runs and passed
+ * whenever it ran alone. The result never differed; only the clock did.
+ */
+let thisRepoScan: ReturnType<typeof checkDeclarationFilename> | undefined;
+const thisRepo = () => (thisRepoScan ??= checkDeclarationFilename());
+
+/** Whichever of the three runs first pays for the scan. Basis: 3.4 s alone, 5.6 s under load. */
+const WHOLE_REPO_SCAN_MS = 30_000;
+
 describe("the workflow scan reports unknown, never zero", () => {
   test("a checkout with no .github/workflows gives null, and null is not clean", () => {
     const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));
@@ -224,9 +241,9 @@ describe("the workflow scan reports unknown, never zero", () => {
   });
 
   test("this repository's own workflows carry no USE", () => {
-    const r = checkDeclarationFilename();
+    const r = thisRepo();
     expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
-  });
+  }, WHOLE_REPO_SCAN_MS);
 });
 
 /**
@@ -313,13 +330,13 @@ describe("the retired name is matched as a FILENAME, on both sides", () => {
 
 describe("the markdown corpus, on this repository", () => {
   test("carries no STALE PATH", () => {
-    const r = checkDeclarationFilename();
+    const r = thisRepo();
     expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
-  });
+  }, WHOLE_REPO_SCAN_MS);
 
   test("and was actually examined — an empty corpus is not a pass", () => {
-    const r = checkDeclarationFilename();
+    const r = thisRepo();
     expect(r.markdown).not.toBeNull();
     expect(r.markdown!.length).toBeGreaterThan(0);
-  });
+  }, WHOLE_REPO_SCAN_MS);
 });
