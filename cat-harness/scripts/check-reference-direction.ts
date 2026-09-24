@@ -128,6 +128,39 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
 );
 
 /**
+ * Does the file SAY a generator wrote it, in its own first lines?
+ *
+ * Two conventions already in the corpus, both self-declarations rather than
+ * inferences from a path:
+ *
+ *  - a top-level `"_generated"` key in JSON, which `sync-docs-harness.ts`
+ *    has emitted into `docs/_data/harness.json` all along (84 occurrences);
+ *  - a `generated:` front-matter key in Markdown, which `gen-skill-docs.ts`
+ *    and `gen-schema-docs.ts` now emit into the `docs/reference/**` mirrors
+ *    (145 occurrences across 31 pages).
+ *
+ * The mirrors are the clearest case for reading a declaration rather than a
+ * path: each is a COPY of a skill that sits one directory away, so a finding
+ * on one is the same finding twice and its fix is in neither — it is in the
+ * source skill. AGENTS.md has forbidden hand-editing them since before this
+ * check existed; the files simply never said so themselves.
+ *
+ * Front matter only, and only the first lines: a page that DISCUSSES
+ * generation must not be able to exempt itself by mentioning the word.
+ */
+function declaresGenerated(abs: string): boolean {
+  let head: string;
+  try {
+    head = readFileSync(abs, "utf-8").slice(0, 2000);
+  } catch {
+    return false;
+  }
+  if (/^\s*\{\s*"_generated"\s*:/.test(head)) return true;
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(head);
+  return fm !== null && /^generated:\s*\S/m.test(fm[1]!);
+}
+
+/**
  * Is this file one a generator writes, by its own `$schema`?
  *
  * Only a TOP-LEVEL `$schema` counts. `docs/assets/schemas/index.json` carries
@@ -265,7 +298,7 @@ export interface ReferenceReport {
   classified: { occurrence: Occurrence; verdict: ReferenceVerdict }[];
   /** Files in a directory DECLARED to hold a machine-written graph. Counted, so the exclusion is visible rather than silent. */
   skippedMachineWritten: number;
-  /** Files whose own `$schema` is DECLARED to be written by a generator. Counted separately: it is a different declaration, at a different granularity. */
+  /** Files that declare THEMSELVES generator output — by `$schema`, by a top-level `_generated`, or by `generated:` front matter. Counted separately from the directory rule: a different declaration, at a different granularity. */
   skippedGeneratorWritten: number;
   /** Instances whose `needs` nobody has declared. Reported, never assumed. */
   undeclared: string[];
@@ -313,7 +346,7 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
       skippedMachineWritten++;
       continue;
     }
-    if (isGeneratorWritten(abs)) {
+    if (isGeneratorWritten(abs) || declaresGenerated(abs)) {
       skippedGeneratorWritten++;
       continue;
     }
@@ -366,7 +399,7 @@ function main(): void {
   console.log(`  undetermined      ${String(undet.length).padStart(5)}   declined to judge — NOT clean`);
   console.log(`\n  Not read, both answered from a declaration rather than a path:`);
   console.log(`    ${report.skippedMachineWritten} file(s) — their DIRECTORY declares a graph a process writes (holds state/derived)`);
-  console.log(`    ${report.skippedGeneratorWritten} file(s) — their own \`$schema\` is declared \`writtenBy\` a generator`);
+  console.log(`    ${report.skippedGeneratorWritten} file(s) — the FILE declares itself generator output (\`$schema\` writtenBy, \`_generated\`, or \`generated:\` front matter)`);
 
   if (wrong.length > 0) {
     const byPair = new Map<string, number>();

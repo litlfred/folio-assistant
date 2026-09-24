@@ -258,3 +258,30 @@ describe("a file whose own `$schema` is declared `writtenBy` a generator is not 
     expect(verdicts(r)).toEqual(["low/broken.json wrong-direction"]);
   });
 });
+
+describe("a file that DECLARES itself generated is not read", () => {
+  test('a top-level "_generated" key in JSON — the convention sync-docs-harness.ts already emits', () => {
+    const r = tree({ "low/d.json": JSON.stringify({ _generated: "scripts/x.ts", v: "high" }) });
+    expect(analyse(r).classified).toEqual([]);
+  });
+
+  test("`generated:` front matter in Markdown — what the docs/reference mirrors now carry", () => {
+    const r = tree({ "low/p.md": "---\nlayout: default\ngenerated: scripts/x.ts — do not hand-edit\n---\n\nabout high\n" });
+    expect(analyse(r).classified).toEqual([]);
+  });
+
+  test("front matter with NO generated key is read", () => {
+    expect(verdicts(tree({ "low/p.md": "---\nlayout: default\n---\n\nabout high\n" }))).toEqual(["low/p.md wrong-direction"]);
+  });
+
+  test("a page that merely DISCUSSES generation cannot exempt itself", () => {
+    // The marker is front matter, not a word anywhere in the text.
+    const r = tree({ "low/p.md": "# On generators\n\ngenerated: is a front-matter key. This page is about high.\n" });
+    expect(verdicts(r)).toEqual(["low/p.md wrong-direction"]);
+  });
+
+  test('"_generated" nested deeper in the JSON does not count', () => {
+    const r = tree({ "low/d.json": JSON.stringify({ describes: { _generated: "x" }, v: "high" }) });
+    expect(verdicts(r)).toEqual(["low/d.json wrong-direction"]);
+  });
+});

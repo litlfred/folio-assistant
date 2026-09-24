@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: '/one-voice-integration-watcher'
 parent: Skill instructions
 ---

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema
 title: IG Publication
 parent: Skill schema reference
 ---

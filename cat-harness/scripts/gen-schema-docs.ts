@@ -218,6 +218,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
   const lines: string[] = [];
   lines.push("---");
   lines.push("layout: default");
+  // Says it is generated, for the same reason as `gen-skill-docs.ts`.
+  lines.push("generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema");
   lines.push(`title: ${title}`);
   lines.push("parent: Skill schema reference");
   lines.push("---");
@@ -294,6 +296,7 @@ function main(): void {
   const index: string[] = [];
   index.push("---");
   index.push("layout: default");
+  index.push("generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema");
   index.push("title: Skill schema reference");
   index.push("nav_order: 7");
   index.push("has_children: true");

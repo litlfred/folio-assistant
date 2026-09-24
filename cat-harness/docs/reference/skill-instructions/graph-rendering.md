@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Graph rendering: one set of rules for every drawn graph'
 parent: Skill instructions
 ---
