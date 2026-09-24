@@ -92,7 +92,6 @@ and mint a doc id
 [document-intake]" calledElement="Process_ExtractStructure">
       <bpmn:documentation>See ingest-extract-structure.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#extract-structure" />
         <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i2</bpmn:incoming>
@@ -103,7 +102,6 @@ from the assets
 [document-intake]" calledElement="Process_DeriveContent">
       <bpmn:documentation>See ingest-derive-content.bpmn. Most of this subprocess is not implemented yet.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#derive-content" />
         <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i3</bpmn:incoming>
@@ -119,9 +117,6 @@ THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable ru
 So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not.
 
 WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. `ingest-theme.bpmn` starts at "Theme source in hand" and can refuse as incomplete. Routing every document into it would make "this is not a theme" and "this theme is malformed" the same refusal, and the second is a defect while the first is the normal case.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#a-theme-source" />
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_i4</bpmn:incoming>
       <bpmn:outgoing>Flow_theme_yes</bpmn:outgoing>
       <bpmn:outgoing>Flow_theme_no</bpmn:outgoing>
@@ -130,7 +125,6 @@ WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. `ingest-theme.bpmn` 
 [theme-art-intake]" calledElement="Process_IngestTheme">
       <bpmn:documentation>See ingest-theme.bpmn. The subprocess derives one Theme node with kind sticky|webpage|publication, and refuses a source it cannot complete rather than emitting a partial theme.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#ingest-the-theme" />
         <bootstrap.processes:skill ref="theme-art-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_theme_yes</bpmn:incoming>
@@ -144,7 +138,6 @@ knowledge graph
 [document-intake]" calledElement="Process_BuildL1Kg">
       <bpmn:documentation>See ingest-build-l1-kg.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#build-the-l1-knowledge-graph" />
         <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i4</bpmn:incoming>
@@ -159,7 +152,6 @@ uncovered until the skill is written.
 
 The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="document-ingestion.html#the-l1-completeness-gate" />
         <cat-harness.processes:adjudication accepts="real spurious source-wrong"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>

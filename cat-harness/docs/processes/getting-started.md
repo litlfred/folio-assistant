@@ -19,6 +19,7 @@ folio-assistant — getting started: from "create a folio" to a live site. "Crea
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`getting-started`](../reference/skill-instructions/getting-started.html)
 
 ## Lanes — who acts

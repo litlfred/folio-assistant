@@ -19,6 +19,7 @@ A SUB-PROCESS, never an entry point. Nobody starts here; it is reached by a call
 
 - **Called by:** [Initialize a harness](initialize-harness.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

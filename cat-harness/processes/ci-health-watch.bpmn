@@ -20,7 +20,6 @@
            "nothing is red" from "nobody could look", which is the single
            thing this watchdog exists to keep apart. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/ci-health.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CiHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
@@ -39,9 +38,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Weekly (Mon 09:17 UTC),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run check:ci-health,&amp;#10;WRITING the report file">

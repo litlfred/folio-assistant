@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_AtomicMassDrift" name="Is AtomicMass.lean still in sync with its data table?" processRef="Process_AtomicMassDrift"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_AtomicMassDrift" name="Is AtomicMass.lean still in sync with its data table?" isExecutable="false">
-    <bpmn:documentation>THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.&amp;#10;&amp;#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &amp;#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&amp;#10;&amp;#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one it carries no `&lt;cat-harness.processes:job&gt;`, so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &amp;#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting.</bpmn:documentation>
+    <bpmn:documentation>THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.&amp;#10;&amp;#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &amp;#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&amp;#10;&amp;#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &amp;#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- STRICT, and declared (bean `30hn`). One path, as above, and the
            output a PROOF depends on: if `AtomicMass.lean` and its data table
@@ -19,7 +19,6 @@
            produced. Strictness costs nothing and records that the diff is not
            optional. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/atomic-mass-gen-check.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_AtomicMassDrift">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
@@ -33,9 +32,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="drift-check"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Regenerate AtomicMass.lean&amp;#10;from the data table &amp;#8212; and diff">

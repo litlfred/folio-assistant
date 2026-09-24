@@ -19,6 +19,7 @@ folio-assistant — the content lifecycle end to end, one cycle of a folio. Sour
 
 - **Called by:** no call activity names this process
 - **Calls:** [Editing and HCI validation](editing-hci-validation.html), [Draft, review and publish](draft-to-publication.html)
+- **Presented on:** [Content types — The content lifecycle](../content-types.html#the-content-lifecycle), [Publication workflow — Content lifecycle overview](../publication-workflow.html#content-lifecycle-overview)
 
 ## Lanes — who acts
 

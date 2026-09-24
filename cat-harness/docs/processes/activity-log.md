@@ -19,6 +19,7 @@ What an agent writes down about its own run, and what a person can do with it af
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`activity-log`](../reference/skill-instructions/activity-log.html)
 
 ## Lanes — who acts

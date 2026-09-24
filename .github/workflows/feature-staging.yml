@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
 # Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
@@ -105,6 +106,7 @@ concurrency:
 jobs:
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
+    # bpmn-node: Start_PR
     # A cleanup dispatch is not a staging request. `github.event.action` is
     # empty on `workflow_dispatch`, so without the second clause a run asked to
     # REMOVE a preview would deploy one as well.
@@ -1199,6 +1201,7 @@ jobs:
   # label still guards is the case where nobody decided anything — a PR closed
   # without merging.
   cleanup:
+    # bpmn-node: Start_Closed
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     # NO shared group, for the reason above: a queued job is cancelled by the
@@ -1456,6 +1459,7 @@ jobs:
 
   # ── Remove ONE preview, on an explicit human dispatch ─────────
   cleanup-dispatch:
+    # bpmn-node: Start_Dispatch
     # THE REMEDY A PERSON CAN ACTUALLY INVOKE — bean `w2g5`, second half.
     #
     # `cleanup` above is the only mechanism that removes a preview and it is
