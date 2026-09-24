@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 298,
+      "count": 301,
       "unit": "beans"
     }
   },
@@ -1079,14 +1079,14 @@
     {
       "id": "folio-assistant-8i57",
       "title": "Document ingestion page has no theme section: Process_IngestTheme is called but documented nowhere",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:04Z",
-      "updatedAt": "2026-09-24T17:47:57Z",
+      "updatedAt": "2026-09-24T18:01:26Z",
       "preview": "## Why\n`document-ingestion.bpmn` calls `Process_IngestTheme` (`ingest-theme.bpmn`) behind `Gateway_ThemeSource`, and its links pointed at `#ingest-the-theme` and `#a-theme-source` — neither anchor exists. `content/docs/document-ingestion/document-ingestion.ts` has sections for extract / derive / build-KG / gate but none for the theme. Once links are derived from `asset.source` (B5-fix), the theme ",
       "file": "beans/defs/folio-assistant-8i57--document-ingestion-page-has-no-theme-section-proce.md"
     },
@@ -1737,6 +1737,20 @@
       "file": "beans/defs/folio-assistant-duez--beans-visualiser-7-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-dv8v",
+      "title": "B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:07:58Z",
+      "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
+      "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
+    },
+    {
       "id": "folio-assistant-edx7",
       "title": "NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these",
       "status": "in-progress",
@@ -1777,6 +1791,20 @@
       "updatedAt": "2026-09-23T02:45:00Z",
       "preview": "Owner, 2026-09-20: 'as part of rendeing pipleine, can we tarball or so as binary archives the justthedocs search (and only aviaable on release, not refresh on staging?)'\n\nYES — BUT NOT FOR THE REASON A TARBALL USUALLY WINS, and the distinction decides the design.\n\n**Compression buys nothing on the wire.** GitHub Pages already serves text with `Content-Encoding: gzip`, so a plain `search-data.json`",
       "file": "beans/defs/folio-assistant-eof6--search-index-as-a-release-artifact-build-it-on-rel.md"
+    },
+    {
+      "id": "folio-assistant-epbt",
+      "title": "B6c (#1168): prose may name a file as explanation, references go in data — rule + advisory stale-name criterion",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:07:57Z",
+      "updatedAt": "2026-09-24T18:07:57Z",
+      "preview": "## Owner decision 2026-09-24\n\"Rule + stale check\": keep explanations; state the rule in data-modelling.md; add an advisory (minor, not gated) kg-audit criterion that flags a file named in a general node's prose that no longer resolves.\n\n## Measured\n22 diagrams' <bpmn:documentation> name 29 implementation files; GraphKindDef's field docs name 4 modules.\n\n## Done when\n- data-modelling.md states the ",
+      "file": "beans/defs/folio-assistant-epbt--b6c-1168-prose-may-name-a-file-as-explanation-refe.md"
     },
     {
       "id": "folio-assistant-f327",
@@ -2935,14 +2963,14 @@
     {
       "id": "folio-assistant-rdy0",
       "title": "Process pages list the docs sections that present them ('Presented on')",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "low",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:05Z",
-      "updatedAt": "2026-09-24T17:47:58Z",
+      "updatedAt": "2026-09-24T18:01:26Z",
       "preview": "## Why\nThe reverse of B5-fix: a generated `/processes/<x>.html` page does not say which prose sections present that process. The index is the same one B5-fix builds (`WebPageNode.asset.source`), so this is navigation for free once it exists.\n\n## Done when\n`gen-processes-viz.ts` emits a \"Presented on\" line per process page, from the same index, with a test.",
       "file": "beans/defs/folio-assistant-rdy0--process-pages-list-the-docs-sections-that-present.md"
     },
@@ -3325,6 +3353,20 @@
       "updatedAt": "2026-09-23T01:37:44Z",
       "preview": "## What\n\nDependabot #910 and #914 raise `typescript` 6 → 7. The owner ruled *\"everything,\nincluding the TS 7 rewrite\"* (issue #956, 2026-09-22), with the stated escape:\n*if TS 7 ships no supported compiler-API equivalent, pin to 6 and say so.*\n\n**Neither branch of that ruling is what the measurement found.** An equivalent\nexists, it works, and its own package path says `unstable`.\n\n## Measured 202",
       "file": "beans/defs/folio-assistant-u2ol--typescript-7-the-compiler-api-exists-and-every-pat.md"
+    },
+    {
+      "id": "folio-assistant-u63y",
+      "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:07:58Z",
+      "preview": "## Owner decision 2026-09-24\n\"B: users declare it\" — each dependent declares the spec, not the spec its users (36 hand-written usedBy entries over 16 records).\n\n## Plan\n- TS: `@conformsTo <spec-id>` in the module doc comment.\n- Skill .md: `conformsTo:` front matter.\n- BPMN: the `xmlns` binding already declares the namespace in-file.\n- JSON-LD: a namespace IRI in `@context` declares it; plain JSON ",
+      "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },
     {
       "id": "folio-assistant-u9r9",
@@ -3919,14 +3961,14 @@
     {
       "id": "folio-assistant-xl55",
       "title": "B5-fix (#1168): BPMN subprocess links derived from the page section that presents the process; 10 <link href> removed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:04Z",
-      "updatedAt": "2026-09-24T17:47:57Z",
+      "updatedAt": "2026-09-24T18:01:26Z",
       "preview": "## Why\n10 `<cat-harness.processes:link href>` elements are arrow-direction findings: a process (general) names the pages written about it. They are also 5-of-10 broken somewhere, with nothing checking them:\n- `#ingest-the-theme` — no such anchor (no theme section exists).\n- `#a-theme-source` — on a gateway; render-bpmn only reads call activities, so it is inert, and its anchor is missing too.\n- On",
       "file": "beans/defs/folio-assistant-xl55--b5-fix-1168-bpmn-subprocess-links-derived-from-the.md"
     },
