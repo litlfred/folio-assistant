@@ -859,15 +859,13 @@ classDiagram
     }
   }
   namespace cat_harness__interaction {
-    class cat_harness_interaction_interaction_shape["interaction"] {
-      <<schema: schemas/harness-config.ts>>
-      fields not machine-readable: schemas/harness-config.ts names no exported schema
+    class n_cat_harness_interaction_interaction["interaction: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace cat_harness__issue_marks {
-    class cat_harness_issue_marks_issue_marks_shape["issue-marks"] {
-      <<schema: src/issue-watch/seen-comments.ts>>
-      fields not machine-readable: src/issue-watch/seen-comments.ts names no exported schema
+    class n_cat_harness_issue_marks_issue_marks["issue-marks: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace cat_harness__uploads {
@@ -888,6 +886,32 @@ classDiagram
       inspected_by [1] unknown
       inspected_at [1] string
       verdicts [1] Record~string, Record~string, Verdict~~
+    }
+    class cat_harness_library_folio_block_summaries_v1_Superseded["Superseded"] {
+      <<json: BlockSummariesSidecarSchema>>
+      text [1] string | null
+      state [1] not-authored | draft | confirmed | rejected
+      drafted_by [0..1] object
+      drafted_at [0..1] string
+      confirmed_by [0..1] object
+      confirmed_at [0..1] string
+      rejected_by [0..1] object
+      rejected_at [0..1] string
+      rejection_reason [0..1] string
+    }
+    class cat_harness_library_folio_block_summaries_v1_Summary["Summary"] {
+      <<json: BlockSummariesSidecarSchema>>
+      block [1] string
+      source [1] string
+      source_hash [1] string
+      narrative [1] object
+      superseded [0..*] Superseded[]
+    }
+    class cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1["folio-block-summaries/v1"] {
+      <<json: BlockSummariesSidecarSchema>>
+      $schema [1] 'folio-block-summaries/v1'
+      entry [1] string
+      summaries [0..*] Summary[]
     }
   }
   namespace cat_harness__who_iris_library {
@@ -1361,12 +1385,19 @@ classDiagram
   cssClass "cat_harness_memory_AlsoAbout" fa_uml_kind_memory
   cssClass "cat_harness_memory_MemoryNode" fa_uml_kind_memory
   cssClass "cat_harness_memory_WaiverNode" fa_uml_kind_waiver
-  cssClass "cat_harness_interaction_interaction_shape" fa_uml_kind_interaction
-  cssClass "cat_harness_issue_marks_issue_marks_shape" fa_uml_kind_issue_marks
+  cssClass "n_cat_harness_interaction_interaction" fa_uml_kind_interaction
+  cssClass "n_cat_harness_interaction_interaction" fa_uml_undetermined
+  cssClass "n_cat_harness_issue_marks_issue_marks" fa_uml_kind_issue_marks
+  cssClass "n_cat_harness_issue_marks_issue_marks" fa_uml_undetermined
   cssClass "n_cat_harness_uploads_uploads" fa_uml_kind_uploads
   cssClass "n_cat_harness_uploads_uploads" fa_uml_undetermined
+  cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
+  cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
   cssClass "cat_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_undetermined
   cssClass "n_cat_harness_agent_skills_library_library" fa_uml_kind_library

@@ -25,7 +25,7 @@ The whole life of a work-plan item, and the rules that make one agent's bean leg
 | lane | role | what it does here |
 |---|---|---|
 | Agent (this session) | `authoring-agent` | Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here. |
-| Sibling session or human (not yours to close) | `sibling-session` | The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans. |
+| Sibling session or human (not yours to close) | `sibling-session` | The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans. |
 
 ## Steps
 

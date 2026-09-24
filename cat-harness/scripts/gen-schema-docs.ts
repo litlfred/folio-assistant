@@ -16,6 +16,7 @@
  * tooling) so it runs in any environment that has `bun`.
  *
  * @module scripts/gen-schema-docs
+ * @covers schemas, docs
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";

@@ -56,7 +56,7 @@
     {
       "id": "process_activitylog.a_persistlog",
       "prefLabel": "Persist the log to the data store",
-      "definition": "Capture is explicitly on — by <folio:log capture=\"on\"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything.",
+      "definition": "Capture is explicitly on — by <cat-harness.processes:log capture=\"on\"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything.",
       "notation": "A_PersistLog",
       "source": "cat-harness/processes/activity-log.bpmn#A_PersistLog",
       "status": "candidate"
@@ -120,7 +120,7 @@
     {
       "id": "process_adjudication.a_adjudicate",
       "prefLabel": "Adjudicate the disagreement",
-      "definition": "The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.",
+      "definition": "The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.",
       "notation": "A_Adjudicate",
       "source": "cat-harness/processes/adjudication.bpmn#A_Adjudicate",
       "status": "candidate"
@@ -1088,7 +1088,7 @@
     {
       "id": "process_crdm_deliver.call_optionsanalysis",
       "prefLabel": "Options analysis how to implement",
-      "definition": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `folio:bean op=\"claim\"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.",
+      "definition": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `cat-harness.processes:bean op=\"claim\"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.",
       "notation": "Call_OptionsAnalysis",
       "source": "cat-harness/processes/crdm-deliver.bpmn#Call_OptionsAnalysis",
       "status": "candidate"
@@ -1288,7 +1288,7 @@
     {
       "id": "process_criterionadjudication.call_adjudicate",
       "prefLabel": "Adjudicate the criterion disagreement",
-      "definition": "The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `folio:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.",
+      "definition": "The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.",
       "notation": "Call_Adjudicate",
       "source": "cat-harness/processes/criterion-adjudication.bpmn#Call_Adjudicate",
       "status": "candidate"
@@ -1688,7 +1688,7 @@
     {
       "id": "process_evidenceretrieval.task_verifyauthority",
       "prefLabel": "Verify authority against the observatory / registry API",
-      "definition": "Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note.",
+      "definition": "Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.",
       "notation": "Task_VerifyAuthority",
       "source": "cat-harness/processes/evidence-retrieval.bpmn#Task_VerifyAuthority",
       "status": "candidate"
@@ -2339,6 +2339,14 @@
       "definition": "The folder name IS the bibliography citation key, so a citation and a directory are the same string.",
       "notation": "Task_Promote",
       "source": "cat-harness/processes/document-ingestion.bpmn#Task_Promote",
+      "status": "candidate"
+    },
+    {
+      "id": "process_ingestion.task_summaryqueue",
+      "prefLabel": "Prose blocks enter the summary queue [library-ingestion]",
+      "definition": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.",
+      "notation": "Task_SummaryQueue",
+      "source": "cat-harness/processes/document-ingestion.bpmn#Task_SummaryQueue",
       "status": "candidate"
     },
     {
@@ -3598,7 +3606,7 @@
     {
       "id": "process_sessionstatemachine.a_updatesession",
       "prefLabel": "Write what changed",
-      "definition": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim.",
+      "definition": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.",
       "notation": "A_UpdateSession",
       "source": "cat-harness/processes/session-state-machine.bpmn#A_UpdateSession",
       "status": "candidate"

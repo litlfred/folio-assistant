@@ -1,5 +1,5 @@
 /**
- * `<folio:adjudication codes="…"/>` — the harness half of bean `5vo9`.
+ * `<cat-harness.processes:adjudication codes="…"/>` — the harness half of bean `5vo9`.
  *
  * @module scripts/tests/adjudication-marker
  * @graphNode none — a test
@@ -29,7 +29,7 @@ function fixture(activityExt: string, type = "task"): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:startEvent id="Start_T" name="Start"/>
@@ -43,18 +43,18 @@ function fixture(activityExt: string, type = "task"): string {
   return p;
 }
 
-const JUDGE = '<folio:fulfilment kinds="person agent" reason="a judgement, never a program"/>';
-const THREE = '<folio:adjudication codes="stands scope dispensation"/>';
+const JUDGE = '<cat-harness.processes:fulfilment kinds="person agent" reason="a judgement, never a program"/>';
+const THREE = '<cat-harness.processes:adjudication codes="stands scope dispensation"/>';
 
 describe("a mechanical actor may not adjudicate", () => {
   test("REFUSES an adjudication whose step a `system` actor could perform", async () => {
     // The owner: "ONLY agentic human actor". `system` is this repository's
     // mechanical kind. If a program can decide it, it is computable and
-    // belongs in a DMN table behind <folio:decision/>.
+    // belongs in a DMN table behind <cat-harness.processes:decision/>.
     await expect(
       loadProcessModel(
         fixture(
-          `${THREE}<folio:fulfilment kinds="person agent system" reason="whoever is free"/>`,
+          `${THREE}<cat-harness.processes:fulfilment kinds="person agent system" reason="whoever is free"/>`,
         ),
       ),
     ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
@@ -63,7 +63,7 @@ describe("a mechanical actor may not adjudicate", () => {
   test("REFUSES `external` too — outside the instance is not an adjudicator here", async () => {
     await expect(
       loadProcessModel(
-        fixture(`${THREE}<folio:fulfilment kinds="person external" reason="anyone"/>`),
+        fixture(`${THREE}<cat-harness.processes:fulfilment kinds="person external" reason="anyone"/>`),
       ),
     ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
   });
@@ -86,25 +86,25 @@ describe("a mechanical actor may not adjudicate", () => {
 describe("the codes are an enum, so a degenerate one is refused", () => {
   test("REFUSES a single permitted answer — assent is not judgement", async () => {
     await expect(
-      loadProcessModel(fixture(`<folio:adjudication codes="approved"/>${JUDGE}`)),
+      loadProcessModel(fixture(`<cat-harness.processes:adjudication codes="approved"/>${JUDGE}`)),
     ).rejects.toThrow(/at least two permitted answers/);
   });
 
   test("REFUSES no codes at all", async () => {
     await expect(
-      loadProcessModel(fixture(`<folio:adjudication codes=""/>${JUDGE}`)),
+      loadProcessModel(fixture(`<cat-harness.processes:adjudication codes=""/>${JUDGE}`)),
     ).rejects.toThrow(/at least two permitted answers/);
   });
 
   test("REFUSES a repeated code — the outcome could not say which was chosen", async () => {
     await expect(
-      loadProcessModel(fixture(`<folio:adjudication codes="a b a"/>${JUDGE}`)),
+      loadProcessModel(fixture(`<cat-harness.processes:adjudication codes="a b a"/>${JUDGE}`)),
     ).rejects.toThrow(/repeats a code/);
   });
 
   test("splits on any whitespace, so a newline-formatted list works", async () => {
     const m = await loadProcessModel(
-      fixture(`<folio:adjudication codes="  stands\n   scope  "/>${JUDGE}`),
+      fixture(`<cat-harness.processes:adjudication codes="  stands\n   scope  "/>${JUDGE}`),
     );
     expect(m.nodes.get("A_T")!.adjudication!.codes).toEqual(["stands", "scope"]);
   });
@@ -118,7 +118,7 @@ describe("it belongs on an activity", () => {
       p,
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:startEvent id="Start_T" name="Start"/>
@@ -150,7 +150,7 @@ function branched(declared: string, branchCodes: (string | null)[]): string {
       c === null
         ? `<bpmn:sequenceFlow id="F_b${i}" sourceRef="GW_T" targetRef="End_T"/>`
         : `<bpmn:sequenceFlow id="F_b${i}" sourceRef="GW_T" targetRef="End_T">` +
-          `<bpmn:extensionElements><folio:adjudication code="${c}"/></bpmn:extensionElements>` +
+          `<bpmn:extensionElements><cat-harness.processes:adjudication code="${c}"/></bpmn:extensionElements>` +
           `</bpmn:sequenceFlow>`,
     )
     .join("\n    ");
@@ -158,12 +158,12 @@ function branched(declared: string, branchCodes: (string | null)[]): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:startEvent id="Start_T" name="Start"/>
     <bpmn:task id="A_T" name="Judge it">
-      <bpmn:extensionElements><folio:adjudication codes="${declared}"/>${JUDGE}</bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication codes="${declared}"/>${JUDGE}</bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_T" name="which?"/>
     <bpmn:endEvent id="End_T" name="done"/>
@@ -223,7 +223,7 @@ describe("absence stays absence", () => {
   test("an activity with no marker has no adjudication, and still loads", async () => {
     // Most activities are not judgements. The marker must be opt-in, or every
     // existing diagram would need editing.
-    const m = await loadProcessModel(fixture('<folio:skill ref="content-feedback"/>'));
+    const m = await loadProcessModel(fixture('<bootstrap.processes:skill ref="content-feedback"/>'));
     expect(m.nodes.get("A_T")!.adjudication).toBeUndefined();
   });
 
@@ -252,7 +252,7 @@ function caller(callerExt: string, judgeCodes = "a b"): string {
     join(dir, "child.bpmn"),
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_Child" name="Child" isExecutable="false">
     <bpmn:startEvent id="Start_C" name="Start"/>
@@ -260,7 +260,7 @@ function caller(callerExt: string, judgeCodes = "a b"): string {
       judgeCodes === ""
         ? '<bpmn:task id="A_C" name="Not a judgement"/>'
         : `<bpmn:task id="A_C" name="Judge"><bpmn:extensionElements>` +
-          `<folio:adjudication codes="${judgeCodes}"/>${JUDGE}</bpmn:extensionElements></bpmn:task>`
+          `<cat-harness.processes:adjudication codes="${judgeCodes}"/>${JUDGE}</bpmn:extensionElements></bpmn:task>`
     }
   </bpmn:process>
 </bpmn:definitions>
@@ -271,7 +271,7 @@ function caller(callerExt: string, judgeCodes = "a b"): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_Parent" name="Parent" isExecutable="false">
     <bpmn:startEvent id="Start_P" name="Start"/>
@@ -287,18 +287,18 @@ function caller(callerExt: string, judgeCodes = "a b"): string {
 
 describe("a caller says what it can act on, and it is checked", () => {
   test("accepts the matching case, and the list is on the node", async () => {
-    const m = await loadProcessModel(caller('<folio:adjudication accepts="a b"/>'));
+    const m = await loadProcessModel(caller('<cat-harness.processes:adjudication accepts="a b"/>'));
     expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["a", "b"]);
   });
 
   test("ORDER does not matter — a set, as on the judge side", async () => {
-    const m = await loadProcessModel(caller('<folio:adjudication accepts="b a"/>'));
+    const m = await loadProcessModel(caller('<cat-harness.processes:adjudication accepts="b a"/>'));
     expect(m.nodes.get("Call_P")!.adjudicationAccepts).toEqual(["b", "a"]);
   });
 
   test("REFUSES a caller accepting an answer the judge cannot give", async () => {
     await expect(
-      loadProcessModel(caller('<folio:adjudication accepts="a c"/>')),
+      loadProcessModel(caller('<cat-harness.processes:adjudication accepts="a c"/>')),
     ).rejects.toThrow(/accepts \(a, c\) but Process_Child's A_C may answer \(a, b\)/);
   });
 
@@ -306,32 +306,32 @@ describe("a caller says what it can act on, and it is checked", () => {
     // Not a subset check by oversight: a caller that handles two of three
     // answers receives the third and does something undefined with it.
     await expect(
-      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "a b c")),
+      loadProcessModel(caller('<cat-harness.processes:adjudication accepts="a b"/>', "a b c")),
     ).rejects.toThrow(/may answer \(a, b, c\)/);
   });
 
   test("REFUSES `accepts` on a call into a process that adjudicates nothing", async () => {
     await expect(
-      loadProcessModel(caller('<folio:adjudication accepts="a b"/>', "")),
+      loadProcessModel(caller('<cat-harness.processes:adjudication accepts="a b"/>', "")),
     ).rejects.toThrow(/contains no judgement/);
   });
 
   test("REFUSES `accepts` anywhere but a call activity", async () => {
     // It states what a CALLER can act on; a plain task calls nothing.
     await expect(
-      loadProcessModel(fixture('<folio:adjudication accepts="a b"/>')),
+      loadProcessModel(fixture('<cat-harness.processes:adjudication accepts="a b"/>')),
     ).rejects.toThrow(/only meaningful on a call activity/);
   });
 
   test("REFUSES declaring both `codes` and `accepts` — it cannot be both", async () => {
     await expect(
-      loadProcessModel(caller(`<folio:adjudication codes="a b" accepts="a b"/>`)),
+      loadProcessModel(caller(`<cat-harness.processes:adjudication codes="a b" accepts="a b"/>`)),
     ).rejects.toThrow(/declares both/);
   });
 
   test("REFUSES a single accepted answer", async () => {
     await expect(
-      loadProcessModel(caller('<folio:adjudication accepts="a"/>')),
+      loadProcessModel(caller('<cat-harness.processes:adjudication accepts="a"/>')),
     ).rejects.toThrow(/names 1 code/);
   });
 
@@ -339,7 +339,7 @@ describe("a caller says what it can act on, and it is checked", () => {
     // Four of the six real callers are in this state and what each should
     // accept is undecided. Refusing here would force a guess that looks
     // checked; `check:workflow-refs` prints them instead.
-    const m = await loadProcessModel(caller("<folio:skill ref=\"adjudication\"/>"));
+    const m = await loadProcessModel(caller("<bootstrap.processes:skill ref=\"adjudication\"/>"));
     expect(m.nodes.get("Call_P")!.adjudicationAccepts).toBeUndefined();
     expect(m.children.get("Call_P")).toBeDefined();
   });
@@ -351,12 +351,12 @@ describe("a misspelled attribute is refused, not ignored", () => {
     // this element's three attributes has a MEANINGFUL absence, so a typo
     // parses as a deliberate abstention.
     await expect(
-      loadProcessModel(caller('<folio:adjudication accept="a b"/>')),
+      loadProcessModel(caller('<cat-harness.processes:adjudication accept="a b"/>')),
     ).rejects.toThrow(/carries "accept", which the engine does not read/);
   });
 
   test("REFUSES a judge whose codes are misspelled into nothing", async () => {
-    await expect(loadProcessModel(fixture(`<folio:adjudication code="a b"/>${JUDGE}`)))
+    await expect(loadProcessModel(fixture(`<cat-harness.processes:adjudication code="a b"/>${JUDGE}`)))
       .rejects.toThrow(/carries "code"/);
   });
 });
@@ -388,12 +388,12 @@ function deferring(callerExt: string): string {
     join(dir, "child.bpmn"),
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_Child" name="Child" isExecutable="false">
     <bpmn:startEvent id="Start_C" name="Start"/>
     <bpmn:task id="A_C" name="Adjudicate">
-      <bpmn:extensionElements><folio:adjudication defers="caller"/>${JUDGE}</bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication defers="caller"/>${JUDGE}</bpmn:extensionElements>
     </bpmn:task>
   </bpmn:process>
 </bpmn:definitions>
@@ -404,7 +404,7 @@ function deferring(callerExt: string): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_Parent" name="Parent" isExecutable="false">
     <bpmn:startEvent id="Start_P" name="Start"/>
@@ -423,7 +423,7 @@ describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", (
     // The whole reason it is an attribute rather than an absent `codes`:
     // `A_Adjudicate` dropping its enum by accident and deferring on purpose
     // would otherwise parse identically.
-    const m = await loadProcessModel(deferring('<folio:skill ref="adjudication"/>'));
+    const m = await loadProcessModel(deferring('<bootstrap.processes:skill ref="adjudication"/>'));
     const child = m.children.get("Call_P")!;
     expect(child.nodes.get("A_C")!.adjudicationDefers).toBe(true);
     expect(child.nodes.get("A_C")!.adjudication).toBeUndefined();
@@ -435,32 +435,32 @@ describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", (
     // exists to hold.
     await expect(
       loadProcessModel(
-        fixture('<folio:adjudication defers="caller"/><folio:fulfilment kinds="person system" reason="x"/>'),
+        fixture('<cat-harness.processes:adjudication defers="caller"/><cat-harness.processes:fulfilment kinds="person system" reason="x"/>'),
       ),
     ).rejects.toThrow(/Only `person` and `agent` may adjudicate/);
   });
 
   test("REFUSES a deferral with no fulfilment at all", async () => {
     await expect(
-      loadProcessModel(fixture('<folio:adjudication defers="caller"/>')),
+      loadProcessModel(fixture('<cat-harness.processes:adjudication defers="caller"/>')),
     ).rejects.toThrow(/no <folio:fulfilment/);
   });
 
   test("REFUSES any value but `caller` — there is nowhere else an enum comes from", async () => {
     await expect(
-      loadProcessModel(fixture(`<folio:adjudication defers="somewhere"/>${JUDGE}`)),
+      loadProcessModel(fixture(`<cat-harness.processes:adjudication defers="somewhere"/>${JUDGE}`)),
     ).rejects.toThrow(/The only value is `caller`/);
   });
 
   test("REFUSES `accepts` against a deferring adjudicator, and says to use `codes`", async () => {
     // The fix is the opposite of the usual one: there is no enum to have read.
     await expect(
-      loadProcessModel(deferring('<folio:adjudication accepts="a b"/>')),
+      loadProcessModel(deferring('<cat-harness.processes:adjudication accepts="a b"/>')),
     ).rejects.toThrow(/defers its enum to the caller[\s\S]*declare <folio:adjudication codes/);
   });
 
   test("a caller declaring nothing still loads — the four real ones do", async () => {
-    const m = await loadProcessModel(deferring('<folio:skill ref="adjudication"/>'));
+    const m = await loadProcessModel(deferring('<bootstrap.processes:skill ref="adjudication"/>'));
     expect(m.nodes.get("Call_P")!.adjudication).toBeUndefined();
     expect(m.nodes.get("Call_P")!.adjudicationAccepts).toBeUndefined();
   });

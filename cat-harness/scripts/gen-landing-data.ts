@@ -3,6 +3,7 @@
  * The landing stickies, as a data file Jekyll can read.
  *
  * @module scripts/gen-landing-data
+ * @covers folio, docs
  *
  * ## Why this is a separate script from `sync-docs-harness.ts`
  *

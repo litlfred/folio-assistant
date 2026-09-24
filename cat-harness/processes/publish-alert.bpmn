@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_PublishAlert" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_PublishAlert">
@@ -11,11 +12,11 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_PublishAlert" name="Alert the publication manager" isExecutable="false">
     <bpmn:documentation>Owner, 2026-09-23: &quot;there is another alert needed for deployment failure. every step post 'push the publish button' should be same&quot;. So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.</bpmn:documentation>
-    <bpmn:extensionElements><folio:policy enforcement="strict"/></bpmn:extensionElements>
+    <bpmn:extensionElements><cat-harness.processes:policy enforcement="strict"/></bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PublishAlert">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Failed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Label</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Open</bpmn:flowNodeRef>
@@ -24,7 +25,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager">
         <bpmn:documentation>The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>U_Triage</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Triaged</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -34,7 +35,7 @@
     </bpmn:startEvent>
     <bpmn:task id="A_Label" name="Ensure the&#10;publication-manager label">
       <bpmn:documentation>The alert is a tracking issue labelled `publication-manager` — the role, not a person, because no actor declares a GitHub account for it. Whoever watches that label is alerted.</bpmn:documentation>
-      <bpmn:extensionElements><folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
@@ -46,19 +47,19 @@
     </bpmn:exclusiveGateway>
     <bpmn:task id="A_Open" name="Open the tracking issue,&#10;naming the failed step">
       <bpmn:documentation>Open the issue with the step that failed, the run link and — for a verification failure — the verifier report.</bpmn:documentation>
-      <bpmn:extensionElements><folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_5</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="A_Comment" name="Comment on the open&#10;issue, naming the step">
       <bpmn:documentation>Add this failure to the open issue as a comment (which notifies), and refresh the body to the latest state.</bpmn:documentation>
-      <bpmn:extensionElements><folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
       <bpmn:incoming>F_4</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:task>
     <bpmn:userTask id="U_Triage" name="Triage the failure:&#10;hold or fix forward">
       <bpmn:documentation>The publication manager reads what failed and decides: hold the release, or fix forward and publish again. Nothing was deployed on a failure before the deploy; a failure after it (the deploy itself, or the previews lost) is live, and says so. The next successful publish closes the issue.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="publish-verification"/></bpmn:extensionElements>
       <bpmn:incoming>F_5</bpmn:incoming>
       <bpmn:incoming>F_6</bpmn:incoming>
       <bpmn:outgoing>F_7</bpmn:outgoing>

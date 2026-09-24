@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ctp3
 title: INGEST Doc-Researcher (arXiv:2510.21603v1) as a methodology subgraph in folio-assistant-core
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T21:14:08Z
-updated_at: 2026-09-23T21:15:39Z
+updated_at: 2026-09-24T00:15:16Z
 parent: folio-assistant-slw1
 ---
 

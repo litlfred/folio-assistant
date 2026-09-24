@@ -3,6 +3,8 @@
  * Materialized content is READ-ONLY, and this is what enforces it.
  *
  * @module cat-harness/scripts/check-materialized-fixity
+ * @covers computed — it follows every node whose `materialization.state` is `materialized`,
+ *   which is a property of NODES rather than of kinds
  *
  * ## The rule, in the owner's words
  *

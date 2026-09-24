@@ -86,7 +86,17 @@ package "folio-assistant-core/core-scripts" as pkg_folio_assistant_core_core_scr
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_scripts_code
 }
 package "folio-assistant-core/core-library" as pkg_folio_assistant_core_core_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_folio_assistant_core_core_library_library
+  class "folio-document-images/v1" as folio_assistant_core_core_library_folio_document_images_v1_folio_document_images_v1 <<json: ImagesSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-document-images/v1'
+    doc_id [1] : string
+    images [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
+  class "folio-image-verdicts/v1" as folio_assistant_core_core_library_folio_image_verdicts_v1 <<ts: VerdictFile>> #f4f4f1 {
+    inspected_by [1] : unknown
+    inspected_at [1] : string
+    verdicts [1] : Record<string, Record<string, Verdict>>
+  }
 }
 package "folio-assistant-core/core-methodologies" as pkg_folio_assistant_core_core_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_core_core_methodologies_methodology

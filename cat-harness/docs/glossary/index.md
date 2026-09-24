@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2431 terms: **7 authored** in 1 glossary, and **2424 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2450 terms: **7 authored** in 1 glossary, and **2443 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2424</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2443</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2431 terms and is 1.4 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2450 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2431</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2450</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -415,14 +415,14 @@ Adjudicate the conflict <span class="fa-gloss-status">candidate, extracted</span
 Adjudicate the criterion disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `folio:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
+<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#Call_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_adjudication.a_adjudicate" data-fa-state="extracted" data-fa-gloss="">
 Adjudicate the disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</p>
+<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>cat-harness/processes/adjudication.bpmn#A_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_adjudication" data-fa-state="extracted" data-fa-gloss="">
@@ -1132,6 +1132,13 @@ Audit the graph [kg:audit] <span class="fa-gloss-status">candidate, extracted</s
 <p>AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, &quot;unbound since it was drawn&quot; and &quot;broken by this change&quot; are indistinguishable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>cat-harness/processes/actor-role-administration.bpmn#Task_RunKgAudit</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--audit-coverage" data-fa-state="extracted" data-fa-gloss="">
+audit-coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/audit-coverage.md"><code>cat-harness/skills/folio-core/audit-coverage.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--qa-review.auditnote.author" data-fa-state="extracted" data-fa-gloss="">
 AuditNote.author <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1604,6 +1611,48 @@ BlockSideTextSchema.prose <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>The Markdown source, exactly as committed.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/changeset.ts"><code>folio-assistant-core/schemas/changeset.ts#BlockSideTextSchema.prose</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummariessidecarschema.entry" data-fa-state="extracted" data-fa-gloss="">
+BlockSummariesSidecarSchema.entry <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The library entry's slug — the directory this file sits in.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema.entry</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummaryschema.block" data-fa-state="extracted" data-fa-gloss="">
+BlockSummarySchema.block <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The block's `@id`, e.g. `library/&lt;slug&gt;/blocks/prose-sec-000`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummarySchema.block</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummaryschema.narrative" data-fa-state="extracted" data-fa-gloss="">
+BlockSummarySchema.narrative <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The summary itself, with its state and its author.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummaryschema.source" data-fa-state="extracted" data-fa-gloss="">
+BlockSummarySchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummarySchema.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummaryschema.source_hash" data-fa-state="extracted" data-fa-gloss="">
+BlockSummarySchema.source_hash <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>sha256 of &#123;@link proseBody} of `source` when the summary was drafted.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummarySchema.source_hash</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--block-summary.blocksummaryschema.superseded" data-fa-state="extracted" data-fa-gloss="">
+BlockSummarySchema.superseded <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Earlier narratives this one replaced — a rejected draft, or one whose source changed. Kept so a rejection's reason is not lost when the block is redrafted: a rejection that vanishes lets the next agent write the identical thing again.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-summary.ts"><code>cat-harness/schemas/block-summary.ts#BlockSummarySchema.superseded</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--board-diagram-interchange" data-fa-state="extracted" data-fa-gloss="">
 board-diagram-interchange <span class="fa-gloss-status">candidate, extracted</span>
@@ -4798,6 +4847,13 @@ DocumentImageSchema.narrative <span class="fa-gloss-status">candidate, extracted
 <p>Present only where a description is worth having — see `role`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.narrative</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.placements" data-fa-state="extracted" data-fa-gloss="">
+DocumentImageSchema.placements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every place this image appears, the first one included.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.placements</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--domain-fencing" data-fa-state="extracted" data-fa-gloss="">
 domain-fencing <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -7052,6 +7108,48 @@ interaction-modality <span class="fa-gloss-status">candidate, extracted</span>
 <p>Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/interaction-modality.md"><code>cat-harness/skills/folio-core/interaction-modality.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.dollar-comment" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.$comment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Prose for a reader who opens the file; never read by a process.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.$comment</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.default" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.default <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What to assume for somebody with no entry above.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.default</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.users" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.users <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Keyed by the identity the agent can resolve — an email today.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.users</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.note" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the profile means for this person, in their terms or the agent's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.profiles" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.profiles <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.profiles</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.source" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How it came to be known — `stated by the user`, a policy, an inference.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.source</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_inventory" data-fa-state="extracted" data-fa-gloss="">
 Inventory what actually renders <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -9285,7 +9383,7 @@ Options analysis how to absorb the impact <span class="fa-gloss-status">candidat
 Options analysis how to implement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `folio:bean op=&quot;claim&quot;`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</p>
+<p>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `cat-harness.processes:bean op=&quot;claim&quot;`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--dependency-order.orderedstep.fatal" data-fa-state="extracted" data-fa-gloss="">
@@ -9661,7 +9759,7 @@ PermitRequest.actorRoles <span class="fa-gloss-status">candidate, extracted</spa
 Persist the log to the data store <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Capture is explicitly on — by &lt;folio:log capture=&quot;on&quot;/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</p>
+<p>Capture is explicitly on — by &lt;cat-harness.processes:log capture=&quot;on&quot;/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_PersistLog</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_personas" data-fa-state="extracted" data-fa-gloss="">
@@ -9775,6 +9873,34 @@ placement <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two &quot;stub&quot; conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/placement.md"><code>cat-harness/skills/folio-core/placement.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.imagesonpage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.imagesOnPage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many images share this page.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.note" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this copy serves HERE — never what the image is, which is the narrative's job. &quot;a recurring header for principle 8&quot; belongs here; &quot;an irregular grid of coloured squares&quot; belongs on the image.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.page" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page it sits on, 1-based as a reader counts.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.page</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_lifecycle.task_plan" data-fa-state="extracted" data-fa-gloss="">
 Plan scope, team, artifacts [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
@@ -10280,6 +10406,13 @@ Prose and the code it describes <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>Descend into Process_NarrativeCodeReview: judge what the pair checks could not settle (a stale pair, a false or undetermined claim), and send a disagreement with a checker to adjudication. Issue #1042, stage C.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>cat-harness/processes/review-task.bpmn#Call_NarrativeCodeReview</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_ingestion.task_summaryqueue" data-fa-state="extracted" data-fa-gloss="">
+Prose blocks enter the summary queue [library-ingestion] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#Task_SummaryQueue</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.proseblock.label" data-fa-state="extracted" data-fa-gloss="">
 ProseBlock.label <span class="fa-gloss-status">candidate, extracted</span>
@@ -13217,7 +13350,7 @@ session-intent <span class="fa-gloss-status">candidate, extracted</span>
 session-state-machine <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.</p>
+<p>An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md"><code>cat-harness/skills/workflow/session-state-machine.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--session-context.sessioncontextschema.actor" data-fa-state="extracted" data-fa-gloss="">
@@ -16184,7 +16317,7 @@ VerificationRoster.entries <span class="fa-gloss-status">candidate, extracted</s
 Verify authority against the observatory / registry API <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note.</p>
+<p>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/evidence-retrieval.bpmn"><code>cat-harness/processes/evidence-retrieval.bpmn#Task_VerifyAuthority</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.call_verify" data-fa-state="extracted" data-fa-gloss="">
@@ -17021,7 +17154,7 @@ Work, keeping the body current (this is 'edit') <span class="fa-gloss-status">ca
 workflow-state <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `&lt;folio:bean op&gt;` actually performs, and why an instance and a bean must be one answer rather than two.</p>
+<p>Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `&lt;cat-harness.processes:bean op&gt;` actually performs, and why an instance and a bean must be one answer rather than two.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>cat-harness/skills/workflow/workflow-state.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.workflowdefinition.bindings" data-fa-state="extracted" data-fa-gloss="">
@@ -17147,7 +17280,7 @@ Write the root README, if it is not there <span class="fa-gloss-status">candidat
 Write what changed <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim.</p>
+<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_UpdateSession</code></a></p>
 </dd>
 </dl>
@@ -17170,13 +17303,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>254 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1342 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>502 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1359 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>163 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>270</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1517</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>531</strong></td><td><strong>9</strong></td><td><strong>1534</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">

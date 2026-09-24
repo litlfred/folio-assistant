@@ -41,6 +41,7 @@
  * Exit: 0 complete (or nothing to check), 1 a requirement unmet, 2 could not check.
  *
  * @module scripts/check-l1-complete
+ * @covers library
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -60,6 +61,8 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
+import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
+import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -171,7 +174,7 @@ export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
 export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr"];
 
 /** Sidecars an entry may carry beyond {@link KIND_SIDECAR}'s kind markers. */
-export const ENTRY_SIDECARS: readonly string[] = ["images.json", "manifest.jsonld"];
+export const ENTRY_SIDECARS: readonly string[] = ["images.json", "manifest.jsonld", SUMMARIES_FILE];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["paged", "structure.json"],
@@ -321,6 +324,7 @@ export const PAGED_ONLY: readonly string[] = [
   "blocks",
   "narrative-provenance",
   "image-descriptions",
+  "block-summaries",
 ];
 
 /**
@@ -529,6 +533,37 @@ function derivableRequirements(dir: string): Requirement[] {
           ? "no narrative in any bearing file"
           : tally,
     });
+  }
+
+  // Block summaries — the agent-summary QA sidecar (owner, 2026-09-24).
+  //
+  // ADVISORY, like `narrative-review`: the backlog is reported and never
+  // failed on. An entry is not incomplete because nobody has summarised its
+  // sections yet — the owner's word was "slowly drain", and a gate that
+  // failed on a backlog of 1325 would be a gate everybody learned to ignore.
+  //
+  // What IS unmet is a sidecar that does not mean what it says: one that will
+  // not parse, names another entry, or records a summary of a block that is
+  // not there or of a text the block no longer points at. The schema cannot
+  // see any of those; this is the semantic half of its QA.
+  {
+    const defects = sidecarDefects(dir);
+    if (defects.length) {
+      out.push({ name: "block-summaries", state: "unmet", detail: defects.slice(0, 2).join("; ") });
+    } else {
+      const t = tally(entryItems(dir));
+      out.push({
+        name: "block-summaries",
+        state: "met",
+        detail:
+          t.prose === 0
+            // A determined zero, said as one.
+            ? "no prose block with text to summarise"
+            : `${t.summarised} of ${t.prose} prose block(s) summarised ` +
+              `(${t.draft} draft, ${t.confirmed} confirmed); backlog ${t.backlog} ` +
+              `(${t.stale} stale, ${t.rejected} rejected) — advisory`,
+      });
+    }
   }
 
   // Tabular records (bean `p67i`).
@@ -1255,5 +1290,21 @@ if (import.meta.main) {
     for (const r of reports) console.log(`wrote ${sidecarFor(writeRoot, r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
+  if (!target && !argv.includes("--json")) {
+    // The drain's backlog, corpus-wide. Reported, never gated — see
+    // `block-summaries` above and `scripts/summaries.ts`.
+    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const t = tally(entryDirs(root).flatMap((d) => {
+      try {
+        return entryItems(d);
+      } catch {
+        return []; // that entry's `block-summaries` already says why
+      }
+    }));
+    console.log(
+      `\n  · block summaries: ${t.backlog} of ${t.prose} prose block(s) in the backlog ` +
+        `(${t.stale} stale), ${t.draft} draft(s) awaiting a person. Advisory — bun run summaries`,
+    );
+  }
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);
 }

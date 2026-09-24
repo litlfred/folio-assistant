@@ -31,6 +31,7 @@
  * `kg-export` follows for `@id`, and for the same reason.
  *
  * @module scripts/harness-schema-export
+ * @covers schemas, cat-harness
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";

@@ -3,16 +3,17 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_GraphDetanglement" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_GraphDetanglement">
     <bpmn:participant id="Participant_Process_GraphDetanglement" name="A sub-graph wants to leave" processRef="Process_GraphDetanglement"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_GraphDetanglement" name="A sub-graph wants to leave" isExecutable="false">
-    <bpmn:documentation>THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DIAGRAM. `graph-detanglement.md` says "nothing moves until the stage before it measures zero" in prose, and prose is what an agent under pressure talks itself past. Each gate here is a DECISION TABLE: `workflow_complete` refuses a hand-supplied outcome at a `folio:decision` gateway, so the branch is computed from the counts a tool already produced rather than asserted.&amp;#10;&amp;#10;THE SHARPEST GATE IS `Detangled?`, AND IT IS SHARP BECAUSE OF ITS RULE ORDER. `unassignedEdges &amp;gt; 0` returns `unknown` BEFORE the cross-edge rule is reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. `repo-partition.ts` states it in its own voice &amp;#8212; "these are not cross-edges, they are edges this tool declined to judge. Do not read them as clean" &amp;#8212; and move 1 of the practice is exactly that sentence. A person can skip it. A table cannot.&amp;#10;&amp;#10;EVERY GATE HAS A THIRD STATE AND NONE OF THEM RENDERS IT AS CLEAN. `Declared in place?` answers `unknown` on a declaration that did not parse rather than "not yet", because one says the work has not started and the other says nobody can tell. `Detangled?` answers `unknown` on an incomplete measurement. Both route to `End_Unknown`, which is a REFUSAL to advance &amp;#8212; the process stops rather than proceeding on a guess.&amp;#10;&amp;#10;DECLARING IS CHEAP AND EXTRACTING IS EXPENSIVE, WHICH IS THE POINT. Stage 1 moves nothing: the sub-graph is declared where it already sits, still inside the repository, still connected. `smart-base/methodologies/` is the worked example and it belongs to a repository that does not exist yet.&amp;#10;&amp;#10;STAGE 2 IS A LOOP, AND THE LOOP IS LOAD-BEARING. `Prune, merge, factor, or reclassify` returns to `Measure` rather than to the gate, because an assignment is verified by RE-RUNNING and never by being locally reasonable &amp;#8212; the obvious move, the one the tool's own message asks for, once took the count from 5 to 15. The four moves are the only four: the first three are the block-scale rule, and "the classification is wrong" is the fourth the repository scale adds because a module's layer is in doubt the way a block's chapter is not.&amp;#10;&amp;#10;ISOLATION IS NOT ZERO EDGES. A sub-graph with no inbound edges can still carry no declaration, no namespace and no published artefact, and lifting that directory produces a repository that cannot say what it is. `bootstrap/` is the demonstrated case and the shape to match.&amp;#10;&amp;#10;THE EXTRACTION IS A PERSON'S DECISION, AND THE LANE SAYS SO. `Authorise the extraction` sits in the Administrator lane because an extraction moves durable artefacts out of a repository, and `deletion-requires-confirmation` is not a courtesy the agent may waive: the agent reports what would move, and waits. The administrator lane is the one whose activities change the substrate every other diagram's lanes bind to, which is exactly what a repository cut does.</bpmn:documentation>
+    <bpmn:documentation>THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DIAGRAM. `graph-detanglement.md` says "nothing moves until the stage before it measures zero" in prose, and prose is what an agent under pressure talks itself past. Each gate here is a DECISION TABLE: `workflow_complete` refuses a hand-supplied outcome at a `cat-harness.processes:decision` gateway, so the branch is computed from the counts a tool already produced rather than asserted.&amp;#10;&amp;#10;THE SHARPEST GATE IS `Detangled?`, AND IT IS SHARP BECAUSE OF ITS RULE ORDER. `unassignedEdges &amp;gt; 0` returns `unknown` BEFORE the cross-edge rule is reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. `repo-partition.ts` states it in its own voice &amp;#8212; "these are not cross-edges, they are edges this tool declined to judge. Do not read them as clean" &amp;#8212; and move 1 of the practice is exactly that sentence. A person can skip it. A table cannot.&amp;#10;&amp;#10;EVERY GATE HAS A THIRD STATE AND NONE OF THEM RENDERS IT AS CLEAN. `Declared in place?` answers `unknown` on a declaration that did not parse rather than "not yet", because one says the work has not started and the other says nobody can tell. `Detangled?` answers `unknown` on an incomplete measurement. Both route to `End_Unknown`, which is a REFUSAL to advance &amp;#8212; the process stops rather than proceeding on a guess.&amp;#10;&amp;#10;DECLARING IS CHEAP AND EXTRACTING IS EXPENSIVE, WHICH IS THE POINT. Stage 1 moves nothing: the sub-graph is declared where it already sits, still inside the repository, still connected. `smart-base/methodologies/` is the worked example and it belongs to a repository that does not exist yet.&amp;#10;&amp;#10;STAGE 2 IS A LOOP, AND THE LOOP IS LOAD-BEARING. `Prune, merge, factor, or reclassify` returns to `Measure` rather than to the gate, because an assignment is verified by RE-RUNNING and never by being locally reasonable &amp;#8212; the obvious move, the one the tool's own message asks for, once took the count from 5 to 15. The four moves are the only four: the first three are the block-scale rule, and "the classification is wrong" is the fourth the repository scale adds because a module's layer is in doubt the way a block's chapter is not.&amp;#10;&amp;#10;ISOLATION IS NOT ZERO EDGES. A sub-graph with no inbound edges can still carry no declaration, no namespace and no published artefact, and lifting that directory produces a repository that cannot say what it is. `bootstrap/` is the demonstrated case and the shape to match.&amp;#10;&amp;#10;THE EXTRACTION IS A PERSON'S DECISION, AND THE LANE SAYS SO. `Authorise the extraction` sits in the Administrator lane because an extraction moves durable artefacts out of a repository, and `deletion-requires-confirmation` is not a courtesy the agent may waive: the agent reports what would move, and waits. The administrator lane is the one whose activities change the substrate every other diagram's lanes bind to, which is exactly what a repository cut does.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict"/>
+      <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_GraphDetanglement">
       <bpmn:lane id="Lane_Agent" name="Authoring agent">
@@ -26,7 +27,7 @@
              is never invented to make a diagram drawable, so there is no
              "graph steward" here. -->
         <bpmn:extensionElements>
-          <folio:role ref="authoring-agent"/>
+          <bootstrap.processes:role ref="authoring-agent"/>
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Wants</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Brief</bpmn:flowNodeRef>
@@ -45,7 +46,7 @@
       <bpmn:lane id="Lane_Admin" name="Administrator">
         <bpmn:documentation>Reached only after Declared, Detangled and Isolated have each independently cleared — so this lane is never asked to judge the measurement, only whether an already-clean extraction may proceed. Declining is not a refusal back to unknown: End_Declined leaves the sub-graph declared, detangled and isolated in place, which is a real outcome of this process and not merely the absence of one.</bpmn:documentation>
         <bpmn:extensionElements>
-          <folio:role ref="administrator"/>
+          <bootstrap.processes:role ref="administrator"/>
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Authorise</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Declined</bpmn:flowNodeRef>
@@ -58,8 +59,8 @@
     <bpmn:task id="Task_Brief" name="Brief the topic before&amp;#10;touching anything">
       <bpmn:documentation>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &amp;#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="opening-brief"/>
-        <folio:bean op="claim"/>
+        <bootstrap.processes:skill ref="opening-brief"/>
+        <cat-harness.processes:bean op="claim"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G0</bpmn:incoming>
       <bpmn:outgoing>G1</bpmn:outgoing>
@@ -68,7 +69,7 @@
     <bpmn:task id="Task_Declare" name="1 &amp;#183; Declare in place&amp;#10;(nothing moves)">
       <bpmn:documentation>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="graph-detanglement"/>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G1</bpmn:incoming>
       <bpmn:outgoing>G2</bpmn:outgoing>
@@ -76,7 +77,7 @@
     <bpmn:exclusiveGateway id="GW_Declared" name="Declared&amp;#10;in place?">
       <bpmn:documentation>Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (`readable`), an entry present for the sub-graph, and every declared path exists. Unparseable goes to `unknown`, a fault rather than 'not yet', and stops the process. No entry, or a declared path that does not exist (bean `dh4f`), goes to `not yet`, back to Declare. Otherwise `declared`, on to Measure.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate"/>
+        <cat-harness.processes:decision ref="decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G2</bpmn:incoming>
       <bpmn:outgoing>G3</bpmn:outgoing>
@@ -87,7 +88,7 @@
     <bpmn:task id="Task_Measure" name="2a &amp;#183; Measure &amp;#8212; unassigned&amp;#10;column FIRST">
       <bpmn:documentation>`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="graph-detanglement"/>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G4</bpmn:incoming>
       <bpmn:incoming>G7</bpmn:incoming>
@@ -96,7 +97,7 @@
     <bpmn:exclusiveGateway id="GW_Detangled" name="Detangled?">
       <bpmn:documentation>Computed from `check:partition`'s counts by decisions/detanglement-gate.dmn (hit policy FIRST). `unassignedEdges &gt; 0` answers `unknown` BEFORE the cross-edge rule is reached, because a zero cross-edge count over an unjudged corpus is not a pass; that stops the process. `crossEdges &gt; 0` answers `keep detangling`: prune, merge, factor, or reclassify, then re-measure. Zero of both is `detangled`, on to Isolate.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/detanglement-gate.dmn#Decision_DetanglementGate"/>
+        <cat-harness.processes:decision ref="decisions/detanglement-gate.dmn#Decision_DetanglementGate"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G6</bpmn:incoming>
       <bpmn:outgoing>G5b</bpmn:outgoing>
@@ -106,8 +107,8 @@
     <bpmn:task id="Task_Move" name="2b &amp;#183; Prune, merge, factor&amp;#10;&amp;#8212; or the classification is wrong">
       <bpmn:documentation>The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="graph-detanglement"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G8</bpmn:incoming>
       <bpmn:outgoing>G7</bpmn:outgoing>
@@ -116,7 +117,7 @@
     <bpmn:task id="Task_Isolate" name="3 &amp;#183; Isolate &amp;#8212; own declaration,&amp;#10;namespace, artefact">
       <bpmn:documentation>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="graph-detanglement"/>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G9</bpmn:incoming>
       <bpmn:outgoing>G10</bpmn:outgoing>
@@ -124,7 +125,7 @@
     <bpmn:exclusiveGateway id="GW_Isolated" name="Stands&amp;#10;alone?">
       <bpmn:documentation>Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers `not yet`, back to Isolate. All three answer `isolated`, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/isolation-gate.dmn#Decision_IsolationGate"/>
+        <cat-harness.processes:decision ref="decisions/isolation-gate.dmn#Decision_IsolationGate"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G10</bpmn:incoming>
       <bpmn:outgoing>G11</bpmn:outgoing>
@@ -134,7 +135,7 @@
     <bpmn:task id="Task_Propose" name="Report what would move&amp;#10;&amp;#8212; sizes, and what breaks">
       <bpmn:documentation>The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G12</bpmn:incoming>
       <bpmn:outgoing>G13</bpmn:outgoing>
@@ -142,7 +143,7 @@
     <bpmn:userTask id="Task_Authorise" name="Authorise the extraction">
       <bpmn:documentation>The one step no package may relax. A repository cut changes the substrate every other diagram's lanes bind to, and that is a person's decision.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G13</bpmn:incoming>
       <bpmn:outgoing>G14</bpmn:outgoing>
@@ -155,8 +156,8 @@
     <bpmn:task id="Task_Extract" name="4 &amp;#183; Extract &amp;#8212; a directory move,&amp;#10;not a file-by-file sift">
       <bpmn:documentation>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="graph-detanglement"/>
-        <folio:bean op="resolve"/>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+        <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
       <bpmn:incoming>G14</bpmn:incoming>
       <bpmn:outgoing>G16</bpmn:outgoing>

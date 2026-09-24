@@ -285,6 +285,7 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -591,6 +592,10 @@ export const RULES: Rule[] = [
       // caller and not a second answer to what the navigation looks like.
       "scripts/viewer-page.ts",
       "scripts/check-viewer-nav.ts",
+      // The rail over the FINISHED site (bean `oi1y`). Core beside
+      // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
+      // rather than guessing them, and which it deliberately runs after.
+      "scripts/rail-standalone-pages.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -921,6 +926,12 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
+      // for the same reason `kg-audit.ts` is: its subject is the graph-kind
+      // registry and the gate set, not the content vocabulary. Beside the audit
+      // it complements rather than duplicates — that one judges the nodes it
+      // covers, this one measures what is covered at all.
+      "scripts/audit-coverage.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and
@@ -1333,6 +1344,25 @@ export const RULES: Rule[] = [
   },
   {
     repo: "base",
+    exact: [
+      // Measures whether an IG's SOURCE graph carries dependency edges for its
+      // logic layer — Library, PlanDefinition, Measure (bean `f4gj`). Its name
+      // carries none of the keyword rule's tokens, so it fell through every
+      // rule when it arrived.
+      //
+      // BASE rather than core, although its subject is content and
+      // `check-artifact-index.ts` below is core on exactly that reasoning. The
+      // difference is the import: this one reads `content/pipeline/fsh-cone.ts`
+      // to compare against what that tool extracts, and `fsh-cone` is base by
+      // the keyword rule underneath. Calling this core would buy the one thing
+      // the partition exists to prevent — a `folio-assist-core -> smart-base`
+      // wrong-direction edge — to gain nothing, since FHIR Shorthand and a
+      // cpg/cqfmeasures profile URL are as WHO-specific as a subject gets.
+      "scripts/measure-logic-layer-edges.ts",
+    ],
+  },
+  {
+    repo: "base",
     keyword: /(^|[/-])(dak|fhir|fsh|ocl|l2|l3|smart|who|ig)([/.-]|$)/i,
   },
 
@@ -1449,6 +1479,10 @@ export const RULES: Rule[] = [
       // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
       "scripts/extract-assets.ts",          // container → extraction record, metadata by default
       "scripts/narratives.ts",              // the narrative review queue
+      // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
+      // writes `summaries.json` beside them, a folio's own material, through
+      // `schemas/block-summary.ts` and `schemas/narrative.ts` — both core.
+      "scripts/summaries.ts",               // the block-summary drain
       // Same test, same answer: it reads `library/<bib-slug>/images.json`,
       // which is a folio's own material, and imports `schemas/attribution.ts`
       // and `schemas/document-image.ts` — the latter reaching `narrative.ts`

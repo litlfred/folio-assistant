@@ -3,6 +3,7 @@
  * Publish the voices graph as a projection, and a viewer over it.
  *
  * @module scripts/gen-voices-viz
+ * @covers voices
  * @graphNode none — a generator over the voices graph, not a schema itself
  *
  * Sibling of `gen-library-viz.ts` and `gen-schema-viz.ts`, deliberately the

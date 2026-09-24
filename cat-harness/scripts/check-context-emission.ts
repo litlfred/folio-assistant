@@ -5,6 +5,8 @@
  * binds it, with our own namespaces spelt as their instance stubs.
  *
  * @module scripts/check-context-emission
+ * @covers schemas — the thing graded is `CONTENT_CONTEXT` in `schemas/jsonld.ts`: a prefix it
+ *   binds that nothing emits, and a prefix a document speaks that it does not bind
  *
  * ## The defect, and why nothing broke
  *

@@ -59,3 +59,7 @@ Publishing the full section text for `agent-skills` entries. who-iris and
 smart-base publish theirs; agent-skills does not, and whether other
 publishers' document text belongs on a public site is a licensing question
 for the owner, not a rendering one.
+
+## Follow-up, 2026-09-24
+
+Prose blocks now get agent summaries too, BESIDE the extract rather than in place of it, kept in a `summaries.json` sidecar that uses this narrative state machine. Bean `x80s`.

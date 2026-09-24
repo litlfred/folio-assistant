@@ -140,6 +140,45 @@ const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
     kind: "sticky",
+    id: "grumpy-cyborg-agents",
+    name: "Grumpy cyborg agents",
+    description: "Cloud cream and a harness teal, behind the cat on the sled and the four robot cats pulling it.",
+    palette: {
+      // Sampled from the art: binned into a 16-step cube over the square crop,
+      // the thought-cloud cream (#f0f0e0 bin) is 21% of the frame, far ahead of
+      // the rain-grey blues. `ink` is the hoodie's dark green, 14.15:1 on
+      // `surface`.
+      surface: "#fbf9ef", ink: "#1c2a24", edge: "#c5cdc3",
+      // The teal of the harness lines and the robots' chest marks — the colour
+      // that says "harness" in the picture. 4.72:1 on `surface`, past the 3:1
+      // SC 1.4.11 floor for the priority stripe, and clear of the literal amber
+      // and red the high and critical stripes carry.
+      accent: "#2f7a80",
+    },
+    // CAT-HARNESS'S OWN, owner 2026-09-24: "use this for the cat-harness theme,
+    // the current plain grump cat them it is using should be for
+    // folio-assisnt-core". The same grumpy cat in the same sage hoodie, now in
+    // a sled with the reins in paw, pulled by four robot cats in harness — the
+    // name drawn literally. Named by the owner: "grumpy-cyborg-agents" — the
+    // robot cats are the agents doing the pulling. `grumpy-cat` is unchanged and moves to
+    // folio-assistant-core, which keeps "each harness its own theme" true.
+    //
+    // All three crops declare their own `textRegion`, measured by rendering
+    // boxes over them: the @ mark sits at the cloud's top centre, so the words
+    // go below it.
+    backdrop: {
+      imageRole: "landing-grumpy-cyborg-agents",
+      // Measured like its siblings: `ink` over this scrim laid on PURE BLACK is
+      // 9.29:1, clear of the AAA 7:1 floor; 14.29:1 on pure white.
+      scrim: "rgba(251, 249, 239, 0.82)",
+      description:
+        "The instance's declared grumpy-cyborg-agents art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "bootstrap",
     name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",

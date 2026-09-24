@@ -212,7 +212,13 @@ describe("the controls live inside the sidebar now", () => {
   });
 
   it("the checkbox is focusable, not `display: none`", () => {
-    expect(ruleWith("left: -9999px")).not.toContain("display: none");
+    expect(ruleWith("clip-path: inset(50%)")).not.toContain("display: none");
+  });
+
+  it("and it is clipped in place, never parked off an edge (bean `2r2n`)", () => {
+    // `left: -9999px` is on the SCROLLABLE side of a right-to-left page: it
+    // made the Arabic onboarding guide 10,389px wide at a 390px viewport.
+    expect(block).not.toMatch(/left:\s*-9{3,}px/);
   });
 
   it("both controls have an accessible name — this is navigation", () => {
