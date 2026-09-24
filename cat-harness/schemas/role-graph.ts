@@ -336,6 +336,10 @@ export interface RoleGraph {
   actors?: ActorDef[];
 }
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const ActorDefSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
@@ -344,6 +348,10 @@ export const ActorDefSchema = z.object({
   roles: z.array(z.string()).optional(),
 });
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const RoleDefSchema = z.object({
   // Declared in the Zod shape as well as the interface: a field TypeScript
   // accepts and Zod strips is written by an author, type-checks, and vanishes

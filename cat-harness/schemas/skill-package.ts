@@ -99,6 +99,10 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 
 // ─── ActorDefinition ─────────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
@@ -124,6 +128,10 @@ export const ActorDefinitionSchema = z.object({
 
 // ─── CapabilityDefinition ────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const CapabilityDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -188,6 +196,10 @@ export const SkillSchemaRefSchema = z.object({
   access: z.enum(["read", "write", "read-write"]),
 });
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -256,6 +268,10 @@ export const RequirementStatementRefSchema = z
   .string()
   .regex(/^req:[a-z0-9-]+#[a-z0-9-]+$/, "a requirement statement ref is req:<requirement>#<statement key>");
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const RequirementStatementSchema = z.object({
   key: z.string().min(1),
   label: z.string(),
