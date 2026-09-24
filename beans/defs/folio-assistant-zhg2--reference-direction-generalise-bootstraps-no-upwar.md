@@ -5,52 +5,48 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T22:51:10Z
-updated_at: 2026-09-23T23:21:28Z
+updated_at: 2026-09-24T11:52:37Z
 parent: folio-assistant-vke6
 ---
 
+## State — delivered, advisory, green. Not merged.
+
+Issue #1219, PR #1222, `bun run gates` 139/139, 34 tests in 194ms on synthetic trees.
+
 ## The rule
 
-Owner, 2026-09-23: *"if sub1 depends (directly or through chain) stub0, no references/context etc points stub0 → sub1."*
-
-`bootstrap-tools/schemas/graph.test.ts` enforces it for ONE instance (`bootstrap/`, bean `iwtn`). This generalises it to all 17.
+Owner, 2026-09-23: *"if sub1 depends (directly or through chain) stub0, no references/context etc points stub0 → sub1."* `bootstrap-tools/schemas/graph.test.ts` enforces it for ONE instance (`iwtn`); this generalises it to all 17.
 
 ## Absorbing `check:partition` = sharing its computation
 
-`schemas/layer-direction.ts` (`directionOf` + `allowedFromNeeds`) already answers "does A depend on B, transitively" for `check:partition` and `kg-detangle`. This is its **third consumer**, asking the same question of a name occurrence instead of an import edge.
+`schemas/layer-direction.ts` (`directionOf` + `allowedFromNeeds`) already served `check:partition` and `kg-detangle`. This is its third consumer. **The brief recorded `check:partition` at 35 edges from this bean's sibling `zlmp`; it is at 0/0 and enforcing** — so it is untouched and the new check registered separately.
 
-**The brief that dispatched this recorded `check:partition` at 35 wrong-direction edges, from this bean's own table. It is at 0/0 and ENFORCING both axes** — `jcmx` retired the last edge. Merging the two into one advisory number would have downgraded a passing hard gate, so `check:partition` is untouched and the new check is registered separately.
+## Findings: 1,424 → 574
 
-## The measurement
+Every reduction was a file that **declares itself** generated — no thresholds, no path rules.
 
-| | |
+| step | wrong-direction |
 |---|---:|
-| bounded occurrences up the arrow | 6,878 |
-| **wrong-direction** (228 files) | **1,424** |
-| exempt (4, each with a reason) | 2,313 |
-| undetermined — *not clean* | 3,141 |
-| files not read (declared machine-written) | 5,258 |
+| start | 1,424 |
+| `$schema` declared `writtenBy` (registry) | 961 |
+| `_generated` + skill/schema mirrors | 729 |
+| UML overview | 534 |
+| after merging `origin/main` | 573 |
+| `rootForScope` fix | **574** |
 
-Three things had to be settled first:
+343 of the 574, in 51 files, are `PENDING`.
 
-- **Bounded matching.** `folio-assistant` prefixes `folio-assistant-core`, so a substring scan double-counts. The brief's 6,778 was substring; bounded over the same file set is 3,651.
-- **The repository-name collision, 59%.** That string names the repository, the product AND the root instance — whose directory *is* the repository root, so every relative path resolves inside it. **Undecidable by name**, so `undetermined`, never a guess.
-- **Machine-written files, from the DECLARATION.** `holds` already means this (`state` = written by a process, `derived` = computed). Asked via `isStateGraph`/`isDerivedGraph`, which are false for an unregistered kind — so an unknown kind gets read.
+## Three self-declarations the check reads
 
-## Confirmed defect
+`$schema` declared `writtenBy`; a top-level `_generated`; `generated:` front matter. All pre-existing conventions. Three is arguably two too many — issue #1254 / bean `ws99`.
 
-554 occurrences / 156 files once test material and three unmarked projections are set aside. Largest cluster `cat-harness/skills/authoring-who-smart-guidelines/` (106) — `smart-stack-layering.md` 41, `toolchain-ownership.md` 18, `smart-base-tools.md` 14, `ig-artifact-ingestion.md` 14.
+## Two findings for the owner
 
-## Known gap, named not papered over
-
-`docs/assets/{schemas,beans,voices}/index.json` (440 occurrences) are generated but sit in a `content` graph and carry no self-declaration, so they report as findings. Fix is one line per generator — emit `"_generated"`, as `sync-docs-harness.ts` does — not a path rule in the check.
+1. **`check:partition` scans only `cat-harness/`**, so it cannot see cross-instance imports. 8 real wrong-direction imports (`cat-harness → folio-assistant-core`) are invisible to it. The two axes share `directionOf` but are fed different layer assignments — absorption is half done.
+2. **"Move the docs up" is the right verb for fewer files than the count suggests.** Of 116 single-destination files, 59 are code files whose mention is a passing comment (moving them would invert a build dependency); and `resolveSkillDirs` walks *dependencies*, so moving a skill up hides it from every layer between.
 
 ## Done when
 
-The owner has ruled on the classes in the report, `PENDING` carries what is not being fixed yet with reasons, and the advisory entry flips to `kind: "gate"` pointing at `check:reference-direction:strict` once the count is zero.
+The owner rules on the 116 (move vs reword), `PENDING` reflects it, and the advisory entry flips to `kind: "gate"` pointing at `check:reference-direction:strict` once the count is zero.
 
-## State
-
-Issue #1219, PR #1222, `bun run gates` 137/137. **Not merged** — awaiting the owner's ruling on the classes below.
-
-No `beans/workflows/` instance recorded for this turn: the workflow engine is driven by MCP tools (`workflow_start`/`workflow_next`) that this session does not hold, and hand-writing a state file the engine did not produce would make the store say something no process did.
+No `beans/workflows/` instance recorded: the workflow engine is driven by MCP tools this session does not hold, and hand-writing a state file the engine did not produce would make the store say something no process did.
