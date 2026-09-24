@@ -1,6 +1,8 @@
 ---
 satisfies:
   - "req:content-lifecycle#feedback-collected"
+input: schemas/skills/content-feedback/input.schema.json
+output: schemas/skills/content-feedback/output.schema.json
 ---
 
 # Content Feedback Collection

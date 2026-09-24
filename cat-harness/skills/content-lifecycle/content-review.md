@@ -1,6 +1,8 @@
 ---
 satisfies:
   - "req:content-lifecycle#review-before-test"
+input: schemas/skills/content-review/input.schema.json
+output: schemas/skills/content-review/output.schema.json
 ---
 
 # Content Review

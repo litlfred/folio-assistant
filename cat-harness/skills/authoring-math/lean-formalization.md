@@ -1,3 +1,8 @@
+---
+input: schemas/skills/lean-formalization/input.schema.json
+output: schemas/skills/lean-formalization/output.schema.json
+---
+
 # lean-formalization
 
 > Skill id: `lean-formalization` · Package: `authoring-math` ·

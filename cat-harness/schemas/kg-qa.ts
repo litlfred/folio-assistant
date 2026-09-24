@@ -1072,6 +1072,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "claims to say how to read a kind of graph that does not exist.",
   },
   {
+    id: "skill-contract-resolves",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A skill's front matter names an `input:` or `output:` contract that is malformed or not in the " +
+      "instance, so what the skill is specified to take or produce cannot be opened.",
+  },
+  {
+    id: "skill-contract-claimed",
+    applies: ["graph"],
+    severity: "minor",
+    summary:
+      "A contract under `schemas/skills/` that no skill names as its `input:` or `output:` — specified " +
+      "for nobody. The skill points at its contract, so this is visible only from the contract's side.",
+  },
+  {
     id: "story-role-resolves",
     applies: ["graph"],
     severity: "major",
