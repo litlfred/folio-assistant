@@ -29,7 +29,7 @@ import {
   type ExternalSchema,
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
-import { FOLIO_BPMN_NS, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
+import { FOLIO_BPMN_NS, isOwnExtensionNamespace, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
@@ -379,7 +379,10 @@ function run(argv: string[]): number {
   // Drift, not absence: an XML namespace is compared by STRING, so a second
   // spelling means a consumer matching on the first skips every element in the
   // second — silently, and while parsing without error.
-  const drifted = own.filter((ns) => ns !== FOLIO_BPMN_NS);
+  // Since bean 12s9 there is more than one address ON PURPOSE (a prefix names
+  // the declaring Subgraph), so drift is "ours but not an active extension
+  // namespace" — the retired spelling — rather than "not the one address".
+  const drifted = own.filter((ns) => !isOwnExtensionNamespace(ns));
   // The diagram's IDENTITY drifting is a different defect with the same shape:
   // a call is a QName, so two diagrams in two namespaces cannot call each
   // other without an import a standards tool would demand.

@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { loadProcessModel } from "../src/workflow/process-model.ts";
-import { FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "./namespaces.ts";
+import { BOOTSTRAP_PROCESSES_NS, FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "./namespaces.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const DIAGRAM = join("processes", "initialize-harness.bpmn");
@@ -45,12 +45,19 @@ function skillsOf(model: unknown): string[] {
 }
 
 describe("the parser follows the namespace, not the prefix", () => {
-  test("a diagram whose prefix is bootstrap.processes loads into the same model", async () => {
+  test("bootstrap's diagram, written bootstrap.processes:, binds bootstrap's own address (stage 2)", () => {
+    const xml = readFileSync(join(REPO_ROOT, "bootstrap", DIAGRAM), "utf-8");
+    expect(ownExtensionPrefixes(xml)).toEqual(["bootstrap.processes"]);
+    expect(xml).toContain(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`);
+    expect(xml).not.toMatch(/<\/?folio:/);
+  });
+
+  test("the same address under any other prefix loads into the same model", async () => {
     const same = variant("same", (x) => x);
     const renamed = variant("renamed", (x) =>
-      x.replace(/xmlns:folio=/g, "xmlns:bootstrap.processes=").replace(/(<\/?)folio:/g, "$1bootstrap.processes:"),
+      x.replace(/xmlns:bootstrap\.processes=/g, "xmlns:x=").replace(/(<\/?)bootstrap\.processes:/g, "$1x:"),
     );
-    expect(readFileSync(renamed, "utf-8")).not.toContain("folio:skill");
+    expect(readFileSync(renamed, "utf-8")).not.toContain("bootstrap.processes:skill");
     const a = await modelOf(same, join(tmp, "same"));
     const b = await modelOf(renamed, join(tmp, "renamed"));
     // Vacuity: the original must carry extensions for "identical" to mean anything.
@@ -58,8 +65,23 @@ describe("the parser follows the namespace, not the prefix", () => {
     expect(b).toEqual(a);
   });
 
+  test("the older single address is still ours, so a diagram not yet moved reads the same", async () => {
+    const older = variant("older", (x) =>
+      x
+        .replace(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`, `xmlns:folio="${FOLIO_BPMN_NS}"`)
+        .replace(/(<\/?)bootstrap\.processes:/g, "$1folio:"),
+    );
+    const a = await modelOf(variant("same2", (x) => x), join(tmp, "same2"));
+    expect(await modelOf(older, join(tmp, "older"))).toEqual(a);
+  });
+
   test("folio: bound to someone else's namespace is not ours, whatever it spells", async () => {
-    const foreign = variant("foreign", (x) => x.replace(`xmlns:folio="${FOLIO_BPMN_NS}"`, 'xmlns:folio="urn:somebody-else"'));
+    const foreign = variant("foreign", (x) =>
+      x
+        .replace(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`, 'xmlns:folio="urn:somebody-else"')
+        .replace(/(<\/?)bootstrap\.processes:/g, "$1folio:"),
+    );
+    expect(readFileSync(foreign, "utf-8")).toContain("<folio:skill");
     const control = await modelOf(variant("control", (x) => x), join(tmp, "control"));
     expect(skillsOf(control).length).toBeGreaterThan(0);
     expect(skillsOf(await modelOf(foreign, join(tmp, "foreign")))).toEqual([]);

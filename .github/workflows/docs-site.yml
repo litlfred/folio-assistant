@@ -423,6 +423,11 @@ jobs:
           # it never overwrites: the graph's `.json` copy above has the same
           # name as bootstrap's declaration, and the graph keeps that address.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
 
           # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
           # here, after the line above, for a reason that cost a wrong claim.

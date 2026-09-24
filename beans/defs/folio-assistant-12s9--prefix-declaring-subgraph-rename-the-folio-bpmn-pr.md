@@ -36,7 +36,7 @@ Programs match on the namespace address, never on the prefix. The prefix is what
 ## Stages (each stage is one PR, and each stage is green on its own)
 
 - [ ] 1. Declare one namespace address per declaring Subgraph, in `schemas/namespaces.ts`. The parser and the moddle descriptor accept both the old address and the new one.
-- [ ] 2. Migrate bootstrap's 3 diagrams, and remove the ALLOW entries in `bootstrap-tools/schemas/graph.test.ts`.
+- [x] 2. Migrate bootstrap's 3 diagrams, and remove the ALLOW entries in `graph.test.ts` (it lives in `cat-harness/schemas/` since 319n).
 - [ ] 3. Migrate the rest of this repository's diagrams, and move the `folio-*/v1` schema ids with a read-both window.
 - [ ] 4. Folio repositories (qou needs the owner's go-ahead first), then drop the old address.
 
@@ -71,3 +71,15 @@ No file under `bootstrap/` carries `folio:` or `folio-*/v1`, and the ALLOW list 
 - **Fixtures that bound no namespace at all** now declare the binding a real diagram carries. A new test pins that a document binding none of our namespaces has none of our elements.
 - **Verified that the tests are not vacuous:** with the normalisation switched off, both parser tests fail.
 - **Not done here, on purpose:** the per-Subgraph addresses (`bootstrap.processes`, …) are not minted yet. Stage 2 mints each one together with the diagrams that use it, so no address is published before anything binds it.
+
+### Stage 2 done, 2026-09-24
+- **Address**, owner's choice (option 1 over 3, after comparing them): `https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#`. Code `bootstrap-processes` in `own-namespaces.json`, `BOOTSTRAP_PROCESSES_NS` in `namespaces.ts`, and an active extension namespace beside the older one.
+  - Why not `…/processes` with no `ns#`: an element name would run together (`…/processesskill`), and that URL is the folder of bootstrap's published `.bpmn` files.
+- **Bootstrap's 3 diagrams** now bind `xmlns:bootstrap.processes` and write `bootstrap.processes:skill|role|precondition`, the only three elements they use. Prose that named cat-harness elements (`folio:bean`, `folio:decision`) now says "work-plan element" and "computed decision", because bootstrap does not define those.
+- **The vocabulary is bootstrap's own data**: `bootstrap/processes/ns.jsonld` defines the three elements, and the site copies it to the extensionless address `<base>/bootstrap/processes/ns` (plus `.json`) in both `docs-site.yml` and `feature-staging.yml`. The address opens a definition.
+- **The drift check** in `external-schemas.ts` now means "ours but not an active extension namespace", since there are two addresses on purpose.
+- **Leak test:** the `folio:` element entries are removed from ALLOW. Only the `folio-*/v1` schema ids remain, for a later stage.
+- **Found:** `variable-performer.test.ts` edited bootstrap's diagram by searching for `<folio:role …>`, a no-op after the rename. It failed, which is good; it now also asserts that each edit actually changed the file.
+
+## Next
+- [ ] 3. The cat-harness diagrams: `skill`, `role` and `precondition` move to `bootstrap.processes:` (bootstrap declares them), and the other 13 elements move to a `cat-harness.processes:` address minted the same way, with its own `ns.jsonld`.
