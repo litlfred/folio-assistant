@@ -101,6 +101,28 @@ The harness's swimlane-role terms (`swimlane-glossary`, the
 [`swimlane-glossary`](swimlane-glossary.md) skill) are one more source the page
 links to, not copies of.
 
+## Extracted terms (bean `lqo9`, piece 1)
+
+`glossary:page` also extracts a `candidate` term from every knowledge-graph
+asset that carries a title and a description
+(`folio-assistant-core/scripts/glossary-extract.ts`): skills, Tool nodes, BPMN
+tasks and call activities, DMN decisions, and schema fields with a doc
+comment. One scheme per asset type per instance (`kg-skills`, `kg-tools`,
+`kg-bpmn-activities`, `kg-dmn-decisions`, `kg-schema-fields`), written to
+`generated/<instance>/<type>.glossary.json` inside core's `glossary/`.
+
+- They are generated. Never edit them: fix the asset, then re-run.
+- The `kg-` scheme prefix is reserved for them. An authored scheme that takes
+  it fails `check:glossary`.
+- A definition is the asset's own text, verbatim. An asset with no
+  description gives a candidate with no definition.
+- To promote one, author a term in a glossary of your own with a definition
+  you have checked, `status: authored`, and the same `source`.
+- BPMN lanes and roles are not extracted: the swimlane ledger carries them.
+- The page shows extracted terms apart from authored ones ("candidate,
+  extracted", and a "Show" filter), and only authored terms go into the
+  schema.org `DefinedTermSet`.
+
 ## Not here
 
 A clinical code system is FHIR `CodeSystem`/`ValueSet`, not a glossary (bean
