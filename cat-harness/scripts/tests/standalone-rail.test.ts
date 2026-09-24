@@ -57,6 +57,23 @@ describe("what it rails", () => {
     expect(railed(root, "bootstrap/README.html")).toBe(true);
   });
 
+  test("a TypeDoc page gets one too, beside the navigation it already has", () => {
+    // The exclusion this test used to assert. `api/` was held out of the first
+    // pass because TypeDoc's pages already carry a toolbar, a module list and
+    // a search dialog, so a second navigation was a LAYOUT question.
+    //
+    // Answered by rendering rather than by argument: a real published page was
+    // railed and both versions opened at 1280px. The rail takes its 56px
+    // COLLAPSED STRIP at x=0, the toolbar reflows to x=56, and `scrollWidth`
+    // equals `innerWidth` in both — nothing is pushed off the page, and
+    // TypeDoc's module list keeps its own column beside the strip.
+    //
+    // Asserted here so that re-excluding `api/` has to change a test.
+    const root = site();
+    run(root);
+    expect(railed(root, "api/modules/thing.html")).toBe(true);
+  });
+
   test("a page that DRAWS a sidebar still gets a real one", () => {
     // The IRIS-replica objection, answered from the repository's own
     // precedent: `navbar/intent.md` depicts the navbar too and wears the theme
@@ -101,17 +118,6 @@ describe("what it must NOT touch — each failure renders fine and is therefore 
     expect(railed(root, "who-iris/item.html")).toBe(false);
   });
 
-  test("`api/` is excluded, and by name rather than by accident", () => {
-    // TypeDoc's own site: a toolbar, a sidebar and a search dialog already.
-    // A second navigation there is a layout question, not a missing-navigation
-    // defect. When that question is answered, `NOT_THIS_PASS` empties and this
-    // expectation is the one that has to change — which is the point of
-    // asserting it rather than leaving the exclusion silent.
-    const root = site();
-    run(root);
-    expect(railed(root, "api/modules/thing.html")).toBe(false);
-  });
-
   test("STAGING previews are not this site", () => {
     // Every open branch's build lives under STAGING. Railing those would
     // rewrite other people's previews with THIS branch's navigation, and the
@@ -129,7 +135,7 @@ describe("what it reports", () => {
     const root = site();
     const r = run(root);
     expect(r.skipped).toEqual(["fragment.html"]);
-    expect(r.injected).toBe(2);
+    expect(r.injected).toBe(3);
   });
 
   test("running twice injects nothing the second time", () => {
