@@ -1408,7 +1408,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("InteractionGraph"),
     renderable: false,
     holds: "context",
-    schema: "schemas/harness-config.ts",
+    // `schema` pointed at `harness-config.ts` until 2026-09-24, and that was
+    // wrong in a way worth naming rather than quietly correcting: that module
+    // holds the PATH to the node (`interaction: z.string().default(...)`), not
+    // its shape. A pointer to where a fact is NOT written is worse than none,
+    // because a reader who follows it concludes the shape is undeclared on
+    // purpose. Bean `3oqj`; `audit-coverage` is what surfaced it.
+    schema: "schemas/interaction.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      "folio-interaction/v1": { validator: "schemas/interaction.ts#InteractionNodeSchema" },
+    },
     summary: "How a person wants to be asked — read at session start, never written by a process.",
   },
   // The marks an agent leaves on an issue it has read.
@@ -1428,6 +1438,15 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     recordsWork: false, // live state, but nothing anybody is partway through
     schema: "src/issue-watch/seen-comments.ts",
+    // declared-path-literal: this table IS the declaration, as on `health`. The
+    // shape was a TypeScript interface until 2026-09-24 — the `schema` /
+    // `validator` divergence this field's own doc uses `qa` to illustrate — so
+    // `check:kind-validators` reported the kind as could-not-determine and
+    // `audit-coverage` as reached by nothing. `SeenState` is now derived from
+    // the Zod schema, so the two cannot drift. Bean `3oqj`.
+    nodeSchemas: {
+      "folio-issue-mark/v1": { validator: "src/issue-watch/seen-comments.ts#IssueMarkSchema" },
+    },
     summary: "How far an agent has read an issue — the comment id and the edit time it accounted for.",
   },
 
