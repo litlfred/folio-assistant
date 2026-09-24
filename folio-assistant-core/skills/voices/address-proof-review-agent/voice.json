@@ -1,0 +1,37 @@
+{
+  "$schema": "folio-voice/v1",
+  "id": "address-proof-review-agent",
+  "title": "Addressing the Proof review agent",
+  "description": "How to write for a reader acting as Proof review agent. One rule, moved out of the role's own `voice` field (#1168): a voice points at the role it addresses, so the role names no voice and a second voice for the same reader is added without editing the role.",
+  "provenance": "house",
+  "sources": [
+    {
+      "title": "Role `proof-review-agent` — its persona, in the cat-harness role graph",
+      "instance": "cat-harness",
+      "kgRef": "scenarios/roles.json"
+    }
+  ],
+  "activeIn": {
+    "roles": [
+      {
+        "instance": "cat-harness",
+        "role": "proof-review-agent"
+      }
+    ]
+  },
+  "rules": [
+    {
+      "id": "address-proof-review-agent-register",
+      "title": "Adversarial but specific",
+      "description": "Adversarial but specific. State the step that does not follow, or the hypothesis that makes the statement vacuous.",
+      "category": "register",
+      "severity": "minor",
+      "judgementOnly": true,
+      "source": {
+        "instance": "cat-harness",
+        "kgRef": "scenarios/roles.json",
+        "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
+      }
+    }
+  ]
+}

@@ -29,8 +29,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-paper-adapter/lean-generation.ts",
+          "detail": "cat-harness/skills/folio-paper-adapter/lean-generation.ts changed since cat-harness/skills/folio-paper-adapter/lean-generation.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "unknown",
@@ -51,8 +56,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 1,
+    "pass": 3,
+    "fail": 2,
     "n/a": 0,
     "unknown": 1
   },

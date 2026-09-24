@@ -2,6 +2,8 @@
 name: interaction-modality
 description: Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.
 user_invocable: true
+satisfies:
+  - "req:agent-workflow#context-before-question"
 ---
 
 # /interaction-modality — ask in a form the person can answer

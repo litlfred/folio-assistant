@@ -157,6 +157,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
   },
   {
+    // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
+    // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
+    // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
+    // and `bun run preview:site` builds a site to run it on locally.
+    match: "check:duplicate-ids",
+    kind: "ci-only",
+    reason:
+      "runs on the built ./_site that only the staging job produces; its scanner and the " +
+      "nav include's one-checkbox rule are pinned by duplicate-ids.test.ts in `bun test`",
+  },
+  {
     // Mounts each instance's rendered content into the built site. It COPIES
     // rather than checks, so there is no verdict for a contributor to run —
     // and it is meaningless outside a job that has just built `_site/`.

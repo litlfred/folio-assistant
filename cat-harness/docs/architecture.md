@@ -42,7 +42,7 @@ flowchart TD
     Server --> Adapter{Content adapter}
     Adapter --> Paper[paper adapter<br/>lean · validate · render]
     Adapter --> Future[other adapters …]
-    Server --> RBAC[RBAC · src/core/rbac.ts]
+    Server --> RBAC[Access · src/core/rbac.ts + access.ts → ODRL policies/]
     Server --> Git[Git helper · src/core/git.ts]
     Server --> Feedback[Feedback store · src/core/feedback.ts]
     Tools --> Skills[Skill packages<br/>schemas/skills/*]
@@ -126,11 +126,26 @@ For papers, content is a tree of typed **blocks** validated at runtime with Zod:
 
 These are documented in the generated [TypeScript API reference](api/).
 
-## RBAC
+## Access control — ODRL, checked before every task
 
-`src/core/rbac.ts` provides role-based access control so multi-actor workflows
-(business analyst, FHIR modeller, terminologist, clinical SME, …) have scoped
-permissions over lifecycle stages.
+There is one permission system, and it is W3C ODRL 2.2 (issue #1180): actions
+in `skills/permissions/permissions.json`, grants in `policies/*.jsonld`,
+evaluated by `permits()` / `decide()` in `schemas/odrl.ts`. Two callers ask it:
+
+- **The BPMN executor**, before every task and decision
+  (`src/workflow/authorize.ts`): is the actor authenticated, eligible for the
+  lane's role, permitted to `perform-task` here, and allowed to touch the
+  content? Advisory today: a `deny` or a role mismatch refuses, and `unknown`
+  is recorded.
+- **The HTTP routes**, through `src/core/rbac.ts`: each route names the action
+  it performs (`content-authoring`, `review-comments`, `adjudication`), and the
+  auth-gateway's sessions are declared actors whose grants are
+  `policies/http-gateway.jsonld`. Here `unknown` refuses.
+
+Until issue #1207 (2026-09-23), `rbac.ts` was a separate viewer < collaborator
+< owner ladder and the executor checked nothing. The discipline is the
+[`task-authorization`](reference/skill-instructions/task-authorization.html)
+skill.
 
 ## Work-plan priming (cross-harness)
 

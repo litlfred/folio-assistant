@@ -9,6 +9,8 @@
  * @module scripts/tests/session-context.test
  */
 import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import {
   SESSION_CONTEXT_SCHEMA_TAG,
@@ -72,13 +74,16 @@ describe("session context", () => {
     expect(SessionContextSchema.safeParse(wrong).success).toBe(false);
   });
 
-  test("`session-state` is a registered kind, writable, and names its reader", () => {
+  test("`session-state` is a registered kind, writable, and its reader names it", () => {
     // Registered AHEAD of any directory, like `memory` and `folio`. Nothing
     // scans a kind, so this is not the `dh4f` shape.
     expect(defaultGraphKinds.has("session-state")).toBe(true);
     expect(graphLayer("session-state")).toBe("state");
     expect(processMayWrite("session-state")).toBe(true);
-    expect(defaultGraphKinds.get("session-state")?.skill).toBe("session-context");
+    // The skill names the kind it reads, not the other way (#1168, B3).
+    const skill = readFileSync(join(import.meta.dir, "../../skills/workflow/session-context.md"), "utf-8");
+    const frontMatter = skill.startsWith("---\n") ? skill.slice(4, skill.indexOf("\n---", 4)) : "";
+    expect(frontMatter).toContain("graph-kinds:\n  - session-state");
   });
 
   test("a session is NOT a process instance — two kinds, both state", () => {

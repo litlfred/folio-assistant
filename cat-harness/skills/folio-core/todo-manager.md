@@ -5,6 +5,11 @@ description: >
   issue tracker. Track implementation progress, open tasks, missing
   artifacts, and blocked items across a session.
 allowed-tools: Read Grep Glob TodoWrite AskUserQuestion
+satisfies:
+  - "req:agent-workflow#work-is-visible"
+graph-kinds:
+  - boards
+  - board-positions
 ---
 
 # Session Task Manager (`beans`)

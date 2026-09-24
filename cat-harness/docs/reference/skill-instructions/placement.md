@@ -125,6 +125,8 @@ and is unreachable from the place that needs it.
 | the asset is | it files under |
 |---|---|
 | why a subsystem is shaped as it is — requirements, options, rulings | `<instance>/docs/architecture/`, with `parent: Architecture` in the front matter |
+| options for a decision not yet taken, with what each costs | `<instance>/docs/proposals/`, `kind: proposal`, and a row in its `index.md` |
+| what was FOUND — prior art, a survey, a measurement, a comparison — that informs a decision without proposing one | `<instance>/docs/research-and-analysis/`, `kind: research`, and a row in its `index.md` |
 | how a person does a task with it | `<instance>/docs/guides/` |
 | how to REACH a data source the content describes — endpoints, shapes, quirks | `<instance>/docs/`, beside the subject it serves |
 | what a declared thing IS, generated from source | `<instance>/docs/reference/` — **never hand-edited** |

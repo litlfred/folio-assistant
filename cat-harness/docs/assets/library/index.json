@@ -2,7 +2,7 @@
   "$schema": "folio-library-index/v1",
   "tile": {
     "uploads": {
-      "count": 16,
+      "count": 17,
       "unit": "waiting"
     },
     "agent-skills-library": {
@@ -10,7 +10,7 @@
       "unit": "entries"
     },
     "library": {
-      "count": 5,
+      "count": 6,
       "unit": "entries"
     },
     "folio-assistant-sci-library": {
@@ -449,6 +449,36 @@
         "src": "cat-harness/library/arxiv-2508.05192v2/images/img-p003-1.png",
         "source": "figure"
       },
+      "referencedBy": []
+    },
+    {
+      "id": "arxiv-2607.14456v1",
+      "instance": "cat-harness",
+      "dir": "cat-harness/library/arxiv-2607.14456v1",
+      "title": "arxiv-2607.14456v1",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "arxiv-2607.14456v1",
+      "sourceFile": "2607.14456v1.pdf",
+      "sourceSha256": "f3f81db565e60f7fb783a997f49f3d0763140109da01d099a44f70a30af97662",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 24,
+      "blocks": 38,
+      "images": 14,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 24,
+      "words": 7581,
+      "chars": 52252,
+      "bytes": 4848231,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
       "referencedBy": []
     },
     {
@@ -1072,6 +1102,18 @@
       "declaredFiles": 0
     },
     {
+      "file": "2607.14456v1.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/2607.14456v1.pdf",
+      "bytes": 4410850,
+      "ext": "pdf",
+      "ingestedBy": "arxiv-2607.14456v1",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "2607.25032v1.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -1348,6 +1390,18 @@
       "declaredFiles": 0
     },
     {
+      "file": "dong-2025-doc-researcher.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/dong-2025-doc-researcher.pdf",
+      "bytes": 8782358,
+      "ext": "pdf",
+      "ingestedBy": "",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -1503,9 +1557,9 @@
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 32,
-      "ingested": 18,
-      "uningested": 14
+      "total": 34,
+      "ingested": 19,
+      "uningested": 15
     },
     {
       "instance": "who-iris",
@@ -1516,7 +1570,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 1782,
+    "filesRead": 1862,
     "unreadable": []
   }
 }
