@@ -70,6 +70,6 @@ There are no scores and no averages (`methodology-adoption`, Refusals).
 
 ## Related
 
-- [`theme-ui-review`](theme-ui-review.md): reviews the **built** result, also at both viewports.
+- [`theme-ui-review`](theme-ui-review.md): reviews the **ingested graphical assets** in their design, also at both viewports. At ingestion only (bean `9fdi`) — it no longer reviews the built result.
 - [`adjudication`](adjudication.md)
 - [`methodology-adoption`](methodology-adoption.md)

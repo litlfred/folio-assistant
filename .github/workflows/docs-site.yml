@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -100,6 +101,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    # bpmn-node: Start_Push
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #

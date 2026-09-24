@@ -19,7 +19,6 @@
            whose failure blocks a merge. A diagram of the gate that was
            advisory about its own steps would be self-contradicting. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/code-quality-gates.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
@@ -54,7 +53,6 @@
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="lean-bare-import"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
@@ -63,7 +61,6 @@
     <bpmn:task id="Task_Python" name="Python: unused and&amp;#10;wildcard imports (HARD)">
       <bpmn:documentation>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="python-imports"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
@@ -72,7 +69,6 @@
     <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
       <bpmn:documentation>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="typescript"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
@@ -81,7 +77,6 @@
     <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
       <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="e2e"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
@@ -90,7 +85,6 @@
     <bpmn:task id="Task_Rust" name="Rust wildcard imports&amp;#10;(WARN-ONLY)">
       <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="rust-wildcard"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
@@ -99,7 +93,6 @@
     <bpmn:task id="Task_Advisories" name="Dependency advisories&amp;#10;(WARN-ONLY)">
       <bpmn:documentation>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:job name="dependency-advisories"/>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_14</bpmn:incoming>

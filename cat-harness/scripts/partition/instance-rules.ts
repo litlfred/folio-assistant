@@ -822,6 +822,9 @@ export const RULES: Rule[] = [
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
+      // The `# bpmn:` / `# bpmn-node:` lines a workflow names its diagram with
+      // (bean `61ca`). Same subject as the coverage check that reads them.
+      "scripts/workflow-bpmn.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
@@ -1344,6 +1347,25 @@ export const RULES: Rule[] = [
     //
     // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
     // for producing a DAK, as against the block kinds a folio may contain.
+  },
+  {
+    repo: "base",
+    exact: [
+      // Measures whether an IG's SOURCE graph carries dependency edges for its
+      // logic layer — Library, PlanDefinition, Measure (bean `f4gj`). Its name
+      // carries none of the keyword rule's tokens, so it fell through every
+      // rule when it arrived.
+      //
+      // BASE rather than core, although its subject is content and
+      // `check-artifact-index.ts` below is core on exactly that reasoning. The
+      // difference is the import: this one reads `content/pipeline/fsh-cone.ts`
+      // to compare against what that tool extracts, and `fsh-cone` is base by
+      // the keyword rule underneath. Calling this core would buy the one thing
+      // the partition exists to prevent — a `folio-assist-core -> smart-base`
+      // wrong-direction edge — to gain nothing, since FHIR Shorthand and a
+      // cpg/cqfmeasures profile URL are as WHO-specific as a subject gets.
+      "scripts/measure-logic-layer-edges.ts",
+    ],
   },
   {
     repo: "base",

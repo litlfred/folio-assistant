@@ -206,6 +206,7 @@
     "audit:coverage": "bun run cat-harness/scripts/audit-coverage.ts",
     "audit:coverage:check": "bun run cat-harness/scripts/audit-coverage.ts --check",
     "audit:coverage:strict": "bun run cat-harness/scripts/audit-coverage.ts --check --strict",
+    "audit:coverage:require-all": "bun run cat-harness/scripts/audit-coverage.ts --check --require-all",
     "kg:audit": "bun run cat-harness/scripts/kg-audit.ts",
     "pairs:attest": "bun run cat-harness/scripts/prose-code-pairs.ts",
     "pairs:claims": "bun run cat-harness/scripts/pair-claims.ts",

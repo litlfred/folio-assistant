@@ -5,7 +5,7 @@
     "id": "Process_IngestTheme",
     "path": "processes/ingest-theme.bpmn"
   },
-  "source_hash": "sha256:bc8aeeedb4902d1ea9a8c7493d65713aa92fc5fdef377d40061f5319f1ffd52d",
+  "source_hash": "sha256:06d3c2a83a4a67b0c9b139ce12c6d3db5b98d7bd77a52905182e747820e0f436",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,29 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_ReadStylesheet",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        },
-        {
-          "where": "Task_ReadGuide",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        },
-        {
-          "where": "Task_MapRoles",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        },
-        {
-          "where": "Task_Contradictions",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        },
-        {
-          "where": "Task_Review",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"ingestion-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -85,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -126,9 +105,9 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 1,
-    "n/a": 9,
+    "pass": 16,
+    "fail": 0,
+    "n/a": 8,
     "unknown": 0
   }
 }

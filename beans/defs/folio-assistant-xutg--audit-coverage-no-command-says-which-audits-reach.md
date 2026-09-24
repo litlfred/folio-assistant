@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xutg
 title: 'AUDIT COVERAGE: no command says which audits reach a kind, so coverage gets inferred from a sidecar count'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T05:25:17Z
-updated_at: 2026-09-24T05:25:57Z
+updated_at: 2026-09-24T12:57:26Z
 parent: folio-assistant-1swy
 ---
 
