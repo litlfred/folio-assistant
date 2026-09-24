@@ -56,6 +56,9 @@
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { orderedDependencies } from "../schemas/harness-config.js";
+import { governingSkills, skillGovernance } from "./skill-governance.js";
+
 import {
   AGENT_INSTRUCTIONS_ROLE,
   assetRolePurpose,
@@ -338,6 +341,32 @@ export function ownDocsFinding(
   };
 }
 
+/** The repository's tracked files, read once per repository. */
+const trackedCache = new Map<string, string[]>();
+function trackedFiles(repoRoot: string): string[] {
+  let files = trackedCache.get(repoRoot);
+  if (!files) {
+    const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repoRoot });
+    files =
+      ls.exitCode === 0
+        ? new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean)
+        : // Not a git checkout (a scratch repository in a test): the skills
+          // are whatever markdown sits under a `skills/` directory.
+          [...new Bun.Glob("**/skills/**/*.md").scanSync({ cwd: repoRoot })];
+    trackedCache.set(repoRoot, files);
+  }
+  return files;
+}
+
+/** The roots an instance depends on; none when its graph cannot be resolved. */
+function dependencyRoots(root: string): string[] {
+  try {
+    return orderedDependencies(root).map((d) => d.rootPath);
+  } catch {
+    return [];
+  }
+}
+
 export function auditInstance(root: string, repoRoot: string = repoRootFor(root)): InstanceCoverage {
   const instance = root.split("/").pop() ?? root;
   let decl: CatHarnessDeclaration | undefined;
@@ -367,6 +396,13 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   const findings: CoverageFinding[] = [];
   const exempted: InstanceCoverage["exempted"] = [];
   const dirs = decl.directories ?? [];
+  // Who governs what, read from the skills; and how far a kind claim reaches —
+  // this instance, every instance it depends on, and the PLATFORM instance
+  // this checker belongs to, whose skills govern every instance it serves.
+  // Without the last, an instance declaring no dependencies (`agent-skills`)
+  // was out of reach of the platform's own `library-ingestion`.
+  const skills = skillGovernance(repoRoot, trackedFiles(repoRoot));
+  const reach = [root, ...dependencyRoots(root), resolve(import.meta.dir, "..")];
 
   for (const dir of dirs) {
     for (const criterion of CRITERIA) {
@@ -387,7 +423,14 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
         continue;
       }
 
-      const declared = dir.coverage?.[criterion];
+      // The governing SKILL is read from the skills (#1168 B7b): the skill
+      // declares the kinds or the directory it governs, and the directory
+      // names none. Derived skills exist by construction, so there is no
+      // "declared and does not resolve" case for this criterion.
+      if (criterion === "skill") {
+        if (governingSkills({ instance, id: dir.id, graphKinds: dir.graphKinds }, skills, repoRoot, reach).length > 0) continue;
+      }
+      const declared = criterion === "skill" ? undefined : dir.coverage?.[criterion];
       if (declared === undefined) {
         // An UNMET OBLIGATION outranks an unanswered question.
         //

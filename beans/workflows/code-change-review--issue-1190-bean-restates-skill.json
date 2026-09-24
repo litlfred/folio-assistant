@@ -49,7 +49,7 @@
     {
       "at": "2026-09-24T05:52:10.000Z",
       "node": "Task_PrepareMerge",
-      "actor": "litlfred",
+      "actor": "owner",
       "note": "Owner: 'Wait then merge' -- explicit confirmation, conditional on the hand-check landing first. Waited, applied its findings, CI green (9 success / 2 skipped, mergeable_state clean, gates 140/140), merged as e5cf533d. ONE DEFECT IN THE MERGE ITSELF: the PR body and merge commit said 'Closes #1190', which auto-closed the issue -- and an agent never closes an issue on its own say-so. Reopened immediately; the close is the owner's. The lesson is that 'Closes #' in a PR body is an issue closure scheduled in advance, and the rule applies to it."
     },
     {

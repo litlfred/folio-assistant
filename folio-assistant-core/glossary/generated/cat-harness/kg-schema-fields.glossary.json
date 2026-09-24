@@ -2036,13 +2036,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.catharnessdeclaration.publishable",
-      "prefLabel": "CatHarnessDeclaration.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.catharnessdeclaration.remotegraphs",
       "prefLabel": "CatHarnessDeclaration.remoteGraphs",
       "definition": "Graphs known but not held — {@link RemoteGraph}.",
@@ -2117,13 +2110,6 @@
       "prefLabel": "CatHarnessDeclarationSchema.needs",
       "definition": "The instances this one is BUILT ON — its layer stack, foundation first.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.catharnessdeclarationschema.publishable",
-      "prefLabel": "CatHarnessDeclarationSchema.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable",
       "status": "candidate"
     },
     {
@@ -2309,6 +2295,20 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.publication.host",
+      "prefLabel": "Publication.host",
+      "definition": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.host",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.publication.state",
+      "prefLabel": "Publication.state",
+      "definition": "WHAT STATE this instance's publication is in. `draft`, always, today.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.state",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.remotegraph.graphkinds",
       "prefLabel": "RemoteGraph.graphKinds",
       "definition": "Which parts of the knowledge graph live there.",
@@ -2390,13 +2390,6 @@
       "prefLabel": "SubgraphCoverageSchema.serialisations",
       "definition": "What produces this directory's SERIALISATIONS — `json`, `jsonld` and `schema.json` at the directory's own URL.",
       "source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.serialisations",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.subgraphcoverageschema.skill",
-      "prefLabel": "SubgraphCoverageSchema.skill",
-      "definition": "The skill that governs it, by NAME rather than by path, so no base applies.",
-      "source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.skill",
       "status": "candidate"
     },
     {
@@ -4556,6 +4549,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.validatornotapplicable",
+      "prefLabel": "GraphKindDef.validatorNotApplicable",
+      "definition": "WHY a runtime validator does not apply to this kind — a reason, not a flag.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.closedcontenttype.own",
       "prefLabel": "ClosedContentType.own",
       "definition": "`true` when the marker is on the root itself rather than a dependency.",
@@ -5008,6 +5008,69 @@
       "prefLabel": "IgMenuSourceSchema.ref",
       "definition": "The commit it was read at. Provenance.",
       "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakefileschema.role",
+      "prefLabel": "IntakeFileSchema.role",
+      "definition": "What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`.",
+      "source": "cat-harness/schemas/intake.ts#IntakeFileSchema.role",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakefileschema.type",
+      "prefLabel": "IntakeFileSchema.type",
+      "definition": "What the file is: `publication`, `full-item-record`, `item-page`, `upload`…",
+      "source": "cat-harness/schemas/intake.ts#IntakeFileSchema.type",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema._comment",
+      "prefLabel": "IntakeSchema._comment",
+      "definition": "Authored context for a person reading the file.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema._comment",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.doc_id",
+      "prefLabel": "IntakeSchema.doc_id",
+      "definition": "The upload directory's name.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.doc_id",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.item",
+      "prefLabel": "IntakeSchema.item",
+      "definition": "The catalogue node this capture is of, by its `id` (`item/<uuid>`).",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.item",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.record",
+      "prefLabel": "IntakeSchema.record",
+      "definition": "The Dublin Core record describing it, relative to this file.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.record",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.title",
+      "prefLabel": "IntakeSchema.title",
+      "definition": "A title — only for a capture nothing else describes.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakesourceschema.capturedat",
+      "prefLabel": "IntakeSourceSchema.capturedAt",
+      "definition": "The capture moment — not when this record was written.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakesourceschema.capturedby",
+      "prefLabel": "IntakeSourceSchema.capturedBy",
+      "definition": "Who or what captured it.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedBy",
       "status": "candidate"
     },
     {
@@ -6698,6 +6761,62 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexitemschema.file",
+      "prefLabel": "BeanIndexItemSchema.file",
+      "definition": "Repository-relative path of the bean file.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.parent",
+      "prefLabel": "BeanIndexItemSchema.parent",
+      "definition": "`\"\"` when the bean has no parent.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.preview",
+      "prefLabel": "BeanIndexItemSchema.preview",
+      "definition": "The body, trimmed to its first 400 characters.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.referencedby",
+      "prefLabel": "LibraryIndexEntrySchema.referencedBy",
+      "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.badges",
+      "prefLabel": "QaIndexSchema.badges",
+      "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.page",
+      "prefLabel": "QaIndexSchema.page",
+      "definition": "The page's slug.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.changedat",
+      "prefLabel": "TranslationStatusSchema.changedAt",
+      "definition": "`YYYY-MM-DD`: the day the counts last changed.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.scope",
+      "prefLabel": "TranslationStatusSchema.scope",
+      "definition": "The translations directory counted, repository-relative.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
+      "status": "candidate"
+    },
+    {
       "id": "skill-package.actordefinitionschema.permissions",
       "prefLabel": "ActorDefinitionSchema.permissions",
       "definition": "Permission ids — what it may do, regardless of lane. See `skills/permissions/`.",
@@ -7353,6 +7472,13 @@
       "prefLabel": "ThemeBackdropSchema.scrim",
       "definition": "The layer between art and ink, as a CSS colour — normally a translucent form of `surface`. Required; see module docs.",
       "source": "cat-harness/schemas/theme.ts#ThemeBackdropSchema.scrim",
+      "status": "candidate"
+    },
+    {
+      "id": "theme.themedtodofieldsschema.layout",
+      "prefLabel": "ThemedTodoFieldsSchema.layout",
+      "definition": "Which of the theme's three crops this sticky shows. ABSENT means the square `card` crop, on every screen — owner, 2026-09-24: *\"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified.\"* Absent rather than defaulted, for the same reason as `theme`: \"the author chose card\" and \"nobody chose\" stay distinguishable.",
+      "source": "cat-harness/schemas/theme.ts#ThemedTodoFieldsSchema.layout",
       "status": "candidate"
     },
     {
@@ -9516,6 +9642,20 @@
       "prefLabel": "WebPageNode.title",
       "definition": "Heading text. Free to change without breaking a link.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.title",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.path",
+      "prefLabel": "WithheldEntrySchema.path",
+      "definition": "Relative to the directory holding the file; a directory takes its whole subtree.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.reason",
+      "prefLabel": "WithheldEntrySchema.reason",
+      "definition": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
       "status": "candidate"
     }
   ]

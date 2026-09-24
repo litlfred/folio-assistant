@@ -863,6 +863,14 @@ export const ThemedTodoFieldsSchema = z
       .string()
       .regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case")
       .optional(),
+    /**
+     * Which of the theme's three crops this sticky shows. ABSENT means the
+     * square `card` crop, on every screen — owner, 2026-09-24: *"i want sticky
+     * themes to by default use the square avatar layout but mostly faded, if
+     * not specified."* Absent rather than defaulted, for the same reason as
+     * `theme`: "the author chose card" and "nobody chose" stay distinguishable.
+     */
+    layout: z.enum(THEME_LAYOUTS).optional(),
   })
   .strict();
 export type ThemedTodoFields = z.infer<typeof ThemedTodoFieldsSchema>;

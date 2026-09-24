@@ -15,7 +15,8 @@ import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSy
 import { join, resolve } from "path";
 import { tmpdir } from "os";
 
-import { initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
+import { enclosingRepoRoot, initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
+import { spawnSync } from "child_process";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
 import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
 
@@ -122,6 +123,8 @@ describe("what gets written", () => {
     // A reviewer's tagged comment refreshes the preview's review comments (423d).
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
     expect(wf).toContain("issues: read");
+    // A push to main publishes main's site: the before side of every preview (5uuf).
+    expect(wf).toMatch(/^\s*push:\n\s*branches: \[main\]$/m);
     expect(r.notes.join(" ")).not.toContain("wired but OFF");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
   });
@@ -136,12 +139,33 @@ describe("what gets written", () => {
     for (const n of g.directories) expect(existsSync(join(d, "todos", n.path))).toBe(true);
   });
 
+  test("a folio in a SUBFOLDER of a repository gets no workflow GitHub would never read, and is told why (zdfa)", () => {
+    const repo = tmp();
+    expect(spawnSync("git", ["init", "-q"], { cwd: repo }).status).toBe(0);
+    const sub = join(repo, "guides", "handbook");
+    expect(enclosingRepoRoot(sub)).not.toBeNull();
+    const r = initFolio(opts(sub, { contentType: "document", skipVcs: false, link: "sibling" }));
+    expect(existsSync(join(sub, ".github/workflows/staging.yml"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("cannot stage a folio below it");
+    // Never a repository nested inside another by accident.
+    expect(existsSync(join(sub, ".git"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("no git init");
+  });
+
+  test("a folio at its repository's root is not enclosed (zdfa)", () => {
+    const d = tmp();
+    expect(enclosingRepoRoot(d)).toBeNull();
+    expect(spawnSync("git", ["init", "-q"], { cwd: d }).status).toBe(0);
+    expect(enclosingRepoRoot(d)).toBeNull();
+  });
+
   test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
     const d = tmp();
     const r = initFolio(opts(d, { contentType: "paper" }));
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(false);
+    expect(wf.split("\n").some((l) => /^\s*push:/.test(l))).toBe(false);
     expect(wf).toContain("exit 1");
     expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
   });

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dv8v
-title: 'B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed'
-status: todo
+title: 'B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas'
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T18:07:58Z
-updated_at: 2026-09-24T18:07:58Z
+updated_at: 2026-09-24T18:51:25Z
 parent: folio-assistant-tr05
 ---
 

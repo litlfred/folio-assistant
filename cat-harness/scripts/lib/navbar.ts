@@ -120,6 +120,35 @@ export interface NavItem {
    * for it.
    */
   note?: string;
+  /**
+   * Rows nested UNDER this one — a harness's own graphs, under the harness.
+   *
+   * The Jekyll sidebar has rendered these since `603s` (`.fa-harness-tab__graphs`)
+   * and this rail never has, which is the single largest difference between the
+   * two surfaces: the sidebar lets a reader reach `who-iris/library/` from the
+   * harness row, and the rail stops at the harness. `sjic` calls that *"two
+   * implementations of one navbar, disagreeing about whether a reader can reach
+   * a graph"*.
+   *
+   * It is on `NavItem` rather than expressed as a nested {@link NavGroup}
+   * because these rows are not a group: they have no label of their own, they
+   * do not collapse separately, and they belong to the row above them. A group
+   * would give each harness a second disclosure inside the harnesses
+   * disclosure, which is a shape nobody asked for.
+   */
+  children?: readonly NavItem[];
+  /**
+   * A control rendered BESIDE the row — never inside it.
+   *
+   * The sidebar's ⚙ opens the glass's Harnesses panel with this harness chosen
+   * (#1146). Its own comment says why it is a sibling: *"the tab is a link, and
+   * a control nested in a link is two targets a keyboard cannot tell apart."*
+   *
+   * `data` is the attribute the page's delegation reads. With no script it does
+   * nothing and the row still works, so a surface that ships no script simply
+   * declares no action rather than rendering a dead control.
+   */
+  action?: { readonly data: string; readonly value: string; readonly label: string; readonly glyph: string };
 }
 
 /** A labelled group of items, which may be collapsed behind a disclosure. */
@@ -177,16 +206,76 @@ export interface NavbarModel {
    * viewer appears with no href, which `harness-tiles` already words exactly
    * right: **declared and not rendered is a gap, not a dead link.** Omitting it
    * would answer "what is in this KG" with a shorter and wronger list.
+   *
+   * **Absent only when another navigation already owns the middle region.**
+   * That is true on exactly one surface — the Jekyll theme renders its own
+   * `<nav id="site-nav">` page tree there — and it is why this became optional
+   * rather than being satisfied with an empty group: an empty `<details>`
+   * invites a click that does nothing, which is the rule the rest of this
+   * module follows for a row with no destination.
    */
-  graphs: NavGroup;
+  graphs?: NavGroup;
   /** The instantiated harnesses. The expandable group in the fixed bottom. */
   harnesses?: NavGroup;
   /** Home, last in the fixed bottom. `"keep home at bottom for who iris."` */
   home?: NavItem;
+  /**
+   * HOW an href is written — the difference between the two surfaces, DECLARED.
+   *
+   * `sjic`'s last box asks for one renderer for a Jekyll page and a mounted
+   * page *"with the difference DECLARED rather than branched on"*. This is one
+   * of the two things that actually differ, and it is a property of the
+   * SURFACE rather than of any row, which is why it sits on the model and not
+   * on {@link NavItem}.
+   *
+   * - `"resolved"` (the default) — the caller has already made the href
+   *   relative to the page being rendered. That is what every injected rail
+   *   does: `railModel` composes `toRoot` and the page knows where it is.
+   * - `"liquid"` — the href is site-root-relative and is emitted wrapped in
+   *   Jekyll's `relative_url` filter, which applies the baseurl at build time.
+   *   A Jekyll page cannot use a resolved href: the same include is rendered
+   *   into pages at every depth, and the site is served from `/folio-assistant/`
+   *   on the canonical deploy and from `/folio-assistant/STAGING/<branch>/` on a
+   *   preview. `68au` is what omitting the filter costs — every graph tile in
+   *   the navbar 404'd.
+   *
+   * Emitting a Liquid filter from a TypeScript renderer is not a new idea
+   * here: `docs/_includes/generated/todo-listing.html` is generated, gated by
+   * a `--check`, and emits `{{ '…' | relative_url }}` for exactly this reason.
+   */
+  hrefs?: "resolved" | "liquid";
+  /**
+   * Whether this rendering emits the open checkbox, or only labels for one
+   * rendered elsewhere on the same page.
+   *
+   * The third declared difference, and the only one that is about a surface
+   * rendering the navbar MORE THAN ONCE. An injected rail is written into a
+   * page exactly once, so it always carries its own input; just-the-docs
+   * includes its footer extension point twice per page by design, so the
+   * second copy must render `"labels"`. See {@link navbarRegionsHtml} for what
+   * the duplicate cost and why giving the second copy its own id was worse.
+   */
+  openControl?: "input" | "labels";
+}
+
+/** How a rendering pass writes its hrefs. Threaded rather than global. */
+interface Ctx {
+  readonly liquid: boolean;
 }
 
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * One href, written the way this surface declares.
+ *
+ * The Liquid form is single-quoted because a path may contain a double quote
+ * only if somebody has gone badly wrong upstream, and `esc` has already turned
+ * `"` into `&quot;` by the time this runs — so the quote that delimits the
+ * filter's argument cannot be the one that closes the attribute.
+ */
+const href = (path: string, c: Ctx): string =>
+  c.liquid ? `{{ '${esc(path)}' | relative_url }}` : esc(path);
 
 /**
  * THE GEOMETRY IS NOT DECIDED HERE ANY MORE.
@@ -285,6 +374,29 @@ export function navbarCss(): string {
     // its own right -- which it has, being the same composited ink as the
     // label it sits next to.
     `.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}`,
+    // A ROW WITH A CONTROL, and its children beneath both.
+    //
+    // `grid` rather than flex because the row and its control share one line
+    // while the children take a full-width second one, and that is a
+    // two-dimensional statement. With flex it would be a wrap the browser
+    // happens to make, which is the same layout only while the labels are
+    // short.
+    //
+    // The control's column is `auto`, so a row with no control has no reserved
+    // gutter — the collapsed strip is `NAV_COLLAPSED_PX` wide and a reserved
+    // column it never uses is a strip that is narrower than it looks.
+    `.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}`,
+    `.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}`,
+    `.fa-nav-kids{grid-column:1/-1}`,
+    // The control is hidden with the labels rather than on its own timer: at
+    // rest the strip shows marks only, and a ⚙ floating beside a mark with no
+    // label names nothing. Same trigger as `.fa-nav-label`, so the two cannot
+    // disagree about when the navbar is open.
+    `.fa-nav-action{display:none;background:none;border:0;cursor:pointer;`,
+    `padding:0 ${NAV_PAD_PX}px;font-size:13px;line-height:1;color:inherit;opacity:.7}`,
+    `.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}`,
+    `.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,`,
+    `.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}`,
     // THE EXPLODING MENU. `<details>` so it is keyboard-operable and announces
     // its own state with no script.
     `.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px ${NAV_PAD_PX}px;`,
@@ -316,7 +428,7 @@ export function navbarCss(): string {
 }
 
 /** An item's mark: its avatar when it has one, its glyph otherwise. */
-function mark(i: NavItem): string {
+function mark(i: NavItem, c: Ctx): string {
   const tone = i.tone ? ` style="background:hsl(${i.tone} 45% 28%)"` : "";
   if (i.avatar) {
     const t = i.avatar.title ? ` title="${esc(i.avatar.title)}"` : "";
@@ -324,7 +436,7 @@ function mark(i: NavItem): string {
     if (!r) {
       return (
         `<span class="fa-nav-glyph fa-nav-tone"${tone}>` +
-        `<img src="${esc(i.avatar.src)}" alt=""${t}></span>`
+        `<img src="${href(i.avatar.src, c)}" alt=""${t}></span>`
       );
     }
     // THE CROP, and the arithmetic is `603s`'s. The frame shows `r` scaled to
@@ -340,7 +452,7 @@ function mark(i: NavItem): string {
     const pct = (n: number) => `${+(n * 100).toFixed(4)}%`;
     return (
       `<span class="fa-nav-glyph fa-nav-tone fa-nav-crop"${tone}>` +
-      `<img src="${esc(i.avatar.src)}" alt=""${t} style="` +
+      `<img src="${href(i.avatar.src, c)}" alt=""${t} style="` +
       `width:${pct(1 / r.w)};height:${pct(1 / r.h)};` +
       `left:${pct(-r.x / r.w)};top:${pct(-r.y / r.h)}"></span>`
     );
@@ -351,24 +463,42 @@ function mark(i: NavItem): string {
   return `<span class="fa-nav-glyph fa-nav-tone"${tone} aria-hidden="true">${esc(glyph)}</span>`;
 }
 
-function itemHtml(i: NavItem): string {
-  const body = `${mark(i)}<span class="fa-nav-label">${esc(i.label)}</span>`;
+function itemHtml(i: NavItem, c: Ctx): string {
+  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}</span>`;
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
   const d = i.depth && i.depth > 0 ? ` style="padding-left:${NAV_PAD_PX + (NAV_GLYPH_PX + 8) * i.depth}px"` : "";
+  let row: string;
   if (i.href === undefined) {
     // The note is part of the row's TEXT, inside the same element, so an
     // assistive technology reads "catalogue, no viewer yet" as one thing
     // rather than as a label and a detached aside.
     const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
-    return `<span class="fa-nav-dead"${d}>${body}${note}</span>`;
+    row = `<span class="fa-nav-dead"${d}>${body}${note}</span>`;
+  } else {
+    row = `<a href="${href(i.href, c)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
-  return `<a href="${esc(i.href)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
+  if (!i.action && !i.children) return row;
+  // The action is a SIBLING of the row, never inside it — a control nested in
+  // a link is two targets a keyboard cannot tell apart. The children follow
+  // both, so the row and its control stay adjacent in the tab order.
+  const action = i.action
+    ? `<button type="button" class="fa-nav-action" ${esc(i.action.data)}="${esc(i.action.value)}"` +
+      ` aria-label="${esc(i.action.label)}">${esc(i.action.glyph)}</button>`
+    : "";
+  const kids = i.children?.length
+    ? `<div class="fa-nav-kids">${i.children.map((k) => itemHtml(k, c)).join("")}</div>`
+    : "";
+  // `fa-nav-row` exists so the row and its action can sit on one line without
+  // the children joining them. Without it the action would have to be absolutely
+  // positioned against a row it is not inside, which is the kind of geometry
+  // `navbar-geometry.ts` exists to stop being re-decided.
+  return `<div class="fa-nav-row">${row}${action}${kids}</div>`;
 }
 
-function groupHtml(g: NavGroup): string {
-  const items = g.items.map(itemHtml).join("");
+function groupHtml(g: NavGroup, c: Ctx): string {
+  const items = g.items.map((i) => itemHtml(i, c)).join("");
   if (!g.collapsible) return items;
   return (
     `<details class="fa-nav-group"${g.open ? " open" : ""}>` +
@@ -380,10 +510,41 @@ function groupHtml(g: NavGroup): string {
 
 /** The navbar. */
 export function navbarHtml(m: NavbarModel): string {
+  return `<nav class="fa-nav" aria-label="folio-assistant">${navbarRegionsHtml(m)}</nav>`;
+}
+
+/**
+ * The navbar's REGIONS, without the `<nav>` element around them.
+ *
+ * This exists for the one surface that already has its own container: the
+ * Jekyll theme renders `.side-bar`, and `nav_footer_custom.html` is
+ * just-the-docs' extension point *inside* it. Emitting a second `<nav>` there
+ * would give the page two navigation landmarks and put the harness tabs in the
+ * wrong one.
+ *
+ * **This is the second of the two declared differences**, with
+ * {@link NavbarModel.hrefs} — and it is a difference in what OWNS the element,
+ * not in what is rendered. `navbarHtml` is this function plus a wrapper, so
+ * the two surfaces cannot drift: there is no second copy of the region order
+ * to keep in step.
+ */
+export function navbarOpenInputHtml(): string {
+  return `<input type="checkbox" class="fa-nav-open" id="fa-nav-open">`;
+}
+
+export function navbarRegionsHtml(m: NavbarModel): string {
+  const c: Ctx = { liquid: m.hrefs === "liquid" };
   return (
-    `<nav class="fa-nav" aria-label="folio-assistant">` +
     // One checkbox behind two labels, so open and close cannot disagree.
-    `<input type="checkbox" class="fa-nav-open" id="fa-nav-open">` +
+    //
+    // `openControl: "labels"` renders only the labels, for a surface that
+    // renders this markup MORE THAN ONCE per page. just-the-docs includes its
+    // footer extension point twice by design, and with the input in both,
+    // `id="fa-nav-open"` appeared twice on 429 of 1,283 built pages (`uknu`).
+    // Giving the second copy its own id was tried and was worse: the
+    // stylesheet reads `.side-bar:has(.fa-nav-open:checked)` and the second
+    // input is not in `.side-bar`, so it checked a box nothing reads.
+    (m.openControl === "labels" ? "" : navbarOpenInputHtml()) +
     `<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">` +
     `<span aria-hidden="true">&times;</span>` +
     `<span class="fa-nav-sr">Close navigation</span></label>` +
@@ -392,15 +553,15 @@ export function navbarHtml(m: NavbarModel): string {
     `<label class="fa-nav-head" for="fa-nav-open" title="Open navigation">` +
     `<span class="fa-nav-glyph" aria-hidden="true">&#9776;</span>` +
     `<span class="fa-nav-name fa-nav-label">${esc(m.instance)}</span></label>` +
-    (m.root ? itemHtml(m.root) : "") +
-    (m.documentIndex ? groupHtml(m.documentIndex) : "") +
+    (m.root ? itemHtml(m.root, c) : "") +
+    (m.documentIndex ? groupHtml(m.documentIndex, c) : "") +
     `</div>` +
-    `<div class="fa-nav-graphs">${groupHtml(m.graphs)}</div>` +
+    (m.graphs ? `<div class="fa-nav-graphs">${groupHtml(m.graphs, c)}</div>` : "") +
     `<div class="fa-nav-bottom">` +
-    (m.harnesses ? groupHtml(m.harnesses) : "") +
-    (m.home ? itemHtml(m.home) : "") +
+    (m.harnesses ? groupHtml(m.harnesses, c) : "") +
+    (m.home ? itemHtml(m.home, c) : "") +
     `</div>` +
-    `</div></nav>`
+    `</div>`
   );
 }
 

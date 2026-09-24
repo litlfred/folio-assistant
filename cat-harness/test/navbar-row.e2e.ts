@@ -511,10 +511,10 @@ test.describe("the document index — the fixed top, about the page rather than 
       .evaluateAll((ns) => ns.map((n) => n.className || n.tagName.toLowerCase()));
     expect(order).toEqual([
       expect.stringContaining("site-header"),
-      // The folio handle, IN the navbar under the header: owner,
+      expect.stringContaining("fa-nav-icons"),
+      // The folio handle, IN the navbar under the icon row: owner,
       // 2026-09-24, "folio handle on LHS on navbar".
       expect.stringContaining("fa-glass-handle"),
-      expect.stringContaining("fa-nav-icons"),
       expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),
       expect.stringContaining("site-footer"),
@@ -591,6 +591,19 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     }
     return out;
   };
+
+  test("the folio handle sits under the icon row, so it never takes the ☰'s clicks", async ({ page }) => {
+    // Owner, 2026-09-24: "folio handle on LHS on navbar". Placed right under
+    // the header, the handle's position depended on the header's height while
+    // the ☰ is painted at a fixed offset, and in this fixture it took the ☰'s
+    // clicks. Under the icon row, the element built to clear the ☰, it cannot.
+    await load(page, CUSTOM);
+    await expect(page.locator(".side-bar > .fa-nav-icons + .fa-glass-handle")).toHaveCount(1);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(200);
+    await page.locator(".fa-nav-toggle").click({ timeout: 5000 });
+  });
 
   test("NO text region is visible until the bar is opened", async ({ page }) => {
     const { errors } = await load(page, CUSTOM);

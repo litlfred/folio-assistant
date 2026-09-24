@@ -380,7 +380,12 @@ jobs:
       # folio-assistant-core"): every `folio-glossary/v1` document validates,
       # and the glossary/ page and its SKOS JSON-LD are current.
       - name: glossary page and SKOS
-        run: bun run check:glossary
+        run: |
+          bun run check:glossary
+          # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
+          # authored term's labels and definition have a current .pot in
+          # every locale, beside the BPMN templates.
+          bun run glossary:pot:check
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -783,6 +788,12 @@ jobs:
           bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
+          # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
+          # every mounted page uses, and committed as an include. Gated here
+          # because a stale include is a sidebar that disagrees with the rail
+          # about what a harness holds -- which is the defect the bean is
+          # about, arriving again through the back door.
+          bun run navbar:include:check
           bun run check:agents-xref
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
@@ -901,7 +912,19 @@ jobs:
           bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
-          bun run check:kind-validators
+          # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
+          # is meant to be closed" and could NEVER have passed: all seven kinds it
+          # counted were either not JSON (`.bpmn`, `.puml`, `.md`, `.ts`) or had no
+          # nodes at all, so the count read as a seven-item backlog over a real
+          # backlog of zero. Each now declares WHY a runtime validator cannot
+          # apply, naming the file format or the absent subject — a fact a reader
+          # can check, so "not applicable" cannot launder a real gap.
+          #
+          # Safe to wire because it is GREEN on this tree, as with `check:skills`:
+          # it locks in a property the repo HAS. What it buys is that a kind added
+          # tomorrow without deciding shows up as `undeclared` rather than joining
+          # a backlog nobody reads.
+          bun run check:kind-validators:require-all
           # The UML overview is drawn from the declarations and the kind
           # validators just checked, so it goes stale when either changes.
           bun run uml:overview:check
@@ -919,6 +942,10 @@ jobs:
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
           bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
@@ -1151,6 +1178,11 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The prefix-sharded identifier lookup over who-iris's REFERENCED
+          # nodes (bean `4pm8`). Gated because a stale shard still answers:
+          # it finds a node the catalogue no longer references, and a reader
+          # cannot tell a stale hit from a current one.
+          bun run id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim
