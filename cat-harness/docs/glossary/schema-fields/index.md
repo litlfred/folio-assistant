@@ -13,7 +13,7 @@ Candidate terms extracted from every schema field with a doc comment: `<Declarat
 
 From: cat-harness 1371 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1545 terms and is 836 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1545 terms and is 835 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -1389,13 +1389,6 @@ CatHarnessDeclaration.publication <span class="fa-gloss-status">candidate, extra
 <p>WHAT KIND of host serves this instance's renderings.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publication</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.publishable" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclaration.publishable <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Is this instance PUBLISHED for consumers outside this repository?</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.remotegraphs" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.remoteGraphs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1472,13 +1465,6 @@ CatHarnessDeclarationSchema.needs <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>The instances this one is BUILT ON — its layer stack, foundation first.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.publishable" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclarationSchema.publishable <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Is this instance PUBLISHED for consumers outside this repository?</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.remotegraphs" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.remoteGraphs <span class="fa-gloss-status">candidate, extracted</span>
@@ -6319,6 +6305,20 @@ ProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.publication.host" data-fa-state="extracted" data-fa-gloss="">
+Publication.host <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Publication.host</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.publication.state" data-fa-state="extracted" data-fa-gloss="">
+Publication.state <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHAT STATE this instance's publication is in. `draft`, always, today.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Publication.state</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-package.pythondependency.package" data-fa-state="extracted" data-fa-gloss="">
 PythonDependency.package <span class="fa-gloss-status">candidate, extracted</span>
