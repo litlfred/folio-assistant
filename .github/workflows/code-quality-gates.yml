@@ -591,9 +591,9 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `bootstrap-tools`, because bootstrap promises a Bootstrapping Agent it needs
-      # no tools and therefore cannot hold a `.ts` of its own. This is the
+      # `bootstrap`'s JSON Schemas are GENERATED from Zod in
+      # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
+      # needs no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
       # whether their output still matched their input.
@@ -601,7 +601,7 @@ jobs:
       # A red here means the Zod moved and the published document did not —
       # and that document sits at an `$id` consumers already follow.
       - name: bootstrap schemas are current
-        run: bun run bootstrap-tools:schemas:check
+        run: bun run bootstrap:schemas:check
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
