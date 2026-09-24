@@ -380,7 +380,12 @@ jobs:
       # folio-assistant-core"): every `folio-glossary/v1` document validates,
       # and the glossary/ page and its SKOS JSON-LD are current.
       - name: glossary page and SKOS
-        run: bun run check:glossary
+        run: |
+          bun run check:glossary
+          # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
+          # authored term's labels and definition have a current .pot in
+          # every locale, beside the BPMN templates.
+          bun run glossary:pot:check
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each

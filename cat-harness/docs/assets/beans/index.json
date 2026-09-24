@@ -1781,14 +1781,14 @@
     {
       "id": "folio-assistant-d4lb",
       "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:42:45Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
       "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
     },
@@ -1865,14 +1865,14 @@
     {
       "id": "folio-assistant-dv8v",
       "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
