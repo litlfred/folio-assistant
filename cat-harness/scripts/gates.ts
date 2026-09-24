@@ -521,6 +521,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "Covered by block-screenshots.test.ts in `bun test` and block-screenshots.e2e.ts in the e2e job",
   },
   {
+    // Bean `5uuf`: publishes a FOLIO's main site at its publish branch's root,
+    // the before side of every preview. The platform has no folio, and no
+    // publish branch checked out in a gate run.
+    match: "publish-main-site.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's publish-main job over that folio's built site and its publish branch; the platform carries no folio. " +
+      "Covered by publish-main-site.test.ts in `bun test`: the manifest, the reserved paths, and the refusals",
+  },
+  {
     match: "staging-banner.ts",
     kind: "ci-only",
     reason:
