@@ -72,9 +72,10 @@
  * declared but whose crops are missing, which `resolveThemeBackdrop` refuses
  * wholesale.
  *
- * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `bootstrap` (the
- * cowboy in the desert) is bootstrap's, `library` is folio-assist-core's, and
- * `engineer` is reserved for testing surfaces.
+ * Today: `grumpy-cyborg-agents` (the sage hoodie on a sled pulled by robot cats) is
+ * cat-harness's, `grumpy-cat` (the plain sage hoodie) is folio-assist-core's,
+ * `bootstrap` (the cowboy in the desert) is bootstrap's, and `engineer` is
+ * reserved for testing surfaces.
  *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping
  *
