@@ -4173,6 +4173,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummariessidecarschema.entry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummariesSidecarSchema.entry"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library entry's slug — the directory this file sits in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema.entry",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.block",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.block"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block's `@id`, e.g. `library/<slug>/blocks/prose-sec-000`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.block",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.narrative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The summary itself, with its state and its author."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.source_hash",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.source_hash"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "sha256 of {@link proseBody} of `source` when the summary was drafted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source_hash",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-summary.blocksummaryschema.superseded",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BlockSummarySchema.superseded"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Earlier narratives this one replaced — a rejected draft, or one whose source changed. Kept so a rejection's reason is not lost when the block is redrafted: a rejection that vanishes lets the next agent write the identical thing again."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.superseded",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/board-positions.boardpositionschema.x",
       "@type": "skos:Concept",
       "skos:inScheme": {

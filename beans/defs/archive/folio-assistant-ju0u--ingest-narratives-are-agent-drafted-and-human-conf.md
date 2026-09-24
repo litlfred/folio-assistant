@@ -119,3 +119,7 @@ name promised to measure the review cost while asserting something else.
 
 Tests: 24 in `scripts/tests/narratives.test.ts`. 2 879 pass / 0 fail; tsc,
 eslint, 35/35 gates determined-pass.
+
+## Follow-up, 2026-09-24
+
+Prose blocks now get agent summaries too, BESIDE the extract rather than in place of it, kept in a `summaries.json` sidecar that uses this narrative state machine. Bean `x80s`.
