@@ -1108,8 +1108,11 @@ export const SubgraphCoverageSchema = z.object({
   visualiser: VisualiserDeclarationSchema.optional(),
   /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
   docs: z.string().min(1).optional(),
-  /** The skill that governs it, by NAME rather than by path, so no base applies. */
-  skill: z.string().min(1).optional(),
+  // NO `skill`: the governing skill is read from the SKILLS, whose front
+  // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
+  // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory
+  // named its skill until then, pointing at what depends on it. A waiver for
+  // a directory nobody governs on purpose is still `exempt.skill` below.
   /**
    * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
    * `schema.json` at the directory's own URL.

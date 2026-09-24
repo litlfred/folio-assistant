@@ -82,8 +82,7 @@
       ],
       "coverage": {
         "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
+        "docs": "cat-harness/docs/subgraph-viewers.md"
       }
     },
     {
@@ -104,8 +103,7 @@
         "glossary"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/glossary/index.md",
-        "skill": "glossary-terms"
+        "visualiser": "cat-harness/docs/glossary/index.md"
       }
     },
     {
@@ -118,8 +116,7 @@
       ],
       "coverage": {
         "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "voice-authoring-guidance"
+        "docs": "cat-harness/docs/subgraph-viewers.md"
       }
     },
     {
@@ -138,10 +135,7 @@
       "description": "The review-comment Tool and its move helper, with their tests beside them. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "graphKinds": [
         "code"
-      ],
-      "coverage": {
-        "skill": "where-does-this-go"
-      }
+      ]
     },
     {
       "id": "core-library",
@@ -152,7 +146,6 @@
         "library"
       ],
       "coverage": {
-        "skill": "library-ingestion",
         "docs": "cat-harness/docs/document-ingestion.md"
       }
     },
@@ -164,10 +157,7 @@
       "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
       "graphKinds": [
         "methodology"
-      ],
-      "coverage": {
-        "skill": "methodology-adoption"
-      }
+      ]
     },
     {
       "id": "core-skills",
@@ -185,10 +175,7 @@
       "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
       "graphKinds": [
         "processes"
-      ],
-      "coverage": {
-        "skill": "bpmn-processes"
-      }
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

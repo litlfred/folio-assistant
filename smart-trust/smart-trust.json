@@ -11,9 +11,6 @@
       "graphKinds": [
         "fhir-artifact-index"
       ],
-      "coverage": {
-        "skill": "ig-artifact-ingestion"
-      },
       "readOnly": true,
       "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened."
     },
@@ -27,7 +24,6 @@
         "docs"
       ],
       "coverage": {
-        "skill": "ig-artifact-ingestion",
         "visualiser": [
           {
             "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-trust-docs/index.html",
@@ -45,10 +41,7 @@
       "description": "`gen-smart-trust-pages.ts` and its tests -- the generator that turns the artefact index into this instance's 681 pages, and as of bean `0818` renders the IG's own menu into the left-hand nav. Undeclared until now while BOTH the index it reads and the docs it writes were declared, so the only undeclared thing in this instance was the transformation between two declared graphs.",
       "graphKinds": [
         "code"
-      ],
-      "coverage": {
-        "skill": "where-does-this-go"
-      }
+      ]
     }
   ],
   "assets": [
