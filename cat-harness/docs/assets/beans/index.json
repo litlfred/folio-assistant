@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 284,
+      "count": 287,
       "unit": "beans"
     }
   },
@@ -417,6 +417,20 @@
       "file": "beans/defs/folio-assistant-3lbz--tools-zod-schemas-are-not-reachable-as-tools-and-k.md"
     },
     {
+      "id": "folio-assistant-3oqj",
+      "title": "FOUR KINDS NOTHING AUDITS: health, interaction, issue-marks, todos - 13 files, 0 criteria, 0 gates",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:44:17Z",
+      "updatedAt": "2026-09-24T05:44:17Z",
+      "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph kinds hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
+      "file": "beans/defs/folio-assistant-3oqj--four-kinds-nothing-audits-health-interaction-issue.md"
+    },
+    {
       "id": "folio-assistant-3q47",
       "title": "PROCESS WALK: deterministically set an agent's context from the KG at each task",
       "status": "todo",
@@ -429,6 +443,20 @@
       "updatedAt": "2026-09-19T17:04:01Z",
       "preview": "**Uncaptured owner requirement**, same comment as `folio-assistant-cy4p` —\n[#363](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-5740727385),\n09:20, not beaned until 17:0x.\n\n> use for skill to deterministcally walk agent through process flow,\n> detministitcally setting the memory/context using the KG\n> (subprocess/role overlays). worktiems are the beans that they carry with\n> ",
       "file": "beans/defs/folio-assistant-3q47--process-walk-deterministically-set-an-agents-conte.md"
+    },
+    {
+      "id": "folio-assistant-3srh",
+      "title": "TEN GATES HAVE NOT DECLARED @covers, so every audit-coverage verdict is an upper bound",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:44:18Z",
+      "updatedAt": "2026-09-24T05:44:18Z",
+      "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
+      "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
     },
     {
       "id": "folio-assistant-423d",
@@ -3789,6 +3817,20 @@
       "updatedAt": "2026-09-22T21:09:45Z",
       "preview": "Owner: *\"doc ingest\"*. A DAK narrative or an L1 handbook arrives as a .docx or\nPDF. Until it is blocks in the folio/ graph, there is nothing to diff, anchor\ncomments to, or heat-map.\n\n**Measured 2026-09-22.**\n- `document-intake` lives in **folio-paper-adapter/**, not\n  folio-document-adapter/. An L1 handbook is a `document` folio, so the skill\n  is in the wrong adapter for its main customer.\n- The",
       "file": "beans/defs/folio-assistant-xtpc--doc-ingest-docx-and-pdf-handbooks-to-document-bloc.md"
+    },
+    {
+      "id": "folio-assistant-xutg",
+      "title": "AUDIT COVERAGE: no command says which audits reach a kind, so coverage gets inferred from a sidecar count",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:25:17Z",
+      "updatedAt": "2026-09-24T05:25:57Z",
+      "preview": "On 2026-09-23 an agent reported that beans were \"effectively unaudited\". The\nevidence was a count of `kg-qa` sidecars over them: zero. The conclusion was\nwrong — **five** gates audit beans (`check:bean-bodies`,\n`check:bean-front-matter`, `check:bean-issue-links`, `check:bean-parents`,\n`check:bean-rollup`), plus `check:subgraphs` over the links in their bodies.\n\nThe defect is not the count. It is t",
+      "file": "beans/defs/folio-assistant-xutg--audit-coverage-no-command-says-which-audits-reach.md"
     },
     {
       "id": "folio-assistant-xwrt",
