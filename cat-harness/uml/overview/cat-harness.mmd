@@ -22,6 +22,21 @@ classDiagram
       maintains [0..*] Maintain[]
     }
   }
+  namespace cat_harness__deploy {
+    class n_cat_harness_deploy_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__ui {
+    class n_cat_harness_ui_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
+  namespace cat_harness__blueprint {
+    class n_cat_harness_blueprint_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace cat_harness__external_schemas {
     class cat_harness_external_schemas_Term["Term"] {
       <<json: ExternalSchemaSchema>>
@@ -1209,6 +1224,12 @@ classDiagram
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
+  cssClass "n_cat_harness_deploy_code" fa_uml_kind_code
+  cssClass "n_cat_harness_deploy_code" fa_uml_undetermined
+  cssClass "n_cat_harness_ui_code" fa_uml_kind_code
+  cssClass "n_cat_harness_ui_code" fa_uml_undetermined
+  cssClass "n_cat_harness_blueprint_code" fa_uml_kind_code
+  cssClass "n_cat_harness_blueprint_code" fa_uml_undetermined
   cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
   cssClass "cat_harness_external_schemas_Term" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_ExternalSchema" fa_uml_kind_external_schema

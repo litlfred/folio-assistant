@@ -430,6 +430,42 @@
       ]
     },
     {
+      "id": "deploy",
+      "path": "deploy/",
+      "dependents": "skip",
+      "description": "The self-sovereign deployment: `provision.sh`, `deploy.sh`, `self-update.sh`, a `docker-compose.yml` and a `Caddyfile.template`. Declared 2026-09-24 under the owner's rule that every `<stub>/*.*` is a subgraph -- it held six files that no checker looked at, which is the `v8gh` shape rather than the `dh4f` one: present and undeclared, so a consumer walking declarations never sees it. `code` rather than a new kind, on `ylj7`'s precedent: these are an instance's scripts and entry points, and minting a `deploy` kind would mean deciding `renderable` and `holds` for a directory of six shell scripts. `GOOGLE_OAUTH_SETUP.md` sits with them rather than in docs/ because it documents how to run THESE scripts, not how the graph works.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "deployment-auth"
+      }
+    },
+    {
+      "id": "ui",
+      "path": "ui/",
+      "dependents": "skip",
+      "description": "The standalone viewer pages -- `index.html`, `styles.css`, and the per-tool pages (`glossary-curator`, `bib-qa`, `source-relevance`). SERVED rather than site-built: `test-server.e2e.ts` fetches `/cat-harness/ui/index.html` and `/cat-harness/ui/styles.css`, so these reach a reader through the server, not through Jekyll. That is why `code` with `renderable: false` is right and `docs` is not -- `renderable` asks whether a directory is wired to the SITE BUILD, and this one is wired to a server instead. `viewer/` is the same shape and is still undeclared; it was left out of this change only because the owner named three directories.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "blueprint",
+      "path": "blueprint/",
+      "dependents": "skip",
+      "description": "The LaTeX blueprint sources -- `content.tex`, `preamble.tex`, `web.tex`, `print.tex` under `src/`. `code` because they are SOURCE that compiles to an artefact, the same reading that puts `scripts/` there. CAUTION, recorded rather than silently inherited: `blueprint/src/preamble.tex` is 26 lines while `cat-harness/latex/preamble.tex` is 830, they differ, and nothing here says which is live. Declaring this directory does not answer that -- `latex/` stays undeclared pending it, so the open question is visible instead of being buried under a declaration that implies both are fine.",
+      "graphKinds": [
+        "code"
+      ],
+      "coverage": {
+        "skill": "where-does-this-go"
+      }
+    },
+    {
       "id": "external-schemas",
       "path": "external-schemas/",
       "dependents": "reproduce",
