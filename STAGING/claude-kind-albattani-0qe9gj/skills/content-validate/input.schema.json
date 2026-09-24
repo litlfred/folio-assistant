@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/skills/content-validate/input.schema.json",
+  "title": "Content Validate Input",
+  "description": "Input schema for content validation.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string",
+      "description": "Path to content to validate."
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific validation rule IDs to run (empty = all applicable)."
+    },
+    "schemaRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schema files to validate against."
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-albattani-0qe9gj",
+    "sha": "15f8c9f9f6a88d1e2fb083413bcd1242012bbbe4",
+    "pr": "1304/merge",
+    "run": "36042832730"
+  }
+}
