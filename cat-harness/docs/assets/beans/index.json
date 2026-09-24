@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 310,
+      "count": 311,
       "unit": "beans"
     }
   },
@@ -1681,7 +1681,7 @@
     {
       "id": "folio-assistant-cw35",
       "title": "GATES DECIDE PUBLICATION: a held bitstream whose copyright or restrictions gate is not permitted is not redistributed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
@@ -1749,6 +1749,20 @@
       "updatedAt": "2026-09-23T10:30:00Z",
       "preview": "## The ask, owner 2026-09-20 (verbatim)\n\n> also when talking about testing specifically, we need avatar and then cats =\n> computable adjudication and agentic test harness.       caaat-harness\n>     ca&at-harness\n>  _c&t-harness\n>  c@t-harness\n> cat-harness\n> cat-harness\n>\n> this time grumpy cat will be engineering themed.  i will provide 3 layouts in\n> a moment\n\n## What it asks for\n\n1. An **avatar",
       "file": "beans/defs/folio-assistant-d3yq--testing-theme-an-engineering-grumpy-cat-theme-and.md"
+    },
+    {
+      "id": "folio-assistant-d4lb",
+      "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
+      "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
+      "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
     },
     {
       "id": "folio-assistant-d5f1",
@@ -1822,15 +1836,15 @@
     },
     {
       "id": "folio-assistant-dv8v",
-      "title": "B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed",
-      "status": "todo",
+      "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
@@ -3469,14 +3483,14 @@
     {
       "id": "folio-assistant-u63y",
       "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:25:14Z",
+      "updatedAt": "2026-09-24T18:42:44Z",
       "preview": "## Owner decision 2026-09-24\n\"B: users declare it\" — each dependent declares the spec, not the spec its users (36 hand-written usedBy entries over 16 records).\n\n## Plan\n- TS: `@conformsTo <spec-id>` in the module doc comment.\n- Skill .md: `conformsTo:` front matter.\n- BPMN: the `xmlns` binding already declares the namespace in-file.\n- JSON-LD: a namespace IRI in `@context` declares it; plain JSON ",
       "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },

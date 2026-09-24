@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1359 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1369 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1533 terms and is 829 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1543 terms and is 834 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1533</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1543</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -642,6 +642,27 @@ BeanGraphSchema.name <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Display name — which instance's work plan this is.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bean-graph.ts"><code>cat-harness/schemas/bean-graph.ts#BeanGraphSchema.name</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexitemschema.file" data-fa-state="extracted" data-fa-gloss="">
+BeanIndexItemSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Repository-relative path of the bean file.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexitemschema.parent" data-fa-state="extracted" data-fa-gloss="">
+BeanIndexItemSchema.parent <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>`&quot;&quot;` when the bean has no parent.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.beanindexitemschema.preview" data-fa-state="extracted" data-fa-gloss="">
+BeanIndexItemSchema.preview <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The body, trimmed to its first 400 characters.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.bitstreamschema.maskedregions" data-fa-state="extracted" data-fa-gloss="">
 BitstreamSchema.maskedRegions <span class="fa-gloss-status">candidate, extracted</span>
@@ -4939,6 +4960,13 @@ LedgerEntry.status <span class="fa-gloss-status">candidate, extracted</span>
 <p>Source-verification status. `unreviewed` for a freshly-indexed upload that nothing has looked at.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bib-verification.ts"><code>cat-harness/schemas/bib-verification.ts#LedgerEntry.status</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.referencedby" data-fa-state="extracted" data-fa-gloss="">
+LibraryIndexEntrySchema.referencedBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Absent means the reference scan did not run — a third state, not &quot;none&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--library-ref.libraryref.instance" data-fa-state="extracted" data-fa-gloss="">
 LibraryRef.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -6582,6 +6610,20 @@ QaFieldHash.lean_statement <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Hash of only the **declaration signatures** in the `.lean` file — everything up to each declaration's `:=` / `where`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-qa.ts"><code>cat-harness/schemas/block-qa.ts#QaFieldHash.lean_statement</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.qaindexschema.badges" data-fa-state="extracted" data-fa-gloss="">
+QaIndexSchema.badges <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Keyed `&lt;nodeId&gt;.&lt;family&gt;` or `page.&lt;family&gt;`; may be empty.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.qaindexschema.page" data-fa-state="extracted" data-fa-gloss="">
+QaIndexSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page's slug.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#QaIndexSchema.page</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-report.qareportentryschema.details" data-fa-state="extracted" data-fa-gloss="">
 QaReportEntrySchema.details <span class="fa-gloss-status">candidate, extracted</span>
@@ -9934,6 +9976,20 @@ TranslationStatus.stale <span class="fa-gloss-status">candidate, extracted</span
 <p>Whether the source content has changed since the last sign-off. Only meaningful when `official` is true.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/translation.ts"><code>cat-harness/schemas/translation.ts#TranslationStatus.stale</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.translationstatusschema.changedat" data-fa-state="extracted" data-fa-gloss="">
+TranslationStatusSchema.changedAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>`YYYY-MM-DD`: the day the counts last changed.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.translationstatusschema.scope" data-fa-state="extracted" data-fa-gloss="">
+TranslationStatusSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The translations directory counted, repository-relative.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope</code></a></p>
+</dd>
 </dl>
 
 <h2 id="letter-U">U</h2>
@@ -10799,6 +10855,20 @@ WebPageNode.title <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Heading text. Free to change without breaking a link.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPageNode.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.path" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Relative to the directory holding the file; a directory takes its whole subtree.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.reason" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why — which gate, which verdict. A withholding with no reason cannot be re-checked.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.workflowdefinition.bindings" data-fa-state="extracted" data-fa-gloss="">
 WorkflowDefinition.bindings <span class="fa-gloss-status">candidate, extracted</span>
