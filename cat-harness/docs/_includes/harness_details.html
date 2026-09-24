@@ -38,7 +38,11 @@
       {%- endif -%}
     </h3>
     {%- if t.description and t.description != "" -%}
-    <p class="fa-harness-section__description">{{ t.description }}</p>
+    {%- comment -%} Backtick spans in the declared description render as
+    <code> rather than showing their markers (bean `mylx`). `markdownify`
+    wraps its output in one <p>, which the existing paragraph already is.
+    {%- endcomment %}
+    <p class="fa-harness-section__description">{{ t.description | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
     {%- endif -%}
     {%- if t.stats.size > 0 -%}
     <dl class="fa-harness-section__stats">
@@ -111,7 +115,7 @@
       <summary>Gaps in this instance's declaration ({{ t.findings.size }})</summary>
       <ul>
         {%- for f in t.findings -%}
-        <li>{{ f }}</li>
+        <li>{{ f | markdownify | remove: "<p>" | remove: "</p>" | strip }}</li>
         {%- endfor -%}
       </ul>
     </details>

@@ -97,6 +97,7 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { withInlineCode } from "../schemas/inline-code.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 
@@ -683,7 +684,7 @@ export function autoDocPage(
         : "";
       return `<tr>
   <td><a href="${esc(`${BLOB}/${i.path}`)}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
-  <td>${i.summary ? esc(i.summary) : '<span class="none">no description in the artefact</span>'}${facts}</td>
+  <td>${i.summary ? withInlineCode(i.summary, esc) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
     .join("\n");

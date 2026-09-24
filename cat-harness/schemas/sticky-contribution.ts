@@ -425,7 +425,8 @@ export interface DeclaredContribution {
   declaredBy: string;
   /**
    * The declaration this contribution came from, RELATIVE TO THE REPOSITORY —
-   * `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.
+   * `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each
+   * instance's own `<instance>/<instance>.json`.
    *
    * ## Why the path and not just the name
    *

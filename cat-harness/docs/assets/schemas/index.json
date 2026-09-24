@@ -2,11 +2,11 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 179,
+      "count": 183,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
-      "count": 22,
+      "count": 21,
       "unit": "modules"
     },
     "large-datasets-schemas": {
@@ -368,6 +368,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/detangle.test.ts",
+      "instance": "cat-harness",
+      "name": "detangle.test",
+      "graphNode": "undeclared",
+      "summary": "The threshold clauses — and the upper size bound in particular.",
+      "isTest": true
+    },
+    {
       "module": "cat-harness/schemas/detangle.ts",
       "instance": "cat-harness",
       "name": "detangle",
@@ -415,6 +423,14 @@
       "graphNode": "undeclared",
       "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/external-schema.ts",
+      "instance": "cat-harness",
+      "name": "external-schema",
+      "graphNode": "schema",
+      "summary": "A specification this repository DEPENDS ON and does not hold.",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/folio-dir.test.ts",
@@ -575,6 +591,21 @@
       "graphNode": "none",
       "reason": "a re-export barrel: it defines nothing of its own",
       "summary": "Re-exports all types, Zod validation schemas, and builder functions.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/inline-code.test.ts",
+      "instance": "cat-harness",
+      "name": "inline-code.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/inline-code.ts",
+      "instance": "cat-harness",
+      "name": "inline-code",
+      "graphNode": "schema",
+      "summary": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
       "isTest": false
     },
     {
@@ -1520,14 +1551,6 @@
       "name": "dublin-core",
       "graphNode": "schema",
       "summary": "Qualified Dublin Core, as a graph node.",
-      "isTest": false
-    },
-    {
-      "module": "folio-assistant-core/schemas/external-schema.ts",
-      "instance": "folio-assistant-core",
-      "name": "external-schema",
-      "graphNode": "schema",
-      "summary": "A specification this repository DEPENDS ON and does not hold.",
       "isTest": false
     },
     {
@@ -11804,6 +11827,13 @@
           "optional": false,
           "array": true,
           "doc": "The outbound edges themselves — the detangling worklist."
+        },
+        {
+          "name": "internalEdges",
+          "type": "DetangleEdge[]",
+          "optional": false,
+          "array": true,
+          "doc": "The INTERNAL edges themselves, not just their count."
         }
       ],
       "extendsNames": [],
@@ -12665,6 +12695,131 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/external-schema.ts#ExternalSchema",
+      "name": "ExternalSchema",
+      "module": "cat-harness/schemas/external-schema.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema",
+      "name": "ExternalSchemaSchema",
+      "module": "cat-harness/schemas/external-schema.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(EXTERNAL_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z][a-z0-9.-]*$/, \"an external-schema id is lowercase kebab-case\")",
+          "optional": false,
+          "array": false,
+          "doc": "Stable local id, e.g. `omg-bpmn-2.0`."
+        },
+        {
+          "name": "authority",
+          "type": "z.enum(SPEC_AUTHORITIES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The specification's own title, as the authority writes it."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The edition being conformed to."
+        },
+        {
+          "name": "specUrl",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Where the specification is published."
+        },
+        {
+          "name": "namespaces",
+          "type": "z.array(z.string().min(1)).default([])",
+          "optional": true,
+          "array": true,
+          "doc": "The XML namespaces or URI stems this edition defines, as WE consume them."
+        },
+        {
+          "name": "use",
+          "type": "z.enum(SPEC_USES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "terms",
+          "type": "z .array( z .object({ /** The term as the corpus spells it, e.g. `bpmn:exclusiveGateway`. */ term: z.string().min(1), /…",
+          "optional": true,
+          "array": true,
+          "doc": "The OPERATIVE vocabulary — the terms this repository actually acts on."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why this edition, where the choice was not forced."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "EXTERNAL_SCHEMA_TAG",
+        "SPEC_AUTHORITIES",
+        "SPEC_USES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/external-schema.ts#SpecAuthority",
+      "name": "SpecAuthority",
+      "module": "cat-harness/schemas/external-schema.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/external-schema.ts#SpecUse",
+      "name": "SpecUse",
+      "module": "cat-harness/schemas/external-schema.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -15328,8 +15483,14 @@
           "array": true
         },
         {
+          "name": "title",
+          "type": "z.string().optional().describe(\"A short name for people, shown as its README's heading.\")",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "description",
-          "type": "z.string().optional()",
+          "type": "z.string().optional().describe(\"What it holds, in a sentence or two, shown under that heading.\")",
           "optional": true,
           "array": false
         }
@@ -37380,131 +37541,6 @@
       "exported": true
     },
     {
-      "id": "folio-assistant-core/schemas/external-schema.ts#ExternalSchema",
-      "name": "ExternalSchema",
-      "module": "folio-assistant-core/schemas/external-schema.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema",
-      "name": "ExternalSchemaSchema",
-      "module": "folio-assistant-core/schemas/external-schema.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(EXTERNAL_SCHEMA_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z.string().regex(/^[a-z][a-z0-9.-]*$/, \"an external-schema id is lowercase kebab-case\")",
-          "optional": false,
-          "array": false,
-          "doc": "Stable local id, e.g. `omg-bpmn-2.0`."
-        },
-        {
-          "name": "authority",
-          "type": "z.enum(SPEC_AUTHORITIES)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The specification's own title, as the authority writes it."
-        },
-        {
-          "name": "version",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The edition being conformed to."
-        },
-        {
-          "name": "specUrl",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Where the specification is published."
-        },
-        {
-          "name": "namespaces",
-          "type": "z.array(z.string().min(1)).default([])",
-          "optional": true,
-          "array": true,
-          "doc": "The XML namespaces or URI stems this edition defines, as WE consume them."
-        },
-        {
-          "name": "use",
-          "type": "z.enum(SPEC_USES)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "terms",
-          "type": "z .array( z .object({ /** The term as the corpus spells it, e.g. `bpmn:exclusiveGateway`. */ term: z.string().min(1), /…",
-          "optional": true,
-          "array": true,
-          "doc": "The OPERATIVE vocabulary — the terms this repository actually acts on."
-        },
-        {
-          "name": "note",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Why this edition, where the choice was not forced."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "EXTERNAL_SCHEMA_TAG",
-        "SPEC_AUTHORITIES",
-        "SPEC_USES",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/external-schema.ts#SpecAuthority",
-      "name": "SpecAuthority",
-      "module": "folio-assistant-core/schemas/external-schema.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/external-schema.ts#SpecUse",
-      "name": "SpecUse",
-      "module": "folio-assistant-core/schemas/external-schema.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "folio-assistant-core/schemas/extraction.ts#ExtractedAsset",
       "name": "ExtractedAsset",
       "module": "folio-assistant-core/schemas/extraction.ts",
@@ -42189,6 +42225,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/detangle.ts#DetangleMetrics",
+      "to": "cat-harness/schemas/detangle.ts#DetangleEdge",
+      "via": "internalEdges",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/detangle.ts#DetangleMetrics",

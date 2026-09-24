@@ -71,6 +71,7 @@ import {
   resolveDirectories,
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
+import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 
@@ -408,9 +409,9 @@ function termEntry({ s, t, label }: Row): string {
   const frag = t.source?.split("#", 2)[1];
   const code = t.notation && t.notation !== label && t.notation !== frag ? ` <code>${esc(t.notation)}</code>` : "";
   const definition = t.definition
-    ? `<p>${esc(first(t.definition))}</p>`
+    ? `<p>${withInlineCode(first(t.definition), esc)}</p>`
     : t.reason
-      ? `<p>${esc(t.reason)}</p>`
+      ? `<p>${withInlineCode(t.reason, esc)}</p>`
       : s.extracted
         ? `<p><em>The asset carries no description.</em></p>`
         : `<p><em>No definition yet.</em></p>`;
@@ -429,7 +430,7 @@ function termEntry({ s, t, label }: Row): string {
     : `${esc(s.glossary.title)} · <code>${esc(iri)}</code>`;
   return [
     `<dt id="${esc(`${s.instance}--${s.glossary.id}--${t.id}`)}" data-fa-state="${s.extracted ? "extracted" : t.status}" data-fa-gloss="${esc(hidden)}">`,
-    `${esc(label)}${code}${status}`,
+    `${withInlineCode(label, esc)}${code}${status}`,
     `</dt>`,
     `<dd>`,
     definition,

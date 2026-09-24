@@ -56,6 +56,7 @@ import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
 import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
+import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -1559,7 +1560,7 @@ function collectionPage(c: Node, all: Node[]): string {
   ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${esc(c.materialization.note)}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${withInlineCode(c.materialization.note, esc)}</p></div>` : ""}
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – ${items.length} of ${items.length} <em>modelled</em>. The upstream

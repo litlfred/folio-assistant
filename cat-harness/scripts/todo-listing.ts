@@ -55,6 +55,7 @@
  */
 import type { TodoIndexItem } from "../schemas/todo-index.js";
 import { safeHref } from "../schemas/safe-url.js";
+import { withInlineCode } from "../schemas/inline-code.js";
 
 /** How the caller turns a note's attachment into an href it can serve. */
 export interface TodoListingOptions {
@@ -106,7 +107,7 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
     `    <li class="fa-todo-listing-item" id="fa-todo-listing-${escapeHtml(item.id)}" ` +
       `data-fa-todo="${escapeHtml(item.id)}">`,
   );
-  lines.push(`      <h3 class="fa-todo-listing-summary">${escapeHtml(item.summary)}</h3>`);
+  lines.push(`      <h3 class="fa-todo-listing-summary">${withInlineCode(item.summary, escapeHtml)}</h3>`);
   lines.push(`      <dl class="fa-todo-listing-meta">`);
   lines.push(metaRow("Status", item.status));
   lines.push(metaRow("Priority", item.priority));
@@ -145,7 +146,9 @@ function renderItem(item: TodoIndexItem, opts: TodoListingOptions): string {
     // failed to load" are opposite facts and this one is the first.
     lines.push(`        <p class="fa-todo-listing-empty">No detail recorded.</p>`);
   } else {
-    for (const p of paras) lines.push(`        <p>${escapeHtml(p)}</p>`);
+    // Backtick spans render as <code> rather than showing their markers (bean
+    // `mylx`); every piece still goes through `escapeHtml`.
+    for (const p of paras) lines.push(`        <p>${withInlineCode(p, escapeHtml)}</p>`);
   }
   lines.push(`      </div>`);
 
