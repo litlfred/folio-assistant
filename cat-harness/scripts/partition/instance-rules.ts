@@ -939,6 +939,11 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // The four state/context graphs nothing judged (bean `h1wq`). Harness for
+      // the same reason as the two above: its subjects are the harness's own
+      // bookkeeping — the health report, the work plan, interaction preferences,
+      // issue marks — and it imports no content vocabulary.
+      "scripts/check-harness-state.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and

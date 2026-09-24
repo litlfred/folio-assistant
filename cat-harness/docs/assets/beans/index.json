@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 308,
+      "count": 310,
       "unit": "beans"
     }
   },
@@ -1595,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-ceud",
+      "title": "CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:00Z",
+      "updatedAt": "2026-09-24T17:30:00Z",
+      "preview": "Measured 2026-09-24, working PR #1241.\n\n`6603c3fbc4d` was pushed to `claude/cool-fermi-htir5p`, an open PR branch.\n**No workflow fired for it at all** — not `code-quality-gates`, not\n`jsonld-gen-check`, not `feature-staging`. The latest run of every workflow\nstayed on the previous SHA, `f1fb1556576`, for 35 minutes.\n\n## What was ruled out\n\n- **The push landed.** `git ls-remote origin claude/cool-f",
+      "file": "beans/defs/folio-assistant-ceud--ci-a-push-to-a-pr-branch-fired-no-workflow-at-all.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -2015,6 +2029,20 @@
       "updatedAt": "2026-09-23T02:45:00Z",
       "preview": "Owner, 2026-09-20: 'noting cacheing olean stragety for \"compiled/compuable\" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'\n\nA THIRD KIND OF REMOTE CONTENT, and `materialization.ts` currently has two purposes (`working`, `archival`) with no room for it. A COMPILED artefact is neither:\n- it is DERIVED, so it is not archival — the source is e",
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
+    },
+    {
+      "id": "folio-assistant-h1wq",
+      "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:16Z",
+      "updatedAt": "2026-09-24T17:40:31Z",
+      "preview": "From `audit-coverage`'s `typed-only` finding. Four kinds declare a validator that\nparses their nodes, and nothing had an opinion about what those nodes SAY. The\nowner chose all four (2026-09-24), having been told the risk: `health` and\n`todos` already have machinery, so a criterion here could be a second answer to\na settled question.\n\n## Summary of Changes\n\n`cat-harness/scripts/check-harness-state",
+      "file": "beans/defs/folio-assistant-h1wq--judge-the-four-typed-only-kinds-health-todos-inter.md"
     },
     {
       "id": "folio-assistant-h2s9",
