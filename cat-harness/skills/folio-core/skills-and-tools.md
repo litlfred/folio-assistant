@@ -61,6 +61,16 @@ session completed two merged PRs' worth of durable work **unclaimed**. The
 fallback is not a degraded mode to mention in passing; it is a second Tool with
 equal standing, and the skill must present it that way.
 
+**An external project is a candidate Tool before it is anything else.** When
+somebody asks whether another project could do a skill's job — Beads for the
+work plan, say — that survey is research, not a proposal and not a skill edit:
+it files under `<instance>/docs/research-and-analysis/` per
+[`placement`](placement.md), dated, with each project's health measured rather
+than recalled. The first one is `research-and-analysis/prior-art.md`
+(2026-09-23), and the choice it raised is a bean (`b91x`), not a paragraph
+here. Only if a candidate is adopted does it become a Tool node with
+`alternativeTo` and `selection`, below.
+
 ## Substitutable Tools declare it, and each says how to choose
 
 A pair like that is **substitutable**: same job, different mechanism, pick one.
