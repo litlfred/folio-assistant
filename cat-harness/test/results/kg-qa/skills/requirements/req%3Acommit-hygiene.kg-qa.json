@@ -5,11 +5,24 @@
     "id": "req:commit-hygiene",
     "path": "skills/requirements/commit-hygiene.json"
   },
-  "source_hash": "sha256:073b0ced2f4c5aba58f86f091d4fa8f16a7b7e21191f689a7ab552e15875397a",
+  "source_hash": "sha256:043d7b92499046e9ff733dd112f7eb2c3a033c16ee342a39dcde986902a155e0",
   "criteria": {
-    "requirement-satisfied-by-resolves": {
-      "result": "pass",
-      "findings": []
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:commit-hygiene/no-build-artifacts",
+          "detail": "no skill or capability declares `satisfies: req:commit-hygiene#no-build-artifacts` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:commit-hygiene/no-secrets",
+          "detail": "no skill or capability declares `satisfies: req:commit-hygiene#no-secrets` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:commit-hygiene/pin-dependencies",
+          "detail": "no skill or capability declares `satisfies: req:commit-hygiene#pin-dependencies` — nothing is recorded as discharging this statement."
+        }
+      ]
     },
     "requirement-actors-resolve": {
       "result": "pass",
@@ -25,8 +38,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 0,
+    "pass": 3,
+    "fail": 1,
     "n/a": 0,
     "unknown": 0
   }

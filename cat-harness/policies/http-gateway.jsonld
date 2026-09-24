@@ -1,0 +1,20 @@
+{
+  "_comment": "The auth-gateway's sessions as ODRL grants (issue #1207, owner 2026-09-23: 'Replace with ODRL now'). Until then src/core/rbac.ts compared a viewer < collaborator < owner ladder and each route hard-coded its minimum rung. These rules reproduce exactly what the routes allowed: every gated route asked for `collaborator or higher`, so `collaborator` and `owner` each hold the three actions those routes now name (content-authoring: edit content, revert content, upload documents, save glossary curation; review-comments: delete feedback; adjudication: adjudicate a relevance verdict). `viewer` holds nothing beyond the cat-harness:anyone floor in folio-defaults.jsonld. Which login is which actor is the gateway's (X-User-Role / X-User-Actor), never this file's.",
+  "@context": {
+    "@vocab": "http://www.w3.org/ns/odrl/2/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#"
+  },
+  "@type": "Set",
+  "uid": "https://litlfred.github.io/folio-assistant/policies/http-gateway",
+  "profile": "https://litlfred.github.io/folio-assistant/ns/folio-odrl",
+  "conflict": "odrl:prohibit",
+  "permission": [
+    { "assignee": "collaborator", "action": "content-authoring" },
+    { "assignee": "collaborator", "action": "review-comments" },
+    { "assignee": "collaborator", "action": "adjudication" },
+    { "assignee": "owner", "action": "content-authoring" },
+    { "assignee": "owner", "action": "review-comments" },
+    { "assignee": "owner", "action": "adjudication" }
+  ]
+}

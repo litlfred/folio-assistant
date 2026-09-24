@@ -502,9 +502,16 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
   });
 
   test("the criterion callers call the specialisation, not the shared half", async () => {
-    // wireframe-design-review joined 2026-09-23: reviewers disagreeing on ONE
+    // `wireframe-design-review` joined 2026-09-23: reviewers disagreeing on ONE
     // criterion is a criterion disagreement, and its own documentation already
     // spoke of "the checker's entry" and "the dispensation".
+    //
+    // It joined as a CORRECTION, which is worth keeping because the PR that
+    // made the split said the opposite. #1074 reported that all four remaining
+    // callers "no longer reach A_ScopeCriterion or A_Dispensation" and framed
+    // that as the intended effect. True for the three below; here it removed
+    // the two steps the diagram documents, so for this one caller it was a
+    // regression rather than a fix.
     for (const [f, id] of [
       ["review-narrative.bpmn", "Task_AdjudicateVoice"],
       ["voice-review.bpmn", "Task_Adjudicate"],

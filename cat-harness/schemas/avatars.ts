@@ -342,6 +342,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 220,
     reads: "a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand",
   },
+  // The harness's swimlane-role ledger, renamed from `glossary` on 2026-09-23:
+  // three lanes with a tag on one, the terms a process's swimlanes define.
+  "swimlane-glossary": {
+    glyph: "M3 6h18M3 12h18M3 18h18M15 9h5v6h-5z",
+    tone: 92,
+    reads: "three swimlanes with a tag — the roles a process's lanes define",
+  },
   glossary: {
     glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
     tone: 84,

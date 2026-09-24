@@ -6,5 +6,6 @@
     "method": "command",
     "command": "lean --version"
   },
-  "fallbackTo": "lean-mcp"
+  "fallbackTo": "lean-mcp",
+  "satisfies": ["req:lean-verification#lean-compiles"]
 }

@@ -429,7 +429,11 @@ test.describe("kg viewer — with a catalogue", () => {
     // geometry.
     await page.goto(`${FIXTURE}?lang=qaa`);
     const parts = page.locator("#meta bdi");
-    expect(await parts.count()).toBeGreaterThan(1);
+    // Retrying, not a bare `count()`: the line is written inside the graph
+    // fetch's `.then`, so `goto` returns before it exists. The same race as
+    // the pressed-facet count below (d345255); reproduced by delaying the
+    // `.jsonld` route 900 ms — bare count 0, this green.
+    await expect(parts.nth(1)).toBeAttached();
     await expect(parts.first()).toHaveText(/^\d+ nodes$/);
 
     // In RTL the first part sits at the RIGHT, and the last to its left.

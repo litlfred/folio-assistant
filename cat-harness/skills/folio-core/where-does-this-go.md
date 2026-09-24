@@ -6,6 +6,8 @@ description: >
   asking — so an agent who does not know a rule exists cannot look it up. One
   discriminating question per row, and the skill that owns the answer.
 allowed-tools: Read Grep Glob
+graph-kinds:
+  - code
 ---
 
 # Where does this go? — the question, then the skill that answers it

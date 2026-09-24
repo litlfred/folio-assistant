@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p023-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p023-1.png",
+  "pageStart": 23,
+  "pageEnd": 23,
+  "narrative": {
+    "text": "Figure 14, the Tournament workflow. From \"Start: Player login\" it gathers the player profile and asks \"Is Player Eligible?\"; No goes straight to End. Yes fetches available tournaments and asks \"Matching Tournament Found?\", with No informing the player there are none. Yes checks slot availability and asks \"Slots Available?\", with No informing the player there are none. Yes submits the registration and asks \"Registration Confirmed?\" — and the two outcomes are crossed relative to the reading one would expect: the No edge reaches \"Inform Registered\" and the Yes edge reaches \"Provide Hot line number to call and register.\" All four terminal boxes converge on End. Recorded as drawn; whether the crossing is intended is not established here. This is one of the two workflows on which Figure 3 shows the specialist system performing worst of the three.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-023",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

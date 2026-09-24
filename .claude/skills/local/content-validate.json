@@ -10,12 +10,8 @@
     { "ref": "content-author", "kind": "skill", "conformance": "SHALL" },
     { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/validate-content.sh", "runtime": "bash", "phase": "validate" }
-  ],
   "routingPatterns": ["validate", "check", "verify", "schema validation"],
   "tags": ["lifecycle", "validation"],
   "package": "content-lifecycle",
-  "lifecycleStages": ["validate"],
-  "schemaRef": "schemas/skills/content-validate"
+  "lifecycleStages": ["validate"]
 }

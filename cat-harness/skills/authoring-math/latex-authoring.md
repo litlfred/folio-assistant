@@ -1,3 +1,8 @@
+---
+input: schemas/skills/latex-authoring/input.schema.json
+output: schemas/skills/latex-authoring/output.schema.json
+---
+
 # latex-authoring
 
 > Skill id: `latex-authoring` · Package: `authoring-math` ·

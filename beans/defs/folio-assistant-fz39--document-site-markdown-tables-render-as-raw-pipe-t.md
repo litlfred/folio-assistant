@@ -1,10 +1,11 @@
 ---
 # folio-assistant-fz39
 title: 'DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-23T18:00:43Z
-updated_at: 2026-09-23T18:00:43Z
+updated_at: 2026-09-23T21:53:32Z
 parent: folio-assistant-q4jm
 ---
 
@@ -15,5 +16,9 @@ Found by the ojcx rehearsal, 2026-09-23. A document folio's `table` block, with 
 **Fix:** add `remark-gfm` as a direct dependency (MIT licence; recorded in THIRD-PARTY-NOTICES) and `.use(remarkGfm)`. It is a dependency decision, so the owner decides.
 
 ## Done when
-- [ ] the owner approves `remark-gfm`, or chooses another way
-- [ ] a document folio's Markdown table renders as a `<table>` in `build-document-site`, pinned by a test
+- [x] the owner approves `remark-gfm`, or chooses another way (approved 2026-09-23: "Add remark-gfm, fix both")
+- [x] a document folio's Markdown table renders as a `<table>` in `build-document-site`, pinned by a test
+
+## Summary of Changes
+
+`remark-gfm` is now a direct dependency, used by `build-document-site.ts` and by the new `publish-instance-files.ts` (bootstrap's README page, bean iwtn ruling 3). The test `a Markdown table in a block renders as a <table>, not raw pipes (fz39)` pins it. No THIRD-PARTY-NOTICES entry: that file lists material this repository redistributes, and an npm dependency is not redistributed.

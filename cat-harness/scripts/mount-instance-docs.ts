@@ -421,7 +421,7 @@ export function declaredGraphs(
  *   root.
  */
 /** Where a kind opens, or why it does not. Never both — see the loop below. */
-type GraphFallback = { href?: string; note?: string };
+export type GraphFallback = { href?: string; note?: string };
 
 /**
  * WHAT THE PUBLISHED SITE KNOWS about each of an instance's declared kinds —
@@ -482,7 +482,7 @@ type GraphFallback = { href?: string; note?: string };
  * kind gains a link the moment it gains a viewer — is the rule being kept
  * here, against a witness that can actually see one.
  */
-function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
+export function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
   const out = new Map<string, GraphFallback>();
   const prefix = publishedDocsPrefix(REPO, built);
   if (prefix === undefined) return out;
@@ -513,7 +513,7 @@ function publishedGraphs(built: string, instanceName: string, toRoot: string): M
   return out;
 }
 
-function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
+export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
   // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
   // was the first version and `check:declared-paths` refused it -- rightly,
   // and pointedly, because `publishedDocsPrefix` exists a few lines up in this
