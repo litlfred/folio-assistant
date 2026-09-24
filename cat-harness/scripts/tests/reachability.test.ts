@@ -25,7 +25,7 @@ async function model(body: string) {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">${body}</bpmn:process>
 </bpmn:definitions>

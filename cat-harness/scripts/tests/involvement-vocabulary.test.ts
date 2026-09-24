@@ -1,5 +1,5 @@
 /**
- * `<folio:involvement vocabulary="…"/>` — RACI's four letters or RASCI's five.
+ * `<cat-harness.processes:involvement vocabulary="…"/>` — RACI's four letters or RASCI's five.
  *
  * @module scripts/tests/involvement-vocabulary
  * @graphNode none — a test
@@ -39,13 +39,13 @@ function fixture(processExt: string, involvement: string): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:extensionElements>${processExt}</bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_T">
       <bpmn:lane id="Lane_T" name="Doer">
-        <bpmn:extensionElements><folio:role ref="a-role"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="a-role"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_T</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_T</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -53,8 +53,8 @@ function fixture(processExt: string, involvement: string): string {
     <bpmn:startEvent id="Start_T" name="Start"/>
     <bpmn:task id="A_T" name="Do the thing">
       <bpmn:extensionElements>
-        <folio:raci ref="a-role" involvement="accountable"/>
-        <folio:raci ref="b-role" involvement="${involvement}"/>
+        <cat-harness.processes:raci ref="a-role" involvement="accountable"/>
+        <cat-harness.processes:raci ref="b-role" involvement="${involvement}"/>
       </bpmn:extensionElements>
     </bpmn:task>
   </bpmn:process>
@@ -90,7 +90,7 @@ describe("the vocabulary is a CHOICE, so choosing the other one is refused", () 
     // differs. That is what makes this a vocabulary rather than a spelling
     // rule.
     const m = await loadProcessModel(
-      fixture('<folio:involvement vocabulary="rasci"/>', "supportive"),
+      fixture('<cat-harness.processes:involvement vocabulary="rasci"/>', "supportive"),
     );
     const n = m.nodes.get("A_T")!;
 
@@ -128,12 +128,12 @@ describe("the vocabulary is a CHOICE, so choosing the other one is refused", () 
       p,
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:startEvent id="Start_T" name="Start"/>
     <bpmn:task id="A_T" name="Do the thing">
-      <bpmn:extensionElements><folio:raci ref="a-role" involvement="acountable"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:raci ref="a-role" involvement="acountable"/></bpmn:extensionElements>
     </bpmn:task>
   </bpmn:process>
 </bpmn:definitions>
@@ -149,7 +149,7 @@ describe("the vocabulary is a CHOICE, so choosing the other one is refused", () 
     // Same posture as `folio:policy` and `folio:bean op`. A silent fallback
     // would be indistinguishable from having chosen raci deliberately, which
     // is the one thing a choice must never be.
-    await expect(loadProcessModel(fixture('<folio:involvement vocabulary="racsi"/>', "informed"))).rejects.toThrow(
+    await expect(loadProcessModel(fixture('<cat-harness.processes:involvement vocabulary="racsi"/>', "informed"))).rejects.toThrow(
       /not a declared vocabulary/,
     );
   });

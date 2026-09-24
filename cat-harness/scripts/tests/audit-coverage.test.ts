@@ -15,6 +15,7 @@ import { join } from "node:path";
 
 import { asRecord, census, coverage, coversIn, gateCoverage, kindUniverse, scriptsFor } from "../audit-coverage.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS } from "../../schemas/kg-qa.js";
+import { defaultGraphKinds } from "../../schemas/cat-harness.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const INSTANCE = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
@@ -140,6 +141,47 @@ describe("the report over this repository", () => {
     expect(new Set(rows.map((r) => r.kind)).size).toBe(rows.length);
   });
 
+  test("typed-only is derived from the registry, and is NOT covered", () => {
+    // Bean `3oqj`. `health` and `todos` read `unaudited` before this state
+    // existed, which over-reported: both declare a validator and
+    // `check:kind-validators` parses their nodes. They looked unreached only
+    // because the gate that types them declares `@covers computed`.
+    for (const r of rows) {
+      const def = defaultGraphKinds.get(r.kind);
+      expect(r.typed).toBe(Boolean(def?.validator) || Boolean(def?.nodeSchemas));
+      if (r.state === "typed-only") {
+        expect(r.typed).toBe(true);
+        // The whole point: typed is not judged.
+        expect(r.criteria.length + r.gates.length).toBe(0);
+        expect(r.files).toBeGreaterThan(0);
+      }
+      // A kind nothing reaches at all must NOT be typed, or it would be
+      // `typed-only` — the two states must partition, not overlap.
+      if (r.state === "unaudited") expect(r.typed).toBe(false);
+    }
+  });
+
+  test("typed-only and unaudited are different findings, not one bucket", () => {
+    // If these ever became the same set, the state would have bought nothing
+    // and `--strict` would be grading one thing while reporting two.
+    const typedOnly = rows.filter((r) => r.state === "typed-only").map((r) => r.kind);
+    const unaudited = rows.filter((r) => r.state === "unaudited").map((r) => r.kind);
+    for (const k of typedOnly) expect(unaudited).not.toContain(k);
+  });
+
+  test("the two kinds `3oqj` typed are typed, and their real nodes parse", () => {
+    // The regression this guards: `interaction/interaction.json` is read at the
+    // start of every session by jq in a shell script whose failure branch
+    // prints "(could not parse — read it by hand)". A malformed node degrades
+    // to a line nobody acts on, so the schema is what makes it fail loudly.
+    for (const kind of ["interaction", "issue-marks"]) {
+      const r = rows.find((x) => x.kind === kind);
+      expect(r, `${kind} has no row`).toBeDefined();
+      expect(r!.typed, `${kind} declares no validator`).toBe(true);
+      expect(r!.files).toBeGreaterThan(0);
+    }
+  });
+
   test("the three states are distinguishable, and all three occur here", () => {
     // If any of these is empty the report has stopped discriminating and the
     // remaining states are carrying a meaning they were not given.
@@ -155,6 +197,7 @@ describe("the report over this repository", () => {
       if (r.state === "unaudited") {
         expect(r.files).toBeGreaterThan(0);
         expect(r.criteria.length + r.gates.length).toBe(0);
+        expect(r.typed).toBe(false);
       }
       if (r.state === "covered") expect(r.criteria.length + r.gates.length).toBeGreaterThan(0);
     }
@@ -187,6 +230,15 @@ describe("the report over this repository", () => {
       const expected = KG_CRITERIA.filter((c) => c.applies.some((s) => KG_SUBJECT_GRAPH_KINDS[s] === r.kind));
       expect(r.criteria.sort()).toEqual([...new Set(expected.map((c) => c.id))].sort());
     }
+  });
+
+  test("every gate CI runs has declared — bean `3srh`", () => {
+    // While any gate was undeclared, every "unaudited" verdict was an UPPER
+    // BOUND rather than a verdict, and the report said so. This is what keeps
+    // that caveat discharged: a new gate arriving undeclared turns the findings
+    // back into a bound, silently, unless something fails.
+    const undeclared = gates.filter((g) => g.state === "undeclared");
+    expect(undeclared.map((g) => g.command)).toEqual([]);
   });
 
   test("a gate's every declared kind is a kind that has a row", () => {

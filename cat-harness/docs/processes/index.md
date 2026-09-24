@@ -44,7 +44,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Copy out materialized content — to work on somebody else's bytes](copy-out-materialized.html) | 5 | — |
 | [CRDM close-out](crdm-close.html) | 3 | — |
 | [CRDM data model](crdm-data-model.html) | 5 | — |
-| [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html) | 10 | — |
+| [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html) | 9 | — |
 | [CRDM — link the work to an issue](crdm-issue-linking.html) | 4 | — |
 | [CRDM Phase 1 — needs](crdm-needs.html) | 4 | — |
 | [CRDM Phases 2–4 — BPA and requirements](crdm-requirements-definition.html) | 5 | — |
@@ -88,7 +88,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Session state machine](session-state-machine.html) | 7 | — |
 | [Render log — the publish branch keeps its own history](staging-render-log.html) | 6 | — |
 | [SWOT situation analysis](swot-analysis.html) | 7 | — |
-| [Post-MVP theme and UI review](theme-ui-review.html) | 6 | — |
+| [Theme and UI review — at ingestion](theme-ui-review.html) | 6 | — |
 | [Translation Workflow](translation-workflow.html) | 10 | — |
 | [Watching a pinned upstream dependency](upstream-pin-watch.html) | 6 | — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | 10 | — |
@@ -344,9 +344,9 @@ Every one of the **74** diagrams has a rendered SVG.
 
 ### Activities carrying no `<folio:skill ref>` — a census, not a gap list
 
-**44** across **25** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
+**43** across **25** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
 
-**17** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
+**16** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
 
 | lane | steps |
 |---|---|
