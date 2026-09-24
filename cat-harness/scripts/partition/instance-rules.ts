@@ -286,6 +286,7 @@ export const RULES: Rule[] = [
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
+      "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -825,6 +826,9 @@ export const RULES: Rule[] = [
       // The `# bpmn:` / `# bpmn-node:` lines a workflow names its diagram with
       // (bean `61ca`). Same subject as the coverage check that reads them.
       "scripts/workflow-bpmn.ts",
+      // Which docs page sections present which process, read from the pages
+      // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
+      "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)

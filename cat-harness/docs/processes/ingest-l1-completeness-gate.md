@@ -19,6 +19,7 @@ folio-assistant — Ingestion subprocess — the L1 completeness gate. Source of
 
 - **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
 - **Calls:** [Adjudication](adjudication.html)
+- **Presented on:** [Document ingestion — The L1 completeness gate](../document-ingestion.html#the-l1-completeness-gate)
 
 ## Lanes — who acts
 

@@ -2850,7 +2850,7 @@
     {
       "id": "convention.conventionschema.id",
       "prefLabel": "ConventionSchema.id",
-      "definition": "Stable id, referenced by `<folio:convention ref=\"…\"/>`.",
+      "definition": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`.",
       "source": "cat-harness/schemas/convention.ts#ConventionSchema.id",
       "status": "candidate"
     },
@@ -6441,7 +6441,7 @@
     {
       "id": "role-graph.roledef.id",
       "prefLabel": "RoleDef.id",
-      "definition": "Stable id. Referenced by `<folio:role ref>` and by `inherits`.",
+      "definition": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.id",
       "status": "candidate"
     },
@@ -6476,7 +6476,7 @@
     {
       "id": "role-graph.roledef.title",
       "prefLabel": "RoleDef.title",
-      "definition": "Display text. Not used for matching: a lane binds by `<folio:role ref>`.",
+      "definition": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.title",
       "status": "candidate"
     },
@@ -9493,7 +9493,7 @@
     {
       "id": "webpage.webpagenode.id",
       "prefLabel": "WebPageNode.id",
-      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `<folio:link>` hrefs — resolve against.",
+      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.id",
       "status": "candidate"
     },

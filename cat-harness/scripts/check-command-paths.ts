@@ -214,7 +214,7 @@ export function aboutThisTree(repo: string, tok: string): boolean {
  * ```
  *
  * Same shape as `declared-path-literal:` in `check:declared-paths` and
- * `<folio:no-skill reason="…"/>`: exempt, but **the reason is required**, so
+ * `<cat-harness.processes:no-skill reason="…"/>`: exempt, but **the reason is required**, so
  * silencing the check costs more than satisfying it, and exempted blocks are
  * COUNTED in the summary rather than disappearing.
  *

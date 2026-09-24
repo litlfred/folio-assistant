@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8i57
 title: 'Document ingestion page has no theme section: Process_IngestTheme is called but documented nowhere'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T17:22:04Z
-updated_at: 2026-09-24T17:22:04Z
+updated_at: 2026-09-24T18:01:26Z
 parent: folio-assistant-tr05
 ---
 

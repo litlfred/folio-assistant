@@ -383,7 +383,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
-  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <folio:role ref>. On the lane, never on the role (#1168)." },
+  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168)." },
   hasLaneUsage: {
     gloss:
       "One appearance of this glossary concept as a swimlane in one process. " +

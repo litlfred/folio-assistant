@@ -213,7 +213,7 @@ export function splitDetail(body: string): { comment: string; detail?: string } 
  * strict, as it was, and it goes to everybody: a widened blast radius that
  * nothing reports on and no budget check counts. So an unrecognised value is an
  * error, and silencing an entry costs more than not silencing it — the same
- * reasoning `<folio:no-skill reason="…"/>` already applies.
+ * reasoning `<cat-harness.processes:no-skill reason="…"/>` already applies.
  *
  * Bean `folio-assistant-0j8h`.
  */
