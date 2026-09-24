@@ -149,3 +149,61 @@ tracked by `t3ad` in PR #1111 as one of 70. Named so a reader of this bean does
 not take `role-carries-activity-skill: pass` for a clean sidecar.
 
 *Settled by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
+
+## Follow-on, 2026-09-24 — "Yes only at ingestion", and the post-MVP review is gone
+
+This bean closed with one thing recorded as a question: `theme-ui-review.bpmn`
+had been left wired to `crdm-deliver.bpmn` at MVP acceptance, because nothing in
+the 2026-09-23 ruling moved it. The owner answered, asked directly:
+
+> Yes only at ingestion
+
+That is a reaffirmation after the objection was raised twice — the start event
+read `name="MVP accepted"`, so the process needed re-scoping rather than
+re-pointing — so it was treated as the decision and applied in full.
+
+### Applied
+
+| file | change |
+|---|---|
+| `crdm-deliver.bpmn` | `Call_ThemeUIReview` **removed**. `GW_StakeholderOK`'s `accepted` branch now closes the phase directly. The end event says why, where a reader looking for the old call will land |
+| `theme-ui-review.bpmn` | **re-scoped**: start `MVP accepted` → `Graphical assets ingested`; every step re-aimed at the ingested assets in their design; agent lane `authoring-agent` → **`ingestion-agent`** |
+| `ingest-theme.bpmn` | `Task_Review` is now a **call activity** to `Process_ThemeUIReview`. Its `folio:no-call` note was withdrawn rather than left standing beside a call it contradicts |
+| `theme-ui-review.md` | rewritten head: at ingestion only; the superseded 2026-09-20 ruling quoted beside the new one |
+| `crdm-requirements-workflow.md`, `wireframe-design-review.md`, `wiregen.md`, `every-workflow-in-the-repo.md` | each said the review was post-MVP; each now says where it went and why |
+
+### A SEVENTH finding closed by the re-scope, not by a separate fix
+
+`theme-ui-review.bpmn`'s own agent lane bound `authoring-agent`, which never
+carried `theme-ui-review` — so all five of its agent tasks were failing
+`role-carries-activity-skill`, pre-existing and not in this bean's earlier count
+of six. Re-binding the lane to `ingestion-agent` is the ruling's direct
+consequence (the process now runs at ingestion, so its agent is the ingestion
+agent), and it closes all five. After regeneration all four affected diagrams —
+`theme-ui-review`, `ingest-theme`, `crdm-deliver`, `document-ingestion` — report
+**zero failing criteria**.
+
+### Two things the ruling costs, stated so they stay accepted
+
+1. **A person is now inside ingestion.** `R_Judge` is a human step, and moving
+   the review does not remove the person who performs it. So ingesting a THEME
+   SOURCE is attended at that step. Everything else stays unattended —
+   `Gateway_ThemeSource` routes non-theme documents past `ingest-theme.bpmn`.
+   This is exactly what the withdrawn `no-call` note warned about; the ruling
+   accepts it.
+2. **No post-build look at what shipped.** An ingestion review answers "how will
+   this read" only as far as the assets can be laid out before the site exists.
+   `wiregen.md` now says in so many words that a post-build visual look is not
+   provided by this process, so nobody assumes it is.
+
+Both are written into the skill as **priced and accepted**, so a later reader
+does not re-add a post-MVP call on their own initiative.
+
+### Earlier ruling superseded
+
+2026-09-20, the owner: reviewing themes and UI *"should be part of post MVP
+process in SDLC"*. The 2026-09-24 ruling replaces it. Both are quoted in the
+skill, because a reader who meets only the older one elsewhere would otherwise
+take one of them for an error.
+
+*Stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

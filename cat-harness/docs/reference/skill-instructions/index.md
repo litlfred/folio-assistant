@@ -192,7 +192,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Two moments, and this skill is used at both](theme-ui-review.html) | `theme-ui-review` | — | **Owner, 2026-09-23**, settling bean `9fdi`: |
+| [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |

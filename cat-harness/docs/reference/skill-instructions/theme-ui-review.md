@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 'Two moments, and this skill is used at both'
+title: 'At ingestion, and only at ingestion'
 parent: Skill instructions
 ---
 
@@ -10,47 +10,62 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/theme-ui-review.md){: .fa-edit-source }
 
 {% raw %}
-# Two moments, and this skill is used at both
+# At ingestion, and only at ingestion
 
-**Owner, 2026-09-23**, settling bean `9fdi`:
+**The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`:
 
 > theme review to ingestion of graphical assets in context of website or app
 > design and determining graphical assets/UI
 
-So theme review happens **twice**, over two different objects, and reading this
-skill as post-MVP *only* is what left it carried by no role at all:
+and, asked directly whether that meant *only* at ingestion:
 
-| moment | what is under review | where |
-|---|---|---|
-| **at ingestion** | the **arriving art** — is this a usable graphical asset, does a signal survive without its colour | `ingest-theme.bpmn` `Task_Review`, inside the unattended engine |
-| **post-MVP** | **what actually renders** — inventory, accessibility, branding, every declared locale | `theme-ui-review.bpmn`, called from `crdm-deliver.bpmn` on the edge out of stakeholder acceptance |
+> Yes only at ingestion
 
-The ingestion moment is not a weaker version of the other one. It asks a
-question the post-MVP review **cannot** ask, because by then the answer is
-already baked in: *what are the graphical assets and the UI going to be?*
-Determining an asset is ingestion work. That is why it runs unattended and why
-`ingestion-agent` carries this skill.
+So this skill runs in exactly one place: `theme-ui-review.bpmn`, called from
+`ingest-theme.bpmn` `Task_Review`, whose agent lane is `ingestion-agent`. It is
+**not** called from `crdm-deliver.bpmn` any more — that call was removed.
 
-The post-MVP moment asks the question the ingestion one cannot: *what did this
-turn into?* Nothing about accepting a crop tells you how it reads at 320px in
-Arabic over a photograph.
+## This supersedes an earlier ruling, and both are quoted on purpose
 
-**Neither replaces the other, and the rest of this file is the post-MVP half.**
-The paragraphs below were written when that was the only half, so where they say
-"post-MVP" they mean the second row of the table, not the whole skill.
+On **2026-09-20** the owner said reviewing themes and UI *"should be part of
+post MVP process in SDLC"*, and this skill was written around that: it hung off
+MVP acceptance and reviewed what had shipped. **The 2026-09-24 ruling replaces
+it.** Both are kept here because a reader who finds only the older one in some
+other file would otherwise conclude one of them is an error. Neither is — the
+later one governs.
 
-# Post-MVP, because there is nothing to check before there is a render
+## What moved, and what did not
 
-The owner, 2026-09-20: theme choice is *"authoring (human/agentic)
-decision/judgement"*, and reviewing themes and UI *"should be part of post MVP
-process in SDLC"*.
+**The object moved upstream.** Post-MVP, the review looked at what shipped, and
+a finding was a defect in something built. At ingestion it looks at the arriving
+graphical assets laid out in the design they are for, and the same finding is a
+decision about what the assets **will be**, taken while it is still cheap.
 
-Those two go together. Because there is **no role-to-theme mapping**
-([`theme.ts`](../../schemas/theme.ts) records why), there is no table to audit,
-no binding to verify, nothing a build-time gate could assert. A theme is chosen
-per note by whoever writes it. What *can* be reviewed is the result, and only
-once there is one — which is why this hangs off MVP acceptance in
-`crdm-deliver.bpmn` rather than sitting in the requirements phases.
+**The questions did not move.** Accessibility measured rather than asserted,
+branding against the instance's own declaration, every declared locale — the
+sections below are unchanged in substance and now apply to the ingested assets.
+
+**Theme choice is still an authoring judgement.** There is still no
+role-to-theme mapping ([`theme.ts`](../../schemas/theme.ts) records why), so
+nothing here checks a binding. What gets reviewed is the ingested art in its
+design context.
+
+## What this gives up — accepted, and written down so it stays accepted
+
+A post-build review answered *"what did this turn into?"* — how a crop reads at
+320px in Arabic over a photograph, once it is in the page. An ingestion review
+answers that only as far as the assets can be laid out in their design before
+the site exists. That gap is the cost of the ruling. It is recorded here so a
+later reader who notices it finds it was **priced and accepted**, not missed —
+and does not re-add a post-MVP call on their own initiative.
+
+## A person is in the loop, inside ingestion
+
+`R_Judge` is a human step: a person looks at the assets laid out at a web and a
+mobile width. Moving the review to ingestion does not remove that person, so
+**ingesting a theme source is attended at that step.** Ingesting anything else
+stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes
+non-theme documents past `ingest-theme.bpmn` entirely.
 
 ## Measure; do not assert
 
@@ -75,8 +90,10 @@ gets skipped. Two measured cases from this repository:
   wrong combinator put a backdrop at its intrinsic 1672px across the viewport,
   with the suite green, every gate green and every request returning 200.
 
-So a person looks at the rendered page. That is a step in the diagram, not an
-optional extra.
+So a person looks at the assets laid out in their design (`R_Judge`). That is a
+step in the diagram, not an optional extra — and those two measured cases are
+why it survived the move to ingestion rather than being dropped as "the manual
+bit".
 
 ## Branding is a question about the INSTANCE, not about taste
 
@@ -116,8 +133,8 @@ get fixed.
 
 Not the choice itself. Whether a sticky should be `engineer` or `library` is an
 authoring decision, and this review does not second-guess it; it asks whether
-what was chosen **renders legibly, consistently and in every declared
-language**.
+what was ingested **will render legibly, consistently and in every declared
+language** in the design it is for.
 
 ## Both viewports, always
 
@@ -130,12 +147,12 @@ Owner, 2026-09-23 (issue #1023): *"need both web and mobile layouts in usability
 
 ## Processes that run this skill
 
-This skill has its own process: **[Post-MVP theme and UI review](../../processes/theme-ui-review.html)**.
+This skill has its own process: **[Theme and UI review — at ingestion](../../processes/theme-ui-review.html)**.
 
-<img src="../../assets/img/workflows/theme-ui-review.svg" alt="BPMN diagram: Post-MVP theme and UI review" style="max-width:100%">
+<img src="../../assets/img/workflows/theme-ui-review.svg" alt="BPMN diagram: Theme and UI review — at ingestion" style="max-width:100%">
 
 | process | step(s) that name it |
 |---|---|
-| [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Review contrast and non-colour signal |
-| [Post-MVP theme and UI review](../../processes/theme-ui-review.html) | Inventory what actually renders; Accessibility: measure, do not assert; Branding: does it read as this instance?; Languages: extracted, rendered, and RTL; Raise findings against the authoring |
+| [Ingestion subprocess — ingest a theme](../../processes/ingest-theme.html) | Theme and UI review (calls a sub-process) |
+| [Theme and UI review — at ingestion](../../processes/theme-ui-review.html) | Inventory the ingested assets; Accessibility: measure, do not assert; Branding: does it read as this instance?; Languages: extracted, rendered, and RTL; Raise findings before the assets land |
 

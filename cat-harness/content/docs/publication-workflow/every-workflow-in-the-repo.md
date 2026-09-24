@@ -184,12 +184,13 @@ catalogue, and `bootstrap` fetching a harness and landing it locally, with
 | `copy-out-materialized.bpmn` | Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own `folio/` that records, in `provenance.local`, which original it came out of — the edge nothing downstream can reconstruct once it is missing |
 | `sample-import.bpmn` | Try a sample of a remote source before committing to it: scope it (which items, which store, **permanent or trial?**), let `materialize-remote` gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls `refresh-materialized` for permanent samples only |
 
-**Post-MVP review** — what the delivered thing actually looks like, once
-stakeholders have accepted it and there is a render to judge:
+**Theme and UI review — at ingestion only** — what the arriving graphical
+assets will look like in the website or app design they are for, decided while
+it is still cheap:
 
 | Diagram | Answers |
 |---------|---------|
-| `theme-ui-review.bpmn` | Does what shipped read legibly, consistently and in every declared language? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out. Called from `crdm-deliver.bpmn` on the single edge out of stakeholder acceptance — there is no role-to-theme mapping, so nothing could have been checked earlier |
+| `theme-ui-review.bpmn` | Will these ingested graphical assets read legibly, consistently and in every declared language, in the design they are for? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out, at a web and a mobile width. Called from `ingest-theme.bpmn` — **at ingestion only**, by owner ruling (bean `9fdi`, 2026-09-24). It was post-MVP and called from `crdm-deliver.bpmn` until then; that call is gone, and the cost — no post-build look at what shipped — is recorded in the skill as accepted rather than missed |
 
 **Upstream dependencies** — what happens when somebody else's release changes
 what we ship. The first is the watcher and the second is the reusable

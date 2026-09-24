@@ -117,19 +117,21 @@ present?">
       <bpmn:documentation>j66n's fourth clause: every layout still required, and a missing one stays INVALID rather than degraded. Three viewports for a screen theme, three print formats for a publication one. A theme that quietly dropped a layout would render correctly everywhere the missing one is not used, which is the state this refusal exists to prevent.</bpmn:documentation>
       <bpmn:incoming>Flow_t9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Task_Review" name="Review contrast and
-non-colour signal">
-      <bpmn:documentation>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees ("Never red with green, never blue with yellow").
+    <bpmn:callActivity id="Task_Review" name="Theme and UI review
+[theme-ui-review]" calledElement="Process_ThemeUIReview">
+      <bpmn:documentation>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI"; asked directly on 2026-09-24 whether that meant ONLY at ingestion: "Yes only at ingestion". Bean `9fdi`.
 
-THIS IS THEME REVIEW AT INGESTION, and it is a different moment from the post-MVP one. Owner, 2026-09-23: "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI."
+So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — "calling it would put a human gate into an automated ingest" — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts.
 
-What is under review here is the ARRIVING ART, and the question is what the graphical assets and the UI are going to be. That is why it sits inside the unattended engine: determining an asset is ingestion work, not a gate somebody stands at. What renders from those assets later is reviewed by theme-ui-review.bpmn, which cannot run yet because nothing has been built.</bpmn:documentation>
+WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely.
+
+THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. "A theme sets the stripe's hue; it never sets its width to zero" — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees ("Never red with green, never blue with yellow"). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="theme-ui-review" />
-      <folio:no-call reason="TWO MOMENTS, ONE SKILL ID -- and the owner settled which one this is, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;. So this step is theme review AT INGESTION: the graphical assets are being reviewed as they arrive, in order to determine what the assets and the UI ARE. theme-ui-review.bpmn is the OTHER moment -- it inventories what actually renders, after a build, called from crdm-deliver.bpmn on the edge out of stakeholder acceptance. Calling that process from here would run a post-build review over something not yet built, and would put its human judgement step into an automated ingest. The earlier version of this reason said only the second half; it read as if the ingest-time review were a lesser offcut of the post-MVP one, which is what left `theme-ui-review` carried by no role at all and this activity failing role-carries-activity-skill. Bean `9fdi`."/></bpmn:extensionElements>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_t8</bpmn:incoming>
       <bpmn:outgoing>Flow_t10</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:callActivity>
     <bpmn:endEvent id="EndEvent_Theme" name="Theme node">
       <bpmn:incoming>Flow_t10</bpmn:incoming>
     </bpmn:endEvent>

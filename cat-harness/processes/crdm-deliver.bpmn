@@ -30,7 +30,6 @@
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CodeAudit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DeployStaging</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Call_ThemeUIReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Summary</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
@@ -122,10 +121,9 @@ into agent direction">
 actionable direction: new beans or bean updates for the agent.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:callActivity id="Call_ThemeUIReview" name="Post-MVP&#10;theme + UI review" calledElement="Process_ThemeUIReview">
-      <bpmn:documentation>On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale.</bpmn:documentation>
-    </bpmn:callActivity>
-    <bpmn:endEvent id="End_Process_CRDM_Deliver" name="Phase complete"/>
+    <bpmn:endEvent id="End_Process_CRDM_Deliver" name="Phase complete">
+      <bpmn:documentation>THERE IS NO THEME REVIEW HERE ANY MORE, and that is a ruling rather than an omission. Until 2026-09-24 the `accepted` branch ran `Call_ThemeUIReview`, a post-MVP theme and UI review, before the phase closed. The owner moved it: theme review happens at INGESTION ONLY — "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI", confirmed "Yes only at ingestion" (bean `9fdi`). It is now called from `ingest-theme.bpmn`, where the graphical assets arrive and are determined, rather than here, where they have already been built into what shipped. A reader looking for the review should go there.</bpmn:documentation>
+    </bpmn:endEvent>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1" sourceRef="Start_Process_CRDM_Deliver" targetRef="Call_OptionsAnalysis"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_1b" sourceRef="Call_OptionsAnalysis" targetRef="A_Implement"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_2" sourceRef="A_Implement" targetRef="A_CodeAudit"/>
@@ -141,8 +139,7 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_10" sourceRef="S_TestMVP" targetRef="GW_StakeholderOK"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_11" name="findings" sourceRef="GW_StakeholderOK" targetRef="BA_TranslateFeedback"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_12" sourceRef="BA_TranslateFeedback" targetRef="A_Implement"/>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_13" name="accepted" sourceRef="GW_StakeholderOK" targetRef="Call_ThemeUIReview"/>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_13b" sourceRef="Call_ThemeUIReview" targetRef="End_Process_CRDM_Deliver"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Deliver_13" name="accepted" sourceRef="GW_StakeholderOK" targetRef="End_Process_CRDM_Deliver"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CRDM_Deliver">
     <bpmndi:BPMNPlane id="Plane_Process_CRDM_Deliver" bpmnElement="Collaboration_Process_CRDM_Deliver">
@@ -196,9 +193,6 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_BA_TranslateFeedback" bpmnElement="BA_TranslateFeedback">
         <dc:Bounds x="2510" y="125" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Call_ThemeUIReview" bpmnElement="Call_ThemeUIReview">
-        <dc:Bounds x="2450" y="295" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Process_CRDM_Deliver" bpmnElement="End_Process_CRDM_Deliver">
         <dc:Bounds x="2710" y="147" width="36" height="36" />
@@ -276,13 +270,7 @@ actionable direction: new beans or bean updates for the agent.</bpmn:documentati
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Deliver_13" bpmnElement="SF_Process_CRDM_Deliver_13">
         <di:waypoint x="2360" y="505" />
-        <di:waypoint x="2420" y="505" />
-        <di:waypoint x="2420" y="335" />
-        <di:waypoint x="2450" y="335" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Deliver_13b" bpmnElement="SF_Process_CRDM_Deliver_13b">
-        <di:waypoint x="2590" y="335" />
-        <di:waypoint x="2650" y="335" />
+        <di:waypoint x="2650" y="505" />
         <di:waypoint x="2650" y="165" />
         <di:waypoint x="2710" y="165" />
       </bpmndi:BPMNEdge>
