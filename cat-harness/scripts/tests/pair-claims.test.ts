@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { claimsEntry, judgePair, resolveCited, type PairClaim } from "../pair-claims";
-import { FOLIO_BPMN_NS } from "../../schemas/namespaces.ts";
+import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS } from "../../schemas/namespaces.ts";
 
 function repo(): string {
   const root = mkdtempSync(join(tmpdir(), "pair-claims-"));
@@ -79,7 +79,7 @@ describe("judgePair — a diagram's declared jobs", () => {
     mkdirSync(join(r, "cat-harness/processes"), { recursive: true });
     writeFileSync(
       join(r, "cat-harness/processes/p.bpmn"),
-      `<bpmn:process id="P" xmlns:folio="${FOLIO_BPMN_NS}"><bpmn:extensionElements><folio:implements workflow=".github/workflows/w.yml"/><folio:job name="build"/><folio:job name="deploy"/></bpmn:extensionElements></bpmn:process>`,
+      `<bpmn:process id="P" xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}" xmlns:cat-harness.processes="${CAT_HARNESS_PROCESSES_NS}"><bpmn:extensionElements><cat-harness.processes:implements workflow=".github/workflows/w.yml"/><cat-harness.processes:job name="build"/><cat-harness.processes:job name="deploy"/></bpmn:extensionElements></bpmn:process>`,
     );
     const p = { kind: "implements" as const, prose: "cat-harness/processes/p.bpmn", code: ".github/workflows/w.yml" };
     expect(outcomes(judgePair(r, p, new Set()))).toEqual(["job:holds", "job:false"]);

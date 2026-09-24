@@ -1,5 +1,5 @@
 /**
- * An unknown attribute on `<folio:bean>` is refused, not ignored.
+ * An unknown attribute on `<cat-harness.processes:bean>` is refused, not ignored.
  *
  * @module scripts/tests/bean-attr-refused.test
  *
@@ -9,7 +9,7 @@
  * unknown ATTRIBUTE, and the two are different checks.
  *
  * `processes/bean-lifecycle.bpmn` records the cost in its own comment: a
- * diagram carried `<folio:bean action="create"/>`, the engine reads `op`, and
+ * diagram carried `<cat-harness.processes:bean action="create"/>`, the engine reads `op`, and
  * "the step silently did nothing for weeks".
  *
  * What made it invisible is that an absent `op` is **documented as
@@ -20,7 +20,7 @@
  *
  * ## What this must NOT break
  *
- * A bare `<folio:bean/>` is legal and means abstention. A guard that refused
+ * A bare `<cat-harness.processes:bean/>` is legal and means abstention. A guard that refused
  * it would remove the documented reading instead of the ambiguity, which is
  * why that case is asserted here rather than left implied.
  *
@@ -29,7 +29,7 @@
  * | break | result |
  * |---|---|
  * | the attribute guard removed | the `action="create"` test **fails** |
- * | the guard also refusing a bare `<folio:bean/>` | the abstention test **fails** |
+ * | the guard also refusing a bare `<cat-harness.processes:bean/>` | the abstention test **fails** |
  * | restored | all pass |
  */
 import { afterAll, describe, expect, test } from "bun:test";
@@ -54,7 +54,7 @@ function diagram(beanMarkup: string): string {
     file,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Defs_B" targetNamespace="urn:test">
   <bpmn:process id="Process_B" name="Bean attr">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>
@@ -62,7 +62,7 @@ function diagram(beanMarkup: string): string {
       <bpmn:incoming>F1</bpmn:incoming>
       <bpmn:outgoing>F2</bpmn:outgoing>
       <bpmn:extensionElements>
-        <folio:no-skill reason="fixture"/>
+        <cat-harness.processes:no-skill reason="fixture"/>
         ${beanMarkup}
       </bpmn:extensionElements>
     </bpmn:task>
@@ -78,7 +78,7 @@ function diagram(beanMarkup: string): string {
 
 describe("an unknown attribute is refused", () => {
   test("`action=\"create\"` — the exact attribute that did nothing for weeks", async () => {
-    await expect(loadProcessModel(diagram('<folio:bean action="create"/>'))).rejects.toThrow(
+    await expect(loadProcessModel(diagram('<cat-harness.processes:bean action="create"/>'))).rejects.toThrow(
       /folio:bean carries "action"/,
     );
   });
@@ -87,7 +87,7 @@ describe("an unknown attribute is refused", () => {
     // A refusal that does not name the alternative sends the author guessing,
     // and one of the two legal answers here is to write NOTHING — which is the
     // answer nobody guesses.
-    await expect(loadProcessModel(diagram('<folio:bean actoin="claim"/>'))).rejects.toThrow(
+    await expect(loadProcessModel(diagram('<cat-harness.processes:bean actoin="claim"/>'))).rejects.toThrow(
       /drop the attribute entirely if abstention is what you meant/,
     );
   });
@@ -96,31 +96,31 @@ describe("an unknown attribute is refused", () => {
     // The dangerous case: the step works, so nothing looks wrong, and the
     // stray attribute survives to be copied into the next diagram.
     await expect(
-      loadProcessModel(diagram('<folio:bean op="claim" action="create"/>')),
+      loadProcessModel(diagram('<cat-harness.processes:bean op="claim" action="create"/>')),
     ).rejects.toThrow(/folio:bean carries "action"/);
   });
 });
 
 describe("what the guard must not break", () => {
-  test("a bare `<folio:bean/>` still loads, and still means abstention", async () => {
+  test("a bare `<cat-harness.processes:bean/>` still loads, and still means abstention", async () => {
     // Legal and documented: "touches the plan in some way the tools do not
     // perform automatically". Refusing it would remove the reading rather than
     // the ambiguity.
-    const m = await loadProcessModel(diagram("<folio:bean/>"));
+    const m = await loadProcessModel(diagram("<cat-harness.processes:bean/>"));
     const node = m.nodes.get("Task_B")!;
     expect(node.touchesWorkPlan).toBe(true);
     expect(node.workPlanOp).toBeUndefined();
   });
 
   test("a valid op still loads", async () => {
-    const m = await loadProcessModel(diagram('<folio:bean op="claim"/>'));
+    const m = await loadProcessModel(diagram('<cat-harness.processes:bean op="claim"/>'));
     expect(m.nodes.get("Task_B")!.workPlanOp).toBe("claim");
   });
 
   test("an unknown op VALUE is still refused by its own check", async () => {
     // The pre-existing check, asserted here so a future edit cannot collapse
     // the two into one and lose the more specific message.
-    await expect(loadProcessModel(diagram('<folio:bean op="archive"/>'))).rejects.toThrow(
+    await expect(loadProcessModel(diagram('<cat-harness.processes:bean op="archive"/>'))).rejects.toThrow(
       /op="archive" is not implemented/,
     );
   });

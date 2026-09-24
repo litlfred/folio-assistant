@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 165,
+      "count": 166,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -543,6 +543,14 @@
       "graphNode": "undeclared",
       "summary": "A minimal valid declaration, extended per test.",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/interaction.ts",
+      "instance": "cat-harness",
+      "name": "interaction",
+      "graphNode": "schema",
+      "summary": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/jsonld.ts",
@@ -16236,6 +16244,117 @@
           "type": "z.string().min(4)",
           "optional": false,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/interaction.ts#InteractionNode",
+      "name": "InteractionNode",
+      "module": "cat-harness/schemas/interaction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
+      "name": "InteractionNodeSchema",
+      "module": "cat-harness/schemas/interaction.ts",
+      "kind": "zod-object",
+      "doc": "The whole node.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(INTERACTION_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "$comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Prose for a reader who opens the file; never read by a process."
+        },
+        {
+          "name": "users",
+          "type": "z.record(z.string(), InteractionProfileSchema)",
+          "optional": false,
+          "array": false,
+          "doc": "Keyed by the identity the agent can resolve — an email today."
+        },
+        {
+          "name": "default",
+          "type": "InteractionProfileSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What to assume for somebody with no entry above."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/interaction.ts#InteractionProfileSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "INTERACTION_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/interaction.ts#InteractionProfile",
+      "name": "InteractionProfile",
+      "module": "cat-harness/schemas/interaction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
+      "name": "InteractionProfileSchema",
+      "module": "cat-harness/schemas/interaction.ts",
+      "kind": "zod-object",
+      "doc": "One person's preferences, or the fallback for somebody with no entry.",
+      "fields": [
+        {
+          "name": "profiles",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true,
+          "doc": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the"
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the profile means for this person, in their terms or the agent's."
+        },
+        {
+          "name": "source",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How it came to be known — `stated by the user`, a policy, an inference."
         }
       ],
       "extendsNames": [],
@@ -40042,6 +40161,22 @@
       "from": "cat-harness/schemas/ig-menu.ts#IgMenuSchema",
       "to": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema",
       "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
+      "to": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
+      "via": "default",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
+      "to": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
+      "via": "users",
       "kind": "field",
       "optional": false,
       "array": false

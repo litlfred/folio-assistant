@@ -587,8 +587,18 @@ jobs:
       # hold files nothing audits, and a gate refusing every push until
       # somebody writes criteria for `interaction/` is a gate that gets
       # switched off. `audit:coverage:strict` is for the day that closes.
-      - name: audit coverage is measured and current
-        run: bun run audit:coverage:check
+      # `--require-all` as of bean `3srh`: every one of the 145 gates CI runs now
+      # DECLARES what kind of node it covers, so the flag that was "for the day
+      # the gap is closed" enforces a property this tree HAS rather than
+      # demanding work — the same reasoning as `check:skills` above.
+      #
+      # What it buys is the report's own honesty. While any gate was undeclared,
+      # every "unaudited" verdict was only an UPPER BOUND and the output said so.
+      # With none undeclared the four remaining kinds are a verdict, and this
+      # step is what stops a new gate arriving undeclared and quietly turning
+      # them back into an upper bound.
+      - name: audit coverage is measured, current, and every gate has declared
+        run: bun run audit:coverage:require-all
 
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
@@ -879,6 +889,10 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The themes page renders every theme in schemas/themes.ts with its
+          # declared art, so it goes stale the moment a theme, a palette or a
+          # crop changes.
+          bun run theme:page:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.

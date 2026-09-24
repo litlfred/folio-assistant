@@ -3,6 +3,9 @@
  * Generate `avatars.css` from the avatar nodes.
  *
  * @module scripts/gen-avatars-css
+ * @covers none — the avatar nodes are declared in `schemas/avatars.ts`, in code, so the
+ *   stylesheet is generated from a module rather than from a graph directory. Whether every
+ *   declared KIND has one is `check-avatar-coverage`'s question, and it is not in the gate set
  *
  * Same contract as `gen-themes-css.ts`, and for the same reason: the graph is
  * the source and the stylesheet is a rendering of it, so a colour or a glyph

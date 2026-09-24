@@ -79,24 +79,42 @@ gate that genuinely audits no graph with silence as its only honest answer.
 
 **An undeclared gate is counted and printed, never zero**, and every "unaudited"
 verdict is stated as an **upper bound** while any remain. That is
-`check:kind-validators`' state 2, for its reasons: 10 of 141 are undeclared here.
+`check:kind-validators`' state 2, for its reasons.
 
-### When you cannot tell, do not annotate
+**That gap is closed as of bean `3srh`** — all 145 gates declare, so
+`audit:coverage:require-all` is wired in CI and the findings are verdicts rather
+than bounds. The flag is what keeps it closed: a new gate arriving undeclared
+turns them back into an upper bound, silently, unless something fails. The
+output still states the caveat whenever the count is non-zero, because the day
+it reopens is the day a reader needs to be told.
 
-Ten gates are undeclared on purpose (bean `3srh`). Each one's docblock did not
-settle which declared kind its subject is, and **a fabricated `@covers` credits
-a kind with coverage nobody checked.** Under-claiming is recoverable — the count
-says so out loud. Over-claiming looks like coverage.
+### When you cannot tell, do not annotate — and then go and read it
+
+Eleven gates were left undeclared on purpose at first, because each one's
+docblock did not settle which declared kind its subject is, and **a fabricated
+`@covers` credits a kind with coverage nobody checked.** Under-claiming is
+recoverable — the count says so out loud. Over-claiming looks like coverage.
+
+Resolving them (bean `3srh`) meant reading each one's **scan set**, and that
+changed two answers a title would have got wrong: `check:retired-front-matter`
+is `computed`, because its set is `kgRoots(instance)` plus the undeclared
+`.claude/skills/` convention; and `check:agents-claims` covers `code`, not
+`docs`, because it grades the symbols a prose claim names while `AGENTS.md`
+itself is a node of no declared graph.
+
+**The finding did not move** when the eleven were declared — the same four kinds,
+now a verdict rather than a bound. That is what closing a denominator is for.
 
 ---
 
-## Three states per kind, and a single zero cannot tell them apart
+## Four states per kind, and a single zero cannot tell them apart
 
 | state | what it means | the case that earns the name |
 |---|---|---|
-| `no-directory` | no instance declares one of this kind | `bean-defs`, declared inside `beans/beans.json`, reached through its parent — and carrying 7 gates |
+| `no-directory` | no instance declares one of this kind | `bean-defs`, declared inside `beans/beans.json`, reached through its parent — and carrying 8 gates |
 | `empty` | a directory exists and holds nothing | a determined empty |
-| `unaudited` | files, and nothing reaching them | `health`, `interaction`, `issue-marks`, `todos` (bean `3oqj`) |
+| `typed-only` | a declared validator TYPES its nodes; nothing judges them | `health`, `interaction`, `issue-marks`, `todos` |
+| `unaudited` | files, and nothing at all — not even a validator | none here, since bean `3oqj` |
 
 `bean-defs` is why the first state is not a gap: it has coverage and no
 directory of its own. A report that printed `0` for its directory count and left
@@ -104,6 +122,46 @@ the reader to infer would have manufactured a finding.
 
 So every row prints all four counts and **names its state** rather than leaving
 it to be read off a zero.
+
+### `typed-only` is a finding, and that is the whole reason it exists
+
+Bean `3oqj`. Before this state, `health` and `todos` read `unaudited` — and that
+**over-reported**. Both declare a validator, and `check:kind-validators` parses
+their nodes against it; they looked unreached only because the gate that types
+them declares `@covers computed`, which this report counts as neither coverage
+nor gap.
+
+The temptation is to call them covered. **Do not.** `--strict` fails on
+`typed-only` as its own family, because typing is not judging — a kind can parse
+perfectly against its schema while nothing has an opinion about what it *says*.
+A state that turned a finding into a pass would be `dh4f` wearing this report's
+own design, and it would contradict the paragraph above about
+`check:kind-validators`.
+
+What the state buys is telling two different pieces of work apart: *a schema
+parses these nodes and no criterion reads them* is not *nothing whatsoever
+reaches this kind*.
+
+### The two kinds that were genuinely untyped
+
+`interaction` and `issue-marks` declared no validator at all, and the cost was
+measured rather than supposed: `interaction/interaction.json` is read at the
+start of **every** session by jq inside a shell script whose failure branch
+prints `(could not parse … — read it by hand)`. A malformed node does not fail;
+it degrades to a line nobody acts on, in the one file every sibling session
+reads first.
+
+Two things that surfaced while fixing it, both worth the pattern:
+
+- **`interaction`'s `schema` pointed at the wrong module.** It named
+  `harness-config.ts`, which holds the *path* to the node, not its shape. A
+  pointer to where a fact is **not** written is worse than none: a reader who
+  follows it concludes the shape is undeclared on purpose.
+- **`saveSeen` was not writing `$schema`.** Consumers route a node by its tag and
+  skip a file that has none, so every mark the mechanism produced would have been
+  passed over by the very check a new schema exists to feed — leaving the two
+  hand-written files as the only ones ever validated. **A validator over the nodes
+  nobody produces is not coverage.**
 
 ---
 
@@ -170,9 +228,10 @@ is a gate that gets switched off within a week.
 - **A new gate**: add `@covers` in the same change. If you cannot tell which kind
   its subject is, leave it off — the count is the honest answer.
 - **A new graph kind**: it appears in the report the moment it is registered,
-  because the denominator is the registry. Expect it to read `unaudited` until
-  something judges it, and say in the sidecar why it needs nothing if that is the
-  answer — never by letting the row read clean.
+  because the denominator is the registry. Expect it to read `unaudited` until it
+  declares a validator and `typed-only` until something judges it — and say in
+  the sidecar why it needs nothing if that is the answer, never by letting the
+  row read clean.
 - **A relocation**: nothing to update. Directories resolve through
   `directoriesForGraph`, which is the reason the report survived three layout
   changes that broke prose in `AGENTS.md`.
