@@ -269,11 +269,11 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T20:02:23.461Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a607e130a77f91bfd2b44d35d4c3af455429d32e",
-  "sourceCommitSha": "a607e130a77f91bfd2b44d35d4c3af455429d32e",
-  "sourceCommitAt": "2026-09-24T21:59:40+02:00",
-  "sourceTreeDirty": false,
+  "generatedAt": "2026-09-24T20:10:52.747Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e4dcff33740e411b0626b9608ff1ef2f08eb8729",
+  "sourceCommitSha": "e4dcff33740e411b0626b9608ff1ef2f08eb8729",
+  "sourceCommitAt": "2026-09-24T22:06:59+02:00",
+  "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "Skill": 261,
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 84,
-    "Schema": 120,
+    "Schema": 121,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -38207,6 +38207,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/id-lookup",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "id-lookup",
+      "title": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
+      "module": "../large-datasets/schemas/id-lookup.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "source-descriptor",
@@ -39849,8 +39857,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a607e130a77f91bfd2b44d35d4c3af455429d32e",
+    "sha": "e4dcff33740e411b0626b9608ff1ef2f08eb8729",
     "pr": "main",
-    "run": "36051869225"
+    "run": "36052691990"
   }
 }
