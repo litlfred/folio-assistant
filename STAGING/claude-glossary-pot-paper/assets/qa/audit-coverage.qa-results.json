@@ -1,0 +1,983 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/audit-coverage.ts",
+    "script_hash": "19894772a7d2"
+  },
+  "subject": {
+    "kind": "audit-coverage",
+    "id": "graph-kinds"
+  },
+  "updated_at": "2026-09-24T13:17:04.028Z",
+  "families": {
+    "coverage-measured": {
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 146 gate(s), 67 criteria.",
+      "count": 42,
+      "entries": [
+        {
+          "kind": "bean-defs",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:bean-bodies",
+            "bun run check:bean-front-matter",
+            "bun run check:bean-issue-links",
+            "bun run check:bean-parents",
+            "bun run check:bean-restates-skill",
+            "bun run check:bean-rollup",
+            "bun run check:ready-to-close",
+            "bun run check:stale-paths"
+          ],
+          "hasFiles": false
+        },
+        {
+          "kind": "beans",
+          "state": "covered",
+          "directories": [
+            "beans"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:bean-bodies",
+            "bun run check:bean-front-matter",
+            "bun run check:bean-issue-links",
+            "bun run check:bean-parents",
+            "bun run check:bean-restates-skill",
+            "bun run check:bean-rollup",
+            "bun run check:harness-dirs",
+            "bun run check:ready-to-close",
+            "bun run check:stale-paths"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "board-positions",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "boards",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run boards:default:check"
+          ],
+          "hasFiles": false
+        },
+        {
+          "kind": "cat-harness",
+          "state": "covered",
+          "directories": [
+            "cat-harness/schemas",
+            "folio-assistant-core/schemas",
+            "large-datasets/schemas"
+          ],
+          "criteria": [
+            "actor-capabilities-resolve",
+            "actor-is-not-a-role",
+            "actor-permissions-resolve",
+            "actor-roles-resolve",
+            "arrow-direction",
+            "consulted-skill-not-performed",
+            "manifest-skill-exists",
+            "nested-instance-audited",
+            "remote-skill-is-servable",
+            "satisfies-resolves",
+            "skill-contract-claimed",
+            "skill-contract-resolves",
+            "skill-graph-kinds-resolve",
+            "skill-has-entry-point",
+            "skill-in-role-or-process",
+            "story-role-resolves",
+            "test-run-checkable",
+            "test-run-conforms",
+            "test-run-skill-resolves"
+          ],
+          "subjectKinds": [
+            "graph"
+          ],
+          "gates": [
+            "bun run check:declaration-claims",
+            "bun run check:declaration-filename",
+            "bun run check:declared-assets",
+            "bun run check:declared-dirs",
+            "bun run check:declared-paths",
+            "bun run check:graph-kind-work",
+            "bun run check:harness-dirs",
+            "bun run check:instance-config",
+            "bun run check:instance-graph",
+            "bun run check:instance-render",
+            "bun run check:layout-norms",
+            "bun run check:publishable",
+            "bun run check:published-instance-exports",
+            "bun run check:published-refs",
+            "bun run check:read-only-graphs",
+            "bun run check:subgraph-coverage",
+            "bun run check:subgraphs",
+            "bun run check:undeclared-files:check",
+            "bun run check:version-bump",
+            "bun run harness:dirs:check",
+            "bun run kg:audit:check",
+            "bun run kg:detangle:check",
+            "bun run kg:locale:check",
+            "bun run kg:locale:check:bootstrap",
+            "bun run kg:schema:check",
+            "bun run ns:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "catalogue",
+          "state": "covered",
+          "directories": [
+            "who-iris/catalogue"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:catalogue",
+            "bun run iris:covers:check",
+            "bun run iris:pages:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "code",
+          "state": "covered",
+          "directories": [
+            "cat-harness/adapters",
+            "cat-harness/scripts",
+            "cat-harness/src",
+            "cat-harness/test",
+            "folio-assistant-core/scripts",
+            "smart-trust/scripts",
+            "who-iris/scripts"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:code-accounting",
+            "bun run check:dependency-advisories",
+            "bun run check:lockfile-pinning",
+            "bun run check:module-scope-resolution",
+            "bun run check:portable-paths",
+            "bun run check:python-deps",
+            "bun run check:secret-leaks",
+            "bun run deps:python:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "code-list",
+          "state": "covered",
+          "directories": [
+            "cat-harness/code-lists"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run code-lists:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "docs",
+          "state": "covered",
+          "directories": [
+            "cat-harness/docs",
+            "docs",
+            "smart-trust/docs",
+            "who-iris/docs"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run cat-harness/scripts/gen-docs-pages.ts --check",
+            "bun run cat-harness/scripts/gen-schema-docs.ts --check",
+            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
+            "bun run check:agent-entry-links",
+            "bun run check:agents-xref",
+            "bun run check:agents-xref:strict",
+            "bun run check:anchor-names",
+            "bun run check:command-paths",
+            "bun run check:docs-populated",
+            "bun run check:docs-templates",
+            "bun run check:folio-mount",
+            "bun run check:glossary",
+            "bun run check:instance-render",
+            "bun run check:viewer-backticks",
+            "bun run docs:auto:check",
+            "bun run docs:harness:check",
+            "bun run gen:jsonld:check",
+            "bun run handler:index:check",
+            "bun run landing:data:check",
+            "bun run readme:audit",
+            "bun run readme:audit:root",
+            "bun run readme:sync:check",
+            "bun run readme:sync:root:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "external-schema",
+          "state": "covered",
+          "directories": [
+            "cat-harness/external-schemas"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run external-schemas:check",
+            "bun run external-schemas:viz:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "state": "covered",
+          "directories": [
+            "smart-base/fhir-artifact-index",
+            "smart-immunizations/fhir-artifact-index",
+            "smart-trust/fhir-artifact-index"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:artifact-index",
+            "bun run smart-trust:pages:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "folio",
+          "state": "covered",
+          "directories": [
+            "cat-harness/folio",
+            "folio-assistant-core/folios"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:folio-mount",
+            "bun run folio:viz:check",
+            "bun run gen:jsonld:check",
+            "bun run landing:data:check",
+            "bun run landing:sticky:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "fsh-guts",
+          "state": "covered",
+          "directories": [
+            "fsh-guts"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run fsh-guts:viz:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "glossary",
+          "state": "covered",
+          "directories": [
+            "folio-assistant-core/glossary"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:glossary",
+            "bun run glossary:check",
+            "bun run glossary:check:bootstrap",
+            "bun run glossary:pot:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "health",
+          "state": "unaudited",
+          "directories": [
+            "cat-harness/test/health/results"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": true
+        },
+        {
+          "kind": "interaction",
+          "state": "unaudited",
+          "directories": [
+            "interaction"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": true
+        },
+        {
+          "kind": "issue-marks",
+          "state": "unaudited",
+          "directories": [
+            "issue-marks"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": true
+        },
+        {
+          "kind": "library",
+          "state": "covered",
+          "directories": [
+            "agent-skills/library",
+            "cat-harness/library",
+            "folio-assistant-core/library",
+            "folio-assistant-sci/library",
+            "smart-base/library",
+            "who-iris/library"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:l1-complete",
+            "bun run check:l1-complete -- --check",
+            "bun run check:methodology-evidence",
+            "bun run check:source-licence",
+            "bun run gen:jsonld:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "memory",
+          "state": "covered",
+          "directories": [
+            "memory"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run agent-memory:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "methodology",
+          "state": "covered",
+          "directories": [
+            "cat-harness/methodologies",
+            "folio-assistant-core/methodologies",
+            "smart-base/methodologies"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:methodology-evidence",
+            "bun run methodologies:viz:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "models",
+          "state": "covered",
+          "directories": [
+            "bootstrap/models"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:model-languages"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "policies",
+          "state": "covered",
+          "directories": [
+            "cat-harness/policies"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:prov-qaqc",
+            "bun run check:qa-reviewer-permission"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "processes",
+          "state": "covered",
+          "directories": [
+            "bootstrap/processes",
+            "cat-harness/processes",
+            "folio-assistant-core/processes",
+            "smart-base/methodologies/processes"
+          ],
+          "criteria": [
+            "activity-calls-skill-process",
+            "activity-documented",
+            "activity-fulfilment-kind",
+            "activity-in-lane",
+            "activity-names-skill",
+            "call-activity-resolves",
+            "convention-ref-resolves",
+            "decision-outcomes-used",
+            "decision-ref-resolves",
+            "gateway-branches-named",
+            "gateway-documented",
+            "lane-binds-role",
+            "node-has-exit",
+            "node-reachable",
+            "process-diagram-published",
+            "prose-claims-resolve",
+            "prose-reviewed-since-code-changed",
+            "raci-accountable-not-consulted",
+            "raci-involvement-vocabulary",
+            "raci-role-resolves",
+            "raci-single-accountable",
+            "role-carries-activity-skill",
+            "role-ref-resolves",
+            "skill-ref-resolves",
+            "skill-servable",
+            "variable-performer-declared-alone"
+          ],
+          "subjectKinds": [
+            "decision",
+            "process"
+          ],
+          "gates": [
+            "bun run check:lane-documentation",
+            "bun run check:process-documentation",
+            "bun run check:raci",
+            "bun run check:workflow-coverage",
+            "bun run check:workflow-refs",
+            "bun run check:xml-comments",
+            "bun run kg:audit:check",
+            "bun run processes:viz:check",
+            "bun run render:bpmn:check",
+            "bun run translate-bpmn:bootstrap:check",
+            "bun run translate-bpmn:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "qa",
+          "state": "covered",
+          "directories": [
+            "cat-harness/test/results"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:artefact-verification",
+            "bun run check:orphan-verdicts",
+            "bun run check:tabular-stubs",
+            "bun run translation:block-qa:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "qa-report",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "review-verdicts",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "scenarios",
+          "state": "covered",
+          "directories": [
+            "bootstrap/scenarios",
+            "cat-harness/scenarios"
+          ],
+          "criteria": [
+            "actor-kind-fits-role",
+            "role-binds-a-lane",
+            "role-has-actor",
+            "role-has-persona",
+            "role-has-story",
+            "role-inherits-resolves",
+            "role-skills-resolve"
+          ],
+          "subjectKinds": [
+            "role"
+          ],
+          "gates": [
+            "bun run check:actor-reach",
+            "bun run check:fallback-roles",
+            "bun run check:lane-documentation",
+            "bun run check:prov-qaqc",
+            "bun run check:qa-reviewer-permission",
+            "bun run check:raci",
+            "bun run glossary:check",
+            "bun run glossary:check:bootstrap",
+            "bun run kg:audit:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "schemas",
+          "state": "covered",
+          "directories": [
+            "bootstrap/schemas",
+            "cat-harness/schemas",
+            "folio-assistant-core/schemas",
+            "large-datasets/schemas",
+            "large-datasets/sources"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run bootstrap:schemas:check",
+            "bun run cat-harness/scripts/gen-schema-docs.ts --check",
+            "bun run check:schema-nodes",
+            "bun run gen:jsonld:check",
+            "bun run kg:schema:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "session-state",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "skills",
+          "state": "covered",
+          "directories": [
+            "agent-skills/skills",
+            "bootstrap/skills",
+            "cat-harness/skills",
+            "fhir-harness/skills",
+            "folio-assistant-core/skills",
+            "folio-assistant-sci/skills",
+            "large-datasets/skills",
+            "smart-base/skills",
+            "who-iris/skills",
+            "who-style-guide/skills"
+          ],
+          "criteria": [
+            "prose-claims-resolve",
+            "prose-reviewed-since-code-changed",
+            "requirement-actors-resolve",
+            "requirement-derived-from-resolves",
+            "requirement-statement-satisfied",
+            "requirement-statements-graded",
+            "skill-is-a-stub",
+            "skill-is-brief",
+            "skill-no-repeated-heading",
+            "skill-not-a-document"
+          ],
+          "subjectKinds": [
+            "requirement",
+            "skill"
+          ],
+          "gates": [
+            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
+            "bun run check:agent-entry-links",
+            "bun run check:agents-xref",
+            "bun run check:agents-xref:strict",
+            "bun run check:bean-restates-skill",
+            "bun run check:skills",
+            "bun run check:tools",
+            "bun run check:voice-skills",
+            "bun run check:workflow-refs",
+            "bun run kg:audit:check",
+            "bun run kg:detangle:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "swimlane-glossary",
+          "state": "covered",
+          "directories": [
+            "bootstrap/glossary",
+            "cat-harness/glossary"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:glossary",
+            "bun run glossary:check",
+            "bun run glossary:check:bootstrap"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "themes",
+          "state": "covered",
+          "directories": [
+            "who-iris/themes"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run themes:css:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "todo-feedback",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "todo-items",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": false
+        },
+        {
+          "kind": "todos",
+          "state": "unaudited",
+          "directories": [
+            "todos"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "hasFiles": true
+        },
+        {
+          "kind": "tools",
+          "state": "covered",
+          "directories": [
+            "cat-harness/tools",
+            "fhir-harness/tools",
+            "folio-assistant-core/tools",
+            "smart-base/tools",
+            "tools"
+          ],
+          "criteria": [
+            "tool-alternative-resolves",
+            "tool-args-shell-safe",
+            "tool-invoke-path-resolves",
+            "tool-io-types-declared",
+            "tool-maintains-in-tree",
+            "tool-satisfies-contract-met",
+            "tool-satisfies-resolves"
+          ],
+          "subjectKinds": [
+            "tool"
+          ],
+          "gates": [
+            "bun run check:tools",
+            "bun run kg:audit:check",
+            "bun run tools:viz:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "translation-sources",
+          "state": "covered",
+          "directories": [
+            "bootstrap/translations",
+            "cat-harness/translations"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run glossary:pot:check",
+            "bun run translate-bpmn:bootstrap:check",
+            "bun run translate-bpmn:check",
+            "bun run translate-kg-viewer:check",
+            "bun run translation:block-qa:check",
+            "bun run translation:drift:check",
+            "bun run translation:index:check",
+            "bun run translation:status:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "uml",
+          "state": "covered",
+          "directories": [
+            "cat-harness/uml"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run uml:overview:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "uploads",
+          "state": "covered",
+          "directories": [
+            "cat-harness/uploads",
+            "uploads",
+            "who-iris/uploads"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:source-licence",
+            "bun run gen:jsonld:check",
+            "bun run iris:covers:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "voices",
+          "state": "covered",
+          "directories": [
+            "agent-skills/skills/voices",
+            "folio-assistant-core/skills/voices",
+            "folio-assistant-sci/skills/voices",
+            "smart-base/skills/voices",
+            "who-style-guide/skills/voices"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:voice-skills",
+            "bun run check:voices",
+            "bun run voices:viz:check"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "waiver",
+          "state": "covered",
+          "directories": [
+            "memory"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:waivers"
+          ],
+          "hasFiles": true
+        },
+        {
+          "kind": "workflow-state",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run check:prov-qaqc"
+          ],
+          "hasFiles": false
+        }
+      ]
+    },
+    "gates-undeclared": {
+      "summary": "A gate CI runs whose script carries no @covers line. Reported and never failed by default (--require-all fails it): the gap is real, and hiding it would render an unmeasured corpus as clean.",
+      "count": 11,
+      "entries": [
+        {
+          "command": "bun run check:agents-claims",
+          "scripts": [
+            "cat-harness/scripts/check-agents-claims.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:context-emission",
+          "scripts": [
+            "cat-harness/scripts/check-context-emission.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:image-roles",
+          "scripts": [
+            "cat-harness/scripts/check-image-roles.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:avatar-instances",
+          "scripts": [
+            "cat-harness/scripts/check-avatar-instances.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:asset-roles",
+          "scripts": [
+            "cat-harness/scripts/check-asset-roles.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:retired-front-matter",
+          "scripts": [
+            "cat-harness/scripts/check-retired-front-matter.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:wireframes",
+          "scripts": [
+            "cat-harness/scripts/check-wireframes.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:partition",
+          "scripts": [
+            "cat-harness/scripts/repo-partition.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run avatars:css:check",
+          "scripts": [
+            "cat-harness/scripts/gen-avatars-css.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run navbar:geometry:check",
+          "scripts": [
+            "cat-harness/scripts/gen-navbar-geometry-css.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        },
+        {
+          "command": "bun run check:viewer-nav",
+          "scripts": [
+            "cat-harness/scripts/check-viewer-nav.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        }
+      ]
+    },
+    "kinds-empty": {
+      "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
+      "count": 0,
+      "entries": []
+    },
+    "kinds-no-directory": {
+      "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
+      "count": 9,
+      "entries": [
+        {
+          "kind": "bean-defs",
+          "criteria": 0,
+          "gates": [
+            "bun run check:bean-bodies",
+            "bun run check:bean-front-matter",
+            "bun run check:bean-issue-links",
+            "bun run check:bean-parents",
+            "bun run check:bean-restates-skill",
+            "bun run check:bean-rollup",
+            "bun run check:ready-to-close",
+            "bun run check:stale-paths"
+          ]
+        },
+        {
+          "kind": "board-positions",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "boards",
+          "criteria": 0,
+          "gates": [
+            "bun run boards:default:check"
+          ]
+        },
+        {
+          "kind": "qa-report",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "review-verdicts",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "session-state",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "todo-feedback",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "todo-items",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "workflow-state",
+          "criteria": 0,
+          "gates": [
+            "bun run check:prov-qaqc"
+          ]
+        }
+      ]
+    },
+    "kinds-unaudited": {
+      "summary": "A declared kind whose directories hold files that no kg-audit criterion and no gate declaring @covers reaches. An UPPER bound while gates remain undeclared: 11 of 146 gate(s) have not said what they cover.",
+      "count": 4,
+      "entries": [
+        {
+          "kind": "health",
+          "directories": [
+            "cat-harness/test/health/results"
+          ]
+        },
+        {
+          "kind": "interaction",
+          "directories": [
+            "interaction"
+          ]
+        },
+        {
+          "kind": "issue-marks",
+          "directories": [
+            "issue-marks"
+          ]
+        },
+        {
+          "kind": "todos",
+          "directories": [
+            "todos"
+          ]
+        }
+      ]
+    }
+  },
+  "total": 66
+}
