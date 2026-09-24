@@ -20285,6 +20285,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/theme.themedtodofieldsschema.layout",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ThemedTodoFieldsSchema.layout"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which of the theme's three crops this sticky shows. ABSENT means the square `card` crop, on every screen — owner, 2026-09-24: *\"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified.\"* Absent rather than defaulted, for the same reason as `theme`: \"the author chose card\" and \"nobody chose\" stay distinguishable."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/theme.ts#ThemedTodoFieldsSchema.layout",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/theme.themegeometryschema.fontscale",
       "@type": "skos:Concept",
       "skos:inScheme": {
