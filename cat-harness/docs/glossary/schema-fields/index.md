@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1380 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1379 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1554 terms and is 840 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1553 terms and is 839 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1554</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1553</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -8879,13 +8879,6 @@ SubgraphCoverageSchema.serialisations <span class="fa-gloss-status">candidate, e
 <dd>
 <p>What produces this directory's SERIALISATIONS — `json`, `jsonld` and `schema.json` at the directory's own URL.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.serialisations</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.skill" data-fa-state="extracted" data-fa-gloss="">
-SubgraphCoverageSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The skill that governs it, by NAME rather than by path, so no base applies.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.skill</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.visualiser" data-fa-state="extracted" data-fa-gloss="">
 SubgraphCoverageSchema.visualiser <span class="fa-gloss-status">candidate, extracted</span>
