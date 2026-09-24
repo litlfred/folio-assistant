@@ -285,8 +285,8 @@ a claim about those two and not about all of them.
 |---|---|---|
 | `cat-harness/computations/wall-violations.witness.json` | **yes**, at the same relative path, `computations/wall-violations.witness.json` | **removed** |
 | `cat-harness/latex/preamble.tex` | **yes**, as `qou/main.tex` — 811 of its 830 lines are common | **removed** |
-| `cat-harness/blueprint/` | **no** — no `blueprint/` on `main` or `gh-pages`, and no `.tex` file anywhere in qou carries the blueprint's labels | **kept** — only copy |
-| `cat-harness/home_page/` | **no** — qou holds no `_config.yml` at all | **kept** — only copy |
+| `cat-harness/blueprint/` | **no** — no `blueprint/` on `main` or `gh-pages` | **held** — pushed to qou as [qou#7453](https://github.com/litlfred/qou/pull/7453); removed here once that merges |
+| `cat-harness/home_page/` | **no** — qou holds no `_config.yml` at all | **removed** — nothing to rescue; see below |
 
 Two of the four are not a matter of degree, and both are worth stating exactly.
 
@@ -314,13 +314,55 @@ copy of a live file; it is the version qou deliberately reverted, sitting in a
 repository whose own banner says it should hold no folio content. Keeping it is
 the standing risk that something restores it.
 
-**`blueprint/` and `home_page/` are kept**, because removing them would destroy
-the only copy — 1,192 lines of blueprint mapping manuscript labels to `QOU.*`
-Lean declarations, and a site index. What to do with them needs a decision that
-is partly about the other repository, and it is asked separately rather than
-guessed at here. One observation for whoever takes it: `home_page/index.md`
-links to `blueprint/` and `blueprint.pdf`, and **neither exists on qou's
-`gh-pages`** — so the page it indexes was never published.
+### `blueprint/` goes to qou; `home_page/` goes
+
+The owner's second decision, 2026-09-24: push the blueprint to the folio
+repository that owns it, and drop the site index.
+
+**`blueprint/` is not stale, and the first measurement of it here was wrong.**
+`content.tex` carries 128 distinct `\lean{QOU.*}` references. A first pass
+searched for the fully-qualified string — `QOU.Boson` — against qou's 3,971
+`.lean` files and found 33, which would have argued for discarding the file.
+That was a defect in the search: **Lean writes `namespace QOU` and then the
+unqualified declaration**, so the qualified form never appears in source.
+Matched by bare declaration name after a declaration keyword:
+
+```
+resolve to a live declaration in qou:   111 / 128   (87%)
+do not resolve:                          17
+```
+
+Read 111 as an **upper bound**, not a verification — it is a name match, so two
+declarations sharing a name in different namespaces both count, and only the
+elaborator could say whether a reference binds to the object the blueprint
+means. That caveat travels with the file: it is in the imported README and in
+the PR.
+
+This is the third measurement in this document to come out wrong on a first
+pass and be corrected on a second, and all three failed the same way — **asking
+about the string a path or a name is written as, rather than the string a
+consumer writes.** The repository-scope join, the `../latex/preamble.tex`
+reference, and this. That is the finding under the finding.
+
+One more thing settles the direction. `web.tex` and `print.tex` both
+`\bibliography{../../references}`, which from `blueprint/src/` is the
+repository root. **qou has `references.bib` there; folio-assistant has none
+anywhere.** The blueprint's own relative paths resolve in the folio repository
+and do not resolve here — it was written for that checkout.
+
+So it is imported rather than deleted: [qou#7452](https://github.com/litlfred/qou/issues/7452),
+[qou#7453](https://github.com/litlfred/qou/pull/7453). `cat-harness/blueprint/`
+stays here until that PR merges, and is removed in a follow-up rather than in
+this one — deleting the only copy on the strength of an unmerged PR is the
+thing `deletion-requires-confirmation` exists to prevent.
+
+**`home_page/` is removed.** Two files: a Jekyll `_config.yml` with
+`baseurl: "/qou"` and an `index.md` linking to `papers/…`, `blueprint/` and
+`blueprint.pdf`. Checked against qou's `gh-pages`, which is the site those
+links would have to land on: it carries `papers/`, and it carries **no
+`blueprint/` and no `blueprint.pdf`**. The page indexes a site that does not
+have two of the three things it points at, in a repository that does not
+publish it. There is nothing to rescue, so it is not pushed anywhere.
 
 ## What would falsify this
 
