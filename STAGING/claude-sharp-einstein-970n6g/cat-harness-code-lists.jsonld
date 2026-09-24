@@ -198,6 +198,296 @@
       "definition": "Reject the translation and request a new one; it goes back to Task_Translate."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-certainty",
+      "prefLabel": "GRADE certainty of evidence",
+      "definition": "The four levels of certainty GRADE assigns to a BODY of evidence for one outcome — never to a single citation. Randomised trials start at high and observational studies at low, before rating down or up. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2010.07.015"
+      },
+      "changeNote": "Balshem H, et al. GRADE guidelines: 3. Rating the quality of evidence. J Clin Epidemiol 2011;64(4):401-406"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty/high",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty",
+      "notation": "high",
+      "prefLabel": "High",
+      "definition": "We are very confident that the true effect lies close to the estimate of the effect."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty/moderate",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty",
+      "notation": "moderate",
+      "prefLabel": "Moderate",
+      "definition": "We are moderately confident in the effect estimate: the true effect is likely to be close to it, but there is a possibility that it is substantially different."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty/low",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty",
+      "notation": "low",
+      "prefLabel": "Low",
+      "definition": "Our confidence in the effect estimate is limited: the true effect may be substantially different from it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty/very-low",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-certainty",
+      "notation": "very-low",
+      "prefLabel": "Very low",
+      "definition": "We have very little confidence in the effect estimate: the true effect is likely to be substantially different from it. Not the same finding as 'could not determine' — absent evidence is a gap, not a grade."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-etd-criterion",
+      "prefLabel": "GRADE Evidence-to-Decision criteria",
+      "definition": "The criteria an Evidence-to-Decision framework judges, EACH EXPLICITLY, before a recommendation. They are judged and argued, never summed into a score. These are the criteria of the framework for clinical and public-health recommendations. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1136/bmj.i2016"
+      },
+      "changeNote": "Alonso-Coello P, et al. GRADE Evidence to Decision (EtD) frameworks: a systematic and transparent approach to making well informed healthcare choices. 1: Introduction. BMJ 2016;353:i2016"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/problem-priority",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "problem-priority",
+      "prefLabel": "Priority of the problem",
+      "definition": "Whether the problem the recommendation addresses is a priority."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/desirable-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "desirable-effects",
+      "prefLabel": "Desirable effects",
+      "definition": "How substantial the desirable anticipated effects of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/undesirable-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "undesirable-effects",
+      "prefLabel": "Undesirable effects",
+      "definition": "How substantial the undesirable anticipated effects of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/certainty-of-evidence",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "certainty-of-evidence",
+      "prefLabel": "Certainty of evidence",
+      "definition": "The overall certainty of the evidence of effects, rated per the grade-certainty list."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/values",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "values",
+      "prefLabel": "Values",
+      "definition": "Whether there is important uncertainty about, or variability in, how much the people affected value the main outcomes."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/balance-of-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "balance-of-effects",
+      "prefLabel": "Balance of effects",
+      "definition": "Whether the balance between desirable and undesirable effects favours the option or the comparison."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/resources-required",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "resources-required",
+      "prefLabel": "Resources required",
+      "definition": "How large the resource requirements, or costs, of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/resource-evidence-certainty",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "resource-evidence-certainty",
+      "prefLabel": "Certainty of evidence of required resources",
+      "definition": "The certainty of the evidence about the resources the option requires."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/cost-effectiveness",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "cost-effectiveness",
+      "prefLabel": "Cost-effectiveness",
+      "definition": "Whether the cost-effectiveness of the option favours the option or the comparison."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/equity",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "equity",
+      "prefLabel": "Equity",
+      "definition": "What the impact of the option on health equity would be."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/acceptability",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "acceptability",
+      "prefLabel": "Acceptability",
+      "definition": "Whether the option is acceptable to key stakeholders."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion/feasibility",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-etd-criterion",
+      "notation": "feasibility",
+      "prefLabel": "Feasibility",
+      "definition": "Whether the option is feasible to implement."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-rating-down",
+      "prefLabel": "GRADE reasons to rate certainty down",
+      "definition": "The five domains for which GRADE lowers the certainty of a body of evidence. Each rating-down is recorded with the code that caused it, so the grade can be re-examined. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://gdt.gradepro.org/app/handbook/handbook.html"
+      },
+      "changeNote": "GRADE Handbook (Schünemann H, Brożek J, Guyatt G, Oxman A, eds.), section 5.2: factors that can reduce the certainty of evidence; GRADE guidelines 4-8, J Clin Epidemiol 2011"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down/risk-of-bias",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "notation": "risk-of-bias",
+      "prefLabel": "Risk of bias",
+      "definition": "Limitations in the design or execution of the included studies — such as lack of allocation concealment, lack of blinding, or loss to follow-up — that make the estimate likely to be biased."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down/inconsistency",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "notation": "inconsistency",
+      "prefLabel": "Inconsistency",
+      "definition": "Unexplained heterogeneity: the studies' effect estimates differ widely, their confidence intervals overlap little, or statistical tests show heterogeneity that the analysis cannot explain."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down/indirectness",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "notation": "indirectness",
+      "prefLabel": "Indirectness",
+      "definition": "The evidence does not answer the question directly: the population, intervention, comparator or outcome studied differs from the one the recommendation is about, or interventions were compared only indirectly."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down/imprecision",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "notation": "imprecision",
+      "prefLabel": "Imprecision",
+      "definition": "The estimate is uncertain because the studies are small or events few, so the confidence interval includes effects that would lead to different decisions."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down/publication-bias",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-down",
+      "notation": "publication-bias",
+      "prefLabel": "Publication bias",
+      "definition": "Studies are likely missing from the body of evidence because publication depended on the direction or size of their results."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-rating-up",
+      "prefLabel": "GRADE reasons to rate certainty up",
+      "definition": "The three domains for which GRADE may raise the certainty of a body of evidence — applied mainly to observational studies with no reason to rate down. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2011.06.004"
+      },
+      "changeNote": "Guyatt GH, et al. GRADE guidelines: 9. Rating up the quality of evidence. J Clin Epidemiol 2011;64(12):1311-1316"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up/large-effect",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up",
+      "notation": "large-effect",
+      "prefLabel": "Large magnitude of effect",
+      "definition": "The effect is so large that bias alone is unlikely to explain it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up/dose-response",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up",
+      "notation": "dose-response",
+      "prefLabel": "Dose-response gradient",
+      "definition": "The effect increases or decreases consistently with the level of exposure, which strengthens the inference that the relationship is causal."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up/plausible-confounding",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-rating-up",
+      "notation": "plausible-confounding",
+      "prefLabel": "Plausible confounding would reduce the effect",
+      "definition": "All plausible residual confounding or bias would reduce a demonstrated effect — or would suggest a spurious effect where none was observed — so the true effect is likely at least as large as estimated."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-direction",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-recommendation-direction",
+      "prefLabel": "GRADE recommendation direction",
+      "definition": "Which way a recommendation points. Always recorded together with its strength: one without the other is not a GRADE recommendation. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2013.02.003"
+      },
+      "changeNote": "Andrews JC, et al. GRADE guidelines: 15. Going from evidence to recommendation — determinants of a recommendation's direction and strength. J Clin Epidemiol 2013;66(7):726-735; WHO Handbook for Guideline Development, 2nd ed. (2014), which uses 'conditional' for GRADE's 'weak'"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-direction/for",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-direction",
+      "notation": "for",
+      "prefLabel": "For the option",
+      "definition": "The recommendation is to use the option."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-direction/against",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-direction",
+      "notation": "against",
+      "prefLabel": "Against the option",
+      "definition": "The recommendation is not to use the option."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-strength",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-recommendation-strength",
+      "prefLabel": "GRADE recommendation strength",
+      "definition": "How strongly a recommendation is made. Strength is NOT certainty: a strong recommendation can rest on low-certainty evidence and a conditional one on high certainty. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2013.02.003"
+      },
+      "changeNote": "Andrews JC, et al. GRADE guidelines: 15. Going from evidence to recommendation — determinants of a recommendation's direction and strength. J Clin Epidemiol 2013;66(7):726-735; WHO Handbook for Guideline Development, 2nd ed. (2014), which uses 'conditional' for GRADE's 'weak'"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-strength/strong",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-strength",
+      "notation": "strong",
+      "prefLabel": "Strong",
+      "definition": "The guideline panel is confident that the desirable effects of following the recommendation clearly outweigh the undesirable effects — or clearly do not, for a recommendation against — so most informed people would choose the recommended course."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-strength/conditional",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#grade-recommendation-strength",
+      "notation": "conditional",
+      "prefLabel": "Conditional",
+      "definition": "The desirable effects probably outweigh the undesirable effects, but the panel is less confident: the balance is close, the evidence uncertain, or values and preferences vary, so different choices will suit different people or settings. GRADE's 'weak'; WHO uses 'conditional'."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-code-lists.jsonld#own-namespaces",
       "@type": "skos:ConceptScheme",
       "notation": "own-namespaces",
