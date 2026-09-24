@@ -825,6 +825,9 @@ export const RULES: Rule[] = [
       // The `# bpmn:` / `# bpmn-node:` lines a workflow names its diagram with
       // (bean `61ca`). Same subject as the coverage check that reads them.
       "scripts/workflow-bpmn.ts",
+      // Which docs page sections present which process, read from the pages
+      // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
+      "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)

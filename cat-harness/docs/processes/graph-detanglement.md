@@ -19,6 +19,7 @@ THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DI
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html)
 
 ## Lanes — who acts
