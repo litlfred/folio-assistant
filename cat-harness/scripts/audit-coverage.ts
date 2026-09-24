@@ -187,8 +187,24 @@ function isSidecar(name: string): boolean {
   return /\.(qa|kg-qa|qa-results|qa-witness)\.json$/.test(name);
 }
 
+/**
+ * This script's OWN sidecar, which the census must not count.
+ *
+ * It lives in the `qa-results` graph, so the `qa` row counts it — and writing it
+ * changes the number the next run computes, which changes the sidecar, for ever.
+ * The first version had no fixpoint: `audit:coverage` then `audit:coverage:check`
+ * failed, and running the writer twice was the only way to satisfy a gate that
+ * is supposed to be satisfied by running it once.
+ *
+ * **A measurement must not be a term in itself.** Not a special case to be
+ * embarrassed about but the general reason this exclusion exists, and the path is
+ * DERIVED from the same constants that write the file rather than spelled out, so
+ * relocating the results directory cannot leave the exclusion pointing elsewhere.
+ */
+const SELF_SIDECAR = join(ROOT, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
+
 /** Files and sidecars under `dir`, recursively. Unreadable is zero, reported by the caller. */
-export function census(dir: string): { files: number; sidecars: number; readable: boolean } {
+export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SIDECAR])): { files: number; sidecars: number; readable: boolean } {
   let entries: string[];
   try {
     entries = readdirSync(dir);
@@ -200,6 +216,7 @@ export function census(dir: string): { files: number; sidecars: number; readable
   for (const e of entries) {
     if (e.startsWith(".")) continue;
     const p = join(dir, e);
+    if (skip.has(p)) continue;
     let dirent;
     try {
       dirent = statSync(p);
@@ -207,7 +224,7 @@ export function census(dir: string): { files: number; sidecars: number; readable
       continue;
     }
     if (dirent.isDirectory()) {
-      const inner = census(p);
+      const inner = census(p, skip);
       files += inner.files;
       sidecars += inner.sidecars;
     } else if (isSidecar(e)) sidecars++;
@@ -427,8 +444,8 @@ function comparable(r: QaResult): string {
  * the `dh4f` case — no record at all reads identically to a clean one if both
  * are reported as "not stale".
  */
-export function sidecarState(repo: string, fresh: QaResult): "absent" | "stale" | "current" {
-  const p = join(repo, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
+export function sidecarState(instanceRoot: string, fresh: QaResult): "absent" | "stale" | "current" {
+  const p = join(instanceRoot, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
   if (!existsSync(p)) return "absent";
   try {
     return comparable(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparable(fresh) ? "current" : "stale";
@@ -547,10 +564,16 @@ function main(): number {
 
   // Read the committed state BEFORE writing, and under `--check` do not write
   // at all — see the docblock. The writer is `audit:coverage`; this is the gate.
-  const state = sidecarState(REPO, result);
-  if (!check) writeQaResult(REPO, "audit-coverage", result);
+  // The INSTANCE root, not the repository root. `QA_RESULTS_DIR` is declared as
+  // this instance's `qa-results` graph, and `check:undeclared-files` is what
+  // caught the first version writing to `<repo>/test/results/` — a directory no
+  // declaration names, so every consumer scanning the declared graphs would have
+  // read a clean run over the one file this script exists to produce. The `dh4f`
+  // defect, committed by the script whose whole subject is coverage.
+  const state = sidecarState(ROOT, result);
+  if (!check) writeQaResult(ROOT, "audit-coverage", result);
   if (state !== "current") {
-    const where = join(relative(REPO, join(REPO, QA_RESULTS_DIR)), "audit-coverage.qa-results.json");
+    const where = relative(REPO, join(ROOT, QA_RESULTS_DIR, "audit-coverage.qa-results.json"));
     const msg = state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} disagrees with this run`;
     console.log(check ? `\n✗ ${msg} — run \`bun run audit:coverage\` and commit it.` : `\n· ${msg} — written.`);
   }
