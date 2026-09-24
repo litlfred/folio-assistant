@@ -3455,6 +3455,84 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
+/* THE GLASS IS JEWELLED — owner, 2026-09-24: *"I like purple, but maybe
+ * slightly/abstractly jewelled? stained glass? modern … align options to
+ * themes"*, then **"Mix, per theme"** from five previewed options.
+ *
+ * Each glass theme carries a PATTERN as well as a tint, painted on `::before`
+ * at the reader's opacity (scaled, so 20% still reads as glass and not as
+ * nothing). A sticky theme belongs to ONE sticky while the glass is shared, so
+ * the pairing is carried by the glass themes the Settings tile offers:
+ *
+ *   Glass  → amethyst facets  (default; pairs with Analyst, Operations)
+ *   Paper  → iris haze        (Pale sage, Dusty Carolina blue)
+ *   Night  → opal night       (Night, Operations)
+ *   Rose window → cathedral rose, leaded (Library, Grumpy cat)
+ *   Leaded grid → modernist panes, one amber jewel (Architecture, Engineer)
+ *
+ * HIGH CONTRAST HAS NO PATTERN, deliberately: it is the usability theme, and
+ * nothing decorative may sit behind it. The cards stay solid on every theme,
+ * so no pattern ever sits behind text. Pure CSS: no image to fetch or drift. */
+.fa-sticky-layer {
+  --fa-glass-pattern:
+    conic-gradient(from 210deg at 30% 38%, rgba(255,255,255,.18) 0 12%, transparent 12% 30%, rgba(255,255,255,.08) 30% 41%, transparent 41% 62%, rgba(0,0,0,.18) 62% 78%, transparent 78%),
+    conic-gradient(from 40deg at 72% 64%, rgba(0,0,0,.2) 0 14%, transparent 14% 36%, rgba(255,255,255,.12) 36% 48%, transparent 48% 70%, rgba(255,255,255,.06) 70% 84%, transparent 84%),
+    linear-gradient(135deg, #3b1d6e 0%, #6a3fc4 45%, #8c74f0 70%, #4a2690 100%);
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer,
+.fa-sticky-layer[data-fa-glass-theme="paper"] {
+  --fa-glass-pattern:
+    linear-gradient(115deg, transparent 0 58%, rgba(255,210,240,.55) 60%, rgba(200,230,255,.5) 63%, rgba(220,255,230,.45) 66%, transparent 69%),
+    radial-gradient(120% 90% at 15% 10%, #efe8ff 0%, transparent 60%),
+    linear-gradient(160deg, #d9ccfb 0%, #b7a3ef 50%, #9d8ae0 100%);
+}
+.fa-sticky-layer[data-fa-glass-theme="night"] {
+  --fa-glass-pattern:
+    radial-gradient(3px 3px at 18% 24%, rgba(190,160,255,.9), transparent),
+    radial-gradient(2px 2px at 64% 18%, rgba(140,220,255,.8), transparent),
+    radial-gradient(2px 2px at 82% 66%, rgba(255,170,220,.8), transparent),
+    radial-gradient(3px 3px at 36% 78%, rgba(165,146,255,.85), transparent),
+    radial-gradient(40% 50% at 70% 70%, rgba(120,70,220,.35), transparent 70%),
+    radial-gradient(45% 55% at 25% 30%, rgba(70,110,210,.28), transparent 70%),
+    linear-gradient(150deg, #141019 0%, #1f1830 55%, #120e18 100%);
+}
+.fa-sticky-layer[data-fa-glass-theme="rose"] {
+  --fa-glass-tint: 28, 20, 38;
+  --fa-glass-card: #e8e8e0;
+  --fa-glass-ink: #1c2630;
+  --fa-glass-muted: #4a5663;
+  --fa-glass-edge: #c2ccd4;
+  --fa-glass-accent: #5b2fb0;
+  --fa-glass-pattern:
+    radial-gradient(circle at 50% 50%, transparent 0 17%, #1c1426 17% 18.2%, transparent 18.2% 33%, #1c1426 33% 34.2%, transparent 34.2%),
+    repeating-conic-gradient(from 0deg at 50% 50%, #1c1426 0 1.2deg, transparent 1.2deg 30deg),
+    conic-gradient(from 0deg at 50% 50%, #5b2fb0 0 30deg, #7a4ad8 30deg 60deg, #9b2d5c 60deg 90deg, #5b2fb0 90deg 120deg, #2f4fa8 120deg 150deg, #7a4ad8 150deg 180deg, #5b2fb0 180deg 210deg, #9b2d5c 210deg 240deg, #7a4ad8 240deg 270deg, #2f4fa8 270deg 300deg, #5b2fb0 300deg 330deg, #7a4ad8 330deg 360deg);
+}
+.fa-sticky-layer[data-fa-glass-theme="leaded"] {
+  --fa-glass-tint: 34, 26, 46;
+  --fa-glass-card: #fdfbf0;
+  --fa-glass-ink: #1a372d;
+  --fa-glass-muted: #45574e;
+  --fa-glass-edge: #a6aea8;
+  --fa-glass-accent: #4d2e9e;
+  --fa-glass-pattern:
+    linear-gradient(90deg, transparent 0 22%, #221a2e 22% 22.8%, transparent 22.8% 61%, #221a2e 61% 61.8%, transparent 61.8%),
+    linear-gradient(0deg, transparent 0 34%, #221a2e 34% 35.2%, transparent 35.2% 72%, #221a2e 72% 73.2%, transparent 73.2%),
+    linear-gradient(90deg, #6b4bc9 0 22%, #8e76e6 22% 61%, #4d2e9e 61%) top / 100% 34% no-repeat,
+    linear-gradient(90deg, #b9a8f2 0 22%, #6b4bc9 22% 61%, #c6a54a 61%) 0 55.74% / 100% 39% no-repeat,
+    linear-gradient(90deg, #4d2e9e 0 22%, #a38ef0 22% 61%, #6b4bc9 61%) bottom / 100% 27% no-repeat;
+}
+.fa-sticky-layer[data-fa-glass-theme="contrast"] { --fa-glass-pattern: none; }
+.fa-sticky-layer[data-fa-glass="open"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--fa-glass-pattern);
+  /* 20% (the default) reads as 36% here: enough to see the facets, still glass. */
+  opacity: min(1, calc(var(--fa-glass-opacity, 0.2) * 1.8));
+}
 .fa-sticky-layer[data-fa-glass="open"][data-fa-glass-blur="off"] {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;

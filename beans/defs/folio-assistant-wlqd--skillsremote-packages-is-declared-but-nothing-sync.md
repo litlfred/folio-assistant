@@ -1,7 +1,7 @@
 ---
 # folio-assistant-wlqd
 title: skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-19T05:47:28Z
@@ -53,13 +53,13 @@ make the integration real.**
 
 One of two, and it is a decision rather than a lookup:
 
-- [ ] **Implement it** — something syncs a declared remote package and
+- [x] **Implement it** — something syncs a declared remote package and
       `skill_fetch` can serve its skills. Then `manifest-skill-exists` should
       accept a remote declaration again, and
       `scripts/tests/manifest-remote-resolution.test.ts` is where the argument
       for closing it is recorded, so revisit it there rather than rediscovering
       it. Its pinned reader list makes a sixth reader visible.
-- [ ] **Or say it is a docs input** — drop `sync` from the wrappers, or move
+- [x] ~~**Or say it is a docs input**~~ (not taken: the owner chose to implement) — drop `sync` from the wrappers, or move
       these files to a name that does not read as a package the instance has.
       Five skills nothing can fetch are five names a reader will try.
 
@@ -329,3 +329,24 @@ Three answers, in order:
 Also measured 2026-09-24: K-Dense-AI/claude-scientific-skills @ 49c6e977 is
 MIT-licensed and holds all three declared skills at `skills/<name>/SKILL.md`
 (166 skills upstream), about 680 KB with their scripts and references.
+
+## Summary of Changes
+
+Done on PR #1183, following the owner's three answers on 2026-09-24.
+
+- `sync-remote-skills.ts` (`sync:remote-skills`) materializes each declared
+  skill at the commit its wrapper pins, as its own package, with a sha256
+  per file and upstream's LICENSE copied beside it. `check:materialized-fixity`
+  catches any edit in place (probed).
+- `check:remote-skills` runs offline in CI. It checks that each skill is
+  materialized at its pin, that a licence file is present, and that NOTICE
+  credits the package at that pin.
+- A wrapper that syncs must pin a full commit SHA and may not auto-update.
+- The two FHIR names were never skills upstream. They are now authored in
+  `fhir-harness/skills/fhir-client/`.
+- The stubs are retired to fsh-guts. `remote-skill-servable.test.ts` pins
+  what each of the five names became.
+- Third-party skills keep their own licence: a row in LICENSE-CONTENT.md,
+  and an entry in NOTICE.
+
+Issue #556 stays open until the owner closes it.

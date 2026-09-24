@@ -4096,10 +4096,15 @@
    */
   var GLASS_PREFS_KEY = "fa-glass-prefs";
   var GLASS_THEMES = [
-    { id: "glass", label: "Glass", hint: "see-through and blurred", opacity: 20 },
-    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines", opacity: 100 },
-    { id: "paper", label: "Paper", hint: "light and nearly solid", opacity: 92 },
-    { id: "night", label: "Night", hint: "dark and nearly solid", opacity: 92 },
+    // Each carries a jewelled purple pattern (owner, 2026-09-24: "Mix, per
+    // theme"), and the hint names the sticky themes it suits. Contrast
+    // stays plain: it is the usability theme.
+    { id: "glass", label: "Glass", hint: "amethyst facets, see-through and blurred — suits Analyst, Operations", opacity: 20 },
+    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines, no pattern", opacity: 100 },
+    { id: "paper", label: "Paper", hint: "iris haze, light and nearly solid — suits Pale sage, Dusty Carolina blue", opacity: 92 },
+    { id: "night", label: "Night", hint: "opal night, dark and nearly solid", opacity: 92 },
+    { id: "rose", label: "Rose window", hint: "cathedral stained glass — suits Library, Grumpy cat", opacity: 30 },
+    { id: "leaded", label: "Leaded grid", hint: "modern stained glass panes — suits Architecture, Engineer", opacity: 30 },
   ];
   var GLASS_AVATAR_STYLES = [
     { id: "pictures", label: "Pictures", hint: "a book's cover when it has one, otherwise its kind avatar" },
