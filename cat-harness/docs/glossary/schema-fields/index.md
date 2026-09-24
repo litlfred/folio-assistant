@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1379 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1394 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1559 terms and is 843 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1574 terms and is 851 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1559</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1574</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3721,6 +3721,13 @@ GraphKindDef.validatorNotApplicable <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>WHY a runtime validator does not apply to this kind — a reason, not a flag.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.within" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.within <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The kind this one is a SUB-GRAPH of, when it is one.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphkinds" data-fa-state="extracted" data-fa-gloss="">
 GraphNodeDirectory.graphKinds <span class="fa-gloss-status">candidate, extracted</span>
@@ -7455,6 +7462,34 @@ Requirement.title <span class="fa-gloss-status">candidate, extracted</span>
 <p>Human-readable title.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#Requirement.title</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.derivedfrom" data-fa-state="extracted" data-fa-gloss="">
+RequirementFields.derivedFrom <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Broader requirements this one specialises, by id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.id" data-fa-state="extracted" data-fa-gloss="">
+RequirementFields.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>`req:&lt;slug&gt;`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.proposedin" data-fa-state="extracted" data-fa-gloss="">
+RequirementFields.proposedIn <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.proposedIn</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.supersededby" data-fa-state="extracted" data-fa-gloss="">
+RequirementFields.supersededBy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>When `superseded`: what replaced it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.supersededBy</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--assistant-types.requirementstatement.actors" data-fa-state="extracted" data-fa-gloss="">
 RequirementStatement.actors <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -7496,6 +7531,69 @@ RequirementStatement.requirement <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Full requirement text.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#RequirementStatement.requirement</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.activity" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.activity <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>FUNCTIONAL — the activity the statement is part of.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.activity</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.actors" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.actors <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The roles it is about, by id in the harness's own role registry.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.actors</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.benefit" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.benefit <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>FUNCTIONAL — why (&quot;so that …&quot;).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.capability" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.capability <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>FUNCTIONAL — what the actor wants to be able to do (&quot;I want …&quot;).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.capability</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.category" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.category <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>NON-FUNCTIONAL — which quality it constrains.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.category</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.conformance" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.conformance <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.dependson" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.dependsOn <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other statements this one presupposes, by &#123;@link requirementRef}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.key" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.key <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Unique within its requirement; with the requirement's id it is the statement's address.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.key</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.requirement" data-fa-state="extracted" data-fa-gloss="">
+RequirementStatementFields.requirement <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The statement itself, as one sentence a reviewer can say yes or no to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--theme.resolvedbackdrop.art" data-fa-state="extracted" data-fa-gloss="">
 ResolvedBackdrop.art <span class="fa-gloss-status">candidate, extracted</span>
@@ -9226,6 +9324,13 @@ TestRunSchema.process <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>WHAT TESTED IT — runner, configuration, scenario bank.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.process</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--test-run.testrunschema.requirements" data-fa-state="extracted" data-fa-gloss="">
+TestRunSchema.requirements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164): *&quot;put requirements in Test schema as array&quot;*, as REFERENCES (`req:&lt;slug&gt;` or `req:&lt;slug&gt;#&lt;statement-key&gt;`), never copies: the requirement's text lives in one place, and a copy in every run is a copy free to disagree with it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.requirements</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--test-run.testrunschema.skill" data-fa-state="extracted" data-fa-gloss="">
 TestRunSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
