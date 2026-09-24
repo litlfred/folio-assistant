@@ -22,10 +22,36 @@ The owner, 2026-09-23:
 
 Three rules, and the third is what makes the first two safe.
 
-## 1. Every asset carries an `id` and a `version`
+## 1. Every asset carries a `version` — and the `id` is HELD
 
-Not only the publishable ones. `id` and `version` are **universal and
-required** on every instance declaration.
+`version` is **universal**. Not only the publishable ones.
+
+**It is enforced by `check:publishable`, not by the schema**, and that is a
+measured decision rather than a weaker one: requiring it in the type breaks
+**376 tests across 20+ files**, every fixture that builds a declaration
+without it. A sweep that size hides a real regression among the noise, and the
+property is delivered either way — all instances carry one, and a new instance
+without a version fails the gate, **by name**, rather than as a parse error
+somewhere in a fixture.
+
+**`id` is a different story, and it is not shipped.** The owner ruled the
+namespace `io.github.litlfred.folio-assistant.<name>`; it was minted into all
+17 declarations and then **removed**, because the next ruling contradicts
+writing it there at all:
+
+> i want simplest so if someone wants to bootstrap a different harness, there
+> is only one place to change. **ONE PLACE.**
+>
+> fork would only edit `bootstrap/README.md` and change ONE reference there.
+
+A namespace written into 17 files is 17 places. So an id must be **derived**
+from that single reference — and the reference does not exist yet.
+`bootstrap/README.md` today carries **zero** outward references and its own
+tests enforce that. Bean `iwtn` owns creating it.
+
+Minting ids before then bakes the wrong scheme into something this schema
+itself calls *stable forever, never reused*. The namespace rule below stands;
+only its application waits.
 
 This reverses what `instance-versioning.md` §3.1 originally shipped, which
 **refused** them unless an instance declared `publishable: true`:

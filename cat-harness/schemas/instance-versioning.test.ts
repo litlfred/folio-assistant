@@ -24,7 +24,6 @@ import { auditPublishable, formatReport } from "../scripts/check-publishable";
 function decl(over: Record<string, unknown> = {}): unknown {
   return {
     name: "example",
-    id: "org.example.example",
     version: "0.1.0",
     directories: [],
     remoteGraphs: [],
@@ -82,35 +81,81 @@ describe("publication is a STATE, and `published` is refused (§3.1, superseded 
   });
 });
 
-describe("every asset carries an id and a version (§3.2, owner 2026-09-23)", () => {
-  test("both present parses", () => {
-    expect(CatHarnessDeclarationSchema.safeParse(decl()).success).toBe(true);
+describe("a version is universal but GATE-enforced; an id is held (§3.2, owner 2026-09-23)", () => {
+  /** A throwaway instance tree. Never the real corpus — that is a sibling's timeout. */
+  function tree(instances: Record<string, unknown>): string {
+    const root = mkdtempSync(join(tmpdir(), "vertest-"));
+    for (const [name, body] of Object.entries(instances)) {
+      const dir = join(root, name);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(join(dir, `${name}.json`), JSON.stringify(body));
+    }
+    return root;
+  }
+
+  test("a declaration with neither still parses — the type permits absence", () => {
+    expect(CatHarnessDeclarationSchema.safeParse(decl({ id: undefined, version: undefined })).success).toBe(true);
   });
 
   /**
-   * The inversion, stated as a test rather than only in prose: these two used
-   * to be REFUSED unless `publishable: true`, and are now REQUIRED of
-   * everything. A reader who finds the old wording somewhere should be able to
-   * run this and see which way round it is.
-   */
-  test("a MISSING id or version is refused, on its own path", () => {
-    expect(failedPaths(decl({ id: undefined }))).toEqual(["id"]);
-    expect(failedPaths(decl({ version: undefined }))).toEqual(["version"]);
-  });
-
-  test("both missing are reported TOGETHER, not one at a time", () => {
-    expect(failedPaths(decl({ id: undefined, version: undefined }))).toEqual(["id", "version"]);
-  });
-
-  /**
-   * `canonicalUrl` is NOT in that list, and the omission is deliberate.
+   * THE ASYMMETRY, pinned, because it is the part that reads as a weakening
+   * and is not one.
    *
-   * It is what §3.4's record needs to play FHIR's `uri` role, so an instance
-   * without one cannot be expressed as a dependency — but that is a fact about
-   * the RECORD, reported by `dependsOnFor` as a `no-uri` gap, not a reason to
-   * refuse the declaration. Only 3 of the 17 instances here carry one.
+   * §3.1 shipped `id` and `version` REFUSED unless `publishable: true`. The
+   * owner reversed that on 2026-09-23 — every asset carries a version — and
+   * requiring it in the TYPE breaks 376 tests across 20+ files, every fixture
+   * that builds a declaration without one. So the requirement moved to
+   * `check:publishable`, which fails the instance BY NAME rather than as a
+   * parse error inside a fixture.
+   *
+   * `auditPublishable` raising a `major` on a versionless instance is the
+   * assertion that makes "universal" true; without it this file would be
+   * pinning permission rather than a property.
    */
-  test("`canonicalUrl` is NOT required — a draft without one is a legal declaration", () => {
+  test("the GATE is what refuses a missing version, and names the instance", () => {
+    const root = tree({ alpha: { name: "alpha", directories: [] } });
+    try {
+      const { findings } = auditPublishable(root);
+      const missing = findings.filter((f) => f.detail.includes("version"));
+      expect(missing).toHaveLength(1);
+      expect(missing[0]!.severity).toBe("major");
+      expect(missing[0]!.detail).toContain("alpha");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("an instance WITH a version raises nothing — falsifiable in both directions", () => {
+    const root = tree({ alpha: { name: "alpha", version: "0.1.0", directories: [] } });
+    try {
+      expect(auditPublishable(root).findings).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  /**
+   * `id` is HELD, not dropped. The owner ruled the namespace
+   * `io.github.litlfred.folio-assistant.<name>` and then ruled that a fork
+   * edits ONE reference in `bootstrap/README.md` — so a namespace written into
+   * 17 declarations is 17 places, and an id must be DERIVED from that single
+   * reference once bean `iwtn` creates it.
+   *
+   * Until then no instance declares one, and NOTHING should start requiring
+   * it. This test fails the moment something does.
+   */
+  test("no instance declares an `id` yet, and an absent one is legal", () => {
+    expect(failedPaths(decl({ id: undefined }))).toEqual([]);
+  });
+
+  /**
+   * `canonicalUrl` stays unrequired for the reason §3.4 gives: it plays FHIR's
+   * `uri` role, so an instance without one cannot be EXPRESSED as a dependency
+   * — reported by `dependsOnFor` as a `no-uri` gap, which is a fact about the
+   * RECORD rather than a reason to refuse the declaration. Only 3 of the
+   * instances here carry one.
+   */
+  test("`canonicalUrl` is NOT required — a draft without one is legal", () => {
     expect(CatHarnessDeclarationSchema.safeParse(decl({ canonicalUrl: undefined })).success).toBe(true);
   });
 });

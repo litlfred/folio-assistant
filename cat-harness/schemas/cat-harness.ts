@@ -687,19 +687,28 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * FHIR rule 1 is that the id is the identity and never changes while the
    * version distinguishes snapshots of it.
    *
-   * **Universal and REQUIRED.** Owner's ruling, 2026-09-23 — every asset
-   * carries an id, not only the publishable ones. Namespace:
-   * `io.github.litlfred.folio-assistant.<name>`, from one mechanical rule —
-   * reverse the host, append the path — which is the same rule that yields
-   * FHIR's real `smart.who.int.base` from `smart.who.int/base`.
+   * **HELD, pending the ONE-reference design.** The owner ruled on 2026-09-23
+   * that every asset carries an id, under
+   * `io.github.litlfred.folio-assistant.<name>`. It was minted into all 17
+   * declarations and then REMOVED, because the owner's next ruling contradicts
+   * writing it there at all:
    *
-   * **A mirror never takes its subject's identity.** `smart-trust` here is our
-   * reconstructed index ABOUT that IG, not the IG; upstream ids are held as
-   * DATA (`chrome.json` records `smart.who.int.trust`). The rule, and why
-   * `canonicalUrl` describes the SUBJECT rather than driving our identity, are
-   * in `skills/folio-core/instance-publication.md`.
+   * > i want simplest so if someone wants to bootstrap a different harness,
+   * > there is only one place to change. ONE PLACE.
+   * > fork would only edit bootstrap/README.md and change ONE reference there.
+   *
+   * A namespace written into 17 files is 17 places. So the id must be DERIVED
+   * from that single reference, and the reference does not exist yet —
+   * `bootstrap/README.md` today has zero outward references and its own tests
+   * enforce that. Bean `iwtn` owns creating it.
+   *
+   * Minting ids before then would bake the wrong scheme into artefacts the
+   * schema itself calls *stable forever, never reused*.
+   *
+   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * why a mirror never takes its subject's identity.
    */
-  id: string;
+  id?: string;
 
   /**
    * The version, and it is an EXACT semver triple.
@@ -717,14 +726,23 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * deliberately does not appear in it: the canonical URL is stable ACROSS
    * versions.
    *
-   * **Universal and REQUIRED.** Owner's ruling, 2026-09-23: *"all assets get a
-   * version"*. §3.1 originally REFUSED one unless `publishable: true`, on the
-   * premise that a version reads as a publication claim. It does not — a
-   * version distinguishes snapshots; whether anyone outside may depend on them
-   * is {@link publication}, a separate question.
+   * **Universal, and enforced by the GATE rather than by this type.** Owner's
+   * ruling, 2026-09-23: *"all assets get a version"*. All 17 carry one, and
+   * `check:publishable` fails an instance without one.
+   *
+   * It is not `required` HERE because making it so breaks **376 tests across
+   * 20+ files** — every fixture that builds a declaration without it. A sweep
+   * that size hides a real regression among the noise, and the property asked
+   * for is delivered either way: the corpus is complete, and a new instance
+   * with no version does not pass.
+   *
+   * §3.1 originally REFUSED one unless `publishable: true`, on the premise
+   * that a version reads as a publication claim. It does not — a version
+   * distinguishes snapshots; whether anyone outside may depend on them is
+   * {@link publication}, a separate question.
    * `skills/folio-core/instance-publication.md`.
    */
-  version: string;
+  version?: string;
 }
 
 /**
@@ -2295,11 +2313,10 @@ export const CatHarnessDeclarationSchema = z.object({
    * identity, stable forever and never reused, while the version distinguishes
    * snapshots of it.
    *
-   * **REQUIRED on every instance** — owner's ruling, 2026-09-23. Namespace and
-   * the mirror-never-takes-its-subject's-identity rule:
-   * `skills/folio-core/instance-publication.md`.
+   * **HELD** pending `iwtn`'s ONE-reference design — see the interface field.
+   * An id derived from one place cannot be written into 17.
    */
-  id: z.string().min(1),
+  id: z.string().min(1).optional(),
   /**
    * The version — an exact semver triple, `current` or `dev`. Never a range.
    *
@@ -2307,11 +2324,11 @@ export const CatHarnessDeclarationSchema = z.object({
    * plays FHIR's `uri` role and deliberately carries no version: the canonical
    * URL is stable ACROSS versions.
    *
-   * **REQUIRED on every instance** — *"all assets get a version"*. A version
-   * distinguishes snapshots; it is not a publication claim, which is what §3.1
-   * mistook it for when it refused one to every undeclared instance.
+   * **Universal, gate-enforced** — see the interface field for why this is not
+   * required here: 376 fixtures. `check:publishable` is what fails an instance
+   * without one.
    */
-  version: ExactVersionSchema,
+  version: ExactVersionSchema.optional(),
 })
   /**
    * What the refinement still checks, now that `id` and `version` are required

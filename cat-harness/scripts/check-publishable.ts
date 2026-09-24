@@ -137,6 +137,28 @@ export function auditPublishable(repoRoot: string): PublishableReport {
       version: decl.version,
       canonicalUrl: decl.canonicalUrl,
     });
+
+    // THIS GATE IS WHAT MAKES "every asset carries a version" TRUE.
+    //
+    // The schema deliberately does not require it — doing so breaks 376
+    // fixtures across 20+ files, and a sweep that size hides a real regression
+    // among the noise. So the type permits absence and this refuses it, which
+    // delivers the same property with a legible failure: the instance is
+    // NAMED, rather than a parse error somewhere in a test fixture.
+    //
+    // `major` rather than `minor`: an instance with no version cannot be
+    // scored by `check:version-bump`, which skips it — so an unversioned
+    // instance is invisible to the machinery that exists to watch versions.
+    if (decl.version === undefined) {
+      findings.push({
+        severity: "major",
+        where,
+        detail:
+          `\`${decl.name}\` declares no \`version\`. Every asset carries one ` +
+          "(owner, 2026-09-23), and `check:version-bump` SKIPS an instance without one — " +
+          "so this is not a cosmetic gap: it is an instance the version machinery cannot see",
+      });
+    }
   }
 
   // Cross-instance rule: an id is an identity, so it belongs to one instance.
@@ -194,9 +216,11 @@ export function formatReport(report: PublishableReport): string {
     out.push("");
     out.push("EVERY INSTANCE IS DRAFT, and that is now a DECIDED state rather than a worklist.");
     out.push(
-      "§6 Q1 is ANSWERED (owner, 2026-09-23): all assets carry an id and a version and sit in draft, and formal " +
-        "publication is a process that needs defining, tooling, and a per-instance answer. Nothing here is awaiting " +
-        "a decision; it is awaiting that process.",
+      "§6 Q1 is ANSWERED (owner, 2026-09-23): all assets carry a version and sit in draft, and formal publication " +
+        "is a process that needs defining, tooling, and a per-instance answer. Nothing here is awaiting a decision; " +
+        "it is awaiting that process. IDS ARE HELD — every row prints `(no id)` on purpose, pending the " +
+        "ONE-reference design (bean `iwtn`): a namespace written into 17 declarations is 17 places to change, " +
+        "which is what the owner ruled against.",
     );
   }
 
@@ -210,8 +234,10 @@ export function formatReport(report: PublishableReport): string {
   out.push("");
   out.push(
     `${findings.length} finding(s), ${findings.filter((f) => f.severity === "major").length} major. ` +
-      "Per-declaration rules (a required id and version, no range versions, and `publication.state` accepting only " +
-      "`draft`) are enforced by the SCHEMA rather than here — a refusal that parses cannot be switched off the way a gate can.",
+      "`publication.state` accepts only `draft` and no range version parses — enforced by the SCHEMA, because a " +
+      "refusal that parses cannot be switched off the way a gate can. The VERSION requirement is the other way " +
+      "round and lives here: requiring it in the type breaks 376 fixtures, so this gate is what fails an instance " +
+      "without one.",
   );
   return out.join("\n");
 }

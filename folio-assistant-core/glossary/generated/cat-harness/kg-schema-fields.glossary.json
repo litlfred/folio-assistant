@@ -2036,13 +2036,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.catharnessdeclaration.publishable",
-      "prefLabel": "CatHarnessDeclaration.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.catharnessdeclaration.remotegraphs",
       "prefLabel": "CatHarnessDeclaration.remoteGraphs",
       "definition": "Graphs known but not held — {@link RemoteGraph}.",
@@ -2117,13 +2110,6 @@
       "prefLabel": "CatHarnessDeclarationSchema.needs",
       "definition": "The instances this one is BUILT ON — its layer stack, foundation first.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.catharnessdeclarationschema.publishable",
-      "prefLabel": "CatHarnessDeclarationSchema.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable",
       "status": "candidate"
     },
     {
@@ -2306,6 +2292,20 @@
       "prefLabel": "MaterialisedDirectory.scope",
       "definition": "Which root `path` was resolved against; absent means the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory.scope",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.publication.host",
+      "prefLabel": "Publication.host",
+      "definition": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.host",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.publication.state",
+      "prefLabel": "Publication.state",
+      "definition": "WHAT STATE this instance's publication is in. `draft`, always, today.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.state",
       "status": "candidate"
     },
     {

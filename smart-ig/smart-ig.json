@@ -1,7 +1,6 @@
 {
   "_comment": "SMART IG — the L3 layer. Created 2026-09-22 (issue #975) on the owner's stack ruling. It is what a WHO SMART Guideline's FHIR Implementation Guide instantiates, and it is the layer `smart-trust` and `smart-immunizations` now declare, which is what makes bean `nsbb`'s ruling true in the declarations rather than only in prose: THERE IS NO PER-IG HARNESS. Both of those repositories were declared harness instances (#690, #717) and `smart-immunizations`'s own comment called that 'PROVISIONAL BY DESIGN' pending this restructure. This is the restructure. DECLARES NO DIRECTORIES, per the `folio-assistant-core` precedent: a declared-but-absent directory is the `dh4f` defect. What distinguishes it from `fhir-harness` below it: `fhir-harness` is the bare FHIR IG pipeline with no WHO assumption and serves ANY IG, while this layer carries what a WHO SMART IG specifically owes — the DAK API surface, the smart.who.int canonicals, the conventions a SMART Guideline's L3 follows.",
   "name": "smart-ig",
-  "id": "io.github.litlfred.folio-assistant.smart-ig",
   "version": "0.1.0",
   "title": "SMART IG",
   "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
