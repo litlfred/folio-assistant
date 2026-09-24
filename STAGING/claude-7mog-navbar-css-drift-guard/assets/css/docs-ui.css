@@ -3923,6 +3923,33 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   outline-offset: 2px;
 }
 
+/* RESERVE THE HANDLE'S BAND on the harness's own standalone viewers — bean
+ * `015u`.
+ *
+ * On a just-the-docs page the handle sits in the header bar's empty middle,
+ * and measured 2026-09-24 it covers no text there at 1280 or 390 px. A
+ * standalone VIEWER (folio, library, …) has no theme header and starts its
+ * content at y = 0, so at 390 px its own `h1` sat under the 52 px handle.
+ *
+ * SCOPED TO VIEWERS, by the mark the viewer fixture itself writes
+ * (`withNarrowViewport` in `scripts/viewer-page.ts` puts
+ * `<style data-folio-narrow-viewport>` in every viewer's head), and NOT to
+ * "any page without a theme header". That broader rule was tried first and
+ * CI refused it three ways, each for a reason worth keeping:
+ *
+ *   - a REPLICA must be unchanged with the glass closed (`folio-mount.e2e`,
+ *     bean `jpjt`: who-iris exists to look like WHO), and a band moves it;
+ *   - two test fixtures with no theme header moved too.
+ *
+ * The replica's banner is still under the handle. Whether that is acceptable
+ * is the owner's call against `jpjt`, not this rule's to settle.
+ *
+ * 3.5rem clears the handle at both of its heights (3.25rem min, 46 px under
+ * the phone rule) with a few pixels of air. */
+html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
+  padding-top: 3.5rem;
+}
+
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
  *
