@@ -17,12 +17,14 @@
 # these are THIS layer's sources; a downstream folio's library is its own
 # and reproducing these would hand it somebody else's corpus.
 #
-# EMPTY ON PURPOSE, 2026-09-23, and that is a DETERMINED empty rather than an
-# unlooked-at one. The paper this graph was declared for is staged at
-# `cat-harness/ingest-staging/arxiv-2510.21603v1` and NOT promoted: its
-# `image-descriptions` requirement is unmet because the extractor placed 383
-# images against 7 captioned figures, 335 of them from the single page that
-# carries the architecture diagram. Writing 383 descriptions would be the
-# fabrication `document-image.ts`'s inspection basis exists to refuse. Bean
-# `j820` holds the finding; `folio-assistant-core/methodologies/doc-researcher.md`
-# omits `evidence:` rather than pointing it at a staged entry.
+# NO LONGER EMPTY, 2026-09-24. `arxiv-2510.21603v1` was promoted here once
+# issue #1234 fixed the extractor that reported its 50 images as 383, and its
+# fifty descriptions were written from inspection. The marker stays: a keep
+# file is cheap, and the directory would go back to being empty if the entry
+# ever moved.
+#
+# It read "EMPTY ON PURPOSE" for a day, recording a DETERMINED empty rather
+# than an unlooked-at one -- which was the right thing to write at the time and
+# is kept here in one line rather than deleted, because the reason it was empty
+# (383 placements of 50 images, and a wrong reading of what they were) is the
+# whole of bean `j820`.

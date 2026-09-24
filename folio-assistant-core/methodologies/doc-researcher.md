@@ -8,17 +8,18 @@ origin: >
   A Unified System for Multimodal Document Parsing and Deep Research"
   (arXiv:2510.21603v1, Huawei Technologies, 24 October 2025). Open access.
 
-  THE PRIMARY IS HELD IN THIS CHECKOUT BUT NOT PROMOTED, and `evidence:` is
-  omitted rather than pointed at a staged entry. `bun run ingest` staged it as
-  `arxiv-2510.21603v1` — 22 blocks and a manifest — and its
-  `image-descriptions` requirement is unmet: the extractor placed **383**
-  images, 335 of them from page 3 alone. See §"What this checkout holds, and
-  what it does not" for what those 383 actually are — the first reading of
-  them, recorded here on 2026-09-23, was wrong and is corrected there.
+  THE PRIMARY IS HELD AND PROMOTED, at `library/arxiv-2510.21603v1`, which is
+  what `evidence:` below points at. It was staged and unpromotable for a day:
+  the extractor reported **383** images, 335 of them on page 3, and its
+  `image-descriptions` requirement could not be met. It holds **fifty**. See
+  §"What this checkout holds" — the first reading of those 383 was wrong, and
+  the correction is kept there rather than tidied away.
 
   It is a SYSTEM paper reporting one implementation against a benchmark its own
   authors built, so what is adopted below is the METHOD, and §"Where this
   rendering stops" says which parts were left behind.
+evidence:
+  - library/arxiv-2510.21603v1
 applies-when: >
   **A question must be answered from documents this folio has ingested, and one
   retrieval pass will not do it.** Use it when the answer is spread across
@@ -120,8 +121,12 @@ taking.
 
 ## What this checkout holds, and what it does not
 
-The paper is staged at `arxiv-2510.21603v1` and **not promoted**: the extractor
-placed 383 images, 335 of them on page 3.
+The paper is at `library/arxiv-2510.21603v1` and **promoted**, L1 complete: 24
+chapters read from the embedded outline, and fifty images each carrying a
+description drafted from inspection. `evidence:` points at it.
+
+**It took a day and a correction to get there**, and the correction is the part
+worth reading.
 
 ## CORRECTED 2026-09-24 — the first reading of those 383 was wrong
 
@@ -148,9 +153,15 @@ duplicates are collapsed.
 
 Bean `j820` carries the measurement across all 29 ingested documents, including
 the same ratio in three other entries (`9789241509510-eng` 161→102,
-`9789241511766-eng` 99→44, `arxiv-2312.07755v1` 84→28). It is a general
-extractor defect with a mechanical fix — deduplicate by content hash — and no
-threshold anywhere in it.
+`9789241511766-eng` 99→44, `arxiv-2312.07755v1` 84→28). It was a general
+extractor defect with a mechanical fix, and issue #1234 shipped it:
+`pdf-images.py` now emits one entry per distinct image, keyed on the PDF's own
+`xref`, with every placement recorded in `placements[]`.
+
+**Each of the fifty was then opened and described.** Four are `logo` — the
+Word, PowerPoint, Excel and Wikipedia marks, stock glyphs rather than content
+the authors drew. Every narrative is a `draft`: only a person may confirm one,
+which is the rule this node argues for two sections above.
 
 **Why the wrong reading is left on the record rather than deleted.** It is the
 exact failure this node warns about two sections above, committed by the node
