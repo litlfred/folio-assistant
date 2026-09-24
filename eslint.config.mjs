@@ -57,6 +57,10 @@ export default tseslint.config(
       // gitignored here, so nothing else in the repo had ever put hand-written
       // JavaScript in front of eslint.
       "**/vendor/**",
+      // Pagefind's generated bundle (bean `4pm8`), built into the git-ignored
+      // `build/` by `bun run pagefind:fixture` or the e2e test. Minified
+      // third-party output, never committed; same reason as vendor above.
+      "large-datasets/pagefind/build/**",
     ],
   },
   ...tseslint.configs.recommended,

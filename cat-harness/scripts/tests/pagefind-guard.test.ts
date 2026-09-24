@@ -23,10 +23,12 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
-import { repoRootFor } from "../../schemas/cat-harness.ts";
+import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
 
-const REPO = repoRootFor(resolve(import.meta.dir, "../.."));
-const DOCS = join(REPO, "cat-harness", "docs");
+const ROOT = resolve(import.meta.dir, "../..");
+const REPO = repoRootFor(ROOT);
+// The docs site root, as the declaration answers it (`cat-harness/docs/` today).
+const DOCS = join(ROOT, siteDirFor(ROOT));
 
 /** Patterns that load or build with Pagefind, in any text file. */
 export const LOADS_PAGEFIND: RegExp[] = [
