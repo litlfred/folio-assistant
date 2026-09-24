@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harness config, candidate H: hybrid (the owner's choice)</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .panel { display:grid; grid-template-columns:280px minmax(0,1fr); border:1px solid var(--ink); margin:16px; min-height:560px; }
+  .list { border-right:1px solid var(--line); padding:12px; background:var(--fill); }
+  .list h3 { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--mute); margin:14px 0 6px; }
+  .list ul { list-style:none; margin:0; padding:0; }
+  .list li a { display:flex; justify-content:space-between; align-items:center; min-height:44px; padding:0 8px; text-decoration:none; }
+  .list li a[aria-current] { background:var(--bg); border:1px solid var(--ink); font-weight:700; }
+  .detail { padding:14px 18px; min-width:0; }
+  .detail h2 { margin:0 0 4px; }
+  table { width:100%; border-collapse:collapse; } th, td { text-align:left; border-bottom:1px solid var(--line); padding:6px 8px; vertical-align:top; overflow-wrap:anywhere; }
+  th { background:var(--fill); font-size:13px; }
+  .finding { font-weight:700; }
+  .hdr { display:flex; flex-wrap:wrap; align-items:center; gap:12px; border-bottom:1px solid var(--line); padding:10px 16px; }
+  .back { display:none; }
+  @media (max-width:700px) {
+    .panel { grid-template-columns:1fr; margin:8px; }
+    .list { display:none; } .back { display:inline-flex; }
+    .detail { padding:12px; }
+    table, thead, tbody, tr, th, td { display:block; } thead { display:none; }
+    tr { border:1px solid var(--line); margin-bottom:8px; padding:6px 8px; } td { border:0; padding:2px 0; }
+    td::before { content:attr(data-h) ": "; color:var(--mute); font-size:12px; }
+  }
+  .page { display:grid; grid-template-columns:240px minmax(0,1fr); }
+  .side { border-right:1px solid var(--line); padding:10px; }
+  .side ul { list-style:none; margin:0; padding:0; }
+  .side li { display:grid; grid-template-columns:minmax(0,1fr) 44px; gap:2px; margin-bottom:2px; }
+  .side li a, .side li button { min-height:44px; display:flex; align-items:center; padding:0 8px; }
+  .side li button { justify-content:center; border:1px solid var(--line); background:var(--fill); }
+  .page > div { min-width:0; }
+  @media (max-width:700px) { .page { grid-template-columns:minmax(0,1fr); } .side { display:none; } }
+</style></head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+<div class="page">
+<aside class="side" aria-label="Sidebar (nav_footer_custom.html)">
+  <p class="wf-mute">Harnesses 6 ▾</p>
+  <ul>
+    <li><a href="#">Folio Assistant</a><button type="button" aria-label="Configuration of Folio Assistant">⚙</button></li>
+    <li><a href="#">C@T Harness</a><button type="button" aria-label="Configuration of C@T Harness" aria-pressed="true">⚙</button></li>
+    <li><a href="#">Bootstrap</a><button type="button" aria-label="Configuration of Bootstrap">⚙</button></li>
+  </ul>
+  <p class="wf-mute">⚙ opens the glass's Harnesses panel with that harness chosen.</p>
+</aside>
+<div>
+<div class="hdr wf-fill"><span aria-hidden="true">▾</span><b>Folio</b><span class="wf-mute">Settings</span><span style="margin-left:auto" class="wf-mute">glass strip:</span><button type="button" class="wf-btn">Todos</button><button type="button" class="wf-btn">Filter</button><button type="button" class="wf-btn" aria-expanded="true"><b>Settings</b></button><button type="button" class="wf-btn">More</button><span class="wf-mute">Settings › Harnesses (no fifth tile: "too many tiles!")</span></div>
+<div class="panel" role="region" aria-label="Harness configuration">
+  <nav class="list" aria-label="Harnesses">
+    <h3>Instantiated here (6)</h3>
+    <ul>
+      <li><a href="#">Bootstrap</a></li>
+      <li><a href="#" aria-current="page">C@T Harness <span class="wf-mute">⚙</span></a></li>
+      <li><a href="#">Folio Assistant</a></li>
+      <li><a href="#">SMART Base</a></li>
+      <li><a href="#">WHO IRIS</a></li>
+      <li><a href="#">smart-trust</a></li>
+    </ul>
+    <h3>In this checkout (11)</h3>
+    <ul><li><a href="#">folio-assistant-core</a></li><li><a href="#">FHIR IG Harness</a></li><li><a href="#">… 9 more</a></li></ul>
+    <h3>Associated ↗ (1)</h3>
+    <ul><li><a href="#">iHRIS Knowledge Base <span class="wf-mute">remote</span></a></li></ul>
+  </nav>
+  <section class="detail" aria-labelledby="h">
+    <a class="wf-btn back" href="#">← Harnesses</a>
+    <h2 id="h">C@T Harness <code>cat-harness</code></h2>
+    <p><a href="#" aria-label="Edit C@T Harness's declaration, cat-harness/cat-harness.json">✎ Edit cat-harness/cat-harness.json</a></p>
+    <p class="wf-mute">Declared in <code>cat-harness/cat-harness.json</code> · instantiated (<code>cat-harness.config.json</code>) · needs Bootstrap</p>
+    <table aria-label="Declared properties of cat-harness">
+      <thead><tr><th>Property</th><th>Value</th><th>Edit with</th></tr></thead>
+      <tbody>
+        <tr><td data-h="Property"><code>name</code></td><td data-h="Value">cat-harness</td><td data-h="Edit with"><a href="#">instance-kinds</a></td></tr>
+        <tr><td data-h="Property"><code>title</code></td><td data-h="Value">C@T Harness</td><td data-h="Edit with"><a href="#">directory-conventions</a></td></tr>
+        <tr><td data-h="Property"><code>icon</code>, <code>images</code></td><td data-h="Value">mark · 24 images</td><td data-h="Edit with"><a href="#">theme-declaration</a></td></tr>
+        <tr><td data-h="Property"><code>navbarIcons</code></td><td data-h="Value">6 icons</td><td data-h="Edit with"><a href="#">harness-tiles</a></td></tr>
+        <tr><td data-h="Property"><code>stickies</code></td><td data-h="Value">1 sticky</td><td data-h="Edit with"><a href="#">create-sticky-note</a></td></tr>
+        <tr><td data-h="Property"><code>directories</code></td><td data-h="Value">39 directories</td><td data-h="Edit with"><a href="#">directory-conventions</a></td></tr>
+        <tr><td data-h="Property"><code>needs</code></td><td data-h="Value">bootstrap</td><td data-h="Edit with"><a href="#">directory-conventions</a></td></tr>
+        <tr><td data-h="Property"><code>canonicalUrl</code>, <code>publication</code></td><td data-h="Value">litlfred.github.io/folio-assistant · github-pages</td><td data-h="Edit with"><a href="#">document-publishing</a></td></tr>
+        <tr><td data-h="Property"><code>stub</code></td><td data-h="Value">folio-assistant</td><td data-h="Edit with"><a href="#">directory-conventions</a></td></tr>
+        <tr><td data-h="Property"><code>associatedHarnesses</code></td><td data-h="Value">ihris ↗ (folio-of)</td><td data-h="Edit with"><a href="#">associate-harness</a></td></tr>
+      </tbody>
+    </table>
+    <details><summary>N properties not declared (inherited or default)</summary><p class="wf-mute">topology: <span class="finding">no skill yet</span> …</p></details>
+    <details open><summary>Findings</summary><ul><li class="finding">cat-harness declares <code>folioMount</code>, which the schema drops</li><li class="finding"><code>topology</code>: no edit skill</li></ul></details>
+    <p class="wf-mute">Selecting <b>iHRIS Knowledge Base</b> shows: <code>url</code> litlfred.github.io/ihris ↗, <code>repository</code> litlfred/ihris, <code>relation</code> folio-of, and a <i>remote</i> badge: referenced, never materialized, nothing fetched. Its ✎ opens litlfred/ihris, not this repository, and <b>Open ↗</b> goes to its own site.</p>
+  </section>
+</div>
+</div></div>
+<div class="wf-meta">Wireframe: harness config, candidate H, hybrid: A's glass panel + a ⚙ per sidebar divider (owner's choice, 2026-09-23)</div>
+</body></html>
