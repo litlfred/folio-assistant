@@ -279,10 +279,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-24T05:37:52.335Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/068e729f31fe529b21e66a4f7417b1dd240a3f4f",
-  "sourceCommitSha": "068e729f31fe529b21e66a4f7417b1dd240a3f4f",
-  "sourceCommitAt": "2026-09-24T05:35:24Z",
+  "generatedAt": "2026-09-24T19:45:26.660Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f46415ea4abfbe5a1f326a8fc4dba62e6cf8a914",
+  "sourceCommitSha": "f46415ea4abfbe5a1f326a8fc4dba62e6cf8a914",
+  "sourceCommitAt": "2026-09-24T19:43:12Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -1536,7 +1536,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
       ],
-      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing.",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/bootstrap/bootstrap.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
@@ -1599,8 +1599,8 @@
   ],
   "staging": {
     "branch": "claude/zen-wright-q30my0",
-    "sha": "92e63eda384fe7eacca968de894af8a5d586b9ab",
+    "sha": "d53f09a275e612f57ee2c8308c88855fc8530cd4",
     "pr": "1183/merge",
-    "run": "35960630458"
+    "run": "36050055272"
   }
 }

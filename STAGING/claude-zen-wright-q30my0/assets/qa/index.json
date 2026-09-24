@@ -1,33 +1,33 @@
 {
   "tile": {
     "qa": {
-      "count": 836,
+      "count": 869,
       "unit": "documents"
     }
   },
   "$schema": "folio-qa-graph/v1",
-  "files": 836,
+  "files": 869,
   "families": [
     {
       "schema": "kg-qa/v1",
-      "files": 491,
+      "files": 518,
       "rollUpField": "totals",
       "buckets": {
-        "pass": 2811,
-        "fail": 134,
-        "n/a": 1368,
+        "pass": 2922,
+        "fail": 142,
+        "n/a": 1419,
         "unknown": 10
       }
     },
     {
       "schema": "qa-witness/v1",
-      "files": 137,
+      "files": 138,
       "rollUpField": "counts",
       "buckets": {
-        "fail": 2,
+        "fail": 1,
         "warn": 12,
-        "pass": 2807,
-        "na": 3115,
+        "pass": 2824,
+        "na": 3123,
         "unknown": 8
       }
     },
@@ -38,12 +38,12 @@
     },
     {
       "schema": "qa-results/v1",
-      "files": 37,
+      "files": 40,
       "rollUpField": null
     },
     {
       "schema": "folio-detangle-sidecar/v1",
-      "files": 25,
+      "files": 27,
       "rollUpField": null
     },
     {
@@ -66,10 +66,10 @@
       "files": 1,
       "rollUpField": "totals",
       "buckets": {
-        "pages": 48,
+        "pages": 47,
         "railed": 47,
         "declined": 0,
-        "missing": 1
+        "missing": 0
       }
     }
   ],

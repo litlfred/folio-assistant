@@ -2744,7 +2744,7 @@
    * key. Swallowing unconditionally would eat a reader's scrolling the moment
    * a window had focus and the mode did not.
    */
-  function nudge(panel, key, shift) {
+  function nudge(panel, key, shift, unbounded) {
     var g = geometryOf(panel);
     var step = shift ? RESIZE_STEP : MOVE_STEP;
     if (key === "ArrowLeft") { if (shift) g.width = Math.max(MIN_WINDOW, g.width - step); else g.left -= step; }
@@ -2752,10 +2752,21 @@
     else if (key === "ArrowUp") { if (shift) g.height = Math.max(MIN_WINDOW, g.height - step); else g.top -= step; }
     else if (key === "ArrowDown") { if (shift) g.height += step; else g.top += step; }
     else return false;
-    // NEVER off the top-left. A window moved past the origin is a window a
-    // reader cannot reach the controls of, which is `l4zi` by another route.
-    g.left = Math.max(0, g.left);
-    g.top = Math.max(0, g.top);
+    // NEVER off the top-left — FOR A WINDOW. A window moved past the origin is
+    // a window a reader cannot reach the controls of, which is `l4zi` by
+    // another route: the board window and the floating sticky sit in a frame
+    // the size of the viewport, and nothing pans that frame.
+    //
+    // A CARD ON THE GLASS is `unbounded`. Owner, 2026-09-24: *"you shoud be
+    // able to put things on folio w/ x,y <0, can't move negative right now."*
+    // The glass pans and zooms (`b8eq`), so a card left of the origin is one
+    // pan away rather than lost — and Home frames it, and Tidy regrids it.
+    // The clamp protected controls from going off a surface that cannot move;
+    // on one that can, it only stopped the reader using the whole surface.
+    if (!unbounded) {
+      g.left = Math.max(0, g.left);
+      g.top = Math.max(0, g.top);
+    }
     applyGeometry(panel, g);
     return true;
   }
@@ -2775,7 +2786,7 @@
    * selection, and a reader who cannot select the text of a note cannot quote
    * it.
    */
-  function wireMove(panel, handle, live, onSettle) {
+  function wireMove(panel, handle, live, onSettle, opts) {
     // `onSettle(geometry)`, OPTIONAL: told where the panel came to rest, once
     // per arrow press and once per drag. The board window and the floating
     // sticky pass nothing and keep their session-only geometry; the GLASS
@@ -2783,6 +2794,10 @@
     // pages (bean `zrvt`). One implementation of moving, and the callers
     // differ only in whether a position outlives the page.
     function settle() { if (onSettle) onSettle(geometryOf(panel)); }
+    // `opts.unbounded`, OPTIONAL: the panel may go past the origin. Only the
+    // GLASS passes it, because only the glass pans — see `nudge` for why a
+    // window keeps its clamp (`l4zi`) and a card on the glass does not.
+    var unbounded = !!(opts && opts.unbounded);
 
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
@@ -2795,7 +2810,7 @@
         panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
-      if (nudge(panel, e.key, e.shiftKey)) {
+      if (nudge(panel, e.key, e.shiftKey, unbounded)) {
         e.preventDefault();
         e.stopPropagation();
         settle();
@@ -2827,7 +2842,11 @@
           e.target.closest("a")) return;
       if (e.pointerType !== "mouse" && panel.getAttribute("data-fa-moving") !== "true" &&
           !e.target.closest("[data-fa-grip]")) return;
+      // A drag still live from a release this page never heard ends here
+      // rather than being silently replaced — it settles where it stood.
+      if (from) finish();
       from = { x: e.clientX, y: e.clientY, g: geometryOf(panel), id: e.pointerId };
+      listen(true);
       // NOT for a mouse. `preventDefault` on `pointerdown` suppresses the
       // compatibility `mousedown` that follows it, and the board windows RAISE
       // on `mousedown` — the switch to pointer events broke "selecting any part
@@ -2842,8 +2861,37 @@
     handle.addEventListener("mousedown", function (e) {
       if (from) e.preventDefault();
     });
-    document.addEventListener("pointermove", function (e) {
+
+    /* EVERY DRAG ENDS — owner, 2026-09-24: *"drag drop avatar and cant
+     * un-drag when not on avata"*.
+     *
+     * A drag used to end on exactly one thing: a `pointerup` on `document`.
+     * A button released where the page cannot hear it — past the window's
+     * edge, over the browser's own chrome, under a native menu — sends no
+     * `pointerup` at all, and the card then followed a pointer with no button
+     * held until the reader happened to press again. Measured: after such a
+     * release the card went on following the pointer for 300px. So a drag
+     * now ends on ANY of the ways a browser says the press is over:
+     *
+     *   - `pointerup` / `pointercancel`, wherever they land;
+     *   - `lostpointercapture` — a finger's capture taken away;
+     *   - a mouse `pointermove` with NO button held, which is what the unheard
+     *     release looks like from inside the page;
+     *   - the window losing focus mid-drag;
+     *   - and `Escape`, which CANCELS: the card goes back where it was and
+     *     nothing is saved. A drag the reader cannot take back is a gesture
+     *     with no inverse, which is `l4zi` for pointers.
+     *
+     * The document listeners exist only WHILE a drag is live. They used to be
+     * added once per card and never removed, and the glass rebuilds its cards
+     * on every change — so each rebuild left three more listeners behind,
+     * closed over cards no longer on the page. */
+    function onMove(e) {
       if (!from || e.pointerId !== from.id) return;
+      // A MOUSE only. A finger or a pen cannot be lifted unheard — its
+      // contact ends in `pointerup` or `pointercancel`, and it is captured —
+      // while a mouse button let go outside the window can be.
+      if (e.pointerType === "mouse" && e.buttons === 0) { finish(); return; }
       // A SECOND FINGER made this a pinch of the whole glass (`b8eq`): the
       // card stands still rather than following one of two fingers.
       if (panel.closest && panel.closest("[data-fa-pinching]")) return;
@@ -2852,20 +2900,57 @@
       // or it slides out from under the finger.
       var host = panel.parentNode && panel.parentNode.closest ? panel.parentNode.closest("[data-fa-scale]") : null;
       var scale = (host && parseFloat(host.getAttribute("data-fa-scale"))) || 1;
+      var left = from.g.left + (e.clientX - from.x) / scale;
+      var top = from.g.top + (e.clientY - from.y) / scale;
       applyGeometry(panel, {
-        left: Math.max(0, from.g.left + (e.clientX - from.x) / scale),
-        top: Math.max(0, from.g.top + (e.clientY - from.y) / scale),
+        left: unbounded ? left : Math.max(0, left),
+        top: unbounded ? top : Math.max(0, top),
         width: from.g.width,
         height: from.g.height,
       });
-    });
-    function end(e) {
-      if (!from || (e && e.pointerId !== from.id)) return;
-      settle();
-      from = null;
     }
-    document.addEventListener("pointerup", end);
-    document.addEventListener("pointercancel", end);
+    function onEnd(e) {
+      if (!from || (e && e.pointerId !== from.id)) return;
+      finish();
+    }
+    function onKey(e) {
+      if (!from || e.key !== "Escape") return;
+      // CAPTURE PHASE, and stopped: the glass's own Escape puts the glass
+      // away, and a reader cancelling a drag has not asked for that.
+      e.preventDefault();
+      e.stopPropagation();
+      applyGeometry(panel, from.g);
+      stop();
+      if (live) live.textContent = "Move cancelled; back where it was.";
+    }
+    function onBlur() { if (from) finish(); }
+    function listen(on) {
+      var f = on ? "addEventListener" : "removeEventListener";
+      document[f]("pointermove", onMove);
+      document[f]("pointerup", onEnd);
+      document[f]("pointercancel", onEnd);
+      document[f]("keydown", onKey, true);
+      window[f]("blur", onBlur);
+      handle[f]("lostpointercapture", onEnd);
+    }
+    function stop() {
+      from = null;
+      listen(false);
+    }
+    function finish() {
+      stop();
+      settle();
+    }
+
+    // The same step an arrow key takes, for a caller that offers it as a
+    // BUTTON — the glass's move bar, for a reader who cannot press arrows.
+    return {
+      step: function (key, shift) {
+        if (!nudge(panel, key, shift, unbounded)) return false;
+        settle();
+        return true;
+      },
+    };
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -3368,16 +3453,25 @@
    * says everything. A description of the cat would be read out before every
    * todo on the board.
    */
-  function buildBackdrop(art) {
+  /* THE SQUARE CROP, ON EVERY SCREEN, UNLESS THE TODO NAMES ONE.
+   *
+   * Owner, 2026-09-24: "i want sticky themes to by default use the square
+   * avatar layout but mostly faded, if not specified." This used to swap in the
+   * tall `mobile` crop below 30rem, which made one sticky show two different
+   * pictures depending on the window — and the square is the crop the avatar
+   * is cut from, so it is the one that reads as this theme's cat.
+   *
+   * "Mostly faded" is the theme's scrim, unchanged: `--fa-sticky-scrim` covers
+   * 82–86% of the art, and its AAA-over-pure-black guarantee travels with it.
+   *
+   * `layout` on the todo picks another crop when an author asks for one. A
+   * name the theme has no crop for falls back to the square rather than to no
+   * art. */
+  function buildBackdrop(art, layout) {
     var pic = el("picture", { "aria-hidden": "true" });
-    if (art.mobile) {
-      var src = el("source", { media: "(max-width: 30rem)", srcset: art.mobile });
-      pic.appendChild(src);
-    }
-    // `card` when there is one, else whatever the theme did supply — the
-    // generator only publishes complete sets, so this fallback is reached only
-    // by a hand-written index.
-    var chosen = art.card || art.mobile || art.laptop;
+    // The generator only publishes complete sets, so the later fallbacks are
+    // reached only by a hand-written index.
+    var chosen = (layout && art[layout]) || art.card || art.mobile || art.laptop;
     pic.appendChild(el("img", { class: "fa-sticky-art", src: chosen, alt: "", loading: "lazy" }));
     return pic;
   }
@@ -3526,7 +3620,7 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art));
+    if (art) card.appendChild(buildBackdrop(art, todo.layout));
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -3904,9 +3998,14 @@
   function placeOnGlass(key, geom) {
     var all = folioAssets();
     if (!all[key]) return;
+    // NO CLAMP AT ZERO. Owner, 2026-09-24: *"you shoud be able to put things
+    // on folio w/ x,y <0"*. The glass pans (`b8eq`), so a negative place is a
+    // place, and Home and Tidy are how a reader gets it back in view. A store
+    // that clamped would move the card on the next page load, and the reader
+    // would find it somewhere they never put it.
     all[key].geom = {
-      left: Math.max(0, Math.round(geom.left)),
-      top: Math.max(0, Math.round(geom.top)),
+      left: Math.round(geom.left),
+      top: Math.round(geom.top),
       width: Math.round(geom.width),
       height: Math.round(geom.height),
     };
@@ -4096,10 +4195,15 @@
    */
   var GLASS_PREFS_KEY = "fa-glass-prefs";
   var GLASS_THEMES = [
-    { id: "glass", label: "Glass", hint: "see-through and blurred", opacity: 20 },
-    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines", opacity: 100 },
-    { id: "paper", label: "Paper", hint: "light and nearly solid", opacity: 92 },
-    { id: "night", label: "Night", hint: "dark and nearly solid", opacity: 92 },
+    // Each carries a jewelled purple pattern (owner, 2026-09-24: "Mix, per
+    // theme"), and the hint names the sticky themes it suits. Contrast
+    // stays plain: it is the usability theme.
+    { id: "glass", label: "Glass", hint: "amethyst facets, see-through and blurred — suits Analyst, Operations", opacity: 20 },
+    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines, no pattern", opacity: 100 },
+    { id: "paper", label: "Paper", hint: "iris haze, light and nearly solid — suits Pale sage, Dusty Carolina blue", opacity: 92 },
+    { id: "night", label: "Night", hint: "opal night, dark and nearly solid", opacity: 92 },
+    { id: "rose", label: "Rose window", hint: "cathedral stained glass — suits Library, Grumpy cat", opacity: 30 },
+    { id: "leaded", label: "Leaded grid", hint: "modern stained glass panes — suits Architecture, Engineer", opacity: 30 },
   ];
   var GLASS_AVATAR_STYLES = [
     { id: "pictures", label: "Pictures", hint: "a book's cover when it has one, otherwise its kind avatar" },
@@ -4400,7 +4504,34 @@
       try { localStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_e) { /* a view that resets next page is the safe failure */ }
     }
     var view = loadView();
-    function atHome() { return view.s === 1 && view.x === 0 && view.y === 0; }
+    /* WHERE HOME IS, now that a card may sit left of or above the origin.
+     *
+     * Owner, 2026-09-24: *"you shoud be able to put things on folio w/ x,y
+     * <0"*. Home used to be the origin, full stop — so a card the reader put
+     * at x = −400 was still off the glass's left edge after Home, and the one
+     * press that is meant to always find the folio did not find all of it.
+     *
+     * Home is now "100%, where your folio STARTS", and the folio starts at its
+     * top-left-most card: the view shifts right and down just far enough to
+     * bring that card's corner to the glass's corner. With every card at or
+     * past the origin — the only case there was before — that shift is zero,
+     * and Home is the origin exactly as it was. The cards' own places are
+     * never touched; Tidy is the control that regrids them. */
+    function homeView() {
+      var minLeft = 0, minTop = 0;
+      Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), function (c) {
+        // A card the reader's filter hides is not one Home should frame.
+        if (c.hasAttribute("data-fa-filtered-out")) return;
+        minLeft = Math.min(minLeft, parseFloat(c.style.left) || 0);
+        minTop = Math.min(minTop, parseFloat(c.style.top) || 0);
+      });
+      return { s: 1, x: Math.round(-minLeft), y: Math.round(-minTop) };
+    }
+    function atHome() {
+      var h = homeView();
+      return view.s === 1 && view.x === h.x && view.y === h.y;
+    }
+    function atOrigin() { return view.s === 1 && view.x === 0 && view.y === 0; }
 
     var glassLive = el("p", { class: "fa-sr-only", "aria-live": "polite" });
     var zoomBar = el("div", { class: "fa-glass-zoom", role: "group", "aria-label": "Zoom and position of your folio" });
@@ -4425,7 +4556,9 @@
 
     function applyView() {
       shelf.style.transformOrigin = "0 0";
-      shelf.style.transform = atHome() ? "" :
+      // No transform at the ORIGIN, rather than at home: home may now be a
+      // shift (see `homeView`), and a shift has to be drawn.
+      shelf.style.transform = atOrigin() ? "" :
         "translate(" + view.x + "px, " + view.y + "px) scale(" + view.s + ")";
       shelf.setAttribute("data-fa-scale", String(view.s));
       var pct = Math.round(view.s * 100);
@@ -4461,7 +4594,7 @@
     zoomInBtn.addEventListener("click", function () { zoomAbout(view.s + ZOOM_STEP / 100); sayZoom(); });
     zoomSlider.addEventListener("input", function () { zoomAbout(Number(zoomSlider.value) / 100); });
     homeBtn.addEventListener("click", function () {
-      view = { s: 1, x: 0, y: 0 };
+      view = homeView();
       applyView();
       saveView();
       glassLive.textContent = "Back home: 100%, where your folio starts.";
@@ -4487,23 +4620,53 @@
     var touches = {};
     var pinch = null;
     function distance(a, b) { return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
+    /* Is this the laptop/tablet SURFACE, where the glass pans and zooms? On a
+     * phone the column stands (`c132`): the zoom bar is not drawn, the shelf
+     * carries no transform, and a finger must scroll the column — so nothing
+     * below may take a finger there. Asked of the rendered zoom bar rather
+     * than of a width literal, so the stylesheet stays the one place that
+     * draws the line. */
+    function isSurface() { return zoomBar.getClientRects().length > 0; }
     sheet.addEventListener("pointerdown", function (e) {
       if (e.pointerType === "mouse" && e.button !== 0) return;
-      // A finger only pans where the browser has been told not to scroll —
-      // the shelf (`touch-action: none`). Elsewhere a finger scrolls the glass.
-      if (e.pointerType !== "mouse" && e.target !== shelf) return;
+      if (pinch) return;   // a second finger is a pinch, never a second pan
+      /* A FINGER PANS FROM ANY EMPTY GLASS — owner, 2026-09-24: *"clicking on
+       * glass, but not avatar, should pan the glass."*
+       *
+       * It used to pan only from the SHELF, the one element the stylesheet
+       * tells the browser not to scroll. But the shelf is what the view
+       * transforms: zoomed out it shrinks, panned it slides, and everywhere
+       * it no longer covers is the sheet — empty glass to the reader, where a
+       * finger did nothing at all. Measured at 50% on a 1024px tablet: the
+       * right half of the glass. So a finger on the sheet pans too, and the
+       * browser's own scroll is held off by `touchmove` below rather than by
+       * `touch-action` — which could not be set on the sheet without also
+       * stopping a finger scrolling a long panel, since a scroller's
+       * `touch-action` binds everything inside it. A finger on a panel, a note
+       * or a card still scrolls; only empty glass pans. */
+      if (e.pointerType !== "mouse" && !isSurface()) return;
       if (!onEmptyGlass(e)) return;
-      panFrom = { id: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false };
+      panFrom = { id: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false,
+                  touch: e.pointerType !== "mouse" };
     });
     sheet.addEventListener("mousedown", function (e) {
       // No text selection while dragging the surface.
       if (e.button === 0 && onEmptyGlass(e)) e.preventDefault();
     });
-    // TWO FINGERS, wherever they land on the shelf — over a card too. Seen in
-    // the CAPTURE phase so a card's own drag cannot hide the second finger;
-    // `data-fa-pinching` then tells that drag to stand still (`wireMove`).
-    shelf.addEventListener("pointerdown", function (e) {
-      if (e.pointerType !== "touch") return;
+    // While a FINGER pans or pinches, the browser must not also scroll the
+    // glass under it. Needed only for a pan that began on the sheet — the
+    // shelf already says `touch-action: none` — and harmless on the shelf.
+    document.addEventListener("touchmove", function (e) {
+      if (pinch || (panFrom && panFrom.touch)) e.preventDefault();
+    }, { passive: false });
+    // TWO FINGERS, wherever they land on the shelf — over a card too — or on
+    // the empty glass beside it, since that is glass the reader sees as the
+    // same surface. Seen in the CAPTURE phase so a card's own drag cannot hide
+    // the second finger; `data-fa-pinching` then tells that drag to stand
+    // still (`wireMove`). Not on a panel or a note: a finger there scrolls.
+    sheet.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch" || !isSurface()) return;
+      if (!shelf.contains(e.target) && !onEmptyGlass(e)) return;
       touches[e.pointerId] = { x: e.clientX, y: e.clientY };
       var ids = Object.keys(touches);
       if (ids.length === 2) {
@@ -4532,6 +4695,9 @@
         return;
       }
       if (panFrom && e.pointerId === panFrom.id) {
+        // The button came up where this page could not hear it: the pan is
+        // over, exactly as a card's drag is (`wireMove`).
+        if (e.pointerType === "mouse" && e.buttons === 0) { endViewPointer(e); return; }
         var dx = e.clientX - panFrom.x, dy = e.clientY - panFrom.y;
         if (!panFrom.moved && Math.abs(dx) + Math.abs(dy) < 4) return;
         panFrom.moved = true;
@@ -4554,6 +4720,84 @@
     }
     document.addEventListener("pointerup", endViewPointer);
     document.addEventListener("pointercancel", endViewPointer);
+
+    /* ── THE MOVE BAR: what ✜ is FOR, said and offered on screen ──────────
+     *
+     * Owner, 2026-09-24: *"exploding icon outlines the avatar but appears to
+     * do nothing else."* The exploding icon is ✜, the card's Move control.
+     * What it was meant to do is written on it and in `zrvt`: *"✥ enters move
+     * mode, arrows move, Shift+arrows resize, Escape or Enter leaves"* — and
+     * it did exactly that. But the only thing a SIGHTED reader was shown was
+     * the dashed outline; the sentence saying what the arrow keys now do went
+     * to a screen-reader live region and nowhere else. To a reader with a
+     * mouse the mode looked like a button that draws a box.
+     *
+     * So while a card is in the mode this bar says the same sentence where it
+     * can be read, and offers the mode's own step — the one `nudge` takes for
+     * an arrow press — as four buttons, plus Done. Nothing new is decided
+     * here: the steps, the resize chord and the ways out are the mode's, and
+     * the buttons call the SAME step through `wireMove`'s controller. They are
+     * the pointer path to the mode for a reader who cannot comfortably press
+     * arrow keys, as −/+ already are for size, and the declared profile here
+     * is low-dexterity (WCAG 2.5.7).
+     *
+     * In the ZOOM BAR's row, because that row is sticky to the top of the
+     * glass: the bar stays on screen however far the glass is scrolled, and
+     * at full size however far it is zoomed out — a bar drawn on the card
+     * would shrink with it. */
+    var moveBar = el("div", { class: "fa-glass-move-bar", role: "group", hidden: "hidden" });
+    var moveSay = el("p", { class: "fa-glass-move-say" });
+    moveBar.appendChild(moveSay);
+    var moving = null;   // { card, mover, done } for the one card in the mode
+    var STEPS = [
+      { key: "ArrowLeft", glyph: "←", word: "left" },
+      { key: "ArrowUp", glyph: "↑", word: "up" },
+      { key: "ArrowDown", glyph: "↓", word: "down" },
+      { key: "ArrowRight", glyph: "→", word: "right" },
+    ];
+    var stepButtons = STEPS.map(function (st) {
+      var b = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-step", "data-fa-step": st.key }, st.glyph);
+      b.addEventListener("click", function () { if (moving) moving.mover.step(st.key, false); });
+      moveBar.appendChild(b);
+      return { b: b, st: st };
+    });
+    var moveDone = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-done", "data-fa-step": "done" },
+      "Done");
+    moveDone.addEventListener("click", function () { if (moving) moving.done(); });
+    moveBar.appendChild(moveDone);
+    // The mode's KEYS work here too: arrows step (Shift resizes), and Escape
+    // leaves the mode — stopped, so the glass's own Escape does not also put
+    // the glass away under a reader who only meant "stop moving".
+    moveBar.addEventListener("keydown", function (e) {
+      if (!moving) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        moving.done();
+        return;
+      }
+      if (moving.mover.step(e.key, e.shiftKey)) e.preventDefault();
+    });
+    zoomBar.appendChild(moveBar);
+
+    function showMoveBar(card, title, mover, done) {
+      if (moving && moving.card !== card) moving.done();
+      moving = { card: card, mover: mover, done: done };
+      moveBar.setAttribute("aria-label", "Move " + title);
+      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys " +
+        "(Shift + arrows resize). Escape or Done to finish.";
+      stepButtons.forEach(function (x) {
+        x.b.setAttribute("aria-label", "Move " + title + " " + x.st.word);
+        x.b.title = "Move " + x.st.word;
+      });
+      moveDone.setAttribute("aria-label", "Done moving " + title);
+      moveBar.removeAttribute("hidden");
+    }
+    function hideMoveBar(card) {
+      if (card && moving && moving.card !== card) return;
+      moving = null;
+      moveBar.setAttribute("hidden", "hidden");
+    }
 
     function buildGlassCard(key, a) {
       var card = el("article", {
@@ -4588,13 +4832,23 @@
         "aria-pressed": "false",
         title: "Move (arrow keys; Shift+arrows resize)",
       }, CONTROL_GLYPHS.move || "\u271C");
+      // Leaving the mode by any route — Escape or Enter on the card, Escape or
+      // Done on the move bar — is this one path, so the bar, the pressed state
+      // and focus cannot disagree about whether the card is still moving.
+      function leaveMoveMode() {
+        setMoveMode(card, false, live);
+        card.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
+      }
       moveBtn.addEventListener("click", function () {
         var on = card.getAttribute("data-fa-moving") !== "true";
-        setMoveMode(card, on, live);
-        moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        if (!on) { leaveMoveMode(); return; }
+        setMoveMode(card, true, live);
+        moveBtn.setAttribute("aria-pressed", "true");
+        showMoveBar(card, a.title, mover, leaveMoveMode);
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
+        hideMoveBar(card);
         moveBtn.focus();
       });
       function resizeBy(d) {
@@ -4645,14 +4899,21 @@
       card.addEventListener("mousedown", raise);
       card.addEventListener("focusin", raise);
 
-      wireMove(card, card, live, function (g) {
+      // UNBOUNDED: a card on the glass may go past the origin (see `nudge`).
+      // Where it settles may also move Home, so the Home button's state is
+      // asked again — `applyView` redraws nothing that did not change.
+      var mover = wireMove(card, card, live, function (g) {
         placeOnGlass(key, g);
         fitShelf();
-      });
+        applyView();
+      }, { unbounded: true });
       return card;
     }
 
     function renderShelf() {
+      // The cards are about to be rebuilt; a bar for a card that is gone
+      // would move nothing.
+      hideMoveBar();
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
       while (notes.firstChild) notes.removeChild(notes.firstChild);
       var all = folioAssets();
@@ -7226,6 +7487,139 @@
     });
   }
 
+  /* ── Figure export: SVG, PNG and the clipboard (#1270) ───────────────── */
+
+  /** The drawing in a figure: the inline <svg> once inlined, else the <img>. */
+  function figureArt(scope) {
+    return scope.querySelector("svg") || scope.querySelector("img");
+  }
+
+  /** A filename stem: the source file's name, else the page title. */
+  function figureName(scope) {
+    var art = figureArt(scope);
+    var src = art ? (art.getAttribute("data-fa-src") || art.getAttribute("src") || "") : "";
+    var stem = src.split("/").pop().replace(/[?#].*$/, "").replace(/\.svg$/i, "");
+    if (!stem) stem = (document.title || "diagram").toLowerCase().replace(/[^a-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
+    return stem || "diagram";
+  }
+
+  /**
+   * The figure as standalone SVG text.
+   *
+   * An inline <svg> is serialised from a clone, with the namespace and an
+   * explicit size added so the file opens on its own. The size comes from the
+   * viewBox, not from the page: zoom and full width are VIEW state, and a
+   * downloaded diagram should be the diagram, not the reader's current zoom.
+   * An <img> that was never inlined is fetched as the file it names.
+   */
+  function figureSvgText(scope) {
+    var art = figureArt(scope);
+    if (!art) return Promise.reject(new Error("no drawing in this figure"));
+    if (String(art.nodeName).toLowerCase() === "img") {
+      var src = art.getAttribute("src") || "";
+      if (!/\.svg([?#]|$)/i.test(src)) return Promise.reject(new Error("the image is not an SVG"));
+      return window.fetch(src).then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.text();
+      });
+    }
+    var clone = art.cloneNode(true);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    clone.removeAttribute("style");
+    clone.removeAttribute("data-fa-src");
+    var size = svgSize(art);
+    clone.setAttribute("width", String(size.w));
+    clone.setAttribute("height", String(size.h));
+    return Promise.resolve('<?xml version="1.0" encoding="UTF-8"?>\n' + new window.XMLSerializer().serializeToString(clone));
+  }
+
+  /** The drawing's own size: its viewBox, else its width/height, else its box. */
+  function svgSize(svg) {
+    var vb = (svg.getAttribute("viewBox") || "").split(/[\s,]+/).map(Number);
+    if (vb.length === 4 && vb[2] > 0 && vb[3] > 0) return { w: vb[2], h: vb[3] };
+    var w = parseFloat(svg.getAttribute("width") || ""), h = parseFloat(svg.getAttribute("height") || "");
+    if (w > 0 && h > 0) return { w: w, h: h };
+    var box = svg.getBoundingClientRect();
+    return { w: Math.max(1, Math.round(box.width)), h: Math.max(1, Math.round(box.height)) };
+  }
+
+  /** The page's own background, so a PNG of a dark-themed page is not transparent. */
+  function pageBackground() {
+    var c = getComputedStyle(document.body).backgroundColor;
+    return !c || c === "transparent" || /rgba\([^)]*,\s*0\)$/.test(c) ? "#ffffff" : c;
+  }
+
+  /**
+   * The figure rendered to a PNG blob at twice its size, for a sharp result
+   * on a high-density screen or in a slide. Rejects — and the caller says so —
+   * when the browser refuses (a drawing that references another origin taints
+   * the canvas), rather than producing an empty image.
+   */
+  function figurePng(scope) {
+    return figureSvgText(scope).then(function (text) {
+      return new Promise(function (resolve, reject) {
+        var dims = svgSize(new window.DOMParser().parseFromString(text, "image/svg+xml").documentElement);
+        var url = URL.createObjectURL(new Blob([text], { type: "image/svg+xml" }));
+        var img = new Image();
+        img.onload = function () {
+          try {
+            var scale = 2;
+            var canvas = document.createElement("canvas");
+            canvas.width = Math.round(dims.w * scale);
+            canvas.height = Math.round(dims.h * scale);
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = pageBackground();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(function (blob) {
+              URL.revokeObjectURL(url);
+              if (blob) resolve(blob); else reject(new Error("the browser produced no image"));
+            }, "image/png");
+          } catch (e) {
+            URL.revokeObjectURL(url);
+            reject(e);
+          }
+        };
+        img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("the SVG would not render")); };
+        img.src = url;
+      });
+    });
+  }
+
+  /** Save a blob under a filename, through a transient link. */
+  function saveBlob(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = el("a", { href: url, download: name }); // href-safe: a blob: URL this function minted over the figure's own bytes, never document data
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+  }
+
+  /**
+   * Copy the figure: as a PNG image where the browser allows writing images
+   * to the clipboard, otherwise as SVG text. Resolves to a sentence saying
+   * WHICH it was, because "copied" alone would leave a reader pasting text
+   * where they expected a picture.
+   */
+  function copyFigure(scope) {
+    var clip = navigator.clipboard;
+    if (!clip) return Promise.resolve("Copy is not available here (the clipboard needs a secure page)");
+    var asText = function () {
+      return figureSvgText(scope)
+        .then(function (text) { return clip.writeText(text); })
+        .then(function () { return "Copied as SVG text — this browser does not accept images on the clipboard"; });
+    };
+    var attempt = typeof window.ClipboardItem === "function" && typeof clip.write === "function"
+      ? clip.write([new window.ClipboardItem({ "image/png": figurePng(scope) })])
+          .then(function () { return "Copied as a PNG image"; })
+          .catch(asText)
+      : asText();
+    return attempt.catch(function (e) { return "Could not copy: " + e.message; });
+  }
+
   function mountFigure(scope, isPlain) {
     if (scope.dataset.faTools === "1") return;
     scope.dataset.faTools = "1";
@@ -7389,7 +7783,35 @@
       e.stopPropagation();
     }, true);
 
-    [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
+    // Export (#1270, owner: "download rendered png, src svg or copy to
+    // clipboard any diagrams"). On the same toolbar, so every figure that has
+    // zoom has these too. The art is looked up at press time, not mount time:
+    // an <img> is replaced by its inline <svg> after the toolbar mounts.
+    var svgBtn = el("button", { type: "button", class: "fa-figure-export-start", "aria-label": "Download this diagram as SVG" }, "SVG");
+    var pngBtn = el("button", { type: "button", "aria-label": "Download this diagram as PNG" }, "PNG");
+    var copyBtn = el("button", { type: "button", "aria-label": "Copy this diagram to the clipboard" }, "Copy");
+    var said = el("span", { class: "fa-figure-status", role: "status", "aria-live": "polite" });
+    var saidTimer = 0;
+    function say(msg) {
+      said.textContent = msg;
+      clearTimeout(saidTimer);
+      saidTimer = setTimeout(function () { said.textContent = ""; }, 4000);
+    }
+    svgBtn.addEventListener("click", function () {
+      figureSvgText(scope).then(function (text) {
+        saveBlob(new Blob([text], { type: "image/svg+xml" }), figureName(scope) + ".svg");
+        say("SVG downloaded");
+      }).catch(function (e) { say("Could not export SVG: " + e.message); });
+    });
+    pngBtn.addEventListener("click", function () {
+      figurePng(scope).then(function (blob) {
+        saveBlob(blob, figureName(scope) + ".png");
+        say("PNG downloaded");
+      }).catch(function (e) { say("Could not export PNG: " + e.message); });
+    });
+    copyBtn.addEventListener("click", function () { copyFigure(scope).then(say); });
+
+    [out, level, into, reset, wide, svgBtn, pngBtn, copyBtn, said].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
     apply();
 
@@ -7490,6 +7912,21 @@
             svg.setAttribute("role", "img");
             svg.setAttribute("aria-label", alt);
           }
+          // The source file, kept for the export controls: "Download SVG"
+          // names the file after it, and it is the committed artefact.
+          svg.setAttribute("data-fa-src", src);
+          // Links inside a drawing are written relative to the SVG FILE, so
+          // one file works wherever it is embedded. Inlined, a relative href
+          // would resolve against the PAGE instead — right from the docs
+          // root, wrong from `processes/` (bean `xl55`) — so each is
+          // re-anchored to the file's own URL, through the same check as
+          // every other link here.
+          var fileUrl = new URL(src, location.href);
+          [].forEach.call(svg.querySelectorAll("a[href]"), function (a) {
+            var checked = safeHref(a.getAttribute("href"));
+            if (checked === undefined) a.removeAttribute("href");
+            else a.setAttribute("href", new URL(checked, fileUrl).href);
+          });
           img.parentNode.replaceChild(document.importNode(svg, true), img);
         })
         .catch(function (e) {
