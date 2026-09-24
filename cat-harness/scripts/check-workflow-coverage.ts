@@ -80,6 +80,7 @@ import { basename, join, relative, resolve } from "node:path";
 
 import { workflowFiles } from "./known-skills.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 const HERE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(HERE);
@@ -149,7 +150,7 @@ export interface JobDrift {
 /** Every `<folio:implements workflow="…"/>` in a diagram. */
 export function declaredWorkflows(xml: string): string[] {
   const out: string[] = [];
-  for (const m of xml.matchAll(/<folio:implements\b[^>]*\bworkflow="([^"]+)"/g)) {
+  for (const m of xml.matchAll(ownElementPattern(xml, "implements", String.raw`[^>]*\bworkflow="([^"]+)"`))) {
     out.push(m[1]!);
   }
   return out;
@@ -169,7 +170,7 @@ export function declaredJobs(xml: string): { node: string; job: string }[] {
   const out: { node: string; job: string }[] = [];
   const pat = /<bpmn:([A-Za-z]+)\b[^>]*\bid="([^"]+)"[^>]*>([\s\S]*?)<\/bpmn:\1>/g;
   for (const m of xml.matchAll(pat)) {
-    for (const j of m[3]!.matchAll(/<folio:job\b[^>]*\bname="([^"]+)"/g)) {
+    for (const j of m[3]!.matchAll(ownElementPattern(xml, "job", String.raw`[^>]*\bname="([^"]+)"`))) {
       out.push({ node: m[2]!, job: j[1]! });
     }
   }

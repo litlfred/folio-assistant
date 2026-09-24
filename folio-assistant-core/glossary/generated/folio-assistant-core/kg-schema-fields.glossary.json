@@ -218,7 +218,7 @@
     {
       "id": "changeset.blockatschema.section",
       "prefLabel": "BlockAtSchema.section",
-      "definition": "The section listing it: `<manifest dir>::<section label | title | #n>`. Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at.",
+      "definition": "The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build). Absent when no manifest lists the block — an orphan, which is itself worth a reviewer's attention and is not guessed at.",
       "source": "folio-assistant-core/schemas/changeset.ts#BlockAtSchema.section",
       "status": "candidate"
     },

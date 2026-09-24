@@ -1139,6 +1139,30 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "for nobody. The skill points at its contract, so this is visible only from the contract's side.",
   },
   {
+    id: "test-run-skill-resolves",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A recorded test run does not parse, or names a skill that does not exist — a result attributed to " +
+      "nothing. The run points at the skill it tests; the skill names no test.",
+  },
+  {
+    id: "test-run-conforms",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A recorded test run's cases violate the input or output contract of the skill it names, so it " +
+      "measured something other than that skill as specified.",
+  },
+  {
+    id: "test-run-checkable",
+    applies: ["graph"],
+    severity: "minor",
+    summary:
+      "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
+      "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
+  },
+  {
     id: "story-role-resolves",
     applies: ["graph"],
     severity: "major",
