@@ -1,5 +1,5 @@
 /**
- * The external-schemas viewer — the `usedBy` join, and the page a reader gets.
+ * The external-schemas viewer — the declared users, and the page a reader gets.
  *
  * Bean `yunp`: `external-schema` was one of the declared kinds with no
  * published viewer, so the navbar listed it disabled and four records — an
@@ -11,8 +11,9 @@
  * **Not the prose**, for the reason `methodologies-viz.test.ts` states: a test
  * that pinned the sentences fails every time somebody improves one.
  *
- * **The `usedBy` classification**, which is the only judgement on the page and
- * the only thing here that nothing else checks. `loadSpecs` already validates
+ * **The declared users** (bean `u63y`), read from the users rather than from a
+ * hand-written list on the record; `spec-users.test.ts` tests the reader, and
+ * this file asserts the page over the real corpus. `loadSpecs` already validates
  * every record and `undeclaredNamespaces` already reconciles the namespaces —
  * both are imported rather than restated, so this file asserts the join and
  * leaves their own tests to them.
@@ -30,68 +31,31 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.js";
-import { classifyUsedBy, page, pageRelPath, usedByRows } from "../gen-external-schemas-viz.js";
+import { declaredUsers, page, pageRelPath } from "../gen-external-schemas-viz.js";
 import { loadSpecs, namespacesInUse } from "../external-schemas.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
 
-describe("`usedBy` is a blast radius, and it is checked — three states", () => {
-  it("a repo-relative path that exists RESOLVES", () => {
-    expect(classifyUsedBy("cat-harness/scripts/external-schemas.ts", REPO, INSTANCE).state).toBe(
-      "resolves",
-    );
-  });
-
-  it("an INSTANCE-relative path resolves too — the corpus spells both", () => {
-    // Trying one root only would report half the list missing, which is a wrong
-    // answer wearing the shape of a finding.
-    expect(classifyUsedBy("schemas/namespaces.ts", REPO, INSTANCE).state).toBe("resolves");
-  });
-
-  it("a glob is NOT A PATH, and that is not a defect", () => {
-    // `omg-dd-1.0` writes `processes/*.bpmn — the BPMNDI layout every diagram
-    // carries`: it names a set and then explains it, on purpose. Reporting that
-    // as broken teaches a reader to ignore the column.
-    expect(classifyUsedBy("processes/*.bpmn", REPO, INSTANCE).state).toBe("not-a-path");
-    expect(
-      classifyUsedBy("processes/*.bpmn — the BPMNDI layout every diagram carries", REPO, INSTANCE)
-        .state,
-    ).toBe("not-a-path");
-  });
-
-  it("a path spelled as a path and not there is MISSING", () => {
-    expect(classifyUsedBy("cat-harness/scripts/gone.ts", REPO, INSTANCE).state).toBe("missing");
-  });
-
-  it("missing and not-a-path are different answers — `dh4f`", () => {
-    // Collapsing them either way loses a fact: one direction hides the entries
-    // that really are broken, the other cries wolf on the deliberate ones.
-    const a = classifyUsedBy("cat-harness/scripts/gone.ts", REPO, INSTANCE).state;
-    const b = classifyUsedBy("processes/*.bpmn", REPO, INSTANCE).state;
-    expect(a).not.toBe(b);
-  });
-});
-
 describe("the page a reader gets — over the REAL registry", () => {
   const specs = loadSpecs();
-  const used = usedByRows(specs, REPO, INSTANCE);
+  const used = declaredUsers(specs, REPO);
 
   it("the registry is found at all — an empty one is not a clean run", () => {
     expect(specs.length).toBeGreaterThan(0);
-    expect(used.size).toBe(specs.length);
   });
 
-  it("every declared dependent in the corpus resolves or says why not", () => {
-    // Not asserted as zero-missing: whether a record may name a path that has
-    // gone is the maintainer's call, and a test that failed the build on it
-    // would be a gate nobody asked for. What IS asserted is that every entry
-    // got a verdict — an unclassified one would render as a blank cell.
-    const flat = [...used.values()].flat();
-    expect(flat.length).toBeGreaterThan(0);
-    for (const r of flat) {
-      expect(["resolves", "not-a-path", "missing"]).toContain(r.state);
-    }
+  it("every specification has a declared user, and no declaration names a missing record", () => {
+    // The 36 hand-written entries these replaced covered every record; losing
+    // one in the move would read as a spec nothing depends on.
+    const declared = new Set(used.uses.map((u) => u.spec));
+    expect(specs.map((s) => s.id).filter((id) => !declared.has(id))).toEqual([]);
+    expect(used.unknown).toEqual([]);
+  });
+
+  it("each declaration form is exercised by the real corpus", () => {
+    // A form nothing uses is a reader that could be broken without a test failing.
+    expect([...new Set(used.uses.map((u) => u.form))].sort()).toEqual(["front-matter", "kind", "tag", "xmlns"]);
   });
 
   it("every row's link resolves to an anchor ON THIS PAGE", () => {

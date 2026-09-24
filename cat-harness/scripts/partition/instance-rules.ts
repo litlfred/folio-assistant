@@ -287,6 +287,7 @@ export const RULES: Rule[] = [
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
+      "scripts/spec-users.ts",               // who declares each external spec — read from the users (bean `u63y`)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a

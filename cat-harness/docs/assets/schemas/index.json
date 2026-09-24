@@ -34853,13 +34853,6 @@
           "array": false
         },
         {
-          "name": "usedBy",
-          "type": "z.array(z.string().min(1)).min(1)",
-          "optional": false,
-          "array": true,
-          "doc": "What in this repository depends on it, so a bump has a blast radius."
-        },
-        {
           "name": "terms",
           "type": "z .array( z .object({ /** The term as the corpus spells it, e.g. `bpmn:exclusiveGateway`. */ term: z.string().min(1), /…",
           "optional": true,

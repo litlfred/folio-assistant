@@ -186,7 +186,7 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
     links,
     ...(harnesses ? { harnesses } : {}),
   });
-  return railed === undefined ? undefined : withNarrowViewport(railed);
+  return railed === undefined ? undefined : withNarrowViewport(withSavedScheme(railed));
 }
 
 /**
@@ -214,6 +214,51 @@ export function withNarrowViewport(html: string): string {
 }
 
 const NARROW_MARK = `data-folio-narrow-viewport`;
+
+/**
+ * The reader's saved colour scheme, applied to a standalone viewer — bean `dc64`.
+ *
+ * The dashboards (beans, todos, translation status) style both schemes through
+ * `:root[data-fa-scheme="light"]`, and default to dark because the site's
+ * configured `color_scheme` is dark. On a themed page `docs-ui.js` sets that
+ * attribute from the reader's stored choice. These pages do not load it, so a
+ * reader who picked LIGHT anywhere on the site still got dark here.
+ *
+ * A few bytes in the HEAD, run before first paint so the page does not flash
+ * dark and then flip. It reads ONLY a stored choice: with none, the page keeps
+ * its CSS default, which is the configured scheme, the same fallback
+ * `docs-ui.js` uses.
+ *
+ * The storage key is read out of `docs-ui.js` at generation time, not written
+ * down again here. Two copies of a key are two answers free to disagree, and a
+ * rename in one would silently disconnect every dashboard.
+ */
+export function withSavedScheme(html: string): string {
+  if (html.includes(SCHEME_MARK)) return html;
+  const head = /<head\b[^>]*>/i.exec(html);
+  if (!head) return html;
+  const key = JSON.stringify(schemeKey());
+  const script =
+    `<script ${SCHEME_MARK}>try{var s=localStorage.getItem(${key});` +
+    `if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>\n`;
+  const at = head.index + head[0].length;
+  return html.slice(0, at) + "\n" + script + html.slice(at);
+}
+
+const SCHEME_MARK = `data-folio-saved-scheme`;
+
+let schemeKeyCache: string | undefined;
+/** The key `docs-ui.js` stores the reader's scheme under. Throws if it cannot be found: a silent default would disconnect every page. */
+export function schemeKey(): string {
+  if (schemeKeyCache) return schemeKeyCache;
+  // declared-path-literal: a platform asset beside this module, not a folio
+  // directory. It is the one place the key is defined.
+  const js = readFileSync(new URL("../docs/assets/js/docs-ui.js", import.meta.url), "utf-8");
+  const m = /var SCHEME_KEY = "([^"]+)";/.exec(js);
+  if (!m) throw new Error("viewer-page: docs-ui.js no longer declares SCHEME_KEY — the dashboards cannot follow the reader's scheme");
+  schemeKeyCache = m[1]!;
+  return schemeKeyCache;
+}
 
 let narrowCss: string | undefined;
 function narrowViewportCss(): string {
