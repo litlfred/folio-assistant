@@ -447,28 +447,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/docs-ui.css?v=1790229233">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/docs-ui.css?v=1790229999">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/work-plan.css?v=1790229233">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/work-plan.css?v=1790229999">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/themes.css?v=1790229233">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/themes.css?v=1790229999">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/uml.css?v=1790229233">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/uml.css?v=1790229999">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/avatars.css?v=1790229233">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/css/avatars.css?v=1790229999">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -485,7 +485,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/js/docs-ui.js?v=1790229233" defer></script>
+<script src="/folio-assistant/STAGING/claude-oi1y-api-nav-2/assets/js/docs-ui.js?v=1790229999" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -793,7 +793,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.</p>
 
-<p><strong>27 file(s)</strong> across 2 group(s). Each links to the file itself —
+<p><strong>29 file(s)</strong> across 2 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.</p>
 <h2 id="does-each-file-declare-itself">
   
@@ -821,7 +821,7 @@ would make the format’s limit and somebody’s omission look the same.</p>
   <tbody>
     <tr>
       <td><span class="fg-tag fg-ok">declared</span></td>
-      <td>17</td>
+      <td>18</td>
       <td>carries the tag itself</td>
     </tr>
     <tr>
@@ -831,13 +831,13 @@ would make the format’s limit and somebody’s omission look the same.</p>
     </tr>
     <tr>
       <td><span class="fg-tag fg-gap">undeclared</span></td>
-      <td>6</td>
+      <td>7</td>
       <td><strong>neither</strong> — a gap, not a format limit</td>
     </tr>
   </tbody>
 </table></div>
 
-<p>The 6 undeclared are listed below with the rest rather than in a
+<p>The 7 undeclared are listed below with the rest rather than in a
 separate section: they are part of the corpus, and a gap hidden behind a
 summary count is the failure this table exists to avoid.</p>
 <h2 id="retired">
@@ -849,7 +849,7 @@ summary count is the failure this table exists to avoid.</p>
 </h2>
     
 
-<p>11 file(s).</p>
+<p>13 file(s).</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -860,6 +860,16 @@ summary count is the failure this table exists to avoid.</p>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.html">detangle-schema-viewer.html</a></td>
+      <td>—</td>
+      <td><span class="fg-tag fg-gap">undeclared</span></td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.md">detangle-schema-viewer.md</a></td>
+      <td>detangle’s schema viewer page — retired 2026-09-23</td>
+      <td><span class="fg-tag fg-ok">declared</span></td>
+    </tr>
     <tr>
       <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md">skill-definition-roles.md</a></td>
       <td><code class="language-plaintext highlighter-rouge">SkillDefinition.roles</code> — retired 2026-09-20</td>
