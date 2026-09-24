@@ -1807,7 +1807,7 @@ theme-generation <span class="fa-gloss-status">candidate, extracted</span>
 theme-ui-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them.</p>
+<p>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/theme-ui-review.md"><code>cat-harness/skills/folio-core/theme-ui-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theming" data-fa-state="extracted" data-fa-gloss="">

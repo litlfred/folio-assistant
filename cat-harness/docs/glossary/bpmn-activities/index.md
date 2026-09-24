@@ -11,13 +11,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 502 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 501 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 531 terms and is 403 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 530 terms and is 404 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">531</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">530</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1642,10 +1642,10 @@ Integration test and QA sweep [content-test] <span class="fa-gloss-status">candi
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>cat-harness/processes/content-lifecycle.bpmn#Task_Test</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_inventory" data-fa-state="extracted" data-fa-gloss="">
-Inventory what actually renders <span class="fa-gloss-status">candidate, extracted</span>
+Inventory the ingested assets <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong.</p>
+<p>Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#A_Inventory</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l1gate.task_checkderived" data-fa-state="extracted" data-fa-gloss="">
@@ -1667,10 +1667,10 @@ Iterate on author feedback <span class="fa-gloss-status">candidate, extracted</s
 <h2 id="letter-J">J</h2>
 <dl class="fa-gloss">
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.r_judge" data-fa-state="extracted" data-fa-gloss="">
-Judge the rendered result <span class="fa-gloss-status">candidate, extracted</span>
+Judge the assets in their design <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A person looks at it, at BOTH a web and a mobile width. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
+<p>A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#R_Judge</code></a></p>
 </dd>
 </dl>
@@ -2320,13 +2320,6 @@ Post the retention notice on the PR <span class="fa-gloss-status">candidate, ext
 <p>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Notice</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.call_themeuireview" data-fa-state="extracted" data-fa-gloss="">
-Post-MVP theme + UI review <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#Call_ThemeUIReview</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_preflight" data-fa-state="extracted" data-fa-gloss="">
 Preflight: is the preview live? <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2469,7 +2462,7 @@ Raise a finding against the wrong side <span class="fa-gloss-status">candidate, 
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>cat-harness/processes/narrative-code-review.bpmn#A_RaiseFinding</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_raisefindings" data-fa-state="extracted" data-fa-gloss="">
-Raise findings against the authoring <span class="fa-gloss-status">candidate, extracted</span>
+Raise findings before the assets land <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so.</p>
@@ -2999,13 +2992,6 @@ Return for correction with annotations <span class="fa-gloss-status">candidate, 
 <dd>
 <p>The reviewer annotates specific passages that need correction and returns to the translator with detailed feedback. Each annotation includes: - The passage in question - What is wrong (terminology, meaning, style) - The suggested correction or reference</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/human-translation-workflow.bpmn"><code>cat-harness/processes/human-translation-workflow.bpmn#Task_ReturnForCorrection</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_review" data-fa-state="extracted" data-fa-gloss="">
-Review contrast and non-colour signal <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (&quot;Never red with green, never blue with yellow&quot;).</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>cat-harness/processes/ingest-theme.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_reviewslices" data-fa-state="extracted" data-fa-gloss="">
 Review each slice [review-task] <span class="fa-gloss-status">candidate, extracted</span>
@@ -3616,6 +3602,13 @@ The RULE is the defect — bean it <span class="fa-gloss-status">candidate, extr
 <dd>
 <p>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags &quot;clearly&quot;, and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_RuleIsWrong</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_review" data-fa-state="extracted" data-fa-gloss="">
+Theme and UI review [theme-ui-review] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;; asked directly on 2026-09-24 whether that meant ONLY at ingestion: &quot;Yes only at ingestion&quot;. Bean `9fdi`. So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — &quot;calling it would put a human gate into an automated ingest&quot; — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. &quot;A theme sets the stripe's hue; it never sets its width to zero&quot; — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (&quot;Never red with green, never blue with yellow&quot;). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>cat-harness/processes/ingest-theme.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_derivecontent.task_audio" data-fa-state="extracted" data-fa-gloss="">
 Transcribe and translate audio <span class="fa-gloss-status">candidate, extracted</span>

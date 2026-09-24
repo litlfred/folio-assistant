@@ -9,7 +9,7 @@ nav_exclude: true
 {% raw %}
 # CRDM Phase 6 — implement, MVP, acceptance
 
-`Process_CRDM_Deliver` · strict (defaulted) · 10 step(s)
+`Process_CRDM_Deliver` · strict (defaulted) · 9 step(s)
 
 One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation. A subprocess has one exit and cannot be re-entered once finished, so splitting this region would have changed what the diagram says.
 
@@ -18,7 +18,7 @@ One phase and not three, because the loops say so: an increment the BA rejects, 
 ## How it connects
 
 - **Called by:** [CRDM requirements](crdm-requirements.html)
-- **Calls:** [Options analysis](options-analysis.html), [Review task](review-task.html), [Post-MVP theme and UI review](theme-ui-review.html)
+- **Calls:** [Options analysis](options-analysis.html), [Review task](review-task.html)
 
 ## Lanes — who acts
 
@@ -30,7 +30,7 @@ One phase and not three, because the loops say so: an increment the BA rejects, 
 
 ## Steps
 
-Every one of the 10 step(s) is documented.
+Every one of the 9 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
@@ -43,7 +43,6 @@ Every one of the 10 step(s) is documented.
 | **Share MVP with stakeholders**<br>`BA_ShareMVP` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Outer loop: the BA presents the accumulated increments to stakeholders as a testable MVP. Staging URL, demo, or walkthrough. |
 | **Test MVP in own context**<br>`S_TestMVP` | Stakeholders | — | Stakeholders test the delivered feature in their own workflow, with their own data. They report what works and what does not. |
 | **Translate feedback into agent direction**<br>`BA_TranslateFeedback` | BA / Feature Requestor | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | The BA translates stakeholder findings into actionable direction: new beans or bean updates for the agent. |
-| **Post-MVP theme + UI review**<br>`Call_ThemeUIReview` | Agent | calls [Post-MVP theme and UI review](theme-ui-review.html) | On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale. |
 
 ## Decisions
 
@@ -53,6 +52,6 @@ Every one of the 3 decision(s) is documented.
 |---|---|---|
 | **Meets criteria?**<br>`GW_IncrementOK` | The BA's result from testing the increment's behaviour. `no` returns to implementation; `yes` asks whether the MVP is ready for stakeholders. | **no** → Phase 6: Implement (feature branch + PR)<br>**yes** → MVP ready for stakeholders? |
 | **MVP ready for stakeholders?**<br>`GW_MVPReady` | Asked after an increment passes: is the whole MVP ready for stakeholders? `not yet` implements the next increment; `yes` deploys the MVP to staging. | **not yet** → Phase 6: Implement (feature branch + PR)<br>**yes** → Deploy the MVP to staging |
-| **Accepted?**<br>`GW_StakeholderOK` | The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review. | **findings** → Translate feedback into agent direction<br>**accepted** → Post-MVP theme + UI review |
+| **Accepted?**<br>`GW_StakeholderOK` | The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review. | **findings** → Translate feedback into agent direction<br>**accepted** → Phase complete |
 
 {% endraw %}
