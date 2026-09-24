@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 308,
+      "count": 312,
       "unit": "beans"
     }
   },
@@ -432,15 +432,15 @@
     },
     {
       "id": "folio-assistant-391j",
-      "title": "REGEN BLIND SPOT: a :check enforced by a bun test (not a workflow step) is never asked by `bun run regen` — prov-qaqc turned main red",
-      "status": "todo",
+      "title": "MERGE SKEW: two green branches merged into a red main (prov-qaqc, 2026-09-24) — not a regen blind spot as first diagnosed; owner decides merge queue vs up-to-date vs fix-forward",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T06:06:37Z",
-      "updatedAt": "2026-09-24T06:06:37Z",
+      "updatedAt": "2026-09-24T18:27:03Z",
       "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
       "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
     },
@@ -1595,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-ceud",
+      "title": "CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:00Z",
+      "updatedAt": "2026-09-24T17:30:00Z",
+      "preview": "Measured 2026-09-24, working PR #1241.\n\n`6603c3fbc4d` was pushed to `claude/cool-fermi-htir5p`, an open PR branch.\n**No workflow fired for it at all** — not `code-quality-gates`, not\n`jsonld-gen-check`, not `feature-staging`. The latest run of every workflow\nstayed on the previous SHA, `f1fb1556576`, for 35 minutes.\n\n## What was ruled out\n\n- **The push landed.** `git ls-remote origin claude/cool-f",
+      "file": "beans/defs/folio-assistant-ceud--ci-a-push-to-a-pr-branch-fired-no-workflow-at-all.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -1667,7 +1681,7 @@
     {
       "id": "folio-assistant-cw35",
       "title": "GATES DECIDE PUBLICATION: a held bitstream whose copyright or restrictions gate is not permitted is not redistributed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
@@ -1737,6 +1751,20 @@
       "file": "beans/defs/folio-assistant-d3yq--testing-theme-an-engineering-grumpy-cat-theme-and.md"
     },
     {
+      "id": "folio-assistant-d4lb",
+      "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
+      "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
+      "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
+    },
+    {
       "id": "folio-assistant-d5f1",
       "title": "INGEST: narrative description per image, localized, including images extracted from PDFs",
       "status": "in-progress",
@@ -1767,15 +1795,15 @@
     {
       "id": "folio-assistant-dc64",
       "title": "Dashboards are dark-only and ignore the colour-scheme setting",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
-      "updatedAt": "2026-09-23T10:36:14Z",
-      "preview": "The state dashboards (beans, todos, translation status) render dark regardless of the reader's scheme, because the attribute that switches them is set only by a script those pages do not load.\n\nObserved on: `beans`, `todos`, `translation-status` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.",
+      "updatedAt": "2026-09-24T18:14:31Z",
+      "preview": "The state dashboards (beans, todos, translation status) render dark regardless of the reader's scheme, because the attribute that switches them is set only by a script those pages do not load.\n\nObserved on: `beans`, `todos`, `translation-status` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] A reader's st",
       "file": "beans/defs/folio-assistant-dc64--dashboards-are-dark-only-and-ignore-the-colour-sch.md"
     },
     {
@@ -1808,15 +1836,15 @@
     },
     {
       "id": "folio-assistant-dv8v",
-      "title": "B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed",
-      "status": "todo",
+      "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
@@ -2015,6 +2043,20 @@
       "updatedAt": "2026-09-23T02:45:00Z",
       "preview": "Owner, 2026-09-20: 'noting cacheing olean stragety for \"compiled/compuable\" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'\n\nA THIRD KIND OF REMOTE CONTENT, and `materialization.ts` currently has two purposes (`working`, `archival`) with no room for it. A COMPILED artefact is neither:\n- it is DERIVED, so it is not archival — the source is e",
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
+    },
+    {
+      "id": "folio-assistant-h1wq",
+      "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:16Z",
+      "updatedAt": "2026-09-24T17:40:31Z",
+      "preview": "From `audit-coverage`'s `typed-only` finding. Four kinds declare a validator that\nparses their nodes, and nothing had an opinion about what those nodes SAY. The\nowner chose all four (2026-09-24), having been told the risk: `health` and\n`todos` already have machinery, so a criterion here could be a second answer to\na settled question.\n\n## Summary of Changes\n\n`cat-harness/scripts/check-harness-state",
+      "file": "beans/defs/folio-assistant-h1wq--judge-the-four-typed-only-kinds-health-todos-inter.md"
     },
     {
       "id": "folio-assistant-h2s9",
@@ -2355,6 +2397,20 @@
       "file": "beans/defs/folio-assistant-k8rc--the-typescript-prose-backlog-344-and-two-of-them.md"
     },
     {
+      "id": "folio-assistant-k9yq",
+      "title": "STICKY ART DEFAULT: square crop, faded, unless the todo names a layout; themes page shows square samples",
+      "status": "completed",
+      "type": "feature",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:37:44Z",
+      "updatedAt": "2026-09-24T18:37:44Z",
+      "preview": "Owner 2026-09-24: \"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified. themes/ pages should show sticky as square\".\n\n## Summary of Changes\n- ThemedTodoFieldsSchema gains an optional `layout` (laptop|mobile|card); absent means the square card crop. todos.ts reads it from front matter.\n- docs-ui.js buildBackdrop: the square crop on every screen, no lon",
+      "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
+    },
+    {
       "id": "folio-assistant-kn0t",
       "title": "PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each",
       "status": "in-progress",
@@ -2581,14 +2637,14 @@
     {
       "id": "folio-assistant-n2l9",
       "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:59Z",
-      "updatedAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-24T17:20:57Z",
       "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
       "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
     },
@@ -3441,14 +3497,14 @@
     {
       "id": "folio-assistant-u63y",
       "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:25:14Z",
+      "updatedAt": "2026-09-24T18:42:44Z",
       "preview": "## Owner decision 2026-09-24\n\"B: users declare it\" — each dependent declares the spec, not the spec its users (36 hand-written usedBy entries over 16 records).\n\n## Plan\n- TS: `@conformsTo <spec-id>` in the module doc comment.\n- Skill .md: `conformsTo:` front matter.\n- BPMN: the `xmlns` binding already declares the namespace in-file.\n- JSON-LD: a namespace IRI in `@context` declares it; plain JSON ",
       "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },
