@@ -179,6 +179,8 @@
     "glossary:export": "bun run cat-harness/scripts/glossary-export.ts",
     "glossary:export:bootstrap": "bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap",
     "glossary:page": "bun run folio-assistant-core/scripts/glossary-page.ts",
+    "glossary:pot": "bun run folio-assistant-core/scripts/glossary-pot.ts --extract",
+    "glossary:pot:check": "bun run folio-assistant-core/scripts/glossary-pot.ts --check",
     "check:glossary": "bun run folio-assistant-core/scripts/glossary-page.ts --check",
     "prov:qaqc": "bun run cat-harness/scripts/prov-qaqc.ts",
     "check:prov-qaqc": "bun run cat-harness/scripts/prov-qaqc.ts --check",

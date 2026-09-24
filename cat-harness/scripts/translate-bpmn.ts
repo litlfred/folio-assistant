@@ -79,7 +79,7 @@ import { resolveDirectories } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
-import { formatPot } from "../content/pipeline/pot-extract.js";
+import { formatPot, potWithoutTimestamp } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
 /**
@@ -186,16 +186,8 @@ function potPathFor(file: string, loc: string): string {
   return join(TRANSLATIONS, loc, DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
 }
 
-/**
- * A `.pot` with its creation timestamp blanked, for comparison only.
- *
- * Never written back: the header is real metadata a translator's tooling
- * reads. It is excluded from the COMPARISON because it is the one line that
- * changes on every run regardless of content.
- */
-function withoutTimestamp(text: string): string {
-  return text.replace(/^"POT-Creation-Date:.*$/m, '"POT-Creation-Date: <ignored>\\n"');
-}
+/** The comparison form of a template, shared with core's `glossary-pot` (see `potWithoutTimestamp`). */
+const withoutTimestamp = potWithoutTimestamp;
 
 /** Locales that already have a translations directory. */
 function knownLocales(): string[] {
