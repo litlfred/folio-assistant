@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/skills/fhir-validation/input.schema.json",
+  "title": "FHIR Validation Input",
+  "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+  "type": "object",
+  "required": [
+    "igRoot"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "validationLevel": {
+      "type": "string",
+      "enum": [
+        "sushi-only",
+        "publisher-qa",
+        "full"
+      ],
+      "default": "full",
+      "description": "Level of validation to perform."
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+    }
+  },
+  "staging": {
+    "branch": "claude/sharp-einstein-970n6g",
+    "sha": "bc56632d70861d2293be8eb6f387d84c93fe5de8",
+    "pr": "1307/merge",
+    "run": "36045224225"
+  }
+}
