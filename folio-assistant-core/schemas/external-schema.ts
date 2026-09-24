@@ -99,8 +99,9 @@ export const ExternalSchemaSchema = z
      */
     namespaces: z.array(z.string().min(1)).default([]),
     use: z.enum(SPEC_USES),
-    /** What in this repository depends on it, so a bump has a blast radius. */
-    usedBy: z.array(z.string().min(1)).min(1),
+    // No `usedBy`: the blast radius of a bump is read from the USERS, each of
+    // which declares the spec it conforms to (`scripts/spec-users.ts`, bean
+    // `u63y`). A hand-written list here was the spec naming its dependents.
     /**
      * The OPERATIVE vocabulary — the terms this repository actually acts on.
      *

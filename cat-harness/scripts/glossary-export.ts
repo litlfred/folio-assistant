@@ -118,6 +118,10 @@
  * Usage:
  *   bun run cat-harness/scripts/glossary-export.ts [--instance ROOT] [--out FILE]
  *   bun run cat-harness/scripts/glossary-export.ts --check
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-skos
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";

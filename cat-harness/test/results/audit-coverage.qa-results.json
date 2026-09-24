@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T18:14:23.894Z",
+  "updated_at": "2026-09-24T18:40:23.367Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 146 gate(s), 68 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 149 gate(s), 68 criteria.",
       "count": 42,
       "entries": [
         {
@@ -328,37 +328,43 @@
         },
         {
           "kind": "health",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "cat-harness/test/health/results"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run check:harness-state:check"
+          ],
           "typed": true,
           "hasFiles": true
         },
         {
           "kind": "interaction",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "interaction"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run check:harness-state:check"
+          ],
           "typed": true,
           "hasFiles": true
         },
         {
           "kind": "issue-marks",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "issue-marks"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run check:harness-state:check"
+          ],
           "typed": true,
           "hasFiles": true
         },
@@ -678,6 +684,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:theme-art:check",
             "bun run theme:page:check",
             "bun run themes:css:check"
           ],
@@ -706,13 +713,15 @@
         },
         {
           "kind": "todos",
-          "state": "typed-only",
+          "state": "covered",
           "directories": [
             "todos"
           ],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run check:harness-state:check"
+          ],
           "typed": true,
           "hasFiles": true
         },
@@ -923,39 +932,14 @@
     },
     "kinds-typed-only": {
       "summary": "A declared kind whose nodes a declared validator TYPES and no criterion or gate JUDGES. Kept apart from kinds-unaudited because they are different pieces of work, and still a finding — `--strict` fails on it. Typing is not judging: a kind can parse perfectly against its schema while nothing has an opinion about what it says.",
-      "count": 4,
-      "entries": [
-        {
-          "kind": "health",
-          "directories": [
-            "cat-harness/test/health/results"
-          ]
-        },
-        {
-          "kind": "interaction",
-          "directories": [
-            "interaction"
-          ]
-        },
-        {
-          "kind": "issue-marks",
-          "directories": [
-            "issue-marks"
-          ]
-        },
-        {
-          "kind": "todos",
-          "directories": [
-            "todos"
-          ]
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 146 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 149 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 55
+  "total": 51
 }

@@ -368,8 +368,10 @@ measurement must not be a term in itself, a docblock that documents a tag
 necessarily contains the tag, and a validator over the nodes nobody produces is
 not coverage.
 
-Every gate now declares (bean `3srh`), so `audit:coverage:require-all` is what
-CI runs and the findings are verdicts rather than upper bounds.
+Every gate now declares (bean `3srh`) and every kind with files is JUDGED rather
+than merely typed (bean `h1wq`, via `check:harness-state`), so CI runs
+`audit:coverage:require-all` **and** `audit:coverage:strict` — two steps, because
+they lock different things and a reader should see which broke.
 
 ## Actors, roles and skills — a role is a swimlane
 
