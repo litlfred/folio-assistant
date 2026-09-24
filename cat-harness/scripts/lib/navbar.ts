@@ -524,6 +524,10 @@ export function navbarHtml(m: NavbarModel): string {
  * the two surfaces cannot drift: there is no second copy of the region order
  * to keep in step.
  */
+export function navbarOpenInputHtml(): string {
+  return `<input type="checkbox" class="fa-nav-open" id="fa-nav-open">`;
+}
+
 export function navbarRegionsHtml(m: NavbarModel): string {
   const c: Ctx = { liquid: m.hrefs === "liquid" };
   return (
@@ -536,9 +540,7 @@ export function navbarRegionsHtml(m: NavbarModel): string {
     // Giving the second copy its own id was tried and was worse: the
     // stylesheet reads `.side-bar:has(.fa-nav-open:checked)` and the second
     // input is not in `.side-bar`, so it checked a box nothing reads.
-    (m.openControl === "labels"
-      ? ""
-      : `<input type="checkbox" class="fa-nav-open" id="fa-nav-open">`) +
+    (m.openControl === "labels" ? "" : navbarOpenInputHtml()) +
     `<label class="fa-nav-close" for="fa-nav-open" title="Close navigation">` +
     `<span aria-hidden="true">&times;</span>` +
     `<span class="fa-nav-sr">Close navigation</span></label>` +
