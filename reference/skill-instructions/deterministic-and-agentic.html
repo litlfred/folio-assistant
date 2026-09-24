@@ -454,32 +454,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790253866">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790253866">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790253866">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790253866">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790253866">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790253137">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790253866">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -496,7 +496,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790253137" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790253866" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -800,7 +800,7 @@ different point, and none of them refers to the others:</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio:policy enforcement</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness.processes:policy enforcement</code></td>
       <td>whether a step that is not enabled is <strong>refused</strong> or merely noted</td>
       <td>per process, <code class="language-plaintext highlighter-rouge">strict</code> or <code class="language-plaintext highlighter-rouge">advisory</code></td>
     </tr>
@@ -810,7 +810,7 @@ different point, and none of them refers to the others:</p>
       <td>per activity</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio:decision</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness.processes:decision</code></td>
       <td>whether the branch is <strong>computed</strong> from a table, refusing a hand-supplied outcome</td>
       <td>per exclusive gateway</td>
     </tr>
@@ -857,7 +857,7 @@ noticed, not what exists.</p>
 
 <ul>
   <li>Exclusive gateways split three ways: <strong>computed</strong> by a DMN table, <strong>declared
-judgement</strong> (<code class="language-plaintext highlighter-rouge">folio:judgement</code>, with a reason), and <strong>undeclared</strong>.</li>
+judgement</strong> (<code class="language-plaintext highlighter-rouge">cat-harness.processes:judgement</code>, with a reason), and <strong>undeclared</strong>.</li>
   <li>The undeclared set is a <strong>backlog</strong>, not a finding. Every gateway predating
 the marker lands there, and it is the number this agenda most needs to
 shrink: an undeclared gateway is one where nobody has said whether a table
@@ -916,7 +916,7 @@ test this at the same time: ask of each whether its output is a result or a
 rule.</p>
 
 <p><strong>What it does not settle.</strong> Which of the four axes dominates, whether “rule”
-is even well-defined for the judgements this repository makes (a <code class="language-plaintext highlighter-rouge">folio:raci</code>
+is even well-defined for the judgements this repository makes (a <code class="language-plaintext highlighter-rouge">cat-harness.processes:raci</code>
 annotation is not obviously either), and whether the distinction survives
 contact with a step whose output is prose. <strong>Open.</strong></p>
 <h2 id="why-the-guarding-is-needed-at-all--cited-not-assumed">
@@ -1115,8 +1115,8 @@ more than this page had before.</p>
 
 <p>The practical half, and the only part that is not research:</p>
 
-<p><strong>Say which point you are at.</strong> A gateway is <code class="language-plaintext highlighter-rouge">folio:decision</code>, or
-<code class="language-plaintext highlighter-rouge">folio:judgement</code> with a reason, and an undeclared one is a gap somebody will
+<p><strong>Say which point you are at.</strong> A gateway is <code class="language-plaintext highlighter-rouge">cat-harness.processes:decision</code>, or
+<code class="language-plaintext highlighter-rouge">cat-harness.processes:judgement</code> with a reason, and an undeclared one is a gap somebody will
 have to measure later. The reason is what makes the corpus countable — and a
 corpus that cannot enumerate its judgement points cannot answer any of the
 three questions above.</p>
@@ -1139,7 +1139,7 @@ consulted it; <code class="language-plaintext highlighter-rouge">workflow_gate</
 
 <ul>
   <li><a href="/folio-assistant/reference/skill-instructions/session-state-machine.html"><code class="language-plaintext highlighter-rouge">session-state-machine</code></a> — the worked case, and
-where <code class="language-plaintext highlighter-rouge">folio:judgement</code> came from.</li>
+where <code class="language-plaintext highlighter-rouge">cat-harness.processes:judgement</code> came from.</li>
   <li><a href="/folio-assistant/reference/skill-instructions/bpmn-processes.html"><code class="language-plaintext highlighter-rouge">bpmn-processes</code></a> — strict vs advisory, the four steps no
 package may relax, and the commit-boundary gate.</li>
   <li><a href="../folio-core/content-context-and-state-graphs.md"><code class="language-plaintext highlighter-rouge">content-context-and-state-graphs</code></a>
@@ -1336,7 +1336,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35999546064"><code>fc86666</code></a> &middot; 2026-09-24T12:32:11Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36000867478"><code>7fca4a9</code></a> &middot; 2026-09-24T12:44:21Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
