@@ -435,32 +435,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790254331">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790254331">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790254331">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790254331">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790254331">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790253866">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790254331">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -477,7 +477,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790253866" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790254331" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -674,9 +674,9 @@
               aria-label="Configuration of Folio Assistant">&#x2699;&#xFE0E;</button><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
         style="--fa-tile-tone: 268; --fa-tile-on: 1; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/"
          data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
-          <img src="/folio-assistant/assets/img/harness/landing-card.webp" alt=""
-               style="width: 200%; height: 200%;
-                      left: 0%; top: -92%">
+          <img src="/folio-assistant/assets/img/harness/landing-grumpy-cyborg-agents-card.webp" alt=""
+               style="width: 500%; height: 500%;
+                      left: -30%; top: -170%">
         </span><span class="fa-harness-tab__label">C@T Harness</span></a><button type="button" class="fa-harness-tab__config"
               data-fa-harness-config="cat-harness"
               aria-label="Configuration of C@T Harness">&#x2699;&#xFE0E;</button><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code-list</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/external-schemas/">external-schema</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">fsh-guts</span>
@@ -1046,7 +1046,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36000867478"><code>7fca4a9</code></a> &middot; 2026-09-24T12:44:21Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36001608647"><code>19032af</code></a> &middot; 2026-09-24T12:52:07Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
@@ -1092,9 +1092,9 @@ just not tied to the two moments named above.</p>
               aria-label="Configuration of Folio Assistant">&#x2699;&#xFE0E;</button><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/uploads/folio-assistant/">uploads</a></li></ul></li><li class="fa-harness-tab"
         style="--fa-tile-tone: 268; --fa-tile-on: 1; --fa-tab-i: 4"><a class="fa-harness-tab__body" href="/folio-assistant/"
          data-fa-href-kind="folio"><span class="fa-harness-tab__mark fa-harness-tab__mark--art" aria-hidden="true">
-          <img src="/folio-assistant/assets/img/harness/landing-card.webp" alt=""
-               style="width: 200%; height: 200%;
-                      left: 0%; top: -92%">
+          <img src="/folio-assistant/assets/img/harness/landing-grumpy-cyborg-agents-card.webp" alt=""
+               style="width: 500%; height: 500%;
+                      left: -30%; top: -170%">
         </span><span class="fa-harness-tab__label">C@T Harness</span></a><button type="button" class="fa-harness-tab__config"
               data-fa-harness-config="cat-harness"
               aria-label="Configuration of C@T Harness">&#x2699;&#xFE0E;</button><ul class="fa-harness-tab__graphs"><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/beans/">beans</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/schemas/cat-harness/">cat-harness</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">code-list</span><span class="fa-harness-graph__note">no viewer yet</span></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/docs-auto/index/docs/docs/">docs</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/external-schemas/">external-schema</a></li><li class="fa-harness-graph"><a class="fa-harness-graph__link" href="/folio-assistant/cat-harness/folio/">folio</a></li><li class="fa-harness-graph"><span class="fa-harness-graph__link fa-harness-graph__link--unlinked">fsh-guts</span>
