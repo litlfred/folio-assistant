@@ -1178,6 +1178,11 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The prefix-sharded identifier lookup over who-iris's REFERENCED
+          # nodes (bean `4pm8`). Gated because a stale shard still answers:
+          # it finds a node the catalogue no longer references, and a reader
+          # cannot tell a stale hit from a current one.
+          bun run id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim
