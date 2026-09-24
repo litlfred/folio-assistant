@@ -985,6 +985,13 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
+      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
+      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
+      // so a core placement is a wrong-direction edge.
+      "schemas/graph.ts",
+      "schemas/discussion.ts",
+      "schemas/bootstrap-graph.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the

@@ -1,7 +1,7 @@
 /**
  * The generated bootstrap schemas, against the contract they replace.
  *
- * @module bootstrap-tools/schemas/discussion.test
+ * @module schemas/discussion.test
  * @graphNode none — a test
  *
  * ## Why a corpus and not a diff
@@ -39,8 +39,14 @@ const read = (p: string): Record<string, unknown> => JSON.parse(readFileSync(joi
 const INPUT = read("bootstrap/schemas/discussion.input.schema.json");
 const OUTPUT = read("bootstrap/schemas/discussion.output.schema.json");
 
-/** `strict: false` — these are draft-07 documents, not ajv-flavoured ones. */
-const ajv = new Ajv({ strict: false, allErrors: true });
+/**
+ * Ajv 6, the one installed: it validates draft-07, which these documents are.
+ * This said `strict: false`, an Ajv 8 option that Ajv 6 ignores; the file sat
+ * outside the typechecked tree until it moved into cat-harness (2026-09-24),
+ * so nothing noticed. `ajv` is not a direct dependency (it comes with eslint),
+ * which is recorded in bean 319n.
+ */
+const ajv = new Ajv({ allErrors: true });
 
 const participant = { kind: "person" as const };
 const exchange = [{ asked: "which harness?", answered: "cat-harness" }];
@@ -255,13 +261,13 @@ describe("the generated bootstrap schemas", () => {
     const validateOut = ajv.compile(OUTPUT);
     for (const c of OUTPUT_CASES) {
       test(`output — ${c.why}`, () => {
-        expect(DiscussionOutputSchema.safeParse(c.doc).success).toBe(validateOut(c.doc));
+        expect(DiscussionOutputSchema.safeParse(c.doc).success).toBe(validateOut(c.doc) as boolean);
       });
     }
     const validateIn = ajv.compile(INPUT);
     for (const c of INPUT_CASES) {
       test(`input — ${c.why}`, () => {
-        expect(DiscussionInputSchema.safeParse(c.doc).success).toBe(validateIn(c.doc));
+        expect(DiscussionInputSchema.safeParse(c.doc).success).toBe(validateIn(c.doc) as boolean);
       });
     }
   });

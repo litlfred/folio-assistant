@@ -35,7 +35,7 @@
  * @graphNode schema
  */
 
-import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
+import { BOOTSTRAP_TERMS } from "./graph.ts";
 
 /**
  * Which layer owns a term — and therefore which instances must carry it.
