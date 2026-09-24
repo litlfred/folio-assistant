@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 287,
+      "count": 289,
       "unit": "beans"
     }
   },
@@ -2891,6 +2891,20 @@
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
     },
     {
+      "id": "folio-assistant-rn3o",
+      "title": "Diagrams: download PNG, download SVG, copy to clipboard on every figure",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:41:53Z",
+      "updatedAt": "2026-09-24T12:45:29Z",
+      "preview": "Owner request 2026-09-24. Add three controls to mountFigure's toolbar in docs-ui.js so every diagram (BPMN, UML portrait/landscape, Mermaid) gets them: Download SVG (serialised or the committed file), Download PNG (canvas, scaled, theme colours), Copy (PNG via ClipboardItem, fall back to SVG text, say which). Keyboard-operable, named; e2e test per control. Queued after B5 (#1268) on the same branc",
+      "file": "beans/defs/folio-assistant-rn3o--diagrams-download-png-download-svg-copy-to-clipboa.md"
+    },
+    {
       "id": "folio-assistant-rnfl",
       "title": "Phase I.3 — rename `content/` → `folio/` (2,408 occurrences, 429 files) (#223)",
       "status": "todo",
@@ -3905,14 +3919,14 @@
     {
       "id": "folio-assistant-ygk5",
       "title": "B4 (#1168): a test run names its skill; cases checked against the skill's contract",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:34:30Z",
-      "updatedAt": "2026-09-24T05:34:30Z",
+      "updatedAt": "2026-09-24T06:43:27Z",
       "preview": "Part of s4sp (plan B4). TestRun.skill (required, SkillName) and optional cases[{input,output}]. crdm-detect gets input/output contracts (owner chose 'Also write a contract'); the eval records skill + all 27 cases. scripts/test-run-conformance.ts validates cases with Zod fromJSONSchema (no second schema, bean 319n). kg-audit: test-run-skill-resolves, test-run-conforms, test-run-checkable. tool-cove",
       "file": "beans/defs/folio-assistant-ygk5--b4-1168-a-test-run-names-its-skill-cases-checked-a.md"
     },
@@ -3943,6 +3957,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
+    },
+    {
+      "id": "folio-assistant-yo4m",
+      "title": "B5 (#1168): arrow-direction QA — @general nodes point only at general nodes",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:11:06Z",
+      "updatedAt": "2026-09-24T12:11:06Z",
+      "preview": "Part of s4sp (plan B5, 'QA check first, then fixes'). @general on RoleDef, SkillDefinition, RequirementStatement, GraphKindDef, CapabilityDefinition, ActorDef, ActorDefinition, ProcessId (owner: core six + Process). schema-graph reads the tag; scripts/arrow-direction.ts checks schema @refs and BPMN folio pointers; kg-audit criterion arrow-direction (major). Reports 19 findings for later fixes: 9 f",
+      "file": "beans/defs/folio-assistant-yo4m--b5-1168-arrow-direction-qa-general-nodes-point-onl.md"
     },
     {
       "id": "folio-assistant-yscf",
