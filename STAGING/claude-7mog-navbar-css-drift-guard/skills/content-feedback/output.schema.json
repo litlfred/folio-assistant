@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-7mog-navbar-css-drift-guard/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": [
+    "triagedItems"
+  ],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "priority",
+          "disposition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "backlog",
+              "next-sprint",
+              "wont-fix",
+              "duplicate",
+              "needs-info"
+            ]
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "linkedIssue": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "critical": {
+          "type": "integer"
+        },
+        "major": {
+          "type": "integer"
+        },
+        "minor": {
+          "type": "integer"
+        },
+        "enhancement": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/7mog-navbar-css-drift-guard",
+    "sha": "33052841ddeaeabd84da91bf2ec26dc05af7f272",
+    "pr": "1296/merge",
+    "run": "36040152706"
+  }
+}
