@@ -171,9 +171,7 @@ async function main(): Promise<number> {
       console.log(
         c.checked
           ? `  ✓ ${tag}: ${c.parsed}/${c.checked} parse`
-          : c.state === "untyped"
-            ? `  · ${tag}: ${c.nodes} node(s), NO declared type — could not determine`
-            : c.state === "external"
+          : c.state === "external"
               ? `  · ${tag}: ${c.nodes} node(s), an external specification — named, not run here`
               : `  · ${tag}: ${c.nodes} node(s), a TypeScript shape, not runnable — could not determine`,
       );
