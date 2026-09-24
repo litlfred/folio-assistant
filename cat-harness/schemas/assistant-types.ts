@@ -438,13 +438,8 @@ export interface SkillDefinition {
    * `fsh-guts/scripts/` on 2026-09-20, so nothing reads this field now.
    */
   lifecycleStages?: LifecycleStage[];
-  /**
-   * Directory holding this skill's own JSON Schema files, relative to the repo
-   * root (e.g. `schemas/skills/content-author`). Also 18/18 on disk, also on
-   * the Zod schema, also missing here. Distinct from `schemas` above, which
-   * names TypeScript modules and types rather than a directory.
-   */
-  schemaRef?: string;
+  // No `schemaRef` (#1168, B3b): a skill names its contracts in its front
+  // matter (`input:`/`output:`), read by `scripts/skill-contracts.ts`.
 }
 
 // ---------------------------------------------------------------------------

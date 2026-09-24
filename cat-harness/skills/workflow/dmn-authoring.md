@@ -1,3 +1,8 @@
+---
+input: schemas/skills/dmn-authoring/input.schema.json
+output: schemas/skills/dmn-authoring/output.schema.json
+---
+
 # dmn-authoring
 
 > Skill id: `dmn-authoring` · Package: `workflow` ·

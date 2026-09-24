@@ -1,3 +1,8 @@
+---
+input: schemas/skills/bpmn-authoring/input.schema.json
+output: schemas/skills/bpmn-authoring/output.schema.json
+---
+
 # bpmn-authoring
 
 > Skill id: `bpmn-authoring` · Package: `workflow` ·

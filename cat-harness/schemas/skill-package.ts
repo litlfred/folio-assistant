@@ -230,7 +230,10 @@ export const SkillDefinitionSchema = z.object({
   // evidence that anything is on the other end — this one was two years of
   // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
-  schemaRef: z.string().optional(),
+  // No `schemaRef` (#1168, B3b). It named a directory and was read only by a
+  // retired generator. A skill names its contracts in its front matter —
+  // `input:` and `output:`, a path into the instance or an https IRI — and
+  // `scripts/skill-contracts.ts` is the one reader.
 });
 
 // ─── Requirement ─────────────────────────────────────────────────────────────
