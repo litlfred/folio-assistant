@@ -7,7 +7,7 @@ priority: normal
 tags:
     - roast
 created_at: 2026-09-20T18:03:45Z
-updated_at: 2026-09-24T12:00:00Z
+updated_at: 2026-09-24T14:00:00Z
 parent: folio-assistant-0lmb
 ---
 
@@ -255,7 +255,9 @@ one quarter of it. Recorded there.
 - [x] The roast above is held and its answers recorded here (2026-09-20) — three of five questions settled by measurement. Of the two rulings then outstanding, **where a term's IRI lives is settled** (2026-09-21: the instance namespace, retirement in the first extracting slice); **whether the existing paper glossary converges on the new kind is still open**
 - [x] `glossary` exists as a content kind in core with optional `notation` and scheme-level version fields, validated by schema — **named something other than `GlossaryEntry`**, which is taken twice (2026-09-23: `folio-glossary/v1`, `Term`/`Glossary` in `folio-assistant-core/schemas/glossary.ts`; the harness's kind renamed `swimlane-glossary`)
 - [x] The docs/ rendering carries a defined-terms index built from KG assets, with extracted-vs-authored distinguished (2026-09-24, piece 1 as posed: 2,421 `candidate` terms from skills, Tools, BPMN activities, DMN decisions and schema fields, shown apart from the 7 authored ones; see "PIECE 1 AS POSED SHIPPED" below)
-- [ ] Labels and definitions are extracted to `.pot` like BPMN labels and render per locale
+- [x] Labels and definitions are extracted to `.pot` like BPMN labels (2026-09-24, owner: *"Authored terms only"*: 14 msgids from the 7 authored terms, one template per locale under `translations/<locale>/glossary/`, gated by `glossary:pot:check`; see "TRANSLATION AND RULING 2 SHIPPED" below)
+- [ ] ... and render per locale (next step: needs the glossary page to read the `.po`, which is a change to `glossary-page.ts`)
+- [x] Ruling 2: the paper `build-glossary.ts` converges on SKOS (2026-09-24, owner: *"Converge on SKOS"*): it writes a `folio-glossary/v1` scheme into the paper instance's glossary directory, and the page picks it up through `collect()`
 - [x] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits (SKOS adopted; slice 1 took it 0 → 135, slice 2 adds 48 more concepts)
 
 Related: `0lmb` (content model), `zzmr` (KG structure and publication), `bzyu` (translation pipeline), the who-iris catalogue work on PR #477, the existing `glossary-build` skill (folio-core) — check what it already does before adding a second mechanism.
@@ -752,6 +754,41 @@ Owner, 2026-09-23: *"everything extracted to glosasay / skos? accesible in ihris
 
 **Size, measured:** the page went from **9 KB (7 terms) to 1.4 MB (2,428 terms)** before compression. It is fetched in one request and the page states that near the top. It keeps A–Z and the filter. No search engine was added (bean `4pm8`: Pagefind only in the large-datasets sub-graph). To keep the size down, an extracted row does not print its term IRI, because that was the largest cost per row. An authored row still prints it. The generated schemes are 1.0 MB and the SKOS 1.9 MB, both committed. `{` is escaped on the page, because an extracted `{{` would be read as Liquid.
 
+**Superseded 2026-09-24 by the split below.** The Show choice is gone and the single page is now an index plus one page per asset type.
+
+### SPLIT PER ASSET TYPE, 2026-09-24 (owner decision)
+
+The owner, asked what to do about the 1.4 MB page (1.5 MB by the time it was split), chose **"Split per asset type"**:
+
+- `docs/glossary/` (the index) keeps the authored terms, the counts, the Sources, and a Pages table linking each asset type's page with its term count and size.
+- `docs/glossary/<type>/` for skills, tools, bpmn-activities, dmn-decisions and schema-fields each holds that type's extracted candidates from every instance, with A–Z, the text filter and the "candidate, extracted" badge. The Show choice went: each page now holds one state.
+- The SKOS files are unchanged.
+
+**Sizes, measured before compression:**
+
+| page | before | after |
+|---|---|---|
+| `glossary/` | 1.5 MB (1,522,496 B, all 2,439 terms) | 16 KB (15,998 B; 7 authored terms, in 2 schemes after the ownership rule below) |
+| `glossary/skills/` | — | 192 KB (196,833 B; 271) |
+| `glossary/tools/` | — | 63 KB (64,772 B; 98) |
+| `glossary/bpmn-activities/` | — | 403 KB (412,891 B; 531) |
+| `glossary/dmn-decisions/` | — | 7 KB (7,057 B; 9) |
+| `glossary/schema-fields/` | — | 823 KB (842,971 B; 1,523) |
+
+**Budgets:** 64 KB for the index and 1 MB for an asset type's page (`PAGE_BUDGET` in `glossary-page.ts`). Each page states its size and budget, and `check:glossary` fails a page over budget. A page that outgrows its budget is split further, not given a larger one. Schema fields is the closest, at 80% of its budget.
+
+**Tests** (`glossary.test.ts`, "the glossary pages"): every term appears exactly once across all the pages, on the page its scheme belongs to; the index holds authored terms only and each type page only its type's extracted terms; each page is under its budget and says so; the index links every type page and each links back; every page keeps the filter and A–Z. Mutation-checked by hand, 4 ways, each red: a type's terms also rendered on the index (4 tests), a type link dropped from the index (1), a budget halved (1), a type page's term list dropped (4).
+
+The wireframe `docs/wireframes/glossary-page/` now has two candidates, `as-is.html` (the index) and `as-is-type-page.html` (Schema fields), each checked at web 1280 and mobile 390.
+
+### Terms minted by the instance that owns their source, 2026-09-24 (owner rule)
+
+Owner: *"make sure all glossary terms properly localed to ihris so [no] collision w/ other subgraphs. general rule/skill"*. A scheme and its terms live in the namespace of the instance whose root holds the source asset. In a folio with sub-instances that is the sub-instance, never the root, even when the `glossary/` directory is declared at the root. A code list extended by several packages belongs to the instance that defines it, which the scheme names with its own `source`. The rule is in `glossary-terms.md` § Conventions.
+
+- `collect()` now places an authored scheme with `schemeOwner`: the instance its own `source` names, otherwise the one instance holding every term's source, otherwise the declaring instance. It refuses a scheme sourced in several instances with no defining source.
+- `check:glossary` adds three checks over every instance: (a) no two schemes mint one scheme IRI; (b) no two instances resolve to one namespace; (c) every term with a repository source, authored or extracted, has its IRI in the owning instance's namespace. `glossary.test.ts` recomputes ownership independently of `collect()`. Each check was mutation-tested by hand and went red: a duplicate scheme, `bootstrap` given cat-harness's stub, authored schemes minted in the declaring instance, and extracted schemes minted in core.
+- **One authored scheme broke the rule.** Core's `platform` scheme had 6 of its 7 terms sourced in cat-harness. It is now split: `folio-assistant-core/glossary/cat-harness.glossary.json` (cat-harness's `platform`, 6 terms) and core's `platform` (1 term, `glossary`). **Six published IRIs moved** from `…/folio-assistant-core/ns#glossary/platform/<id>` to `…/cat-harness/ns#glossary/platform/<id>`, one day after they were first published. The SKOS gained `cat-harness--platform.skos.jsonld`. Extracted terms were already compliant.
+
 ### docs-auto: considered and not used, and why
 
 `gen-docs-auto.ts` has the auto-doc-type mechanism the owner described (`cat-harness/docs-auto/<type>/<path>`), and its `glossary` type already exists for the swimlane ledger. It does not fit this piece. A docs-auto type returns `AutoDocItem[]`, one row per artefact FILE for one sub-graph page, and emits no SKOS. What was asked is per ELEMENT (one diagram holds dozens of activities), needs IRIs in the owning instance's namespace, and must land in the SKOS the glossary page publishes. `index/skills` and `index/processes` already list the same artefacts per sub-graph, so a docs-auto glossary type over them would have been a third rendering. The extraction therefore plugs into core's glossary flow. The docs-auto `glossary` type is unchanged and linked from the page.
@@ -785,4 +822,72 @@ The `@` mutation survived the first version of the test, which compared qualifie
 - Translation (piece 3, the `.pot` extraction of labels and definitions), `jmpb`.
 - Ruling 2: convergence of the paper `build-glossary.ts` onto SKOS.
 - Promotion tooling. Promoting a candidate is authoring it by hand in a glossary of one's own. No curator UI exists for KG candidates the way `ui/glossary-curator.html` does for paper slugs.
+
+## TRANSLATION AND RULING 2 SHIPPED, 2026-09-24
+
+Owner, 2026-09-24, structured answers: translation is *"Authored terms only"*,
+and ruling 2 is *"Converge on SKOS"*. Owner rule the same day: a glossary IRI is
+localised to the instance that OWNS the source asset, a sub-instance's for a
+sub-instance, and scheme IRIs are unique across instances.
+
+### Translation (piece 3): the `.pot` half
+
+- `folio-assistant-core/scripts/glossary-pot.ts` (`glossary:pot`, gated by
+  `glossary:pot:check` in the "glossary page and SKOS" CI step). It extends the
+  BPMN pipeline rather than building a second one: `formatPot`, the shared
+  `potWithoutTimestamp` (moved out of `translate-bpmn.ts` into
+  `pot-extract.ts` so the two checkers cannot disagree), and cat-harness's
+  declared `translation-sources` directory.
+- One template per scheme with an authored term:
+  `translations/<locale>/glossary/<instance>--<scheme>.pot`, named after the
+  SKOS asset. Today that is `folio-assistant-core--platform.pot`, **14 msgids**
+  (7 labels, 7 definitions) in each of the 5 locales. None of the 2,431
+  extracted candidates is a msgid.
+- The term IRI is the translator comment, never a msgid: it stays the same in
+  every language.
+- `translations/<locale>/glossary.po` is a different, hand-authored file (the
+  terminology hints of `he0e`), so the templates use a `glossary/` directory.
+- `gen-translation-status.ts` counts every `.pot` under a locale, so the
+  status page shows the new templates with no change to it.
+- **Next step, not done:** per-locale rendering. The page is built by
+  `glossary-page.ts`, which reads no `.po`; rendering per locale means
+  teaching it to (and a per-locale SKOS, as `kg-locale-export` does for the
+  graph). That file was being split per asset type in a parallel change, so it
+  was left alone here.
+
+### Ruling 2: the paper glossary on SKOS
+
+- `build-glossary.ts` now also writes `paper-<paper>.glossary.json`, a
+  `folio-glossary/v1` scheme, into the glossary directory the paper's OWN
+  instance declares. `collect()` reads it like any other scheme, so the IRIs
+  are in that instance's namespace by construction.
+- Status by provenance: a term whose owning block is `kind: "definition"`,
+  with its `:defterm` paragraph found, is `authored`; one introduced in a
+  theorem, remark or other block is `candidate`; one with no `:defterm`
+  paragraph (or no `.md`) is `could-not-extract` with its reason. The
+  definition is the `:defterm` paragraph verbatim, directives replaced by
+  their labels. The slug is the `notation`.
+- `glossary.json` and `glossary.tex` are unchanged, byte for byte: the TeX
+  chapter and the Lean synonyms module read them, and their `--check` is what
+  a paper's CI runs. `--check` now also fails on a stale scheme, on two slugs
+  minting one term id, and on a scheme id another document in the directory
+  holds. A scheme not yet written is reported, not failed, so a paper that has
+  not regenerated keeps a green gate.
+- An instance that declares no glossary directory gets a notice and no scheme
+  (nothing is guessed). `init-folio` does not declare one yet.
+- No paper instance exists in this repository, so the page shows **0** paper
+  terms today; the behaviour is proved on a two-instance fixture
+  (`build-glossary-skos.test.ts`).
+- The two `GlossaryEntry` interfaces: the paper builder's is still the shape
+  of `glossary.json`, which downstream `--check` compares, so it is not
+  redundant yet. It becomes redundant when the TeX chapter is rendered from
+  the SKOS scheme instead; that is a later change.
+  `formalization-types.ts`'s `GlossaryEntry` is a Lean mapping and unrelated.
+
+### Open, the owner's
+
+- Is a paper's definition block the right line for `authored`? The
+  alternative is that every paper term is a `candidate` until promoted by
+  hand, as the KG extraction is.
+- Should `init-folio` declare `glossary/` for a new paper folio?
 

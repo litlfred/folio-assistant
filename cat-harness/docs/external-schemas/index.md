@@ -26,7 +26,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>16</b><span>specifications</span></div>
 <div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>182</b><span>declared uses</span></div>
+<div class="xs-stat"><b>183</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -110,6 +110,7 @@ a registry nobody prunes is one that stops describing the repository.
 | user | declared by |
 |---|---|
 | `folio-assistant-core/schemas/dublin-core.ts` | `@conformsTo` tag |
+| `folio-dublin-core/v1 nodes` | through the module that types it (`folio-assistant-core/schemas/dublin-core.ts`) |
 | `folio-dublin-core/v1 nodes` | through the module that types it (`folio-assistant-core/schemas/dublin-core.ts`) |
 | `who-iris/skills/iris-dspace.md` | `conformsTo:` front matter |
 

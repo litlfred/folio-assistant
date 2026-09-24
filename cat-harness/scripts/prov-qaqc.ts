@@ -32,6 +32,9 @@
  * and filling it with a guess to satisfy the schema is the fabrication this
  * report exists to catch.
  *
+ * Owner, 2026-09-24, asked whether to relax that to PROV-O's optional
+ * `hadRole`: *"Keep required"*. The page says so.
+ *
  * ## Advisory: findings do not fail the build
  *
  * Owner, 2026-09-23: advisory first (see `authorize.ts`). So a finding is
@@ -377,6 +380,8 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 **Advisory.** The owner chose advisory first (2026-09-23), so findings are reported here and do not fail the build. \`check:prov-qaqc\` fails only when these outputs are stale, when a \`prov:Activity\` does not validate against \`ProvActivitySchema\`, or on an internal error. \`unknown\` is never read as permit.
 
 **Nothing is invented.** An entry with no actor, or in a lane that binds no role, gets no \`prov:Activity\`, because the schema requires \`prov:agent\` and \`prov:hadRole\`. It gets a finding instead. Every entry is \`asserted\`, so that is not listed as a finding.
+
+**\`prov:hadRole\` stays required.** PROV-O makes it optional, and the owner decided on 2026-09-24 to keep it required here anyway ("Keep required"): a step in a lane that binds no role is reported as \`no-role\`, never logged without a role.
 
 ## Totals
 
