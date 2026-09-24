@@ -61,7 +61,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
-| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | — | Detect when a user request is a **feature request** (platform capability change) |
+| [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | [schema](../skills/crdm-detect.html) | Detect when a user request is a **feature request** (platform capability change) |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
 ## Platform core (folio-core)
