@@ -713,14 +713,14 @@
     {
       "id": "folio-assistant-5uuf",
       "title": "FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and 'view on main' are empty; stacked PRs compare with the wrong base",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-q4jm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T18:06:56Z",
-      "updatedAt": "2026-09-23T18:06:56Z",
+      "updatedAt": "2026-09-24T19:00:50Z",
       "preview": "Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's \"before\" picture, and the review page's \"view on main\" link, both read the published main site at the root of `gh-pages`. Two gaps follow:\n- **A folio has no main-site publish.** Neither `init-folio` nor `folio-staging.yml` publishes `main`'s document site to the `gh-pages` root. So every before picture reads *\"Its pag",
       "file": "beans/defs/folio-assistant-5uuf--folio-preview-before-side-no-main-site-publish-so.md"
     },
@@ -1781,14 +1781,14 @@
     {
       "id": "folio-assistant-d4lb",
       "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:42:45Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
       "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
     },
@@ -1865,14 +1865,14 @@
     {
       "id": "folio-assistant-dv8v",
       "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
@@ -2673,7 +2673,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:59Z",
       "updatedAt": "2026-09-24T17:20:57Z",
-      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
+      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [x] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [x] perform-task rules, scoped by cat-h",
       "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
     },
     {

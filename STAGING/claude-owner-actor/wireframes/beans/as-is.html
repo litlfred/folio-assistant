@@ -71,13 +71,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
