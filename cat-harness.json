@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T18:35:17.409Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6aa654230467a2cbe4d0ce6a0582dd63e2cf73cb",
-  "sourceCommitSha": "6aa654230467a2cbe4d0ce6a0582dd63e2cf73cb",
-  "sourceCommitAt": "2026-09-24T20:31:53+02:00",
+  "generatedAt": "2026-09-24T18:53:57.436Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/77b052b16b903ea3acbeedb4b3de96ff2a285f88",
+  "sourceCommitSha": "77b052b16b903ea3acbeedb4b3de96ff2a285f88",
+  "sourceCommitAt": "2026-09-24T20:51:04+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 83,
-    "Schema": 117,
+    "Schema": 118,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -3123,7 +3123,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 239,
+      "instructionLines": 262,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4442,7 +4442,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 222,
+      "instructionLines": 224,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37722,6 +37722,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "site-indexes",
+      "title": "The published index files the site's viewers read — each `$schema` family",
+      "module": "schemas/site-indexes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-package",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "skill-package",
@@ -39719,8 +39727,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6aa654230467a2cbe4d0ce6a0582dd63e2cf73cb",
+    "sha": "77b052b16b903ea3acbeedb4b3de96ff2a285f88",
     "pr": "main",
-    "run": "36041882612"
+    "run": "36044102751"
   }
 }
