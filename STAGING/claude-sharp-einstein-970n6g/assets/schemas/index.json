@@ -14574,6 +14574,13 @@
           "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
         },
         {
+          "name": "validatorNotApplicable",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "WHY a runtime validator does not apply to this kind — a reason, not a flag."
+        },
+        {
           "name": "nodeSchemas",
           "type": "Readonly<Record<string, NodeSchemaRef>>",
           "optional": true,
@@ -27662,6 +27669,13 @@
           "type": "z .string() .regex(/^[a-z][a-z0-9-]*$/, \"a theme id is lowercase kebab-case\") .optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "layout",
+          "type": "z.enum(THEME_LAYOUTS).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which of the theme's three crops this sticky shows. ABSENT means the"
         }
       ],
       "extendsNames": [],
@@ -27669,6 +27683,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "THEME_LAYOUTS",
         "z"
       ],
       "exported": true
