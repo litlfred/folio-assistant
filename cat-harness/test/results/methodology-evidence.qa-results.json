@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-methodology-evidence.ts",
-    "script_hash": "477374f26438"
+    "script_hash": "d15217f6e46f"
   },
   "subject": {
     "kind": "corpus",
     "id": "methodologies"
   },
-  "updated_at": "2026-09-24T05:32:25.867Z",
+  "updated_at": "2026-09-24T06:42:07.814Z",
   "families": {
     "evidence-unresolved": {
       "summary": "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: it reads as an ingested source in every listing, so a reader who does not open it is told the citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer is not an open question about whether to adopt something.",

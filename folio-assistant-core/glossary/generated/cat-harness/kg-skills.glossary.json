@@ -69,6 +69,14 @@
       "status": "candidate"
     },
     {
+      "id": "audit-coverage",
+      "prefLabel": "audit-coverage",
+      "definition": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "notation": "audit-coverage",
+      "source": "cat-harness/skills/folio-core/audit-coverage.md",
+      "status": "candidate"
+    },
+    {
       "id": "bean-blocking",
       "prefLabel": "bean-blocking",
       "definition": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
@@ -748,6 +756,14 @@
       "definition": "Cold start, then review a time window of activity — sibling sessions, the work plan, issues, change proposals, branches, CI — and prioritise what it finds against goals stated in the owner's words. Inputs are the window, the goals, the scope and the axes; the output is a synopsis (closed, open, needs doing, with effort), a priority queue per goal with selectable next actions, and the instruction gaps met on the way, each recorded as a work item. Use when asked \"what happened\", \"what is stalled\", \"what should we do next for X\", or at the start of a session that inherits parallel work.",
       "notation": "goal-review",
       "source": "cat-harness/skills/folio-core/goal-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "grade",
+      "prefLabel": "grade",
+      "definition": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+      "notation": "grade",
+      "source": "cat-harness/skills/authoring-who-smart-guidelines/grade.md",
       "status": "candidate"
     },
     {
