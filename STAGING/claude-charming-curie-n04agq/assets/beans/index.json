@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 292,
+      "count": 293,
       "unit": "beans"
     }
   },
@@ -247,6 +247,20 @@
       "updatedAt": "2026-09-19T08:12:02Z",
       "preview": "THE RULE, from the owner 2026-09-19: 'if the witnesses were generated as a QA reviewer primarily then it should be under test/results/ as part of a QA process.'\n\nPlacement follows PROVENANCE, not file family and not consumption. An artefact that is primarily the output of a QA review belongs under `test/results/`, whatever fetches it afterwards.\n\n## What exists today, measured 2026-09-19 on main\n\n",
       "file": "beans/defs/folio-assistant-2634--qa-outputs-live-under-testresults-verdicts-and-wit.md"
+    },
+    {
+      "id": "folio-assistant-269z",
+      "title": "Folio handle covers the who-iris replica's INGESTED COPY banner — conflicts with jpjt 'replica unchanged'",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:04:45Z",
+      "updatedAt": "2026-09-24T18:04:45Z",
+      "preview": "Found by bean 015u (2026-09-24). On the who-iris replica the fixed ▾ Folio handle covers the 'INGESTED COPY — not WHO' banner at 390 px, and at 1280 px a link sits centred under it, so a click there opens the glass instead.\n\nThe obvious fix, reserving the handle's band with top padding, is ruled out by an existing rule: `folio-mount.e2e` asserts a replica is UNCHANGED while the glass is closed (be",
+      "file": "beans/defs/folio-assistant-269z--folio-handle-covers-the-who-iris-replicas-ingested.md"
     },
     {
       "id": "folio-assistant-2b5s",
