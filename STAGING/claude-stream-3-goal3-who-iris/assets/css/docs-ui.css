@@ -214,7 +214,42 @@
    breakpoint. If pinning should instead happen at some screen width, the
    change is the media query on these two rules -- the mechanism is the same. */
 @media (min-width: 50rem) {
-  :root.fa-has-fullwidth .side-bar { z-index: auto; }
+  /* WAS `z-index: auto`, AND THAT BROKE THE NAV ON EVERY PAGE WITH A WIDE
+     FIGURE -- bean `vfr8`, owner's screenshot of `/document-ingestion.html`.
+
+     Removing the stacking context also removed the sidebar's own ability to
+     paint above `.main`, and it did so IN EVERY STATE rather than only where
+     the conflict was. The open-nav rule below already says what that looks
+     like, in as many words: "Without this the sidebar opens BEHIND the page
+     content and reads as a rendering bug rather than as a nav." It loses the
+     cascade to this rule -- `:root.fa-has-fullwidth .side-bar` is (0,3,0)
+     against `.side-bar:hover`'s (0,2,0) -- so on such a page the nav opened
+     behind the page whether or not anything was actually in full-width mode.
+
+     MEASURED on `/document-ingestion.html`, which auto-expands 4 of its 5
+     figures: with the nav open, `elementFromPoint` inside the opened column
+     returned page content (`SPAN.fa-qa-glyph`, `P`, `A`) at x=120, and the
+     nav only within the original 56px strip.
+
+     AND `auto` DID NOT ACHIEVE ITS OWN PURPOSE. Synthesising the beneficiary
+     these rules describe -- a `.fa-qr-panel.fa-qr-in-sidebar[data-open]` on a
+     full-width page -- the panel was NOT visible at its own centre under
+     `auto`: `DIV.main-content-wrap` painted over it, despite the panel's
+     `z-index: 1200`. Under `100` it is visible. So this value is better than
+     `auto` on BOTH counts, not a trade.
+
+     100 rather than something larger because it is measured as sufficient:
+     100, 1300 and 10001 all give an identical, correct hit-test, and 100 is
+     the number the open-nav rule below already uses. A second, larger
+     constant would be two answers to one question.
+
+     ONE THING A READER SHOULD KNOW: nothing in this repository sets
+     `fa-qr-in-sidebar`. It occurs 4 times, all in this file. The three rules
+     keyed on it cannot currently match, so the escape they describe is not
+     reachable today -- which is why the only live effect of the old value was
+     the defect. The rules are left alone rather than removed: whether that
+     class is still wanted is the owner's call, not this fix's. */
+  :root.fa-has-fullwidth .side-bar { z-index: 100; }
 
   :root.fa-has-fullwidth .fa-qr-panel.fa-qr-in-sidebar[data-open="true"] {
     position: fixed;
@@ -3448,7 +3483,92 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-glass-shelf {
   position: relative;
   margin: 1rem 0 0;
+  /* A SURFACE to grab even with nothing on it, and one a finger pinches and
+     pans rather than scrolls (`b8eq`). */
+  min-height: 50vh;
+  touch-action: none;
+  cursor: grab;
 }
+.fa-glass-shelf[data-fa-pinching] { cursor: grabbing; }
+
+/* ── Zoom, pan and Home — bean `b8eq` ─────────────────────────────────────
+   Sticky to the top of the glass so it stays in reach however far the glass
+   is scrolled, and ABOVE the cards so a zoomed-in card never covers it. */
+.fa-glass-zoom {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 0 auto;
+  padding: 0.3rem 0.5rem;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  border: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-zoom-btn {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fa-glass-home { font-size: 0.9rem; }
+.fa-sticky-layer[data-fa-glass-home="false"] .fa-glass-home {
+  border-color: var(--fa-glass-accent);
+  box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
+}
+.fa-glass-zoom-slider { width: 9rem; height: 2.75rem; accent-color: var(--fa-glass-accent); }
+.fa-glass-zoom-value { min-width: 3.2rem; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.fa-glass-zoom button:focus-visible,
+.fa-glass-zoom input:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+
+/* ── A todo's avatar is a sticky note — owner, 2026-09-23 (`b8eq`) ──────
+   A square of note yellow, a folded corner and ruled lines: the thing a todo
+   is everywhere else on this site. Fixed colours on purpose — a sticky note
+   is yellow in both schemes, and the ink is measured against that yellow. */
+.fa-sticky-note-avatar {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: #fbe38e;
+  border: 1px solid #a88a1f;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.35);
+  transform: rotate(-3deg);
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+}
+.fa-sticky-note-avatar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28%;
+  height: 28%;
+  background: linear-gradient(to bottom right, #d9bb4f 50%, transparent 50%);
+}
+.fa-sticky-note-lines {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 24%;
+  height: 46%;
+  background: repeating-linear-gradient(to bottom, #6b5a12 0 2px, transparent 2px 33%);
+  opacity: 0.6;
+}
+.fa-glass-todo-row .fa-sticky-note-avatar { width: 1.9rem; height: 1.9rem; }
 .fa-glass-asset {
   position: absolute;
   box-sizing: border-box;
@@ -3515,11 +3635,47 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-notes p { padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; font-size: 0.85rem; }
 
 /* ── The tile strip, along the BOTTOM edge ────────────────────────────── */
-.fa-glass-tiles {
+/* THE DOCK holds the strip and the tab that slides it away (`b8eq`). The
+   dock is what is fixed to the bottom edge; hidden, it drops by the strip's
+   height and leaves the tab on screen — the way back is never off-screen. */
+.fa-glass-dock {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* The dock spans the width; only its tab and strip take presses, so the
+     glass beside the tab stays usable. */
+  pointer-events: none;
+  transition: transform 0.25s ease;
+  z-index: 3;
+}
+.fa-glass-dock > * { pointer-events: auto; }
+.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem)); }
+@media (prefers-reduced-motion: reduce) {
+  .fa-glass-dock { transition: none; }
+}
+.fa-glass-strip-toggle {
+  min-height: 2.75rem;
+  margin-right: 1rem;
+  padding: 0 1rem;
+  border: 2px solid var(--fa-glass-accent);
+  border-bottom: 0;
+  background: var(--fa-glass-card);
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fa-glass-strip-toggle:focus-visible {
+  outline: 3px solid var(--fa-glass-accent);
+  outline-offset: 2px;
+}
+.fa-glass-tiles {
+  align-self: stretch;
   display: flex;
   gap: 0.5rem;
   padding: 0.6rem 1rem;
@@ -6458,7 +6614,35 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
-.fa-search-home[data-place="navbar"] .fa-search-peek { display: none; }
+
+/* THE FIELD FILLS THE DISPLAY PANEL. Owner, 2026-09-23: *"it should start open
+   full top of display panel"*.
+
+   `width: 100%` on `.fa-search-home` was never the constraint. MEASURED at
+   1280px, walking the box chain up from the input: `.fa-search-home` 1224,
+   `.fa-search-holder` 1190, `.search` 1190 -- and then the theme's own
+   `.search-input-wrap` at **536px with `max-width: 536px`**, sized for the
+   header just-the-docs renders it in rather than for a panel this wide. So the
+   field was 44% of the space it was given, and every declaration above it was
+   already correct. */
+.fa-search-home[data-place="navbar"] .search-input-wrap {
+  max-width: none;
+  width: 100%;
+}
+
+/* THE GLYPH IS ALWAYS THERE. Owner, same message: *"maginfyingglass
+   avatar/braadning should be visibile always."*
+
+   It used to be `display: none` in this state, on the reasoning that the field
+   is present so the control that reveals it is redundant. That is true of it
+   AS A REVEAL and misses what the owner is asking for: a fixed mark that says
+   "search is here", in the same place in both states, so the eye has one
+   target rather than two.
+
+   It keeps a real job rather than becoming decoration -- clicking it focuses
+   the field. A visible glyph that did nothing would be `gjli`: an inert thing
+   that reads as a control. */
+.fa-search-home[data-place="navbar"] .fa-search-peek { display: inline-flex; }
 
 /* CORNER — fixed, upper right.
  *
@@ -6561,6 +6745,27 @@ a.fa-harness-tab__body:focus-visible {
  * the field is not quietly smaller in its new home than in its old one. The
  * test holds the legal 24 so this comfort can be spent deliberately rather
  * than by accident. */
+/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`,
+   found by driving the REAL CI build rather than the local one.
+
+   `.search` is `position: relative` and its only child `.search-input-wrap` is
+   `position: absolute`, so `.search` computes to **height 0** while the input
+   inside it is 36px. Anything that follows the field in normal flow is
+   therefore painted UNDER it. Measured on the staging preview at 1280px:
+   `.search` h=0, `.fa-search-home` h=34 — the whole control's height was the
+   NOTICE, and a hit test at the field's centre returned `P.fa-search-notice`,
+   not the input. The field was not clickable where a reader would click it.
+
+   Reserving the field's own height puts the notice below it: `.search` h=36,
+   the control h=70, and the hit test reaches the input.
+
+   ONLY EVER VISIBLE ON A PREVIEW, since `.fa-search-notice` is rendered only
+   when the build stamped a non-canonical index — but a preview is what a
+   reviewer looks at, and a zero-height box around a 36px control is wrong
+   whether or not anything currently sits under it. 2.25rem is the field's own
+   height, one declaration below. */
+.fa-search-home .search { min-height: 2.25rem; }
+
 .fa-search-home .search-input {
   box-sizing: border-box;
   width: 100%;
@@ -6864,6 +7069,10 @@ a.fa-harness-tab__body:focus-visible {
     width: auto !important;
     height: auto !important;
   }
+  /* The phone's own pinch zooms the column, so the glass's zoom stands down:
+     a second zoom over the browser's would be two answers to one gesture. */
+  .fa-glass-shelf { transform: none !important; touch-action: auto; min-height: 0; cursor: auto; }
+  .fa-glass-zoom { display: none; }
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
   .fa-sticky-layer [data-fa-control="move"],
@@ -6919,6 +7128,13 @@ a.fa-harness-tab__body:focus-visible {
 .fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar img {
   object-fit: cover;
   object-position: center top;
+}
+/* Filling a card, the note is square and centred, not stretched to the card. */
+.fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-sticky-note-avatar {
+  width: auto;
+  height: 58%;
+  aspect-ratio: 1;
+  max-width: 70%;
 }
 .fa-glass-asset > .fa-glass-asset-face > .fa-glass-avatar .fa-glass-kind-avatar {
   --fa-avatar-size: 45%;
@@ -7056,3 +7272,110 @@ a.fa-harness-tab__body:focus-visible {
   border-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.5));
 }
 .fa-landing-window .fa-board-window-control { color: inherit; border-color: currentColor; }
+
+/* ── HARNESSES CONFIG PANEL — issue #1146, the owner's "Hybrid" ───────────
+ *
+ * The sidebar ⚙ sits BESIDE its tab (a grid of tab + button), and every
+ * target is at least 44px: the declared interaction profile is low-dexterity. */
+.fa-harness-tab { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; column-gap: 2px; }
+.fa-harness-tab > :not(.fa-harness-tab__body):not(.fa-harness-tab__config) { grid-column: 1 / -1; }
+.fa-harness-tab__config {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--fa-tile-ink) 18%, transparent);
+  color: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.fa-harness-tab__config:hover,
+.fa-harness-tab__config:focus-visible { background: color-mix(in oklab, var(--fa-tile-ink) 40%, transparent); }
+
+.fa-hc { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr); gap: 1rem; margin-top: 0.5rem; }
+.fa-hc-group h3, .fa-hc-title { font-size: 0.95rem; margin: 0.5rem 0 0.25rem; }
+.fa-hc-group ul { list-style: none; margin: 0; padding: 0; }
+.fa-hc-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--fa-glass-edge);
+  border-radius: 0.375rem;
+  margin: 0 0 0.25rem;
+  background: transparent;
+  color: var(--fa-glass-ink);
+  text-align: left;
+  cursor: pointer;
+}
+.fa-hc-item code { color: var(--fa-glass-muted); font-size: 0.8rem; }
+.fa-hc-item[aria-current="true"] { border-width: 2px; font-weight: 600; }
+.fa-hc-back { display: none; min-height: 2.75rem; }
+.fa-hc-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fa-hc-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--fa-glass-ink); text-decoration: underline; overflow-wrap: anywhere; }
+.fa-hc-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.fa-hc-table th, .fa-hc-table td { text-align: left; vertical-align: top; padding: 0.25rem 0.4rem; border-bottom: 1px solid var(--fa-glass-edge); overflow-wrap: anywhere; }
+.fa-hc-skills .fa-hc-link { min-height: 0; }
+.fa-hc-gap, .fa-hc-note { color: var(--fa-glass-muted); }
+.fa-hc-undeclared, .fa-hc-findings { margin-top: 0.5rem; }
+.fa-hc-undeclared > summary, .fa-hc-findings > summary { min-height: 2.75rem; display: flex; align-items: center; cursor: pointer; }
+.fa-hc-detail:empty::before { content: "Choose a harness to see its properties."; color: var(--fa-glass-muted); }
+
+/* A PHONE DRILLS IN: the list, or one harness, never both squeezed. */
+@media (max-width: 40rem) {
+  .fa-hc { grid-template-columns: minmax(0, 1fr); }
+  .fa-hc[data-fa-hc-view="list"] .fa-hc-detail { display: none; }
+  .fa-hc[data-fa-hc-view="detail"] .fa-hc-list { display: none; }
+  .fa-hc-back { display: inline-block; }
+  .fa-hc-table thead { display: none; }
+  .fa-hc-table tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 0.25rem 0; border-bottom: 1px solid var(--fa-glass-edge); }
+  .fa-hc-table th, .fa-hc-table td { border: 0; padding: 0.1rem 0.25rem; }
+}
+
+
+/* ── Arranging tiles between the strip and More — bean `b8eq` ────────────
+   Each tile in More carries its "Strip" button beneath it, and the strip's
+   tiles are listed with a "More" button: the whole arrangement can be made
+   by pressing (WCAG 2.5.7). Dragging highlights where a tile would land. */
+.fa-glass-more-item { display: flex; flex-direction: column; align-items: stretch; gap: 0.3rem; }
+.fa-glass-arrange {
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--fa-glass-edge);
+  background: transparent;
+  color: var(--fa-glass-ink);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fa-glass-arrange:focus-visible { outline: 3px solid var(--fa-glass-accent); outline-offset: 2px; }
+.fa-glass-arrange-hint { color: var(--fa-glass-muted); font-size: 0.85rem; margin: 0.25rem 0 0.5rem; }
+.fa-glass-arrange-title { font-size: 0.95rem; margin: 1rem 0 0.4rem; color: var(--fa-glass-ink); }
+.fa-glass-arrange-list { list-style: none; margin: 0; padding: 0; }
+.fa-glass-arrange-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 0;
+  border-top: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-arrange-name { flex: 1 1 auto; font-weight: 600; }
+[data-fa-draggable-tile] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+[data-fa-draggable-tile][data-fa-dragging] { opacity: 0.4; }
+.fa-glass-tile-ghost {
+  position: fixed;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: 0.9;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  background: var(--fa-glass-card, #1f2933);
+}
+.fa-sticky-layer[data-fa-drop="strip"] .fa-glass-tiles,
+.fa-sticky-layer[data-fa-drop="more"] .fa-glass-panel[data-fa-panel="glass-more"] {
+  outline: 3px dashed var(--fa-glass-accent);
+  outline-offset: -3px;
+}
