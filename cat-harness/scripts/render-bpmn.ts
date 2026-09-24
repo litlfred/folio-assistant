@@ -116,7 +116,7 @@ for (const file of sources) {
 /**
  * Where a call activity should take a reader who clicks it.
  *
- * `<folio:link href="…"/>` on the activity wins — that is how a page says "the
+ * `<cat-harness.processes:link href="…"/>` on the activity wins — that is how a page says "the
  * section for this subprocess is here", which is the useful destination when
  * the diagram is embedded in a docs page.
  *
@@ -141,7 +141,7 @@ function subprocessLinks(xml: string): Map<string, string> {
     // of the called process at least takes the reader somewhere true, but a
     // bare file has no page chrome and no prose around it — the destination
     // you actually want is the section that documents that subprocess, which
-    // only the model can name. So prefer `<folio:link>`; this is what happens
+    // only the model can name. So prefer `<cat-harness.processes:link>`; this is what happens
     // when nobody wrote one.
     //
     // The path is asset-relative, which assumes the embedding page sits at

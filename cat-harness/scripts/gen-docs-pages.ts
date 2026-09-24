@@ -14,7 +14,7 @@
  *   1. Anchors stop depending on heading text. `heading_anchors: true` derives
  *      `#extract-structure` from the words in the heading, so a retitle
  *      silently breaks every inbound link — including the
- *      `<folio:link href="document-ingestion.html#extract-structure">` hrefs
+ *      `<cat-harness.processes:link href="document-ingestion.html#extract-structure">` hrefs
  *      authored into the BPMN sources, which is a live round trip today. Each
  *      node's `id` is pinned with kramdown's `{: #id }` instead.
  *   2. Every node gets an edit link to ITS OWN source. Jekyll knows only

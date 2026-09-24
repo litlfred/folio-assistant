@@ -13,7 +13,7 @@
  *
  * ## A diagram DECLARES its subject; nothing is inferred from a name
  *
- * `<folio:implements workflow=".github/workflows/x.yml"/>` on the process.
+ * `<cat-harness.processes:implements workflow=".github/workflows/x.yml"/>` on the process.
  * Matching on filename would be the `directory-conventions` mistake one level
  * out: `upstream-pin-watch.bpmn` and `upstream-pins.yml` do not share a
  * basename, and five diagrams MENTION a workflow file while documenting an
@@ -30,10 +30,10 @@
  * which job**. Add a fourth job and every check stayed green.
  *
  * So a node that stands for a job DECLARES it:
- * `<folio:job name="stage"/>`, and the two sets are compared in **both**
+ * `<cat-harness.processes:job name="stage"/>`, and the two sets are compared in **both**
  * directions. A job with no node is a diagram that has gone stale; a node
  * naming a job the YAML does not have is one that was stale already. Neither
- * is inferred from a label — same reason `<folio:implements>` is not inferred
+ * is inferred from a label — same reason `<cat-harness.processes:implements>` is not inferred
  * from a filename.
  *
  * Declaring is OPT-IN per diagram: a covered workflow whose diagram names no
@@ -147,7 +147,7 @@ export interface JobDrift {
   duplicated: string[];
 }
 
-/** Every `<folio:implements workflow="…"/>` in a diagram. */
+/** Every `<cat-harness.processes:implements workflow="…"/>` in a diagram. */
 export function declaredWorkflows(xml: string): string[] {
   const out: string[] = [];
   for (const m of xml.matchAll(ownElementPattern(xml, "implements", String.raw`[^>]*\bworkflow="([^"]+)"`))) {
@@ -157,7 +157,7 @@ export function declaredWorkflows(xml: string): string[] {
 }
 
 /**
- * Every `<folio:job name="…"/>` in a diagram, with the node declaring it.
+ * Every `<cat-harness.processes:job name="…"/>` in a diagram, with the node declaring it.
  *
  * Matched as an element BODY rather than by proximity: a self-closing node
  * has no body and so declares nothing, and a `folio:job` is attributed to the
@@ -292,7 +292,7 @@ export function surveyWorkflows(repo: string = REPO, instance: string = HERE): {
     for (const w of declaredWorkflows(xml)) {
       if (!existsSync(join(repo, w))) {
         // Unambiguous, and it breaks a reader who follows it — the same tier
-        // `check-workflow-refs.ts` puts a dangling `<folio:skill ref>` in.
+        // `check-workflow-refs.ts` puts a dangling `<bootstrap.processes:skill ref>` in.
         dangling.push({ diagram: rel, workflow: w });
         continue;
       }
@@ -423,7 +423,7 @@ if (import.meta.main) {
     }
     console.error(
       "\n  A diagram that is drawn once and then drifts is worse than none, because\n" +
-        "  it is consulted. Update the diagram, or the `<folio:job>` that names the job.",
+        "  it is consulted. Update the diagram, or the `<cat-harness.processes:job>` that names the job.",
     );
   }
   if (unknown.length > 0) {

@@ -19,7 +19,7 @@
  *
  * | kind | prose | code | declared by |
  * |---|---|---|---|
- * | `implements` | a `.bpmn` diagram | the `.github/workflows/*.yml` it draws | `<folio:implements workflow="…"/>` |
+ * | `implements` | a `.bpmn` diagram | the `.github/workflows/*.yml` it draws | `<cat-harness.processes:implements workflow="…"/>` |
  * | `co-located` | a skill `.md` | the same-stem `.ts` beside it | the file sitting there |
  *
  * A paper block's `.md` ↔ `lean.ref` pair is the third declared kind; it lives

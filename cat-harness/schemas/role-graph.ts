@@ -75,7 +75,7 @@
  * no tool could answer "which skills does this task's performer have" and no
  * check could find a lane nobody had defined.
  *
- * A LANE therefore names the role it binds, with `<folio:role ref="…"/>` —
+ * A LANE therefore names the role it binds, with `<bootstrap.processes:role ref="…"/>` —
  * see {@link laneRoleRef}. The role does not list its lanes: a role is the
  * general node and a lane the dependent one, and a general node never names its
  * users (`data-modelling` step 8; owner, 2026-09-23, #1168). Until then roles
@@ -196,7 +196,7 @@ export const MECHANICAL_KINDS: readonly ActorKind[] = ACTOR_KINDS.filter((k) => 
  *
  * `undefined` rather than `ACTOR_KINDS` so a caller can tell "every kind is
  * allowed" from "nothing was asserted" — the third state this repository
- * insists on everywhere else. A declared `<folio:fulfilment/>` overrides it.
+ * insists on everywhere else. A declared `<cat-harness.processes:fulfilment/>` overrides it.
  */
 export function fulfilmentKindsForBpmnType(bpmnType: string): readonly ActorKind[] | undefined {
   if (bpmnType === "bpmn:UserTask") return JUDGEMENT_KINDS.filter((k) => k === "person");
@@ -229,10 +229,10 @@ export interface ActorDef {
 
 /** A role — a BPMN swimlane, as a declared object. */
 export interface RoleDef {
-  /** Stable id. Referenced by `<folio:role ref>` and by `inherits`. */
+  /** Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`. */
   id: string;
   /**
-   * Display text. Not used for matching: a lane binds by `<folio:role ref>`.
+   * Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`.
    *
    * `title` and `description` rather than `name` and `summary`: they are the
    * two labels EVERY knowledge-graph node carries (`schemas/kg-node.ts`), and a
@@ -742,7 +742,7 @@ export function resolveRoleStack(graph: RoleGraph, path: string[]): RoleStack {
 /**
  * The role a BPMN lane binds.
  *
- * Only the lane's own `<folio:role ref="…"/>` binds it. There is no fallback
+ * Only the lane's own `<bootstrap.processes:role ref="…"/>` binds it. There is no fallback
  * to matching the lane's display name against the roles: that fallback needed
  * a `lanes[]` on every role, which is a general node naming its users
  * (`data-modelling` step 8, #1168). `laneName` is kept for callers' sake and

@@ -38,7 +38,7 @@
  * | location | `` `Sym` in `path.ts` `` (from `check-agents-claims`) | the module is missing from an existing directory, or does not declare `Sym` |
  * | absence | `` `sym` `` + "has no caller" (from `check-agents-claims`) | a non-test, non-declaring file references it |
  * | file-run | `` `bun run path/to/x.ts` `` | the file's directory exists here and the file does not |
- * | job | `<folio:job name="…"/>` on a diagram | the workflow the diagram implements has no such job |
+ * | job | `<cat-harness.processes:job name="…"/>` on a diagram | the workflow the diagram implements has no such job |
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
