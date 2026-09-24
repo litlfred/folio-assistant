@@ -783,6 +783,12 @@ jobs:
           bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
+          # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
+          # every mounted page uses, and committed as an include. Gated here
+          # because a stale include is a sidebar that disagrees with the rail
+          # about what a harness holds -- which is the defect the bean is
+          # about, arriving again through the back door.
+          bun run navbar:include:check
           bun run check:agents-xref
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
@@ -919,6 +925,10 @@ jobs:
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
           bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
