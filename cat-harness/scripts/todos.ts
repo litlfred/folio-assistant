@@ -216,6 +216,9 @@ export function readTodoFiles(root: string = TODO_ROOT()): Array<{ todo: TodoNod
         // every consumer downstream — including the one that has to show a
         // reviewer what was actually decided. Bean `5y4b`.
         theme: typeof fm["theme"] === "string" ? fm["theme"] : undefined,
+        // Which crop of the theme's art the sticky shows. Absent means the
+        // square `card` crop — the default is the renderer's, not the parser's.
+        layout: typeof fm["layout"] === "string" ? fm["layout"] : undefined,
         tags: tagsFrom(fm),
         $schema: TODO_SCHEMA_TAG,
       });

@@ -19,6 +19,7 @@ Putting a note at a spot on a board: write the note into the folio, record where
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

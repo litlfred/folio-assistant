@@ -887,6 +887,12 @@
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
+  /* The SAME regions, named as `lib/navbar.ts` renders them (`sjic`). One
+   * set of declarations, two vocabularies — not a second rule free to
+   * disagree about when the strip is a strip. */
+  .side-bar .fa-nav-group > summary,
+  .side-bar .fa-nav-label,
+  .side-bar .fa-nav-kids,
   .side-bar .fa-nav-home__label {
     opacity: var(--fa-nav-text, 1);
     transition: opacity .12s ease;
@@ -938,6 +944,12 @@
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
+  /* The SAME regions, named as `lib/navbar.ts` renders them (`sjic`). One
+   * set of declarations, two vocabularies — not a second rule free to
+   * disagree about when the strip is a strip. */
+  .side-bar .fa-nav-group > summary,
+  .side-bar .fa-nav-label,
+  .side-bar .fa-nav-kids,
   .side-bar .fa-nav-home__label {
     max-height: calc(var(--fa-nav-text, 1) * 200vh);
     /* `max-height` caps the CONTENT box, and `min-height` outranks it outright.
@@ -1056,7 +1068,8 @@
    * `top` clears the site mark, whose height is the theme's own header. The
    * strip is `--fa-nav-collapsed` wide and the glyph is centred in it, so it
    * lands under the mark rather than beside it. */
-  .fa-nav-toggle {
+  .fa-nav-toggle,
+  .side-bar .fa-nav-head {
     position: absolute;
     /* AT THE HEADER'S BOTTOM EDGE, not 0.5rem inside it. The header is capped
        at 3.75rem and this is 1.75rem tall, so `3.25rem` put it 52-80px down
@@ -1075,11 +1088,14 @@
     user-select: none;
     opacity: 0.7;
   }
-  .fa-nav-toggle:hover { opacity: 1; }
-  .fa-nav-toggle .fa-nav-glyph { flex: none; text-align: center; }
+  .fa-nav-toggle:hover,
+  .side-bar .fa-nav-head:hover { opacity: 1; }
+  .fa-nav-toggle .fa-nav-glyph,
+  .side-bar .fa-nav-head .fa-nav-glyph { flex: none; text-align: center; }
   /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
      so showing both would be two controls for one state. */
-  .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }
+  .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle,
+  .side-bar:has(.fa-nav-open:checked) .fa-nav-head { display: none; }
 
   /* THE CLOSE CONTROL. Only while pinned open -- an `[x]` alone in a 3.5rem
      strip would be the only thing in it and would read as a close button for
@@ -3907,6 +3923,33 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   outline-offset: 2px;
 }
 
+/* RESERVE THE HANDLE'S BAND on the harness's own standalone viewers — bean
+ * `015u`.
+ *
+ * On a just-the-docs page the handle sits in the header bar's empty middle,
+ * and measured 2026-09-24 it covers no text there at 1280 or 390 px. A
+ * standalone VIEWER (folio, library, …) has no theme header and starts its
+ * content at y = 0, so at 390 px its own `h1` sat under the 52 px handle.
+ *
+ * SCOPED TO VIEWERS, by the mark the viewer fixture itself writes
+ * (`withNarrowViewport` in `scripts/viewer-page.ts` puts
+ * `<style data-folio-narrow-viewport>` in every viewer's head), and NOT to
+ * "any page without a theme header". That broader rule was tried first and
+ * CI refused it three ways, each for a reason worth keeping:
+ *
+ *   - a REPLICA must be unchanged with the glass closed (`folio-mount.e2e`,
+ *     bean `jpjt`: who-iris exists to look like WHO), and a band moves it;
+ *   - two test fixtures with no theme header moved too.
+ *
+ * The replica's banner is still under the handle. Whether that is acceptable
+ * is the owner's call against `jpjt`, not this rule's to settle.
+ *
+ * 3.5rem clears the handle at both of its heights (3.25rem min, 46 px under
+ * the phone rule) with a few pixels of air. */
+html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
+  padding-top: 3.5rem;
+}
+
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
  *
@@ -4463,7 +4506,14 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  *
  * Generalised here rather than copied: it was scoped to one selector, and this
  * is the second caller. */
-.fa-sr-only {
+/* `sjic`: the renderer's open control carries the instance name beside its
+ * glyph, and in the 3.5rem strip that name has nowhere to go — the region is
+ * already named by the site title directly above it. So it is hidden the way
+ * everything else here is hidden from SIGHT ONLY. It is not removed from the
+ * renderer, which would take it off the mounted pages where the rail is the
+ * only thing naming the instance. */
+.fa-sr-only,
+.side-bar .fa-nav-head .fa-nav-name {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -4889,7 +4939,19 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  * `:has()` scopes this to the footer that carries OUR block, so a future
  * footer with ordinary footer content keeps the theme's layout.
  */
-.site-footer:has(.fa-nav-home) {
+/* `sjic`: ALSO the renderer's block, and this is the whole reason the switch
+ * to `lib/navbar.ts` looked broken. The `:has()` above is keyed on
+ * `.fa-nav-home` — a class the hand-written Liquid emitted and the renderer
+ * does not, because it distinguishes home by POSITION (last row of the fixed
+ * bottom) rather than by name. So the footer kept the theme's `padding:
+ * 1rem 2rem` and the navigation laid out at x=32 inside a 56px strip, with
+ * its home glyph clipped off the right edge. Measured, not guessed.
+ *
+ * `.fa-nav-in` is the regions wrapper and BOTH surfaces emit it, so this
+ * matches exactly when our block is present — which is what the comment
+ * above says this selector is for. */
+.site-footer:has(.fa-nav-home),
+.site-footer:has(.fa-nav-in) {
   position: static;
   /* `var(--fa-nav-open)`, NOT `100%`, and the difference is a measured defect.
    *
@@ -4960,7 +5022,8 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  * them. It is the one destination that must stay reachable when everything
  * else is collapsed, which is also why the markup puts it outside both
  * `<details>`. */
-.fa-nav-home {
+.fa-nav-home,
+.side-bar .fa-nav-bottom > a:last-child {
   display: flex;
   flex: 0 0 auto;
   gap: 0.5rem;
@@ -4973,19 +5036,23 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 }
 
 .fa-nav-home:hover,
-.fa-nav-home:focus-visible {
+.fa-nav-home:focus-visible,
+.side-bar .fa-nav-bottom > a:last-child:hover,
+.side-bar .fa-nav-bottom > a:last-child:focus-visible {
   background: rgba(128, 128, 128, 0.18);
   text-decoration: none;
 }
 
-.fa-nav-home__mark {
+.fa-nav-home__mark,
+.side-bar .fa-nav-bottom > a:last-child > .fa-nav-glyph {
   flex: none;
   width: var(--fa-nav-mark);
   font-size: 1rem;
   text-align: center;
 }
 
-.fa-nav-home__label {
+.fa-nav-home__label,
+.side-bar .fa-nav-bottom > a:last-child > .fa-nav-label {
   overflow: hidden;
   font-weight: 600;
   white-space: nowrap;
@@ -5475,7 +5542,8 @@ button.fa-nav-icon {
   border-top: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.3));
 }
 
-.fa-harness-tabs__heading {
+.fa-harness-tabs__heading,
+.side-bar .fa-nav-group > summary {
   cursor: pointer;
   list-style: none;
   display: flex;
@@ -5491,17 +5559,20 @@ button.fa-nav-icon {
   text-transform: uppercase;
 }
 
-.fa-harness-tabs__heading::-webkit-details-marker {
+.fa-harness-tabs__heading::-webkit-details-marker,
+.side-bar .fa-nav-group > summary::-webkit-details-marker {
   display: none;
 }
 
-.fa-harness-tabs__heading::before {
+.fa-harness-tabs__heading::before,
+.side-bar .fa-nav-group > summary::before {
   content: "▸";
   font-size: 0.7em;
   transition: transform 120ms ease;
 }
 
-.fa-harness-tabs[open] > .fa-harness-tabs__heading::before {
+.fa-harness-tabs[open] > .fa-harness-tabs__heading::before,
+.side-bar .fa-nav-group[open] > summary::before {
   transform: rotate(90deg);
 }
 
@@ -5581,7 +5652,8 @@ a.fa-harness-tab__body:focus-visible {
  * avatar declared" as a finding elsewhere, and a navbar is not the place to
  * render a gap as a `?`. Nine of fourteen harnesses take this branch today, so
  * it is the common case and not the edge. */
-.fa-harness-tab__mark {
+.fa-harness-tab__mark,
+.side-bar .fa-nav-glyph {
   flex: none;
   width: var(--fa-nav-mark);
   height: var(--fa-nav-mark);
@@ -5593,18 +5665,21 @@ a.fa-harness-tab__body:focus-visible {
  * the plain mark, same column, so a tab with art and a tab with an initial
  * line their labels up. The four percentages come from the declaration via
  * `harness-tiles.ts`; nothing here knows a box. */
-.fa-harness-tab__mark--art {
+.fa-harness-tab__mark--art,
+.side-bar .fa-nav-crop {
   position: relative;
   overflow: hidden;
   border-radius: 0.1875rem;
 }
 
-.fa-harness-tab__mark--art img {
+.fa-harness-tab__mark--art img,
+.side-bar .fa-nav-crop img {
   position: absolute;
   max-width: none;
 }
 
-.fa-harness-tab__mark--initial {
+.fa-harness-tab__mark--initial,
+.side-bar .fa-nav-tone {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5628,7 +5703,8 @@ a.fa-harness-tab__body:focus-visible {
   line-height: 1;
 }
 
-.fa-harness-tab__label {
+.fa-harness-tab__label,
+.side-bar .fa-nav-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -5658,7 +5734,8 @@ a.fa-harness-tab__body:focus-visible {
  *
  * Quieter than the tab: the tab is the destination and these are what is
  * inside it, so they read as a sub-list and not as four more tabs. */
-.fa-harness-tab__graphs {
+.fa-harness-tab__graphs,
+.side-bar .fa-nav-kids {
   margin: 0.15rem 0 0.35rem;
   padding: 0 0 0 1.75rem;
   list-style: none;
@@ -5670,7 +5747,8 @@ a.fa-harness-tab__body:focus-visible {
   line-height: 1.6;
 }
 
-.fa-harness-graph__link {
+.fa-harness-graph__link,
+.side-bar .fa-nav-kids a {
   /* THE WORST OF THE THREE, at 26x13: an inline `<a>`, so its box was exactly
    * its text and no height applied to it. `inline-block` is what makes the
    * floor reachable at all; the padding is what a pointer aims at. See the

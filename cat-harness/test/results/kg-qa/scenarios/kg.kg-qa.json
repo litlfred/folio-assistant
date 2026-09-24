@@ -214,47 +214,15 @@
       "findings": []
     },
     "arrow-direction": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-names-resolve": {
       "result": "fail",
       "findings": [
         {
-          "where": "processes/content-lifecycle.bpmn",
-          "detail": "<cat-harness.processes:link href=\"publication-workflow.html#editing-and-the-hci-validation-gate\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/content-lifecycle.bpmn",
-          "detail": "<cat-harness.processes:link href=\"publication-workflow.html#from-corpus-to-published-folio\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#extract-structure\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#derive-content\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#a-theme-source\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#ingest-the-theme\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#build-the-l1-knowledge-graph\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/document-ingestion.bpmn",
-          "detail": "<cat-harness.processes:link href=\"document-ingestion.html#the-l1-completeness-gate\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/draft-to-publication.bpmn",
-          "detail": "<cat-harness.processes:link href=\"publication-workflow.html#editing-and-the-hci-validation-gate\"> — the process names a page about it. A process is general; the page should point at the process instead."
-        },
-        {
-          "where": "processes/editing-hci-validation.bpmn",
-          "detail": "<cat-harness.processes:link href=\"evidence.html#the-subprocess\"> — the process names a page about it. A process is general; the page should point at the process instead."
+          "where": "processes/ig-incremental-build.bpmn",
+          "detail": "names `docs/proposals/ig-incremental-build.md`: its directory is here and the file is not — renamed, moved, or never written."
         }
       ]
     },
@@ -325,7 +293,7 @@
     }
   },
   "totals": {
-    "pass": 15,
+    "pass": 16,
     "fail": 4,
     "n/a": 0,
     "unknown": 0

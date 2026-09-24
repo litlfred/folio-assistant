@@ -52,10 +52,11 @@ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harn
 
 Readers match **the address, never the prefix text**, so a diagram that binds a
 different prefix to the same address reads identically, and `folio:` bound to
-anyone else's address is not ours. The older single address
-(`…/folio-assistant/bpmn`) is still read, so a folio's diagrams keep working
-until they are moved. A test fails if an element is written under an address
-whose vocabulary does not define it.
+anyone else's address is not ours. The older single address,
+`…/folio-assistant/bpmn`, is **retired** (2026-09-24). An element under it is
+no longer read, and `external-schemas` reports a diagram that still binds it
+as drift. A test fails if an element is written under an address whose
+vocabulary does not define it.
 
 ## Edge routing: rectilinear, and never over a task
 

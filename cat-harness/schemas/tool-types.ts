@@ -106,7 +106,7 @@ export const ChangeProposalNumberSchema = z
 export const MarkdownSchema = z.string().describe("Markdown text. Not admissible as a command-line argument — see INJECTION_SAFE.");
 
 /**
- * The name of a skill, as an activity's `<folio:skill ref>` writes it.
+ * The name of a skill, as an activity's `<bootstrap.processes:skill ref>` writes it.
  *
  * Same shape as a file stem under `skills/<package>/`, because that is what it
  * resolves to — `knownSkills()` in `scripts/known-skills.ts` builds its set by

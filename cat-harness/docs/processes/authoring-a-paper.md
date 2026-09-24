@@ -19,6 +19,7 @@ folio-assistant — authoring a scientific paper end to end (Lean + LaTeX). Sour
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Writing a paper with folio-assistant — The end-to-end workflow](../guides/writing-a-paper.html#the-end-to-end-workflow)
 
 ## Lanes — who acts
 

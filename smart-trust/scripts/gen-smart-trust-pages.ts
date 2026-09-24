@@ -465,7 +465,7 @@ function indexPage(ix: FhirArtifactIndex): string {
         // came to 524KB with one category 90% of it — so the list moves to a
         // page of its own rather than inline.
         return [
-          `<details>`,
+          `<details markdown="1">`,
           `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
           ``,
           `${list.length} artefacts — too many to list here without the index becoming`,
@@ -474,8 +474,12 @@ function indexPage(ix: FhirArtifactIndex): string {
           `</details>`,
         ].join("\n");
       }
+      // `markdown="1"`, or the table inside prints as rows of pipes. Kramdown
+      // does not parse Markdown inside an HTML block unless told to, so the
+      // whole artefact table shipped as raw text on the live index — found by
+      // `check:escaped-markup`'s leaked-table scan (bean `7w1a`, 2026-09-24).
       return [
-        `<details>`,
+        `<details markdown="1">`,
         `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
         ``,
         ...artifactTable(list, "."),

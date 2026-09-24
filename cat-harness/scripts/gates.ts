@@ -767,6 +767,18 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:kind-validators",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
+  },
+  {
+    script: "check:harness-state",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
+  },
+  {
     script: "audit:coverage:check",
     kind: "covered-by",
     reason:
@@ -846,22 +858,6 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
-  },
-  {
-    script: "check:theme-art:check",
-    kind: "report",
-    // NOT a permanent exemption, and the unblocking condition is exact rather
-    // than "when somebody gets round to it": it refuses `landing-architecture`,
-    // which is declared with laptop and card and NO mobile crop.
-    // `resolveThemeBackdrop` refuses an incomplete backdrop wholesale, so that
-    // theme would render with no art at all — a real finding, not a false one.
-    //
-    // Gating on it today would make CI red over art that is MISSING rather than
-    // over a regression somebody introduced, which is the one thing a ratchet
-    // must not do. Wire it the moment the architecture mobile crop lands, or
-    // the incomplete declaration is withdrawn.
-    reason:
-      "refuses `landing-architecture`, whose mobile crop has never been supplied; gating would make CI red over missing art rather than over a regression. Wire it when that crop lands",
   },
   {
     script: "check:undeclared-files",

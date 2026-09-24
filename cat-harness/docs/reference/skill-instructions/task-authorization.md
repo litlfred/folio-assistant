@@ -90,6 +90,121 @@ rights decide whether the record lands.
 GitHub login to a declared actor is the data store's job (`policies/`
 deliberately never holds identity), and it is not built yet.
 
+## Asking who you are: the `auth_whoami` Tool
+
+Owner, 2026-09-24: *"need Tool fo user auth/auth"*, then *"do github"*. The
+`user-auth` Tool node (MCP `auth_whoami`, `src/tools/auth.ts`) answers three
+questions in one call:
+
+1. **Who am I?** It asks GitHub (`src/core/github-auth.ts`). With a person's
+   own token, `GET /user` gives the login and the `permissions` block of
+   `GET /repos/{o}/{r}` gives their role. In an Actions job the token is the
+   workflow's, not the person's, so it asks
+   `GET …/collaborators/{GITHUB_ACTOR}/permission` instead.
+2. **What does GitHub let me do?** That role, mapped onto the gateway actors
+   `policies/http-gateway.jsonld` already grants: `admin` → `owner`;
+   `maintain` and `write` → `collaborator`; `triage` and `read` → `viewer`;
+   `none` → nobody. A GitHub caller and an HTTP-gateway caller therefore get
+   the same answer from the same policy, and no login is written into the
+   repository.
+3. **What does policy let me do here?** The ODRL answer for an action, or the
+   full four-check verdict for a BPMN step when `process` and `task` are given.
+
+It answers in three states: `authenticated`, `unauthenticated`, and `unknown`
+(GitHub could not be asked). `unknown` is never shown as a pass. A role that
+cannot be read stays unknown and maps to nobody; it is never guessed. An actor
+you name is reported as **claimed**, because GitHub vouched for the login, not
+for the BPMN actor.
+
+**There is no login-to-actor table, and there will not be one.** Owner,
+2026-09-24: *"just use github accounts and standard personal account
+permission levels"*. This repository is owned by a personal account, and
+GitHub gives such a repository exactly three levels. They are the whole
+mapping (`PERSONAL_ACCOUNT_LEVELS` in `src/core/github-auth.ts`):
+
+| GitHub level | GitHub role | actor |
+|---|---|---|
+| owner | `admin` | `owner` |
+| collaborator | `write` | `collaborator` |
+| anyone else, public repository | `read` | `viewer` |
+| anyone else, private repository | `none` | nobody |
+
+The consequence is stated in every `auth_whoami` answer: there is no
+read-only or triage collaborator on a personal-account repository, so **every
+collaborator can write the whole graph**. Telling an author from a reviewer is
+left to the per-lane ODRL rules.
+
+**Owner rulings on the analysis, 2026-09-24:**
+
+- **The actors are `owner`, `collaborator` and `viewer`.** They are the
+  personal-account levels above, and nothing finer is mapped from a login.
+- **Access granularity is a property of the tool that holds the data, not of
+  the actor.** Writing the static KG through a GitHub-backed tool is `owner` or
+  `collaborator`, and GitHub makes that write **all or nothing** for the whole
+  repository. A different tool, such as a future data store in front of the
+  graph, may offer finer grain. The same actor then gets a different
+  granularity from that tool.
+- **Every write role collapses into `collaborator`.** At the GitHub level,
+  author, reviewer, adjudicator and release manager are all `collaborator`.
+  Sign-off stays with `owner` by the merge, as the CRDM process has it.
+
+## GitHub as the auth layer: what it is good at, and where it stops
+
+The knowledge graph's data store is a git repository on GitHub, so GitHub is
+the authenticator and the outermost access control. That choice has real
+strengths and one structural weakness, and every answer `auth_whoami` gives
+ends by restating the weakness.
+
+**Strengths**
+
+- **Real identity at no extra cost.** Accounts with two-factor
+  authentication, organisation SSO where it is configured, per-repository
+  fine-grained tokens, and a runner-set `GITHUB_ACTOR` in Actions. There is no
+  second identity system to run.
+- **Access to the graph is access to the repository.** One place to grant,
+  and revoking a collaborator takes effect on the next request.
+- **Every write is attributable.** A change lands as a commit with an author,
+  and PR reviews and merges are recorded. That is the durable half of the
+  audit trail that the PROV-O report (above) reads.
+- **Write governance exists.** Branch protection and rulesets can require
+  reviews and passing checks before a merge, and `CODEOWNERS` makes review
+  requirements **path-scoped**.
+
+**The weakness: all of the knowledge graph, or none of it**
+
+- **Read is whole-repository.** Anyone with `read` sees every sub-graph,
+  every node and every file. GitHub cannot say "the glossary, but not the
+  unpublished chapters".
+- **Write is whole-repository too.** `write` lets a person push to any path on
+  any unprotected branch. Path scoping exists only for **reviews** (via
+  `CODEOWNERS`), and it binds merges into protected branches, not pushes.
+- **No query-path control.** GitHub serves files, not queries. It cannot
+  authorize a traversal that starts in a sub-graph you may read and reaches a
+  node you may not, because it does not know the edge exists.
+- **Five roles, no actions.** `admin`, `maintain`, `write`, `triage` and
+  `read` are its whole vocabulary. Authoring, adjudicating and releasing are
+  all just `write`. The ODRL profile's actions cannot be expressed in it.
+- **Once read, it is copied.** A clone or a fork keeps the data after access
+  is revoked. Revocation stops the next read, not the last one.
+- **A login is not an actor.** GitHub says who pushed, not which lane or role
+  they were acting in.
+
+**What follows from that**
+
+1. **Where a boundary must hold against a reader, it is a repository
+   boundary.** Sub-graphs with different read audiences belong in different
+   repositories. That is one more reason for the repo split already under way
+   (bean `vuip`).
+2. **Everything finer is ODRL, enforced in process.** The engine's
+   four-check verdict and the HTTP routes govern callers that go through
+   them. **They are not a security boundary against someone who can clone the
+   repository.** Do not describe a scoped ODRL rule as protecting data from a
+   GitHub reader.
+3. **Real per-node or per-query enforcement needs a data store in front of
+   the graph** (the auth-gateway, and later a relationship engine; the owner
+   ruled OpenFGA *later*). The policies do not change when it arrives. Only
+   the place that evaluates them does.
+
 ## Advisory now, and what makes it strict
 
 Owner: *"Advisory now."* In advisory mode:
@@ -182,7 +297,9 @@ error. Quote the counts from a run, not from the page you remember.
 - `src/workflow/authorize.ts`: `authorizeTask`, `describeVerdict`
 - `src/core/access.ts`: `loadAccessContext`, `principalFromEnv`
 - `src/core/rbac.ts`: `principalOf`, `authorize`, `allows`, `forbidden`
+- `src/core/github-auth.ts`: `githubIdentity`, `principalFromGithub`, `GITHUB_ROLE_ACTOR`
+- `src/tools/auth.ts`: `auth_whoami` (Tool node `user-auth`), `whoami`, `grainNote`
 - `schemas/odrl.ts`: `decide` (every policy; any `deny` wins), `PERFORM_TASK`
 - `scripts/prov-qaqc.ts`: `buildReport`, `reportInstance` (the after-check)
-- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/prov-qaqc.test.ts`
+- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/user-auth.test.ts`, `scripts/tests/prov-qaqc.test.ts`
 {% endraw %}

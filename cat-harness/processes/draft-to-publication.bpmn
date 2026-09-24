@@ -132,7 +132,6 @@
     <bpmn:callActivity id="CallActivity_Editing" name="Editing and HCI validation&#10;[content-author]" calledElement="Process_Editing">
       <bpmn:documentation>The editing sub-process. Every change to the corpus goes through its HCI validation gate — a red draft is fixed there, never by patching the built artifact.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:link href="publication-workflow.html#editing-and-the-hci-validation-gate" />
         <bootstrap.processes:skill ref="content-author" />
         <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>

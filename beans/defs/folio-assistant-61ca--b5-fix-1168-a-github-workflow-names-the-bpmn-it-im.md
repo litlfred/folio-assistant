@@ -1,11 +1,11 @@
 ---
 # folio-assistant-61ca
 title: 'B5-fix (#1168): a GitHub workflow names the BPMN it implements; 9 <implements workflow> and <job> flipped'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-24T17:22:12Z
-updated_at: 2026-09-24T17:23:46Z
+updated_at: 2026-09-24T17:47:57Z
 parent: folio-assistant-tr05
 ---
 

@@ -276,7 +276,7 @@ export interface GraphKindDef {
    *
    * A module path names a file, and a file may export thirty schemas —
    * `schemas/health-report.ts` exports five. The `#` form is the convention
-   * `<folio:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
+   * `<cat-harness.processes:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
    * gateway here, so this reuses a spelling rather than minting one.
    *
    * **Resolved relative to the INSTANCE root**, not the repository root. That
@@ -292,6 +292,49 @@ export interface GraphKindDef {
    * graph here.
    */
   validator?: string;
+  /**
+   * WHY a runtime validator does not apply to this kind — a reason, not a flag.
+   *
+   * ## The defect this exists to remove
+   *
+   * `check:kind-validators` reported *"7 kind(s) declare no validator"* and
+   * carried `--require-all` "for the day the gap is meant to be closed".
+   * Measured 2026-09-24 (bean `rj0n`): **that day could not come.** Every one of
+   * the seven was either not JSON at all, or had no nodes:
+   *
+   * | kind | what it holds | why Zod cannot apply |
+   * |---|---|---|
+   * | `processes` | 77 `.bpmn`, 9 `.dmn` | XML |
+   * | `uml` | 103 `.puml`, 101 `.mmd` | PlantUML / Mermaid, and `derived` |
+   * | `methodology` | 12 `.md` | markdown |
+   * | `code` | 1793 `.ts` | TypeScript |
+   * | `cat-harness` | mixed `.ts` and `.json` | several node types; {@link GraphKindDef.schema} calls one pointer here "a lie of precision" |
+   * | `bean-defs`, `session-state` | nothing | nested, or absent from this repository |
+   *
+   * So the count read as a seven-item backlog over a real backlog of **zero** —
+   * `dh4f` INVERTED. That bean is could-not-determine rendered as clean; this is
+   * **not-applicable rendered as a gap**, and it is the more expensive direction,
+   * because a flag that can never pass is one somebody eventually deletes. The
+   * rule is `check-harness-state`'s, one file over: *a check that cannot pass is
+   * indistinguishable from a corpus that cannot be fixed.*
+   *
+   * ## It is a REASON, and the reason must name a fact
+   *
+   * A boolean would let a kind opt out by asserting it. The reason has to name
+   * the file format or the absent subject — something a reader can check — so
+   * this cannot become the polite way to launder a real gap. "We decided not to"
+   * is not a reason; ".bpmn is XML" is.
+   *
+   * Absent means **has not said**, which is the finding `--require-all` fails on.
+   * That keeps silence and a decision apart, which is the whole point: a kind
+   * added tomorrow without deciding still shows up.
+   *
+   * **Mutually exclusive with {@link GraphKindDef.validator} and
+   * {@link GraphKindDef.nodeSchemas}** — a kind cannot both have a runnable
+   * schema and declare that one cannot exist. `check:kind-validators` reports
+   * that contradiction rather than picking a winner.
+   */
+  validatorNotApplicable?: string;
   /**
    * One entry per `$schema` family a node of this kind may carry, keyed by
    * the tag. Bean `rdkm`.
@@ -433,6 +476,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // few hours on 2026-09-20 it held `memory` nodes, which are `context`
     // (beans `mhh9`, `07xs`).
     holds: "content",
+    validatorNotApplicable:
+      "it holds several node kinds typed in different places — skills, workflows, roles, actors. `schema` above " +
+      "already says why one pointer here would be a lie of precision, and that applies to a validator with more " +
+      "force: a runnable one would silently grade 51 JSON files against whichever single shape it named. Each " +
+      "family is validated where it is declared.",
     summary: "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
   },
   // ── THE THREE KINDS SPLIT OUT OF `cat-harness`, 2026-09-21 ─────────────
@@ -483,6 +531,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // BPMN's shape is an XSD, not a Zod schema, so there is no validator;
     // the pinned edition and its operative terms are the external-schema record.
     schema: "external-schemas/omg-bpmn-2.0.json",
+    validatorNotApplicable:
+      "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one " +
+      "here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` " +
+      "grade them instead.",
     summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
   },
   scenarios: {
@@ -560,6 +612,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // how a decision about the subject gets made. `renderable: false` above
     // follows from the same fact — nothing here is published as a page.
     holds: "context",
+    validatorNotApplicable:
+      "its nodes are markdown — 12 files, counted 2026-09-24. `check-methodology-evidence` grades what matters " +
+      "about them, which is whether each cited source actually exists in a library.",
     summary:
       "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
   },
@@ -608,18 +663,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-semantic-zoom/v1": { validator: "schemas/semantic-zoom.ts#SemanticZoomSchema" },
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
-      "folio-bean-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
-      "folio-translation-status/v1": { writtenBy: "scripts/gen-translation-status.ts" },
-      "folio-schema-graph/v1": { writtenBy: "scripts/gen-schema-viz.ts" },
-      "folio-library-index/v1": { writtenBy: "scripts/gen-library-viz.ts" },
+      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema" },
+      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema" },
+      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema" },
+      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema" },
       // The per-entry block graph, one file per library entry (bean `7nvr`).
       // Same writer as the index and deliberately a SEPARATE family: the index
       // answers "what entries are there" and this answers "what is in one",
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
-      "folio-library-entry/v1": { writtenBy: "scripts/gen-library-viz.ts" },
-      "folio-voices-index/v1": { writtenBy: "scripts/gen-voices-viz.ts" },
-      "folio-graph-projection/v1": { writtenBy: "scripts/gen-folio-viz.ts" },
+      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema" },
+      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema" },
+      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema" },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +
@@ -694,6 +749,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health`.
     // Generated: the generator is where the shape of a diagram is written down.
     schema: "scripts/gen-uml-overview.ts",
+    validatorNotApplicable:
+      "its nodes are `.puml` and `.mmd` — PlantUML and Mermaid source, counted 2026-09-24 as 103 and 101. Not " +
+      "JSON, and `derived` besides, so a finding against one is a finding against the generator; " +
+      "`uml:overview:check` grades their currency.",
     summary:
       "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas " +
       "its graph kinds register — PlantUML and Mermaid from one model.",
@@ -735,7 +794,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Written inline by two call sites and typed by neither — recorded,
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
-      "folio-qa-index/v1": { writtenBy: "scripts/gen-docs-pages.ts" },
+      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema" },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
@@ -828,6 +887,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     type: termIri("CodeGraph"),
     renderable: false,
     holds: "content",
+    validatorNotApplicable:
+      "its nodes are TypeScript — 1793 files, counted 2026-09-24. `tsc` is the validator for code, and " +
+      "`check:partition` plus `check-code-accounting` grade the graph over it.",
     summary:
       "Source code -- the modules, scripts and entry points an instance holds. Declared so that " +
       "code is scannable at all: an undeclared file is one no checker has a reason to look at. " +
@@ -958,6 +1020,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // the something.
     holds: "state",
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
+    validatorNotApplicable:
+      "no instance declares a directory of this kind — it is nested inside `beans/`, declared by " +
+      "`beans/beans.json`, and reached through its parent. There is nothing here to validate; `check:bean-front-matter` and its four siblings grade the bean store.",
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
@@ -1137,6 +1202,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
       "folio-block-summaries/v1": { validator: "schemas/block-summary.ts#BlockSummariesSidecarSchema" },
+      // What the site mount must not publish from this directory (bean `cw35`).
+      // Written by the instance's generator from its licence gates; the mount
+      // validates it with this schema and refuses to mount if it cannot.
+      "folio-withheld/v1": { validator: "schemas/withheld.ts#WithheldSchema" },
     },
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
@@ -1400,6 +1469,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     recordsWork: false, // live state, but nothing anybody is partway through
     schema: "schemas/session-context.ts",
+    validatorNotApplicable:
+      "no instance declares a directory of this kind in this repository, so it has no nodes to validate. If one " +
+      "appears this reason stops being true, and the declaration should go with it.",
     summary: "A session's context — the acting actor, the instances it has open, and what it waits on.",
   },
 
