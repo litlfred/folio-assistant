@@ -344,7 +344,10 @@ export function interactionProfilesRead(): Family {
   // shelling out per profile: the answer is the same and one walk is honest
   // about what it covered.
   const haystack: string[] = [];
+  const seen = new Set<string>();
   const walk = (d: string): void => {
+    if (seen.has(d)) return;
+    seen.add(d);
     let entries: string[];
     try {
       entries = readdirSync(d, { withFileTypes: true }).map((e) => e.name + (e.isDirectory() ? "/" : ""));
@@ -364,15 +367,33 @@ export function interactionProfilesRead(): Family {
       }
     }
   };
-  walk(join(ROOT, "skills"));
-  walk(join(ROOT, "scripts"));
-  walk(join(ROOT, "schemas"));
-  walk(join(ROOT, "src"));
+  // RESOLVED through the declaration, not listed. The first version walked
+  // `skills`, `scripts`, `schemas` and `src` as literals, and
+  // `check:declared-paths` caught two of them — which is the defect class this
+  // very family is about, committed one function away from it: a hardcoded
+  // directory is a declaration read from memory, and it goes stale the moment
+  // anybody relocates one. It also under-searched: a literal list covers THIS
+  // instance, while a profile may be honoured by a dependency's skill.
+  for (const inst of instanceRootsIn(REPO)) {
+    for (const kind of ["cat-harness", "skills", "code", "schemas"]) {
+      for (const dir of directoriesForGraph(inst, kind)) walk(dir);
+    }
+  }
+  // `.claude/` is a local convention rather than a declared graph — the same
+  // exception `check-retired-front-matter` makes, and for the same reason.
   walk(join(REPO, ".claude"));
 
   for (const [prof, where] of profiles) {
     if (!haystack.some((t) => t.includes(prof))) {
-      f.findings.push({ where, detail: `declares profile \`${prof}\`, which nothing in skills/, scripts/, schemas/, src/ or .claude/ names` });
+      // The message says what was ACTUALLY walked, not a list written here. A
+      // remedy naming directories the search may not have covered sends the
+      // reader to the wrong place — the same defect as the hardcoded walk above,
+      // one layer out, and the one `AGENTS.md` keeps paying for when prose
+      // quotes a directory set instead of counting one.
+      f.findings.push({
+        where,
+        detail: `declares profile \`${prof}\`, which none of the ${haystack.length} file(s) across ${seen.size} declared director(ies) names`,
+      });
     }
   }
   return f;

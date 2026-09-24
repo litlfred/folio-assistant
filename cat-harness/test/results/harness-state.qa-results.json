@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-harness-state.ts",
-    "script_hash": "317b19765ab1"
+    "script_hash": "c3738593b4b4"
   },
   "subject": {
     "kind": "harness-state",
     "id": "health+todos+interaction+issue-marks"
   },
-  "updated_at": "2026-09-24T17:37:40.231Z",
+  "updated_at": "2026-09-24T18:17:43.000Z",
   "families": {
     "health-result-is-from-the-current-producer": {
       "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 1.",
