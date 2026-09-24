@@ -39,6 +39,8 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
+ * @covers processes, scenarios, skills, tools, cat-harness — the graph kinds
+ *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto
  */
 
 import { createHash } from "node:crypto";

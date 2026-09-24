@@ -50,6 +50,8 @@
  * bootstrap must have. So bootstrap is not asked for a visualiser, and IS
  * asked whether its graph artefact is produced — a layer that cannot emit its
  * own graph has not shown it is a graph.
+ *
+ * @covers cat-harness
  */
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";

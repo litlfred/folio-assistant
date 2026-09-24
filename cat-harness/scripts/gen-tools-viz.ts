@@ -4,6 +4,7 @@
  * and which skill each one satisfies.
  *
  * @module cat-harness/scripts/gen-tools-viz
+ * @covers tools
  *
  * ## Why this is its own page, and not a section of the skills page
  *

@@ -251,6 +251,18 @@ mechanism **records** a verdict agents produced rather than performing the check
 So before proposing dispatch points, read the mechanism's entry point. A name says
 what something is for; an argument list says what it does.
 
+## The same failure one level out: a KIND, not a mechanism
+
+Cases 1–4 ask what a mechanism is missing. Ask it of a **kind of node** and you
+get the case that cost the owner's time rather than an agent's: an agent counted
+`kg-qa` sidecars over the bean store, found zero, and reported beans
+"effectively unaudited". Eight gates audit them.
+
+That is this skill's opening sentence one level out — **coverage is a relation
+between an instrument and the question it was built for** — and it is
+[`audit-coverage`](audit-coverage.md), with `bun run audit:coverage` as the
+second question.
+
 ## Why this is its own skill
 
 It was written into [`skills-and-tools`](skills-and-tools.md) first, which took

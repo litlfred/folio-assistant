@@ -3,6 +3,7 @@
  * The exported graph, once per locale — and the core graph never learns they exist.
  *
  * @module scripts/kg-locale-export
+ * @covers cat-harness
  *
  * Owner, 2026-09-21: *"we should also build the json/jsonld for the rendered
  * result of the translations. no reason that is english only"*. Bean `jmpb`.

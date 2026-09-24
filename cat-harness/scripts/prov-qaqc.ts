@@ -42,6 +42,9 @@
  * Usage:  bun run cat-harness/scripts/prov-qaqc.ts [--check]
  *
  * @module cat-harness/scripts/prov-qaqc
+ * @covers workflow-state, policies, scenarios — it re-checks the ODRL policy AFTER the fact
+ *   from the workflow record, so its subjects are the instance state, the policies it grades
+ *   against, and the role graph naming the actors
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";

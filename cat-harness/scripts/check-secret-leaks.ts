@@ -60,6 +60,7 @@
  * epic is about.
  *
  * @module scripts/check-secret-leaks
+ * @covers code
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";

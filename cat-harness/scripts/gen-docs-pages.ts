@@ -28,6 +28,8 @@
  * Usage:
  *   bun run cat-harness/scripts/gen-docs-pages.ts            # write
  *   bun run cat-harness/scripts/gen-docs-pages.ts --check    # fail if any page is stale
+ *
+ * @covers docs
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";

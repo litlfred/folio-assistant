@@ -3,6 +3,7 @@
  * Audit every citation a skill makes to a section of an `AGENTS.md`.
  *
  * @module scripts/check-agents-xref
+ * @covers skills, docs
  *
  * ## Why this has to exist before anything is migrated
  *
