@@ -447,28 +447,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/docs-ui.css?v=1790227659">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/docs-ui.css?v=1790228383">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/work-plan.css?v=1790227659">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/work-plan.css?v=1790228383">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/themes.css?v=1790227659">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/themes.css?v=1790228383">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/uml.css?v=1790227659">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/uml.css?v=1790228383">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/avatars.css?v=1790227659">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/css/avatars.css?v=1790228383">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -485,7 +485,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/js/docs-ui.js?v=1790227659" defer></script>
+<script src="/folio-assistant/STAGING/claude-0uu2-declaration-gap/assets/js/docs-ui.js?v=1790228383" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1182,14 +1182,14 @@ are either in the wrong repo.”</em></p>
       <td>1</td>
       <td>48K</td>
       <td><code class="language-plaintext highlighter-rouge">preamble.tex</code>, 830 lines, self-described as <em>“Shared LaTeX preamble for all papers in the folio”</em></td>
-      <td><strong>nothing</strong></td>
+      <td>four workflow steps and a skill — <strong>by a path that does not resolve</strong>; see below</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cat-harness/computations/</code></td>
       <td>1</td>
       <td>8K</td>
       <td>one <code class="language-plaintext highlighter-rouge">wall-violations.witness.json</code></td>
-      <td><strong>nothing</strong> — and two <code class="language-plaintext highlighter-rouge">fsh-guts/scripts/</code> documents already say so: <em>“Their subject is absent. <code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> holds one file, a <code class="language-plaintext highlighter-rouge">.witness.json</code>, and no Python…”</em></td>
+      <td><code class="language-plaintext highlighter-rouge">wall-violations-sweep.ts</code> — <strong>by a path that does not resolve</strong>; see below. Two <code class="language-plaintext highlighter-rouge">fsh-guts/scripts/</code> documents already note the directory: <em>“Their subject is absent. <code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> holds one file, a <code class="language-plaintext highlighter-rouge">.witness.json</code>, and no Python…”</em></td>
     </tr>
   </tbody>
 </table></div>
@@ -1234,6 +1234,128 @@ and the only one where <code class="language-plaintext highlighter-rouge">declar
 plausibly the pre-split ancestor of <code class="language-plaintext highlighter-rouge">cat-harness/ui/</code>, which is the same kind of
 thing with none of the QOU hardcoding — but that is a guess, and this proposal
 does not act on guesses.</p>
+<h3 id="corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them">
+  
+  
+    <a href="#corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them" class="anchor-heading" aria-labelledby="corrected-two-of-the-four-are-referenced--by-paths-that-cannot-reach-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Corrected: two of the four ARE referenced — by paths that cannot reach them
+  
+  
+</h3>
+    
+
+<p>A first sweep of this document searched for the literal prefixes
+<code class="language-plaintext highlighter-rouge">cat-harness/latex/</code> and <code class="language-plaintext highlighter-rouge">cat-harness/computations/</code> and reported both as
+referenced by nothing. That was wrong, and the way it was wrong is the same
+mistake the measurement section already records once: <strong>searching for the path
+a file is at rather than the path a consumer writes.</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--preamble ../latex/preamble.tex</code> appears in <code class="language-plaintext highlighter-rouge">lean_ci.yml</code>, <code class="language-plaintext highlighter-rouge">publish.yml</code>,
+<code class="language-plaintext highlighter-rouge">blueprint.yml</code> and <code class="language-plaintext highlighter-rouge">lean-build.yml</code>, and in
+<code class="language-plaintext highlighter-rouge">skills/folio-core/docs-generation.md</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">folio-assistant/computations/wall-violations.witness.json</code> is the default
+output path in <code class="language-plaintext highlighter-rouge">content/pipeline/wall-violations-sweep.ts</code>.</li>
+</ul>
+
+<p>Neither resolves. The four workflow steps carry no <code class="language-plaintext highlighter-rouge">working-directory</code>, so they
+run at the repository root, where <code class="language-plaintext highlighter-rouge">../latex/preamble.tex</code> points <strong>above the
+checkout</strong> — and the file is at <code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code>. The witness
+path names <code class="language-plaintext highlighter-rouge">folio-assistant/computations/</code>, and the file is at
+<code class="language-plaintext highlighter-rouge">cat-harness/computations/</code>. Both are the folio-side layout, left behind by the
+2026-09-20 partition; AGENTS.md already records the same shape for
+<code class="language-plaintext highlighter-rouge">witness-refresh</code>, which <em>“needs <code class="language-plaintext highlighter-rouge">folio-assistant/computations/</code>, and the
+platform carries no folio.”</em></p>
+
+<p>So the finding is sharper than “unreferenced”: these are files no consumer
+scans (<code class="language-plaintext highlighter-rouge">v8gh</code>) named by consumers that scan nothing and report a clean run
+(<code class="language-plaintext highlighter-rouge">dh4f</code>) — <strong>both defects over one pair of files</strong>. The workflow step is
+<code class="language-plaintext highlighter-rouge">continue-on-error: true</code> and guarded by <code class="language-plaintext highlighter-rouge">if [ ! -d content ]</code>, so nothing ever
+went red over it.</p>
+
+<p>Fixing those five dangling references is <strong>not</strong> part of this proposal. They are
+qou-shaped invocations in a repository that carries no folio, and they are
+listed here so the next reader does not rediscover them.</p>
+<h2 id="verified-against-litlfredqou-2026-09-24">
+  
+  
+    <a href="#verified-against-litlfredqou-2026-09-24" class="anchor-heading" aria-labelledby="verified-against-litlfredqou-2026-09-24"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verified against <code class="language-plaintext highlighter-rouge">litlfred/qou</code>, 2026-09-24
+  
+  
+</h2>
+    
+
+<p>The owner chose: check that <code class="language-plaintext highlighter-rouge">litlfred/qou</code> already holds each removal candidate,
+and remove only what it does. Checked against qou’s default branch <code class="language-plaintext highlighter-rouge">main</code>
+(<code class="language-plaintext highlighter-rouge">7aafd8dbe</code>) and its <code class="language-plaintext highlighter-rouge">gh-pages</code> branch. qou carries 6,443 branches, so this is
+a claim about those two and not about all of them.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>candidate</th>
+      <th>in <code class="language-plaintext highlighter-rouge">litlfred/qou</code>?</th>
+      <th>verdict</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/computations/wall-violations.witness.json</code></td>
+      <td><strong>yes</strong>, at the same relative path, <code class="language-plaintext highlighter-rouge">computations/wall-violations.witness.json</code></td>
+      <td><strong>removed</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code></td>
+      <td><strong>yes</strong>, as <code class="language-plaintext highlighter-rouge">qou/main.tex</code> — 811 of its 830 lines are common</td>
+      <td><strong>removed</strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/blueprint/</code></td>
+      <td><strong>no</strong> — no <code class="language-plaintext highlighter-rouge">blueprint/</code> on <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">gh-pages</code>, and no <code class="language-plaintext highlighter-rouge">.tex</code> file anywhere in qou carries the blueprint’s labels</td>
+      <td><strong>kept</strong> — only copy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/home_page/</code></td>
+      <td><strong>no</strong> — qou holds no <code class="language-plaintext highlighter-rouge">_config.yml</code> at all</td>
+      <td><strong>kept</strong> — only copy</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two of the four are not a matter of degree, and both are worth stating exactly.</p>
+
+<p><strong>The witness is not a duplicate; it is a zero-run.</strong> qou’s copy was computed
+<code class="language-plaintext highlighter-rouge">2026-05-02</code> and reports <code class="language-plaintext highlighter-rouge">fileCount: 9, totalHits: 20</code>. The folio-assistant copy
+is <em>later</em> — <code class="language-plaintext highlighter-rouge">2026-08-08</code> — and reports <code class="language-plaintext highlighter-rouge">fileCount: 0, totalHits: 0</code>, with every
+category zeroed. It is the sweep run in the platform repo against the folio that
+is not there. Nothing is lost by removing it and the real one is in qou.</p>
+
+<p><strong>The preamble in this repository is the SUPERSEDED one, and the divergence is
+a mathematical correctness fix.</strong> qou’s <code class="language-plaintext highlighter-rouge">main.tex</code> removed a block of 16 macros
+on 2026-08-22 and replaced it with a comment saying why, which is still there:</p>
+
+<blockquote>
+  <p>This block defined 16 macros whose names are author typos — a control
+sequence written without the space that separates it from the next token
+(<code class="language-plaintext highlighter-rouge">\pi c_s</code> → <code class="language-plaintext highlighter-rouge">\pic_s</code>, <code class="language-plaintext highlighter-rouge">\xi Z</code> → <code class="language-plaintext highlighter-rouge">\xiZ</code>, <code class="language-plaintext highlighter-rouge">\lambda L</code> → <code class="language-plaintext highlighter-rouge">\lambdaL</code>). Defining
+the glued name makes the page compile, and that is the problem: it converts a
+loud failure into silently-wrong printed mathematics. Two did exactly that.
+<code class="language-plaintext highlighter-rouge">\pic</code> expanded to <code class="language-plaintext highlighter-rouge">\pi</code>, so <code class="language-plaintext highlighter-rouge">2\pic_s</code> printed <code class="language-plaintext highlighter-rouge">2\pi_s</code> and the sound speed
+vanished from a Hawking-temperature denominator … Every source site is fixed;
+<strong>do not restore these.</strong></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">cat-harness/latex/preamble.tex</code> still defines all sixteen. It is not a spare
+copy of a live file; it is the version qou deliberately reverted, sitting in a
+repository whose own banner says it should hold no folio content. Keeping it is
+the standing risk that something restores it.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">blueprint/</code> and <code class="language-plaintext highlighter-rouge">home_page/</code> are kept</strong>, because removing them would destroy
+the only copy — 1,192 lines of blueprint mapping manuscript labels to <code class="language-plaintext highlighter-rouge">QOU.*</code>
+Lean declarations, and a site index. What to do with them needs a decision that
+is partly about the other repository, and it is asked separately rather than
+guessed at here. One observation for whoever takes it: <code class="language-plaintext highlighter-rouge">home_page/index.md</code>
+links to <code class="language-plaintext highlighter-rouge">blueprint/</code> and <code class="language-plaintext highlighter-rouge">blueprint.pdf</code>, and <strong>neither exists on qou’s
+<code class="language-plaintext highlighter-rouge">gh-pages</code></strong> — so the page it indexes was never published.</p>
 <h2 id="what-would-falsify-this">
   
   
@@ -1250,9 +1372,10 @@ and the classification is wrong. The scan covered <code class="language-plaintex
 <code class="language-plaintext highlighter-rouge">*.yml</code>, <code class="language-plaintext highlighter-rouge">*.yaml</code>, excluding the directory itself and the generated
 <code class="language-plaintext highlighter-rouge">docs-auto</code>/<code class="language-plaintext highlighter-rouge">docs/reference</code> trees. It did not cover <code class="language-plaintext highlighter-rouge">.tex</code> <code class="language-plaintext highlighter-rouge">\input</code>, shell,
 or HTML <code class="language-plaintext highlighter-rouge">src</code>/<code class="language-plaintext highlighter-rouge">href</code>.</li>
-  <li><strong>If <code class="language-plaintext highlighter-rouge">litlfred/qou</code> does not already carry <code class="language-plaintext highlighter-rouge">blueprint/</code> and the LaTeX
-preamble</strong>, then removing them here loses the only copy, and the move is to
-push them there first. This was not checked; it needs the other repository.</li>
+  <li><strong>Checked, and it decided two of the four</strong>: qou carries the witness and the
+preamble and does not carry <code class="language-plaintext highlighter-rouge">blueprint/</code> or <code class="language-plaintext highlighter-rouge">home_page/</code>. The check covered
+qou’s <code class="language-plaintext highlighter-rouge">main</code> and <code class="language-plaintext highlighter-rouge">gh-pages</code> only; it holds 6,443 branches and one of them
+could carry either.</li>
   <li><strong>If the pass-through <code class="language-plaintext highlighter-rouge">skills/</code> parents turn out to be read by something that
 walks declarations one level deep</strong>, they stop being a model question and
 become a real gap.</li>
