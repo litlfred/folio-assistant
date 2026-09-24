@@ -10,9 +10,12 @@ lang: en
 > **Folded into cat-harness 2026-09-23** (bean `byql`). This was the README of
 > a top-level `detangle/` instance that declared no `needs`, so its own edges
 > could not be placed by the direction classifier it hosts. The owner's ruling:
-> fold it into the harness. The script is `scripts/kg-detangle.ts`, the
-> criterion `schemas/detangle.ts`, the pinned measurements
-> `test/results/detangle/`; run it with `bun run kg:detangle`.
+> fold it into the harness. The script is
+> `skills/graph-management/kg-detangle.ts`, beside the
+> [`graph-detanglement`](../skills/graph-management/graph-detanglement.md) skill
+> it implements (owner, 2026-09-24); the criterion `schemas/detangle.ts`; the
+> pinned measurements `test/results/detangle/`, under the declared `qa`
+> directory. Run it with `bun run kg:detangle`.
 
 
 **Is this candidate subgraph really a subgraph?**
