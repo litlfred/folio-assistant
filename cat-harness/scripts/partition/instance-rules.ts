@@ -285,6 +285,7 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -925,6 +926,12 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
+      // for the same reason `kg-audit.ts` is: its subject is the graph-kind
+      // registry and the gate set, not the content vocabulary. Beside the audit
+      // it complements rather than duplicates — that one judges the nodes it
+      // covers, this one measures what is covered at all.
+      "scripts/audit-coverage.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and

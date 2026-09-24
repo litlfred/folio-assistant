@@ -193,7 +193,15 @@ export const OWN_NAMESPACE_VALUES: readonly string[] = ownNamespaces.codes.flatM
  */
 export const BOOTSTRAP_PROCESSES_NS = ownNamespace("bootstrap-processes");
 
-export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, LEGACY_FOLIO_BPMN_NS] as const;
+/**
+ * The namespace of the BPMN extension elements CAT-HARNESS declares — every
+ * one bootstrap does not: `bean`, `policy`, `adjudication`, `raci`, … —
+ * written `cat-harness.processes:` (bean `12s9` stage 3). Defined by
+ * `cat-harness/processes/ns.jsonld`, which the site publishes here.
+ */
+export const CAT_HARNESS_PROCESSES_NS = ownNamespace("cat-harness-processes");
+
+export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, LEGACY_FOLIO_BPMN_NS] as const;
 
 /**
  * The XML namespaces our BPMN extension ELEMENTS are recognised in — by
@@ -213,7 +221,7 @@ export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, LEGACY
  * accepting it. {@link BOOTSTRAP_PROCESSES_NS} IS here: it is a second
  * address on purpose, not a second spelling of one.
  */
-export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS];
+export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS];
 
 /**
  * The prefix our extension elements are normalised to once parsed, whatever

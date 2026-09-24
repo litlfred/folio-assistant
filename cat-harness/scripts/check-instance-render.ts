@@ -52,6 +52,7 @@
  *   bun run check:instance-render -- --json
  *
  * @module scripts/check-instance-render
+ * @covers docs, cat-harness
  */
 
 import { basename, relative, resolve } from "node:path";

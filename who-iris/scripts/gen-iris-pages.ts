@@ -3,6 +3,7 @@
  * Render the ingested-IRIS replica pages from the catalogue.
  *
  * @module who-iris/scripts/gen-iris-pages
+ * @covers catalogue
  *
  * Owner, 2026-09-20: *"<baseurl>/who-iris/communty-list is page"*, a replica of
  * <https://iris.who.int/community-list>, and *"there are not really special

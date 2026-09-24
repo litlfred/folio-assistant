@@ -85,7 +85,7 @@ two copies free to drift.
 Three worked cases, each a different answer:
 
 - **`raci`** — both. The four letters and the one-Accountable rule are the
-  method (node); reading R from the BPMN lane, the `folio:raci` element and
+  method (node); reading R from the BPMN lane, the `cat-harness.processes:raci` element and
   `check:raci` are this platform's application (skill).
 - **`crdm`** — skill only, and correctly so. It is a house method with no
   external origin, and §"Adopting a new one" step 1 says such a thing is a

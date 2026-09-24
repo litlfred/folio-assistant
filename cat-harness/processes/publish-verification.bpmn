@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_PublishVerification" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_PublishVerification">
@@ -11,11 +12,11 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_PublishVerification" name="Verify the export before it is deployed" isExecutable="false">
     <bpmn:documentation>Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — &quot;a failure triggers an alert to the publisher manager&quot;. This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.</bpmn:documentation>
-    <bpmn:extensionElements><folio:policy enforcement="strict"/></bpmn:extensionElements>
+    <bpmn:extensionElements><cat-harness.processes:policy enforcement="strict"/></bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PublishVerification">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Exported</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Verify</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
@@ -30,7 +31,7 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="A_Verify" name="Run every verifier&#10;over the export">
       <bpmn:documentation>Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir &lt;site&gt;`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="publish-verification"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:serviceTask>

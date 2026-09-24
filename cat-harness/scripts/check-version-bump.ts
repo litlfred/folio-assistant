@@ -43,6 +43,7 @@
  * non-functioning one.
  *
  * @module scripts/check-version-bump
+ * @covers cat-harness
  */
 
 import { spawnSync } from "node:child_process";

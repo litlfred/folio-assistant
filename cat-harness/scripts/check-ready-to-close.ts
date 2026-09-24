@@ -41,6 +41,7 @@
  * space the skill forbids.
  *
  * @module folio-assistant/scripts/check-ready-to-close
+ * @covers bean-defs, beans
  */
 
 import { resolve } from "node:path";

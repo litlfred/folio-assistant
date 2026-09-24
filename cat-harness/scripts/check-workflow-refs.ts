@@ -28,6 +28,8 @@
  *
  * Usage:  bun run check:workflow-refs  [--strict]
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
+ *
+ * @covers processes, skills
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";

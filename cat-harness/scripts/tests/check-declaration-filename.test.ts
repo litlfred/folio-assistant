@@ -61,6 +61,59 @@ function fixture(rel: string, src: string, instance = "cat-harness"): string {
   return root;
 }
 
+
+/**
+ * The real-corpus scan, computed ONCE for the whole file.
+ *
+ * `checkDeclarationFilename()` with no argument walks every TypeScript and
+ * markdown file in the repository — measured 2026-09-24 at **4.3 s** here,
+ * against **3.6 s** on `main` before this branch added 118 annotated scripts
+ * and a skill. Three tests below called it separately, so the file paid that
+ * cost three times, and under full-suite parallel load the first of them
+ * crossed bun's 5 s per-test default and failed as a TIMEOUT — with its
+ * assertion (`toEqual([])`) never reached, so a green corpus reported as a
+ * red test.
+ *
+ * Sharing is sound because the scan is PURE and read-only, and all three call
+ * sites pass no argument, so they were computing the same value. Fixing it
+ * here rather than raising the timeout is the `generalise-the-fix` Move 1.1
+ * distinction: the symptom was a budget, the defect was doing the same
+ * expensive work three times. Raising the budget would have left the next
+ * corpus growth to rediscover it.
+ *
+ * The tests that build a synthetic checkout still call it with a path of their
+ * own — those are cheap and must not share this.
+ *
+ * ## Sharing is not sufficient, and {@link CORPUS_TIMEOUT} is the other half
+ *
+ * Sharing fixed the second and third calls; the FIRST one still pays the whole
+ * scan, and 4.3 s standalone becomes 5.2 s under full-suite parallel load, so it
+ * crossed the 5 s default again. There is no margin to find here: the scan reads
+ * the whole corpus by construction, so its cost grows with the repository while
+ * a per-test default does not. That makes an explicit budget the correct fix for
+ * this half rather than a concession — and it has to carry its measurement, or
+ * the next person cannot tell a considered budget from a number somebody raised
+ * until the red went away.
+ */
+let realCorpus: ReturnType<typeof checkDeclarationFilename> | undefined;
+const corpus = (): ReturnType<typeof checkDeclarationFilename> =>
+  (realCorpus ??= checkDeclarationFilename());
+
+/**
+ * The budget for whichever test populates {@link corpus} first.
+ *
+ * BASIS, measured 2026-09-24: the scan is 4.3 s standalone and 5.2 s observed
+ * under `bun test` over all 470 files, against bun's 5 s default. 30 s is ~6x
+ * the standalone cost, which leaves room for the corpus to grow and for a
+ * loaded runner, while still failing fast if the scan regresses into something
+ * quadratic rather than hanging the suite.
+ *
+ * It is on all three tests rather than the first, because which one runs first
+ * is not guaranteed and a budget that depends on ordering is a budget that
+ * comes back.
+ */
+const CORPUS_TIMEOUT = 30_000;
+
 describe("a path to the declaration is built from the constant", () => {
   test("a whole-value string literal is a bypass", () => {
     const r = checkDeclarationFilename(fixture("src/a.ts", 'const p = join(root, "harness.json");\n'));
@@ -211,35 +264,19 @@ describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
   });
 });
 
-/**
- * ONE scan of this repository, shared by the three tests that need it.
+/*
+ * The hoist above landed independently on main (#1258) and on this branch,
+ * within hours, with the same shape and different names -- `corpus()` there,
+ * `repoScan()` here. Main's is kept; this branch's duplicate is gone.
  *
- * Each of them called `checkDeclarationFilename()` itself, so the same walk of
- * ~4,100 markdown files and every workflow ran three times, at roughly five
- * seconds each — against bun's five-second per-test budget. It passed on a
- * quiet machine and failed on a busy one, and which of the three went red
- * varied between identical runs.
- *
- * It tipped over on 2026-09-24 when promoting `arxiv-2510.21603v1` added that
- * paper's 22 sections to the corpus (4,071 → 4,093 files). That is the point
- * worth recording: NOTHING WAS WRONG WITH THE SCAN OR THE PROMOTION. The cost
- * grows with the corpus, every promotion adds to it, and three copies of one
- * pure read is what made an ordinary increment look like a regression.
- *
- * Lazy rather than top-level so the fixture tests above still run instantly
- * when this file is filtered to one of them.
- *
- * The three tests that use it also carry {@link SCAN_TIMEOUT}. Hoisting cut
- * the file from 15.2s to 4.6s in isolation, and 4.6s under bun's 5s default is
- * a test that passes alone and fails inside the full suite — which is what it
- * then did, at 6.3s. An explicit budget is the honest fix: this is a whole-repo
- * read whose cost grows with the corpus, so five seconds was never the right
- * number for it, and raising it weakens no assertion.
+ * One measurement from this side is worth keeping, because it says WHEN the
+ * cost tipped over: promoting `arxiv-2510.21603v1` added that paper's 22
+ * sections to the corpus, 4,071 -> 4,093 files, and that was the increment
+ * that took the file from passing to intermittently red. Measured against a
+ * worktree of origin/main rather than a stash, which is the only way to
+ * measure main once a branch has commits. Nothing was wrong with the scan or
+ * the promotion -- every promotion adds to this corpus, and it will tip again.
  */
-/** Generous on purpose. A timeout here must mean "wedged", not "the repo grew". */
-const SCAN_TIMEOUT = 60_000;
-let REPO_SCAN: ReturnType<typeof checkDeclarationFilename> | undefined;
-const repoScan = () => (REPO_SCAN ??= checkDeclarationFilename());
 
 describe("the workflow scan reports unknown, never zero", () => {
   test("a checkout with no .github/workflows gives null, and null is not clean", () => {
@@ -253,10 +290,14 @@ describe("the workflow scan reports unknown, never zero", () => {
     expect(workflowUses(r)).toEqual([]);
   });
 
-  test("this repository's own workflows carry no USE", () => {
-    const r = repoScan();
-    expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
-  }, SCAN_TIMEOUT);
+  test(
+    "this repository's own workflows carry no USE",
+    () => {
+      const r = corpus();
+      expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
+    },
+    CORPUS_TIMEOUT,
+  );
 });
 
 /**
@@ -342,14 +383,22 @@ describe("the retired name is matched as a FILENAME, on both sides", () => {
 });
 
 describe("the markdown corpus, on this repository", () => {
-  test("carries no STALE PATH", () => {
-    const r = repoScan();
-    expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
-  }, SCAN_TIMEOUT);
+  test(
+    "carries no STALE PATH",
+    () => {
+      const r = corpus();
+      expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
+    },
+    CORPUS_TIMEOUT,
+  );
 
-  test("and was actually examined — an empty corpus is not a pass", () => {
-    const r = repoScan();
-    expect(r.markdown).not.toBeNull();
-    expect(r.markdown!.length).toBeGreaterThan(0);
-  }, SCAN_TIMEOUT);
+  test(
+    "and was actually examined — an empty corpus is not a pass",
+    () => {
+      const r = corpus();
+      expect(r.markdown).not.toBeNull();
+      expect(r.markdown!.length).toBeGreaterThan(0);
+    },
+    CORPUS_TIMEOUT,
+  );
 });

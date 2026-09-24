@@ -30,6 +30,7 @@
  * finding calling for a different fix.
  *
  * @module skills/graph-management/kg-detangle
+ * @covers cat-harness, skills
  */
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
