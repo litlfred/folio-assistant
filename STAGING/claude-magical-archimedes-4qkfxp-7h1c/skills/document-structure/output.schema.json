@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-7h1c/skills/document-structure/output.schema.json",
+  "title": "Document Structure Output",
+  "type": "object",
+  "required": [
+    "manifestsChanged"
+  ],
+  "properties": {
+    "manifestsChanged": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Chapter directory names in their new reading order."
+    },
+    "forwardReferences": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail."
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-7h1c",
+    "sha": "2f16a0517e81dde766817e2857d1005514ec7492",
+    "pr": "1262/merge",
+    "run": "35997546461"
+  }
+}
