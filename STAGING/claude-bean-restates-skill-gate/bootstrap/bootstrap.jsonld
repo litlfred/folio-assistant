@@ -214,6 +214,7 @@
       "@type": "@id"
     },
     "roleName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#roleName",
+    "satisfiesStatement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfiesStatement",
     "permissionName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#permissionName",
     "io": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#io",
@@ -278,10 +279,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T21:48:08.212Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/db1f7268f352de3a06722d74646384bd5017233d",
-  "sourceCommitSha": "db1f7268f352de3a06722d74646384bd5017233d",
-  "sourceCommitAt": "2026-09-23T21:46:07Z",
+  "generatedAt": "2026-09-24T05:34:27.763Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f733b1cbd8a2e455f9f4ad46725832e904f90db",
+  "sourceCommitSha": "6f733b1cbd8a2e455f9f4ad46725832e904f90db",
+  "sourceCommitAt": "2026-09-24T05:32:52Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -306,7 +307,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/root-readme"
     },
     {
@@ -320,7 +321,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission"
     },
     {
@@ -333,7 +334,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
     },
     {
@@ -347,7 +348,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
     },
     {
@@ -361,7 +362,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
     },
     {
@@ -375,7 +376,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
     },
     {
@@ -389,7 +390,7 @@
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
     },
     {
@@ -557,12 +558,12 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "Initiator",
+      "name": "Bootstrapping Agent",
       "sourceKind": "bpmn-lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/initiator",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Initiator"
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Requestor",
@@ -587,7 +588,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -605,7 +606,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
@@ -627,7 +628,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
@@ -671,7 +672,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -714,7 +715,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -757,7 +758,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -779,7 +780,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -800,7 +801,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
@@ -822,7 +823,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
@@ -844,7 +845,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -868,7 +869,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -886,7 +887,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1002,7 +1003,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1020,7 +1021,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -1042,7 +1043,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -1085,7 +1086,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1107,7 +1108,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -1129,7 +1130,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -1151,7 +1152,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1169,7 +1170,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Initiator",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1408,10 +1409,10 @@
       "summary": "A Subgraph of schema definitions: files that state the shape other files must have."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "glossary",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "name": "swimlane-glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SwimlaneGlossaryGraph",
       "renderable": false,
       "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
     },
@@ -1432,11 +1433,11 @@
       "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/initiator",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
-      "name": "initiator",
-      "title": "Initiator",
-      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: an Initiator has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step an Initiator cannot perform. It stops being an Initiator the moment the harness is installed and it re-enters through that harness instead.",
+      "name": "bootstrapping-agent",
+      "title": "Bootstrapping Agent",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
@@ -1448,7 +1449,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/log-message",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/initiator"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/bootstrapping-agent"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
@@ -1469,7 +1470,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "requestor",
       "title": "Requestor",
-      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Initiator may narrow the list from context; only the Requestor settles it.",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "person"
@@ -1493,15 +1494,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/logger"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "cat-harness",
+      "name": "skills",
       "path": "skills/",
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/cat-harness",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/cat-harness"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/schemas",
@@ -1523,7 +1524,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
       ],
-      "description": "bootstrap's four Roles: Initiator, Requestor, Knowledge Graph Data Store and Logger.",
+      "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/scenarios",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
@@ -1552,16 +1553,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "glossary",
+      "name": "swimlane-glossary",
       "path": "glossary/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
       ],
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/glossary",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/glossary"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/swimlane-glossary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bean-restates-skill-gate/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
@@ -1598,8 +1599,8 @@
   ],
   "staging": {
     "branch": "claude/bean-restates-skill-gate",
-    "sha": "b8480cd5b7e9d7bd6fd8526e3c2b33ad84bc09c3",
+    "sha": "a3931f7a3deeb56429526f35737e7f178bf783c5",
     "pr": "1191/merge",
-    "run": "35924466007"
+    "run": "35960439086"
   }
 }
