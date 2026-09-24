@@ -119,19 +119,21 @@ export type GraphLayer = "content" | "context" | "state" | "derived";
  * |---|---|---|
  * | `validator` | a Zod schema, `module#Export` — runnable | `kg-qa/v1` → `KgQaReportSchema` |
  * | `shape` | a TypeScript type, `module#Name` — readable, NOT runnable | `qa-witness/v1` → `QaWitness` |
- * | `writtenBy` | no declared type at all; the module that writes it — or, for an authored file, the one that consumes it | `folio-qa-index/v1` |
  * | `external` | a specification nobody here types; the node conforms to it | a JSON Schema document, `https://json-schema.org/draft/2020-12/schema` |
  *
- * `writtenBy` is a finding recorded as data rather than a gap hidden by
- * omission: the family exists on disk and nothing types it. `external` is
- * not a gap — the shape is somebody else's, and it is named rather than
- * restated.
+ * `external` is not a gap — the shape is somebody else's, and it is named
+ * rather than restated.
+ *
+ * There was a fourth, `writtenBy`: no type at all, just the module that wrote
+ * the family. It recorded the gap as data, and it was also this registry — a
+ * `@general` node — naming its dependent. #1168 B6b typed all nine families
+ * that used it (beans `dv8v`, `d4lb`) and removed the form, so an untyped
+ * family can no longer be registered: it is either typed or it is not listed.
  */
 export type NodeSchemaRef =
-  | { validator: string; shape?: never; writtenBy?: never; external?: never }
-  | { shape: string; validator?: never; writtenBy?: never; external?: never }
-  | { writtenBy: string; validator?: never; shape?: never; external?: never }
-  | { external: string; validator?: never; shape?: never; writtenBy?: never };
+  | { validator: string; shape?: never; external?: never }
+  | { shape: string; validator?: never; external?: never }
+  | { external: string; validator?: never; shape?: never };
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -1232,7 +1234,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
       "folio-extraction/v1": { validator: "folio-assistant-core:schemas/extraction.ts#ExtractionSchema" },
-      "folio-intake/v1": { writtenBy: "scripts/library-graph.ts" },
+      "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
+      // The document adapter writes an upload's description beside its intake
+      // (bean `d4lb`), in the same family the IRIS catalogue records use.
+      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
     },
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:

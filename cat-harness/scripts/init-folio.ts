@@ -535,13 +535,20 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
   // `issue_comment` refreshes the preview's review comments when a reviewer
   // writes one (bean 423d, the `review-comments` skill). The reusable
   // workflow's `comments` job runs only on it, and checks out no PR code.
+  // `push` to main publishes main's site at the gh-pages root, which is the
+  // "before" side every preview is compared with (bean 5uuf). Without it the
+  // before pictures are all missing and "view on main" 404s.
   const trigger = on
     ? `  pull_request:
     types: [opened, synchronize, reopened]
   issue_comment:
     types: [created, edited]
+  push:
+    branches: [main]
   workflow_dispatch:`
     : `  workflow_dispatch:
+  # push:
+  #   branches: [main]
   # pull_request:
   #   types: [opened, synchronize, reopened]
   # issue_comment:
@@ -550,7 +557,8 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
 
 # A before/after preview of this folio for every pull request, published to
 # STAGING/<branch>/ on gh-pages, with the ChangeSet (what changed, block by
-# block) beside it. The mechanics live in the platform's reusable workflow.
+# block) beside it. A push to main publishes main's site at the gh-pages root:
+# the "before" side. The mechanics live in the platform's reusable workflow.
 #
 ${header}
 

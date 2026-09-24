@@ -139,7 +139,7 @@ are counted separately rather than as one "has DAK" tally.
 Grouped as the IG's own `artifacts.html` groups them. An artefact with a DAK API sidecar links
 through to its own page; the rest link out to the published representations.
 
-<details>
+<details markdown="1">
 <summary><strong>Other</strong> — 604</summary>
 
 604 artefacts — too many to list here without the index becoming
@@ -147,7 +147,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Requirements: Actor Definitions</strong> — 5</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -160,7 +160,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Requirements: Formal Requirements</strong> — 29</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -197,7 +197,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Structures: Logical Models</strong> — 5</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -210,7 +210,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Terminology: Code Systems</strong> — 15</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -233,7 +233,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Terminology: Concept Maps</strong> — 1</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -242,7 +242,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Terminology: Value Sets</strong> — 14</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |
@@ -264,7 +264,7 @@ unreadable. Every one has its own page: **[browse all 604](./category/Other.html
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><strong>Other</strong> — 1</summary>
 
 | Artefact | Canonical URL | Published as | Bytes |

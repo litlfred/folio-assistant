@@ -133,6 +133,8 @@ describe("what gets written", () => {
     // A reviewer's tagged comment refreshes the preview's review comments (423d).
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
     expect(wf).toContain("issues: read");
+    // A push to main publishes main's site: the before side of every preview (5uuf).
+    expect(wf).toMatch(/^\s*push:\n\s*branches: \[main\]$/m);
     expect(r.notes.join(" ")).not.toContain("wired but OFF");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
   });
@@ -153,6 +155,7 @@ describe("what gets written", () => {
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(false);
+    expect(wf.split("\n").some((l) => /^\s*push:/.test(l))).toBe(false);
     expect(wf).toContain("exit 1");
     expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
   });
