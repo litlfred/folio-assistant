@@ -437,7 +437,16 @@ assertion, not a gap.
 
   Fixed with the namespace-tolerant readers; the corpus is **159**
   task-containing lanes, not 157, and the glossary is **43 concepts / 152
-  usages**. `log` and `session-record` remain correctly reported as declared
+  usages**.
+
+  **And 159 has since moved too — `check:lane-documentation` reports 186 on
+  2026-09-24.** Every lane figure above this line is a *dated observation*,
+  not a property of the corpus: this bean has now been behind twice (157, then
+  159), and `swimlane-glossary` carried the original 157 with no correction at
+  all until the same date. **Re-derive it — `bun run check:lane-documentation`
+  — rather than quoting any number from this bean.** None of the arguments
+  here depends on the figure; they depend on there being far more lane names
+  than roles, which holds at any scale. `log` and `session-record` remain correctly reported as declared
   roles no swimlane draws: their lanes exist but hold no task, which is not a
   defect — an `actedUpon` lane holds none by construction.
 

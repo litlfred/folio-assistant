@@ -276,7 +276,7 @@ export interface GraphKindDef {
    *
    * A module path names a file, and a file may export thirty schemas —
    * `schemas/health-report.ts` exports five. The `#` form is the convention
-   * `<folio:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
+   * `<cat-harness.processes:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
    * gateway here, so this reuses a spelling rather than minting one.
    *
    * **Resolved relative to the INSTANCE root**, not the repository root. That

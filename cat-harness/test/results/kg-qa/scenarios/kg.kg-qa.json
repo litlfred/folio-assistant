@@ -217,6 +217,15 @@
       "result": "pass",
       "findings": []
     },
+    "prose-names-resolve": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "processes/ig-incremental-build.bpmn",
+          "detail": "names `docs/proposals/ig-incremental-build.md`: its directory is here and the file is not — renamed, moved, or never written."
+        }
+      ]
+    },
     "skill-contract-claimed": {
       "result": "pass",
       "findings": []
@@ -285,7 +294,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 3,
+    "fail": 4,
     "n/a": 0,
     "unknown": 0
   }

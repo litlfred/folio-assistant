@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rdy0
 title: Process pages list the docs sections that present them ('Presented on')
-status: in-progress
+status: completed
 type: feature
 priority: low
 created_at: 2026-09-24T17:22:05Z
-updated_at: 2026-09-24T17:47:58Z
+updated_at: 2026-09-24T18:01:26Z
 parent: folio-assistant-tr05
 ---
 

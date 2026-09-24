@@ -13,7 +13,7 @@
  * makes rather than guessing at meaning:
  *
  *   - `md-link`       a relative markdown link between two graph files
- *   - `bpmn-skill`    `<folio:skill ref="…">` on an activity
+ *   - `bpmn-skill`    `<bootstrap.processes:skill ref="…">` on an activity
  *   - `json-skill`    a skill name in `roles.json` or a package manifest
  *   - `ts-import`     a relative import between schema modules
  *
@@ -180,7 +180,7 @@ function link(from: string, toId: string | undefined, ref: string, via: string) 
  *
  * `kinds` is NOT optional and that is the fix for a measured defect. A first
  * cut preferred a hit in the SAME group, on the reasoning that a package's own
- * copy should win over a sibling instance's. Five `<folio:skill ref>` values —
+ * copy should win over a sibling instance's. Five `<bootstrap.processes:skill ref>` values —
  * `activity-log`, `getting-started`, `l2-dak-authoring`, `qa-report-signing`,
  * `upstream-version-adoption` — are ALSO the basenames of diagrams sitting in
  * the same directory, so every one of them resolved to the .bpmn referring to
