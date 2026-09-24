@@ -19,7 +19,7 @@
  *
  * | kind | prose | code | declared by |
  * |---|---|---|---|
- * | `implements` | a `.bpmn` diagram | the `.github/workflows/*.yml` it draws | `<cat-harness.processes:implements workflow="…"/>` |
+ * | `implements` | a `.bpmn` diagram | the `.github/workflows/*.yml` it draws | `# bpmn: <diagram>` in the workflow (`workflow-bpmn.ts`) |
  * | `co-located` | a skill `.md` | the same-stem `.ts` beside it | the file sitting there |
  *
  * A paper block's `.md` ↔ `lean.ref` pair is the third declared kind; it lives
@@ -57,7 +57,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import type { KgCriterionEntry, KgFinding, KgQaReport } from "../schemas/kg-qa.js";
-import { ownElementPattern } from "../schemas/namespaces.js";
+import { workflowsImplementing } from "./workflow-bpmn.js";
 
 /** The declared pair kinds this platform can see. */
 export const PAIR_KINDS = ["implements", "co-located"] as const;
@@ -104,12 +104,9 @@ export function discoverPairs(
   if (!existsSync(abs)) return [];
   const prose = relative(repoRoot, abs);
   if (subject.kind === "process") {
-    const text = readFileSync(abs, "utf-8");
-    const out: ProseCodePair[] = [];
-    for (const m of text.matchAll(ownElementPattern(text, "implements", String.raw`[^>]*\bworkflow="([^"]+)"`))) {
-      out.push({ kind: "implements", prose, code: m[1]! });
-    }
-    return out;
+    // The workflow names the diagram (bean `61ca`), so the pair is found by
+    // asking which workflows point here — the diagram names none of them.
+    return workflowsImplementing(repoRoot, prose).map((code) => ({ kind: "implements" as const, prose, code }));
   }
   if (subject.kind === "skill" && abs.endsWith(".md")) {
     const ts = `${abs.slice(0, -3)}.ts`;

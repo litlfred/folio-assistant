@@ -9493,7 +9493,7 @@
     {
       "id": "webpage.webpagenode.id",
       "prefLabel": "WebPageNode.id",
-      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `<cat-harness.processes:link>` hrefs — resolve against.",
+      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.id",
       "status": "candidate"
     },

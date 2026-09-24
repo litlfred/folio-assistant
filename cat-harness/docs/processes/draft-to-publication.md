@@ -19,6 +19,7 @@ folio-assistant — corpus to draft publication to officially published. Source 
 
 - **Called by:** [Content lifecycle](content-lifecycle.html)
 - **Calls:** [Editing and HCI validation](editing-hci-validation.html)
+- **Presented on:** [Publication workflow — From corpus to published folio](../publication-workflow.html#from-corpus-to-published-folio)
 
 ## Lanes — who acts
 

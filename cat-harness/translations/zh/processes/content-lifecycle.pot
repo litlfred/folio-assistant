@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: content-lifecycle\n"
-"POT-Creation-Date: 2026-09-24T12:30:55.577Z\n"
+"POT-Creation-Date: 2026-09-24T17:53:10.442Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/content-lifecycle.bpmn:150
+#: processes/content-lifecycle.bpmn:148
 #. Diagram element documentation
 msgid "Asked after feedback is filed as beans: is there more content to write for this folio? `yes` returns to editing and HCI validation; `no` retires or archives it."
 msgstr ""
@@ -24,12 +24,12 @@ msgstr ""
 msgid "Content lifecycle"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:114
+#: processes/content-lifecycle.bpmn:113
 #. Diagram element documentation
 msgid "Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:121
+#: processes/content-lifecycle.bpmn:120
 #. Diagram label
 msgid "Draft, review and publish [content-publish]"
 msgstr ""
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Editors + authoring agents"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:139
+#: processes/content-lifecycle.bpmn:137
 #. Diagram label
 msgid "File feedback as beans [todo-manager]"
 msgstr ""
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Folio lifecycle — one cycle, plan to retire"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:163
+#: processes/content-lifecycle.bpmn:161
 #. Diagram label
 msgid "Folio retired"
 msgstr ""
@@ -69,27 +69,27 @@ msgstr ""
 msgid "folio-assistant — the content lifecycle end to end, one cycle of a folio. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:132
+#: processes/content-lifecycle.bpmn:130
 #. Diagram element documentation
 msgid "Implementer and reader feedback on the published folio, triaged by severity and scope."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:113
+#: processes/content-lifecycle.bpmn:112
 #. Diagram label
 msgid "Integration test and QA sweep [content-test]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:149
+#: processes/content-lifecycle.bpmn:147
 #. Diagram label
 msgid "More content?"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:175
+#: processes/content-lifecycle.bpmn:173
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:156
+#: processes/content-lifecycle.bpmn:154
 #. Diagram element documentation
 msgid "No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes."
 msgstr ""
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Publication manager"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:155
+#: processes/content-lifecycle.bpmn:153
 #. Diagram label
 msgid "Retire or archive [content-retire]"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Scope the work, identify artifacts and actors, form the team, set the timeline."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:122
+#: processes/content-lifecycle.bpmn:121
 #. Diagram element documentation
 msgid "See draft-to-publication.bpmn."
 msgstr ""
@@ -174,12 +174,12 @@ msgstr ""
 msgid "Touched twice, not once: Task_SeedBeans converts the programme manager's plan into trackable work at the start, and Task_FeedbackBeans converts triaged reader feedback into more of it at the end, immediately before Gateway_NextCycle asks whether to go around again — so this lane is what makes the lifecycle a LOOP rather than a line, carrying what closed one cycle into what opens the next."
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:131
+#: processes/content-lifecycle.bpmn:129
 #. Diagram label
 msgid "Triage published feedback [content-feedback]"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:140
+#: processes/content-lifecycle.bpmn:138
 #. Diagram element documentation
 msgid "Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for."
 msgstr ""
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/content-lifecycle.bpmn:174
+#: processes/content-lifecycle.bpmn:172
 #. Diagram label
 msgid "yes"
 msgstr ""

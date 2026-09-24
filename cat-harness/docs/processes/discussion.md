@@ -19,6 +19,7 @@ THE SECOND PROCESS IN CAT_BOOTSTRAP, and an exception to bootstrap holding as li
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

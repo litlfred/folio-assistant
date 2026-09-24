@@ -26,8 +26,9 @@
  *   - a STABLE ID per node, independent of the heading text. The docs site runs
  *     `heading_anchors: true`, which derives `#extract-structure` from the
  *     heading's words — so retitling a section silently breaks every inbound
- *     link, including the `<cat-harness.processes:link href="document-ingestion.html#extract-structure">`
- *     hrefs authored by hand into the BPMN sources. An explicit id is what the
+ *     link, including the subprocess links `render-bpmn.ts` derives from an
+ *     asset's `source` (bean `xl55`; they were hand-authored on the BPMN
+ *     sources until then). An explicit id is what the
  *     emitter pins with kramdown's `{: #id }`, and what a graph node's `@id`
  *     is minted from.
  *   - an ASSET as a first-class child, with its own title, its own narrative
@@ -84,7 +85,7 @@ export interface WebPageNode {
   /**
    * Stable identity. Becomes the heading anchor (pinned, not derived from the
    * title), the local part of the node's `@id`, and the fragment that inbound
-   * links — including the BPMN `<cat-harness.processes:link>` hrefs — resolve against.
+   * links — including the BPMN subprocess links derived from `asset.source` — resolve against.
    *
    * Changing this is a breaking change to every link that targets it.
    * Changing `title` is not, which is the whole point.

@@ -38,14 +38,14 @@
  * | location | `` `Sym` in `path.ts` `` (from `check-agents-claims`) | the module is missing from an existing directory, or does not declare `Sym` |
  * | absence | `` `sym` `` + "has no caller" (from `check-agents-claims`) | a non-test, non-declaring file references it |
  * | file-run | `` `bun run path/to/x.ts` `` | the file's directory exists here and the file does not |
- * | job | `<cat-harness.processes:job name="…"/>` on a diagram | the workflow the diagram implements has no such job |
+ * | job | `# bpmn-node: <id>` inside a workflow's job | the diagram the workflow names has no element with that id |
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 
 import { absenceClaims, checkClaims, declares, locationClaims, normalise } from "./check-agents-claims.js";
 import type { ProseCodePair } from "./prose-code-pairs.js";
-import { ownElementPattern } from "../schemas/namespaces.js";
+import { bpmnIds, workflowBpmn } from "./workflow-bpmn.js";
 
 export type ClaimOutcome = "holds" | "false" | "undetermined";
 
@@ -143,19 +143,16 @@ export function judgePair(repo: string, pair: ProseCodePair, scripts: ReadonlySe
     }
   }
 
-  // A diagram's declared jobs against the workflow it implements.
+  // Each job's named node against the diagram. The workflow holds the
+  // pointer (bean `61ca`), so a missing workflow means no claim was made.
   if (pair.kind === "implements") {
-    const diagram = readFileSync(join(repo, pair.prose), "utf-8");
     const wf = join(repo, pair.code);
-    const yml = existsSync(wf) ? readFileSync(wf, "utf-8") : undefined;
-    for (const m of diagram.matchAll(ownElementPattern(diagram, "job", String.raw`\s+name="([^"]+)"`))) {
-      const job = m[1]!;
-      if (yml === undefined) {
-        out.push({ shape: "job", subject: job, outcome: "undetermined", reason: `${pair.code} is missing` });
-        continue;
+    if (existsSync(wf)) {
+      const ids = bpmnIds(readFileSync(join(repo, pair.prose), "utf-8"));
+      for (const { job, node } of workflowBpmn(readFileSync(wf, "utf-8")).nodes) {
+        const has = ids.has(node);
+        out.push({ shape: "job", subject: `${job} → ${node}`, outcome: has ? "holds" : "false", ...(has ? {} : { reason: `${pair.prose} has no element \`${node}\`` }) });
       }
-      const has = new RegExp(`^  ${job.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}:\\s*$`, "m").test(yml);
-      out.push({ shape: "job", subject: job, outcome: has ? "holds" : "false", ...(has ? {} : { reason: `${pair.code} has no job \`${job}\`` }) });
     }
   }
   return out;

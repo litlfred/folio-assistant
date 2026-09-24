@@ -19,6 +19,7 @@ folio-assistant — Ingestion subprocess — extract structure. Source of truth:
 
 - **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
 - **Calls:** none
+- **Presented on:** [Document ingestion — Extract structure](../document-ingestion.html#extract-structure)
 
 ## Lanes — who acts
 

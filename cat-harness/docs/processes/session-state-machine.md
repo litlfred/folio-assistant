@@ -19,6 +19,7 @@ The shape of a session from the outside: establish who is acting, open a record 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`session-state-machine`](../reference/skill-instructions/session-state-machine.html)
 
 ## Lanes — who acts

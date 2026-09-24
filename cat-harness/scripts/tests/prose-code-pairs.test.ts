@@ -11,7 +11,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { attest, discoverPairs, evaluatePairs, readAttestations } from "../prose-code-pairs";
-import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS } from "../../schemas/namespaces.ts";
 
 function repo(): { root: string; inst: string } {
   const root = mkdtempSync(join(tmpdir(), "pairs-"));
@@ -19,11 +18,9 @@ function repo(): { root: string; inst: string } {
   mkdirSync(join(inst, "processes"), { recursive: true });
   mkdirSync(join(inst, "skills", "pkg"), { recursive: true });
   mkdirSync(join(root, ".github", "workflows"), { recursive: true });
-  writeFileSync(join(root, ".github/workflows/w.yml"), "jobs: {}\n");
-  writeFileSync(
-    join(inst, "processes/p.bpmn"),
-    `<bpmn:process id="P" xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}" xmlns:cat-harness.processes="${CAT_HARNESS_PROCESSES_NS}"><bpmn:extensionElements><cat-harness.processes:implements workflow=".github/workflows/w.yml"/></bpmn:extensionElements></bpmn:process>`,
-  );
+  writeFileSync(join(root, ".github/workflows/w.yml"), "# bpmn: inst/processes/p.bpmn\njobs: {}\n");
+  writeFileSync(join(root, ".github/workflows/unrelated.yml"), "# mentions inst/processes/p.bpmn only in prose\njobs: {}\n");
+  writeFileSync(join(inst, "processes/p.bpmn"), `<bpmn:process id="P"/>`);
   writeFileSync(join(inst, "skills/pkg/s.md"), "# s\n");
   writeFileSync(join(inst, "skills/pkg/s.ts"), "export const s = 1;\n");
   writeFileSync(join(inst, "skills/pkg/lonely.md"), "# no code beside me\n");
@@ -31,7 +28,7 @@ function repo(): { root: string; inst: string } {
 }
 
 describe("discoverPairs — declared pairs only (R1)", () => {
-  test("a diagram's <cat-harness.processes:implements workflow> and a co-located skill .md/.ts", () => {
+  test("a workflow naming the diagram (`# bpmn:`, bean 61ca) and a co-located skill .md/.ts", () => {
     const { root, inst } = repo();
     expect(discoverPairs({ kind: "process", path: "processes/p.bpmn" }, inst, root)).toEqual([
       { kind: "implements", prose: "inst/processes/p.bpmn", code: ".github/workflows/w.yml" },

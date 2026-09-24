@@ -17021,7 +17021,7 @@ WebPageNode.block <span class="fa-gloss-status">candidate, extracted</span>
 WebPageNode.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `&lt;cat-harness.processes:link&gt;` hrefs — resolve against.</p>
+<p>Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPageNode.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpagenode.lead" data-fa-state="extracted" data-fa-gloss="">
