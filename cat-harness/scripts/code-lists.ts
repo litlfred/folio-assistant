@@ -27,6 +27,9 @@
  * Whether the codes MATCH the list is the engine's job, at load time
  * (`checkCodeLists` in `src/workflow/process-model.ts`) — checked once, where
  * every consumer gets it, rather than restated here.
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdf
  */
 import { readFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
