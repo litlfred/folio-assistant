@@ -140,12 +140,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-5 of 6 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
-- folio-assistant-core — *declared, not published*
+- [folio-assistant-core]({{ '/cat-harness/library/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
@@ -207,11 +207,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-4 of 5 published.
+3 of 4 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})

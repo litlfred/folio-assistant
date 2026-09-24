@@ -146,23 +146,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 270,
+      "count": 289,
       "unit": "beans"
-    },
-    {
-      "id": "bootstrap-tools-schemas",
-      "directory": "bootstrap-tools-schemas",
-      "title": "bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hidden": false,
-      "count": 5,
-      "unit": "modules"
     },
     {
       "id": "docs",
@@ -331,7 +316,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 158,
+      "count": 165,
       "unit": "modules"
     },
     {
@@ -416,7 +401,7 @@
       "href": "/cat-harness/uploads/",
       "hidden": false,
       "icon": "uploads",
-      "count": 17,
+      "count": 16,
       "unit": "waiting"
     },
     {
@@ -587,56 +572,6 @@
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "bootstrap-tools",
-      "title": "bootstrap-tools",
-      "label": "bootstrap-tools",
-      "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/bootstrap-tools/"
-        }
-      ],
-      "findings": [
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/bootstrap-tools/) rather than the instance's own themed root.",
-        "bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
       "navbarIcons": [
         "close",
@@ -1292,35 +1227,35 @@
       ],
       "icon": null,
       "avatar": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "tone": 212,
@@ -1343,7 +1278,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1365,7 +1300,7 @@
         },
         {
           "kind": "library",
-          "note": "no viewer yet"
+          "path": "/cat-harness/library/folio-assistant-core/"
         },
         {
           "kind": "methodology",
@@ -1393,7 +1328,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 7 graph(s) with no published viewer — code, folio, library, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1419,35 +1354,35 @@
         "title": "c@t"
       },
       "avatar": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "tone": 268,
@@ -1460,7 +1395,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 43
         },
         {
           "id": "kinds",
@@ -2106,32 +2041,6 @@
         ]
       },
       {
-        "name": "bootstrap-tools",
-        "title": "bootstrap-tools",
-        "group": "checkout",
-        "declaredIn": "bootstrap-tools/bootstrap-tools.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/bootstrap-tools.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap-tools/bootstrap-tools.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "bootstrap-tools"
-          },
-          {
-            "key": "description",
-            "summary": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap know…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "directories",
-            "summary": "1: bootstrap-tools-schemas"
-          }
-        ]
-      },
-      {
         "name": "folio-assistant-sci",
         "title": "folio-assistant-sci",
         "group": "checkout",
@@ -2533,7 +2442,7 @@
           },
           {
             "key": "images",
-            "summary": "24: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
+            "summary": "27: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
           },
           {
             "key": "assets",
@@ -2561,7 +2470,7 @@
           },
           {
             "key": "directories",
-            "summary": "45: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

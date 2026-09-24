@@ -234,7 +234,7 @@ The same decision, askable:
 >    Nothing here has to change, and the collision is solved where collisions
 >    actually happen.
 > 2. **In this repository itself** — rename every skill file. That touches the
->    package manifests, every `<folio:skill ref>` in the BPMN diagrams, two doc
+>    package manifests, every `<bootstrap.processes:skill ref>` in the BPMN diagrams, two doc
 >    generators and every cross-reference between skill bodies. It is the kind
 >    of change that is painful to reverse.
 >

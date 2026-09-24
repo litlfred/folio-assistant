@@ -197,6 +197,14 @@ package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>
     overallStatus [1] : pass | warnings | errors
     results [0..*] : Result[]
   }
+  class "CRDM Detect Input" as cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input <<schema: skills/crdm-detect/input.schema.json>> #e9edf3 {
+    text [1] : string
+  }
+  class "CRDM Detect Output" as cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output <<schema: skills/crdm-detect/output.schema.json>> #e9edf3 {
+    fires [1] : boolean
+    categories [0..*] : list<direct-capability | workflow-gap | platform-change | cross-cutting | review-surfaced | self-declared-genre>
+    excluded [1] : boolean
+  }
   class "InputVariable" as cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable <<schema: skills/dmn-authoring/input.schema.json>> #e9edf3 {
     name [1] : string
     type [1] : string | integer | boolean | date | codeable-concept
@@ -579,12 +587,18 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : map<object[]>
     updated_at [1] : string
   }
+  class "Case" as cat_harness_qa_folio_test_run_v1_Case <<json: TestRunSchema>> #f4e6e6 {
+    input [1] : any
+    output [1] : any
+  }
   class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
+    skill [1] : string
     subject [1] : string
     data [1] : object
     process [1] : object
     outcome [1] : map<any>
+    cases [0..*] : Case[]
     updated_at [1] : string
   }
   class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
@@ -766,21 +780,44 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Superseded" as cat_harness_library_folio_block_summaries_v1_Superseded <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    text [1] : string | null
+    state [1] : not-authored | draft | confirmed | rejected
+    drafted_by [0..1] : object
+    drafted_at [0..1] : string
+    confirmed_by [0..1] : object
+    confirmed_at [0..1] : string
+    rejected_by [0..1] : object
+    rejected_at [0..1] : string
+    rejection_reason [0..1] : string
+  }
+  class "Summary" as cat_harness_library_folio_block_summaries_v1_Summary <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    block [1] : string
+    source [1] : string
+    source_hash [1] : string
+    narrative [1] : object
+    superseded [0..*] : Superseded[]
+  }
+  class "folio-block-summaries/v1" as cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-summaries/v1'
+    entry [1] : string
+    summaries [0..*] : Summary[]
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_who_iris_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_who_iris_library_library
 }
 package "cat-harness/agent-skills-library" as pkg_cat_harness_agent_skills_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_agent_skills_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_agent_skills_library_library
 }
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
 }
 package "cat-harness/folio-assistant-core-library" as pkg_cat_harness_folio_assistant_core_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
 }
 package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_smart_base_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
@@ -793,9 +830,6 @@ package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources
 }
 package "cat-harness/folio" as pkg_cat_harness_folio <<folio>> {
   note "folio: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_folio_folio
-}
-package "cat-harness/smart-kg-methodologies" as pkg_cat_harness_smart_kg_methodologies <<methodology>> {
-  note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_smart_kg_methodologies_methodology
 }
 package "cat-harness/smart-base-methodologies" as pkg_cat_harness_smart_base_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_cat_harness_smart_base_methodologies_methodology
@@ -984,9 +1018,6 @@ package "cat-harness/who-iris-skills" as pkg_cat_harness_who_iris_skills <<skill
 package "cat-harness/large-datasets-schemas" as pkg_cat_harness_large_datasets_schemas <<schemas, cat-harness>> {
   note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_cat_harness_large_datasets_schemas_schemas
 }
-package "cat-harness/bootstrap-tools-schemas" as pkg_cat_harness_bootstrap_tools_schemas <<schemas, cat-harness>> {
-  note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_cat_harness_bootstrap_tools_schemas_schemas
-}
 package "cat-harness/swimlane-glossary" as pkg_cat_harness_swimlane_glossary <<swimlane-glossary>> {
   class "folio-glossary-ledger/v1" as cat_harness_swimlane_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #f4f4f1 {
     $schema [1] : string
@@ -1063,17 +1094,20 @@ cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : per
 cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
 cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
 cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
 cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
 cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
 cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
+cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
+cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations
 cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Item : items
-' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_code_lists pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_fsh_guts pkg_cat_harness_health pkg_cat_harness_beans pkg_cat_harness_todos pkg_cat_harness_memory pkg_cat_harness_interaction pkg_cat_harness_issue_marks pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_who_iris_library pkg_cat_harness_agent_skills_library pkg_cat_harness_folio_assistant_sci_library pkg_cat_harness_folio_assistant_core_library pkg_cat_harness_smart_base_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_smart_kg_methodologies pkg_cat_harness_smart_base_methodologies pkg_cat_harness_folio_assistant_core_methodologies pkg_cat_harness_folio_assistant_core_skills pkg_cat_harness_smart_base_processes pkg_cat_harness_docs pkg_cat_harness_root_docs pkg_cat_harness_folio_assist_core_schemas pkg_cat_harness_large_datasets_skills pkg_cat_harness_who_iris_skills pkg_cat_harness_large_datasets_schemas pkg_cat_harness_bootstrap_tools_schemas pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_assistant_core_processes
+' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_code_lists pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_fsh_guts pkg_cat_harness_health pkg_cat_harness_beans pkg_cat_harness_todos pkg_cat_harness_memory pkg_cat_harness_interaction pkg_cat_harness_issue_marks pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_who_iris_library pkg_cat_harness_agent_skills_library pkg_cat_harness_folio_assistant_sci_library pkg_cat_harness_folio_assistant_core_library pkg_cat_harness_smart_base_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_smart_base_methodologies pkg_cat_harness_folio_assistant_core_methodologies pkg_cat_harness_folio_assistant_core_skills pkg_cat_harness_smart_base_processes pkg_cat_harness_docs pkg_cat_harness_root_docs pkg_cat_harness_folio_assist_core_schemas pkg_cat_harness_large_datasets_skills pkg_cat_harness_who_iris_skills pkg_cat_harness_large_datasets_schemas pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_assistant_core_processes
 pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_skills
 pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_scenarios
 pkg_cat_harness_code_lists -[hidden]down- pkg_cat_harness_policies
@@ -1096,22 +1130,20 @@ pkg_cat_harness_uploads -[hidden]down- pkg_cat_harness_folio_assistant_core_libr
 pkg_cat_harness_library -[hidden]down- pkg_cat_harness_smart_base_library
 pkg_cat_harness_who_iris_library -[hidden]down- pkg_cat_harness_translation_sources
 pkg_cat_harness_agent_skills_library -[hidden]down- pkg_cat_harness_folio
-pkg_cat_harness_folio_assistant_sci_library -[hidden]down- pkg_cat_harness_smart_kg_methodologies
-pkg_cat_harness_folio_assistant_core_library -[hidden]down- pkg_cat_harness_smart_base_methodologies
-pkg_cat_harness_smart_base_library -[hidden]down- pkg_cat_harness_folio_assistant_core_methodologies
-pkg_cat_harness_translation_sources -[hidden]down- pkg_cat_harness_folio_assistant_core_skills
-pkg_cat_harness_folio -[hidden]down- pkg_cat_harness_smart_base_processes
-pkg_cat_harness_smart_kg_methodologies -[hidden]down- pkg_cat_harness_docs
+pkg_cat_harness_folio_assistant_sci_library -[hidden]down- pkg_cat_harness_smart_base_methodologies
+pkg_cat_harness_folio_assistant_core_library -[hidden]down- pkg_cat_harness_folio_assistant_core_methodologies
+pkg_cat_harness_smart_base_library -[hidden]down- pkg_cat_harness_folio_assistant_core_skills
+pkg_cat_harness_translation_sources -[hidden]down- pkg_cat_harness_smart_base_processes
+pkg_cat_harness_folio -[hidden]down- pkg_cat_harness_docs
 pkg_cat_harness_smart_base_methodologies -[hidden]down- pkg_cat_harness_root_docs
 pkg_cat_harness_folio_assistant_core_methodologies -[hidden]down- pkg_cat_harness_folio_assist_core_schemas
 pkg_cat_harness_folio_assistant_core_skills -[hidden]down- pkg_cat_harness_large_datasets_skills
 pkg_cat_harness_smart_base_processes -[hidden]down- pkg_cat_harness_who_iris_skills
 pkg_cat_harness_docs -[hidden]down- pkg_cat_harness_large_datasets_schemas
-pkg_cat_harness_root_docs -[hidden]down- pkg_cat_harness_bootstrap_tools_schemas
-pkg_cat_harness_folio_assist_core_schemas -[hidden]down- pkg_cat_harness_swimlane_glossary
-pkg_cat_harness_large_datasets_skills -[hidden]down- pkg_cat_harness_cat_harness_scripts
-pkg_cat_harness_who_iris_skills -[hidden]down- pkg_cat_harness_cat_harness_src
-pkg_cat_harness_large_datasets_schemas -[hidden]down- pkg_cat_harness_cat_harness_adapters
-pkg_cat_harness_bootstrap_tools_schemas -[hidden]down- pkg_cat_harness_cat_harness_tests
+pkg_cat_harness_root_docs -[hidden]down- pkg_cat_harness_swimlane_glossary
+pkg_cat_harness_folio_assist_core_schemas -[hidden]down- pkg_cat_harness_cat_harness_scripts
+pkg_cat_harness_large_datasets_skills -[hidden]down- pkg_cat_harness_cat_harness_src
+pkg_cat_harness_who_iris_skills -[hidden]down- pkg_cat_harness_cat_harness_adapters
+pkg_cat_harness_large_datasets_schemas -[hidden]down- pkg_cat_harness_cat_harness_tests
 pkg_cat_harness_swimlane_glossary -[hidden]down- pkg_cat_harness_folio_assistant_core_processes
 @enduml

@@ -27,6 +27,7 @@
  * shared vocabulary actually declares — the half that can be known offline.
  *
  * @module scripts/check-tools
+ * @covers tools, skills
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

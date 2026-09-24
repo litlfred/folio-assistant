@@ -20,6 +20,8 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
+ * @covers computed — it sweeps whichever kinds declare `nodeSchemas`, so a literal list would go
+ *   stale silently
  */
 
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";

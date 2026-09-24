@@ -87,16 +87,16 @@ So the split is **at the judgement**:
 
 ### What that means when you call it
 
-`A_Adjudicate` declares `<folio:adjudication defers="caller"/>` — it IS an
+`A_Adjudicate` declares `<cat-harness.processes:adjudication defers="caller"/>` — it IS an
 adjudication and the permitted answers are yours. Declared rather than left as
 a missing `codes`, so a marker lost by accident and a deferral on purpose do
 not parse the same.
 
 - **Asking the QA-criterion question?** Call `Process_CriterionAdjudication`
-  and declare `<folio:adjudication accepts="stands scope dispensation"/>`. The
+  and declare `<cat-harness.processes:adjudication accepts="stands scope dispensation"/>`. The
   engine compares your list with what that process actually offers.
 - **Asking something else?** Call `Process_Adjudication` and declare
-  `<folio:adjudication codes="…"/>` on your own call activity, with your own
+  `<cat-harness.processes:adjudication codes="…"/>` on your own call activity, with your own
   gateway coding the same set. The engine refuses a mismatch between the two,
   and refuses a partly-coded gateway, which reads as complete.
 - **Declaring nothing** is legal and **reported** by `check:workflow-refs` —

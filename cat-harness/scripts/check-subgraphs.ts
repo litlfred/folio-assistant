@@ -29,6 +29,8 @@
  * Usage:
  *   bun run subgraphs            # the tree and the entanglement report
  *   bun run check:subgraphs      # same, non-zero only if something is unreadable
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -155,7 +157,7 @@ export interface SubgraphReport {
    * moved to `fsh-guts/`, which is `scope: "repository"` and therefore sits
    * OUTSIDE this instance — and `owningDirectory` compares in the instance's
    * path space, so every repository-scoped directory was skipped without a
-   * word. `bootstrap/skills/`, `smart-kg/` and `uploads/` are skipped the
+   * word. `bootstrap/skills/` and `uploads/` are skipped the
    * same way.
    *
    * Skipping retired content is defensible; skipping it SILENTLY is not,

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kg-to-portal\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.940Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.654Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,267 +14,267 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/kg-to-portal.bpmn:107
+#: processes/kg-to-portal.bpmn:108
 #. Diagram label
 msgid "A graph exists, and a portal needs it"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:154
+#: processes/kg-to-portal.bpmn:155
 #. Diagram element documentation
 msgid "A real end, not a warning. Publishing anyway and reporting the overrun is how a cost becomes somebody's surprise invoice. Narrowing the editorial scope at E_Scope is the way back in, which is why that step is editorial rather than mechanical."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:236
+#: processes/kg-to-portal.bpmn:237
 #. Diagram label
 msgid "a transport was chosen"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:204
+#: processes/kg-to-portal.bpmn:205
 #. Diagram element documentation
 msgid "Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:183
+#: processes/kg-to-portal.bpmn:184
 #. Diagram element documentation
 msgid "An undetermined decision is DATA, not silence. It is recorded with what it waits on and what would settle it, so the next session can tell \"nobody has chosen\" from \"somebody chose and did not write it down\" — the same third state bean-blocking keeps for a block with no expiry."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:211
+#: processes/kg-to-portal.bpmn:212
 #. Diagram element documentation
 msgid "Answered by verifying what arrived against what was signed. `signature and digests match` serves the bytes; `mismatch` rejects them and keeps serving the previous version."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:126
+#: processes/kg-to-portal.bpmn:127
 #. Diagram element documentation
 msgid "Apply the editorial scope mechanically and report what it removed. A selection that reports nothing cannot be told from one that ran over an empty rule."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:87
+#: processes/kg-to-portal.bpmn:88
 #. Diagram label
 msgid "Attestation (GDHCN / WHO SMART Trust)"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:166
+#: processes/kg-to-portal.bpmn:167
 #. Diagram element documentation
 msgid "Bean xies, gate 3, and the one that is easy to drop because gate 2 (merge to main) looks like an approval. It is not: merging approves the CHANGE, and this approves what a reader will actually see. continual-progress measured why a description cannot stand in for it (PR #178, 2026-09-16)."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:78
+#: processes/kg-to-portal.bpmn:79
 #. Diagram label
 msgid "Build pipeline"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:125
+#: processes/kg-to-portal.bpmn:126
 #. Diagram label
 msgid "Cut the subgraph that leaves"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:118
+#: processes/kg-to-portal.bpmn:119
 #. Diagram label
 msgid "Decide what may leave the repository"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:69
+#: processes/kg-to-portal.bpmn:70
 #. Diagram label
 msgid "Deployment owner"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:63
+#: processes/kg-to-portal.bpmn:64
 #. Diagram label
 msgid "Editorial"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:119
+#: processes/kg-to-portal.bpmn:120
 #. Diagram element documentation
 msgid "EDITORIAL, and it is stage 1 rather than a filter bolted to the exporter. kg-export produces the WHOLE graph because inspection wants the whole graph; a portal wants what its readers may see. Running the second as the first is how a QA verdict, a bean's blocking note or an unpublished draft reaches a public cache. Decided once, here, rather than at each consumer."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:79
+#: processes/kg-to-portal.bpmn:80
 #. Diagram element documentation
 msgid "Executes E_Scope's decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph's node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:48
+#: processes/kg-to-portal.bpmn:49
 #. Diagram element documentation
 msgid "folio-assistant — KG to public portal. Six stages: select, serialize, package, sign, distribute, verify. Three decisions belong to the DEPLOYMENT and are drawn as gateways rather than as steps — the ingestion transport, the versioned store, and the signing scheme. A pipeline that picks one of those is asserting a decision nobody made. A CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers \"what serves the rendering\"; a cache answers \"what stands between the server and the reader\", and the canonical URL stays the origin's either way."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:165
+#: processes/kg-to-portal.bpmn:166
 #. Diagram label
 msgid "Human eyes on the rendered artefact"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:45
+#: processes/kg-to-portal.bpmn:46
 #. Diagram label
 msgid "KG to public portal"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:133
+#: processes/kg-to-portal.bpmn:134
 #. Diagram element documentation
 msgid "kg-export, already built and host-agnostic by design. Every edge term declared {\"@type\": \"@id\"} — without that coercion the document is a list of records that merely LOOKS linked, and the node IRIs are fragments of the document's own @id so the graph is mergeable with anyone else's."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:147
+#: processes/kg-to-portal.bpmn:148
 #. Diagram element documentation
 msgid "Measured against D_Constraints' numbers, not against a feeling. The gate is here rather than before packaging because the package's own size is the quantity being judged, and estimating it from the graph's node count is the guess this gate exists to replace."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:242
+#: processes/kg-to-portal.bpmn:243
 #. Diagram label
 msgid "mismatch"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:112
+#: processes/kg-to-portal.bpmn:113
 #. Diagram element documentation
 msgid "Money, network traffic, graph size, latency. Each needs a NUMBER and each number needs a denominator, because a constraint with no denominator is a preference: \"the graph is too big\" is not a finding, \"6.2 MB per publication against a 100 GB free tier\" is. Say which figures were measured, which were quoted from a vendor, and which could not be obtained — a figure from a chat message is none of the three, and the who-iris catalogue carries the worked example where \"0.7 TB\" propagated through ten files and the measured figure was about half."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:192
+#: processes/kg-to-portal.bpmn:193
 #. Diagram label
 msgid "Open — awaiting a deployment decision"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:233
+#: processes/kg-to-portal.bpmn:234
 #. Diagram label
 msgid "over budget"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:70
+#: processes/kg-to-portal.bpmn:71
 #. Diagram element documentation
 msgid "Owns the numbers every other gate in the pipeline checks against: GW_Budget measures the package against D_Constraints' figures, not a feeling. When GW_Transport has no default branch to take, this lane is the one that records the gap as still open — at D_Undetermined — rather than letting the build pick a transport nobody decided on."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:139
+#: processes/kg-to-portal.bpmn:140
 #. Diagram label
 msgid "Package: files plus a manifest of digests"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:97
+#: processes/kg-to-portal.bpmn:98
 #. Diagram label
 msgid "Portal (external consumer)"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:92
+#: processes/kg-to-portal.bpmn:93
 #. Diagram label
 msgid "Publish target"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:196
+#: processes/kg-to-portal.bpmn:197
 #. Diagram label
 msgid "Publish to the origin (a cache may front it)"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:197
+#: processes/kg-to-portal.bpmn:198
 #. Diagram element documentation
 msgid "Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:222
+#: processes/kg-to-portal.bpmn:223
 #. Diagram label
 msgid "Readers have the bytes"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:182
+#: processes/kg-to-portal.bpmn:183
 #. Diagram label
 msgid "Record the decision as still open"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:153
+#: processes/kg-to-portal.bpmn:154
 #. Diagram label
 msgid "Refused — over budget"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:217
+#: processes/kg-to-portal.bpmn:218
 #. Diagram label
 msgid "Rejected — serve the previous version"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:132
+#: processes/kg-to-portal.bpmn:133
 #. Diagram label
 msgid "Serialize to JSON-LD"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:218
+#: processes/kg-to-portal.bpmn:219
 #. Diagram element documentation
 msgid "Serving the LAST good version rather than nothing: a portal that goes blank on a failed verification has turned an integrity problem into an outage, and a reader cannot tell the two apart. The versioned store is what makes this possible, which is why \"suitable versioned storage\" is a requirement rather than a preference."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:158
+#: processes/kg-to-portal.bpmn:159
 #. Diagram label
 msgid "Sign the package and/or each asset"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:241
+#: processes/kg-to-portal.bpmn:242
 #. Diagram label
 msgid "signature and digests match"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:88
+#: processes/kg-to-portal.bpmn:89
 #. Diagram element documentation
 msgid "Signs after A_Package and before E_HumanEyes, so what a human approves downstream is exactly what got signed — reordering the two would let a reviewer approve bytes the signature no longer covers. Whether that signature covers the whole package, each asset, or both composed is a deployment choice this lane executes rather than makes."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:111
+#: processes/kg-to-portal.bpmn:112
 #. Diagram label
 msgid "State the constraints, with denominators"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:237
+#: processes/kg-to-portal.bpmn:238
 #. Diagram label
 msgid "still undetermined"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:93
+#: processes/kg-to-portal.bpmn:94
 #. Diagram element documentation
 msgid "The one lane whose action makes a URL live, which is exactly why a CDN in front of it is not drawn as a second lane — folding the cache in as a participant would make its URL look like the published one, and the canonical URL is this lane's promise to keep, not the cache's. Uploading and exposing stay two separate moments here rather than one, so a bad layout is still catchable before a reader can reach it."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:98
+#: processes/kg-to-portal.bpmn:99
 #. Diagram element documentation
 msgid "The only lane outside this instance's control, so P_Verify checks against an external trust anchor — the GDHCN trustlist — rather than against anything the pipeline itself asserts. When that trustlist cannot be reached, this lane's answer is `unknown`, and GW_Verified routes it the same way as a mismatch: to the last good version, never to a guessed pass."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:140
+#: processes/kg-to-portal.bpmn:141
 #. Diagram element documentation
 msgid "The serialization alone is not a package. A package is an addressable set — the JSON-LD, the assets it references, and a manifest naming every file with its digest and byte count. The manifest is what makes a REMOVED file detectable, which a per-file signature cannot do on its own."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:159
+#: processes/kg-to-portal.bpmn:160
 #. Diagram element documentation
 msgid "THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: `propsal signing = GDHCN`, then `smart-trust`). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:176
+#: processes/kg-to-portal.bpmn:177
 #. Diagram element documentation
 msgid "THIS GATEWAY HAS NO DEFAULT BRANCH, AND THAT IS THE POINT. Owner, 2026-09-20: \"ingestion method not determined.\" Pull from the portal, push to an object store, a git fetch, a signed tarball on a schedule — they differ in cost, in who initiates, in what must be reachable from where, and in what happens when a publication is missed. The deployment answers using D_Constraints' numbers; until it does, the diagram reaches here and stops. Drawing one branch as the obvious one would record a decision nobody made."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:64
+#: processes/kg-to-portal.bpmn:65
 #. Diagram element documentation
 msgid "Two decisions, not one: E_Scope bounds what may leave the repository before the pipeline runs, and E_HumanEyes — reached only after S_Sign — approves what a reader will actually see, which merging to main does not. When GW_Budget rejects a package as over budget, narrowing scope here is the only way back in, so this lane is doing gatekeeping at both ends of the pipeline rather than once."
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:210
+#: processes/kg-to-portal.bpmn:211
 #. Diagram label
 msgid "Verifies?"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:203
+#: processes/kg-to-portal.bpmn:204
 #. Diagram label
 msgid "Verify what arrived against what was signed"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:175
+#: processes/kg-to-portal.bpmn:176
 #. Diagram label
 msgid "Which transport? (UNDETERMINED)"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:232
+#: processes/kg-to-portal.bpmn:233
 #. Diagram label
 msgid "within budget"
 msgstr ""
 
-#: processes/kg-to-portal.bpmn:146
+#: processes/kg-to-portal.bpmn:147
 #. Diagram label
 msgid "Within the stated budget?"
 msgstr ""

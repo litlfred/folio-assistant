@@ -142,3 +142,4 @@ a step can name it: Functional Requirement 1 is FR-1.
 | [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | diagram | the steps above |
 | [`processes/discussion.bpmn`](processes/discussion.bpmn) | diagram | asking the Requestor (step 2) |
 | [`processes/log-message.bpmn`](processes/log-message.bpmn) | diagram | recording what you are doing, and any failure |
+| [`processes/ns.jsonld`](processes/ns.jsonld) | data | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` |

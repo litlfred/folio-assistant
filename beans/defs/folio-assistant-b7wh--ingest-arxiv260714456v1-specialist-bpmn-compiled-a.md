@@ -1,11 +1,11 @@
 ---
 # folio-assistant-b7wh
 title: INGEST arXiv:2607.14456v1 (specialist BPMN-compiled agents) as evidence + a skill on the processes subgraph
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T22:25:37Z
-updated_at: 2026-09-23T22:26:10Z
+updated_at: 2026-09-24T00:15:16Z
 parent: folio-assistant-slw1
 ---
 

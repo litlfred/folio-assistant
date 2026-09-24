@@ -3,6 +3,7 @@
  * Derived documentation for a sub-graph — one index per (type, sub-graph).
  *
  * @module scripts/gen-docs-auto
+ * @covers docs
  *
  * Owner, 2026-09-20, bean `06e3`:
  *
@@ -95,6 +96,7 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO = join(ROOT, "..");
@@ -468,7 +470,7 @@ export const TYPES: AutoDocType[] = [
             return between === "" ? d[1] : undefined;
           })();
           const lanes = [...xml.matchAll(/<(?:bpmn:)?lane\b[^>]*\sname="([^"]*)"/g)].map((m) => m[1]!);
-          const skills = [...new Set([...xml.matchAll(/<folio:skill\s+ref="([^"]+)"/g)].map((m) => m[1]!))];
+          const skills = [...new Set([...xml.matchAll(ownElementPattern(xml, "skill", String.raw`\s+ref="([^"]+)"`))].map((m) => m[1]!))];
           const acts = (xml.match(/<(?:bpmn:)?(task|serviceTask|userTask|callActivity)\b/g) ?? []).length;
           const facts: Record<string, string> = { activities: String(acts) };
           if (lanes.length) facts.lanes = lanes.join(" · ");

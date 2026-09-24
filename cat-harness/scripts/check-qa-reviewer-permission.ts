@@ -46,6 +46,7 @@
  * exemption cannot be claimed by asserting it.
  *
  * @module scripts/check-qa-reviewer-permission
+ * @covers policies, scenarios
  */
 
 import { readPolicyGrants } from "../schemas/odrl.js";

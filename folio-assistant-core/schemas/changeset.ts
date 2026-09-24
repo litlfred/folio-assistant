@@ -80,7 +80,7 @@ export const BlockAtSchema = z.object({
   file: z.string(),
   kind: z.string(),
   /**
-   * The section listing it: `<manifest dir>::<section label | title | #n>`.
+   * The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build).
    * Absent when no manifest lists the block — an orphan, which is itself
    * worth a reviewer's attention and is not guessed at.
    */

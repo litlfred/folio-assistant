@@ -236,6 +236,7 @@ function build(beans: Attr[] | null): { classes: ClassDef[]; edges: Edge[] } {
     { from: "Todo", to: "Actor", path: "tags.identities", label: "identities[].actor", mult: "0..*" },
     { from: "Bean", to: "Bean", path: "parentId", label: "parent", mult: "0..1" },
     { from: "Bean", to: "Bean", path: "blockingIds", label: "blocks", mult: "0..*" },
+    { from: "TestRun", to: "Skill", path: "skill", label: "tests", mult: "1" },
     { from: "KgQaReport", to: "Role", path: "subject.kind", label: "audits", mult: "1" },
     { from: "KgQaReport", to: "Process", path: "subject.kind", label: "audits", mult: "1" },
     { from: "KgQaReport", to: "Skill", path: "subject.kind", label: "audits", mult: "1" },

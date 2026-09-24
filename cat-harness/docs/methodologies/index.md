@@ -25,10 +25,10 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>12</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>5</b><span>with the source held here</span></div>
-<div class="mv-stat"><b>7</b><span>cited, not ingested</span></div>
-<div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
+<div class="mv-stat"><b>11</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>6</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
+<div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
 
 ## Choosing one
@@ -41,8 +41,7 @@ agent picks by resemblance, which is why the schema requires the field.
 |---|---|---|---|
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
-| **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-cited">cited, not ingested</span> | `folio-assistant-core` |
-| **[GRADE — Grading of Recommendations, Assessment, Development and Evaluation](#grade)**<br>`grade` | Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions —… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-kg` |
+| **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see `kepner-tregoe… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
@@ -95,29 +94,15 @@ these.
 
 <a id="doc-researcher"></a>
 
-`doc-researcher` — declared by `folio-assistant-core` — <span class="mv-tag mv-cited">cited, not ingested</span>
+`doc-researcher` — declared by `folio-assistant-core` — <span class="mv-tag mv-ingested">source held</span>
 
 **Applies when.** **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread across several documents, or across text and figures within one, or when the asker will follow up. It answers *how to search a corpus you already hold*, never *what to hold* — `library-ingestion` and the L1 completeness gate answer that, and this method assumes their output. Do NOT reach for it for a single lookup in a known document. The loop below costs iterations, and a method whose cheapest path is more expensive than reading the page is the wrong method.
 
-**Origin.** Kuicai Dong, Shurui Huang, Fangda Ye, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang, Gang Wang, Yichao Wang, Chen Zhang and Yong Liu, "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research" (arXiv:2510.21603v1, Huawei Technologies, 24 October 2025). Open access. THE PRIMARY IS HELD IN THIS CHECKOUT BUT NOT PROMOTED, and `evidence:` is omitted rather than pointed at a staged entry. `bun run ingest` staged it as `arxiv-2510.21603v1` — 22 blocks and a manifest — and its `image-descriptions` requirement is unmet: the extractor placed **383** images, 335 of them from page 3 alone and many byte-identical in size, which are fragments of one composite architecture figure rather than 335 figures. Writing 383 descriptions would be the fabrication `document-image.ts`'s inspection basis exists to refuse. Recorded rather than worked around; see §"What this checkout holds, and what it does not". It is a SYSTEM paper reporting one implementation against a benchmark its own authors built, so what is adopted below is the METHOD, and §"Where this rendering stops" says which parts were left behind.
+**Origin.** Kuicai Dong, Shurui Huang, Fangda Ye, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang, Gang Wang, Yichao Wang, Chen Zhang and Yong Liu, "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research" (arXiv:2510.21603v1, Huawei Technologies, 24 October 2025). Open access. THE PRIMARY IS HELD AND PROMOTED, at `library/arxiv-2510.21603v1`, which is what `evidence:` below points at. It was staged and unpromotable for a day: the extractor reported **383** images, 335 of them on page 3, and its `image-descriptions` requirement could not be met. It holds **fifty**. See §"What this checkout holds" — the first reading of those 383 was wrong, and the correction is kept there rather than tidied away. It is a SYSTEM paper reporting one implementation against a benchmark its own authors built, so what is adopted below is the METHOD, and §"Where this rendering stops" says which parts were left behind.
 
-**No ingested source.** The origin above names one; nothing in this
-checkout holds it. `literature-search` is the skill that closes one of
-these.
+**Ingested sources:**
 
-### GRADE — Grading of Recommendations, Assessment, Development and Evaluation
-
-<a id="grade"></a>
-
-`grade` — declared by `smart-kg` — <span class="mv-tag mv-cited">cited, not ingested</span>
-
-**Applies when.** Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions — those are `kepner-tregoe`, recorded per `madr`.
-
-**Origin.** The GRADE Working Group (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et al., BMJ 2016. WHO applies it through the *WHO Handbook for Guideline Development*.
-
-**No ingested source.** The origin above names one; nothing in this
-checkout holds it. `literature-search` is the skill that closes one of
-these.
+- `library/arxiv-2510.21603v1`
 
 ### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
 
