@@ -163,7 +163,6 @@ classDiagram
       specUrl [1] string~uri~
       namespaces [0..*] string[]
       use [1] conforms | reads | cites
-      usedBy [1..*] string[]
       terms [0..*] Term[]
       note [0..1] string
     }

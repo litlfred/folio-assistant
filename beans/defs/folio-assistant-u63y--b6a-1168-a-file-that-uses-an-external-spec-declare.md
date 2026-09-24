@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u63y
 title: 'B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-24T18:07:58Z
-updated_at: 2026-09-24T18:07:58Z
+updated_at: 2026-09-24T18:25:14Z
 parent: folio-assistant-tr05
 ---
 

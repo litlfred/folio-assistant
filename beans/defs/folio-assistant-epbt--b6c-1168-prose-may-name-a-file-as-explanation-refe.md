@@ -1,11 +1,11 @@
 ---
 # folio-assistant-epbt
 title: 'B6c (#1168): prose may name a file as explanation, references go in data — rule + advisory stale-name criterion'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T18:07:57Z
-updated_at: 2026-09-24T18:07:57Z
+updated_at: 2026-09-24T18:25:14Z
 parent: folio-assistant-tr05
 ---
 
