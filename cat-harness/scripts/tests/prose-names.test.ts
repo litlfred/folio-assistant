@@ -27,12 +27,12 @@ describe("namedFiles — what prose names", () => {
 
 describe("classifyName — four states", () => {
   const root = mkdtempSync(join(tmpdir(), "prose-names-"));
-  mkdirSync(join(root, "docs", "proposals"), { recursive: true });
-  writeFileSync(join(root, "docs", "proposals", "here.md"), "x");
+  mkdirSync(join(root, "notes", "proposals"), { recursive: true });
+  writeFileSync(join(root, "notes", "proposals", "here.md"), "x");
   const basenames = new Set(["feature-staging.yml"]);
 
   test("a path that exists resolves", () => {
-    expect(classifyName("docs/proposals/here.md", [root], basenames)).toBe("resolves");
+    expect(classifyName("notes/proposals/here.md", [root], basenames)).toBe("resolves");
   });
 
   test("a bare name some tracked file carries resolves", () => {
@@ -53,7 +53,7 @@ describe("classifyName — four states", () => {
   });
 
   test("a path whose directory IS here and whose file is not is MISSING — the one finding", () => {
-    expect(classifyName("docs/proposals/gone.md", [root], basenames)).toBe("missing");
+    expect(classifyName("notes/proposals/gone.md", [root], basenames)).toBe("missing");
   });
 
   test("any root may resolve it — a sibling instance's path spelled from its own root", () => {
