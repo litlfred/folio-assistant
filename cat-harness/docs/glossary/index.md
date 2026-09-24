@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2431 terms: **7 authored** in 1 glossary, and **2424 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2433 terms: **7 authored** in 1 glossary, and **2426 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2424</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2426</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2431 terms and is 1.4 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2433 terms and is 1.4 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2431</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2433</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -5337,6 +5337,13 @@ fhir-client-operations <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/fhir-client-operations.md"><code>cat-harness/skills/remote-stubs/fhir-client-operations.md</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
+fhir-client-operations <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.</p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/fhir-client-operations.md"><code>fhir-harness/skills/fhir-client/fhir-client-operations.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--fhir-validation" data-fa-state="extracted" data-fa-gloss="">
 fhir-validation <span class="fa-gloss-status">candidate, extracted</span>
@@ -13829,6 +13836,13 @@ smart-launch <span class="fa-gloss-status">candidate, extracted</span>
 <p>STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md"><code>cat-harness/skills/remote-stubs/smart-launch.md</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-skills--smart-launch" data-fa-state="extracted" data-fa-gloss="">
+smart-launch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.</p>
+<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md"><code>fhir-harness/skills/fhir-client/smart-launch.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--smart-stack-layering" data-fa-state="extracted" data-fa-gloss="">
 smart-stack-layering <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -17171,12 +17185,12 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>cat-harness</td><td>254 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1342 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>163 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>270</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1517</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>272</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1517</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
