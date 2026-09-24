@@ -26,6 +26,7 @@ package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
     selection [0..1] : object
     requires [0..1] : object
     maintains [0..*] : Maintain[]
+    renders [0..*] : string[]
   }
 }
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {

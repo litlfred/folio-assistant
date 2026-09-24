@@ -144,6 +144,7 @@ classDiagram
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
+      renders [0..*] string[]
     }
   }
   namespace folio_assistant_core__core_scripts {
