@@ -1460,7 +1460,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
+      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
       "source": "cat-harness/processes/document-ingestion.bpmn"
     },
     {

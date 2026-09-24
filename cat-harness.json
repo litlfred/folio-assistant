@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T12:00:32.910Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cd7278026658b5688e18ce84da5a4fc887179f5",
-  "sourceCommitSha": "0cd7278026658b5688e18ce84da5a4fc887179f5",
-  "sourceCommitAt": "2026-09-24T13:57:35+02:00",
+  "generatedAt": "2026-09-24T12:19:22.030Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6871585ed048875e6a4ec6b313d4d56ea4d546f6",
+  "sourceCommitSha": "6871585ed048875e6a4ec6b313d4d56ea4d546f6",
+  "sourceCommitAt": "2026-09-24T14:15:57+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -282,11 +282,11 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 71,
-    "SequenceFlow": 908,
+    "SequenceFlow": 909,
     "Role": 148,
-    "ProcessNode": 860,
+    "ProcessNode": 861,
     "Tool": 83,
-    "Schema": 115,
+    "Schema": 116,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -1741,7 +1741,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 457,
+      "instructionLines": 502,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -20211,8 +20211,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 14,
+      "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
@@ -20320,6 +20320,14 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Promote",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Citeable",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
@@ -20558,6 +20566,27 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Prose blocks enter the summary queue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Citeable",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Available to cite as an L1 source",
@@ -20573,7 +20602,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i10"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i11"
@@ -37201,6 +37230,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-summary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "block-summary",
+      "title": "An agent's summary of a library block, kept BESIDE the block — the QA",
+      "module": "schemas/block-summary.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board-positions",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "board-positions",
@@ -39682,8 +39719,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "0cd7278026658b5688e18ce84da5a4fc887179f5",
+    "sha": "6871585ed048875e6a4ec6b313d4d56ea4d546f6",
     "pr": "main",
-    "run": "35996084045"
+    "run": "35997970779"
   }
 }
