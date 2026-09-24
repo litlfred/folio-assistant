@@ -42,6 +42,7 @@
  * @module folio-assistant/core/github-auth
  */
 
+import { execFileSync } from "node:child_process";
 import type { Principal } from "./access.js";
 
 /** GitHub's repository roles, highest first. */
@@ -233,4 +234,25 @@ export function principalFromGithub(id: GithubIdentity): Principal {
     authenticatedBy: "github",
     account: id.login,
   };
+}
+
+/**
+ * The principal for a caller working in the checkout at `root`: the repository
+ * is read from `GITHUB_REPOSITORY` or the `origin` remote, and GitHub is asked.
+ * This is what the BPMN engine authorizes against in strict mode, so that the
+ * actor on a step is the one GitHub vouched for, not one the caller typed.
+ */
+export async function githubPrincipalFor(
+  root: string,
+  env: Env,
+  fetchFn?: FetchLike,
+): Promise<{ principal: Principal; identity: GithubIdentity }> {
+  let remote: string | undefined;
+  try {
+    remote = execFileSync("git", ["remote", "get-url", "origin"], { cwd: root, encoding: "utf-8" }).trim();
+  } catch {
+    remote = undefined;
+  }
+  const identity = await githubIdentity({ env, repo: repoSlug(env, remote), fetch: fetchFn });
+  return { principal: principalFromGithub(identity), identity };
 }

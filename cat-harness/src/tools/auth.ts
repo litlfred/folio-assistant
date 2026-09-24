@@ -20,11 +20,10 @@
  * callers, whatever its content type.
  */
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { execFileSync } from "node:child_process";
 import { z } from "zod";
 import { decide, unscopedGrants, type RequestScope } from "../../schemas/odrl.js";
 import { accessContext, type AccessContext, type Principal } from "../core/access.js";
-import { GITHUB_ROLE_ACTOR, githubIdentity, principalFromGithub, repoSlug, type GithubIdentity } from "../core/github-auth.js";
+import { GITHUB_ROLE_ACTOR, githubPrincipalFor, principalFromGithub, type GithubIdentity } from "../core/github-auth.js";
 import { authorizeTask, describeVerdict } from "../workflow/authorize.js";
 
 export interface WhoamiInput {
@@ -142,13 +141,7 @@ export function registerAuthTools(server: McpServer, repoRoot: string): void {
       target: z.string().optional().describe("The content acted on: a block id, path or bean id"),
     },
     async (input) => {
-      let remote: string | undefined;
-      try {
-        remote = execFileSync("git", ["remote", "get-url", "origin"], { cwd: repoRoot, encoding: "utf-8" }).trim();
-      } catch {
-        remote = undefined;
-      }
-      const id = await githubIdentity({ env: process.env, repo: repoSlug(process.env, remote) });
+      const { identity: id } = await githubPrincipalFor(repoRoot, process.env);
       return { content: [{ type: "text" as const, text: whoami(accessContext(repoRoot), id, input) }] };
     },
   );
