@@ -284,6 +284,7 @@ export const RULES: Rule[] = [
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
+      "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a

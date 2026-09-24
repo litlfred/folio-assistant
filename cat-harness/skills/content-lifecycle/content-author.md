@@ -1,3 +1,8 @@
+---
+input: schemas/skills/content-author/input.schema.json
+output: schemas/skills/content-author/output.schema.json
+---
+
 # Content Authoring
 
 Create and develop content artifacts according to the project plan.

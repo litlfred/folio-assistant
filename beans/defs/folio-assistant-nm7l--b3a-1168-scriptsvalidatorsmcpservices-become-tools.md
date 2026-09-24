@@ -1,10 +1,11 @@
 ---
 # folio-assistant-nm7l
 title: 'B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T23:20:35Z
-updated_at: 2026-09-23T23:20:35Z
+updated_at: 2026-09-23T23:56:10Z
 parent: folio-assistant-tr05
 ---
 
