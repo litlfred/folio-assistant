@@ -458,3 +458,26 @@ describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
     expect(missing).toEqual([]);
   });
 });
+
+describe("library/withheld.json is the catalogue's gates, for the mount — bean cw35", () => {
+  const w = JSON.parse(readFileSync(join(LIB, "withheld.json"), "utf-8")) as { paths: { path: string }[] };
+  const listed = new Set(w.paths.map((p) => p.path));
+  const items = nodes().filter((n) => n.libraryId);
+  const originalBlocked = (n: (typeof items)[number]) =>
+    (n.bitstreams ?? []).some(
+      (b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized" && publicationBlockers(b.materialization?.gates).length > 0,
+    );
+
+  it("withholds every item whose original's publication gates block, and no other", () => {
+    const blocked = items.filter(originalBlocked);
+    const open = items.filter((n) => !originalBlocked(n));
+    expect(blocked.length, "no blocked item — the assertion below is vacuous").toBeGreaterThan(0);
+    expect(open.length, "no publishable item — the assertion below is vacuous").toBeGreaterThan(0);
+    for (const n of blocked) expect(listed.has(`${n.libraryId}/`), `${n.libraryId} should be withheld`).toBe(true);
+    for (const n of open) expect(listed.has(`${n.libraryId}/`), `${n.libraryId} is publishable and must not be withheld`).toBe(false);
+  });
+
+  it("every withheld path exists under library/ — a stale entry would hide nothing", () => {
+    for (const p of listed) expect(existsSync(join(LIB, p)), `${p} is listed but absent`).toBe(true);
+  });
+});

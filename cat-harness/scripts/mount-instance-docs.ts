@@ -101,7 +101,7 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
-import { join, resolve } from "path";
+import { join, relative, resolve, sep } from "path";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
@@ -902,6 +902,50 @@ function mountable(): Mountable[] {
  * asserted without a filesystem: a routing rule tested only through `cpSync`
  * is a rule whose failing case nobody writes down.
  */
+/**
+ * The name of the file a mounted directory may carry to say what must NOT be
+ * published from it.
+ *
+ * Bean `cw35`: the mount copies a directory wholesale, so a publication whose
+ * licence refuses redistribution (its catalogue gates say so) was still served
+ * BY URL — its cover and extracted text — after every link to it was removed.
+ * The platform cannot know an instance's licence rules and must not learn
+ * them; the instance's own generator writes this list from its own data, and
+ * the mount honours it for every instance alike.
+ */
+export const WITHHELD_FILE = "withheld.json";
+
+/**
+ * The paths (relative to `dir`) that must not be copied to the site.
+ *
+ * Absent file → nothing withheld. A file that is present but unreadable or
+ * malformed THROWS: "could not tell what to withhold" must never become
+ * "publish everything", which is the one failure this list exists to stop.
+ */
+export function withheldPaths(dir: string): string[] {
+  const f = join(dir, WITHHELD_FILE);
+  if (!existsSync(f)) return [];
+  let raw: unknown;
+  try {
+    raw = JSON.parse(readFileSync(f, "utf-8"));
+  } catch (e) {
+    throw new Error(`${f} is not valid JSON (${(e as Error).message}) — refusing to mount rather than publish what it withholds`);
+  }
+  const paths = (raw as { paths?: unknown }).paths;
+  if (!Array.isArray(paths) || paths.some((p) => typeof (p as { path?: unknown })?.path !== "string")) {
+    throw new Error(`${f} has no valid \`paths: [{ path, reason }]\` — refusing to mount rather than publish what it withholds`);
+  }
+  return (paths as { path: string }[]).map((p) => p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""));
+}
+
+/** A `cpSync` filter that drops every withheld path, and everything beneath it. */
+export function withheldFilter(dir: string, withheld: readonly string[]): (src: string) => boolean {
+  return (src) => {
+    const rel = relative(dir, src).split(sep).join("/");
+    return !withheld.some((w) => rel === w || rel.startsWith(`${w}/`));
+  };
+}
+
 export function resolve_<T extends { route: string }>(
   candidates: T[],
 ): { mounts: T[]; refused: (T & { ownedBy: string })[] } {
@@ -971,7 +1015,11 @@ function main(): number {
   const { mounts, refused } = resolve_(candidates);
 
   for (const m of mounts) {
-    cpSync(m.dir, join(siteAbs, m.route), { recursive: true });
+    const withheld = withheldPaths(m.dir);
+    cpSync(m.dir, join(siteAbs, m.route), { recursive: true, filter: withheldFilter(m.dir, withheld) });
+    if (withheld.length) {
+      console.log(`  /${m.route}/: withheld ${withheld.length} path(s) named by its ${WITHHELD_FILE}: ${withheld.join(", ")}`);
+    }
   }
 
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
@@ -1025,7 +1073,14 @@ function main(): number {
   // fixture could not see it because a fixture is always finished.
 
   for (const m of mounts) {
-    console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
+    // SOURCE count, said as such: since bean `cw35` a mount may withhold paths,
+    // and printing the source total beside the route read as "this many were
+    // published" (1,377 printed for a /who-iris/ that received 131).
+    const w = withheldPaths(m.dir).length;
+    console.log(
+      `  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s) in source` +
+        `${w ? `, ${w} withheld path(s) not copied` : ""})`,
+    );
   }
 
   if (refused.length) {
