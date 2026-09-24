@@ -14,7 +14,11 @@
  */
 import { describe, expect, it } from "bun:test";
 
-import { resolve_, withRoutes } from "../mount-instance-docs.js";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, writeFileSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
+
+import { WITHHELD_FILE, resolve_, withRoutes, withheldFilter, withheldPaths } from "../mount-instance-docs.js";
 
 const r = (route: string) => ({ route });
 
@@ -178,5 +182,48 @@ describe("which kind answers at the instance's own route", () => {
       m("y", "library", true),
     ]);
     expect(undetermined.map((u) => u.name)).toEqual(["x"]);
+  });
+});
+
+describe("a mounted directory's withheld.json is honoured — bean cw35", () => {
+  const tree = () => {
+    const d = mkdtempSync(join(tmpdir(), "withheld-"));
+    mkdirSync(join(d, "refused", "sections"), { recursive: true });
+    mkdirSync(join(d, "kept"), { recursive: true });
+    writeFileSync(join(d, "refused", "sections", "p1.md"), "text of a work whose licence refuses redistribution");
+    writeFileSync(join(d, "refused-cover.png"), "x");
+    writeFileSync(join(d, "refused-covers-are-not-a-prefix.png"), "x");
+    writeFileSync(join(d, "kept", "p1.md"), "fine");
+    writeFileSync(join(d, "index.html"), "<html></html>");
+    return d;
+  };
+
+  it("absent → nothing withheld", () => {
+    expect(withheldPaths(tree())).toEqual([]);
+  });
+
+  it("copies everything EXCEPT the listed paths, and a directory takes its whole subtree", () => {
+    const d = tree();
+    writeFileSync(
+      join(d, WITHHELD_FILE),
+      JSON.stringify({ $schema: "folio-withheld/v1", paths: [{ path: "refused/", reason: "copyright refused" }, { path: "refused-cover.png", reason: "copyright refused" }] }),
+    );
+    const out = mkdtempSync(join(tmpdir(), "site-"));
+    cpSync(d, out, { recursive: true, filter: withheldFilter(d, withheldPaths(d)) });
+    expect(existsSync(join(out, "refused"))).toBe(false);
+    expect(existsSync(join(out, "refused", "sections", "p1.md"))).toBe(false);
+    expect(existsSync(join(out, "refused-cover.png"))).toBe(false);
+    // a sibling whose NAME merely starts with a withheld path is not withheld
+    expect(existsSync(join(out, "refused-covers-are-not-a-prefix.png"))).toBe(true);
+    expect(existsSync(join(out, "kept", "p1.md"))).toBe(true);
+    expect(existsSync(join(out, "index.html"))).toBe(true);
+  });
+
+  it("a withheld.json it cannot read REFUSES to mount — never 'publish everything'", () => {
+    const d = tree();
+    writeFileSync(join(d, WITHHELD_FILE), "{ not json");
+    expect(() => withheldPaths(d)).toThrow(/refusing to mount/);
+    writeFileSync(join(d, WITHHELD_FILE), JSON.stringify({ paths: [{ nope: 1 }] }));
+    expect(() => withheldPaths(d)).toThrow(/refusing to mount/);
   });
 });

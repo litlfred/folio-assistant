@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2465 terms: **7 authored** in 1 glossary, and **2458 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2458 terms: **7 authored** in 1 glossary, and **2451 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2458</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2451</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2465 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2458 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2465</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2458</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -7072,69 +7072,6 @@ InstanceGraph.order <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Every dependency the root reaches, EACH ONCE, deepest first and the root's direct dependencies last. The root itself is not in it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#InstanceGraph.order</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakefileschema.role" data-fa-state="extracted" data-fa-gloss="">
-IntakeFileSchema.role <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeFileSchema.role</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakefileschema.type" data-fa-state="extracted" data-fa-gloss="">
-IntakeFileSchema.type <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>What the file is: `publication`, `full-item-record`, `item-page`, `upload`…</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeFileSchema.type</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakeschema._comment" data-fa-state="extracted" data-fa-gloss="">
-IntakeSchema._comment <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Authored context for a person reading the file.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema._comment</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakeschema.doc_id" data-fa-state="extracted" data-fa-gloss="">
-IntakeSchema.doc_id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The upload directory's name.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema.doc_id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakeschema.item" data-fa-state="extracted" data-fa-gloss="">
-IntakeSchema.item <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The catalogue node this capture is of, by its `id` (`item/&lt;uuid&gt;`).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema.item</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakeschema.record" data-fa-state="extracted" data-fa-gloss="">
-IntakeSchema.record <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The Dublin Core record describing it, relative to this file.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema.record</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakeschema.title" data-fa-state="extracted" data-fa-gloss="">
-IntakeSchema.title <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A title — only for a capture nothing else describes.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSchema.title</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakesourceschema.capturedat" data-fa-state="extracted" data-fa-gloss="">
-IntakeSourceSchema.capturedAt <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The capture moment — not when this record was written.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedAt</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--intake.intakesourceschema.capturedby" data-fa-state="extracted" data-fa-gloss="">
-IntakeSourceSchema.capturedBy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Who or what captured it.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/intake.ts"><code>cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedBy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_methodologyfromsource.a_integrate" data-fa-state="extracted" data-fa-gloss="">
 Integrate: call existing processes <span class="fa-gloss-status">candidate, extracted</span>
@@ -17241,6 +17178,20 @@ Withdraw a review comment [folio-review-comment-move] <span class="fa-gloss-stat
 <p>The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_WithdrawComment</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.path" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Relative to the directory holding the file; a directory takes its whole subtree.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--withheld.withheldentryschema.reason" data-fa-state="extracted" data-fa-gloss="">
+WithheldEntrySchema.reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why — which gate, which verdict. A withholding with no reason cannot be re-checked.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/withheld.ts"><code>cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--witnessed-values" data-fa-state="extracted" data-fa-gloss="">
 witnessed-values <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -17408,13 +17359,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1376 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1369 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>162 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1550</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1543</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
