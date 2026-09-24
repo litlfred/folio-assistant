@@ -10,7 +10,7 @@
       "unit": "modules"
     },
     "large-datasets-schemas": {
-      "count": 3,
+      "count": 5,
       "unit": "modules"
     }
   },
@@ -1566,6 +1566,23 @@
       "name": "artifact-store",
       "graphNode": "schema",
       "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
+      "isTest": false
+    },
+    {
+      "module": "large-datasets/schemas/id-lookup.test.ts",
+      "instance": "large-datasets",
+      "name": "id-lookup.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The prefix-sharded identifier lookup — bean `folio-assistant-4pm8`.",
+      "isTest": true
+    },
+    {
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "instance": "large-datasets",
+      "name": "id-lookup",
+      "graphNode": "schema",
+      "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "isTest": false
     },
     {
@@ -38581,6 +38598,189 @@
       "exported": true
     },
     {
+      "id": "large-datasets/schemas/id-lookup.ts#IdEntry",
+      "name": "IdEntry",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "interface",
+      "doc": "One referenced node, as the lookup returns it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`kind/local`, lower-case, as the catalogue names the node."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Where the node is held: the source's own page for it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifest",
+      "name": "IdLookupManifest",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "name": "IdLookupManifestSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ID_LOOKUP_MANIFEST_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The corpus this indexes, by its instance name."
+        },
+        {
+          "name": "selection",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
+        },
+        {
+          "name": "budgetBytes",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namespaces",
+          "type": "z.record(z.string().regex(NAMESPACE), NamespaceIndexSchema)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ID_LOOKUP_MANIFEST_SCHEMA_TAG",
+        "NAMESPACE",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "name": "NamespaceIndexSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefixLength",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shards",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#Shard",
+      "name": "Shard",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#ShardSchema",
+      "name": "ShardSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entries",
+          "type": "z.array(z.tuple([z.string().min(1), z.string().min(1), z.string().url()])).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "large-datasets/schemas/source-descriptor.ts#Availability",
       "name": "Availability",
       "module": "large-datasets/schemas/source-descriptor.ts",
@@ -44306,6 +44506,14 @@
       "from": "folio-assistant-core/schemas/review-verdict.ts#VerdictTag",
       "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue",
       "via": "verdict",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "to": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "via": "namespaces",
       "kind": "field",
       "optional": false,
       "array": false
