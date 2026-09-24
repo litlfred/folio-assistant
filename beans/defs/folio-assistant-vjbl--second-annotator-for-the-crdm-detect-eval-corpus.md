@@ -87,3 +87,18 @@ It also inherits this bean's own defect. Reading `6o1z` gives away two labels,
 so the pool of agents who may annotate this corpus shrinks every time somebody
 writes down what they found. That is worth saying out loud rather than
 discovering a third time.
+
+## 2026-09-24 — `6o1z` decided by the owner: the split stands
+
+The owner, asked to rule on #187 and #199 together, chose **"Keep the split"**:
+the corpus labels **the action asked of the agent, not the subject matter**.
+#187 asks for a document to be written (`isFeature: false`); #199 *is* the set of
+requested platform changes (`isFeature: true`). Both corpus `why` lines now say
+so, citing the decision.
+
+So #187 is no longer a hard case "turning on intent", and it does not
+"contradict #199": the two differ on exactly the axis the label measures. A
+second annotator should treat that axis — action requested vs. subject matter —
+as the corpus's stated convention and disagree with it explicitly if they do,
+rather than rediscovering the pair. No label flipped; `eval:crdm-detect` stays
+at precision 86% / recall 100% / F1 93% over 27.

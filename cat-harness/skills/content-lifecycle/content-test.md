@@ -1,6 +1,8 @@
 ---
 satisfies:
   - "req:content-lifecycle#test-before-publish"
+input: schemas/skills/content-test/input.schema.json
+output: schemas/skills/content-test/output.schema.json
 ---
 
 # Content Testing

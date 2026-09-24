@@ -202,7 +202,8 @@ export const SkillDefinitionSchema = z.object({
    * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
    * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
    * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
-   * consulted it: routes hardcode `hasRole(req, "collaborator")`. A field
+   * consulted it: routes hardcoded `hasRole(req, "collaborator")` (they name an
+   * ODRL action since issue #1207). A field
    * that reads as enforcement and enforces nothing is worse than an absent
    * one. Reinstating it means writing the consumer first, and deciding which
    * of the two vocabularies it speaks.
@@ -230,7 +231,10 @@ export const SkillDefinitionSchema = z.object({
   // evidence that anything is on the other end — this one was two years of
   // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
-  schemaRef: z.string().optional(),
+  // No `schemaRef` (#1168, B3b). It named a directory and was read only by a
+  // retired generator. A skill names its contracts in its front matter —
+  // `input:` and `output:`, a path into the instance or an https IRI — and
+  // `scripts/skill-contracts.ts` is the one reader.
 });
 
 // ─── Requirement ─────────────────────────────────────────────────────────────

@@ -72,7 +72,7 @@ import type { FeedbackItem } from "../../schemas/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
-import { hasRole, forbidden } from "../../src/core/rbac.js";
+import { allows, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
 import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
@@ -992,7 +992,7 @@ End every response with suggested follow-ups:
 
     // Save block
     if (path === "/api/block/save") {
-      if (!hasRole(req, "collaborator")) return forbidden("editing content", "collaborator");
+      if (!allows(req, "content-authoring")) return forbidden("editing content", "content-authoring");
       try {
         const body = (await req.json()) as { paperId: string; rootName: string; md: string };
         const mdPath = await this.saveBlock(body.paperId, body.rootName, body.md);
@@ -1004,7 +1004,7 @@ End every response with suggested follow-ups:
 
     // Upload document
     if (path === "/api/upload") {
-      if (!hasRole(req, "collaborator")) return forbidden("uploading documents", "collaborator");
+      if (!allows(req, "content-authoring")) return forbidden("uploading documents", "content-authoring");
       try {
         const contentType = req.headers.get("content-type") || "";
 

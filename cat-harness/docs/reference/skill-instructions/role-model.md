@@ -22,7 +22,7 @@ Four objects, each with a home:
 |---|---|---|
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
-| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
@@ -312,6 +312,14 @@ one. What this buys:
 
 **Identity is not here.** Which login is which actor is the data store's to
 know (owner, 2026-09-23). No actor file and no policy carries a login.
+
+**Who reads all three before a task runs:** the BPMN executor. Before any task
+or decision is recorded, `authorizeTask` asks whether the actor is
+authenticated, eligible for the lane's role (`roles`), and permitted by policy
+to `perform-task` here and on this content. A role mismatch or a `deny`
+refuses; `unknown` is recorded while the rollout is advisory. The HTTP routes
+ask the same policies through `src/core/rbac.ts`. See
+[`task-authorization`](task-authorization.md), issue #1207.
 
 **Adding a permission:** declare the action in `permissions.json` with its
 `includedIn`, then add a rule to a policy in `policies/`. Never add a

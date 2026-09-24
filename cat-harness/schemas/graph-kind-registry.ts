@@ -714,8 +714,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:
       "QA verdicts and their projections — kg-qa audits, block and translation QA, " +
-      "qa-witness documents for the docs site, result roll-ups and test runs; seven " +
-      "`$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
+      "qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups " +
+      "and test runs; every `$schema` family is named in `nodeSchemas`, which is the list " +
+      "— a count here would be a second one, and it was already wrong by one before " +
+      "`viewer-nav-qa/v1` was added. Generated; never hand-edited.",
     schema: "content/pipeline/qa-witness.ts",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
@@ -734,6 +736,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // now a directory of this harness (bean `byql`), so the shape is an
       // ordinary instance-relative path under `schemas/` and needs no `detangle:` qualifier.
       "folio-detangle-sidecar/v1": { shape: "schemas/detangle-sidecar.ts#DetangleSidecar" },
+      // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
+      // a count, because the owner's rule has two clauses -- present unless
+      // EXPLICITLY removed -- and a count cannot tell a deliberate removal
+      // from a generator nobody wired.
+      "viewer-nav-qa/v1": { validator: "schemas/viewer-nav-qa.ts#ViewerNavQaSchema" },
     },
     // No `validator`, and that is a finding rather than an omission: the
     // module above exports TypeScript interfaces only. The largest generated

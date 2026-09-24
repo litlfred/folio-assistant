@@ -1,6 +1,8 @@
 ---
 satisfies:
   - "req:content-lifecycle#validate-before-review"
+input: schemas/skills/content-validate/input.schema.json
+output: schemas/skills/content-validate/output.schema.json
 ---
 
 # Content Validation

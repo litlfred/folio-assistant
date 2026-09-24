@@ -264,6 +264,7 @@ be followed mechanically rather than inferred:
 | Tool | `satisfies` | Skill |
 | Skill, Capability | `satisfies` | Requirement statement |
 | Skill | `graph-kinds` | Graph kind |
+| Skill | `input`, `output` | Schema (its contract) |
 | Test | exercises | Skill |
 | any content node | `$schema` | Schema |
 | Folio | the board layer | Board, then Position, then Note |
