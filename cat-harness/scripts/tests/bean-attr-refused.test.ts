@@ -54,7 +54,7 @@ function diagram(beanMarkup: string): string {
     file,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/ns"
+                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Defs_B" targetNamespace="urn:test">
   <bpmn:process id="Process_B" name="Bean attr">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>

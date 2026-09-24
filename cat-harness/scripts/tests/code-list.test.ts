@@ -139,7 +139,10 @@ describe("the engine checks an adjudication's codes against the list it names", 
   test("this repository's diagrams all name their list", () => {
     const f = mkdtempSync(join(tmpdir(), "cl-unlisted-"));
     mkdirSync(join(f, "p"));
-    writeFileSync(join(f, "p", "x.bpmn"), '<folio:adjudication codes="a b"/><folio:adjudication codes="a b" list="l"/>');
+    writeFileSync(
+      join(f, "p", "x.bpmn"),
+      `<bpmn:definitions xmlns:folio="${ns.FOLIO_BPMN_NS}"><folio:adjudication codes="a b"/><folio:adjudication codes="a b" list="l"/></bpmn:definitions>`,
+    );
     expect(unlistedAdjudications([join(f, "p", "x.bpmn")], f)).toHaveLength(1);
   });
 });
