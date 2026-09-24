@@ -24,7 +24,7 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>16</b><span>specifications</span></div>
+<div class="xs-stat"><b>17</b><span>specifications</span></div>
 <div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
 <div class="xs-stat"><b>182</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
@@ -41,6 +41,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
+| **[Data Catalog Vocabulary (DCAT) - Version 3](#w3c-dcat-3)**<br>`w3c-dcat-3` | W3C | [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) | `cites` — it is referenced, and nothing here is validated against it |
 | **[ODRL Information Model 2.2](#w3c-odrl)**<br>`w3c-odrl` | W3C | [2018-02-15](https://www.w3.org/TR/odrl-model/) | `conforms` — this repository's artefacts are valid against it |
 | **[OWL 2 Web Ontology Language Document Overview (Second Edition)](#w3c-owl2)**<br>`w3c-owl2` | W3C | [2012-12-11](https://www.w3.org/TR/owl2-overview/) | `conforms` — this repository's artefacts are valid against it |
 | **[PROV-O: The PROV Ontology](#w3c-prov-o)**<br>`w3c-prov-o` | W3C | [2013-04-30](https://www.w3.org/TR/prov-o/) | `conforms` — this repository's artefacts are valid against it |
@@ -62,6 +63,10 @@ declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.
 
+**1 record(s) nothing declares.** A version bump would move nothing that says so:
+
+- [`w3c-dcat-3`](#w3c-dcat-3)
+
 ## Namespaces the corpus uses against the ones it declares
 
 Read from the BPMN and DMN files themselves — **4** namespace IRI(s)
@@ -70,7 +75,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**17 declared and not in use.** Not a defect on its own: a
+**18 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -87,6 +92,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://www.w3.org/2002/07/owl#`
 - `http://www.w3.org/2004/02/skos/core#`
 - `http://www.w3.org/ns/csvw#`
+- `http://www.w3.org/ns/dcat#`
 - `http://www.w3.org/ns/oa#`
 - `http://www.w3.org/ns/odrl/2/`
 - `http://www.w3.org/ns/prov#`
@@ -322,6 +328,22 @@ a subset of the edition rather than a transcription of it.
 | term | what it means here |
 |---|---|
 | `csvw:TableGroup` | derived from the corpus; what this repository does with it is not yet described |
+
+### Data Catalog Vocabulary (DCAT) - Version 3 {#w3c-dcat-3}
+
+`w3c-dcat-3` — W3C, edition [2024-08-22](https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/) — `cites`, meaning it is referenced, and nothing here is validated against it.
+
+**Namespaces.**
+
+- `http://www.w3.org/ns/dcat#`
+
+**Note.** REFERENCE ONLY — owner, 2026-09-23, on bean 4sim: 'Reference only'. Pinned so that the day a glossary or terminology RELEASE is described (a dcat:Dataset per published graph document, a dcat:Distribution per serialisation), the edition is already chosen and named, not guessed. Nothing in this repository emits a DCAT term today, so there are no operative terms. DCAT is also one more TARGET vocabulary for the ETL Tools of bean k74z.
+
+**What depends on it.** Nothing here declares it.
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
 
 ### ODRL Information Model 2.2 {#w3c-odrl}
 
