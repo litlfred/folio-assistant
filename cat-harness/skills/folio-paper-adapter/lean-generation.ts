@@ -10,7 +10,6 @@ export const leanGeneration: SkillDefinition = {
   dependsOn: [
     { ref: "content-validation", kind: "skill", conformance: "SHALL" },
   ],
-  mcpServices: ["lean-lsp"],
   routingPatterns: ["extract.*stub", "from\\s+latex", "generate.*lean"],
   tags: ["lean", "generation", "stub"],
 };

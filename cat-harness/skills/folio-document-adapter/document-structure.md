@@ -1,3 +1,8 @@
+---
+input: schemas/skills/document-structure/input.schema.json
+output: schemas/skills/document-structure/output.schema.json
+---
+
 # document-structure
 
 Decide and maintain the chapter/section skeleton of a document folio.

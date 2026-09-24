@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p016-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p016-1.png",
+  "pageStart": 16,
+  "pageEnd": 16,
+  "narrative": {
+    "text": "Figure 7, the Cost workflow. It starts by getting all rules and selecting the highest-ranked rules, then descends through four decisions: \"Check for Fraud Flag\", \"Check if Payment Declined\", \"Check if Recoverable\" and \"Check if Refundable\". Six outcomes are returned rather than computed onward — \"Return No Action\", \"Return Operational Cost\" (twice, from different paths), \"Return Operational Cost + Payment Amount\", and \"Return Operational cost - Customer Experience Penalty\" on the No branch of the fraud check. All six converge on End. Every branch is a rule lookup returning a figure, which is what makes the workflow deterministic in the paper's sense.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-016",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

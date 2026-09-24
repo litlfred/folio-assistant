@@ -1,3 +1,8 @@
+---
+input: schemas/skills/fhir-validation/input.schema.json
+output: schemas/skills/fhir-validation/output.schema.json
+---
+
 # fhir-validation
 
 > Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` ·

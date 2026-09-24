@@ -1,3 +1,8 @@
+---
+input: schemas/skills/proof-verification/input.schema.json
+output: schemas/skills/proof-verification/output.schema.json
+---
+
 # proof-verification
 
 > Skill id: `proof-verification` · Package: `authoring-math` ·
