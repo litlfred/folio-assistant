@@ -1312,10 +1312,16 @@ function arrowDirection(): KgCriterionEntry {
   if (graph === null) {
     return { result: "unknown", findings: [{ where: "—", detail: "no schemas directory to read `@general` declarations from." }] };
   }
-  const process = workflowFiles(root)
+  const perFile = workflowFiles(root)
     .filter((f) => f.endsWith(".bpmn"))
-    .flatMap((f) => processArrowFindings(relative(root, f), readFileSync(f, "utf-8")));
-  return entry([...schemaArrowFindings(graph), ...process]);
+    .map((f) => processArrowFindings(relative(root, f), readFileSync(f, "utf-8")));
+  // Zero extension elements across every diagram means the reader matched
+  // nothing — the prefix-drift failure this check has already had once — so
+  // it is `unknown`, never a clean run.
+  if (perFile.reduce((n, r) => n + r.examined, 0) === 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no BPMN extension element was found in any diagram, so the process half checked nothing." }] };
+  }
+  return entry([...schemaArrowFindings(graph), ...perFile.flatMap((r) => r.findings)]);
 }
 
 /**

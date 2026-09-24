@@ -27,15 +27,25 @@ describe("the dependent holds the pointer (#1168, B5)", () => {
   });
 
   test("a process may point at its skills, roles and decisions, and at nothing that depends on it", () => {
-    const bpmn = `
-      <folio:skill ref="todo-manager"/><folio:role ref="author"/>
-      <folio:decision ref="decisions/x.dmn#D"/><folio:bean op="claim"/>
-      <folio:implements workflow=".github/workflows/x.yml"/>
-      <folio:link href="x.html#y" />`;
-    const f = processArrowFindings("p.bpmn", bpmn);
-    expect(f.map((x) => x.detail.split(" — ")[0])).toEqual([
-      '<folio:implements workflow=".github/workflows/x.yml">',
-      '<folio:link href="x.html#y">',
+    const bpmn = `<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+      xmlns:b.p="https://example.org/bootstrap/processes/ns#" xmlns:c.p="https://example.org/cat-harness/processes/ns#">
+      <b.p:skill ref="todo-manager"/><b.p:role ref="author"/>
+      <c.p:decision ref="decisions/x.dmn#D"/><c.p:bean op="claim"/>
+      <c.p:implements workflow=".github/workflows/x.yml"/>
+      <c.p:link href="x.html#y" /><bpmn:task id="T" name="not an extension"/>`;
+    const r = processArrowFindings("p.bpmn", bpmn);
+    expect(r.examined).toBe(6);
+    expect(r.findings.map((x) => x.detail.split(" — ")[0])).toEqual([
+      '<c.p:implements workflow=".github/workflows/x.yml">',
+      '<c.p:link href="x.html#y">',
     ]);
+  });
+
+  test("the extension prefixes are read from the file, so a renamed namespace is still examined", () => {
+    const old = `<x xmlns:folio="https://example.org/folio#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"><folio:link href="a.html"/></x>`;
+    const r = processArrowFindings("p.bpmn", old);
+    expect(r.examined).toBe(1);
+    expect(r.findings).toHaveLength(1);
+    expect(processArrowFindings("q.bpmn", "<bpmn:task/>").examined).toBe(0);
   });
 });
