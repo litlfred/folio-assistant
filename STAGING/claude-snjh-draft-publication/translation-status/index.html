@@ -132,13 +132,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
@@ -183,7 +183,7 @@ numbers last <strong>changed</strong> on 2026-09-24.</p>
 <tbody>
 <tr>
   <th scope="row"><code>ar</code></th>
-  <td>4 / 72<br><span class="ts-dim">5.6%</span></td>
+  <td>4 / 74<br><span class="ts-dim">5.4%</span></td>
   <td>168</td>
   <td>124<br><span class="ts-dim">73.8%</span></td>
   <td>0</td>
@@ -191,7 +191,7 @@ numbers last <strong>changed</strong> on 2026-09-24.</p>
 </tr>
 <tr>
   <th scope="row"><code>es</code></th>
-  <td>3 / 72<br><span class="ts-dim">4.2%</span></td>
+  <td>3 / 74<br><span class="ts-dim">4.1%</span></td>
   <td>85</td>
   <td>41<br><span class="ts-dim">48.2%</span></td>
   <td>0</td>
@@ -199,7 +199,7 @@ numbers last <strong>changed</strong> on 2026-09-24.</p>
 </tr>
 <tr>
   <th scope="row"><code>fr</code></th>
-  <td>5 / 75<br><span class="ts-dim">6.7%</span></td>
+  <td>5 / 77<br><span class="ts-dim">6.5%</span></td>
   <td>171</td>
   <td>60<br><span class="ts-dim">35.1%</span></td>
   <td>0</td>
@@ -207,7 +207,7 @@ numbers last <strong>changed</strong> on 2026-09-24.</p>
 </tr>
 <tr>
   <th scope="row"><code>ru</code></th>
-  <td>4 / 72<br><span class="ts-dim">5.6%</span></td>
+  <td>4 / 74<br><span class="ts-dim">5.4%</span></td>
   <td>168</td>
   <td>124<br><span class="ts-dim">73.8%</span></td>
   <td>0</td>
@@ -215,7 +215,7 @@ numbers last <strong>changed</strong> on 2026-09-24.</p>
 </tr>
 <tr>
   <th scope="row"><code>zh</code></th>
-  <td>3 / 72<br><span class="ts-dim">4.2%</span></td>
+  <td>3 / 74<br><span class="ts-dim">4.1%</span></td>
   <td>85</td>
   <td>41<br><span class="ts-dim">48.2%</span></td>
   <td>0</td>
