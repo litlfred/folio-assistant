@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — swimlane-glossary · docs-auto</title>
+<style>
+  :root { color-scheme: light dark; --ink: #1b2733; --muted: #5b6b7a; --edge: #c3ccd6; --paper: #fff; --accent: #0a5c7a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e6edf3; --muted: #9fb0c0; --edge: #3a4652; --paper: #0f1720; --accent: #6fc4e4; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
+  a { color: var(--accent); }
+  h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+  .lede { color: var(--muted); margin: 0 0 1.4rem; }
+  .note { border-left: 4px solid var(--edge); padding: .7rem 1rem; margin: 1.4rem 0; font-size: .93rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .6rem; border-bottom: 1px solid var(--edge); vertical-align: top; }
+  th { background: color-mix(in srgb, var(--edge) 22%, transparent); }
+  td:first-child { width: 26rem; }
+  /* A repo-relative path is long and has no spaces, so it breaks mid-word
+     unless the breakpoints are named. Slashes are where a reader expects it. */
+  .p { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; word-break: normal; overflow-wrap: anywhere; line-break: anywhere; }
+  .none { color: var(--muted); font-style: italic; }
+  .f { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
+  .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
+  ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
+  ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
+<div class="wrap">
+<h1>Glossary <span class="p">swimlane-glossary</span></h1>
+<p class="lede">Derived: every term this instance's swimlanes define — the role's title and description, the lane names that bind it, and whether the term has been retired. Sub-graph <code>cat-harness/glossary</code>.</p>
+
+<div class="note">
+  <strong>This is an index, not the documentation.</strong> It says what exists and what each
+  artefact declares about itself. What a process is <em>for</em>, when you would be in it, and
+  what it is not, is authored beside it and reuses these entries rather than restating them —
+  see the <code>docs-auto</code> skill.
+</div>
+
+<ul class="subs">
+<li><strong>swimlane-glossary</strong> <span class="p">cat-harness/glossary</span> <span class="n">48</span></li>
+</ul>
+
+<table>
+<thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
+<tbody>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/adjudicator"><code>Adjudicator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/adjudicator</span></td>
+  <td>Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.<div class="f"><span class="k">notation</span> role/adjudicator</div><div class="f"><span class="k">first seen</span> 2026-09-22</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/administrator"><code>Administrator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/administrator</span></td>
+  <td>Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.<div class="f"><span class="k">notation</span> role/administrator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/attestation-service"><code>Attestation service</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/attestation-service</span></td>
+  <td>Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.<div class="f"><span class="k">notation</span> role/attestation-service</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/author"><code>Author</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/author</span></td>
+  <td>Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.<div class="f"><span class="k">notation</span> role/author</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/authoring-agent"><code>Authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/authoring-agent</span></td>
+  <td>The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.<div class="f"><span class="k">notation</span> role/authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/board-renderer"><code>Board renderer</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/board-renderer</span></td>
+  <td>Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.<div class="f"><span class="k">notation</span> role/board-renderer</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/build-pipeline"><code>Build pipeline</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/build-pipeline</span></td>
+  <td>Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).<div class="f"><span class="k">notation</span> role/build-pipeline</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/business-analyst"><code>Business analyst</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/business-analyst</span></td>
+  <td>Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.<div class="f"><span class="k">notation</span> role/business-analyst</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/clinical-sme"><code>Clinical / scientific SME</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/clinical-sme</span></td>
+  <td>Reviewer whose judgement is about the subject matter rather than the artefact.<div class="f"><span class="k">notation</span> role/clinical-sme</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/code-reviewer"><code>Code reviewer</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/code-reviewer</span></td>
+  <td>Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.<div class="f"><span class="k">notation</span> role/code-reviewer</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/compute-authoring-agent"><code>Compute authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/compute-authoring-agent</span></td>
+  <td>Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.<div class="f"><span class="k">notation</span> role/compute-authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/corpus"><code>Corpus</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/corpus</span></td>
+  <td>The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.<div class="f"><span class="k">notation</span> role/corpus</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/deep-researcher"><code>Deep researcher</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/deep-researcher</span></td>
+  <td>Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `&lt;folio:role ref&gt;`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.<div class="f"><span class="k">notation</span> role/deep-researcher</div><div class="f"><span class="k">first seen</span> 2026-09-23</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/docs-authoring-agent"><code>Docs authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/docs-authoring-agent</span></td>
+  <td>The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.<div class="f"><span class="k">notation</span> role/docs-authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/editor"><code>Editor</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/editor</span></td>
+  <td>Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.<div class="f"><span class="k">notation</span> role/editor</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/editorial-authoring-agent"><code>Editorial authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/editorial-authoring-agent</span></td>
+  <td>The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.<div class="f"><span class="k">notation</span> role/editorial-authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/evidence-agent"><code>Evidence agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/evidence-agent</span></td>
+  <td>Retrieves and appraises external evidence for a guideline claim.<div class="f"><span class="k">notation</span> role/evidence-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/external-registry"><code>External registry</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/external-registry</span></td>
+  <td>Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.<div class="f"><span class="k">notation</span> role/external-registry</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/feedback-provider"><code>Feedback provider</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/feedback-provider</span></td>
+  <td>Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.<div class="f"><span class="k">notation</span> role/feedback-provider</div><div class="f"><span class="k">first seen</span> 2026-09-22</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/fhir-modeller"><code>FHIR modeller</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/fhir-modeller</span></td>
+  <td>Authors the L3 profiles, extensions and examples an IG is built from.<div class="f"><span class="k">notation</span> role/fhir-modeller</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/ig-publisher-service"><code>IG publisher + validator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/ig-publisher-service</span></td>
+  <td>The JVM services an IG build shells out to. External in behaviour, internal in configuration.<div class="f"><span class="k">notation</span> role/ig-publisher-service</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/ingestion-agent"><code>Ingestion engine</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/ingestion-agent</span></td>
+  <td>Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.<div class="f"><span class="k">notation</span> role/ingestion-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/integration-watcher"><code>Integration watcher</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/integration-watcher</span></td>
+  <td>Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.<div class="f"><span class="k">notation</span> role/integration-watcher</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/lean-authoring-agent"><code>Lean authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/lean-authoring-agent</span></td>
+  <td>Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.<div class="f"><span class="k">notation</span> role/lean-authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/lean-toolchain"><code>Lean toolchain</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/lean-toolchain</span></td>
+  <td>Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.<div class="f"><span class="k">notation</span> role/lean-toolchain</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/librarian"><code>Librarian</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/librarian</span></td>
+  <td>Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.<div class="f"><span class="k">notation</span> role/librarian</div><div class="f"><span class="k">first seen</span> 2026-09-22</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/log"><code>Activity log</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/log</span></td>
+  <td>The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.<div class="f"><span class="k">notation</span> role/log</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/narrative-reviewer"><code>Narrative reviewer</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/narrative-reviewer</span></td>
+  <td>Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.<div class="f"><span class="k">notation</span> role/narrative-reviewer</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/onboarding-agent"><code>Onboarding agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/onboarding-agent</span></td>
+  <td>The authoring agent acting before there is a folio: clarifying what the user means by &quot;create a folio&quot;, scanning an existing repo, and scaffolding.<div class="f"><span class="k">notation</span> role/onboarding-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/platform-authoring-agent"><code>Platform authoring agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/platform-authoring-agent</span></td>
+  <td>The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.<div class="f"><span class="k">notation</span> role/platform-authoring-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/programme-manager"><code>Programme manager</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/programme-manager</span></td>
+  <td>Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.<div class="f"><span class="k">notation</span> role/programme-manager</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/proof-review-agent"><code>Proof review agent</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/proof-review-agent</span></td>
+  <td>Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.<div class="f"><span class="k">notation</span> role/proof-review-agent</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/publication-manager"><code>Publication manager</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/publication-manager</span></td>
+  <td>Takes an authorised release to its published form and is accountable for what is live.<div class="f"><span class="k">notation</span> role/publication-manager</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/publish-target"><code>Publish target</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/publish-target</span></td>
+  <td>GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.<div class="f"><span class="k">notation</span> role/publish-target</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/qc-reviewer"><code>QC reviewer</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/qc-reviewer</span></td>
+  <td>Reviewer with the publication quality gate. Checks the built artefact, not only the source.<div class="f"><span class="k">notation</span> role/qc-reviewer</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/review-coordinator"><code>Review coordinator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/review-coordinator</span></td>
+  <td>Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.<div class="f"><span class="k">notation</span> role/review-coordinator</div><div class="f"><span class="k">first seen</span> 2026-09-23</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/reviewer"><code>Reviewer / SME</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/reviewer</span></td>
+  <td>Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.<div class="f"><span class="k">notation</span> role/reviewer</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/session-coordinator"><code>Session coordinator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/session-coordinator</span></td>
+  <td>The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.<div class="f"><span class="k">notation</span> role/session-coordinator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/session-record"><code>Session record</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/session-record</span></td>
+  <td>A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.<div class="f"><span class="k">notation</span> role/session-record</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/sibling-session"><code>Sibling session</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/sibling-session</span></td>
+  <td>Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.<div class="f"><span class="k">notation</span> role/sibling-session</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/stakeholder"><code>Stakeholder</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/stakeholder</span></td>
+  <td>Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.<div class="f"><span class="k">notation</span> role/stakeholder</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/terminologist"><code>Terminologist</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/terminologist</span></td>
+  <td>Owns coded concepts and value sets — the vocabulary a DAK is expressed in.<div class="f"><span class="k">notation</span> role/terminologist</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/translation-adjudicator"><code>Translation adjudicator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/translation-adjudicator</span></td>
+  <td>Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where &quot;a reviewer reports, an adjudicator settles&quot; was written down.<div class="f"><span class="k">notation</span> role/translation-adjudicator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/translation-coordinator"><code>Translation coordinator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/translation-coordinator</span></td>
+  <td>Decides what is translated, into which languages, and when a translation is accepted.<div class="f"><span class="k">notation</span> role/translation-coordinator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/translator"><code>Human translator</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/translator</span></td>
+  <td>Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.<div class="f"><span class="k">notation</span> role/translator</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/user"><code>User</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/user</span></td>
+  <td>The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.<div class="f"><span class="k">notation</span> role/user</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/validation-pipeline"><code>Validation pipeline</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/validation-pipeline</span></td>
+  <td>The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.<div class="f"><span class="k">notation</span> role/validation-pipeline</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/glossary/glossary-ledger.json#role/work-plan"><code>Work plan (beans)</code></a><br><span class="p">cat-harness/glossary/glossary-ledger.json#role/work-plan</span></td>
+  <td>The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.<div class="f"><span class="k">notation</span> role/work-plan</div><div class="f"><span class="k">first seen</span> 2026-09-21</div><div class="f"><span class="k">status</span> current</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<script>
+/* The sub-graph this page indexes. Read by orphanSubjectPages() to establish
+   ownership before pruning — the same line the viewer generators emit. */
+var SCOPE = "swimlane-glossary";
+</script>
+</body>
+</html>

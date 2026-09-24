@@ -402,6 +402,21 @@
       "seeAlso": "https://litlfred.github.io/content-types.html"
     },
     {
+      "@id": "folio-assistant-core:GlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "GlossaryGraph",
+      "comment": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "prefLabel": "GlossaryGraph",
+      "definition": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "notation": "folio-assistant-core:GlossaryGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
+    },
+    {
       "@id": "folio-assistant-core:PreviewGraph",
       "@type": [
         "rdfs:Class",
@@ -597,21 +612,6 @@
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:GlossaryGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "GlossaryGraph",
-      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "prefLabel": "GlossaryGraph",
-      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "notation": "cat-harness:GlossaryGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
       "@id": "cat-harness:HealthGraph",
       "@type": [
         "rdfs:Class",
@@ -768,9 +768,9 @@
         "skos:Concept"
       ],
       "label": "QaGraph",
-      "comment": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
+      "comment": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited.",
       "prefLabel": "QaGraph",
-      "definition": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited.",
+      "definition": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited.",
       "notation": "cat-harness:QaGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -862,6 +862,21 @@
       "prefLabel": "SkillGraph",
       "definition": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
       "notation": "cat-harness:SkillGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:SwimlaneGlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "SwimlaneGlossaryGraph",
+      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "prefLabel": "SwimlaneGlossaryGraph",
+      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+      "notation": "cat-harness:SwimlaneGlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -1642,6 +1657,21 @@
       "prefLabel": "roleName",
       "definition": "The role's own name, as a lane binds it.",
       "notation": "cat-harness:roleName",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:satisfiesStatement",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "satisfiesStatement",
+      "comment": "A requirement statement this node discharges, as `req:<requirement>#<statement key>`.",
+      "prefLabel": "satisfiesStatement",
+      "definition": "A requirement statement this node discharges, as `req:<requirement>#<statement key>`.",
+      "notation": "cat-harness:satisfiesStatement",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
