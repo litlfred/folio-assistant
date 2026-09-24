@@ -1,10 +1,11 @@
 ---
 # folio-assistant-yo4m
 title: 'B5 (#1168): arrow-direction QA — @general nodes point only at general nodes'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-24T12:11:06Z
-updated_at: 2026-09-24T12:11:06Z
+updated_at: 2026-09-24T13:16:02Z
 parent: folio-assistant-tr05
 ---
 
