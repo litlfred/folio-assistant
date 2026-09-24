@@ -148,7 +148,7 @@ import {
   readDeclaration,
   repoRootFor,
 } from "../schemas/cat-harness.js";
-import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, KG_QA_RESULTS_DIR, type KgSubjectKind } from "../schemas/kg-qa.js";
+import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
 import { loadGates } from "./gates.js";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
 

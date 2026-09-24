@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "991d8f072261"
+    "script_hash": "19894772a7d2"
   },
   "subject": {
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T05:52:14.842Z",
+  "updated_at": "2026-09-24T06:04:41.063Z",
   "families": {
     "coverage-measured": {
       "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 41 of 41 declared kind(s), 141 gate(s), 59 criteria.",

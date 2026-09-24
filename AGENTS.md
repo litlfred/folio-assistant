@@ -359,8 +359,8 @@ be *typed*. This asks who *judges* it, and the two come apart: a kind can be
 perfectly typed and audited by nothing.
 
 **The discipline is in the skill, not here** —
-[`covered-is-not-reachable`](cat-harness/skills/folio-core/covered-is-not-reachable.md)
-§"The fifth case" carries why the gate half is **declared** rather than inferred
+[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+carries why the gate half is **declared** rather than inferred
 (a grep fails in both directions), why an undeclared gate is counted so every
 "unaudited" reads as an upper bound, the three per-kind states that must not
 collapse into one zero, and the two rules building it paid for — a measurement

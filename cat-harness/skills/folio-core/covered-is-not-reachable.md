@@ -251,65 +251,17 @@ mechanism **records** a verdict agents produced rather than performing the check
 So before proposing dispatch points, read the mechanism's entry point. A name says
 what something is for; an argument list says what it does.
 
-## The fifth case, one level out: a KIND audited by gates and by no criterion
+## The same failure one level out: a KIND, not a mechanism
 
-Cases 1–4 ask what a mechanism is missing. This asks the same question of a
-**kind of node**, and it is the case that cost the owner's time rather than an
-agent's.
+Cases 1–4 ask what a mechanism is missing. Ask it of a **kind of node** and you
+get the case that cost the owner's time rather than an agent's: an agent counted
+`kg-qa` sidecars over the bean store, found zero, and reported beans
+"effectively unaudited". Eight gates audit them.
 
-2026-09-23. An agent counted `kg-qa` sidecars over the bean store, found zero,
-and reported beans **"effectively unaudited"** — to the owner, as a premise for
-choosing what to build next. **Eight gates audit them**: the five
-`check:bean-*`, plus `check:ready-to-close`, `check:stale-paths` and
-`check:harness-dirs`.
-
-The instrument was not broken. `kg-qa` sidecars measure `kg-audit`'s criteria
-exactly, and `KG_SUBJECT_KINDS` has no `bean` — so zero was the right answer to
-*"how many criteria reach this kind"* and no answer at all to *"is this kind
-audited"*. This skill's opening sentence, one level out: **coverage is a relation
-between an instrument and the question it was built for.**
-
-> **`bun run audit:coverage`** is the second question, and it did not exist
-> before bean `xutg`. Per declared graph kind: directories declared, files found,
-> `kg-audit` criteria reaching it, and CI gates that **declare** they cover it.
-
-### Why the gate half is declared and not inferred
-
-A gate names its kinds in its own module docblock — `@covers bean-defs, beans`.
-The tempting alternative is to grep each gate's source for a kind's name or its
-declared directory, and it fails in both directions: a gate that mentions
-`beans/defs/` in passing scores as auditing beans, and one that resolves its
-directory through `directoriesForGraph` names no path and scores as auditing
-nothing. Both answers wrong, neither *looking* wrong — which is
-[`directory-conventions`](directory-conventions.md)' `dh4f`, could-not-determine
-rendered as clean.
-
-So a gate that has not said is `undeclared`, **counted and printed**, and every
-"unaudited" verdict is stated as an upper bound while any remain. That is
-`check:kind-validators`' state 2 and it is the honest shape for any coverage
-report: a denominator, not a silence.
-
-Three states per kind, and they must not collapse into one zero:
-
-| state | what it means | example here |
-|---|---|---|
-| `no-directory` | no instance declares one of this kind — nested, or absent | `bean-defs`, declared inside `beans/beans.json`, with 7 gates |
-| `empty` | a directory exists and holds nothing | a determined empty |
-| `unaudited` | files, and nothing reaching them | `health`, `interaction`, `issue-marks`, `todos` |
-
-### Two rules the build of it paid for, both general
-
-**A measurement must not be a term in itself.** The report's own sidecar lives in
-the `qa-results` graph, so the `qa` row counted it, so writing it changed the next
-run's answer — for ever. The gate could only be satisfied by running the writer
-*twice*. Exclude your own output, derive the path from the constants that write
-it, and test that running once converges.
-
-**A docblock that documents a tag necessarily contains the tag.** `coversIn` read
-`audit-coverage.ts`' own worked examples of `@covers` as declarations, crediting
-the coverage report with auditing the bean store. Any parser over docblocks has
-to tell a **use** from a **mention**; indentation is the distinction JSDoc already
-provides.
+That is this skill's opening sentence one level out — **coverage is a relation
+between an instrument and the question it was built for** — and it is
+[`audit-coverage`](audit-coverage.md), with `bun run audit:coverage` as the
+second question.
 
 ## Why this is its own skill
 
