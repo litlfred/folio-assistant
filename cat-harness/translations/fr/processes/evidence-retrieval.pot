@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: evidence-retrieval\n"
-"POT-Creation-Date: 2026-09-23T20:28:09.055Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.615Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,212 +14,212 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/evidence-retrieval.bpmn:66
+#: processes/evidence-retrieval.bpmn:67
 #. Diagram label
 msgid "A recommendation is in play"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:100
+#: processes/evidence-retrieval.bpmn:101
 #. Diagram element documentation
 msgid "Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named `corpus-search`, which has never existed. It is not `corpus-grep`, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:146
+#: processes/evidence-retrieval.bpmn:147
 #. Diagram element documentation
 msgid "An unresolvable citation is not dropped and not silently kept. It becomes a tracked item, so the gap is visible in the work plan rather than surviving as a footnote nobody re-checks."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:140
+#: processes/evidence-retrieval.bpmn:141
 #. Diagram element documentation
 msgid "Answered by checking the source against the observatory or registry API: is its authority confirmed? `no` opens a bean for the unverified citation; `yes` goes on to appraise and grade the evidence."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:164
+#: processes/evidence-retrieval.bpmn:165
 #. Diagram element documentation
 msgid "Answered by the appraisal: is the graded evidence enough to support a recommendation? `no` records the evidence gap; `yes` attaches the evidence to the recommendation."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:154
+#: processes/evidence-retrieval.bpmn:155
 #. Diagram label
 msgid "Appraise and grade the body of evidence"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:178
+#: processes/evidence-retrieval.bpmn:179
 #. Diagram label
 msgid "Attach the evidence to the recommendation [content-author]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:32
+#: processes/evidence-retrieval.bpmn:33
 #. Diagram label
 msgid "Author / guideline developer (person)"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:139
+#: processes/evidence-retrieval.bpmn:140
 #. Diagram label
 msgid "Authority confirmed?"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:33
+#: processes/evidence-retrieval.bpmn:34
 #. Diagram element documentation
 msgid "Brackets the machine work rather than doing it: frames the PICO before Lane_Agent fans out across evidence classes, then is the only lane that grades what comes back and decides whether it is sufficient for a recommendation — retrieval and authority-checking are delegated, but the judgement that turns evidence into a claim never leaves this lane."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:125
+#: processes/evidence-retrieval.bpmn:126
 #. Diagram label
 msgid "Candidates assembled"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:59
+#: processes/evidence-retrieval.bpmn:60
 #. Diagram element documentation
 msgid "Catches two different shortfalls at two different severities: an unverified citation is noted but the process continues into grading, while an insufficient body of evidence ends the process at its own event — so only the second is fatal, and both stay visible in the work plan rather than one being silently absorbed into the other."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:155
+#: processes/evidence-retrieval.bpmn:156
 #. Diagram element documentation
 msgid "Certainty of evidence per the grading system the folio declares. The grade attaches to the BODY of evidence for one PICO question, not to an individual citation -- which is why this step is after the join and not inside the fan-out."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:132
+#: processes/evidence-retrieval.bpmn:133
 #. Diagram element documentation
-msgid "Each candidate is resolved against the standard API of the body that publishes it, so that &#x27;authoritative&#x27; is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note."
+msgid "Each candidate is resolved against the standard API of the body that publishes it, so that &#x27;authoritative&#x27; is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:27
+#: processes/evidence-retrieval.bpmn:28
 #. Diagram label
 msgid "Editing subprocess — evidence for a recommendation"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:43
+#: processes/evidence-retrieval.bpmn:44
 #. Diagram label
 msgid "Evidence agent (system)"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:29
+#: processes/evidence-retrieval.bpmn:30
 #. Diagram label
 msgid "Evidence for a recommendation"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:77
+#: processes/evidence-retrieval.bpmn:78
 #. Diagram label
 msgid "Frame the question as PICO [content-author]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:189
+#: processes/evidence-retrieval.bpmn:190
 #. Diagram label
 msgid "Gap recorded, no recommendation"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:116
+#: processes/evidence-retrieval.bpmn:117
 #. Diagram element documentation
 msgid "Indicator and microdata sources. Distinct from the two above because the unit of evidence is a MEASUREMENT with a population, a period and a method, not a claim in prose."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:92
+#: processes/evidence-retrieval.bpmn:93
 #. Diagram element documentation
 msgid "Ingested primary literature under library/: the sections/*.md tree and, where a document was scanned, ocr/page-NNN.txt. NOTE the known blind spot — a document OCR&#x27;d but never re-run through pdf-structure.py has only a stub in sections/, so a sections-only search misses it."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:170
+#: processes/evidence-retrieval.bpmn:171
 #. Diagram element documentation
 msgid "Insufficient evidence is a RESULT. It is recorded as such -- an honest gap the guideline can state -- rather than being closed by weakening the recommendation until the available evidence supports it."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:203
+#: processes/evidence-retrieval.bpmn:204
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:145
+#: processes/evidence-retrieval.bpmn:146
 #. Diagram label
 msgid "Open a bean for the unverified citation [todo-manager]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:78
+#: processes/evidence-retrieval.bpmn:79
 #. Diagram element documentation
 msgid "Population, Intervention, Comparator, Outcome. The PICO is what makes the search reproducible and the evidence auditable: without it, &#x27;we looked for evidence&#x27; is not a claim anyone can check. WHO guideline development states the question this way before any retrieval."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:115
+#: processes/evidence-retrieval.bpmn:116
 #. Diagram label
 msgid "Query data repositories and statistical datasets"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:186
+#: processes/evidence-retrieval.bpmn:187
 #. Diagram label
 msgid "Recommendation is evidence-backed"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:169
+#: processes/evidence-retrieval.bpmn:170
 #. Diagram label
 msgid "Record the evidence gap [todo-manager]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:85
+#: processes/evidence-retrieval.bpmn:86
 #. Diagram label
 msgid "Retrieve across evidence classes"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:69
+#: processes/evidence-retrieval.bpmn:70
 #. Diagram label
 msgid "Review the guidance already in this content [content-review]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:99
+#: processes/evidence-retrieval.bpmn:100
 #. Diagram label
 msgid "Search trusted CONTENT — L2 DAKs, L3 IGs"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:91
+#: processes/evidence-retrieval.bpmn:92
 #. Diagram label
 msgid "Search trusted SOURCES — L1 [document-intake]"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:163
+#: processes/evidence-retrieval.bpmn:164
 #. Diagram label
 msgid "Sufficient for a recommendation?"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:53
+#: processes/evidence-retrieval.bpmn:54
 #. Diagram element documentation
 msgid "Task_VerifyAuthority and its gateway sit here rather than with Lane_Agent because the decision is not this instance's call — it is a readout of what the external API returns, and the moment that answer is uncertain or absent, Lane_WorkPlan opens a bean rather than this lane inventing a verdict."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:44
+#: processes/evidence-retrieval.bpmn:45
 #. Diagram element documentation
 msgid "The appraisal in the role's own description happens elsewhere in this diagram: this lane only fans out in parallel across the three evidence classes and joins the candidates, while grading is Lane_Author's call and authority is Lane_Trusted's — so what it owns here is coverage, not judgement."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:70
+#: processes/evidence-retrieval.bpmn:71
 #. Diagram element documentation
 msgid "The author reads what the document, DAK or IG ALREADY says on this question, before looking outward. A recommendation that contradicts a sibling recommendation in the same artefact is a defect no external evidence will reveal."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:30
+#: processes/evidence-retrieval.bpmn:31
 #. Diagram element documentation
 msgid "The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:179
+#: processes/evidence-retrieval.bpmn:180
 #. Diagram element documentation
 msgid "The PICO, the graded body of evidence, each verified citation and its resolved authority record are written onto the recommendation block, so a reader can retrace the whole chain from the sentence back to the source."
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:52
+#: processes/evidence-retrieval.bpmn:53
 #. Diagram label
 msgid "Trusted registries and observatories (external)"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:131
+#: processes/evidence-retrieval.bpmn:132
 #. Diagram label
 msgid "Verify authority against the observatory / registry API"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:58
+#: processes/evidence-retrieval.bpmn:59
 #. Diagram label
 msgid "Work plan — beans (shared)"
 msgstr ""
 
-#: processes/evidence-retrieval.bpmn:204
+#: processes/evidence-retrieval.bpmn:205
 #. Diagram label
 msgid "yes"
 msgstr ""

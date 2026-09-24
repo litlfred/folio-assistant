@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_SampleImport"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -29,18 +30,18 @@ THE GATES ARE CALLED, NOT COPIED. Size, restrictions, copyright, retention and s
 
 WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-23: &quot;if sample-import is not inteded to be permannet, materliase to fsh-guts&quot;. A permanent sample goes to library/ and is kept current by refresh-materialized.bpmn. A trial goes to fsh-guts/: kept, addressable, never published, and never refreshed, because a trial is evidence of what the source looked like when it was tried.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_SampleImport_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
         <bpmn:documentation>One decision, and it is the one no file answers: what the sample is FOR. Which items, into which store, and whether the result is meant to last. The last question decides the destination, and asking it after the copy exists would mean moving a copy that was already landed somewhere under the wrong obligations.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Proposed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Scope</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Calls the two shared subprocesses and does the part that is this process's own: landing the copy in the destination the contributor chose, importing it into the store, and testing the import. It never re-asks a gate: it acts on materialize-remote's outcome. It also answers the second entry, an upstream change to a permanent sample, by calling refresh-materialized rather than re-importing.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Upstream</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Refresh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Refreshed</bpmn:flowNodeRef>
@@ -54,7 +55,7 @@ WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-
       </bpmn:lane>
       <bpmn:lane id="Lane_2" name="Corpus — L1 source knowledge graph">
         <bpmn:documentation>Every path ends here with something written down. A refused sample stays referenced with the refusing gate's reason, a failed import records what failed, and a passed one records where it landed. None ends in silence, because an import nobody can tell was tried is the one somebody tries again.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>EndEvent_Refused</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RecordFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Failed</bpmn:flowNodeRef>
@@ -71,7 +72,7 @@ which items, which store,
 and is it PERMANENT?">
       <bpmn:documentation>Three answers, recorded before anything is fetched. WHICH ITEMS: named by the source's identifiers, or by a subset strategy its descriptor supports. WHICH STORE: the knowledge graph or other structured store the import is tested against. PERMANENT OR TRIAL: a permanent sample lands in library/ and is refreshed; a trial lands in fsh-guts/ and is not. The purpose materialize-remote asks for (working or archival) is asked there, not here.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
+        <bootstrap.processes:skill ref="sample-import" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -80,8 +81,8 @@ and is it PERMANENT?">
 (the five gates)">
       <bpmn:documentation>The shared subprocess. It resolves the request against the source descriptor, then asks size, restrictions, copyright, retention and source loss, and either fetches with fixity or leaves the content referenced. This process does not restate any of that; it waits for the outcome.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
-        <folio:skill ref="materialize-remote" />
+        <bootstrap.processes:skill ref="sample-import" />
+        <bootstrap.processes:skill ref="materialize-remote" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -102,8 +103,8 @@ permanent?">
     <bpmn:serviceTask id="Task_Library" name="Land it in library/">
       <bpmn:documentation>A permanent sample joins the library as an L1 source, with the materialization record (purpose, gates, fixity) beside it. From here refresh-materialized governs it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="sample-import" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
@@ -112,8 +113,8 @@ permanent?">
 the unpublished trashcan">
       <bpmn:documentation>A trial goes to the kept trashcan: addressable, exported, never published. Its node declares `$schema: folio-fsh-guts/v1` and carries the bean or issue it was written under, since it was never moved from anywhere and a `movedFrom` would be invented provenance. It is NOT refreshed: a trial records what the source looked like when it was tried. Promoting a trial means running this process again with permanent = yes, so the gates are asked afresh.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="sample-import" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
@@ -122,7 +123,7 @@ the unpublished trashcan">
 and test the import">
       <bpmn:documentation>The part only this process does. Load the landed sample into the chosen store and check what an import can get wrong: every item arrived (count against the request), identifiers survived (the descriptor's authoritative ones), structure validates against the store's schema, and provenance (source, revision, fixity) is attached to each node. A check that could not run is a failure, not a pass.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
+        <bootstrap.processes:skill ref="sample-import" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:incoming>Flow_9</bpmn:incoming>
@@ -138,8 +139,8 @@ passed?">
     <bpmn:serviceTask id="Task_RecordFindings" name="Record what failed">
       <bpmn:documentation>Which check failed, on which items, and the evidence. The landed copy is not removed: a failed import is information about the source or the store, and deleting the copy would destroy the evidence.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="sample-import" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12</bpmn:incoming>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>
@@ -165,8 +166,8 @@ is due or changed upstream">
 content">
       <bpmn:documentation>Refresh is not re-import: what changed upstream, what changed locally since, and what to do when both did. The shared subprocess answers all three, and re-asks the five gates, since a licence can change and a collection can grow past the size agreed.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="sample-import" />
-        <folio:skill ref="materialize-remote" />
+        <bootstrap.processes:skill ref="sample-import" />
+        <bootstrap.processes:skill ref="materialize-remote" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
