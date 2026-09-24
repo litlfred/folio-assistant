@@ -1130,6 +1130,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.
       "folio-block-summaries/v1": { validator: "schemas/block-summary.ts#BlockSummariesSidecarSchema" },
+      // What the site mount must not publish from this directory (bean `cw35`).
+      // Written by the instance's generator from its licence gates; the mount
+      // validates it with this schema and refuses to mount if it cannot.
+      "folio-withheld/v1": { validator: "schemas/withheld.ts#WithheldSchema" },
     },
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +

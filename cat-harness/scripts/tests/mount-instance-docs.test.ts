@@ -206,7 +206,7 @@ describe("a mounted directory's withheld.json is honoured — bean cw35", () => 
     const d = tree();
     writeFileSync(
       join(d, WITHHELD_FILE),
-      JSON.stringify({ paths: [{ path: "refused/", reason: "copyright refused" }, { path: "refused-cover.png", reason: "copyright refused" }] }),
+      JSON.stringify({ $schema: "folio-withheld/v1", paths: [{ path: "refused/", reason: "copyright refused" }, { path: "refused-cover.png", reason: "copyright refused" }] }),
     );
     const out = mkdtempSync(join(tmpdir(), "site-"));
     cpSync(d, out, { recursive: true, filter: withheldFilter(d, withheldPaths(d)) });

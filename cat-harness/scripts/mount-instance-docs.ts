@@ -102,6 +102,8 @@
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, relative, resolve, sep } from "path";
+
+import { WithheldSchema } from "../schemas/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
@@ -931,11 +933,14 @@ export function withheldPaths(dir: string): string[] {
   } catch (e) {
     throw new Error(`${f} is not valid JSON (${(e as Error).message}) — refusing to mount rather than publish what it withholds`);
   }
-  const paths = (raw as { paths?: unknown }).paths;
-  if (!Array.isArray(paths) || paths.some((p) => typeof (p as { path?: unknown })?.path !== "string")) {
-    throw new Error(`${f} has no valid \`paths: [{ path, reason }]\` — refusing to mount rather than publish what it withholds`);
+  const parsed = WithheldSchema.safeParse(raw);
+  if (!parsed.success) {
+    throw new Error(
+      `${f} is not a valid folio-withheld/v1 list (${parsed.error.issues[0]?.message ?? "invalid"}) — ` +
+        `refusing to mount rather than publish what it withholds`,
+    );
   }
-  return (paths as { path: string }[]).map((p) => p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""));
+  return parsed.data.paths.map((p) => p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""));
 }
 
 /** A `cpSync` filter that drops every withheld path, and everything beneath it. */
