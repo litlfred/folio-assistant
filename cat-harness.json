@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T18:53:57.436Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/77b052b16b903ea3acbeedb4b3de96ff2a285f88",
-  "sourceCommitSha": "77b052b16b903ea3acbeedb4b3de96ff2a285f88",
-  "sourceCommitAt": "2026-09-24T20:51:04+02:00",
+  "generatedAt": "2026-09-24T19:01:07.044Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e026f3ea1721f8507c5785361810de42e996dc9a",
+  "sourceCommitSha": "e026f3ea1721f8507c5785361810de42e996dc9a",
+  "sourceCommitAt": "2026-09-24T20:58:19+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 83,
-    "Schema": 118,
+    "Schema": 119,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -353,7 +353,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming"
       ],
       "instructionsPath": "skills/theming/theme-art-intake.md",
-      "instructionLines": 176,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37982,6 +37982,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "withheld",
+      "title": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
+      "module": "schemas/withheld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/adjudication",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "adjudication",
@@ -39727,8 +39735,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "77b052b16b903ea3acbeedb4b3de96ff2a285f88",
+    "sha": "e026f3ea1721f8507c5785361810de42e996dc9a",
     "pr": "main",
-    "run": "36044102751"
+    "run": "36044930538"
   }
 }
