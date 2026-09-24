@@ -810,6 +810,19 @@ jobs:
           # here; the general reverse needs the API and prints as undetermined
           # rather than as clean.
           bun run check:bean-issue-links
+          # Bean `8v0y`: a bean that carries a SKILL'S CONTRACT instead of
+          # pointing at it. `kn0t` held a second copy of
+          # ig-publisher-reduction.md and it had drifted in four places; the P1
+          # one turned "the navigation is DIFFED, and the difference is empty
+          # or explained entry by entry" into "navigation matches", which would
+          # have let a phase be declared done on an impression -- the first
+          # entry in that skill's own `Do not` list. NOT a similarity check:
+          # kn0t's three real drifts score Jaccard 0.25/0.54/0.33, all below
+          # any usable floor, because semantic drift is a REWRITE. Structural
+          # instead -- a table enumerating phases, each row carrying its own
+          # exit condition. Measured over the whole store: 0 of 888 beans, and
+          # 1 of 1 on kn0t as it stood before PR #1185.
+          bun run check:bean-restates-skill
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete

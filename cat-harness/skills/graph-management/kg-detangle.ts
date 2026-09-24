@@ -29,11 +29,11 @@
  * would make a group with a broken link look entangled, which is a different
  * finding calling for a different fix.
  *
- * @module scripts/kg-detangle
+ * @module skills/graph-management/kg-detangle
  */
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
-import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../schemas/detangle-sidecar.ts";
+import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -43,11 +43,11 @@ import {
   type DetangleEdge,
   type DetangleNode,
   type EdgeAuthority,
-} from "../schemas/detangle.js";
-import { allowedFromNeeds, directionOf, type LayerRule } from "../schemas/layer-direction.js";
-import { ancestorsOf, flattenDependencies } from "../schemas/dependency-order.js";
+} from "../../schemas/detangle.js";
+import { allowedFromNeeds, directionOf, type LayerRule } from "../../schemas/layer-direction.js";
+import { ancestorsOf, flattenDependencies } from "../../schemas/dependency-order.js";
 
-const ROOT = resolve(import.meta.dir, "../..");
+const ROOT = resolve(import.meta.dir, "../../..");
 
 /** Directories scanned, each mapped to the depth at which a candidate group is named. */
 const SCAN: Array<{ path: string; groupDepth: number }> = [
