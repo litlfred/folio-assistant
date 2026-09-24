@@ -1,6 +1,8 @@
 ---
 satisfies:
   - "req:content-lifecycle#publish-authorized"
+input: schemas/skills/content-publish/input.schema.json
+output: schemas/skills/content-publish/output.schema.json
 ---
 
 # Content Publication

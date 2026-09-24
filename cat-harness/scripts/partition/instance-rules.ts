@@ -284,6 +284,7 @@ export const RULES: Rule[] = [
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
+      "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -582,6 +583,14 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
+      // The viewer page's COMMON FIXTURE and its audit (bean `edx7`). Core
+      // beside `check-viewer-backticks.ts` and for the same two reasons: they
+      // guard what every viewer generator writes, and they write into the
+      // rendered site. The navbar MODEL is composed here from the
+      // declarations; the component itself is `lib/navbar.ts`, so this adds a
+      // caller and not a second answer to what the navigation looks like.
+      "scripts/viewer-page.ts",
+      "scripts/check-viewer-nav.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.

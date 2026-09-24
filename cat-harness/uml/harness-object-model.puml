@@ -46,7 +46,6 @@ package scenario {
     tags [0..*] : string[]
     package [0..1] : string
     lifecycleStages [0..*] : list<plan | author | validate | review | test | publish | feedback | retire>
-    schemaRef [0..1] : string
   }
   class "User Story" as UserStory <<json: UserStorySchema>> #e8f0ee {
     id [1] : string

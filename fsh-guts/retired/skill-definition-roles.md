@@ -73,9 +73,12 @@ Measured against the *right* registry the finding is different and worse.
 2. **`reader` is not a tier.** Eight declarations use it; `UserRole` has
    `viewer`. So even read as RBAC, 8 of 51 do not resolve.
 
-3. **No reader — and it looks like one exists.** `src/core/rbac.ts` is
+3. **No reader — and it looks like one exists.** *(Describes the code as it
+   was on 2026-09-20. Since issue #1207 the routes name an ODRL action and
+   `rbac.ts` asks the policies; `SkillDefinition.roles` is still read by
+   nothing.)* `src/core/rbac.ts` was
    entirely header-driven (`getUserRole` reads `x-user-role`), and every route
-   hardcodes its own minimum: `hasRole(req, "collaborator")` in
+   hardcoded its own minimum: `hasRole(req, "collaborator")` in
    `routes/relevance.ts`, `glossary.ts`, `feedback.ts`. **Nothing anywhere
    reads `SkillDefinition.roles`.** Searched: `src/`, `schemas/`, `scripts/`,
    `adapters/`, the MCP tool layer, and `skill-fetch`/`skill-list`.
