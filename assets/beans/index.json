@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 297,
+      "count": 298,
       "unit": "beans"
     }
   },
@@ -741,14 +741,14 @@
     {
       "id": "folio-assistant-61ca",
       "title": "B5-fix (#1168): a GitHub workflow names the BPMN it implements; 9 <implements workflow> and <job> flipped",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:12Z",
-      "updatedAt": "2026-09-24T17:23:46Z",
+      "updatedAt": "2026-09-24T17:47:57Z",
       "preview": "## Why\n9 `<cat-harness.processes:implements workflow=…>` are arrow-direction findings: the diagram names its implementation. Owner decision 2026-09-24: \"Workflow names its BPMN\".\n\n## Plan\n- Each `.github/workflows/*.yml` carries `# bpmn: cat-harness/processes/<x>.bpmn`; each job implementing a node carries `# bpmn-node: <Task_Id>`.\n- `check-workflow-coverage.ts`, `prose-code-pairs.ts`, `pair-claim",
       "file": "beans/defs/folio-assistant-61ca--b5-fix-1168-a-github-workflow-names-the-bpmn-it-im.md"
     },
@@ -1079,14 +1079,14 @@
     {
       "id": "folio-assistant-8i57",
       "title": "Document ingestion page has no theme section: Process_IngestTheme is called but documented nowhere",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:04Z",
-      "updatedAt": "2026-09-24T17:22:04Z",
+      "updatedAt": "2026-09-24T17:47:57Z",
       "preview": "## Why\n`document-ingestion.bpmn` calls `Process_IngestTheme` (`ingest-theme.bpmn`) behind `Gateway_ThemeSource`, and its links pointed at `#ingest-the-theme` and `#a-theme-source` — neither anchor exists. `content/docs/document-ingestion/document-ingestion.ts` has sections for extract / derive / build-KG / gate but none for the theme. Once links are derived from `asset.source` (B5-fix), the theme ",
       "file": "beans/defs/folio-assistant-8i57--document-ingestion-page-has-no-theme-section-proce.md"
     },
@@ -2691,6 +2691,20 @@
       "file": "beans/defs/folio-assistant-oi3h--fsh-guts-visualiser-7-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-oqdr",
+      "title": "Bootstrap diagrams' SVGs are published but rendered by nothing since the split",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:52:19Z",
+      "updatedAt": "2026-09-24T17:52:19Z",
+      "preview": "## What\n`cat-harness/docs/assets/img/workflows/` holds `initialize-harness.svg`, `log-message.svg` and `discussion.svg`, whose sources are `bootstrap/processes/*.bpmn`. `render-bpmn.ts` renders `workflowFiles(cat-harness)`, which does not reach bootstrap, so these three are never re-rendered and `render:bpmn:check` cannot see them drift. The generated process pages (`docs/processes/initialize-harn",
+      "file": "beans/defs/folio-assistant-oqdr--bootstrap-diagrams-svgs-are-published-but-rendered.md"
+    },
+    {
       "id": "folio-assistant-ovkk",
       "title": "The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor",
       "status": "in-progress",
@@ -2921,14 +2935,14 @@
     {
       "id": "folio-assistant-rdy0",
       "title": "Process pages list the docs sections that present them ('Presented on')",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "low",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:05Z",
-      "updatedAt": "2026-09-24T17:22:05Z",
+      "updatedAt": "2026-09-24T17:47:58Z",
       "preview": "## Why\nThe reverse of B5-fix: a generated `/processes/<x>.html` page does not say which prose sections present that process. The index is the same one B5-fix builds (`WebPageNode.asset.source`), so this is navigation for free once it exists.\n\n## Done when\n`gen-processes-viz.ts` emits a \"Presented on\" line per process page, from the same index, with a test.",
       "file": "beans/defs/folio-assistant-rdy0--process-pages-list-the-docs-sections-that-present.md"
     },
@@ -3905,14 +3919,14 @@
     {
       "id": "folio-assistant-xl55",
       "title": "B5-fix (#1168): BPMN subprocess links derived from the page section that presents the process; 10 <link href> removed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:22:04Z",
-      "updatedAt": "2026-09-24T17:22:04Z",
+      "updatedAt": "2026-09-24T17:47:57Z",
       "preview": "## Why\n10 `<cat-harness.processes:link href>` elements are arrow-direction findings: a process (general) names the pages written about it. They are also 5-of-10 broken somewhere, with nothing checking them:\n- `#ingest-the-theme` — no such anchor (no theme section exists).\n- `#a-theme-source` — on a gateway; render-bpmn only reads call activities, so it is inert, and its anchor is missing too.\n- On",
       "file": "beans/defs/folio-assistant-xl55--b5-fix-1168-bpmn-subprocess-links-derived-from-the.md"
     },

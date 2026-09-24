@@ -7654,6 +7654,18 @@
           // The source file, kept for the export controls: "Download SVG"
           // names the file after it, and it is the committed artefact.
           svg.setAttribute("data-fa-src", src);
+          // Links inside a drawing are written relative to the SVG FILE, so
+          // one file works wherever it is embedded. Inlined, a relative href
+          // would resolve against the PAGE instead — right from the docs
+          // root, wrong from `processes/` (bean `xl55`) — so each is
+          // re-anchored to the file's own URL, through the same check as
+          // every other link here.
+          var fileUrl = new URL(src, location.href);
+          [].forEach.call(svg.querySelectorAll("a[href]"), function (a) {
+            var checked = safeHref(a.getAttribute("href"));
+            if (checked === undefined) a.removeAttribute("href");
+            else a.setAttribute("href", new URL(checked, fileUrl).href);
+          });
           img.parentNode.replaceChild(document.importNode(svg, true), img);
         })
         .catch(function (e) {
