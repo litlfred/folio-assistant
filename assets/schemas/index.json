@@ -3180,13 +3180,6 @@
           "optional": true,
           "array": true,
           "doc": "Lifecycle stages this skill participates in."
-        },
-        {
-          "name": "schemaRef",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Directory holding this skill's own JSON Schema files, relative to the repo"
         }
       ],
       "extendsNames": [],
@@ -23850,12 +23843,6 @@
           "type": "z.array(LifecycleStageSchema).optional()",
           "optional": true,
           "array": true
-        },
-        {
-          "name": "schemaRef",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
         }
       ],
       "extendsNames": [],

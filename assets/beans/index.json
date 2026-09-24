@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 267,
+      "count": 268,
       "unit": "beans"
     }
   },
@@ -1765,6 +1765,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hj9d",
+      "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T00:26:28Z",
+      "updatedAt": "2026-09-24T00:26:28Z",
+      "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
+      "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
+    },
+    {
       "id": "folio-assistant-hs08",
       "title": "MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio",
       "status": "in-progress",
@@ -2301,14 +2315,14 @@
     {
       "id": "folio-assistant-nm7l",
       "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T23:20:35Z",
-      "updatedAt": "2026-09-23T23:20:35Z",
+      "updatedAt": "2026-09-23T23:56:10Z",
       "preview": "Part of s4sp (plan B3, split: B3a arrows, B3b skill I/O contracts). Skill scripts/validators/mcpServices removed (26 skills, no live reader); the 6 real scripts become Tools (content-graph-analysis, pages-index, proof-dependency-graph, proof-objects-extract, proof-status-update, paper-latex-build) and content-manifest-validate also satisfies content-validation. Requirement statements lose satisfie",
       "file": "beans/defs/folio-assistant-nm7l--b3a-1168-scriptsvalidatorsmcpservices-become-tools.md"
     },
