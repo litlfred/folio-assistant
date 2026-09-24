@@ -79,7 +79,7 @@ function diagram(beanMarkup: string): string {
 describe("an unknown attribute is refused", () => {
   test("`action=\"create\"` — the exact attribute that did nothing for weeks", async () => {
     await expect(loadProcessModel(diagram('<cat-harness.processes:bean action="create"/>'))).rejects.toThrow(
-      /folio:bean carries "action"/,
+      /cat-harness\.processes:bean carries "action"/,
     );
   });
 
@@ -97,7 +97,7 @@ describe("an unknown attribute is refused", () => {
     // stray attribute survives to be copied into the next diagram.
     await expect(
       loadProcessModel(diagram('<cat-harness.processes:bean op="claim" action="create"/>')),
-    ).rejects.toThrow(/folio:bean carries "action"/);
+    ).rejects.toThrow(/cat-harness\.processes:bean carries "action"/);
   });
 });
 

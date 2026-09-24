@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xl55
 title: 'B5-fix (#1168): BPMN subprocess links derived from the page section that presents the process; 10 <link href> removed'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-24T17:22:04Z
-updated_at: 2026-09-24T17:47:57Z
+updated_at: 2026-09-24T18:01:26Z
 parent: folio-assistant-tr05
 ---
 

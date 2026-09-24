@@ -216,12 +216,14 @@ export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HA
  * Subgraph that declares the element (`bootstrap.processes:`) is unreachable
  * until nothing depends on the prefix, which is what this list is for.
  *
- * The retired {@link LEGACY_FOLIO_BPMN_NS} is deliberately NOT here: no
- * diagram binds it, and `external-schemas` reports it as drift rather than
- * accepting it. {@link BOOTSTRAP_PROCESSES_NS} IS here: it is a second
- * address on purpose, not a second spelling of one.
+ * Two addresses on purpose, one per declaring Subgraph. The single address
+ * {@link FOLIO_BPMN_NS} was here too until 2026-09-24 and is now RETIRED, like
+ * {@link LEGACY_FOLIO_BPMN_NS} before it: no diagram in the owner's
+ * repositories binds it (the last, ihris, moved in litlfred/ihris#24), so an
+ * element under it is no longer ours, and `external-schemas` reports a diagram
+ * that still binds it as drift.
  */
-export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS];
+export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS];
 
 /**
  * The prefix our extension elements are normalised to once parsed, whatever

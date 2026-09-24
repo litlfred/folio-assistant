@@ -140,7 +140,7 @@ export type BoundaryRole = "sink" | "source" | "tangled" | "isolated" | "undeter
  * - `enforced` — reverse it and something breaks. A TypeScript `import`, a
  *   BPMN `calledElement`. The direction is a property of the system.
  * - `recorded` — the direction is WHERE THE AUTHOR PUT THE POINTER.
- *   `<folio:skill ref="S">` is written on the diagram, so the arrow runs
+ *   `<bootstrap.processes:skill ref="S">` is written on the diagram, so the arrow runs
  *   diagram → skill. Had the repository put `workflows: [...]` in each skill's
  *   front matter instead, the identical coupling would be stored the other way
  *   and `processes` would measure as a sink rather than a source.
