@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: theme-ui-review\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.999Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.700Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,122 +14,122 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/theme-ui-review.bpmn:51
+#: processes/theme-ui-review.bpmn:52
 #. Diagram element documentation
 msgid "A person looks at it, at BOTH a web and a mobile width. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:38
+#: processes/theme-ui-review.bpmn:39
 #. Diagram label
 msgid "Accessibility: measure, do not assert"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:20
+#: processes/theme-ui-review.bpmn:21
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:42
+#: processes/theme-ui-review.bpmn:43
 #. Diagram label
 msgid "Branding: does it read as this instance?"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:39
+#: processes/theme-ui-review.bpmn:40
 #. Diagram element documentation
 msgid "Contrast COMPUTED against the real ground, including the worst case a backdrop can present; a non-colour channel wherever colour carries meaning (SC 1.4.1); an accessible name on every region; keyboard and focus order. An automated pass is necessary and not sufficient — axe accepts a non-empty placeholder as an accessible name, and a CSS selector that matches nothing raises no error at all."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:47
+#: processes/theme-ui-review.bpmn:48
 #. Diagram element documentation
 msgid "Every user-facing string reaches the .pot; every declared locale renders without clipping or overflow; right-to-left is laid out rather than mirrored by accident. New UI is where untranslated strings enter, because nothing was stale — there was nothing there before."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:60
+#: processes/theme-ui-review.bpmn:61
 #. Diagram element documentation
 msgid "Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:56
+#: processes/theme-ui-review.bpmn:57
 #. Diagram label
 msgid "Findings?"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:21
+#: processes/theme-ui-review.bpmn:22
 #. Diagram element documentation
 msgid "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:34
+#: processes/theme-ui-review.bpmn:35
 #. Diagram label
 msgid "Inventory what actually renders"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:50
+#: processes/theme-ui-review.bpmn:51
 #. Diagram label
 msgid "Judge the rendered result"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:46
+#: processes/theme-ui-review.bpmn:47
 #. Diagram label
 msgid "Languages: extracted, rendered, and RTL"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:43
+#: processes/theme-ui-review.bpmn:44
 #. Diagram element documentation
 msgid "Marks, palettes and art against the instance's own declaration rather than a remembered style. The question a downstream folio makes sharp: would this instance inherit something it did not choose?"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:33
+#: processes/theme-ui-review.bpmn:34
 #. Diagram label
 msgid "MVP accepted"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:72
+#: processes/theme-ui-review.bpmn:73
 #. Diagram label
 msgid "none"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:10
+#: processes/theme-ui-review.bpmn:11
 #. Diagram label
 msgid "Post-MVP theme and UI review"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:59
+#: processes/theme-ui-review.bpmn:60
 #. Diagram label
 msgid "Raise findings against the authoring"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:63
+#: processes/theme-ui-review.bpmn:64
 #. Diagram label
 msgid "Reviewed"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:15
+#: processes/theme-ui-review.bpmn:16
 #. Diagram label
 msgid "Reviewer"
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:13
+#: processes/theme-ui-review.bpmn:14
 #. Diagram element documentation
 msgid "Reviewing what the MVP actually RENDERS — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: choosing a theme is an authoring judgement made per note, and there is no role-to-theme mapping to check at build time. What can be reviewed is the result, and only after there is one."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:57
+#: processes/theme-ui-review.bpmn:58
 #. Diagram element documentation
 msgid "The reviewer's judgement of the rendered result. `yes` raises findings against the authoring; `none` ends reviewed."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:16
+#: processes/theme-ui-review.bpmn:17
 #. Diagram element documentation
 msgid "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:35
+#: processes/theme-ui-review.bpmn:36
 #. Diagram element documentation
 msgid "Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong."
 msgstr ""
 
-#: processes/theme-ui-review.bpmn:70
+#: processes/theme-ui-review.bpmn:71
 #. Diagram label
 msgid "yes"
 msgstr ""

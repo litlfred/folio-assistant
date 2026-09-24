@@ -161,9 +161,9 @@ the pointer lives on the task.
 
 | relation | written on | never on | why |
 |---|---|---|---|
-| a task implements a skill | the BPMN task (`<folio:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
+| a task implements a skill | the BPMN task (`<bootstrap.processes:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
 | a voice speaks for a role | the voice (`activeIn.roles`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
-| a lane is played by a role | the lane (`<folio:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
+| a lane is played by a role | the lane (`<bootstrap.processes:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
 | a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
 | a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
 | a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |

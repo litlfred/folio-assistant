@@ -132,7 +132,7 @@ re-introduces the leak `instance-graph-isolation.test.ts` exists to stop
   an `actedUpon` lane holds none by construction.
 - **A lane whose binding is dangling, contradictory or unbound.**
 
-A lane declaring `<folio:role variable="true"/>` is none of these. It
+A lane declaring `<bootstrap.processes:role variable="true"/>` is none of these. It
 emits a concept with a scope note and **no definition**, which is true —
 see [`role-model`](role-model.md) and bean `ug4r`. `laneBinding()` is the
 only route from a lane to a concept for exactly this reason: `variable`

@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_RelatedWork" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_RelatedWork">
@@ -14,7 +15,7 @@
     <bpmn:laneSet id="LaneSet_Process_RelatedWork">
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work's owners.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_RW</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_SearchBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_SearchIssues</bpmn:flowNodeRef>
@@ -24,29 +25,29 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_User" name="User">
         <bpmn:documentation>Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>U_Coordinate</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_RW" name="Work started or changed in chat"/>
     <bpmn:task id="A_SearchBeans" name="Search beans for relevance">
       <bpmn:documentation>beans list --json / beans query over titles AND bodies, open and recently completed. A completed bean is evidence of a decision already made.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="related-work-coordination"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="related-work-coordination"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_SearchIssues" name="Search issues and open PRs">
       <bpmn:documentation>The repository's issues (open and closed) and its open pull requests. An open PR touching the same files is the collision most worth finding early.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="related-work-coordination"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="related-work-coordination"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Categorize" name="Categorize and summarize">
       <bpmn:documentation>Each hit gets a category (overlaps: coordinate; affected by; out of scope; unrelated) and a one-line summary with its state. Judgement, not a keyword score: say why each is in its category.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="related-work-coordination"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="related-work-coordination"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="U_Coordinate" name="Coordinate? How?">
-      <bpmn:extensionElements><folio:no-skill reason="The user's decision. The agent presents context, options and a recommendation as a structured question."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="The user's decision. The agent presents context, options and a recommendation as a structured question."/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Record" name="Record and act on the answer">
       <bpmn:documentation>Write the chosen coordination where it will be found: bean links (--blocked-by, --parent), a line in the issue or PR body, or 'note only'. A declined coordination is recorded too.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="related-work-coordination"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="related-work-coordination"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_RW" name="Related work known and decided"/>
     <bpmn:sequenceFlow id="SF_Process_RelatedWork_1" sourceRef="Start_RW" targetRef="A_SearchBeans"/>
