@@ -269,15 +269,15 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T19:01:07.044Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e026f3ea1721f8507c5785361810de42e996dc9a",
-  "sourceCommitSha": "e026f3ea1721f8507c5785361810de42e996dc9a",
-  "sourceCommitAt": "2026-09-24T20:58:19+02:00",
+  "generatedAt": "2026-09-24T19:16:31.689Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/61f6b8c71299ebf944689d37dac4530d69d138f9",
+  "sourceCommitSha": "61f6b8c71299ebf944689d37dac4530d69d138f9",
+  "sourceCommitAt": "2026-09-24T21:13:58+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 260,
-    "Actor": 35,
+    "Actor": 36,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
@@ -285,7 +285,7 @@
     "SequenceFlow": 908,
     "Role": 148,
     "ProcessNode": 860,
-    "Tool": 83,
+    "Tool": 84,
     "Schema": 119,
     "GraphKind": 32,
     "Directory": 42,
@@ -1519,7 +1519,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 131,
+      "instructionLines": 168,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2233,7 +2233,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 186,
+      "instructionLines": 195,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2773,7 +2773,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 190,
+      "instructionLines": 307,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4487,6 +4487,19 @@
       "hasCapability": [],
       "roleName": [
         "stakeholder"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/claude",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "claude",
+      "actorKind": "agent",
+      "title": "Claude (agent session)",
+      "description": "The LLM agent that works in this repository's sessions, under the name it writes into workflow history (`actor: \"claude\"` in `beans/workflows/*.json`). Declared so the PROV-O QA/QC report can resolve that name to an actor (owner, 2026-09-24: \"Declare both\"). The id is the name the agent asserts, not a login: history records it as `asserted` and nothing here authenticates it, and which session or account it was is the data store's to know. `roles` are the lanes its history entries occupy and whose role admits an agent: `authoring-agent` (every code-change-review step it recorded, and the CRDM agent steps) and `code-reviewer` (`Task_Review` in code-change-review). It also recorded one `BA_Submit` in the `business-analyst` lane; that role admits only a person, so it is NOT listed here and the report keeps that step as `not-eligible` for the owner to settle. What it may DO is in the ODRL policies, and none grants it anything yet.",
+      "hasCapability": [],
+      "roleName": [
+        "authoring-agent",
+        "code-reviewer"
       ]
     },
     {
@@ -36470,6 +36483,78 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/user-auth",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "user-auth",
+      "title": "Who is asking, and what may they do",
+      "description": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "auth_whoami"
+        },
+        "inProcess": {
+          "module": "src/tools/auth.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "A declared actor the caller is acting as.",
+            "required": false
+          },
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "An ODRL action to ask about, e.g. content-authoring.",
+            "required": false
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "Process id, to scope the question or check a task.",
+            "required": false
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "Node id; with process, runs the task-authorization check.",
+            "required": false
+          },
+          {
+            "name": "role",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The role the lane binds.",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The content acted on.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Markdown",
+            "description": "Identity, GitHub role, ODRL grants and decisions, and what GitHub's grain cannot express."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deployment-auth"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/stakeholder-map",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "stakeholder-map",
@@ -39735,8 +39820,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e026f3ea1721f8507c5785361810de42e996dc9a",
+    "sha": "61f6b8c71299ebf944689d37dac4530d69d138f9",
     "pr": "main",
-    "run": "36044930538"
+    "run": "36046739207"
   }
 }
