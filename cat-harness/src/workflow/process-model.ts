@@ -27,6 +27,8 @@
  * gate that passes by not looking is worse than no gate.
  *
  * @module folio-assistant/workflow/process-model
+ *
+ * @conformsTo omg-bpmn-2.0
  */
 
 import { BpmnModdle } from "bpmn-moddle";

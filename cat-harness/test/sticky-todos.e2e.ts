@@ -97,6 +97,19 @@ const THEMED_ITEMS = [
     tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
     relations: [],
   },
+  {
+    id: "themed-todo-tall",
+    summary: "Read the tall crop",
+    comment: "A todo that names its layout.",
+    status: "open",
+    priority: "medium",
+    origin: "agent",
+    createdAt: "2026-09-20",
+    theme: "library",
+    layout: "mobile",
+    tags: { roles: [], processes: [], tasks: [], identities: [], references: [], artefacts: [] },
+    relations: [],
+  },
 ];
 
 const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -436,16 +449,27 @@ test("a themed todo renders its backdrop art, the way every other sticky does", 
   await expect(img).toHaveCount(1);
   await expect(img).toHaveAttribute("src", "/assets/img/harness/landing-library-card.webp");
 
-  // The CARD crop by default, with mobile below 30rem. The laptop crop is
-  // deliberately unused: it is composed for a page-width surface.
-  const source = card.locator("picture > source");
-  await expect(source).toHaveCount(1);
-  await expect(source).toHaveAttribute("srcset", "/assets/img/harness/landing-library-mobile.webp");
+  // The SQUARE crop on every screen when the todo names no layout — owner,
+  // 2026-09-24: "by default use the square avatar layout". No `<source>`: the
+  // board used to swap in the tall crop below 30rem, so one sticky showed two
+  // different pictures depending on the window.
+  await expect(card.locator("picture > source")).toHaveCount(0);
 
   // Decoration behind text that already says everything. A description of the
   // cat would be read out before every todo on the board.
   await expect(img).toHaveAttribute("alt", "");
   await expect(card.locator("picture")).toHaveAttribute("aria-hidden", "true");
+});
+
+test("a todo that NAMES a layout gets that crop instead of the square", async ({ page }) => {
+  await page.goto(THEMED_PAGE_URL);
+  await page.locator(".fa-tiles-toggle").click();
+  await page.locator(".fa-tile", { hasText: "Todos" }).click();
+  const card = page.locator('.fa-sticky-slot .fa-sticky[data-todo-id="themed-todo-tall"]');
+  await expect(card.locator("picture > img.fa-sticky-art")).toHaveAttribute(
+    "src",
+    "/assets/img/harness/landing-library-mobile.webp",
+  );
 });
 
 test("the art survives a pin, because the card is rebuilt from the todo", async ({ page }) => {

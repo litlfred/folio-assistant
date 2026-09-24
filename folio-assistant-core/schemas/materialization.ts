@@ -555,6 +555,22 @@ export function unansweredGates(g: Gates): Array<keyof Gates> {
   return (Object.keys(g) as Array<keyof Gates>).filter((k) => g[k].verdict === "unknown");
 }
 
+/**
+ * The gates that stop a held copy being PUBLISHED — linked from a page or served
+ * from a CDN — as distinct from being held. Bean `cw35`, from the `v048` roast:
+ * every held IRIS PDF carried `copyright: unknown` and was redistributed anyway,
+ * because nothing turned a verdict into a decision.
+ *
+ * Only `copyright` and `restrictions` decide publication; the other three are
+ * about keeping a copy, not showing it. Anything short of `permitted` blocks,
+ * `unknown` included: an unanswered licence is not a licence. No gates at all
+ * blocks on both, for the same reason.
+ */
+export const PUBLICATION_GATES = ["copyright", "restrictions"] as const;
+export function publicationBlockers(g: Gates | undefined): Array<(typeof PUBLICATION_GATES)[number]> {
+  return PUBLICATION_GATES.filter((k) => g?.[k]?.verdict !== "permitted");
+}
+
 /** Gates that came back `refused`. A non-empty result means the copy must not exist. */
 export function refusedGates(g: Gates): Array<keyof Gates> {
   return (Object.keys(g) as Array<keyof Gates>).filter((k) => g[k].verdict === "refused");
