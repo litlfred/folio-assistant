@@ -11,13 +11,13 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 255 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 4 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 256 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 4 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 271 terms and is 192 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 272 terms and is 193 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">271</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">272</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -902,6 +902,13 @@ instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
 <p>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says &quot;this is not a new kind&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/instance-kinds.md"><code>cat-harness/skills/folio-core/instance-kinds.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--instance-publication" data-fa-state="extracted" data-fa-gloss="">
+instance-publication <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/instance-publication.md"><code>cat-harness/skills/folio-core/instance-publication.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--integration-audit" data-fa-state="extracted" data-fa-gloss="">
 integration-audit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1744,7 +1751,7 @@ tabular-metadata <span class="fa-gloss-status">candidate, extracted</span>
 task-authorization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.</p>
+<p>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/task-authorization.md"><code>cat-harness/skills/folio-core/task-authorization.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--technical-documentation" data-fa-state="extracted" data-fa-gloss="">

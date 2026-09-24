@@ -1,6 +1,7 @@
 {
   "_comment": "The WHO SMART Immunizations artefact index — the SECOND ingested IG, and the one that tested whether the pipeline generalises. Declared exactly as `smart-trust` is on main today, MINUS a `docs` graph: the owner ruled on 2026-09-21 that generated HTML is not wanted ('i dont want the. /html generated... just the calculated versions, dependcies and such the AST end'), so this instance ships the index and its DAK surface and renders nothing. PROVISIONAL BY DESIGN: the owner has also ruled that a per-IG harness should not exist at all ('there does not neeed to be smart-trust harness, b/c no new funcionality'), with the DAK/IG pipeline belonging in an IG base and the output landing in a `smart-guideline` page under a new `smart-base` harness (bean nsbb). This declaration keeps the repository CONSISTENT rather than half-migrated while that restructure is decided; it is not an argument that the instance should persist.",
   "name": "smart-immunizations",
+  "version": "0.1.0",
   "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
   "directories": [
     {

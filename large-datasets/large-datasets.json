@@ -1,14 +1,15 @@
 {
   "_comment": "large-datasets, staged as a top-level named subgraph. Owner, 2026-09-20: 'maybe not core skill, sub-graph of skills to deal with \"large data sets\"'. It exists because a capability was missing from BOTH neighbours: `materialize-remote` (in folio-assist-core) answers 'may we take this, and what does holding it cost', and nothing answers the question before it -- how do you ENUMERATE a corpus, and how do you ask it for a SUBSET? Every source answers differently and none of it is guessable, so without a declared descriptor an agent asked for 'the WPRO style guides' must be told the API by a human every time. NOT in folio-assist-core, deliberately: core is the CONTENT layer, and this is about sources the instance will never hold. NOT in cat-harness: it is not about the harness either. It is the third thing, which is what earns it a subgraph rather than a directory inside one.",
   "name": "large-datasets",
-  "description": "Taking a subset of a corpus you will never hold \u2014 and publishing artifacts too big for the site that describes them.",
+  "version": "0.1.0",
+  "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 large-datasets",
-      "description": "Cold start for work in this layer, and the boundary it exists to hold: this layer does NOT decide whether to take something \u2014 that is `materialize-remote`'s five gates in core. Here the deliverable is the descriptor, because no source's enumeration API is guessable and an answer given to a human once is recorded nowhere."
+      "title": "AGENTS.md — large-datasets",
+      "description": "Cold start for work in this layer, and the boundary it exists to hold: this layer does NOT decide whether to take something — that is `materialize-remote`'s five gates in core. Here the deliverable is the descriptor, because no source's enumeration API is guessable and an answer given to a human once is recorded nowhere."
     },
     {
       "id": "readme",
@@ -23,7 +24,7 @@
       "id": "large-datasets-schemas",
       "path": "schemas/",
       "dependents": "skip",
-      "description": "`source-descriptor` \u2014 how to enumerate a corpus and ask it for a subset. `artifact-store` \u2014 where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
+      "description": "`source-descriptor` — how to enumerate a corpus and ask it for a subset. `artifact-store` — where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
       "graphKinds": [
         "schemas",
         "cat-harness"

@@ -1,43 +1,39 @@
 {
   "$schema": "kg-qa/v1",
   "subject": {
-    "kind": "tool",
-    "id": "workflow-complete",
-    "path": null
+    "kind": "skill",
+    "id": "instance-publication",
+    "path": "skills/folio-core/instance-publication.md"
   },
-  "source_hash": "921bc78ceb0a",
+  "source_hash": "797246cf3337",
   "criteria": {
-    "tool-invoke-path-resolves": {
+    "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
-    "tool-satisfies-resolves": {
+    "skill-is-brief": {
       "result": "pass",
       "findings": []
     },
-    "tool-satisfies-contract-met": {
+    "skill-not-a-document": {
       "result": "pass",
       "findings": []
     },
-    "tool-io-types-declared": {
+    "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
     },
-    "tool-args-shell-safe": {
-      "result": "pass",
-      "findings": []
-    },
-    "tool-alternative-resolves": {
+    "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
     },
-    "tool-maintains-in-tree": {
+    "prose-claims-resolve": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 5,
+    "pass": 4,
     "fail": 0,
     "n/a": 2,
     "unknown": 0

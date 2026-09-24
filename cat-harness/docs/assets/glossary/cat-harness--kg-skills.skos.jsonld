@@ -2082,6 +2082,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/instance-publication",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "instance-publication"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft."
+        }
+      ],
+      "skos:notation": "instance-publication",
+      "dcterms:source": "cat-harness/skills/folio-core/instance-publication.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/integration-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4174,7 +4194,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role."
+          "@value": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role."
         }
       ],
       "skos:notation": "task-authorization",
