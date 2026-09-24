@@ -226,11 +226,12 @@
                 "jurisdiction-endpoint",
                 "none"
               ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
             }
-          },
-          "required": [
-            "host"
-          ]
+          }
         },
         "topology": {
           "type": "object",
@@ -381,10 +382,6 @@
                     ]
                   },
                   "docs": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "skill": {
                     "type": "string",
                     "minLength": 1
                   },
@@ -700,9 +697,6 @@
             "minLength": 1
           }
         },
-        "publishable": {
-          "type": "boolean"
-        },
         "id": {
           "type": "string",
           "minLength": 1
@@ -723,8 +717,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-libleak/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-libleak",
-    "sha": "52afda6348947e710453bf73ba00fdfaeb861382",
+    "sha": "59049f875e65ff1d310b3ce032925502a510f9d1",
     "pr": "1323/merge",
-    "run": "36049626586"
+    "run": "36053741087"
   }
 }
