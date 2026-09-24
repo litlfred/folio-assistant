@@ -460,6 +460,9 @@ export function buildContext(): Record<string, unknown> {
     // until those registries are nodes, and `roleName`/`permissionName` say so
     // instead of implying an edge the graph cannot honour.
     roleName: termIri("roleName"),
+    // A literal like `roleName`: requirement statements are not nodes of this
+    // graph, so a `req:<id>#<key>` is a name here, not a link (#1168, B3).
+    satisfiesStatement: termIri("satisfiesStatement"),
     permissionName: termIri("permissionName"),
 
     // ---- Structured values whose own vocabulary this graph does not model ---
@@ -996,9 +999,13 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, fallbackTo, ...other } = rest;
+    const { requires, fallbackTo, satisfies, ...other } = rest;
     return {
       ...other,
+      // Not `satisfies`: that term is a LINK to a skill, and a Tool's. A
+      // capability discharges a requirement STATEMENT, which this graph does
+      // not hold as a node, so the ref stays a name (#1168, B3).
+      ...(satisfies === undefined ? {} : { satisfiesStatement: names(satisfies) }),
       ...(requires === undefined
         ? {}
         : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),

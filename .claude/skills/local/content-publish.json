@@ -10,9 +10,6 @@
     { "ref": "content-test", "kind": "skill", "conformance": "SHALL" },
     { "ref": "req:content-lifecycle", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/create-release.sh", "runtime": "bash", "phase": "execute" }
-  ],
   "routingPatterns": ["publish", "release", "deploy", "version"],
   "tags": ["lifecycle", "publication"],
   "package": "content-lifecycle",

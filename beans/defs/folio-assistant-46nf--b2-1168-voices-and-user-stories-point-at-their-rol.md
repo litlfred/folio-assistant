@@ -1,10 +1,11 @@
 ---
 # folio-assistant-46nf
 title: 'B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T22:20:00Z
-updated_at: 2026-09-23T22:20:00Z
+updated_at: 2026-09-23T22:49:20Z
 parent: folio-assistant-tr05
 ---
 
