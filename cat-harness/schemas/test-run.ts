@@ -83,6 +83,7 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { SkillNameSchema } from "./tool-types";
 
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
@@ -110,8 +111,34 @@ export const HashBasisSchema = z.object({
 });
 export type HashBasis = z.infer<typeof HashBasisSchema>;
 
+/**
+ * One case the run exercised: what went in and what came out, as the skill's
+ * own contract names them.
+ *
+ * Recorded so the run can be checked AGAINST that contract (#1168, B4) — a
+ * run whose cases do not fit the skill's input and output schemas measured
+ * something other than the skill it claims to test.
+ */
+export const TestCaseSchema = z.object({
+  input: z.unknown(),
+  output: z.unknown(),
+});
+export type TestCase = z.infer<typeof TestCaseSchema>;
+
 export const TestRunSchema = z.object({
   $schema: z.literal(TEST_RUN_SCHEMA_ID),
+  /**
+   * The skill this run tests, by name.
+   *
+   * The run points at the skill; the skill names no test (#1168, B4,
+   * data-modelling step 8). Tests come and go and a skill's contract does
+   * not, so the pointer lives on the run. `kg-audit` resolves it
+   * (`test-run-skill-resolves`) and checks each case against the skill's
+   * contract (`test-run-conforms`).
+   *
+   * @ref SkillDefinitionSchema
+   */
+  skill: SkillNameSchema,
   /** What this run measured, for a reader who has only the file. */
   subject: z.string().min(1),
   /** WHAT was tested. */
@@ -120,6 +147,12 @@ export const TestRunSchema = z.object({
   process: HashBasisSchema,
   /** The measurements themselves, in whatever shape the runner records. */
   outcome: z.record(z.string(), z.unknown()),
+  /**
+   * The cases, when the runner records them. Absent is a real state: a run
+   * that only records aggregates cannot be checked against the contract, and
+   * `test-run-conforms` says so rather than passing it.
+   */
+  cases: z.array(TestCaseSchema).optional(),
   /**
    * ISO-8601 UTC. Deliberately NOT part of either hash: when a run happened
    * is not what makes it reproducible, and including it would make every
@@ -185,10 +218,12 @@ export class TestRunBasisError extends Error {
  */
 export function buildTestRun(args: {
   root: string;
+  skill: string;
   subject: string;
   dataInputs: string[];
   processInputs: string[];
   outcome: Record<string, unknown>;
+  cases?: TestCase[];
   now?: Date;
 }): TestRun {
   const data = hashBasis(args.root, args.dataInputs);
@@ -197,10 +232,12 @@ export function buildTestRun(args: {
   if (overlap.length) throw new TestRunBasisError(overlap);
   return {
     $schema: TEST_RUN_SCHEMA_ID,
+    skill: args.skill,
     subject: args.subject,
     data,
     process,
     outcome: args.outcome,
+    ...(args.cases === undefined ? {} : { cases: args.cases }),
     updated_at: (args.now ?? new Date()).toISOString(),
   };
 }

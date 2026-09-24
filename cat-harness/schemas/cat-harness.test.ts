@@ -1067,9 +1067,9 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
-      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
-      // that is correct — it declares no `harness.json`, so it is a directory
-      // rather than an instance.
+      // between `large-datasets` and `who-iris`. A directory with no
+      // `harness.json` is not an instance and is correctly absent — `smart-kg/`
+      // was the example until it was removed (bean `wg7r`).
       // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
       // the owner has since ruled that a per-IG harness should not exist at all
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
@@ -1187,20 +1187,21 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // The theme did not move with them, deliberately: `theme` is a property of
     // a DIRECTORY in the declaration, and those two directories no longer
     // exist as declared subjects. What remains themed is the graph that holds
-    // the methodology nodes, here and in `smart-kg` — which is the right
+    // the methodology nodes — which is the right
     // grain anyway, since `analyst` describes the methodologies rather than
     // the skills that apply them.
     //
-    // THREE since 2026-09-23. `folio-assistant-core-methodologies` joined when
-    // core got a methodologies graph of its own (`doc-researcher`), and it
-    // takes `analyst` for the same reason the other two do: the subject is a
+    // TWO since 2026-09-24, when `smart-kg-methodologies` went with GRADE
+    // becoming a skill (bean `wg7r`). `folio-assistant-core-methodologies`
+    // joined 2026-09-23 when core got a methodologies graph of its own
+    // (`doc-researcher`), and it takes `analyst` for the same reason
+    // `methodologies` does: the subject is a
     // METHOD, and the theme describes methods rather than the layer that holds
     // them. A second theme for core's copy would say the two graphs render
     // differently, which nobody decided and which the pages do not do.
     expect(themed.map((d) => d.id).sort()).toEqual([
       "folio-assistant-core-methodologies",
       "methodologies",
-      "smart-kg-methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");

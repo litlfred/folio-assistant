@@ -83,6 +83,7 @@ import {
   type RoleGraph,
   type SkillProvenance,
 } from "../schemas/role-graph.js";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -301,7 +302,8 @@ export async function processRows(repo = REPO): Promise<ProcessRow[]> {
     // The DECLARATION, asked of the file: is there an enforcement VALUE? A
     // presence check, not a second reading of what the policy means — and a
     // presence check on the value, not on the element. See the module doc.
-    const declared = /<folio:policy[^>]*\benforcement\s*=/.test(readFileSync(abs, "utf-8"));
+    const xml = readFileSync(abs, "utf-8");
+    const declared = ownElementPattern(xml, "policy", String.raw`[^>]*\benforcement\s*=`, "").test(xml);
     try {
       const m = await loadProcessModel(abs);
       const nodes = [...m.nodes.values()];

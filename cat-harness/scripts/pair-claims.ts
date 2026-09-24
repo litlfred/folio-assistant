@@ -45,6 +45,7 @@ import { dirname, join, relative } from "node:path";
 
 import { absenceClaims, checkClaims, declares, locationClaims, normalise } from "./check-agents-claims.js";
 import type { ProseCodePair } from "./prose-code-pairs.js";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 export type ClaimOutcome = "holds" | "false" | "undetermined";
 
@@ -147,7 +148,7 @@ export function judgePair(repo: string, pair: ProseCodePair, scripts: ReadonlySe
     const diagram = readFileSync(join(repo, pair.prose), "utf-8");
     const wf = join(repo, pair.code);
     const yml = existsSync(wf) ? readFileSync(wf, "utf-8") : undefined;
-    for (const m of diagram.matchAll(/<folio:job\s+name="([^"]+)"/g)) {
+    for (const m of diagram.matchAll(ownElementPattern(diagram, "job", String.raw`\s+name="([^"]+)"`))) {
       const job = m[1]!;
       if (yml === undefined) {
         out.push({ shape: "job", subject: job, outcome: "undetermined", reason: `${pair.code} is missing` });
