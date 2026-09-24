@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9x9r
 title: check:head-has-run passes on ANY run naming the sha — two unrelated push runs satisfy it while the gate workflow never fired
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-24T19:38:43Z
-updated_at: 2026-09-24T19:38:43Z
+updated_at: 2026-09-24T19:51:29Z
 parent: folio-assistant-1xhc
 ---
 
@@ -41,15 +41,53 @@ from one that passed — and here a script written against that very sentence
 reproduces it, because a run from a *different* workflow is admitted as
 evidence for *this* one.
 
+## A second, worse case — found while implementing
+
+PR #1222's head `28f929a`, same day. Its **only** run was `Code-quality
+gates` fired by **`workflow_dispatch`**. The old check printed a ✓.
+
+That is worse than #1309's, because a dispatch resolves
+`refs/heads/<branch>` rather than `refs/pull/N/merge` — so the green was
+about a tree that is not what would land (`yv4z`, `sddf`). The script whose
+own no-run branch carries that warning endorsed it from the other branch.
+
+So the defect is not "any run counts" alone; it is that neither the
+workflow nor the event was ever asked about.
+
+## Settled
+
+Owner ruled **option 1** on 2026-09-24: derive the owed workflows from
+`.github/workflows/`. Implemented in `src/core/workflow-events.ts`
+(`scanTriggers` / `triggerFor`) and consumed by `check-head-has-run`.
+
+Three states, because a sha carries neither a diff nor a ref:
+
+| | |
+|---|---|
+| `required` | declares the event with no filters — absence is a **finding** |
+| `conditional` | declares it behind `paths`/`types`/`branches` — **not judged**, and printed rather than dropped |
+| `not-declared` | owes nothing |
+
+In this repository four workflows declare `pull_request` and exactly one —
+`Code-quality gates` — does so unfiltered. **That count is not asserted
+anywhere**: the test pins the *property* that at least one is required
+(an empty required set passes vacuously on every commit), because a count
+in a test is the same defect as a count in prose.
+
+Job-level `if:` is deliberately ignored — a triggered workflow produces a
+run even when every job skips, which #1309 demonstrates, so treating it as
+a filter would have moved a genuinely required workflow into the
+unjudgeable column for nothing.
+
 ## Done when
 
-The verdict names the workflow, not the commit. Candidates, not yet ruled:
+- [x] the verdict names the workflow and the event, not just the commit
+- [x] required / conditional / not-declared stay three states
+- [x] could-not-ask still outranks both (an unreadable workflow file exits 2)
+- [x] tests on synthetic trees; the one real-tree test asserts a property, not a count
 
-1. Take the workflow(s) to require from `.github/workflows/` the same way
-   `gates.ts` derives its list from `code-quality-gates.yml`, so the
-   requirement cannot drift from what CI runs.
-2. Ask per-event: a `pull_request` workflow is satisfied only by a
-   `pull_request` run, never by a `push` run naming the same sha.
-
-Whichever is chosen, the third state survives: could-not-ask stays distinct
-from no-run, which is the one thing the current script gets right.
+The two candidates as they stood before the ruling, and their costs, are in
+[issue #1324](https://github.com/litlfred/folio-assistant/issues/1324).
+Option 2 (match per-event only) is a strict subset of what shipped: it would
+have caught #1309's push-run case and **missed** #1222's dispatch case, and
+would still pass if the gate workflow were renamed or deleted.
