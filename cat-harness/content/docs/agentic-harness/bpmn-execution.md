@@ -34,7 +34,9 @@ gateways are computed and which are judgement calls. A signing step can be
 engine-enforced inside an otherwise agentic run, and that is a property of the
 task, not of the whole diagram.
 
-**Not built yet.** No BPMN engine is wired in, and no QA/QC report reads a
-PROV-O log today. What exists is the process diagrams, the role graph, the
-lane bindings and the per-gateway count. This section names the target so the
+**Partly built.** No BPMN engine is wired in. The mechanical QA/QC report
+now exists: `bun run prov:qaqc` writes each workflow instance's history as a
+PROV-O log and re-checks every step against the ODRL policies, advisory
+(issue #1180, step 5; the `task-authorization` skill). The agentic QA/QC
+report does not exist yet. The rest of this section names the target so the
 proposal has something to be measured against.
