@@ -468,7 +468,7 @@ the full six-phase process is in
 `processes/crdm-requirements.bpmn` loads like every other diagram here,
 so `workflow_start` / `workflow_next` / `workflow_complete` run it, and
 `workflow_complete` refuses a step that is not enabled. Every activity in the
-agent's lane carries `<folio:skill ref>`, so `workflow_next` returns the skill
+agent's lane carries `<bootstrap.processes:skill ref>`, so `workflow_next` returns the skill
 to run rather than just a step name; `A_Implement`, `A_CreateBeans` and
 `A_Close` also carry the bean operation the engine performs. `crdm_start` and
 `crdm_status` are documented as **proposed** in older text and should not be
@@ -638,12 +638,12 @@ to spend the words: **do not start the topic.**
   `workflow_complete` (MCP) run one — all five declared as Tool nodes — and
   state is committed under `beans/workflows/` so a sibling session sees the
   same position. **Which store answers which question**, what
-  `<folio:bean op>` actually performs, and why an instance and a bean must be
+  `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two, are in
   [`workflow-state`](cat-harness/skills/workflow/workflow-state.md).
   **The discipline is in the skill, not here** —
   [`bpmn-processes`](cat-harness/skills/workflow/bpmn-processes.md) carries how to author
-  an activity (`<folio:skill ref>` and `<folio:bean>`, both required), strict
+  an activity (`<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>`, both required), strict
   vs advisory and the four steps no package may relax, the commit-boundary
   corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
   why a hand-supplied outcome is refused, and what a bean-marked step actually

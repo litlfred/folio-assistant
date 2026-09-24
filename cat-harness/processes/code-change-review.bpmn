@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -49,11 +50,11 @@ The loop back through "root-cause the failure" is the point of drawing this at a
            `folio-assistant-30hn`). This one says so on purpose: the steps
            it gates are the ones agents skip under time pressure —
            running the gates, and opening the PR at the first commit. -->
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
       <!-- Capture ON. This process ends in a write to `main`, so what ran
            before that write is exactly the audit question. Same reasoning
            as `content-lifecycle`. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
       <!-- PROCESS-SCOPED CONVENTION (bean `3190`). Every step in this diagram
            writes or reviews code, so the comment convention holds throughout
            and is bound once here rather than restated on nine activities.
@@ -61,7 +62,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
            adjudicating a translation is not in this diagram and does not get
            it, which is the whole distinction — "absent binding means NO
            conventions, not all of them". -->
-      <folio:convention ref="comment-why-not-what" />
+      <cat-harness.processes:convention ref="comment-why-not-what" />
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_CodeChangeReview">
@@ -75,14 +76,14 @@ The loop back through "root-cause the failure" is the point of drawing this at a
              differs from the declared "CI/CD Pipeline" by one capital letter,
              which no reader would catch and the audit did. -->
         <bpmn:extensionElements>
-          <folio:role ref="authoring-agent"/>
+          <bootstrap.processes:role ref="authoring-agent"/>
           <!-- LANE-SCOPED (bean `3190`), and the scope is the point. This lane
                writes the checks; the reviewer and the pipeline lanes below do
                not, so binding it here rather than on the process says who the
                rule is for. `workflow_next` reports the scope beside the ref so
                an agent can tell "every step in this process" from "this lane
                only" — two different claims that a flat list would merge. -->
-          <folio:convention ref="no-clean-run-over-an-empty-set"/>
+          <cat-harness.processes:convention ref="no-clean-run-over-an-empty-set"/>
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
@@ -100,7 +101,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="CI/CD pipeline">
         <bpmn:documentation>Exists as a separate lane for one reason: what it tests — the merge of head into base — is not a claim the Agent lane could make about its own tree, so GW_CIGreen has to be fed by an independent run rather than by the agent reporting its own gates as done.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_RunCI</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Code reviewer">
@@ -108,7 +109,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         <!-- This one DOES match by name, and is still bound explicitly: a
              binding that works by coincidence of wording is one rename from
              silently unbinding. -->
-        <bpmn:extensionElements><folio:role ref="code-reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="code-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -126,8 +127,8 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         step and not at the end.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="bean-coordination"/>
-        <folio:bean op="claim"/>
+        <bootstrap.processes:skill ref="bean-coordination"/>
+        <cat-harness.processes:bean op="claim"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f1</bpmn:incoming>
       <bpmn:outgoing>f2</bpmn:outgoing>
@@ -140,7 +141,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         what this closes.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="issue-working"/>
+        <bootstrap.processes:skill ref="issue-working"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f2</bpmn:incoming>
       <bpmn:outgoing>f3</bpmn:outgoing>
@@ -152,7 +153,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         this is the work.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="continual-progress"/>
+        <bootstrap.processes:skill ref="continual-progress"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f3</bpmn:incoming>
       <bpmn:incoming>f11</bpmn:incoming>
@@ -169,12 +170,12 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         agent running only the tests would have pushed all three.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <!-- This activity carried a `<folio:no-skill>` exemption when the
+        <!-- This activity carried a `<cat-harness.processes:no-skill>` exemption when the
              diagram landed: the SDLC audit had found that nothing told an
              agent to run the platform's own gates, and the exemption WAS
              the Verification phase being unowned, recorded rather than
              papered over. Bean `folio-assistant-n60j` closed it. -->
-        <folio:skill ref="platform-gates"/>
+        <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f4</bpmn:incoming>
       <bpmn:outgoing>f5</bpmn:outgoing>
@@ -187,7 +188,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         is not caution — it is a blocked reviewer.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="continual-progress"/>
+        <bootstrap.processes:skill ref="continual-progress"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f5</bpmn:incoming>
       <bpmn:outgoing>f6</bpmn:outgoing>
@@ -206,7 +207,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         review state — only a green, mergeable head waits on reviewers.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f9</bpmn:incoming>
       <bpmn:outgoing>f11</bpmn:outgoing>
@@ -232,7 +233,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
              its own change. What the agent needs is the follow-through
              discipline: answer every finding or say why not, and keep the PR
              moving until it is merged or closed. -->
-        <folio:skill ref="watch"/>
+        <bootstrap.processes:skill ref="watch"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f13</bpmn:incoming>
       <bpmn:outgoing>f14</bpmn:outgoing>
@@ -246,7 +247,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         merge-conflict transition.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge"/>
+        <bootstrap.processes:skill ref="prepare-merge"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f15</bpmn:incoming>
       <bpmn:outgoing>f16</bpmn:outgoing>
@@ -259,8 +260,8 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         audited. An ISSUE is never closed on the agent's own say-so.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager"/>
-        <folio:bean op="resolve"/>
+        <bootstrap.processes:skill ref="todo-manager"/>
+        <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f16</bpmn:incoming>
       <bpmn:outgoing>f17</bpmn:outgoing>
@@ -279,7 +280,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         different trees, and the difference is invisible from a checkout.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes the workflow. There is no instruction body for an agent to follow, and a skill here would describe somebody else's behaviour."/>
+        <cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes the workflow. There is no instruction body for an agent to follow, and a skill here would describe somebody else's behaviour."/>
       </bpmn:extensionElements>
       <bpmn:incoming>f6</bpmn:incoming>
       <bpmn:outgoing>f7</bpmn:outgoing>
@@ -293,7 +294,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
         somebody acts as one for the duration of this lane.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="code-node-review"/>
+        <bootstrap.processes:skill ref="code-node-review"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f8</bpmn:incoming>
       <bpmn:outgoing>f12</bpmn:outgoing>

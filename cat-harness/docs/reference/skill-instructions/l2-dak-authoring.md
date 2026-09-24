@@ -72,7 +72,7 @@ happens when `SMART_BASE_HOME` is unset (the skill degrades to `skip`, it does
 
 ## Where this sits
 
-`l2-dak-authoring.bpmn` carries `<folio:policy enforcement="advisory"/>`: it is
+`l2-dak-authoring.bpmn` carries `<cat-harness.processes:policy enforcement="advisory"/>`: it is
 a per-content-type process, and this package owns what "adequate" means in its
 domain. That is licence to adapt the sequence, not to skip the gate — the base
 processes it feeds (`editing-hci-validation`, `content-lifecycle`) stay strict.

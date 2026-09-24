@@ -238,7 +238,10 @@ export function navbarCss(): string {
     `@media(min-width:${NAV_WIDE_MQ_PX}px){`,
     `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_WIDE_PX}px}`,
     `.fa-nav-in{width:${NAV_OPEN_WIDE_PX}px}}`,
-    `.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}`,
+    // Clipped in place, never parked at `left:-9999px`: on a right-to-left
+    // page that is the scrollable side, and it widened the page ~10,000px
+    // (bean `2r2n`). Same rule as `.fa-nav-open` in docs-ui.css.
+    `.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}`,
     // THE THREE REGIONS. `min-height:0` on the middle is not optional: a flex
     // child defaults to `min-height:auto`, which refuses to shrink below its
     // content, so the column grows past the viewport and the FIXED BOTTOM

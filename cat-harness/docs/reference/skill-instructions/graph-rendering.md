@@ -52,7 +52,7 @@ prevents is stated beside it.
    than one kind of edge ([`edge-kinds-and-blast-radius`](edge-kinds-and-blast-radius.md)).
    Editorial `uses[]` and formal Lean edges, enforced and prose-only
    references, and a field-carried link versus one declared elsewhere (the
-   UML's dashed `folio:skill` edge) each get their own line style and a
+   UML's dashed `bootstrap.processes:skill` edge) each get their own line style and a
    legend. Merging two kinds into one line destroys the signal every metric
    on that graph is computed from.
 5. **Pick the layout engine by what the graph is, and write down why.**
