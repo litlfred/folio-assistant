@@ -8,6 +8,8 @@ updated_at: 2026-09-24T05:54:04Z
 parent: folio-assistant-slw1
 ---
 
+Issue #1250.
+
 Owner, 2026-09-24:
 
 > on library/ page, the extract of a node is shown, but no agentic summary
