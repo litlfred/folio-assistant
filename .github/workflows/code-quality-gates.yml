@@ -378,6 +378,14 @@ jobs:
       - name: glossary page and SKOS
         run: bun run check:glossary
 
+      # The agentic engine's after-check (#1180 step 5): every workflow
+      # instance's history as W3C PROV-O, with authorizeTask re-run on each
+      # step. ADVISORY (owner, 2026-09-23): findings are reported on the
+      # prov-qaqc/ page, never fatal. This fails only on stale outputs, a
+      # prov:Activity that does not validate, or an internal error.
+      - name: PROV-O QA/QC report
+        run: bun run check:prov-qaqc
+
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
       # 58 of 62 .pot templates are diagrams and none has a .po). It checks
