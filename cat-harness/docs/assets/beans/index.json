@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 275,
+      "count": 276,
       "unit": "beans"
     }
   },
@@ -741,7 +741,7 @@
     {
       "id": "folio-assistant-6o1z",
       "title": "crdm-detect corpus: #187 and #199 are the same artefact, labelled opposite",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
@@ -991,6 +991,20 @@
       "updatedAt": "2026-09-19T11:43:44Z",
       "preview": "Notes that a participant carries, attached to a node of the graph.\n\n`h32d` is the schema both halves share; `5oai` is the relation that lets one\nattach to a content block and move between them. The 2x2 that governs this is\nmemory-vs-workflow and human-vs-agent: todos are human memory, `MEMORY.md` is\nagent memory, beans are agent workflow, and human workflow is deliberately\nempty.\n\n`4kiw` and `0j8h",
       "file": "beans/defs/folio-assistant-8jt6--memory-todos-notes-an-agent-or-a-person-carries-at.md"
+    },
+    {
+      "id": "folio-assistant-8v0y",
+      "title": "A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:07:00Z",
+      "updatedAt": "2026-09-23T21:07:04Z",
+      "preview": "Issue [#1190](https://github.com/litlfred/folio-assistant/issues/1190).\n\nA bean that carries a **skill's contract** instead of pointing at it. `AGENTS.md`'s\nbanner already states the rule — *where a skill and a copy disagree, the skill wins\nand the copy is wrong* — and nothing could read it.\n\n## The defect, already paid for\n\n`kn0t` held a second copy of\n[`fhir-harness/skills/fhir-ig-base/ig-publis",
+      "file": "beans/defs/folio-assistant-8v0y--a-bean-that-restates-a-live-skills-contract-is-unc.md"
     },
     {
       "id": "folio-assistant-8xtj",
@@ -3289,14 +3303,14 @@
     {
       "id": "folio-assistant-vq8o",
       "title": "Prior-art page: open-source projects taking a similar approach",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:53:16Z",
-      "updatedAt": "2026-09-23T22:03:23Z",
+      "updatedAt": "2026-09-24T05:25:53Z",
       "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
       "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
     },
@@ -3878,12 +3892,6 @@
   "findings": [
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-6o1z",
-      "blocks": "folio-assistant-vjbl",
-      "detail": "blocks `folio-assistant-vjbl` and states no expiry, so the block cannot be told from abandoned work"
-    },
-    {
-      "kind": "blocked-without-expiry",
       "bean": "folio-assistant-jg8s",
       "blocks": "folio-assistant-p67i",
       "detail": "blocks `folio-assistant-p67i` and states no expiry, so the block cannot be told from abandoned work"
@@ -3899,6 +3907,12 @@
       "bean": "folio-assistant-tfo1",
       "blocks": "folio-assistant-d3yq",
       "detail": "blocks `folio-assistant-d3yq` and states no expiry, so the block cannot be told from abandoned work"
+    },
+    {
+      "kind": "blocker-closed",
+      "bean": "folio-assistant-6o1z",
+      "blocks": "folio-assistant-vjbl",
+      "detail": "is completed but still blocks `folio-assistant-vjbl`, which is todo"
     }
   ]
 }
