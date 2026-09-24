@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8v0y
 title: A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T21:07:00Z
-updated_at: 2026-09-23T21:07:04Z
+updated_at: 2026-09-24T05:54:13Z
 parent: folio-assistant-1xhc
 ---
 
@@ -170,3 +170,40 @@ finding names something the bean's OWNER does.
       additive — one predicate plus tests. The option deliberately argued against was
       widening now: a bulleted-phase-list detector has **zero** live instances, which is
       the same evidence-free surface three of the brief's four shapes were rejected for
+
+## Summary of Changes
+
+Shipped in PR #1191, merged `e5cf533d`.
+
+`cat-harness/scripts/check-bean-restates-skill.ts`, wired as
+`check:bean-restates-skill` and registered in
+`.github/workflows/code-quality-gates.yml` so `gates.ts` derives it — a hard
+gate, not `kind: "report"`, because the false-positive rate measured 0.
+
+**The rule is structural, and that was forced by measurement rather than
+chosen.** A phase-contract table: a criterion column that is not an exit-**code**
+column, over rows enumerating named units of a plan. 0 of 888 beans in the
+store, 1 of 1 on `kn0t` before PR #1185, 0 after. Three of the four criterion
+shapes in the original brief were rejected against the corpus — `## Proposed
+phases` and `## Rules` occur zero times, `invariant` is ordinary prose in every
+open hit, and a line matching `exit criterion` flags `kn0t` AFTER its repair.
+The brief's conjunction was falsified too: pre-repair `kn0t` names no skill by
+path at all, so requiring the pointer as a condition would have caught none of
+the defect the gate exists for.
+
+22 tests over synthetic trees and literal strings; nothing walks `beans/`.
+
+**What it does not reach, named rather than passed over.** `ekp9`'s hand-check
+found 3 live restatements this rule cannot flag — `xies`, `tfo1`, `lqo9` — none
+of them a phase table. The clean line therefore claims only *"no open bean
+carries a phase-contract table"*. Their point 4 also corrected a real defect
+here: the report no longer says "delete the copy", because they measured the
+SKILL wrong in 3 of 5 drifted pairs.
+
+**Follow-up worth its own bean, not opened here:** `ekp9` §"AGREEMENT IS NOT
+CORRECTNESS" names a class no bean-vs-skill rule reaches — `lqo9` and
+`swimlane-glossary` both say *"157 task-containing lanes"* where
+`check:lane-documentation` measures **182**; `s8mo` and `session-context` both
+say *"the six fields"* where `SessionContextSchema` has **8**. A check
+comparing a prose count against a command's output would catch these. That is a
+different check, and the owner chooses whether it is wanted.

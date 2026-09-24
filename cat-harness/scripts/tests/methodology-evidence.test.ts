@@ -113,12 +113,13 @@ describe("the real corpus", () => {
     expect(report.unresolved).toEqual([]);
   });
 
-  it("reaches `grade` in the repository-scoped smart-kg graph, not just the harness's", () => {
-    // `smart-kg/methodologies/` is repository-scoped so it lifts out whole.
+  it("reaches `diig` in the repository-scoped smart-base graph, not just the harness's", () => {
+    // `smart-base/methodologies/` is repository-scoped so it lifts out whole.
     // A sweep resolving only instance-relative directories would miss it and
-    // report a smaller, cleaner corpus than exists.
+    // report a smaller, cleaner corpus than exists. (This read `grade` in
+    // `smart-kg/` until GRADE became a skill, bean `wg7r`.)
     const names = [...report.resolved.map((r) => r.name), ...report.noEvidence.map((f) => f.name)];
-    expect(names).toContain("grade");
+    expect(names).toContain("diig");
   });
 
   it("swot is backed by BOTH its sources, and each is really on disk", () => {

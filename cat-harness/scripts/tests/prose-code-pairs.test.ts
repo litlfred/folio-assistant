@@ -11,6 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { attest, discoverPairs, evaluatePairs, readAttestations } from "../prose-code-pairs";
+import { FOLIO_BPMN_NS } from "../../schemas/namespaces.ts";
 
 function repo(): { root: string; inst: string } {
   const root = mkdtempSync(join(tmpdir(), "pairs-"));
@@ -21,7 +22,7 @@ function repo(): { root: string; inst: string } {
   writeFileSync(join(root, ".github/workflows/w.yml"), "jobs: {}\n");
   writeFileSync(
     join(inst, "processes/p.bpmn"),
-    `<bpmn:process id="P"><bpmn:extensionElements><folio:implements workflow=".github/workflows/w.yml"/></bpmn:extensionElements></bpmn:process>`,
+    `<bpmn:process id="P" xmlns:folio="${FOLIO_BPMN_NS}"><bpmn:extensionElements><folio:implements workflow=".github/workflows/w.yml"/></bpmn:extensionElements></bpmn:process>`,
   );
   writeFileSync(join(inst, "skills/pkg/s.md"), "# s\n");
   writeFileSync(join(inst, "skills/pkg/s.ts"), "export const s = 1;\n");

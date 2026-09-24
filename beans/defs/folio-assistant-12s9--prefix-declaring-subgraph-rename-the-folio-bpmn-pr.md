@@ -43,3 +43,31 @@ Programs match on the namespace address, never on the prefix. The prefix is what
 ## Done when
 
 No file under `bootstrap/` carries `folio:` or `folio-*/v1`, and the ALLOW list in `graph.test.ts` holds only bootstrap's own location.
+
+## Measured 2026-09-24: a premise was wrong, and stage 1 is bigger
+
+**The bean says "programs match on the namespace address, never on the prefix". In this repository that is false.**
+- `process-model.ts` parses with `bpmn-moddle` and registers no descriptor for our extensions. It recognises them by the literal prefix text: `ext.find((v) => v.$type === "folio:bean")`, about 30 times.
+- Five more readers regex the raw XML for the prefix text:
+  - `check-workflow-coverage.ts` (`<folio:implements`, `<folio:job`)
+  - `kg-detangle.ts` (`folio:skill ref=`)
+  - `code-lists.ts` (`<folio:adjudication`)
+  - `gen-docs-auto.ts` (`<folio:skill ref=`)
+  - `glossary-export.ts` (`<folio:role`)
+- So a diagram written as `<bootstrap.processes:skill>` would parse **without error and be silently ignored**. That is the `0d99` failure (an element nothing reads, which reads as fine) turned inside out.
+
+**It is fixable.** The parser exposes each element's namespace: probed, an unknown element carries `$descriptor.ns = { prefix, localName, uri }`. Normalising `$type` by `ns.uri` once, right after parsing, makes `process-model` prefix-independent.
+
+**All 74 diagrams bind `folio` to one address** (`https://litlfred.github.io/folio-assistant/bpmn`), so no legacy spelling remains to carry.
+
+## Stage 1, revised
+- [x] 1a. `schemas/namespaces.ts`: a registry of OUR extension namespaces (the current address, plus one per declaring Subgraph). `process-model.ts` normalises each element by `ns.uri` after parsing, and the five raw-regex readers go through the parser or a namespace-aware helper.
+- [x] 1b. Test: a diagram written with a different prefix bound to our address produces an identical model, and one with `folio:` bound to a foreign address produces none of our elements.
+- [x] 1c. Gate: fail on any new raw regex for `<folio:` in a diagram reader, so the prefix cannot be re-hardcoded.
+
+### Stage 1 done, 2026-09-24
+- **Nine readers, not six.** The new gate found four more that my first search missed: `prose-code-pairs`, `render-bpmn`, `pair-claims` and `gen-processes-viz`. All nine now match through `ownElementPattern`, and `process-model` normalises by `ns.uri`.
+- **Two test fixtures had bound `folio` to the wrong address** (`…/ns` instead of `…/bpmn`). They passed only because matching was by prefix text. Corrected.
+- **Fixtures that bound no namespace at all** now declare the binding a real diagram carries. A new test pins that a document binding none of our namespaces has none of our elements.
+- **Verified that the tests are not vacuous:** with the normalisation switched off, both parser tests fail.
+- **Not done here, on purpose:** the per-Subgraph addresses (`bootstrap.processes`, …) are not minted yet. Stage 2 mints each one together with the diagrams that use it, so no address is published before anything binds it.

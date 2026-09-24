@@ -57,6 +57,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import type { KgCriterionEntry, KgFinding, KgQaReport } from "../schemas/kg-qa.js";
+import { ownElementPattern } from "../schemas/namespaces.js";
 
 /** The declared pair kinds this platform can see. */
 export const PAIR_KINDS = ["implements", "co-located"] as const;
@@ -105,7 +106,7 @@ export function discoverPairs(
   if (subject.kind === "process") {
     const text = readFileSync(abs, "utf-8");
     const out: ProseCodePair[] = [];
-    for (const m of text.matchAll(/<folio:implements\b[^>]*\bworkflow="([^"]+)"/g)) {
+    for (const m of text.matchAll(ownElementPattern(text, "implements", String.raw`[^>]*\bworkflow="([^"]+)"`))) {
       out.push({ kind: "implements", prose, code: m[1]! });
     }
     return out;
