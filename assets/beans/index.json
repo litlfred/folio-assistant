@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 298,
+      "count": 304,
       "unit": "beans"
     }
   },
@@ -35,6 +35,20 @@
       "updatedAt": "2026-09-21T10:28:48Z",
       "preview": "Owner, 2026-09-20 (session_014HGPQoUnzXGqSspA8x6YyD), in three messages.\n\n## 1. The handler\n\n> in cat-harness needs to be harness/handler at `cat-harness/docs-auto/<auto-doc-type>/<path>`\n> defined. which will auto-generate extracatable documentation at `<path>` sub-graph.\n> extracablle = bpmn, tasks, glossary, etc. ther is a glosarry bean... this could\n> clarify it lives at `cat-harness/docs-auto",
       "file": "beans/defs/folio-assistant-06e3--docs-auto-a-handler-at-cat-harnessdocs-autoauto-do.md"
+    },
+    {
+      "id": "folio-assistant-08u4",
+      "title": "SURVIVAL PATH: every referenced IRIS node resolves by Handle, with a liveness check and a snapshot pointer",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:01:44Z",
+      "updatedAt": "2026-09-24T18:01:44Z",
+      "preview": "From the `v048` roast, objections 6 + 7. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** every catalogue node id is a DSpace UUID or a path, and every upstream URL is `iris.who.int/…`. `hdl.handle.net` occurs **0** times in `who-iris/catalogue`, against `iris-dspace.md` R1: *\"Resolve by **Handle** where one exists… only the Handle is guaranteed outside WHO\"*. No step in `sample-import",
+      "file": "beans/defs/folio-assistant-08u4--survival-path-every-referenced-iris-node-resolves.md"
     },
     {
       "id": "folio-assistant-0fua",
@@ -107,6 +121,20 @@
       "file": "beans/defs/folio-assistant-0lmb--content-model-block-kinds-adapters-and-the-authori.md"
     },
     {
+      "id": "folio-assistant-0uu2",
+      "title": "DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:58:39Z",
+      "updatedAt": "2026-09-24T06:22:01Z",
+      "preview": "Owner, 2026-09-23: 'bootstrap/ should be its own subgraph.... in fact QA: in harness `<stub>/*.*` should be a subgraph.' The FIRST half only — which top-level directories are undeclared, and what each should become. The reference-direction half is a sibling session's.\n\nDeliverable is a SPLIT (declare / fold / remove / already-declared / not-mine), not a sweep. Implement only what the owner picks.\n",
+      "file": "beans/defs/folio-assistant-0uu2--declaration-gap-every-top-level-directory-is-a-dec.md"
+    },
+    {
       "id": "folio-assistant-0ytk",
       "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
       "status": "in-progress",
@@ -137,14 +165,14 @@
     {
       "id": "folio-assistant-12s9",
       "title": "PREFIX = DECLARING SUBGRAPH: rename the folio: BPMN prefix and folio-*/v1 schema ids to the path of the Subgraph that declares them (owner ruling iwtn #1)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-88mg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:03:10Z",
-      "updatedAt": "2026-09-23T21:03:10Z",
+      "updatedAt": "2026-09-24T18:02:28Z",
       "preview": "## Owner ruling, 2026-09-23 (bean iwtn, ruling 1 of 4)\n\n> use `<sub>:` as prefix when assets are declared/instantiated in `<sub>`. what patterns for sub-sub-graphs? `<path>:<in>:<graph>:` or so?\n\nA nested Subgraph uses its **path of Subgraph ids joined with dots**. XML forbids a colon inside a prefix, so `a:b:c:` cannot be used. The owner chose this pattern on 2026-09-23 over \"Harness name only\" a",
       "file": "beans/defs/folio-assistant-12s9--prefix-declaring-subgraph-rename-the-folio-bpmn-pr.md"
     },
@@ -779,6 +807,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
+    },
+    {
+      "id": "folio-assistant-6brk",
+      "title": "FLAKE: check-declaration-filename's corpus scan runs 4.2s against a 5000ms test budget on a clean main — any corpus growth tips it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T06:21:41Z",
+      "updatedAt": "2026-09-24T06:21:41Z",
+      "preview": "`check-declaration-filename.test.ts` scans the whole markdown and workflow\ncorpus. **Measured 2026-09-24, directly, three runs per tree:**\n\n| tree | ms per `checkDeclarationFilename()` |\n|---|---|\n| clean `main` | **4476, 4198, 3927** |\n| `main` + ~150 lines of markdown (PR #1188) | **4927, 4216, 4249** |\n\nThe test budget is **5000 ms**. So on a clean `main`, before anybody adds\nanything, the scan",
+      "file": "beans/defs/folio-assistant-6brk--flake-check-declaration-filenames-corpus-scan-runs.md"
     },
     {
       "id": "folio-assistant-6h47",
@@ -1609,6 +1651,20 @@
       "file": "beans/defs/folio-assistant-ctp3--ingest-doc-researcher-arxiv251021603v1-as-a-method.md"
     },
     {
+      "id": "folio-assistant-cw35",
+      "title": "GATES DECIDE PUBLICATION: a held bitstream whose copyright or restrictions gate is not permitted is not redistributed",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:01:44Z",
+      "updatedAt": "2026-09-24T18:01:44Z",
+      "preview": "From the `v048` roast, objections 3 + 4. The owner placed this under `kupb` on 2026-09-24, knowing it keeps GOAL 3 open.\n\n**Measured:** every held bitstream carries `copyright: unknown` and `restrictions: unknown`, yet the public who-iris pages link the PDFs via raw.githubusercontent and jsDelivr. `gen-iris-pages.ts` reads gates only to COUNT them (l.1062). `refusedGates` / `unansweredGates` (`fol",
+      "file": "beans/defs/folio-assistant-cw35--gates-decide-publication-a-held-bitstream-whose-co.md"
+    },
+    {
       "id": "folio-assistant-cy4p",
       "title": "BPMN ENGINE: a Tool node, with downcompilation per coding agent",
       "status": "todo",
@@ -1763,6 +1819,20 @@
       "updatedAt": "2026-09-20T12:02:21Z",
       "preview": "The owner's decision on `ulqj` is CSVW. This is the build.\n\n> \"make csvw a skill and associated tool in document ingestion. part of\n> csv/excel processing is extract tabular metadata (tables, rows, headers,\n> cols, data types, location on sheet, row, col, etc) as best as can. generic\n> workflows, specific tools and skill depending on format\"\n\n## The shape the owner asked for\n\n**Generic workflow, f",
       "file": "beans/defs/folio-assistant-eief--csvw-skill-ingestion-tools-tabular-metadata-as-far.md"
+    },
+    {
+      "id": "folio-assistant-ekp9",
+      "title": "HAND-CHECK: which beans restate a skill rather than record an outcome — the ground truth `check:bean-restates-skill` is measured against",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:09:53Z",
+      "updatedAt": "2026-09-23T21:09:53Z",
+      "preview": "Read each bean that shares substantial prose with a skill, decide whether the sharing is a\nlegitimate **outcome record** or a **live restatement** that can drift, and record the verdict.\nGround truth for the sibling session's `check:bean-restates-skill`.\n\nIssue: #1187. Worked example of the correct post-repair shape: `kn0t` on `main`, repaired in #1185.\n\n## Why — the defect, already paid for\n\n`kn0",
+      "file": "beans/defs/folio-assistant-ekp9--hand-check-which-beans-restate-a-skill-rather-than.md"
     },
     {
       "id": "folio-assistant-eof6",
@@ -3385,14 +3455,14 @@
     {
       "id": "folio-assistant-v048",
       "title": "ROAST: adversarial pass over the catalogue-import design before any of it is believed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:02:32Z",
-      "updatedAt": "2026-09-20T08:02:32Z",
+      "updatedAt": "2026-09-24T17:54:11Z",
       "preview": "Owner: 'bean up and roast.' The roast is a deliverable, not a mood. It belongs as a bean so the objections survive the chat, which is the same reason `kg:audit` writes sidecars rather than printing a verdict: a printed objection is gone, and 'nobody raised this' and 'somebody raised it and it was answered' become indistinguishable.\n\nFindings recorded in the chat this session; to be written up here",
       "file": "beans/defs/folio-assistant-v048--roast-adversarial-pass-over-the-catalogue-import-d.md"
     },
@@ -3929,6 +3999,20 @@
       "updatedAt": "2026-09-24T17:47:57Z",
       "preview": "## Why\n10 `<cat-harness.processes:link href>` elements are arrow-direction findings: a process (general) names the pages written about it. They are also 5-of-10 broken somewhere, with nothing checking them:\n- `#ingest-the-theme` — no such anchor (no theme section exists).\n- `#a-theme-source` — on a gateway; render-bpmn only reads call activities, so it is inert, and its anchor is missing too.\n- On",
       "file": "beans/defs/folio-assistant-xl55--b5-fix-1168-bpmn-subprocess-links-derived-from-the.md"
+    },
+    {
+      "id": "folio-assistant-xlg2",
+      "title": "RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-kupb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:01:44Z",
+      "updatedAt": "2026-09-24T18:01:44Z",
+      "preview": "From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** `sample-import.bpmn` loads and renders, with skills and roles bound, but `beans/workflows/` holds **no** instance of it or of `materialize-remote`, no `.ts` file names it, and the three worked items arrived as owner uploads, not through it. `hfwl`'s Done-when asked only for a diagram, a skill and a ren",
+      "file": "beans/defs/folio-assistant-xlg2--run-the-sample-import-one-real-end-to-end-instance.md"
     },
     {
       "id": "folio-assistant-xp72",

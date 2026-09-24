@@ -22,13 +22,15 @@ address would have parsed without error while every Skill, Role and decision
 in it was silently ignored. The owner's ruling that a prefix names the
 Subgraph that declares the element (<code>bootstrap.processes:</code>) is unreachable
 until nothing depends on the prefix, which is what this list is for.</p>
-<p>The retired <a href="schemas_namespaces.LEGACY_FOLIO_BPMN_NS.html" class="tsd-kind-variable">LEGACY_FOLIO_BPMN_NS</a> is deliberately NOT here: no
-diagram binds it, and <code>external-schemas</code> reports it as drift rather than
-accepting it. <a href="schemas_namespaces.BOOTSTRAP_PROCESSES_NS.html" class="tsd-kind-variable">BOOTSTRAP_PROCESSES_NS</a> IS here: it is a second
-address on purpose, not a second spelling of one.</p>
+<p>Two addresses on purpose, one per declaring Subgraph. The single address
+<a href="schemas_namespaces.FOLIO_BPMN_NS.html" class="tsd-kind-variable">FOLIO_BPMN_NS</a> was here too until 2026-09-24 and is now RETIRED, like
+<a href="schemas_namespaces.LEGACY_FOLIO_BPMN_NS.html" class="tsd-kind-variable">LEGACY_FOLIO_BPMN_NS</a> before it: no diagram in the owner's
+repositories binds it (the last, ihris, moved in litlfred/ihris#24), so an
+element under it is no longer ours, and <code>external-schemas</code> reports a diagram
+that still binds it as drift.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/9bc4c202bc3f9271be6095e0db2c967a44a77630/cat-harness/schemas/namespaces.ts#L224">work/folio-assistant/folio-assistant/cat-harness/schemas/namespaces.ts:224</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/67886de5539a658ffa89fc461df0ef6a312c2695/cat-harness/schemas/namespaces.ts#L226">work/folio-assistant/folio-assistant/cat-harness/schemas/namespaces.ts:226</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

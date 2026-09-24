@@ -21,7 +21,7 @@ their activities name.</p>
 <h2 id="what-goes-wrong-here-and-why-a-report-was-not-enough" class="tsd-anchor-link">What goes wrong here, and why a report was not enough<a href="#what-goes-wrong-here-and-why-a-report-was-not-enough" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The joins in &quot;an actor performs a task in a process as a role, using that
 role's skills&quot; were, until this module, checked at exactly one point:
-<code>scripts/check-workflow-refs.ts</code> verified that a <code>&lt;folio:skill ref&gt;</code> names a
+<code>scripts/check-workflow-refs.ts</code> verified that a <code>&lt;bootstrap.processes:skill ref&gt;</code> names a
 skill that exists. Everything else was unjoined, and the numbers say so —
 measured 2026-09-18 across twenty diagrams: <strong>60 distinct lane names</strong>, bound
 to nothing, for roughly two dozen actual positions; four <code>.dmn</code> files whose
