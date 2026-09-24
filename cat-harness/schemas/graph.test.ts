@@ -7,8 +7,8 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { findDeclarationFile, instanceRootsIn } from "../../cat-harness/schemas/cat-harness.ts";
-import { CLASS_GLOSSES } from "../../cat-harness/schemas/vocabulary.ts";
+import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
+import { CLASS_GLOSSES } from "./vocabulary.ts";
 import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
@@ -102,8 +102,7 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
     /"folio-[a-z-]+\/v1"/g,
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
-  const PENDING = [
-  ];
+  const PENDING: string[] = [];
   const files: string[] = [];
   const walk = (d: string) => {
     for (const f of readdirSync(d)) {
