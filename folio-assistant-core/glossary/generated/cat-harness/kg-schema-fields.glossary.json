@@ -6698,6 +6698,62 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexitemschema.file",
+      "prefLabel": "BeanIndexItemSchema.file",
+      "definition": "Repository-relative path of the bean file.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.parent",
+      "prefLabel": "BeanIndexItemSchema.parent",
+      "definition": "`\"\"` when the bean has no parent.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.preview",
+      "prefLabel": "BeanIndexItemSchema.preview",
+      "definition": "The body, trimmed to its first 400 characters.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.referencedby",
+      "prefLabel": "LibraryIndexEntrySchema.referencedBy",
+      "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.badges",
+      "prefLabel": "QaIndexSchema.badges",
+      "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.page",
+      "prefLabel": "QaIndexSchema.page",
+      "definition": "The page's slug.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.changedat",
+      "prefLabel": "TranslationStatusSchema.changedAt",
+      "definition": "`YYYY-MM-DD`: the day the counts last changed.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.scope",
+      "prefLabel": "TranslationStatusSchema.scope",
+      "definition": "The translations directory counted, repository-relative.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
+      "status": "candidate"
+    },
+    {
       "id": "skill-package.actordefinitionschema.permissions",
       "prefLabel": "ActorDefinitionSchema.permissions",
       "definition": "Permission ids — what it may do, regardless of lane. See `skills/permissions/`.",
