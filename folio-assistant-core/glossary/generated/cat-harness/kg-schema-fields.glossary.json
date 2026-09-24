@@ -1539,6 +1539,48 @@
       "status": "candidate"
     },
     {
+      "id": "block-summary.blocksummariessidecarschema.entry",
+      "prefLabel": "BlockSummariesSidecarSchema.entry",
+      "definition": "The library entry's slug — the directory this file sits in.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema.entry",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.block",
+      "prefLabel": "BlockSummarySchema.block",
+      "definition": "The block's `@id`, e.g. `library/<slug>/blocks/prose-sec-000`.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.block",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.narrative",
+      "prefLabel": "BlockSummarySchema.narrative",
+      "definition": "The summary itself, with its state and its author.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.narrative",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.source",
+      "prefLabel": "BlockSummarySchema.source",
+      "definition": "The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.source_hash",
+      "prefLabel": "BlockSummarySchema.source_hash",
+      "definition": "sha256 of {@link proseBody} of `source` when the summary was drafted.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.source_hash",
+      "status": "candidate"
+    },
+    {
+      "id": "block-summary.blocksummaryschema.superseded",
+      "prefLabel": "BlockSummarySchema.superseded",
+      "definition": "Earlier narratives this one replaced — a rejected draft, or one whose source changed. Kept so a rejection's reason is not lost when the block is redrafted: a rejection that vanishes lets the next agent write the identical thing again.",
+      "source": "cat-harness/schemas/block-summary.ts#BlockSummarySchema.superseded",
+      "status": "candidate"
+    },
+    {
       "id": "board-positions.boardpositionschema.x",
       "prefLabel": "BoardPositionSchema.x",
       "definition": "Horizontal position in board units.",
