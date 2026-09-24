@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-hand-check-beans-restating-skills/skills/content-test/output.schema.json",
+  "title": "Content Test Output",
+  "description": "Output schema for content testing results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "testResults"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "testResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "testId",
+          "status"
+        ],
+        "properties": {
+          "testId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "passed": {
+          "type": "integer"
+        },
+        "failed": {
+          "type": "integer"
+        },
+        "skipped": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/hand-check-beans-restating-skills",
+    "sha": "a8c47cbad3b2044ad72bf2bf462c1a8a06eb43fe",
+    "pr": "1188/merge",
+    "run": "35964177155"
+  }
+}

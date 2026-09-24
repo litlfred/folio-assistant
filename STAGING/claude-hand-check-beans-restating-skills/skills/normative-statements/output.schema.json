@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-hand-check-beans-restating-skills/skills/normative-statements/output.schema.json",
+  "title": "Normative Statement Output",
+  "type": "object",
+  "required": [
+    "label",
+    "kind"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "const": "prose",
+      "description": "Always prose today. There is no first-class recommendation kind: adding one means a builder, schema, label prefix, viewer registration, constraint rows and QA criteria, and it is tracked separately rather than half-done. A prose block converts by changing one builder call."
+    },
+    "anchor": {
+      "type": "string",
+      "description": "The HTML anchor emitted for this block, equal to its label."
+    },
+    "citedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Labels whose uses[] names this statement."
+    }
+  },
+  "staging": {
+    "branch": "claude/hand-check-beans-restating-skills",
+    "sha": "a8c47cbad3b2044ad72bf2bf462c1a8a06eb43fe",
+    "pr": "1188/merge",
+    "run": "35964177155"
+  }
+}
