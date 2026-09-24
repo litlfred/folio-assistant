@@ -1163,6 +1163,15 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
   },
   {
+    id: "arrow-direction",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A general node names one of its dependents: a `@general` schema `@ref`s a declaration that is not " +
+      "general, or a BPMN process points at something that implements or documents it. The dependent " +
+      "should hold the pointer (data-modelling step 8).",
+  },
+  {
     id: "story-role-resolves",
     applies: ["graph"],
     severity: "major",

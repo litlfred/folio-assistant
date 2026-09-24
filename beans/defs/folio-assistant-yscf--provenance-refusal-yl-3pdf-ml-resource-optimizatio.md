@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yscf
 title: 'PROVENANCE REFUSAL: yl-3.pdf (ML resource optimization for hybrid ETL) is not admissible as evidence'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T22:30:19Z
-updated_at: 2026-09-23T22:30:55Z
+updated_at: 2026-09-24T00:17:04Z
 parent: folio-assistant-slw1
 ---
 

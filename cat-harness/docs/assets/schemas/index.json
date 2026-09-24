@@ -11885,12 +11885,20 @@
           "optional": true,
           "array": false,
           "doc": "Present only where a description is worth having — see `role`."
+        },
+        {
+          "name": "placements",
+          "type": "z.array(PlacementSchema).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Every place this image appears, the first one included."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/document-image.ts#ImageBasisSchema",
+        "cat-harness/schemas/document-image.ts#PlacementSchema",
         "cat-harness/schemas/narrative.ts#NarrativeSchema"
       ],
       "unresolved": [],
@@ -12102,6 +12110,64 @@
       "refs": [
         "cat-harness/schemas/attribution.ts#AttributionSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#Placement",
+      "name": "Placement",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-image.ts#PlacementSchema",
+      "name": "PlacementSchema",
+      "module": "cat-harness/schemas/document-image.ts",
+      "kind": "zod-object",
+      "doc": "ONE PLACEMENT of an image on a page.",
+      "fields": [
+        {
+          "name": "page",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page it sits on, 1-based as a reader counts."
+        },
+        {
+          "name": "coverage",
+          "type": "z.number().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use."
+        },
+        {
+          "name": "imagesOnPage",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How many images share this page."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What this copy serves HERE — never what the image is, which is the"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -14425,6 +14491,7 @@
       "name": "GraphKindDef",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "kind": "interface",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "type",
@@ -21840,6 +21907,7 @@
       "name": "ActorDefSchema",
       "module": "cat-harness/schemas/role-graph.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "id",
@@ -22175,6 +22243,7 @@
       "name": "RoleDefSchema",
       "module": "cat-harness/schemas/role-graph.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "persona",
@@ -22885,6 +22954,7 @@
       "name": "ActorDefinitionSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "id",
@@ -23009,6 +23079,7 @@
       "name": "CapabilityDefinitionSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "id",
@@ -23709,6 +23780,7 @@
       "name": "RequirementStatementSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "key",
@@ -23926,6 +23998,7 @@
       "name": "SkillDefinitionSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
+      "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
           "name": "id",
@@ -39340,6 +39413,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
+      "to": "cat-harness/schemas/document-image.ts#PlacementSchema",
+      "via": "placements",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",

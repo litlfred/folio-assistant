@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2439 terms: **7 authored** in 1 glossary, and **2432 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2444 terms: **7 authored** in 1 glossary, and **2437 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2432</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2437</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2439 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2444 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2439</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2444</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -4846,6 +4846,13 @@ DocumentImageSchema.narrative <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>Present only where a description is worth having — see `role`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.narrative</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.placements" data-fa-state="extracted" data-fa-gloss="">
+DocumentImageSchema.placements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every place this image appears, the first one included.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.placements</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--domain-fencing" data-fa-state="extracted" data-fa-gloss="">
 domain-fencing <span class="fa-gloss-status">candidate, extracted</span>
@@ -9824,6 +9831,34 @@ placement <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two &quot;stub&quot; conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/placement.md"><code>cat-harness/skills/folio-core/placement.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.imagesonpage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.imagesOnPage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many images share this page.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.note" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this copy serves HERE — never what the image is, which is the narrative's job. &quot;a recurring header for principle 8&quot; belongs here; &quot;an irregular grid of coloured squares&quot; belongs on the image.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.page" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page it sits on, 1-based as a reader counts.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.page</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_lifecycle.task_plan" data-fa-state="extracted" data-fa-gloss="">
 Plan scope, team, artifacts [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
@@ -17226,13 +17261,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>502 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1348 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>502 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1353 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>163 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>531</strong></td><td><strong>9</strong></td><td><strong>1523</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>531</strong></td><td><strong>9</strong></td><td><strong>1528</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
