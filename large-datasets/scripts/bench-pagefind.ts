@@ -330,8 +330,9 @@ export interface QueryResult {
 
 export interface BrowserReport {
   profile: string;
-  /** Importing pagefind.js and calling init(). The wasm and meta load on the first query, so `first` includes them. */
+  /** Importing pagefind.js and calling init(). */
   initMs: number;
+  /** Bytes settled by the end of init(); `first.bytes` includes them, and everything else the first search needed. */
   initBytes: number;
   worker: boolean;
   first: { ms: number; bytes: number; requests: number };
@@ -440,9 +441,18 @@ async function browserRun(dir: string, queries: Query[], profiles: Array<"unthro
       const heapInit = await heap();
       const rssInit = await rendererRss(bcdp);
       const results: QueryResult[] = [];
+      // The first query's bytes are counted from the import of pagefind.js, not
+      // from the query: init() starts fetching the meta file (1.6 MB at full
+      // scale) without awaiting it, so where it lands between init and the first
+      // query depends on timing. Counting both together is what a reader pays
+      // for a first search on the page, and is the same on every run.
+      let first = true;
       for (const q of queries) {
-        bytes = 0;
-        requests = 0;
+        if (!first) {
+          bytes = 0;
+          requests = 0;
+        }
+        first = false;
         const r = (await page.evaluate(async (text: string) => {
           type R = { results: Array<{ data(): Promise<{ url: string }> }> };
           const pf = (window as unknown as { __pf: { search(t: string): Promise<R> } }).__pf;

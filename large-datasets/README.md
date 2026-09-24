@@ -98,3 +98,10 @@ That lookup is built: [`id-lookup/`](id-lookup/) holds the client and the
 generated who-iris index, `bun run id-lookup` writes it and `id-lookup:check`
 gates it. It is measured at full IRIS scale in bean `4pm8` (a reader downloads
 one shard of about 14 KB per lookup).
+
+Pagefind is being **prototyped and measured** beside it, on the same corpus
+(bean `4pm8`; owner, 2026-09-24): [`pagefind/`](pagefind/) holds a small
+fixture and a one-form page, and `bun run pagefind:bench` is the method. It is
+a dev dependency of this subgraph only; nothing under `cat-harness/docs/`
+loads it, and `pagefind-guard.test.ts` fails if something starts to. The
+measurements are in the bean. The decision is the owner's.
