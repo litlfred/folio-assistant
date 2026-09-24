@@ -79,7 +79,7 @@ jobs:
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -137,9 +137,9 @@ jobs:
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -220,7 +220,7 @@ jobs:
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1352,7 +1352,7 @@ jobs:
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1383,7 +1383,7 @@ jobs:
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
       # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
@@ -1420,7 +1420,7 @@ jobs:
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest

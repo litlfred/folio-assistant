@@ -67,7 +67,7 @@ jobs:
     steps:
       # ── Free disk space (mathlib + doc-gen4 need ~10 GB) ─────────
       - name: Free disk space
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        uses: jlumbroso/free-disk-space@ceedf095f4ec1a097402bc6bd80831f2e1a6fde6
         with:
           tool-cache: false
           android: true
@@ -78,7 +78,7 @@ jobs:
           swap-storage: false
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ inputs.ref || github.ref }}
@@ -130,7 +130,7 @@ jobs:
       # package.  The root lakefile pulls all three paper packages
       # (qou, ugb, fred2005) via `[[require]]` stanzas.
       - name: Cache Lean build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .lake
@@ -233,7 +233,7 @@ jobs:
       # ── Upload deploy artifacts for the deploy job ──────────────
       - name: Upload deploy artifacts
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: blueprint-deploy
           path: _deploy
@@ -255,7 +255,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Download deploy artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: blueprint-deploy
           path: _deploy

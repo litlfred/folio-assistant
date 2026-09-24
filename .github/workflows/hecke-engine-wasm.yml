@@ -21,7 +21,7 @@ jobs:
     name: Verify default hecke-engine builds (no regression)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -48,7 +48,7 @@ jobs:
     name: Clarabel LP/SDP tests + scipy cross-check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: verify-host-build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -185,7 +185,7 @@ jobs:
           [ "$size" -lt 5000000 ] || { echo "WASM artifact too large (>5MB)"; exit 1; }
 
       - name: Upload pkg artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: hecke-engine-wasm-pkg
           path: tools/hecke-engine-wasm/pkg/
@@ -197,14 +197,14 @@ jobs:
     needs: build-wasm
     if: ${{ github.event.inputs.publish == 'true' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: hecke-engine-wasm-pkg
           path: tools/hecke-engine-wasm/pkg/

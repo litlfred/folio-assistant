@@ -30,7 +30,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref || github.ref }}
 
@@ -104,7 +104,7 @@ jobs:
         run: python3 .github/scripts/generate_lean_stubs.py
 
       - name: Cache Lean build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: content/quantum-observable-universe/lean/.lake
           key: lean-ci-${{ runner.os }}-${{ hashFiles('content/quantum-observable-universe/lean/lean-toolchain', 'content/quantum-observable-universe/lean/lakefile.toml', 'content/quantum-observable-universe/lean/lake-manifest.json') }}
