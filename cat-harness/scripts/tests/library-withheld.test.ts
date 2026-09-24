@@ -17,9 +17,12 @@ import { join, resolve } from "node:path";
 import { orphanAvatars } from "../gen-library-viz.ts";
 import { readEntryBlocks } from "../library-graph.ts";
 import { withheldPaths, withheldReason } from "../lib/withheld.ts";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
-const SITE_LIBRARY = join(REPO, "cat-harness", "docs", "assets", "library");
+const INSTANCE = resolve(import.meta.dir, "..", "..");
+const REPO = resolve(INSTANCE, "..");
+/** READ, never spelled: `site-dir-single-answer` is a gate. */
+const SITE_LIBRARY = join(INSTANCE, siteDirFor(INSTANCE), "assets", "library");
 
 /** A library root holding one entry with a prose block and a figure. */
 function plant(withheld: boolean): string {
