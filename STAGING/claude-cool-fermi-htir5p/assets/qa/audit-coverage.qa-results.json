@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T06:34:09.778Z",
+  "updated_at": "2026-09-24T11:58:21.122Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 145 gate(s), 63 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 145 gate(s), 66 criteria.",
       "count": 42,
       "entries": [
         {
@@ -96,7 +96,10 @@
             "skill-graph-kinds-resolve",
             "skill-has-entry-point",
             "skill-in-role-or-process",
-            "story-role-resolves"
+            "story-role-resolves",
+            "test-run-checkable",
+            "test-run-conforms",
+            "test-run-skill-resolves"
           ],
           "subjectKinds": [
             "graph"
