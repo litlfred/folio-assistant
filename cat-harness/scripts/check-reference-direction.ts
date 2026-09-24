@@ -29,6 +29,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import {
+  BASE_GRAPH_KINDS,
   findDeclarationFile,
   instanceRootsIn,
   isDerivedGraph,
@@ -90,14 +91,63 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * direction, since the cost of reading an excluded file is a finding somebody
  * dismisses, while the cost of excluding a read one is a leak nobody sees.
  *
- * NOT a complete answer, and the gap is named rather than papered over:
- * three projections under a `docs` directory (`assets/schemas/index.json`,
- * `assets/beans/index.json`, `assets/voices/index.json`, 440 occurrences
- * measured 2026-09-23) are generated but sit in a `content` graph and carry
- * no self-declaration, so they are reported as findings. The fix is one line
- * in each generator — emit `"_generated"`, as `sync-docs-harness.ts` already
- * does for `docs/_data/harness.json` — not a path rule here.
+ * A DIRECTORY is not the only unit this is declared at, and taking it as the
+ * only one cost 429 false findings on the first run (2026-09-23): three
+ * projections under `docs/` — `assets/{schemas,beans,voices}/index.json` —
+ * are written by generators while sitting in a `content` graph, because the
+ * directory holds documentation and these are files inside it. The FILE
+ * family is declared too, and {@link GENERATOR_WRITTEN} reads that.
  */
+/**
+ * Every `$schema` a graph kind declares a GENERATOR writes.
+ *
+ * The second half of the machine-written question, at file granularity, and
+ * read from the same declarations as the first — `nodeSchemas[…].writtenBy`
+ * in the graph-kind registry, which already names the script that produces
+ * each family. Nine families across `docs`, `qa` and `uploads`.
+ *
+ * Derived rather than listed, and that is the point: the three projections
+ * this was written for are `folio-schema-graph/v1`, `folio-bean-index/v1` and
+ * `folio-voices-index/v1`, but listing those three would have left the other
+ * six — and the tenth, the day somebody declares it — reporting as authored
+ * prose. A literal written for exactly this purpose on 2026-09-21 was
+ * silently missing six nodes; this is the same mistake one directory over.
+ *
+ * It also needs no change to any generator. The alternative considered was
+ * having each of the three emit a `"_generated"` key, the way
+ * `sync-docs-harness.ts` does: three edits, three regenerated artefacts, and
+ * a convention a fourth generator would have to remember. The declaration
+ * already says it, so nothing needs to start saying it again.
+ */
+const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
+  Object.values(BASE_GRAPH_KINDS).flatMap((k) =>
+    Object.entries(k.nodeSchemas ?? {})
+      .filter(([, d]) => (d as { writtenBy?: string }).writtenBy !== undefined)
+      .map(([schema]) => schema),
+  ),
+);
+
+/**
+ * Is this file one a generator writes, by its own `$schema`?
+ *
+ * Only a TOP-LEVEL `$schema` counts. `docs/assets/schemas/index.json` carries
+ * the string `generatedAt` four times deeper in — as a FIELD NAME inside a
+ * schema projection — so a marker scan over the text says "generated" about
+ * any file that describes a generated one. Parsing and reading the top level
+ * is the difference between what a file IS and what it mentions.
+ */
+function isGeneratorWritten(abs: string): boolean {
+  if (!abs.endsWith(".json") && !abs.endsWith(".jsonld")) return false;
+  try {
+    const top = JSON.parse(readFileSync(abs, "utf-8")) as unknown;
+    if (typeof top !== "object" || top === null || Array.isArray(top)) return false;
+    const schema = (top as { $schema?: unknown }).$schema;
+    return typeof schema === "string" && GENERATOR_WRITTEN.has(schema);
+  } catch {
+    return false; // unparseable is not a licence to skip it
+  }
+}
+
 /** Text this axis can read. A binary or an image carries no reference a reader follows. */
 const EXTENSIONS = new Set([".ts", ".tsx", ".md", ".json", ".jsonld", ".bpmn", ".dmn", ".yml", ".yaml"]);
 
@@ -215,6 +265,8 @@ export interface ReferenceReport {
   classified: { occurrence: Occurrence; verdict: ReferenceVerdict }[];
   /** Files in a directory DECLARED to hold a machine-written graph. Counted, so the exclusion is visible rather than silent. */
   skippedMachineWritten: number;
+  /** Files whose own `$schema` is DECLARED to be written by a generator. Counted separately: it is a different declaration, at a different granularity. */
+  skippedGeneratorWritten: number;
   /** Instances whose `needs` nobody has declared. Reported, never assumed. */
   undeclared: string[];
 }
@@ -255,9 +307,14 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
 
   const classified: ReferenceReport["classified"] = [];
   let skippedMachineWritten = 0;
+  let skippedGeneratorWritten = 0;
   for (const abs of filesUnder(root)) {
     if (isMachineWritten(abs)) {
       skippedMachineWritten++;
+      continue;
+    }
+    if (isGeneratorWritten(abs)) {
+      skippedGeneratorWritten++;
       continue;
     }
     const from = ownerOf(abs, all);
@@ -282,6 +339,7 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
     instances: all.length,
     classified,
     skippedMachineWritten,
+    skippedGeneratorWritten,
     undeclared: all.filter((i) => i.needs === undefined).map((i) => i.name).sort(),
   };
 }
@@ -306,7 +364,9 @@ function main(): void {
   console.log(`  wrong-direction   ${String(wrong.length).padStart(5)}   in ${new Set(wrong.map((c) => c.occurrence.file)).size} files`);
   console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS.length} exemptions, each with a stated reason`);
   console.log(`  undetermined      ${String(undet.length).padStart(5)}   declined to judge — NOT clean`);
-  console.log(`\n  ${report.skippedMachineWritten} file(s) not read: their directory DECLARES a graph a process writes (holds state/derived).`);
+  console.log(`\n  Not read, both answered from a declaration rather than a path:`);
+  console.log(`    ${report.skippedMachineWritten} file(s) — their DIRECTORY declares a graph a process writes (holds state/derived)`);
+  console.log(`    ${report.skippedGeneratorWritten} file(s) — their own \`$schema\` is declared \`writtenBy\` a generator`);
 
   if (wrong.length > 0) {
     const byPair = new Map<string, number>();

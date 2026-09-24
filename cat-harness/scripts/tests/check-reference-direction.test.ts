@@ -226,3 +226,35 @@ describe("analyse over a synthetic tree", () => {
     expect(() => analyse(root)).toThrow(/needs graph is broken/);
   });
 });
+
+describe("a file whose own `$schema` is declared `writtenBy` a generator is not read", () => {
+  /** `folio-schema-graph/v1` is declared `writtenBy: scripts/gen-schema-viz.ts` in the graph-kind registry. */
+  const GENERATED = "folio-schema-graph/v1";
+
+  test("it is skipped even though its DIRECTORY holds authored content", () => {
+    // The 429-false-finding case: a generator's output sitting in a `docs`
+    // graph, which is `content` because the directory holds documentation.
+    const r = tree({ "low/index.json": JSON.stringify({ $schema: GENERATED, x: "high" }) }, [
+      { id: "d", path: "", graphKinds: ["docs"] },
+    ]);
+    expect(analyse(r).classified).toEqual([]);
+    expect(analyse(r).skippedGeneratorWritten).toBe(1);
+  });
+
+  test("the same file with an UNDECLARED $schema is read", () => {
+    const r = tree({ "low/index.json": JSON.stringify({ $schema: "something-nobody-declared/v1", x: "high" }) });
+    expect(verdicts(r)).toEqual(["low/index.json wrong-direction"]);
+  });
+
+  test("only a TOP-LEVEL $schema counts — a file that MENTIONS one is still read", () => {
+    // `docs/assets/schemas/index.json` carries `generatedAt` four times as a
+    // field NAME inside a schema projection. What a file is, not what it names.
+    const r = tree({ "low/notes.json": JSON.stringify({ describes: { $schema: GENERATED }, x: "high" }) });
+    expect(verdicts(r)).toEqual(["low/notes.json wrong-direction"]);
+  });
+
+  test("an unparseable JSON file is read rather than skipped — a broken file is not a licence", () => {
+    const r = tree({ "low/broken.json": "{ this is not json, and it mentions high" });
+    expect(verdicts(r)).toEqual(["low/broken.json wrong-direction"]);
+  });
+});
