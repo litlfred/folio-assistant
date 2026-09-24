@@ -214,6 +214,7 @@
       "@type": "@id"
     },
     "roleName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#roleName",
+    "satisfiesStatement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfiesStatement",
     "permissionName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#permissionName",
     "io": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#io",
@@ -278,10 +279,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-23T23:21:29.429Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/93a4d205b63f535025ac3ff8521a8a3b21753e95",
-  "sourceCommitSha": "93a4d205b63f535025ac3ff8521a8a3b21753e95",
-  "sourceCommitAt": "2026-09-23T23:19:06Z",
+  "generatedAt": "2026-09-24T01:40:22.617Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/faa07040f35dadae92fcdcf3c9c5470a83f900aa",
+  "sourceCommitSha": "faa07040f35dadae92fcdcf3c9c5470a83f900aa",
+  "sourceCommitAt": "2026-09-24T01:37:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -1408,10 +1409,10 @@
       "summary": "A Subgraph of schema definitions: files that state the shape other files must have."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "glossary",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "name": "swimlane-glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SwimlaneGlossaryGraph",
       "renderable": false,
       "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
     },
@@ -1552,16 +1553,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pensive-carson-b7sqzq/bootstrap/bootstrap.jsonld#directory/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pensive-carson-b7sqzq/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "glossary",
+      "name": "swimlane-glossary",
       "path": "glossary/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
       ],
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pensive-carson-b7sqzq/bootstrap/bootstrap.jsonld#directory/glossary",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/glossary"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pensive-carson-b7sqzq/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/swimlane-glossary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pensive-carson-b7sqzq/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
@@ -1598,8 +1599,8 @@
   ],
   "staging": {
     "branch": "claude/pensive-carson-b7sqzq",
-    "sha": "319778d64f2cc6f6d652b56a6081c7e2de1918b6",
+    "sha": "01294e6d3949faa0a4c42a68a1370e90b583e1f6",
     "pr": "1214/merge",
-    "run": "35932992366"
+    "run": "35943777189"
   }
 }
