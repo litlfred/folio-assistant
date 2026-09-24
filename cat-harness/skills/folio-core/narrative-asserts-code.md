@@ -25,7 +25,7 @@ machine has already done everything it can, and your job is the rest.
 
 | pair | prose | code | declared by |
 |---|---|---|---|
-| diagram ↔ workflow | a `.bpmn` diagram's `<documentation>` | the `.github/workflows/*.yml` it draws | `<cat-harness.processes:implements workflow>` (+ `<cat-harness.processes:job>`) |
+| diagram ↔ workflow | a `.bpmn` diagram's `<documentation>` | the `.github/workflows/*.yml` it draws | `# bpmn: <diagram>` in the workflow (+ `# bpmn-node: <id>` per job) |
 | skill ↔ code | a skill `.md` | the same-stem `.ts` beside it | the file sitting there |
 | proof ↔ Lean | a paper block's `.md` | its `lean.ref` | the block manifest — **see below, it has its own skill** |
 

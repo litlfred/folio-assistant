@@ -13,10 +13,10 @@
  *
  *   1. Anchors stop depending on heading text. `heading_anchors: true` derives
  *      `#extract-structure` from the words in the heading, so a retitle
- *      silently breaks every inbound link — including the
- *      `<folio:link href="document-ingestion.html#extract-structure">` hrefs
- *      authored into the BPMN sources, which is a live round trip today. Each
- *      node's `id` is pinned with kramdown's `{: #id }` instead.
+ *      silently breaks every inbound link — including the subprocess links
+ *      `render-bpmn.ts` derives from a node's `asset.source`
+ *      (`process-presentations.ts`). Each node's `id` is pinned with
+ *      kramdown's `{: #id }` instead.
  *   2. Every node gets an edit link to ITS OWN source. Jekyll knows only
  *      `page.path`, so a per-node link is impossible from the theme: the
  *      node -> file mapping exists only here, in the thing that assembles the

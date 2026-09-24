@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: draft-to-publication\n"
-"POT-Creation-Date: 2026-09-24T12:30:55.606Z\n"
+"POT-Creation-Date: 2026-09-24T17:53:10.468Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -19,17 +19,17 @@ msgstr ""
 msgid "Answered by the publication QA gates. `no` returns to editing and HCI validation; `yes` circulates the draft."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:177
+#: processes/draft-to-publication.bpmn:176
 #. Diagram label
 msgid "Approved?"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:178
+#: processes/draft-to-publication.bpmn:177
 #. Diagram element documentation
 msgid "Asked once every reviewer has answered: is the draft approved? `no` opens beans for the change requests; `yes` goes to authorising the release."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:193
+#: processes/draft-to-publication.bpmn:192
 #. Diagram label
 msgid "Authorise the release [content-publish]"
 msgstr ""
@@ -44,12 +44,12 @@ msgstr ""
 msgid "Carries the release's own state across the cycle: the release bean opened at the start says what is in the draft and who holds it, a rejected review becomes one change bean per finding before the loop back to editing, and only this lane's close marks a release actually done rather than merely built."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:143
+#: processes/draft-to-publication.bpmn:142
 #. Diagram label
 msgid "Circulate the draft [content-review]"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:164
+#: processes/draft-to-publication.bpmn:163
 #. Diagram label
 msgid "Clinical / scientific sign-off [content-review]"
 msgstr ""
@@ -59,12 +59,12 @@ msgstr ""
 msgid "Clinical / scientific SMEs"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:213
+#: processes/draft-to-publication.bpmn:212
 #. Diagram label
 msgid "Close the release beans [todo-manager]"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:157
+#: processes/draft-to-publication.bpmn:156
 #. Diagram element documentation
 msgid "Content reviewer, QC reviewer and technical officer review the draft as a whole — coherence, phase-gate criteria, breaking vs non-breaking change."
 msgstr ""
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Corpus updated"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:165
+#: processes/draft-to-publication.bpmn:164
 #. Diagram element documentation
 msgid "Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper."
 msgstr ""
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Draft QA green?"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:151
+#: processes/draft-to-publication.bpmn:150
 #. Diagram label
 msgid "Draft under review"
 msgstr ""
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Draft, review and publish"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:184
+#: processes/draft-to-publication.bpmn:183
 #. Diagram element documentation
 msgid "Each requested change becomes a bean, so the editors and agents picking the work up next see exactly what review asked for and what is still open."
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 msgid "folio-assistant — corpus to draft publication to officially published. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:230
+#: processes/draft-to-publication.bpmn:229
 #. Diagram label
 msgid "no"
 msgstr ""
@@ -139,7 +139,7 @@ msgstr ""
 msgid "One or more content blocks have landed in the corpus through the editing process."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:183
+#: processes/draft-to-publication.bpmn:182
 #. Diagram label
 msgid "Open beans for the change requests [todo-manager]"
 msgstr ""
@@ -169,7 +169,7 @@ msgstr ""
 msgid "Publication manager"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:194
+#: processes/draft-to-publication.bpmn:193
 #. Diagram element documentation
 msgid "Publication requires authorisation by the programme manager or designated authority."
 msgstr ""
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Publication-readiness QA across layers — QC reports, IG Publisher QA, proof status, broken links, build warnings."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:222
+#: processes/draft-to-publication.bpmn:221
 #. Diagram label
 msgid "Published officially"
 msgstr ""
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Review team (content · QC · technical officer)"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:156
+#: processes/draft-to-publication.bpmn:155
 #. Diagram label
 msgid "Review the draft publication [content-review]"
 msgstr ""
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:144
+#: processes/draft-to-publication.bpmn:143
 #. Diagram element documentation
 msgid "The draft publication is circulated to the review team for formal review."
 msgstr ""
@@ -234,17 +234,17 @@ msgstr ""
 msgid "The release itself is a bean: it carries what is in this draft, what is outstanding, and who is holding it."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:203
+#: processes/draft-to-publication.bpmn:202
 #. Diagram element documentation
 msgid "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform."
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:202
+#: processes/draft-to-publication.bpmn:201
 #. Diagram label
 msgid "Version, tag and publish [content-publish]"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:214
+#: processes/draft-to-publication.bpmn:213
 #. Diagram element documentation
 msgid "What shipped is resolved; what slipped stays open and carries into the next cycle."
 msgstr ""
@@ -254,7 +254,7 @@ msgstr ""
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/draft-to-publication.bpmn:232
+#: processes/draft-to-publication.bpmn:231
 #. Diagram label
 msgid "yes"
 msgstr ""

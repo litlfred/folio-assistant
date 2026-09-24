@@ -53,7 +53,7 @@
  * that indistinguishable from an oversight — which is the whole shape of the
  * bug. So a forward declaration is declared, with a reason naming what would
  * emit it, in {@link FORWARD_DECLARED}. Reason required, same discipline as
- * `command-path-ok:` and `<folio:no-skill reason="…"/>`: silencing the check
+ * `command-path-ok:` and `<cat-harness.processes:no-skill reason="…"/>`: silencing the check
  * costs more than satisfying it, and the exempted set is REPORTED rather than
  * disappearing.
  *

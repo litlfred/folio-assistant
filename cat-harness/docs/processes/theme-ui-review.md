@@ -19,6 +19,7 @@ Reviewing GRAPHICAL ASSETS AS THEY ARE INGESTED — accessibility, branding, lan
 
 - **Called by:** [Ingestion subprocess — ingest a theme](ingest-theme.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`theme-ui-review`](../reference/skill-instructions/theme-ui-review.html)
 
 ## Lanes — who acts

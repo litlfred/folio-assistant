@@ -18,9 +18,6 @@ Everything up to the tracking issue is MECHANICAL and sits in a system lane: rea
 Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all.
 
 The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it.</bpmn:documentation>
-    <bpmn:extensionElements>
-      <cat-harness.processes:implements workflow=".github/workflows/upstream-pins.yml"/>
-    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_UpstreamPinWatch">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Owns exactly three outcomes and must keep them visibly different: current closes the tracking issue, behind opens or edits it, and UNKNOWN leaves the issue untouched while failing the job anyway — a watchdog that goes blind must never read as clean, so this lane is the one place that distinction cannot be collapsed into a single pass or fail. It hands off at the first sign of judgement: the moment a bump needs adopting, that is Lane_Agent's, never this one's.</bpmn:documentation>
@@ -44,9 +41,6 @@ The adoption itself is a call activity, so the judgement half lives in its own r
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Weekly,&#10;or on dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:documentation>Weekly and not daily, for the same reason `ci-health.yml` is weekly: the defect being guarded against is "nobody noticed for months", not "nobody noticed for a day", and a daily run turns the tracking issue into a feed.</bpmn:documentation>
       <bpmn:timerEventDefinition id="Timer_Sweep"/>
     </bpmn:startEvent>

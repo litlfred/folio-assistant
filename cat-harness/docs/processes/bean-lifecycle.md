@@ -19,6 +19,7 @@ The whole life of a work-plan item, and the rules that make one agent's bean leg
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Beans and todos — The agent bean lifecycle](../beans-and-todos.html#the-agent-bean-lifecycle)
 
 ## Lanes — who acts
 
