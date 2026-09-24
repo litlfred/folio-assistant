@@ -15,9 +15,12 @@ import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSy
 import { join, resolve } from "path";
 import { tmpdir } from "os";
 
+import { spawnSync } from "child_process";
+
 import { parse as parseYaml } from "yaml";
 
 import {
+  enclosingRepoRoot,
   folioTemplates,
   initFolio,
   isValidSlug,
@@ -147,6 +150,26 @@ describe("what gets written", () => {
     expect(fb?.path).toBe("feedback");
     // Declared AND present: a declared-but-absent directory is the dh4f defect.
     for (const n of g.directories) expect(existsSync(join(d, "todos", n.path))).toBe(true);
+  });
+
+  test("a folio in a SUBFOLDER of a repository gets no workflow GitHub would never read, and is told why (zdfa)", () => {
+    const repo = tmp();
+    expect(spawnSync("git", ["init", "-q"], { cwd: repo }).status).toBe(0);
+    const sub = join(repo, "guides", "handbook");
+    expect(enclosingRepoRoot(sub)).not.toBeNull();
+    const r = initFolio(opts(sub, { contentType: "document", skipVcs: false, link: "sibling" }));
+    expect(existsSync(join(sub, ".github/workflows/staging.yml"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("cannot stage a folio below it");
+    // Never a repository nested inside another by accident.
+    expect(existsSync(join(sub, ".git"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("no git init");
+  });
+
+  test("a folio at its repository's root is not enclosed (zdfa)", () => {
+    const d = tmp();
+    expect(enclosingRepoRoot(d)).toBeNull();
+    expect(spawnSync("git", ["init", "-q"], { cwd: d }).status).toBe(0);
+    expect(enclosingRepoRoot(d)).toBeNull();
   });
 
   test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {

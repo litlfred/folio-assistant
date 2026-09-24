@@ -1,10 +1,11 @@
 ---
 # folio-assistant-6brk
 title: 'FLAKE: check-declaration-filename''s corpus scan runs 4.2s against a 5000ms test budget on a clean main — any corpus growth tips it'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-24T06:21:41Z
-updated_at: 2026-09-24T06:21:41Z
+updated_at: 2026-09-24T19:53:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -69,11 +70,27 @@ somebody who was not looking at it.
 
 ## Done when
 
-- [ ] the scan's cost and the budget are not within 20 % of each other —
+- [x] the scan's cost and the budget are not within 20 % of each other —
       by memoising, narrowing the walk, or raising the budget **with its basis
       stated**, not by tuning until green
-- [ ] a timeout in this family names the corpus rather than only the
+- [x] a timeout in this family names the corpus rather than only the
       milliseconds, so the next contributor can tell "the corpus grew" from
       "my change is slow"
-- [ ] re-measured after the fix, both trees, three runs — the numbers above are
+- [x] re-measured after the fix, both trees, three runs — the numbers above are
       the before
+
+
+
+## Summary of Changes (2026-09-24)
+
+Most of the fix had already landed (4bc98ea, 041c9d8):
+- `check-declaration-filename.test.ts` shares ONE real-corpus scan across its three corpus tests, instead of scanning three times.
+- Those tests carry `CORPUS_TIMEOUT = 30_000`, with its measured basis written beside it.
+
+**Re-measured after the fix**, on `main` `324ca67`, three runs of `checkDeclarationFilename()`: **2795, 3252, 3163 ms over 1,379 files**. Against the 30 s budget that is 9–11 %, far from the 20 % line.
+
+This commit adds the two remaining pieces:
+- **The scan names the corpus.** `corpus()` times the scan. Past half its budget, it warns with the milliseconds, the file count and a pointer to the budget's basis. So "the corpus grew" is visible before it becomes a timeout, and a slow change can be told apart from a grown corpus.
+- `docs-templates.test.ts` shares its scan between its two tests; it was calling the scanner twice with no argument.
+
+Only one tree was measured here, not both of the trees in the table above: the PR #1188 tree is long merged, so the comparison against it is moot.

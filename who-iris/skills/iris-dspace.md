@@ -7,6 +7,8 @@ description: >
   checked against.
 conformsTo:
   - dcmi-terms
+graph-kinds:
+  - catalogue
 ---
 
 # IRIS, DSpace and Dublin Core

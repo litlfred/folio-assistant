@@ -852,6 +852,14 @@
       "status": "candidate"
     },
     {
+      "id": "instance-publication",
+      "prefLabel": "instance-publication",
+      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "notation": "instance-publication",
+      "source": "cat-harness/skills/folio-core/instance-publication.md",
+      "status": "candidate"
+    },
+    {
       "id": "integration-audit",
       "prefLabel": "integration-audit",
       "definition": "Sidecar-invalidation utility for the integration-watcher pipeline. Adds mechanical QA fields (script-reviewer entries) to per-block `.qa.json` sidecars and marks the existing entries stale so the next `qa-sweep` re-evaluates them. Use when a checker bug is fixed in a QA checker module (downstream \"fresh\" entries are now incorrect) or when a registry update adds a criterion the block hasn't been audited under.",

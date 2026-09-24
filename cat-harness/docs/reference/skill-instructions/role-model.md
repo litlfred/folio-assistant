@@ -308,10 +308,15 @@ one. What this buys:
   task in a lane needs the permission **and** the lane's role, so eligibility
   (`roles`) and permission stay separate, as below.
 - **Anyone.** `cat-harness:anyone` is an unauthenticated reader. The owner's floor:
-  it may `visualize` and `render`, and nothing else.
+  it may `visualize` and `render`, and nothing else. Owner, 2026-09-24:
+  *"person acting w/ no login = reader/browser"*. A person with no login is a
+  reader/browser, whoever they are, and holds exactly this.
 
 **Identity is not here.** Which login is which actor is the data store's to
-know (owner, 2026-09-23). No actor file and no policy carries a login.
+know (owner, 2026-09-23). No actor file and no policy carries a login, and
+workflow history names the **actor**, never the login: the repository owner's
+steps are recorded as `owner` (owner, 2026-09-24, *"Yes, exactly"*), and the
+data store maps the login to `owner`.
 
 **Who reads all three before a task runs:** the BPMN executor. Before any task
 or decision is recorded, `authorizeTask` asks whether the actor is

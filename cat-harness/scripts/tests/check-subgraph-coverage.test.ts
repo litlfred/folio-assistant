@@ -53,6 +53,18 @@ function instance(
     mkdirSync(abs.slice(0, abs.lastIndexOf("/")), { recursive: true });
     writeFileSync(abs, "x");
   }
+  // A governing skill is declared by the SKILL since #1168 B7b, not by the
+  // directory: a fixture asking for `skill: "x"` gets a skill file whose
+  // front matter names the directory's kinds, and the directory names none.
+  const { skill, ...rest } = (coverage ?? {}) as Record<string, unknown>;
+  const kinds = opts.graphKinds ?? ["cat-harness"];
+  if (typeof skill === "string") {
+    mkdirSync(join(root, "skills"), { recursive: true });
+    writeFileSync(
+      join(root, "skills", `${skill}.md`),
+      `---\nname: ${skill}\ngraph-kinds:\n${kinds.map((k) => `  - ${k}\n`).join("")}---\n# ${skill}\n`,
+    );
+  }
   writeDeclaration(root, JSON.stringify({
       name: opts.name ?? "inst",
       directories: [
@@ -60,8 +72,8 @@ function instance(
           id: "thing",
           path: "thing/",
           dependents: "reproduce",
-          graphKinds: opts.graphKinds ?? ["cat-harness"],
-          ...(coverage === undefined ? {} : { coverage }),
+          graphKinds: kinds,
+          ...(coverage === undefined ? {} : { coverage: rest }),
         },
       ],
     }));
@@ -599,9 +611,9 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
     expect(resolveCoveragePath("/repo/", "a/b.md")).toBe("/repo/a/b.md");
   });
 
-  it("a node id — no slash, no dot — is not treated as a path in either base", () => {
-    // `coverage.skill` names a skill rather than a file, so "missing" here
-    // would be the axis lying about what it looked at.
+  it("a governing skill is found by its declaration, never looked up as a path", () => {
+    // The skill names the kind it governs (#1168 B7b); nothing about it is a
+    // path, so "missing" here would be the axis lying about what it looked at.
     const { root, cleanup } = instance({ skill: "some-skill" });
     expect(auditInstance(root).findings.filter((f) => f.criterion === "skill")).toEqual([]);
     cleanup();

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vxho
 title: A test 14% under the default timeout is a gate that fails on a busy machine, not a red one
-status: todo
+status: in-progress
 parent: folio-assistant-1xhc
 type: task
 created_at: 2026-09-24T12:19:24Z
-updated_at: 2026-09-24T12:19:24Z
+updated_at: 2026-09-24T18:51:24Z
 ---
 
 Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.
@@ -35,6 +35,62 @@ directories rather than a fixture, so it gets slower every time the repo grows
 
 ## Done when
 
-- [ ] the test's runtime is MEASURED, not estimated, and the cause of the 5.6s named
-- [ ] if it walks the real tree, decide whether that is the point of the test or an accident of how it was written
-- [ ] the gate no longer depends on machine load — by making the test fast, or by an explicitly-reasoned timeout, never by a bare number
+- [x] the test's runtime is MEASURED, not estimated, and the cause of the 5.6s named
+- [x] if it walks the real tree, decide whether that is the point of the test or an accident of how it was written
+- [x] the gate no longer depends on machine load — by making the test fast, or by an explicitly-reasoned timeout, never by a bare number
+
+## MEASURED, and the guess in the paragraph above was RIGHT for the wrong reason
+
+The bean guessed *"it walks real repository directories rather than a fixture,
+so it gets slower every time the repo grows."* It does walk the real tree — but
+growth is not what made it slow, and the fix that follows from growth (raise
+the timeout, buy a few months) would have been the wrong one.
+
+| measurement | |
+|---|---|
+| `readLibraryGraph` over the real repo, warm, quiet process | **~150ms** (142, 162, 167 over three calls) |
+| the whole file in isolation | **1.55s** for 16 tests |
+| the failing run, under the full suite | **5683ms** for ONE test, against a 5000ms limit |
+
+So the test's own work is ~150ms and the full suite inflates it ~35x. That is
+CONTENTION — hundreds of test files against one disk — not a test that has
+quietly grown.
+
+## The fix is structural, not a bigger number
+
+`bun test` applies its timeout **per test**. The two graph readers were called
+INSIDE test bodies, so that filesystem work sat inside the budget. They are now
+read once at MODULE scope, before any test starts, and no test's budget
+contains them.
+
+That is not a trick to get under the number. These graphs are a **fixture**:
+every test in the file asserts about the same repository, and reading it four
+times was four answers to one question that were only ever equal by luck.
+`readLibraryGraph` was called twice and `readSchemaGraph` twice; each is now
+read once.
+
+| | before | after |
+|---|---|---|
+| whole file, three runs | 1.58s, 1.55s, 1.55s | **1.03s, 1.06s, 1.11s** |
+
+A third faster, variance under 5%.
+
+## What is NOT demonstrated, said plainly
+
+**The 5683ms failure was not reproduced.** It needs a loaded runner, and this
+container could not be made to produce it on demand. So the fix rests on the
+mechanism plus the reduction, not on watching the red turn green:
+
+- the failure text attributes the 5683ms to the TEST, so the I/O was inside a
+  per-test budget — that is what the fix removes;
+- the same file now does half the filesystem work it did.
+
+A check that would settle it: if this ever recurs on `viz-generators.test.ts`
+after this change, the cause is elsewhere and this entry is the record of what
+was already ruled out.
+
+## Summary of Changes
+
+`cat-harness/schemas/viz-generators.test.ts` — `SCHEMA_GRAPH` and
+`LIBRARY_GRAPH` hoisted to module scope; four call sites became two reads.
+No assertion changed.

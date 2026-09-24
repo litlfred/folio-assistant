@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 316,
+      "count": 320,
       "unit": "beans"
     },
     {
@@ -246,7 +246,7 @@
       ],
       "href": "/cat-harness/schemas/large-datasets/",
       "hidden": false,
-      "count": 3,
+      "count": 5,
       "unit": "modules"
     },
     {
@@ -654,12 +654,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -673,6 +673,10 @@
           "path": "/cat-harness/schemas/large-datasets/"
         },
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/large-datasets/"
         },
@@ -682,7 +686,7 @@
         }
       ],
       "findings": [
-        "large-datasets: declares 1 graph(s) with no published viewer — skills. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: declares 2 graph(s) with no published viewer — code, skills. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -1900,6 +1904,10 @@
           {
             "name": "document-publishing",
             "path": "/reference/skill-instructions/document-publishing.html"
+          },
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
           }
         ]
       },
@@ -1974,17 +1982,12 @@
         ]
       },
       {
-        "key": "publishable",
-        "skills": [
-          {
-            "name": "directory-conventions",
-            "path": "/reference/skill-instructions/directory-conventions.html"
-          }
-        ]
-      },
-      {
         "key": "id",
         "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
           {
             "name": "directory-conventions",
             "path": "/reference/skill-instructions/directory-conventions.html"
@@ -1994,6 +1997,10 @@
       {
         "key": "version",
         "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
           {
             "name": "directory-conventions",
             "path": "/reference/skill-instructions/directory-conventions.html"
@@ -2033,6 +2040,10 @@
           {
             "key": "needs",
             "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2059,6 +2070,10 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2085,6 +2100,10 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2110,7 +2129,11 @@
           },
           {
             "key": "directories",
-            "summary": "3: large-datasets-schemas, large-datasets-sources, large-datasets-skills"
+            "summary": "5: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2145,6 +2168,10 @@
           {
             "key": "directories",
             "summary": "7: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2171,6 +2198,10 @@
           {
             "key": "directories",
             "summary": "1: voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2201,6 +2232,10 @@
           {
             "key": "needs",
             "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2231,6 +2266,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2261,6 +2300,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2291,6 +2334,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2329,6 +2376,10 @@
           {
             "key": "needs",
             "summary": "fhir-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2367,6 +2418,10 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2405,6 +2460,10 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2439,6 +2498,10 @@
           {
             "key": "needs",
             "summary": "cat-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2505,6 +2568,10 @@
           {
             "key": "needs",
             "summary": "bootstrap"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2543,6 +2610,10 @@
           {
             "key": "renderExemption",
             "summary": "{ of, reason, owes, reachableAt }"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       }

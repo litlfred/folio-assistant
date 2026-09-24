@@ -7,6 +7,8 @@ description: >-
   (adjudication answers, namespace IRIs) instead of strings in code.
 capability: authoring
 package: folio-core
+graph-kinds:
+  - code-list
 ---
 
 # Code lists
