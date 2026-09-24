@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "methodologies"
   },
-  "updated_at": "2026-09-24T06:19:28.915Z",
+  "updated_at": "2026-09-24T06:37:37.261Z",
   "families": {
     "evidence-unresolved": {
       "summary": "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: it reads as an ingested source in every listing, so a reader who does not open it is told the citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer is not an open question about whether to adopt something.",
@@ -22,7 +22,7 @@
     },
     "no-evidence-declared": {
       "summary": "A valid methodology citing an origin, with no `evidence:` pointing at an ingested source. THE FINDING THIS AXIS WAS BUILT FOR: on 2026-09-22 this was six of six. Reported, never gated — whether a methodology whose source nobody can open may still be used is the owner's call, and a gate failing on the whole corpus at once is one somebody switches off. `literature-search` is the skill that closes one of these.",
-      "count": 6,
+      "count": 5,
       "entries": [
         {
           "node": "methodologies/dmn.md",
@@ -48,11 +48,6 @@
           "node": "../smart-base/methodologies/diig.md",
           "name": "diig",
           "detail": "cites an origin (World Health Organization, International Telecommunication Union and the United Nations Fo…) with no ingested source"
-        },
-        {
-          "node": "../smart-kg/methodologies/grade.md",
-          "name": "grade",
-          "detail": "cites an origin (The GRADE Working Group (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alons…) with no ingested source"
         }
       ]
     },
@@ -62,5 +57,5 @@
       "entries": []
     }
   },
-  "total": 6
+  "total": 5
 }

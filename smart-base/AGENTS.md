@@ -85,4 +85,3 @@ misrepresents the standard.
 | `who-iris` | the IRIS catalogue — the *shape* of a corpus of 1,057,223 files, almost none of it held |
 | `who-style-guide` | the three WHO editorial voices already derived, and the model this layer's voices follow |
 | `smart-trust`, `smart-immunizations` | reconstructed artefact indexes of published IGs; provisional per `nsbb` |
-| `smart-kg` | judgement methodologies for WHO L1 guideline development (GRADE) |

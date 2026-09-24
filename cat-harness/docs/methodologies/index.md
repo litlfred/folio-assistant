@@ -25,10 +25,10 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>12</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>11</b><span>adopted methodologies</span></div>
 <div class="mv-stat"><b>6</b><span>with the source held here</span></div>
-<div class="mv-stat"><b>6</b><span>cited, not ingested</span></div>
-<div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
+<div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
+<div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
 
 ## Choosing one
@@ -42,7 +42,6 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
-| **[GRADE — Grading of Recommendations, Assessment, Development and Evaluation](#grade)**<br>`grade` | Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions —… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-kg` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see `kepner-tregoe… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
@@ -104,20 +103,6 @@ these.
 **Ingested sources:**
 
 - `library/arxiv-2510.21603v1`
-
-### GRADE — Grading of Recommendations, Assessment, Development and Evaluation
-
-<a id="grade"></a>
-
-`grade` — declared by `smart-kg` — <span class="mv-tag mv-cited">cited, not ingested</span>
-
-**Applies when.** Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions — those are `kepner-tregoe`, recorded per `madr`.
-
-**Origin.** The GRADE Working Group (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et al., BMJ 2016. WHO applies it through the *WHO Handbook for Guideline Development*.
-
-**No ingested source.** The origin above names one; nothing in this
-checkout holds it. `literature-search` is the skill that closes one of
-these.
 
 ### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
 
