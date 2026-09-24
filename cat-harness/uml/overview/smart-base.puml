@@ -15,6 +15,12 @@ package "smart-base/library" as pkg_smart_base_library <<library>> {
     images [1] : object[] | null
     undetermined_reason [0..1] : string
   }
+  class "folio-vector-labels/v1" as smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-vector-labels/v1'
+    doc_id [1] : string
+    pages [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
 }
 package "smart-base/methodologies" as pkg_smart_base_methodologies <<methodology>> {
   note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_smart_base_methodologies_methodology

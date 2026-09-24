@@ -1126,6 +1126,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
+      // The OTHER layer of the same page — bean `a8wy`. `folio-document-images`
+      // holds what the PDF PLACES; this holds the positioned text of a figure
+      // the PDF DRAWS, for which there is no image object to place. Two
+      // families rather than one because a vector figure has no rectangle to
+      // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
+      // so `role` and `basis` would each mean two things.
+      "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.

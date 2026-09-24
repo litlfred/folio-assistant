@@ -60,6 +60,7 @@ import {
   isTabularMimetype,
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
+import { VECTOR_LABELS_FILE, VectorLabelsSidecarSchema } from "../schemas/vector-labels.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
@@ -174,7 +175,12 @@ export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
 export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr"];
 
 /** Sidecars an entry may carry beyond {@link KIND_SIDECAR}'s kind markers. */
-export const ENTRY_SIDECARS: readonly string[] = ["images.json", "manifest.jsonld", SUMMARIES_FILE];
+export const ENTRY_SIDECARS: readonly string[] = [
+  "images.json",
+  VECTOR_LABELS_FILE,
+  "manifest.jsonld",
+  SUMMARIES_FILE,
+];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["paged", "structure.json"],
@@ -279,6 +285,42 @@ export function declaredFigureLabels(sectionsDir: string): Set<string> {
  * A label seen BOTH ways keeps the caption: one real caption and three
  * cross-references is a captioned figure, which is what `Fig. 5` is above.
  */
+/**
+ * What the VECTOR arm recovered for this entry, as a sentence — or `""`.
+ *
+ * Bean `a8wy`. Appended to `image-descriptions`' detail and to **nothing
+ * else**: it never changes a state. The raster arm and the vector arm answer
+ * different questions about the same page, and `m4xy`'s rule holds over the
+ * pair as it does over declared-versus-placed — labels recovered and figures
+ * declared are not commensurable, so no ratio between them is computed here.
+ *
+ * The empty string is returned for three DIFFERENT situations, and that is
+ * deliberate rather than sloppy: no sidecar, an undetermined sidecar, and a
+ * determined-empty one all mean "this line has nothing to add". Which of the
+ * three it is belongs in the sidecar, where the reason is, not smuggled into a
+ * gate's one-line detail.
+ */
+export function vectorLabelNote(dir: string): string {
+  const f = join(dir, VECTOR_LABELS_FILE);
+  if (!existsSync(f)) return "";
+  let pages;
+  try {
+    ({ pages } = VectorLabelsSidecarSchema.parse(JSON.parse(readFileSync(f, "utf-8"))));
+  } catch {
+    // A sidecar that will not parse is a defect of THIS file, and
+    // `entry-contents` is where a malformed sidecar is reported. Saying it
+    // twice would make one defect look like two.
+    return "";
+  }
+  if (pages === null || pages.length === 0) return "";
+  const labels = pages.reduce((n, p) => n + p.labels.length, 0);
+  return (
+    ` The vector arm recovered ${labels} positioned label(s) across ${pages.length} page(s) ` +
+    `that declare a figure — see ${VECTOR_LABELS_FILE}; which labels belong to which figure ` +
+    `is NOT established (bean a8wy).`
+  );
+}
+
 export function declaredFigureCaptions(sectionsDir: string): Map<string, string | null> {
   const figures = new Map<string, string | null>();
   let files: string[];
@@ -846,10 +888,16 @@ function derivableRequirements(dir: string): Requirement[] {
           // `m4xy`. Never compared as a ratio; see `declaredFigureLabels`.
           const declared = declaredFigureLabels(join(dir, "sections"));
           const declaredNote =
-            declared.size > 0
+            (declared.size > 0
               ? ` The text declares at least ${declared.size} captioned figure(s); ` +
                 `which of them correspond to placed images is NOT established.`
-              : "";
+              : "") +
+            // A page can need BOTH arms, which is why this rides the branches
+            // where raster images WERE placed rather than only the empty ones.
+            // `9789240010567-eng` page 92 is the case: the raster arm extracted
+            // five component logos and Fig. 5.6.2, the diagram they sit inside,
+            // is drawn.
+            vectorLabelNote(dir);
           if (undescribed.length || unjudged.length) {
             out.push({
               name: "image-descriptions",
@@ -893,7 +941,8 @@ function derivableRequirements(dir: string): Requirement[] {
                   `no raster image was placed — the figures are drawn in vector — but ` +
                   `all ${figures.size} declared figure(s) carry caption text, which is ` +
                   `the reader's handle (owner ruling 2026-09-23, bean m4xy). ` +
-                  `Captions: ${[...figures].map(([l, c]) => `Fig. ${l} "${c}"`).join("; ")}`,
+                  `Captions: ${[...figures].map(([l, c]) => `Fig. ${l} "${c}"`).join("; ")}` +
+                  vectorLabelNote(dir),
               });
             } else {
               // `not-derivable` rather than `unmet`: the document is not
@@ -908,8 +957,8 @@ function derivableRequirements(dir: string): Requirement[] {
                 detail:
                   `no raster image was placed, and ${bare.length} of ${figures.size} ` +
                   `declared figure(s) carry no caption text either — Fig. ` +
-                  `${bare.join(", ")}. They are drawn in vector, no arm reads them, ` +
-                  `and the caption handle does not reach them (bean m4xy)`,
+                  `${bare.join(", ")}. They are drawn in vector and the caption handle does ` +
+                  `not reach them (bean m4xy).` + vectorLabelNote(dir),
               });
             }
           } else {

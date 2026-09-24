@@ -9015,6 +9015,83 @@
       "status": "candidate"
     },
     {
+      "id": "vector-labels.vectorfigurepageschema.captioncandidates",
+      "prefLabel": "VectorFigurePageSchema.captionCandidates",
+      "definition": "Verbatim line-start `Fig.`/`Figure` matches on the page, table-of-contents entries removed. A lower bound, and it deliberately includes cross-references — plural, and never asserted to be the page's figure.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.captionCandidates",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.drawings",
+      "prefLabel": "VectorFigurePageSchema.drawings",
+      "definition": "Vector drawing operations MuPDF reports on the page. Reported, never graded.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.drawings",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.page",
+      "prefLabel": "VectorFigurePageSchema.page",
+      "definition": "1-based, matching `DocumentImage`'s `basis.page` so the two join.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.rasterimagesonpage",
+      "prefLabel": "VectorFigurePageSchema.rasterImagesOnPage",
+      "definition": "Raster images the page also places.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rasterImagesOnPage",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.rotation",
+      "prefLabel": "VectorFigurePageSchema.rotation",
+      "definition": "The page's rotation in degrees, as the PDF declares it.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rotation",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.bbox",
+      "prefLabel": "VectorLabelSchema.bbox",
+      "definition": "The line's rectangle **in the visible frame** — rotation already applied.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.bbox",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.fonts",
+      "prefLabel": "VectorLabelSchema.fonts",
+      "definition": "Font names on the line's spans, deduplicated and sorted.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.fonts",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.intersectsdrawing",
+      "prefLabel": "VectorLabelSchema.intersectsDrawing",
+      "definition": "Whether this block's rectangle intersects any vector drawing's.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.intersectsDrawing",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.sizes",
+      "prefLabel": "VectorLabelSchema.sizes",
+      "definition": "Point sizes on the line's spans, deduplicated and sorted ascending.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.sizes",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.text",
+      "prefLabel": "VectorLabelSchema.text",
+      "definition": "The line's text: its spans concatenated, since a span break is a style change and not a word break.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.text",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelssidecarschema.pages",
+      "prefLabel": "VectorLabelsSidecarSchema.pages",
+      "definition": "`null` is could-not-determine and is NOT an empty list.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages",
+      "status": "candidate"
+    },
+    {
       "id": "viewer-nav-qa.viewernavpageschema.path",
       "prefLabel": "ViewerNavPageSchema.path",
       "definition": "The page's published path, e.g. `/cat-harness/library/who-iris/`.",
