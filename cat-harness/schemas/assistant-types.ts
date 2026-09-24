@@ -256,7 +256,7 @@ export interface CapabilityDefinition {
  *
  * **It can, exactly.** The diagram already carries it, executably:
  * `Gateway_SigningRoute` branches to `Task_HumanSign`, a `userTask`, in
- * `Lane_Human`, which binds `<folio:role ref="publication-manager"/>`. So
+ * `Lane_Human`, which binds `<bootstrap.processes:role ref="publication-manager"/>`. So
  * the fallback role is *the role of a lane holding a task only a person can
  * fill* — `fulfilmentKindsForBpmnType`, which the diagram's own
  * documentation already relies on to stop the air-gapped route quietly

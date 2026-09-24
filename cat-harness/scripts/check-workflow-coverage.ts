@@ -23,7 +23,7 @@
  *
  * The declaration is on the WORKFLOW because the workflow depends on the
  * process it carries out: the dependent holds the pointer (data-modelling
- * step 8). It was `<folio:implements workflow>` on the diagram until bean
+ * step 8). It was `<cat-harness.processes:implements workflow>` on the diagram until bean
  * `61ca` — nine `arrow-direction` findings (#1168 B5).
  *
  * ## Coverage is not enough — a diagram that DRIFTS is worse than none
@@ -255,7 +255,7 @@ export function surveyWorkflows(repo: string = REPO): {
       for (const d of declared.diagrams) {
         if (existsSync(join(repo, d))) diagrams.push(d);
         // Unambiguous, and it breaks a reader who follows it — the same tier
-        // `check-workflow-refs.ts` puts a dangling `<folio:skill ref>` in.
+        // `check-workflow-refs.ts` puts a dangling `<bootstrap.processes:skill ref>` in.
         else dangling.push({ diagram: d, workflow: rel });
       }
       diagrams = diagrams.sort();

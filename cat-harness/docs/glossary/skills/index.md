@@ -1614,7 +1614,7 @@ serving-renderings <span class="fa-gloss-status">candidate, extracted</span>
 session-context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What a state machine tracks across a session, as against one process instance. The six fields, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.</p>
+<p>What a state machine tracks across a session, as against one process instance. What the record carries, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-context.md"><code>cat-harness/skills/workflow/session-context.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--session-intent" data-fa-state="extracted" data-fa-gloss="">

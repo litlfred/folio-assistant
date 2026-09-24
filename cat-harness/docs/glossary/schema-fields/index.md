@@ -2128,7 +2128,7 @@ ConventionSchema.applies <span class="fa-gloss-status">candidate, extracted</spa
 ConventionSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable id, referenced by `&lt;folio:convention ref=&quot;…&quot;/&gt;`.</p>
+<p>Stable id, referenced by `&lt;cat-harness.processes:convention ref=&quot;…&quot;/&gt;`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/convention.ts"><code>cat-harness/schemas/convention.ts#ConventionSchema.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--convention.conventionschema.rationale" data-fa-state="extracted" data-fa-gloss="">
@@ -7711,7 +7711,7 @@ RoleDef.actorKinds <span class="fa-gloss-status">candidate, extracted</span>
 RoleDef.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable id. Referenced by `&lt;folio:role ref&gt;` and by `inherits`.</p>
+<p>Stable id. Referenced by `&lt;bootstrap.processes:role ref&gt;` and by `inherits`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledef.inherits" data-fa-state="extracted" data-fa-gloss="">
@@ -7746,7 +7746,7 @@ RoleDef.skills <span class="fa-gloss-status">candidate, extracted</span>
 RoleDef.title <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Display text. Not used for matching: a lane binds by `&lt;folio:role ref&gt;`.</p>
+<p>Display text. Not used for matching: a lane binds by `&lt;bootstrap.processes:role ref&gt;`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.title</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.inherits" data-fa-state="extracted" data-fa-gloss="">

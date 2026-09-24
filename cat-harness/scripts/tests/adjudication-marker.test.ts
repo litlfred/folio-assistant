@@ -72,7 +72,7 @@ describe("a mechanical actor may not adjudicate", () => {
     // The case the marker exists for. A step that has not said who may adjudicate
     // has not restricted anybody, and defaulting to person+agent would let
     // silence read as a deliberate restriction.
-    await expect(loadProcessModel(fixture(THREE))).rejects.toThrow(/no <folio:fulfilment/);
+    await expect(loadProcessModel(fixture(THREE))).rejects.toThrow(/no <cat-harness\.processes:fulfilment/);
   });
 
   test("accepts `person agent` — what adjudication.bpmn's judge step declares", async () => {
@@ -443,7 +443,7 @@ describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", (
   test("REFUSES a deferral with no fulfilment at all", async () => {
     await expect(
       loadProcessModel(fixture('<cat-harness.processes:adjudication defers="caller"/>')),
-    ).rejects.toThrow(/no <folio:fulfilment/);
+    ).rejects.toThrow(/no <cat-harness\.processes:fulfilment/);
   });
 
   test("REFUSES any value but `caller` — there is nowhere else an enum comes from", async () => {
@@ -456,7 +456,7 @@ describe("`defers=\"caller\"` — an adjudication whose enum the caller owns", (
     // The fix is the opposite of the usual one: there is no enum to have read.
     await expect(
       loadProcessModel(deferring('<cat-harness.processes:adjudication accepts="a b"/>')),
-    ).rejects.toThrow(/defers its enum to the caller[\s\S]*declare <folio:adjudication codes/);
+    ).rejects.toThrow(/defers its enum to the caller[\s\S]*declare <cat-harness\.processes:adjudication codes/);
   });
 
   test("a caller declaring nothing still loads — the four real ones do", async () => {
