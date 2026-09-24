@@ -42,7 +42,9 @@ Core's `glossary` graph kind. Core declares `glossary/` with
   It carries a `reason` a person can act on.
 
 A candidate is never presented as a definition. An extractor writes
-candidates; only a person moves one to `authored`.
+candidates; only a person moves one to `authored`. A paper's definition block
+counts as that person: its author wrote the definition and marked it (see
+"A paper's glossary" below).
 
 ## Conventions
 
@@ -120,6 +122,45 @@ comment. One scheme per asset type per instance (`kg-skills`, `kg-tools`,
 - The page shows extracted terms apart from authored ones ("candidate,
   extracted", and a "Show" filter), and only authored terms go into the
   schema.org `DefinedTermSet`.
+
+## Translation: authored terms only (bean `lqo9`, owner 2026-09-24)
+
+`bun run glossary:pot` writes one gettext template per scheme that has an
+authored term, to `translations/<locale>/glossary/<instance>--<scheme>.pot`
+under cat-harness's declared `translation-sources` directory, beside the BPMN
+templates in `processes/`. It is the same pipeline: `formatPot`, the same
+timestamp-blind comparison, and the translation status page counts the new
+templates with no change of its own. `bun run glossary:pot:check` is the gate.
+
+- Only `authored` terms are extracted: `prefLabel`, each `altLabel`, and the
+  `definition`, in the source language (`en` when given per language). A
+  `candidate` reaches a template once a person promotes it.
+- The term's IRI is the translator comment, never a msgid. It stays the same
+  in every language; only labels and definitions are translated.
+- `translations/<locale>/glossary.po` is a different file (terminology hints
+  for `translation-block-qa`). Do not confuse it with the `glossary/` directory.
+- Per-locale rendering of the glossary page is the next step, not built yet.
+
+## A paper's glossary (bean `lqo9`, ruling 2: converge on SKOS)
+
+The paper builder (`content/pipeline/build-glossary.ts`, skill
+[`glossary-build`](glossary-build.md)) also writes the paper's terms as one
+`folio-glossary/v1` scheme, `paper-<paper directory>`, into the glossary
+directory the paper's OWN instance declares. The page picks it up through
+`collect()` like any other scheme, so the IRIs are in that instance's
+namespace (a sub-instance's for a paper in a sub-instance, never the root's).
+
+| the owning block | its `:defterm` paragraph | status |
+|---|---|---|
+| `kind: "definition"` | found | `authored`: the author wrote the definition |
+| any other kind | found | `candidate`: extracted from a theorem, remark, … |
+| any | not found | `could-not-extract`, with the reason |
+
+The definition is the `:defterm` paragraph, verbatim, with directives replaced
+by their labels. The slug is the term's `notation`. Never edit the scheme:
+edit the paper and re-run the builder. `glossary.json` and `glossary.tex` are
+unchanged. An instance that declares no glossary directory gets a notice and
+no scheme; add `{ "id": "glossary", "path": "glossary/", "dependents": "reproduce", "graphKinds": ["glossary"] }`.
 
 ## Not here
 

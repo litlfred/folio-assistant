@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 282,
+      "count": 284,
       "unit": "beans"
     }
   },
@@ -293,14 +293,14 @@
     {
       "id": "folio-assistant-2r2n",
       "title": "Mobile: pages scroll sideways at phone width",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-23T10:36:13Z",
+      "updatedAt": "2026-09-24T06:04:56Z",
       "preview": "A page wider than a 390 px viewport makes the reader pan sideways to reach columns or actions. Fix in the shared table/grid CSS: wrap, stack or collapse columns at narrow widths, and let only a table's own container scroll, with a visible cue.\n\nObserved on: `catalogue`, `folio`, `fsh-guts`, `kg-viewer`, `library`, `navbar`, `processes`, `skills-index`, `tools`, `translation-status`, `uploads` (see",
       "file": "beans/defs/folio-assistant-2r2n--mobile-pages-scroll-sideways-at-phone-width.md"
     },
@@ -387,6 +387,20 @@
       "updatedAt": "2026-09-24T06:06:37Z",
       "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
       "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
+    },
+    {
+      "id": "folio-assistant-3dci",
+      "title": "THEME: grumpy-cyborg-agents for cat-harness; plain grumpy-cat moves to folio-assistant-core",
+      "status": "completed",
+      "type": "feature",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:36:12Z",
+      "updatedAt": "2026-09-24T12:36:12Z",
+      "preview": "Owner 2026-09-24: supplied three crops (card 1254x1254, mobile 1024x1536, laptop 1659x948) of the grumpy cat in the sage hoodie on a sled pulled by four robot cats — \"import avatar theme\", \"use this for the cat-harness theme, the current plain grump cat them it is using should be for folio-assisnt-core\", named \"grumpy-cyborg-agents\".\n\n## Summary of Changes\n- Art at cat-harness/docs/assets/img/harn",
+      "file": "beans/defs/folio-assistant-3dci--theme-grumpy-cyborg-agents-for-cat-harness-plain-g.md"
     },
     {
       "id": "folio-assistant-3lbz",
@@ -883,14 +897,14 @@
     {
       "id": "folio-assistant-7h1c",
       "title": "publish-verify scope misses our own SKOS code-lists document",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:40:40Z",
-      "updatedAt": "2026-09-24T05:40:40Z",
+      "updatedAt": "2026-09-24T11:55:19Z",
       "preview": "Found 2026-09-24 while working `wg7r`. `publish-verify`'s `isOurs` counts a JSON-LD document as ours only when its `@context` names our content context or binds one of our namespaces. `<stub>-code-lists.jsonld` (glossary-export) binds only `skos`, `dcterms`, `owl` and `rdf`, so the verifier counts it **out of scope (not ours)**, even though its `@id` sits under our published base and we author eve",
       "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
     },
@@ -2238,7 +2252,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:03:45Z",
-      "updatedAt": "2026-09-24T12:00:00Z",
+      "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), queued for a ROAST before anything is built:\n\n> justthedocs docs/ rendering should include an index of all defined terms extracted from KG assets in the docs/ (e.g. a bpmn diagram swimlane has title/description). make translatable like all assets. make coded-glossary content kind that can be used in KG extraction and visualisation, re-used when",
       "file": "beans/defs/folio-assistant-lqo9--glossary-a-coded-versioned-glossary-content-kind-i.md"
     },
@@ -3775,6 +3789,20 @@
       "updatedAt": "2026-09-22T21:09:45Z",
       "preview": "Owner: *\"doc ingest\"*. A DAK narrative or an L1 handbook arrives as a .docx or\nPDF. Until it is blocks in the folio/ graph, there is nothing to diff, anchor\ncomments to, or heat-map.\n\n**Measured 2026-09-22.**\n- `document-intake` lives in **folio-paper-adapter/**, not\n  folio-document-adapter/. An L1 handbook is a `document` folio, so the skill\n  is in the wrong adapter for its main customer.\n- The",
       "file": "beans/defs/folio-assistant-xtpc--doc-ingest-docx-and-pdf-handbooks-to-document-bloc.md"
+    },
+    {
+      "id": "folio-assistant-xwrt",
+      "title": "Mounted instance pages widen at phone width: kg-to-portal is 566px at 390",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T07:06:54Z",
+      "updatedAt": "2026-09-24T07:06:54Z",
+      "preview": "Found by bean 2r2n (2026-09-24). After 2r2n, 1 of 249 built pages still scrolls sideways at 390 px: `docs/who-iris/kg-to-portal.html`, 566 px wide because of three long inline `code` spans (482, 357 and 311 px).\n\nIt is a MOUNTED instance page: `mount-instance-docs.ts` copies who-iris's own docs verbatim and injects the rail. It gets neither `narrow-viewport.css` (themed pages link it from head_cus",
+      "file": "beans/defs/folio-assistant-xwrt--mounted-instance-pages-widen-at-phone-width-kg-to.md"
     },
     {
       "id": "folio-assistant-xxku",

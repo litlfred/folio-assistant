@@ -5949,7 +5949,7 @@ glossary-build <span class="fa-gloss-status">candidate, extracted</span>
 glossary-terms <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary.</p>
+<p>Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/glossary-terms.md"><code>cat-harness/skills/folio-core/glossary-terms.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.glossaryentry.ambiguity" data-fa-state="extracted" data-fa-gloss="">
