@@ -308,3 +308,24 @@ their costs. **No code was written**: CRDM Phase 1 starts from the issue, and
 the branch — implement, or retire the declaration — is the author's.
 
 Status stays `in-progress`; neither `## Done when` box has moved.
+
+--------
+
+## Owner, 2026-09-24 — implement it, via #556
+
+Three answers, in order:
+
+1. **"Implement via #556"** — not retire, not leave.
+2. Where synced skills live: **"Commit, pinned, read-only"**. That is the
+   repository's materialized-content rule: the bytes are committed at a
+   pinned upstream commit, with sha256 fixity, and are read-only. Updating
+   them is a deliberate re-sync, not `autoUpdate`.
+3. The two FHIR skills: **"Author them here"**. Measured 2026-09-24:
+   TopologyHealth/SMARTerFHIR @ 506463af is a TypeScript library with **zero**
+   SKILL.md files, so no sync can serve `smart-launch` or
+   `fhir-client-operations`. They are written in `fhir-harness/`, against
+   the library's real API.
+
+Also measured 2026-09-24: K-Dense-AI/claude-scientific-skills @ 49c6e977 is
+MIT-licensed and holds all three declared skills at `skills/<name>/SKILL.md`
+(166 skills upstream), about 680 KB with their scripts and references.

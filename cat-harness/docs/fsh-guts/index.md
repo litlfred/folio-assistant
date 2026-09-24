@@ -20,7 +20,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**27 file(s)** across 2 group(s). Each links to the file itself —
+**28 file(s)** across 2 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -33,7 +33,7 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 17 | carries the tag itself |
+| <span class="fg-tag fg-ok">declared</span> | 18 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 4 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 6 | **neither** — a gap, not a format limit |
 
@@ -43,10 +43,11 @@ summary count is the failure this table exists to avoid.
 
 ## retired
 
-11 file(s).
+12 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
+| [remote-stubs-package.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/remote-stubs-package.md) | `remote-stubs`, as it was at retirement | <span class="fg-tag fg-ok">declared</span> |
 | [skill-definition-roles.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md) | `SkillDefinition.roles` — retired 2026-09-20 | <span class="fg-tag fg-ok">declared</span> |
 | [skill-instructions-AGENTS.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-AGENTS.md) | AGENTS.md — kg-navigation | <span class="fg-tag fg-ok">declared</span> |
 | [skill-instructions-bootstrap-graph-emission.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md) | Emitting bootstrap's own graph | <span class="fg-tag fg-ok">declared</span> |

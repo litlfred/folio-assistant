@@ -3,8 +3,10 @@
 title: witness-pipeline.yml has never run — keep, template, or retire?
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-24T06:47:37Z
-updated_at: 2026-09-24T06:47:37Z
+updated_at: 2026-09-24T12:14:40Z
+parent: folio-assistant-1xhc
 ---
 
 Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.

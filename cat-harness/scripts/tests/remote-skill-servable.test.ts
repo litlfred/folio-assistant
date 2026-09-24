@@ -47,47 +47,33 @@ import { knownSkills, remotePackageDeclarations } from "../known-skills.js";
 const ROOT = join(import.meta.dir, "..", "..");
 
 /**
- * **Empty since 2026-09-20 — and the gap did not close, it MOVED.**
+ * **Empty, and since 2026-09-24 for the right reason** — issue #556.
  *
- * The five names were unservable, so `skill_fetch` failed partway through any
- * task that asked for one. Each now has a stub body in `skills/remote-stubs/`
- * that says plainly it is not implemented, where the real thing lives, and what
- * would finish it. So nothing fails at the call site, and **nothing is finished
- * either**: the content is still absent.
+ * The five names were unservable, then stubbed (2026-09-20), and are now real:
  *
- * This file's own header asked for exactly that act — "a deliberate act with the
- * expectation updated, not a green run nobody reads" — on the owner's principle:
+ * - the three scientific skills are MATERIALIZED — pinned, committed and
+ *   fixity-checked (`sync-remote-packages.ts`, owner: "Commit, pinned,
+ *   read-only") — and served as ordinary local packages;
+ * - the two FHIR names were never skills upstream (SMARTerFHIR is a library with
+ *   no skill files), so the wrapper stopped declaring them and they are AUTHORED
+ *   in `fhir-harness/skills/fhir-client/` (owner: "Author them here").
  *
- * > stub things out knowing its not working. make sure QA checks pickup so we can
- * > fix later. principle: KG is always a work in progress. QA helps show where to
- * > work on it next, close gaps.
- *
- * ## Why emptying this list alone would have been the wrong change
- *
- * An empty pin passes in two very different worlds: one where every declaration
- * is now servable, and one where somebody deleted the wrapper declarations so
- * there was nothing left to fail. It would also pass if the stubs were deleted
- * and the wrappers with them — losing both the capability and its record.
- *
- * So the pin moved rather than shrank. `EXPECTED_STUBS` below carries the same
- * five names on the other side of the ledger, and `kg:audit` reports each under
- * `skill-is-a-stub` (`minor`: printed every run, gating nothing). Bean `wlqd`.
+ * The stubs are retired to `fsh-guts/retired/remote-stubs-package.md`, bodies
+ * verbatim. The pins below replace `EXPECTED_STUBS` with what each name became,
+ * so an empty unservable list still cannot pass in the world where the
+ * declarations were deleted instead.
  */
 const EXPECTED_UNSERVABLE: string[] = [];
 
-/**
- * The same five, now stubbed — the other side of the ledger.
- *
- * Deleting a stub must fail here rather than quietly restore the call-time
- * failure this pair of pins exists to prevent.
- */
-const EXPECTED_STUBS = [
-  "fhir-client-operations",
+/** Materialized from a pinned upstream commit, and served as local packages. */
+const EXPECTED_MATERIALIZED = [
   "hypothesis-generation",
   "scientific-critical-thinking",
   "scientific-visualization",
-  "smart-launch",
 ];
+
+/** Never skills upstream; authored here, in the FHIR instance. */
+const EXPECTED_AUTHORED_FHIR = ["fhir-client-operations", "smart-launch"];
 
 describe("remote-package declarations vs what this instance can serve", () => {
   const servable = knownSkills(ROOT);
@@ -108,25 +94,26 @@ describe("remote-package declarations vs what this instance can serve", () => {
     expect(unservable).toEqual(EXPECTED_UNSERVABLE);
   });
 
-  test("every name that WAS unservable is now a declared stub, not silently gone", () => {
-    // The other half of the pin. `unservable` being empty is only good news if
-    // the names are still declared AND each is answered by a stub that says it is
-    // unimplemented. A name that vanished from both sides took its record with it.
+  test("each synced name is still declared, served, and materialized — not a stub", () => {
     const declaredNames = new Set(declared.map((d) => d.skill));
-    for (const name of EXPECTED_STUBS) {
+    for (const name of EXPECTED_MATERIALIZED) {
       expect(declaredNames.has(name), `${name} is no longer declared by any wrapper`).toBe(true);
       expect(servable.has(name), `${name} is declared but has no body to serve`).toBe(true);
+      const rec = JSON.parse(readFileSync(join(ROOT, "skills", name, "materialization.json"), "utf-8"));
+      expect(rec.files.length).toBeGreaterThan(0);
+      for (const f of rec.files) expect(f.materialization.fixity.algorithm).toBe("sha256");
+      const body = readFileSync(join(ROOT, "skills", name, `${name}.md`), "utf-8");
+      expect(/^stub:\s*\S/m.test(body), `${name}.md is still a stub`).toBe(false);
     }
   });
 
-  test("each stub declares itself a stub, so kg:audit can report it", () => {
-    // The stub body is what stops the call-time failure; the `stub:` front matter
-    // is what stops the fix from LOOKING finished. Without this assertion,
-    // somebody could remove the marker and the gap would go quiet.
-    for (const name of EXPECTED_STUBS) {
-      const body = readFileSync(join(ROOT, "skills", "remote-stubs", `${name}.md`), "utf-8");
+  test("the two FHIR names are authored in fhir-harness, and no wrapper claims them", () => {
+    const declaredNames = new Set(declared.map((d) => d.skill));
+    for (const name of EXPECTED_AUTHORED_FHIR) {
+      expect(declaredNames.has(name), `${name} is declared remote again, but upstream has no such skill`).toBe(false);
+      const body = readFileSync(join(ROOT, "..", "fhir-harness", "skills", "fhir-client", `${name}.md`), "utf-8");
       expect(body.startsWith("---"), `${name}.md has no front matter`).toBe(true);
-      expect(/^stub:\s*\S/m.test(body), `${name}.md carries no \`stub:\` reason`).toBe(true);
+      expect(/^stub:\s*\S/m.test(body), `${name}.md is a stub`).toBe(false);
     }
   });
 
@@ -138,11 +125,13 @@ describe("remote-package declarations vs what this instance can serve", () => {
     }
   });
 
-  test("both wrappers still declare a sync nothing performs — the bean's premise", () => {
-    // If this stops being true the premise has changed: either the field was
-    // dropped (one of `wlqd`'s two remedies) or a sync was implemented. Either
-    // way the criterion's summary needs rewriting, so fail rather than pass.
-    const withSync = declared.filter((d) => d.sync !== undefined && d.sync !== null);
-    expect(withSync.length).toBe(declared.length);
+  test("every declared skill comes from a wrapper that syncs, pinned, never auto-updating", () => {
+    // The premise inverted: this asserted that a sync was declared and NOTHING
+    // performed it. Now something does, so what is pinned is how.
+    for (const d of declared) {
+      const sync = d.sync as { autoUpdate?: boolean } | undefined;
+      expect(sync, `${d.file} declares ${d.skill} with no sync`).toBeDefined();
+      expect(sync?.autoUpdate).toBe(false);
+    }
   });
 });

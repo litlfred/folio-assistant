@@ -481,6 +481,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-voice/v1": { validator: "schemas/voices.ts#VoiceProfileSchema" },
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
       "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
+      // A synced remote skill's pinned, per-file fixity record (issue #556).
+      "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
     },
     summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
   },

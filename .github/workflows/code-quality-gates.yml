@@ -855,6 +855,9 @@ jobs:
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
           bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
           bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs

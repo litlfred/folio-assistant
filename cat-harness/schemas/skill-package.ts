@@ -355,38 +355,26 @@ export const SkillRegistrySchema = z.object({
 export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkout", "subtree"]);
 
 /**
- * How a remote package WOULD be brought in. **Declared intent; nothing performs
- * it.**
+ * How a remote package's skills are brought in — PERFORMED since 2026-09-24
+ * (issue #556, bean `wlqd`) by `scripts/sync-remote-packages.ts`
+ * (`bun run sync:remote-skills`).
  *
- * Measured 2026-09-19 (bean `wlqd`): `shallow-clone` appears only as a value in
- * {@link RemoteSyncStrategySchema}; `src/tools/skill-fetch.ts` and
- * `scripts/generate-registry.ts` contain no mention of `skills/remote-packages/`
- * at all; and the directory's only substantive reader,
- * `scripts/generate-docs.ts`, reads it for the Docker requirements this type's
- * own doc comment names. So `frequency` and `autoUpdate` are fields no code
- * consults.
+ * Until then this was declared intent that nothing performed: `shallow-clone`
+ * appeared only as a value in {@link RemoteSyncStrategySchema}, and both
+ * wrappers pinned `ref: "main"` with `autoUpdate: true`. The owner chose to
+ * implement it, **committed, pinned and read-only**:
  *
- * **Stronger since 2026-09-20**: that "only substantive reader" was itself
- * never invoked — no package.json entry and no workflow, in any commit since
- * the root commit — and is retired to `fsh-guts/scripts/` (bean
- * `folio-assistant-3w0i`). The directory now has no substantive reader at
- * all, which does not change the conclusion below; it removes the last
- * reason to soften it.
+ * - the sync copies each declared skill at the wrapper's `ref` into its own
+ *   package under the instance's skills directory, with a sha256 fixity record
+ *   per file, so `check:materialized-fixity` fails an edit in place;
+ * - a wrapper that declares `sync` must pin a full commit SHA and may not
+ *   `autoUpdate` — a skill body is a prompt an agent follows, so an unpinned
+ *   one is an unreviewed prompt. {@link RemotePackageRefSchema} refuses both;
+ * - `bun run check:remote-skills` fails, offline, when a declared skill is
+ *   not materialized at its wrapper's pin.
  *
- * It is documented rather than deleted because the intent is real information
- * about two real external dependencies — a maintainer chose `shallow-clone` over
- * `subtree` — and losing that costs the next reader the same decision. What was
- * costly was stating it as fact: the generated docs page said "Agents can sync
- * and update these automatically based on the sync configuration", which a reader
- * of the published site cannot check against the code.
- *
- * **If you implement it, two things are decisions and not details.** Both
- * wrappers currently pin `ref: "main"` with `autoUpdate: true`, which would
- * auto-ingest whatever the upstream pushes — prefer a pinned commit. And
- * `manifest-skill-exists` deliberately stops treating a remote declaration as
- * resolution (bean `nup0`); that allowance should come back, and
- * `scripts/tests/manifest-remote-resolution.test.ts` records the argument for
- * closing it so it is revisited rather than rediscovered.
+ * The synced skills resolve as LOCAL skills, so `manifest-skill-exists` needs
+ * no remote allowance (bean `nup0`) — it sees them as it sees any other.
  */
 export const RemoteSyncConfigSchema = z.object({
   strategy: RemoteSyncStrategySchema,
@@ -414,6 +402,51 @@ export const RemotePackageRefSchema = z.object({
     skills: z.array(z.string()),
     lifecycleStages: z.array(LifecycleStageSchema).optional(),
   }),
+}).superRefine((w, ctx) => {
+  // PINNED, OR NOT SYNCED (issue #556). A synced skill is a prompt an agent
+  // follows, so it moves only by a reviewed change to this pin.
+  if (!w.sync) return;
+  if (!/^[0-9a-f]{40}$/.test(w.ref)) {
+    ctx.addIssue({ code: "custom", path: ["ref"],
+      message: "a wrapper that syncs pins a full 40-character commit SHA, never a branch or tag" });
+  }
+  if (w.sync.autoUpdate) {
+    ctx.addIssue({ code: "custom", path: ["sync", "autoUpdate"],
+      message: "a pinned sync never updates itself; move the pin in a reviewed change instead" });
+  }
+});
+
+/**
+ * The record `sync-remote-packages.ts` writes beside a synced skill
+ * (`materialization.json`, tag `folio-remote-skill/v1`, issue #556).
+ *
+ * Each file's `materialization` is the shape `check:materialized-fixity`
+ * walks. It is restated narrowly here rather than imported, because the full
+ * `MaterializationSchema` belongs to a layer above this one; this is the
+ * subset a synced skill always carries — materialized, pinned, with sha256.
+ */
+export const RemoteSkillRecordSchema = z.object({
+  $schema: z.literal("folio-remote-skill/v1"),
+  skill: z.string().min(1),
+  package: z.string().min(1),
+  repo: z.string().url(),
+  ref: z.string().regex(/^[0-9a-f]{40}$/, "a synced skill is pinned to a full commit SHA"),
+  wrapper: z.string().min(1),
+  note: z.string().min(1),
+  files: z.array(z.object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    materialization: z.object({
+      state: z.literal("materialized"),
+      provenance: z.object({ upstream: z.string().url() }),
+      localPath: z.string().min(1),
+      bytes: z.number().int().nonnegative(),
+      purpose: z.literal("archival"),
+      fixity: z.object({ algorithm: z.literal("sha256"), digest: z.string().regex(/^[0-9a-f]{64}$/) }),
+      materializedAt: z.string().min(1),
+      upstreamVersion: z.string().regex(/^[0-9a-f]{40}$/),
+    }),
+  })).min(1),
 });
 
 // ─── Inferred types ──────────────────────────────────────────────────────────
