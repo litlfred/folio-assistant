@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 312,
+      "count": 314,
       "unit": "beans"
     }
   },
@@ -1021,6 +1021,20 @@
       "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
     },
     {
+      "id": "folio-assistant-7mog",
+      "title": "ONE stylesheet for the navbar: docs-ui.css aliases 12 rules that navbarCss() already owns",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:39:39Z",
+      "updatedAt": "2026-09-24T17:39:39Z",
+      "preview": "The owner chose \"1 2\" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.\n\n## What shipped as 1 (PR #1264)\n\n`nav_footer_custom.html` is a single `{% include %}` and composes no markup.\nThe sidebar's navbar is RENDERED by `lib/navbar.ts`. To keep the look\nbyte-for-byte, `docs-ui.css` gained the renderer's class names as ADDITIONAL\nSELECTORS on rules it already",
+      "file": "beans/defs/folio-assistant-7mog--one-stylesheet-for-the-navbar-docs-uicss-aliases-1.md"
+    },
+    {
       "id": "folio-assistant-7po1",
       "title": "WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos",
       "status": "todo",
@@ -1851,14 +1865,14 @@
     {
       "id": "folio-assistant-edx7",
       "title": "NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:30:28Z",
-      "updatedAt": "2026-09-23T13:30:28Z",
+      "updatedAt": "2026-09-24T12:00:24Z",
       "preview": "Owner, 2026-09-23, naming three pages and then the rule:\n\n> navbar should be on sub pages like\n> https://litlfred.github.io/folio-assistant/cat-harness/catalogue/who-iris/\n>\n> or https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n> or library\n>\n> etc... **common fixture unless explicty removed in harness visualtion.**\n\nThe last line is the requirement, and i",
       "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
     },
@@ -2645,7 +2659,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:59Z",
       "updatedAt": "2026-09-24T17:20:57Z",
-      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
+      "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [x] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [x] perform-task rules, scoped by cat-h",
       "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
     },
     {
@@ -3292,7 +3306,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:26:39Z",
-      "updatedAt": "2026-09-22T21:28:43Z",
+      "updatedAt": "2026-09-24T12:00:07Z",
       "preview": "## What — the owner's spec, verbatim\n\n2026-09-21, with a screenshot of the who-iris rail open and working:\n\n> looks good.\n>\n> we should have same navbar across all folios though.  presented same way.\n> need to comine the two.\n>\n> * keep exploding menu from folio-assisnt\n> * keep [x] from who-iris, keep behavior of open/close, etc.\n> * keep consistent docs/ library/ etc. when content/subgraphs pres",
       "file": "beans/defs/folio-assistant-sjic--one-navbar-for-every-folio-combine-the-folio-assis.md"
     },
@@ -3761,6 +3775,20 @@
       "updatedAt": "2026-09-20T18:47:55Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim\nbecause a goal paraphrased by an agent is a different goal:\n\n> get to separtion of repos into dir/repos with each harness instiatiatin w/\n> config and initation steps skilled, tooled, and tested (readme, creation of\n> directories, active vs static content -- beans todos fsh-guts,etc.)\n\nCreated on the owner's ruling for",
       "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md"
+    },
+    {
+      "id": "folio-assistant-vxho",
+      "title": "A test 14% under the default timeout is a gate that fails on a busy machine, not a red one",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:19:24Z",
+      "updatedAt": "2026-09-24T12:19:24Z",
+      "preview": "Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.\n\n```\ncat-harness/schemas/viz-generators.test.ts:\n(fail) the readers agree with what the generators publish > a queue's\n       declared intake is ONE unit, not one per file it carries [5683.71ms]\n  ^ this test timed out after 5000ms.\n```\n\n**It is not a correctness failure and it was not the diff's.** The diff was two\nbea",
+      "file": "beans/defs/folio-assistant-vxho--a-test-14-under-the-default-timeout-is-a-gate-that.md"
     },
     {
       "id": "folio-assistant-w0cr",
