@@ -409,3 +409,18 @@ describe("the KG-to-portal page keeps its claims honest", () => {
     expect(page).toContain("not measured");
   });
 });
+
+describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
+  it("every committed page lets inline code break rather than widen the page", () => {
+    // Mounted verbatim, so the harness's narrow-viewport.css never reaches
+    // these pages. Three long code spans made kg-to-portal 566 px wide at a
+    // 390 px viewport before the rule was in the generator's own stylesheet.
+    const pages = [
+      ...readdirSync(DOCS).filter((f) => f.endsWith(".html")).map((f) => join(DOCS, f)),
+      ...readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => join(LIB, f)),
+    ];
+    expect(pages.length).toBeGreaterThan(0);
+    const missing = pages.filter((p) => !readFileSync(p, "utf-8").includes(":not(pre) > code { overflow-wrap: anywhere; }"));
+    expect(missing).toEqual([]);
+  });
+});
