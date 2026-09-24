@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 290,
+      "count": 291,
       "unit": "beans"
     }
   },
@@ -419,14 +419,14 @@
     {
       "id": "folio-assistant-3oqj",
       "title": "FOUR KINDS NOTHING AUDITS: health, interaction, issue-marks, todos - 13 files, 0 criteria, 0 gates",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:17Z",
-      "updatedAt": "2026-09-24T05:44:17Z",
+      "updatedAt": "2026-09-24T13:08:49Z",
       "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph kinds hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
       "file": "beans/defs/folio-assistant-3oqj--four-kinds-nothing-audits-health-interaction-issue.md"
     },
@@ -447,14 +447,14 @@
     {
       "id": "folio-assistant-3srh",
       "title": "TEN GATES HAVE NOT DECLARED @covers, so every audit-coverage verdict is an upper bound",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:44:18Z",
-      "updatedAt": "2026-09-24T05:44:18Z",
+      "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
     },
@@ -1735,6 +1735,20 @@
       "updatedAt": "2026-09-23T10:00:13Z",
       "preview": "Child of d903 (renderer 4 of the five it listed). A text diff of a decision table is unreadable, which is the case that proved a single 'the diff' wrong.\n\nNeeds, before it can be built:\n- the structured shape of each DAK artefact on BOTH sides. The ChangeSet reads manifests as text and never executes them; a field diff needs the parsed artefact (FHIR JSON, a DMN table, a data dictionary row);\n- a ",
       "file": "beans/defs/folio-assistant-f327--diff-renderer-structural-diff-for-dak-artefacts-a.md"
+    },
+    {
+      "id": "folio-assistant-f4gj",
+      "title": "MEASURED: fsh-cone is a second route to logic-layer edges, but delivers 0 of 458 as merged — skill's P3 blocker holds as measurement, is too strong as inference",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-uhkv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:17:32Z",
+      "updatedAt": "2026-09-23T21:19:50Z",
+      "preview": "## Brief\n\n**The question.** `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` §\"P3 is\nBLOCKED on more than a fork\" infers, from 458 export artefacts carrying no dependency\nedges, that **P3 depends on `ig-publisher-fork` delivering the logic-layer edges**.\n`cat-harness/content/pipeline/fsh-cone.ts` — merged on `main`, from archived bean `267x` —\nbuilds a dependency graph from IG **source",
+      "file": "beans/defs/folio-assistant-f4gj--measured-fsh-cone-is-a-second-route-to-logic-layer.md"
     },
     {
       "id": "folio-assistant-fgkb",
@@ -3849,28 +3863,28 @@
     {
       "id": "folio-assistant-xutg",
       "title": "AUDIT COVERAGE: no command says which audits reach a kind, so coverage gets inferred from a sidecar count",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:25:17Z",
-      "updatedAt": "2026-09-24T05:25:57Z",
+      "updatedAt": "2026-09-24T12:57:26Z",
       "preview": "On 2026-09-23 an agent reported that beans were \"effectively unaudited\". The\nevidence was a count of `kg-qa` sidecars over them: zero. The conclusion was\nwrong — **five** gates audit beans (`check:bean-bodies`,\n`check:bean-front-matter`, `check:bean-issue-links`, `check:bean-parents`,\n`check:bean-rollup`), plus `check:subgraphs` over the links in their bodies.\n\nThe defect is not the count. It is t",
       "file": "beans/defs/folio-assistant-xutg--audit-coverage-no-command-says-which-audits-reach.md"
     },
     {
       "id": "folio-assistant-xwrt",
       "title": "Mounted instance pages widen at phone width: kg-to-portal is 566px at 390",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T07:06:54Z",
-      "updatedAt": "2026-09-24T07:06:54Z",
+      "updatedAt": "2026-09-24T17:18:12Z",
       "preview": "Found by bean 2r2n (2026-09-24). After 2r2n, 1 of 249 built pages still scrolls sideways at 390 px: `docs/who-iris/kg-to-portal.html`, 566 px wide because of three long inline `code` spans (482, 357 and 311 px).\n\nIt is a MOUNTED instance page: `mount-instance-docs.ts` copies who-iris's own docs verbatim and injects the rail. It gets neither `narrow-viewport.css` (themed pages link it from head_cus",
       "file": "beans/defs/folio-assistant-xwrt--mounted-instance-pages-widen-at-phone-width-kg-to.md"
     },

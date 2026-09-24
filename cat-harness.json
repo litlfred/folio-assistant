@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T17:20:26.758Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2573951cda2c350b882d0ece0ec48bfb9bc408e",
-  "sourceCommitSha": "d2573951cda2c350b882d0ece0ec48bfb9bc408e",
-  "sourceCommitAt": "2026-09-24T19:17:27+02:00",
+  "generatedAt": "2026-09-24T17:36:06.259Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c7f3151fe40a1be08d64095d559b6e747f78771a",
+  "sourceCommitSha": "c7f3151fe40a1be08d64095d559b6e747f78771a",
+  "sourceCommitAt": "2026-09-24T19:33:15+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 861,
     "Tool": 83,
-    "Schema": 116,
+    "Schema": 117,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -2615,7 +2615,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/audit-coverage.md",
-      "instructionLines": 191,
+      "instructionLines": 250,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37498,6 +37498,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "interaction",
+      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "module": "schemas/interaction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -39736,8 +39744,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "d2573951cda2c350b882d0ece0ec48bfb9bc408e",
+    "sha": "c7f3151fe40a1be08d64095d559b6e747f78771a",
     "pr": "main",
-    "run": "36033268469"
+    "run": "36035116489"
   }
 }
