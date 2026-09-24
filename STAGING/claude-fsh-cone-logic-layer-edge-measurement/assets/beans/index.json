@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 275,
+      "count": 278,
       "unit": "beans"
     }
   },
@@ -363,14 +363,14 @@
     {
       "id": "folio-assistant-319n",
       "title": "ZOD IS IN CAT-HARNESS: move bootstrap-tools' graph.ts and discussion.ts into cat-harness/schemas, retire bootstrap-tools if empty",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-88mg",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:17Z",
-      "updatedAt": "2026-09-23T22:52:17Z",
+      "updatedAt": "2026-09-24T05:45:45Z",
       "preview": "Owner, 2026-09-23 (bean iwtn, ruling 4): *\"cat-harness/tools like renderer. zod is in cat-harness\"*. `model-registry.ts` already moved (PR #1200). The owner then chose to move the other two as well, in a follow-up PR after #1200 merges.\n\n## The rule (owner, 2026-09-23)\n\n> Zod - these are authoring tools for the KG, different tools can/will be used, but the core KG should be unchanged.\n\nThe Zod fil",
       "file": "beans/defs/folio-assistant-319n--zod-is-in-cat-harness-move-bootstrap-tools-graphts.md"
     },
@@ -991,6 +991,20 @@
       "updatedAt": "2026-09-19T11:43:44Z",
       "preview": "Notes that a participant carries, attached to a node of the graph.\n\n`h32d` is the schema both halves share; `5oai` is the relation that lets one\nattach to a content block and move between them. The 2x2 that governs this is\nmemory-vs-workflow and human-vs-agent: todos are human memory, `MEMORY.md` is\nagent memory, beans are agent workflow, and human workflow is deliberately\nempty.\n\n`4kiw` and `0j8h",
       "file": "beans/defs/folio-assistant-8jt6--memory-todos-notes-an-agent-or-a-person-carries-at.md"
+    },
+    {
+      "id": "folio-assistant-8v0y",
+      "title": "A bean that RESTATES a live skill's contract is unchecked — kn0t drifted in four places and one turned a measurement into an impression",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:07:00Z",
+      "updatedAt": "2026-09-23T21:07:04Z",
+      "preview": "Issue [#1190](https://github.com/litlfred/folio-assistant/issues/1190).\n\nA bean that carries a **skill's contract** instead of pointing at it. `AGENTS.md`'s\nbanner already states the rule — *where a skill and a copy disagree, the skill wins\nand the copy is wrong* — and nothing could read it.\n\n## The defect, already paid for\n\n`kn0t` held a second copy of\n[`fhir-harness/skills/fhir-ig-base/ig-publis",
+      "file": "beans/defs/folio-assistant-8v0y--a-bean-that-restates-a-live-skills-contract-is-unc.md"
     },
     {
       "id": "folio-assistant-8xtj",
@@ -1723,6 +1737,20 @@
       "file": "beans/defs/folio-assistant-ga3q--waiver-a-human-can-waive-a-confirmation-right-scop.md"
     },
     {
+      "id": "folio-assistant-ghgn",
+      "title": "ORPHANED VIEWER PAGES: the schema-viewer and UML generators never remove the page of a retired instance (detangle's is still published)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-88mg",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:40:27Z",
+      "updatedAt": "2026-09-24T05:40:27Z",
+      "preview": "Found 2026-09-24 while retiring `bootstrap-tools` (bean 319n). `gen-schema-viz.ts` and `gen-uml-overview.ts` write one page per instance but never remove the page of an instance that no longer exists. So a retired instance keeps a published page that nothing links to.\n\n- `bootstrap-tools`: its two orphans (`cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html` and `cat-harness/docs/uml/",
+      "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
+    },
+    {
       "id": "folio-assistant-gnqa",
       "title": "library visualiser: 6 wireframe findings",
       "status": "todo",
@@ -2017,6 +2045,20 @@
       "updatedAt": "2026-09-21T23:06:21Z",
       "preview": "## The owner's words, verbatim\n\nParaphrase would lose the sequencing and the scope, both of which constrain the\ndesign:\n\n> i want the smart-* mockups not to mount the existing rendered .html but use\n> the IG Publisher+postporcessed json/jsonld +metadataindexing to reproduce the\n> generated html in the justthedoc pipeline.\n>\n> i want the input/page(s)/ content to be rendered viajustthedocs pipeline",
       "file": "beans/defs/folio-assistant-jut3--smart-via-just-the-docs-stop-mounting-ig-publisher.md"
+    },
+    {
+      "id": "folio-assistant-jwoc",
+      "title": "PROV-O QA/QC report over workflow instances: the agentic engine's after-check (#1180 step 5)",
+      "status": "completed",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:31:23Z",
+      "updatedAt": "2026-09-24T05:31:23Z",
+      "preview": "Issue #1180, step 5 of `docs/proposals/odrl-prov-actor-model.md`: the agentic engine's after-check. The deterministic engine checks the ODRL policy before a task (t490, #1207); an agent swarm acts first, so the same policy is checked after, from a PROV-O log derived from workflow history. Advisory, as the owner chose.\n\n## Done when\n- [x] `scripts/prov-qaqc.ts`: one `prov:Activity` per activity/dec",
+      "file": "beans/defs/folio-assistant-jwoc--prov-o-qaqc-report-over-workflow-instances-the-age.md"
     },
     {
       "id": "folio-assistant-jwox",

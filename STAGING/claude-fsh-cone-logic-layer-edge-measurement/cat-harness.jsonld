@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T05:48:28.842Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/22ca7e156644ff06a6a81d51edb54498aa6720cc",
-  "sourceCommitSha": "22ca7e156644ff06a6a81d51edb54498aa6720cc",
-  "sourceCommitAt": "2026-09-24T05:45:19Z",
+  "generatedAt": "2026-09-24T06:22:02.376Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/00f66e2092117f628efeb58a42da22f83e98149a",
+  "sourceCommitSha": "00f66e2092117f628efeb58a42da22f83e98149a",
+  "sourceCommitAt": "2026-09-24T06:20:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -292,7 +292,7 @@
     "Tool": 83,
     "Schema": 115,
     "GraphKind": 32,
-    "Directory": 44,
+    "Directory": 43,
     "Asset": 3
   },
   "@graph": [
@@ -743,7 +743,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 230,
+      "instructionLines": 237,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2996,7 +2996,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 156,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39576,6 +39576,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/bootstrap-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "bootstrap-graph",
+      "title": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
+      "module": "schemas/bootstrap-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bootstrap-graph"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/carried-note",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "carried-note",
@@ -39714,6 +39723,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/diff-renderers"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "discussion",
+      "title": "The two documents the `discussion` process carries, as Zod.",
+      "module": "schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/discussion"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -39766,6 +39784,15 @@
       "module": "schemas/graph-kind-registry.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph-kind-registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "graph",
+      "title": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
+      "module": "schemas/graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/harness-config",
@@ -40483,33 +40510,6 @@
       "module": "../large-datasets/schemas/source-descriptor.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/large-datasets-schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/bootstrap-graph",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "bootstrap-graph",
-      "title": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
-      "module": "../bootstrap-tools/schemas/bootstrap-graph.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/bootstrap-tools-schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bootstrap-graph"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "discussion",
-      "title": "The two documents the `discussion` process carries, as Zod.",
-      "module": "../bootstrap-tools/schemas/discussion.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/bootstrap-tools-schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/discussion"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#schema/graph",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "graph",
-      "title": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
-      "module": "../bootstrap-tools/schemas/graph.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/bootstrap-tools-schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools",
@@ -42143,18 +42143,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/bootstrap-tools-schemas",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-tools-schemas",
-      "path": "bootstrap-tools/schemas/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
-      ],
-      "description": "The Zod that bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fsh-cone-logic-layer-edge-measurement/cat-harness.jsonld#directory/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "swimlane-glossary",
@@ -42259,8 +42247,8 @@
   ],
   "staging": {
     "branch": "claude/fsh-cone-logic-layer-edge-measurement",
-    "sha": "3c2b2d092d052746e62a2d601f0c1c5af62d6955",
+    "sha": "c51d412f697f382bd5b3cf14fe46b750f220805a",
     "pr": "1198/merge",
-    "run": "35961441452"
+    "run": "35964004120"
   }
 }
