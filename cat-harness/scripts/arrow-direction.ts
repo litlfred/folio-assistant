@@ -25,7 +25,16 @@
  *
  * @module scripts/arrow-direction
  */
-import type { SchemaGraph } from "./schema-graph.js";
+/**
+ * The part of `schema-graph.ts`'s reading this check uses, declared here
+ * rather than imported: the reader is a core module and this one is harness,
+ * which may not depend on core. A `SchemaGraph` satisfies it structurally,
+ * so the composition root that owns both (`kg-audit`) passes one straight in.
+ */
+export interface ArrowGraph {
+  decls: ReadonlyArray<{ id: string; name: string; module: string; general?: true }>;
+  edges: ReadonlyArray<{ from: string; to: string; via: string; kind: string }>;
+}
 
 export interface ArrowFinding {
   where: string;
@@ -50,7 +59,7 @@ export const PROCESS_POINTERS: Readonly<Record<string, string>> = {
 export const POINTER_ATTRS = ["ref", "href", "workflow"] as const;
 
 /** A `@general` schema that `@ref`s a declaration which is not `@general`. */
-export function schemaArrowFindings(graph: SchemaGraph): ArrowFinding[] {
+export function schemaArrowFindings(graph: ArrowGraph): ArrowFinding[] {
   const byId = new Map(graph.decls.map((d) => [d.id, d]));
   const out: ArrowFinding[] = [];
   for (const e of graph.edges) {
