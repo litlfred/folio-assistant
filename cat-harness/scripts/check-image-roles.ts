@@ -61,6 +61,8 @@
  * found clean must not read the same.
  *
  * @module scripts/check-image-roles
+ * @covers cat-harness — the `role` keys it grades are on the instance DECLARATIONS, and the
+ *   question is whether each is read by anything that can reach it
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

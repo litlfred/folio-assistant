@@ -40,24 +40,65 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
+import { z } from "zod";
+
 export const SEEN_DIR = "issue-marks";
 
-export interface SeenState {
+/** The `$schema` tag a mark carries. Bean `3oqj`. */
+export const ISSUE_MARK_SCHEMA_TAG = "folio-issue-mark/v1";
+
+/**
+ * A mark, as a runnable schema.
+ *
+ * ## Why this is Zod and `SeenState` is derived from it
+ *
+ * `SeenState` was a TypeScript interface, so the `issue-marks` kind declared
+ * `schema` (where the shape is written) and no `validator` (what can be run) —
+ * the exact pair `GraphKindDef.validator` documents as diverging, with `qa` as
+ * its worked example. `check:kind-validators` therefore reported this kind as
+ * *could not determine* and `audit-coverage` as reached by nothing at all.
+ *
+ * One source, not two: the interface is `z.infer` of this, so a field added to
+ * one cannot go missing from the other.
+ *
+ * ## `$schema` is REQUIRED, and `saveSeen` was not writing it
+ *
+ * The two marks committed here carry the tag; `saveSeen` did not write it. That
+ * is worse than a cosmetic omission, because `check:kind-validators` routes a
+ * node BY its tag and skips a file that has none — so every mark the mechanism
+ * wrote would have been passed over silently by the very check this schema
+ * exists to feed, and the two hand-written ones would have been the only files
+ * ever validated. A validator over the nodes nobody produces is not coverage.
+ *
+ * Bean `dh4f`'s shape, and `AGENTS.md`'s rule in one line: *extension is a
+ * coincidence; a declaration inside the file is the contract.*
+ */
+export const IssueMarkSchema = z.object({
+  $schema: z.literal(ISSUE_MARK_SCHEMA_TAG),
   /** `owner/repo#number`, for readability when someone opens the file. */
-  issue: string;
+  issue: z.string(),
   /** Highest comment id read. Everything above it is unseen. */
-  lastCommentId: number;
+  lastCommentId: z.number(),
   /**
    * `updatedAt` of the newest EDIT the agent has accounted for, ISO-8601.
    * A comment edited after being read keeps its id; without this it would
    * read as already handled.
    */
-  lastUpdatedAt?: string;
+  lastUpdatedAt: z.string().optional(),
   /** When the agent last looked, ISO-8601. Not the same as the mark. */
-  checkedAt: string;
+  checkedAt: z.string(),
   /** Free-text note — which session, which branch. */
-  note?: string;
-}
+  note: z.string().optional(),
+});
+
+/**
+ * The mark as the code handles it — `$schema` optional, because a caller
+ * assembling a mark should not have to restate a constant, and `saveSeen`
+ * supplies it on the way to disk.
+ */
+export type SeenState = Omit<z.infer<typeof IssueMarkSchema>, "$schema"> & {
+  $schema?: typeof ISSUE_MARK_SCHEMA_TAG;
+};
 
 export interface CommentLike {
   id: number;
@@ -90,7 +131,11 @@ export function loadSeen(
 export function saveSeen(root: string, owner: string, repo: string, issue: number, state: SeenState): void {
   const p = seenPath(root, owner, repo, issue);
   mkdirSync(dirname(p), { recursive: true });
-  writeFileSync(p, `${JSON.stringify(state, null, 2)}\n`);
+  // `$schema` FIRST and always written — see `IssueMarkSchema`. A mark without
+  // it is skipped by every consumer that routes on the tag, so omitting it made
+  // the mechanism's own output invisible to the check that grades this graph.
+  const node = { $schema: ISSUE_MARK_SCHEMA_TAG, ...state };
+  writeFileSync(p, `${JSON.stringify(node, null, 2)}\n`);
 }
 
 /**

@@ -5011,6 +5011,48 @@
       "status": "candidate"
     },
     {
+      "id": "interaction.interactionnodeschema.default",
+      "prefLabel": "InteractionNodeSchema.default",
+      "definition": "What to assume for somebody with no entry above.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.default",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionnodeschema.dollar-comment",
+      "prefLabel": "InteractionNodeSchema.$comment",
+      "definition": "Prose for a reader who opens the file; never read by a process.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.$comment",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionnodeschema.users",
+      "prefLabel": "InteractionNodeSchema.users",
+      "definition": "Keyed by the identity the agent can resolve — an email today.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.note",
+      "prefLabel": "InteractionProfileSchema.note",
+      "definition": "What the profile means for this person, in their terms or the agent's.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.profiles",
+      "prefLabel": "InteractionProfileSchema.profiles",
+      "definition": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.profiles",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.source",
+      "prefLabel": "InteractionProfileSchema.source",
+      "definition": "How it came to be known — `stated by the user`, a policy, an inference.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.source",
+      "status": "candidate"
+    },
+    {
       "id": "kg-node.assetsourceschema.instance",
       "prefLabel": "AssetSourceSchema.instance",
       "definition": "The instance it came from, as a reference — `litlfred/cat-harness`.",
