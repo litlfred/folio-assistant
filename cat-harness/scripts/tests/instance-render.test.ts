@@ -152,7 +152,6 @@ describe("this repository's own instances", () => {
       "folio-assistant",
       "agent-skills",
       "bootstrap",
-      "bootstrap-tools",
       "cat-harness",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and

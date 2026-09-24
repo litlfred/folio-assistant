@@ -274,7 +274,6 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
-      "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
@@ -790,6 +789,12 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, and by its SUBJECT twice over: it reads
+      // the agent work plan and compares it against `skills/`, which is the
+      // `kg` graph the harness declares. Bean `8v0y` — a bean restating a
+      // skill's contract is a defect in the harness's own discipline, and a
+      // folio has neither a bean store nor a skill graph to be wrong about.
+      "scripts/check-bean-restates-skill.ts",
       // Harness for the same reason, plus one of its own: its `--github`
       // half asks the forge which PRs are open, and a PR is a fact about
       // this checkout and the forge, not about any folio's material.
@@ -915,6 +920,11 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
+      // re-checked with `authorizeTask`. Harness on the same terms as the
+      // audit: it reads the harness's own work-plan store, role graph and
+      // policies, and imports nothing from the content vocabulary.
+      "scripts/prov-qaqc.ts",
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
@@ -975,6 +985,13 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
+      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
+      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
+      // so a core placement is a wrong-direction edge.
+      "schemas/graph.ts",
+      "schemas/discussion.ts",
+      "schemas/bootstrap-graph.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the

@@ -960,22 +960,6 @@
       }
     },
     {
-      "id": "bootstrap-tools-schemas",
-      "path": "bootstrap-tools/schemas/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The Zod that bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
-      "graphKinds": [
-        "schemas",
-        "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
-      }
-    },
-    {
       "id": "swimlane-glossary",
       "path": "glossary/",
       "dependents": "skip",

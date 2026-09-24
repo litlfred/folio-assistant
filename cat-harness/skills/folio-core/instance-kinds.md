@@ -86,7 +86,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap`, `bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
