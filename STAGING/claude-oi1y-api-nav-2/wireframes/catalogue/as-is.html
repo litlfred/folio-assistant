@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: the catalogue, as a graph</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  .banner { border-bottom: 2px solid var(--ink); background: var(--fill); padding: 12px 0; font-size: 14px; }
+  .brand { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 0; }
+  .word { display: flex; gap: 12px; align-items: center; }
+  .word .org { font-weight: 700; font-size: 16px; line-height: 1.2; }
+  .word .iris { border-left: 1px solid var(--line); padding-left: 10px; font-size: 12px; line-height: 1.2; }
+  .word .iris b { font-size: 28px; display: block; }
+  .omit { font-size: 12px; color: var(--mute); text-align: right; max-width: 16rem; }
+  nav.main { background: var(--ink); color: var(--bg); }
+  nav.main .wrap { display: flex; flex-wrap: wrap; gap: 4px 24px; padding-top: 12px; padding-bottom: 12px; }
+  .crumbs { background: var(--fill); border-bottom: 1px solid var(--line); }
+  .crumbs .wrap { padding-top: 10px; padding-bottom: 10px; font-size: 14px; }
+  article { max-width: 1060px; margin: 0 auto; padding: 16px 40px 32px; }
+  h1 { font-size: 36px; font-weight: 400; margin: 12px 0; }
+  h2 { font-size: 24px; font-weight: 400; margin: 28px 0 10px; }
+  .lede { max-width: 45rem; }
+  .gapnote { color: var(--mute); padding-left: 30px; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .st { display: inline-block; border: 1px solid var(--ink); font-size: 10px; font-weight: 700; padding: 1px 6px; }
+  .st.ref { border-style: dashed; }
+  .path { display: block; font-family: monospace; font-size: 12px; color: var(--mute); }
+  .mono { font-family: monospace; }
+  .skip td { color: var(--mute); background: var(--fill); font-size: 13px; }
+  .gen { border-left: 4px solid var(--ink); background: var(--fill); padding: 12px 18px; font-size: 14px; margin-top: 20px; }
+  footer { border-top: 2px solid var(--ink); background: var(--fill); padding: 20px 0; font-size: 13px; margin-top: 32px; }
+  footer .wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+  .clip { width: 100%; }
+  @media (max-width: 700px) {
+    .wrap { padding: 0 16px; }
+    .omit { font-size: 11px; }
+    article { padding: 8px 16px 24px; }
+    h1 { font-size: 30px; }
+    .gapnote { padding-left: 14px; }
+    .clip { overflow: hidden; border-right: 3px dashed var(--ink); }
+    .clip table { width: 752px; }
+    footer .wrap { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;left:-9999px;width:1px;height:1px}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
+<div class="wf-meta">As-is wireframe · catalogue · covers: cat-harness/docs/cat-harness/catalogue/who-iris/index.html</div>
+<div class="banner"><div class="wrap"><b>INGESTED COPY — not WHO, and not live.</b> This page is rendered by <u>folio-assistant</u> from its own catalogue of <u>WHO IRIS</u>, modelled <i>by reference</i>: 13 nodes of a 273,559-item 361.55 GiB repository, of which <b>3 items</b> are held here. The WHO logo is deliberately omitted, and the rendered covers are withheld from display for the same reason — they carry the emblem printed on the publications.</div></div>
+<header class="wrap brand">
+  <div class="word"><span class="org">World Health<br>Organization</span><span class="iris"><b>iris.</b>Institutional Repository<br>for Information Sharing</span></div>
+  <span class="omit">Logo omitted, covers withheld — replica, not published under WHO</span>
+</header>
+<nav class="main" aria-label="IRIS replica menu (not links)"><div class="wrap"><span>Communities &amp; Collections</span><span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span></div></nav>
+<div class="crumbs"><div class="wrap">who-iris • <b>Catalogue</b></div></div>
+
+<article>
+  <h1>The catalogue, as a graph</h1>
+  <p class="lede">The replica pages show what IRIS looks like. This one shows what this catalogue <i>knows</i> — and, more usefully, what it records that it does not know.</p>
+  <p class="gapnote"><b>The gap is the point, not a backlog.</b> This instance models <b>13</b> node(s) against <b>273,559</b> items across <b>1,057,223</b> files upstream. Cataloguing by reference means recording that something exists without holding it, so a small number here is the design rather than a shortfall.</p>
+
+  <h2>What is held, and what is only named</h2>
+  <table aria-label="Materialisation states">
+    <thead><tr><th>state</th><th>nodes</th><th>what it means</th></tr></thead>
+    <tbody>
+      <tr><td><span class="st">MATERIALIZED</span></td><td>3</td><td>the bytes are in this repository</td></tr>
+      <tr><td><span class="st ref">REFERENCED</span></td><td>10</td><td>upstream, not here — a fact, not a gap</td></tr>
+      <tr><td><span class="st">UNKNOWN</span></td><td>0</td><td>nobody has looked; never rendered as either of the above</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What the gates say about the 6 held bitstream(s)</h2>
+  <p>Not everything permitted is everything known. <code>restrictions</code> is unknown on 6, <code>sourceLoss</code> is unknown on 3, <code>copyright</code> is unknown on 6 of them.</p>
+  <table aria-label="Gate verdicts" style="max-width:24rem">
+    <thead><tr><th>gate</th><th>verdicts</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">copyright</td><td><span class="st">UNKNOWN</span> 6</td></tr>
+      <tr><td class="mono">restrictions</td><td><span class="st">UNKNOWN</span> 6</td></tr>
+      <tr><td class="mono">retention</td><td><span class="st">PERMITTED</span> 6</td></tr>
+      <tr><td class="mono">size</td><td><span class="st">PERMITTED</span> 6</td></tr>
+      <tr><td class="mono">sourceLoss</td><td><span class="st">PERMITTED</span> 3 <span class="st">UNKNOWN</span> 3</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Every node</h2>
+  <p class="wf-note wf-mobile-only">At 390 px this table is 752 px wide: the whole page pans sideways and <b>held as</b>, <b>record</b> and <b>bitstreams</b> start off-screen (the dashed edge).</p>
+  <div class="clip">
+  <table aria-label="Every node">
+    <thead><tr><th>state</th><th>kind</th><th>node</th><th>held as</th><th>record</th><th>bitstreams</th></tr></thead>
+    <tbody>
+      <tr><td><span class="st ref">REFERENCED</span></td><td class="mono">collection</td><td>Publications<span class="path">collection/hq-publications</span></td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="st ref">REFERENCED</span></td><td class="mono">community</td><td>8. WHO Framework Convention on Tobacco Control (FCTC)<span class="path">community/28b22be0-5864-409c-9b83-0442e2a7ca0e</span></td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td><span class="st ref">REFERENCED</span></td><td class="mono">community</td><td>1. Headquarters<span class="path">community/5bff2c18-6c2b-4658-9087-93811d2399c0</span></td><td>—</td><td>—</td><td>—</td></tr>
+      <tr class="skip"><td colspan="6">7 more referenced rows not drawn (1 collection, 6 regional-office communities)</td></tr>
+      <tr><td><span class="st">MATERIALIZED</span></td><td class="mono">item</td><td>Publication and information products style guide<span class="path">item/18892cf3-5a4f-42a4-923c-a93f4a594dec</span></td><td class="mono">wpr-rdo-2020-003-eng</td><td>yes</td><td>2</td></tr>
+      <tr><td><span class="st">MATERIALIZED</span></td><td class="mono">item</td><td>WHO handbook for guideline development<span class="path">item/63e14c27-7448-41ec-be08-a96a25a47db6</span></td><td class="mono">9789241548960-eng</td><td>yes</td><td>2</td></tr>
+      <tr><td><span class="st">MATERIALIZED</span></td><td class="mono">item</td><td>WHO editorial style manual<span class="path">item/b08c6c19-315a-41a4-a9cb-8edabdbc6791</span></td><td class="mono">who-pub-tps-931</td><td>yes</td><td>2</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="gen">Generated from <code>catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Every count above is derived from the nodes themselves; none is transcribed. <code>bun run check:catalogue</code> separately verifies that each node validates and that every <code>metadataRef</code>, <code>libraryId</code>, <code>localPath</code> and parent path resolves.</div>
+</article>
+
+<footer><div class="wrap">
+  <p><b>Ingested replica.</b> Rendered from <code>who-iris/catalogue/</code> by <code>who-iris/scripts/gen-iris-pages.ts</code>. Layout after <u>iris.who.int</u>; every figure on this page is read out of the catalogue, not copied from a screenshot.</p>
+  <p>Source of record: <u>iris.who.int</u> — © WHO. This copy asserts no endorsement and carries no WHO mark.</p>
+</div></footer>
+</body>
+</html>
