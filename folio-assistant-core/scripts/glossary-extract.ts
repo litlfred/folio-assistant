@@ -97,6 +97,11 @@ export function assetTypeTitle(t: AssetType): string {
   return TITLES[t].title;
 }
 
+/** What an asset type's terms are read from, in a sentence: the glossary's per-type page says it once at the top. */
+export function assetTypeWhat(t: AssetType): string {
+  return TITLES[t].what;
+}
+
 /** One extracted scheme: the instance it belongs to, and the glossary itself. */
 export interface ExtractedScheme {
   instance: string;
