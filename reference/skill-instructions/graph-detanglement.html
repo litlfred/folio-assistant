@@ -454,32 +454,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790277574">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790277574">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790277574">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790277574">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790277574">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790277325">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790277574">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -496,7 +496,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790277325" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790277574" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1041,67 +1041,102 @@ too low — an <code class="language-plaintext highlighter-rouge">export {}</cod
 <p><strong>A grep that under-reports reads exactly like a clean result.</strong></p>
 
 <p>And the same failure once more, from a sibling session two days later, stated
-in its most compact form yet: *“describing a mechanism from its name and its
-position in a diagram, then reasoning about what it needs. `–payload</p>
-<file.json>` settled in one line what three proposals had guessed at. A name
-says what something is for; an argument list says what it does."*
+in its most compact form yet: <em>“describing a mechanism from its name and its
+position in a diagram, then reasoning about what it needs. <code class="language-plaintext highlighter-rouge">--payload &lt;file.json&gt;</code>
+settled in one line what three proposals had guessed at. A name
+says what something is for; an argument list says what it does.”</em></p>
 
-That is move 9 and move 12 with the cost attached. Three proposals were made
-about a mechanism nobody had opened; **one of the three was accepted and two
-were wasted**, and reading the argument list first would have produced the
+<p>That is move 9 and move 12 with the cost attached. Three proposals were made
+about a mechanism nobody had opened; <strong>one of the three was accepted and two
+were wasted</strong>, and reading the argument list first would have produced the
 accepted one directly. Which is also why the enumeration was still worth doing:
-*"as a choice that is one proposal accepted and two wasted, while as an audit it
-is three lines and one action."* **Enumerating dispatch points is how you find
-the ones already built** — the audit framing survives a bad hit rate, the
-choice framing does not.
+<em>“as a choice that is one proposal accepted and two wasted, while as an audit it
+is three lines and one action.”</em> <strong>Enumerating dispatch points is how you find
+the ones already built</strong> — the audit framing survives a bad hit rate, the
+choice framing does not.</p>
+<h2 id="what-the-metric-will-not-tell-you">
+  
+  
+    <a href="#what-the-metric-will-not-tell-you" class="anchor-heading" aria-labelledby="what-the-metric-will-not-tell-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the metric will not tell you
+  
+  
+</h2>
+    
 
-## What the metric will not tell you
+<p>From the editorial side, measured on a real corpus:</p>
 
-From the editorial side, measured on a real corpus:
+<blockquote>
+  <p>“an unconstrained search cleared 66 of 236 forward references — and a
+narrative review of its 53 moves found <strong>18 of them made the paper worse</strong>.
+Reducing the metric and improving the reading are different objectives, and
+they diverge often enough that the difference is not a rounding error.”</p>
 
-&gt; "an unconstrained search cleared 66 of 236 forward references — and a
-&gt; narrative review of its 53 moves found **18 of them made the paper worse**.
-&gt; Reducing the metric and improving the reading are different objectives, and
-&gt; they diverge often enough that the difference is not a rounding error."
-&gt;
-&gt; "Expect the reviewed yield to be roughly a third of what the raw metric
-&gt; promises, and prefer it."
+  <p>“Expect the reviewed yield to be roughly a third of what the raw metric
+promises, and prefer it.”</p>
+</blockquote>
 
-So: **a guard is not an objective.** Pinned nodes, atomic families and
-container boundaries constrain the search, and `split` and `merge` are never
-auto-dischargeable — they rename things and ripple through every reference.
+<p>So: <strong>a guard is not an objective.</strong> Pinned nodes, atomic families and
+container boundaries constrain the search, and <code class="language-plaintext highlighter-rouge">split</code> and <code class="language-plaintext highlighter-rouge">merge</code> are never
+auto-dischargeable — they rename things and ripple through every reference.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
 
-## Related
+<ul>
+  <li><a href="/folio-assistant/reference/skill-instructions/graph-rendering.html"><code class="language-plaintext highlighter-rouge">graph-rendering</code></a> — drawing the graph being
+partitioned, with each group’s detangle numbers beside it. The UML overview
+pages show them per sub-graph.</li>
+  <li><code class="language-plaintext highlighter-rouge">placement.md</code> — the sibling SOP, for where a NEW node goes. Same shape:
+numbered steps, a stop, a closing checklist.</li>
+  <li><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code> — the reachability half, and the rule that
+“reachability is PLURAL”: the question is not which caller a mechanism should
+have but what should be able to START it. Pointed at rather than absorbed,
+per <code class="language-plaintext highlighter-rouge">AGENTS.md</code>’s warning against minting something to take over what an
+existing object already owns.</li>
+  <li><code class="language-plaintext highlighter-rouge">docs/architecture/migration-plan.md</code> — the phased plan for this
+repository’s own five-repo cut, including the Phase II per-repo gate.</li>
+  <li><code class="language-plaintext highlighter-rouge">scripts/repo-partition.ts</code> — the instrument. Its comment prose is where much
+of the above was recorded first.</li>
+  <li><code class="language-plaintext highlighter-rouge">schemas/layer-direction.ts</code> — the one wrong-direction verdict both
+<code class="language-plaintext highlighter-rouge">check:partition</code> and <code class="language-plaintext highlighter-rouge">kg:detangle</code> call.</li>
+</ul>
+<h2 id="processes-that-run-this-skill">
+  
+  
+    <a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2>
+    
 
-- [`graph-rendering`](/folio-assistant/reference/skill-instructions/graph-rendering.html) — drawing the graph being
-  partitioned, with each group's detangle numbers beside it. The UML overview
-  pages show them per sub-graph.
-- `placement.md` — the sibling SOP, for where a NEW node goes. Same shape:
-  numbered steps, a stop, a closing checklist.
-- `covered-is-not-reachable` — the reachability half, and the rule that
-  "reachability is PLURAL": the question is not which caller a mechanism should
-  have but what should be able to START it. Pointed at rather than absorbed,
-  per `AGENTS.md`'s warning against minting something to take over what an
-  existing object already owns.
-- `docs/architecture/migration-plan.md` — the phased plan for this
-  repository's own five-repo cut, including the Phase II per-repo gate.
-- `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
-  of the above was recorded first.
-- `schemas/layer-direction.ts` — the one wrong-direction verdict both
-  `check:partition` and `kg:detangle` call.
+<p>This skill has its own process: <strong><a href="../../processes/graph-detanglement.html">A sub-graph wants to leave</a></strong>.</p>
 
+<p><img src="../../assets/img/workflows/graph-detanglement.svg" alt="BPMN diagram: A sub-graph wants to leave" style="max-width:100%" /></p>
 
-## Processes that run this skill
-
-This skill has its own process: **[A sub-graph wants to leave](../../processes/graph-detanglement.html)**.
-
-<img src="../../assets/img/workflows/graph-detanglement.svg" alt="BPMN diagram: A sub-graph wants to leave" style="max-width:100%" />
-
-| process | step(s) that name it |
-|---|---|
-| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 &#183; Declare in place&#10;(nothing moves); 2a &#183; Measure &#8212; unassigned&#10;column FIRST; 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong; 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact; 4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift |
-
-</file.json>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>process</th>
+      <th>step(s) that name it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="../../processes/graph-detanglement.html">A sub-graph wants to leave</a></td>
+      <td>1 · Declare in place
+(nothing moves); 2a · Measure — unassigned
+column FIRST; 2b · Prune, merge, factor
+— or the classification is wrong; 3 · Isolate — own declaration,
+namespace, artefact; 4 · Extract — a directory move,
+not a file-by-file sift</td>
+    </tr>
+  </tbody>
+</table></div>
 
           
 
@@ -1293,7 +1328,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36046739207"><code>61f6b8c</code></a> &middot; 2026-09-24T19:15:16Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36047256129"><code>c9c00f6</code></a> &middot; 2026-09-24T19:19:29Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
