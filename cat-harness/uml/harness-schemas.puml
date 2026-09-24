@@ -109,6 +109,7 @@ package test {
     process.inputs [1..*] : string[]
     outcome [1] : map<any>
     cases [0..*] : {input, output}[]
+    requirements [0..*] : string[]
     updated_at [1] : string
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {

@@ -314,8 +314,8 @@
     "voices:graph": "bun run cat-harness/scripts/voices-graph.ts",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
-    "sync:remote-skills": "bun run cat-harness/scripts/sync-remote-packages.ts",
-    "check:remote-skills": "bun run cat-harness/scripts/sync-remote-packages.ts --check"
+    "sync:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts",
+    "check:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts --check"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

@@ -176,7 +176,7 @@ describe("the reason the allowance was closed is still true", () => {
     //
     // FOUR since 2026-09-24 (issue #556, bean `wlqd`): the sixth reader this
     // comment anticipated arrived, and it IS the sync —
-    // `scripts/sync-remote-packages.ts`. It still serves no body itself. It
+    // `scripts/sync-remote-skills.ts`. It still serves no body itself. It
     // MATERIALIZES each declared skill as an ordinary local package, pinned and
     // fixity-checked, and `skill_fetch` serves that package as it serves any
     // other. So the allowance this file records as closed stays closed, for a
@@ -186,7 +186,7 @@ describe("the reason the allowance was closed is still true", () => {
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
       "scripts/partition/instance-rules.ts",
-      "scripts/sync-remote-packages.ts",
+      "scripts/sync-remote-skills.ts",
     ]);
   });
 

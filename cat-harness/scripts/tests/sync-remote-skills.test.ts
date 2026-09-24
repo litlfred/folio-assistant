@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { RemotePackageRefSchema } from "../../schemas/skill-package.ts";
-import { buildRecord, checkMaterialized, pinnedRef, RECORD_FILE, upstreamSkillDir, type Wrapper } from "../sync-remote-packages.ts";
+import { buildRecord, checkMaterialized, checkNotice, pinnedRef, RECORD_FILE, upstreamSkillDir, type Wrapper } from "../sync-remote-skills.ts";
 
 const SHA = "49c6e97775eaa18ba791bebe23162a70ae601c18";
 
@@ -32,6 +32,7 @@ function fixture(w: Wrapper, materialize: { ref?: string; pkg?: string } | null)
   if (materialize) {
     mkdirSync(join(skills, "alpha"));
     writeFileSync(join(skills, "alpha", "alpha.md"), "---\nname: alpha\n---\n# A\n");
+    writeFileSync(join(skills, "alpha", "LICENSE"), "MIT License\n");
     writeFileSync(join(skills, "alpha", RECORD_FILE), JSON.stringify({ ref: materialize.ref ?? w.ref, package: materialize.pkg ?? w.name }));
   }
   return skills;
@@ -59,6 +60,12 @@ describe("a synced skill is pinned to a commit", () => {
 describe("check:remote-skills, offline", () => {
   test("materialized at the pin is clean", () => {
     expect(checkMaterialized(fixture(wrapper(), {}))).toEqual([]);
+  });
+  test("a copy without its licence is a finding", async () => {
+    const { rmSync } = await import("node:fs");
+    const dir = fixture(wrapper(), {});
+    rmSync(join(dir, "alpha", "LICENSE"));
+    expect(checkMaterialized(dir).join()).toContain("no licence file");
   });
   test("declared and not materialized is a finding", () => {
     expect(checkMaterialized(fixture(wrapper(), null)).join()).toContain("not materialized");
@@ -93,5 +100,28 @@ describe("the record check:materialized-fixity reads", () => {
   test("the upstream directory follows the wrapper's path", () => {
     expect(upstreamSkillDir("/c", { path: "skills" }, "a")).toBe("/c/skills/a");
     expect(upstreamSkillDir("/c", { path: "/" }, "a")).toBe("/c/a");
+  });
+});
+
+describe("the licence travels with the copy", () => {
+  test("a skill's own licence wins; else the upstream root's; else none", async () => {
+    const { upstreamLicence } = await import("../sync-remote-skills.ts");
+    const clone = mkdtempSync(join(tmpdir(), "sync-lic-"));
+    const skill = join(clone, "skills", "a");
+    mkdirSync(skill, { recursive: true });
+    expect(upstreamLicence(clone, skill)).toBeUndefined();
+    writeFileSync(join(clone, "LICENSE"), "MIT License");
+    expect(upstreamLicence(clone, skill)).toEqual({ path: join(clone, "LICENSE"), inSkill: false });
+    writeFileSync(join(skill, "LICENSE.txt"), "Apache");
+    expect(upstreamLicence(clone, skill)).toEqual({ path: join(skill, "LICENSE.txt"), inSkill: true });
+  });
+});
+
+describe("NOTICE credits every synced package at its pin", () => {
+  test("named at the pin is clean; a moved pin or a missing entry is a finding", () => {
+    const w = wrapper();
+    expect(checkNotice(`example/pkg https://github.com/example/pkg at ${SHA}`, [w])).toEqual([]);
+    expect(checkNotice("https://github.com/example/pkg at an older commit", [w]).join()).toContain("current pin");
+    expect(checkNotice("nothing", [w]).join()).toContain("does not name");
   });
 });

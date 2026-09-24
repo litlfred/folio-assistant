@@ -3,7 +3,7 @@
  * MATERIALIZE a remote package's declared skills, at a PINNED commit, so
  * `skill_fetch` can serve them.
  *
- * @module cat-harness/scripts/sync-remote-packages
+ * @module cat-harness/scripts/sync-remote-skills
  *
  * Issue #556, bean `wlqd`. Owner, 2026-09-24:
  *
@@ -45,8 +45,8 @@
  *   is ours rather than upstream's and so carries no fixity.
  *
  * Usage:
- *   bun run cat-harness/scripts/sync-remote-packages.ts            # fetch + write
- *   bun run cat-harness/scripts/sync-remote-packages.ts --check    # offline: is every declared skill materialized at its pin?
+ *   bun run cat-harness/scripts/sync-remote-skills.ts            # fetch + write
+ *   bun run cat-harness/scripts/sync-remote-skills.ts --check    # offline: is every declared skill materialized at its pin?
  */
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
@@ -185,6 +185,15 @@ export function buildRecord(
   };
 }
 
+const LICENCE_NAMES = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "COPYING"];
+
+/** The licence governing a skill: its own, else the upstream root's. */
+export function upstreamLicence(clone: string, skillDir: string): { path: string; inSkill: boolean } | undefined {
+  for (const n of LICENCE_NAMES) if (existsSync(join(skillDir, n))) return { path: join(skillDir, n), inSkill: true };
+  for (const n of LICENCE_NAMES) if (existsSync(join(clone, n))) return { path: join(clone, n), inSkill: false };
+  return undefined;
+}
+
 function git(args: string[], cwd?: string): void {
   const r = spawnSync("git", args, { cwd, encoding: "utf8" });
   if (r.status !== 0) throw new Error(`git ${args.join(" ")} failed: ${r.stderr.trim()}`);
@@ -221,7 +230,26 @@ export function checkMaterialized(skillsDir: string): string[] {
       if (r.ref !== w.ref) problems.push(`${skill}: materialized at ${r.ref}, but ${w.file} pins ${w.ref} — re-sync`);
       if (r.package !== w.name) problems.push(`${skill}: materialized from \`${r.package}\`, but declared by \`${w.name}\``);
       if (!existsSync(join(skillsDir, skill, `${skill}.md`))) problems.push(`${skill}: no \`${skill}.md\` entry point`);
+      if (!LICENCE_NAMES.some((n) => existsSync(join(skillsDir, skill, n)))) {
+        problems.push(`${skill}: no licence file beside the copy — the notice must travel with it`);
+      }
     }
+  }
+  return problems;
+}
+
+/**
+ * NOTICE names every synced package, at its current pin (owner, 2026-09-24:
+ * third-party skills keep their own licence and are listed in NOTICE). A pin
+ * moved without NOTICE following would credit bytes that are no longer here.
+ */
+export function checkNotice(noticeText: string, wrappers: Wrapper[]): string[] {
+  const problems: string[] = [];
+  for (const w of wrappers) {
+    if (!w.sync || w.wrapper.skills.length === 0) continue;
+    const repo = w.repo.replace(/\.git$/, "");
+    if (!noticeText.includes(repo)) problems.push(`NOTICE does not name ${repo}, which ${w.file} syncs`);
+    else if (!noticeText.includes(w.ref)) problems.push(`NOTICE names ${repo} but not its current pin ${w.ref}`);
   }
   return problems;
 }
@@ -253,8 +281,25 @@ function sync(skillsDir: string, instanceRoot: string): number {
         rmSync(dst, { recursive: true, force: true });
         cpSync(src, dst, { recursive: true });
         renameSync(join(dst, "SKILL.md"), join(dst, `${skill}.md`));
+        // THE LICENCE TRAVELS WITH THE COPY. A permissive licence (MIT and its
+        // kin) is conditional on its notice being kept with every copy, and
+        // upstream keeps that notice at its ROOT, outside the skill directory
+        // that is copied. So it is copied in beside the skill, under fixity
+        // like every other byte. A skill with no licence anywhere upstream is
+        // refused: bytes nobody granted are bytes this repository may not hold.
+        const licence = upstreamLicence(clone, src);
+        if (!licence) {
+          rmSync(dst, { recursive: true, force: true });
+          console.error(`  ✗ ${skill}: no licence file in the skill or at the upstream root — not copied`);
+          failures++;
+          continue;
+        }
+        const licenceLocal = licence.inSkill ? relative(src, licence.path) : "LICENSE";
+        if (!licence.inSkill) cpSync(licence.path, join(dst, licenceLocal));
         const upstreamRel = (local: string): string =>
-          relative(clone, join(src, local === `${skill}.md` ? "SKILL.md" : local));
+          local === licenceLocal && !licence.inSkill
+            ? relative(clone, licence.path)
+            : relative(clone, join(src, local === `${skill}.md` ? "SKILL.md" : local));
         const record = buildRecord(w, skill, dst, instanceRoot, upstreamRel, at);
         writeFileSync(join(dst, RECORD_FILE), `${JSON.stringify(record, null, 2)}\n`);
         writeFileSync(
@@ -288,7 +333,11 @@ if (import.meta.main) {
     process.exit(1);
   }
   if (process.argv.includes("--check")) {
-    const problems = checkMaterialized(skillsDir);
+    const noticePath = join(INSTANCE, "..", "NOTICE");
+    const problems = [
+      ...checkMaterialized(skillsDir),
+      ...checkNotice(existsSync(noticePath) ? readFileSync(noticePath, "utf8") : "", wrappersIn(skillsDir)),
+    ];
     const declared = wrappersIn(skillsDir).filter((w) => w.sync).flatMap((w) => w.wrapper.skills);
     console.log(`Remote skills — ${declared.length} declared by a syncing wrapper`);
     if (declared.length === 0) {

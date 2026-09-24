@@ -44,6 +44,13 @@ import {
 } from "../check-declaration-filename.ts";
 
 /**
+ * A whole-repository scan, measured at 4.8 s alone on 2026-09-24 — just under
+ * bun's 5 s default, so under the full suite's load it timed out while the
+ * check itself was passing. The budget is for the scan, not a looser test.
+ */
+const WHOLE_REPO_MS = 30_000;
+
+/**
  * A tree holding one source file at `<root>/<rel>`.
  *
  * Defaults to placing it **inside the owning instance**, because that is where
@@ -226,7 +233,7 @@ describe("the workflow scan reports unknown, never zero", () => {
   test("this repository's own workflows carry no USE", () => {
     const r = checkDeclarationFilename();
     expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
-  });
+  }, WHOLE_REPO_MS);
 });
 
 /**
@@ -315,11 +322,11 @@ describe("the markdown corpus, on this repository", () => {
   test("carries no STALE PATH", () => {
     const r = checkDeclarationFilename();
     expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
-  });
+  }, WHOLE_REPO_MS);
 
   test("and was actually examined — an empty corpus is not a pass", () => {
     const r = checkDeclarationFilename();
     expect(r.markdown).not.toBeNull();
     expect(r.markdown!.length).toBeGreaterThan(0);
-  });
+  }, WHOLE_REPO_MS);
 });

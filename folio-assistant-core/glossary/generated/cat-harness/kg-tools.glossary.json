@@ -334,6 +334,14 @@
       "status": "candidate"
     },
     {
+      "id": "package-release-manual",
+      "prefLabel": "Package release by hand",
+      "definition": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      "notation": "package-release-manual",
+      "source": "cat-harness/tools/index.ts#package-release-manual",
+      "status": "candidate"
+    },
+    {
       "id": "pages-index",
       "prefLabel": "Published-paper index page",
       "definition": "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
@@ -427,6 +435,14 @@
       "definition": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
       "notation": "readme-sync",
       "source": "cat-harness/tools/mcp.ts#readme-sync",
+      "status": "candidate"
+    },
+    {
+      "id": "release-please",
+      "prefLabel": "release-please (declared, not configured here)",
+      "definition": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      "notation": "release-please",
+      "source": "cat-harness/tools/index.ts#release-please",
       "status": "candidate"
     },
     {
@@ -547,6 +563,30 @@
       "definition": "The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into.",
       "notation": "tool-types-schema",
       "source": "cat-harness/tools/index.ts#tool-types-schema",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-faster-whisper",
+      "prefLabel": "Transcribe audio — faster-whisper (option, not installed)",
+      "definition": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-faster-whisper",
+      "source": "cat-harness/tools/index.ts#transcribe-faster-whisper",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-vosk",
+      "prefLabel": "Transcribe audio — vosk (option, not installed)",
+      "definition": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-vosk",
+      "source": "cat-harness/tools/index.ts#transcribe-vosk",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-whisper-cpp",
+      "prefLabel": "Transcribe audio — whisper.cpp (option, not installed)",
+      "definition": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      "notation": "transcribe-whisper-cpp",
+      "source": "cat-harness/tools/index.ts#transcribe-whisper-cpp",
       "status": "candidate"
     },
     {

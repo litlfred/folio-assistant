@@ -7,7 +7,7 @@ movedFrom: "cat-harness/skills/remote-stubs/"
 bean: folio-assistant-wlqd
 issue: 556
 summary: >-
-  Stubs that kept `remote-skill-is-servable` answerable while no code synced the remote packages. Retired because each name is now served for real. The three scientific skills are materialized, pinned and read-only, by `sync-remote-packages.ts`. The two FHIR skills are authored in `fhir-harness/`, because TopologyHealth/SMARTerFHIR is a library with no skill files: the names had never existed upstream.
+  Stubs that kept `remote-skill-is-servable` answerable while no code synced the remote packages. Retired because each name is now served for real. The three scientific skills are materialized, pinned and read-only, by `sync-remote-skills.ts`. The two FHIR skills are authored in `fhir-harness/`, because TopologyHealth/SMARTerFHIR is a library with no skill files: the names had never existed upstream.
 ---
 
 # `remote-stubs`, as it was at retirement

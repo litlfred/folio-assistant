@@ -56,7 +56,7 @@ import { join, resolve } from "node:path";
 import { findDeclarationFile, directoriesForGraph, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../schemas/cat-harness.js";
 
 import { findEntryFiles } from "./check-agent-entry-links.ts";
-import { isSyncedSkillDir } from "./sync-remote-packages.js";
+import { isSyncedSkillDir } from "./sync-remote-skills.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");

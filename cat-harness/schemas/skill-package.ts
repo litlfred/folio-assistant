@@ -356,7 +356,7 @@ export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkou
 
 /**
  * How a remote package's skills are brought in — PERFORMED since 2026-09-24
- * (issue #556, bean `wlqd`) by `scripts/sync-remote-packages.ts`
+ * (issue #556, bean `wlqd`) by `scripts/sync-remote-skills.ts`
  * (`bun run sync:remote-skills`).
  *
  * Until then this was declared intent that nothing performed: `shallow-clone`
@@ -417,7 +417,7 @@ export const RemotePackageRefSchema = z.object({
 });
 
 /**
- * The record `sync-remote-packages.ts` writes beside a synced skill
+ * The record `sync-remote-skills.ts` writes beside a synced skill
  * (`materialization.json`, tag `folio-remote-skill/v1`, issue #556).
  *
  * Each file's `materialization` is the shape `check:materialized-fixity`

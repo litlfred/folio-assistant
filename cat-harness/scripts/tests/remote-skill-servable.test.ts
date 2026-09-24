@@ -52,7 +52,7 @@ const ROOT = join(import.meta.dir, "..", "..");
  * The five names were unservable, then stubbed (2026-09-20), and are now real:
  *
  * - the three scientific skills are MATERIALIZED — pinned, committed and
- *   fixity-checked (`sync-remote-packages.ts`, owner: "Commit, pinned,
+ *   fixity-checked (`sync-remote-skills.ts`, owner: "Commit, pinned,
  *   read-only") — and served as ordinary local packages;
  * - the two FHIR names were never skills upstream (SMARTerFHIR is a library with
  *   no skill files), so the wrapper stopped declaring them and they are AUTHORED

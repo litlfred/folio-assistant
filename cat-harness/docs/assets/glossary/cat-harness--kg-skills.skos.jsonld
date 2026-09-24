@@ -1607,26 +1607,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/fhir-client-operations",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "fhir-client-operations"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
-        }
-      ],
-      "skos:notation": "fhir-client-operations",
-      "dcterms:source": "cat-harness/skills/remote-stubs/fhir-client-operations.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/fhir-validation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1964,11 +1944,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
         }
       ],
       "skos:notation": "hypothesis-generation",
-      "dcterms:source": "cat-harness/skills/remote-stubs/hypothesis-generation.md",
+      "dcterms:source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
       "skos:note": "candidate"
     },
     {
@@ -2897,6 +2877,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/package-release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "package-release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts."
+        }
+      ],
+      "skos:notation": "package-release",
+      "dcterms:source": "cat-harness/skills/folio-core/package-release.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/paper-importer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3734,11 +3734,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review."
         }
       ],
       "skos:notation": "scientific-critical-thinking",
-      "dcterms:source": "cat-harness/skills/remote-stubs/scientific-critical-thinking.md",
+      "dcterms:source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
       "skos:note": "candidate"
     },
     {
@@ -3754,11 +3754,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
         }
       ],
       "skos:notation": "scientific-visualization",
-      "dcterms:source": "cat-harness/skills/remote-stubs/scientific-visualization.md",
+      "dcterms:source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
       "skos:note": "candidate"
     },
     {
@@ -3944,26 +3944,6 @@
       ],
       "skos:notation": "smart-base-tools",
       "dcterms:source": "cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/smart-launch",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "smart-launch"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
-        }
-      ],
-      "skos:notation": "smart-launch",
-      "dcterms:source": "cat-harness/skills/remote-stubs/smart-launch.md",
       "skos:note": "candidate"
     },
     {
