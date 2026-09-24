@@ -915,6 +915,11 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
+      // re-checked with `authorizeTask`. Harness on the same terms as the
+      // audit: it reads the harness's own work-plan store, role graph and
+      // policies, and imports nothing from the content vocabulary.
+      "scripts/prov-qaqc.ts",
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",

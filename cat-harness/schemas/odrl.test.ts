@@ -246,6 +246,10 @@ describe("PROV-O activity", () => {
     const { "cat-harness:underPolicy": _drop, ...r } = run;
     expect(ProvActivitySchema.safeParse(r).success).toBe(false);
   });
+  test("several policies in force are listed, and an empty list is still no policy", () => {
+    expect(ProvActivitySchema.safeParse({ ...run, "cat-harness:underPolicy": ["urn:a", "urn:b"] }).success).toBe(true);
+    expect(ProvActivitySchema.safeParse({ ...run, "cat-harness:underPolicy": [] }).success).toBe(false);
+  });
   test("it cannot end before it starts", () => {
     expect(ProvActivitySchema.safeParse({ ...run, "prov:endedAtTime": "2026-09-23T19:00:00Z" }).success).toBe(false);
   });

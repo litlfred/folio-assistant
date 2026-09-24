@@ -1,0 +1,401 @@
+{
+  "@context": {
+    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@graph": [
+    {
+      "@id": "crdm--folio-assistant-6lb8#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#BA_Submit",
+        "prov:hadRole": "business-analyst"
+      },
+      "prov:startedAtTime": "2026-09-20T20:26:42.428Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#2",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#A_Detect",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:26:57.927Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#3",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#GW_Feature",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:27:04.878Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#4",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#Call_Issue",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:27:45.486Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#5",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#Call_Needs",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:46:47.858Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#6",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#Call_Requirements",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:05:54.568Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8#7",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements#Call_DataModel",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:33:51.250Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-data-model#A_Entities",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:09:36.405Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#2",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-data-model#A_Relations",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:10:00.081Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#3",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-data-model#BA_ConfirmEntities",
+        "prov:hadRole": "business-analyst"
+      },
+      "prov:startedAtTime": "2026-09-20T21:26:34.123Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#4",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-data-model#S_ConfirmCardinality",
+        "prov:hadRole": "stakeholder"
+      },
+      "prov:startedAtTime": "2026-09-20T21:26:51.326Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#5",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-data-model#GW_Model",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:26:51.493Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_DataModel#6",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-data-model#A_Declare",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:33:51.250Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Issue#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-issue-linking#A_ScanIssues",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:27:12.252Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Issue#2",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-issue-linking#GW_Issue",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:27:18.420Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Issue#3",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-issue-linking#A_AskCreate",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:27:45.486Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Needs#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-needs#A_Stakeholders",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:28:09.222Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Needs#2",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-needs#A_Synthesise",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:28:15.124Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Needs#3",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-needs#BA_ReviewNeeds",
+        "prov:hadRole": "business-analyst"
+      },
+      "prov:startedAtTime": "2026-09-20T20:46:29.971Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Needs#4",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-needs#S_ConfirmNeeds",
+        "prov:hadRole": "stakeholder"
+      },
+      "prov:startedAtTime": "2026-09-20T20:46:43.118Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Needs#5",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-needs#GW_Needs",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:46:47.857Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements-definition#A_MapWorkflow",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:47:40.480Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#2",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements-definition#A_DefineReqs",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:56:42.895Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#3",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements-definition#A_CompareOptions",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T20:56:52.579Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#4",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-requirements-definition#BA_ReviewReqs",
+        "prov:hadRole": "business-analyst"
+      },
+      "prov:startedAtTime": "2026-09-20T21:05:40.790Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#5",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "litlfred",
+        "prov:hadPlan": "crdm-requirements-definition#S_ApproveReqs",
+        "prov:hadRole": "stakeholder"
+      },
+      "prov:startedAtTime": "2026-09-20T21:05:48.970Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Requirements#6",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-requirements-definition#GW_Reqs",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:05:54.568Z"
+    },
+    {
+      "@id": "crdm--folio-assistant-6lb8/Call_Signoff#1",
+      "@type": "prov:Activity",
+      "cat-harness:underPolicy": [
+        "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+        "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+      ],
+      "prov:qualifiedAssociation": {
+        "prov:agent": "claude",
+        "prov:hadPlan": "crdm-signoff#A_CreateBeans",
+        "prov:hadRole": "authoring-agent"
+      },
+      "prov:startedAtTime": "2026-09-20T21:48:45.270Z"
+    }
+  ],
+  "@id": "crdm--folio-assistant-6lb8"
+}
