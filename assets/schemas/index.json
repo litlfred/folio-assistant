@@ -2971,13 +2971,6 @@
           "doc": "Actors this statement applies to (defaults to parent's actors)."
         },
         {
-          "name": "satisfiedBy",
-          "type": "SatisfiedByRef[]",
-          "optional": true,
-          "array": true,
-          "doc": "What satisfies this statement."
-        },
-        {
           "name": "dependsOn",
           "type": "string[]",
           "optional": true,
@@ -2988,8 +2981,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/assistant-types.ts#Conformance",
-        "cat-harness/schemas/assistant-types.ts#SatisfiedByRef"
+        "cat-harness/schemas/assistant-types.ts#Conformance"
       ],
       "unresolved": [],
       "external": [],
@@ -3029,35 +3021,6 @@
           "optional": false,
           "array": false,
           "doc": "Higher priority wins."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/assistant-types.ts#SatisfiedByRef",
-      "name": "SatisfiedByRef",
-      "module": "cat-harness/schemas/assistant-types.ts",
-      "kind": "interface",
-      "doc": "A reference to what satisfies a requirement statement.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "\"skill\" | \"capability\" | \"requirement-statement\"",
-          "optional": false,
-          "array": false,
-          "doc": "What kind of thing satisfies this statement."
-        },
-        {
-          "name": "ref",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "ID of the satisfying skill, capability, or requirement-statement key."
         }
       ],
       "extendsNames": [],
@@ -3191,27 +3154,6 @@
           "doc": "Tools the agent is allowed to use when this skill is active."
         },
         {
-          "name": "scripts",
-          "type": "SkillScript[]",
-          "optional": true,
-          "array": true,
-          "doc": "Scripts executed during skill lifecycle phases."
-        },
-        {
-          "name": "mcpServices",
-          "type": "string[]",
-          "optional": true,
-          "array": true,
-          "doc": "MCP service names this skill interacts with."
-        },
-        {
-          "name": "validators",
-          "type": "SkillValidator[]",
-          "optional": true,
-          "array": true,
-          "doc": "Validators that check skill output."
-        },
-        {
           "name": "routingPatterns",
           "type": "string[]",
           "optional": true,
@@ -3252,8 +3194,6 @@
       "refs": [
         "cat-harness/schemas/assistant-types.ts#SkillCapabilityRef",
         "cat-harness/schemas/assistant-types.ts#SkillDependency",
-        "cat-harness/schemas/assistant-types.ts#SkillScript",
-        "cat-harness/schemas/assistant-types.ts#SkillValidator",
         "cat-harness/schemas/skill-package.ts#LifecycleStage"
       ],
       "unresolved": [],
@@ -3467,90 +3407,6 @@
           "optional": false,
           "array": false,
           "doc": "Whether this skill reads or writes these types."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/assistant-types.ts#SkillScript",
-      "name": "SkillScript",
-      "module": "cat-harness/schemas/assistant-types.ts",
-      "kind": "interface",
-      "doc": "A script that a skill can execute at different lifecycle phases.",
-      "fields": [
-        {
-          "name": "path",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Path to the script (relative to repo root)."
-        },
-        {
-          "name": "runtime",
-          "type": "\"bash\" | \"python\" | \"typescript\" | \"bun\"",
-          "optional": false,
-          "array": false,
-          "doc": "Script runtime."
-        },
-        {
-          "name": "phase",
-          "type": "\"pre\" | \"execute\" | \"validate\" | \"post\"",
-          "optional": false,
-          "array": false,
-          "doc": "When in the skill lifecycle to run this script."
-        },
-        {
-          "name": "args",
-          "type": "string[]",
-          "optional": true,
-          "array": true,
-          "doc": "Additional CLI arguments."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/assistant-types.ts#SkillValidator",
-      "name": "SkillValidator",
-      "module": "cat-harness/schemas/assistant-types.ts",
-      "kind": "interface",
-      "doc": "A validator that checks skill output correctness.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "Path to the validator script."
-        },
-        {
-          "name": "runtime",
-          "type": "\"bash\" | \"python\" | \"typescript\" | \"bun\"",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "scope",
-          "type": "\"file\" | \"block\" | \"chapter\" | \"project\"",
-          "optional": false,
-          "array": false,
-          "doc": "What scope this validator checks."
         }
       ],
       "extendsNames": [],
@@ -14599,13 +14455,6 @@
           "array": false
         },
         {
-          "name": "skill",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The skill that says how to READ a graph of this kind, by name."
-        },
-        {
           "name": "schema",
           "type": "string",
           "optional": true,
@@ -23054,12 +22903,20 @@
           "optional": true,
           "array": false,
           "doc": "The capability that stands in for this one when it is absent."
+        },
+        {
+          "name": "satisfies",
+          "type": "z.array(z.lazy(() => RequirementStatementRefSchema)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The requirement statements this capability discharges. See"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-package.ts#CapabilityDetectionSchema"
+        "cat-harness/schemas/skill-package.ts#CapabilityDetectionSchema",
+        "cat-harness/schemas/skill-package.ts#RequirementStatementRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -23678,6 +23535,33 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/skill-package.ts#RequirementStatementRef",
+      "name": "RequirementStatementRef",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-package.ts#RequirementStatementRefSchema",
+      "name": "RequirementStatementRefSchema",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "zod-scalar",
+      "doc": "A pointer AT one requirement statement: `req:<requirement id>#<statement key>`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/skill-package.ts#RequirementStatementSchema",
       "name": "RequirementStatementSchema",
       "module": "cat-harness/schemas/skill-package.ts",
@@ -23714,12 +23598,6 @@
           "array": true
         },
         {
-          "name": "satisfiedBy",
-          "type": "z.array(SatisfiedByRefSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
           "name": "dependsOn",
           "type": "z.array(z.string()).optional()",
           "optional": true,
@@ -23729,8 +23607,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-package.ts#ConformanceSchema",
-        "cat-harness/schemas/skill-package.ts#SatisfiedByRefSchema"
+        "cat-harness/schemas/skill-package.ts#ConformanceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -23792,144 +23669,6 @@
       "external": [
         "z"
       ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SatisfiedByKind",
-      "name": "SatisfiedByKind",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "doc": "What satisfies a requirement statement.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SatisfiedByKindSchema",
-      "name": "SatisfiedByKindSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-enum",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "skill",
-        "capability",
-        "requirement-statement"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SatisfiedByRef",
-      "name": "SatisfiedByRef",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SatisfiedByRefSchema",
-      "name": "SatisfiedByRefSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "SatisfiedByKindSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "ref",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/skill-package.ts#SatisfiedByKindSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ScriptPhase",
-      "name": "ScriptPhase",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "doc": "Lifecycle phase in which a script runs.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ScriptPhaseSchema",
-      "name": "ScriptPhaseSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-enum",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "pre",
-        "execute",
-        "validate",
-        "post"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ScriptRuntime",
-      "name": "ScriptRuntime",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "doc": "Script execution runtimes.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ScriptRuntimeSchema",
-      "name": "ScriptRuntimeSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-enum",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "bash",
-        "python",
-        "typescript",
-        "bun"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
       "exported": true
     },
     {
@@ -24089,24 +23828,6 @@
           "array": true
         },
         {
-          "name": "scripts",
-          "type": "z.array(SkillScriptSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "mcpServices",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "validators",
-          "type": "z.array(SkillValidatorSchema).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
           "name": "routingPatterns",
           "type": "z.array(z.string()).optional()",
           "optional": true,
@@ -24142,9 +23863,7 @@
       "refs": [
         "cat-harness/schemas/skill-package.ts#LifecycleStageSchema",
         "cat-harness/schemas/skill-package.ts#SkillCapabilityRefSchema",
-        "cat-harness/schemas/skill-package.ts#SkillDependencySchema",
-        "cat-harness/schemas/skill-package.ts#SkillScriptSchema",
-        "cat-harness/schemas/skill-package.ts#SkillValidatorSchema"
+        "cat-harness/schemas/skill-package.ts#SkillDependencySchema"
       ],
       "unresolved": [],
       "external": [
@@ -24473,150 +24192,6 @@
       "external": [
         "z"
       ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SkillScript",
-      "name": "SkillScript",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SkillScriptSchema",
-      "name": "SkillScriptSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "path",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "runtime",
-          "type": "ScriptRuntimeSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "phase",
-          "type": "ScriptPhaseSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "args",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/skill-package.ts#ScriptPhaseSchema",
-        "cat-harness/schemas/skill-package.ts#ScriptRuntimeSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SkillValidator",
-      "name": "SkillValidator",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#SkillValidatorSchema",
-      "name": "SkillValidatorSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "runtime",
-          "type": "ScriptRuntimeSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "scope",
-          "type": "ValidatorScopeSchema",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/skill-package.ts#ScriptRuntimeSchema",
-        "cat-harness/schemas/skill-package.ts#ValidatorScopeSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ValidatorScope",
-      "name": "ValidatorScope",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "type-alias",
-      "doc": "Scope of a validator's operation.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/skill-package.ts#ValidatorScopeSchema",
-      "name": "ValidatorScopeSchema",
-      "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-enum",
-      "fields": [],
-      "extendsNames": [],
-      "values": [
-        "file",
-        "block",
-        "chapter",
-        "project"
-      ],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
       "exported": true
     },
     {
@@ -37817,14 +37392,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/assistant-types.ts#RequirementStatement",
-      "to": "cat-harness/schemas/assistant-types.ts#SatisfiedByRef",
-      "via": "satisfiedBy",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
       "from": "cat-harness/schemas/assistant-types.ts#SessionHook",
       "to": "cat-harness/schemas/assistant-types.ts#HookCommand",
       "via": "commands",
@@ -37844,22 +37411,6 @@
       "from": "cat-harness/schemas/assistant-types.ts#SkillDefinition",
       "to": "cat-harness/schemas/assistant-types.ts#SkillDependency",
       "via": "dependsOn",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/assistant-types.ts#SkillDefinition",
-      "to": "cat-harness/schemas/assistant-types.ts#SkillScript",
-      "via": "scripts",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/assistant-types.ts#SkillDefinition",
-      "to": "cat-harness/schemas/assistant-types.ts#SkillValidator",
-      "via": "validators",
       "kind": "field",
       "optional": true,
       "array": true
@@ -40937,6 +40488,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema",
+      "to": "cat-harness/schemas/skill-package.ts#RequirementStatementRefSchema",
+      "via": "satisfies",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema",
       "to": "cat-harness/schemas/skill-package.ts#DockerRequirementsSchema",
       "via": "wrapper",
@@ -40985,25 +40544,9 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/skill-package.ts#RequirementStatementSchema",
-      "to": "cat-harness/schemas/skill-package.ts#SatisfiedByRefSchema",
-      "via": "satisfiedBy",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
       "from": "cat-harness/schemas/skill-package.ts#RoleAssignmentSchema",
       "to": "cat-harness/schemas/skill-package.ts#IdentitySourceSchema",
       "via": "identitySource",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SatisfiedByRefSchema",
-      "to": "cat-harness/schemas/skill-package.ts#SatisfiedByKindSchema",
-      "via": "kind",
       "kind": "field",
       "optional": false,
       "array": false
@@ -41052,22 +40595,6 @@
       "from": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
       "to": "cat-harness/schemas/skill-package.ts#SkillDependencySchema",
       "via": "dependsOn",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
-      "to": "cat-harness/schemas/skill-package.ts#SkillScriptSchema",
-      "via": "scripts",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
-      "to": "cat-harness/schemas/skill-package.ts#SkillValidatorSchema",
-      "via": "validators",
       "kind": "field",
       "optional": true,
       "array": true
@@ -41159,38 +40686,6 @@
       "kind": "field",
       "optional": false,
       "array": true
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillScriptSchema",
-      "to": "cat-harness/schemas/skill-package.ts#ScriptPhaseSchema",
-      "via": "phase",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillScriptSchema",
-      "to": "cat-harness/schemas/skill-package.ts#ScriptRuntimeSchema",
-      "via": "runtime",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillValidatorSchema",
-      "to": "cat-harness/schemas/skill-package.ts#ScriptRuntimeSchema",
-      "via": "runtime",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness/schemas/skill-package.ts#SkillValidatorSchema",
-      "to": "cat-harness/schemas/skill-package.ts#ValidatorScopeSchema",
-      "via": "scope",
-      "kind": "field",
-      "optional": false,
-      "array": false
     },
     {
       "from": "cat-harness/schemas/staging-preview.ts#StagingPreviewBlockSchema",

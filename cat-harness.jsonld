@@ -214,6 +214,7 @@
       "@type": "@id"
     },
     "roleName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#roleName",
+    "satisfiesStatement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfiesStatement",
     "permissionName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#permissionName",
     "io": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#io",
@@ -268,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T23:25:40.142Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f210219cd63fa3a794bc010c82aed9326f0f4e4",
-  "sourceCommitSha": "6f210219cd63fa3a794bc010c82aed9326f0f4e4",
-  "sourceCommitAt": "2026-09-24T01:23:12+02:00",
+  "generatedAt": "2026-09-23T23:58:41.565Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46144f93e35d161d04fb19e0450ef0df1854c8bb",
+  "sourceCommitSha": "46144f93e35d161d04fb19e0450ef0df1854c8bb",
+  "sourceCommitAt": "2026-09-24T01:55:58+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -284,7 +285,7 @@
     "SequenceFlow": 898,
     "Role": 146,
     "ProcessNode": 851,
-    "Tool": 77,
+    "Tool": 83,
     "Schema": 114,
     "GraphKind": 32,
     "Directory": 40,
@@ -513,7 +514,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 155,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -528,7 +529,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "instructionLines": 177,
+      "instructionLines": 182,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -895,7 +896,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 703,
+      "instructionLines": 705,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1023,7 +1024,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/confirmation-waiver.md",
-      "instructionLines": 131,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1389,7 +1390,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/where-does-this-go.md",
-      "instructionLines": 104,
+      "instructionLines": 106,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1500,7 +1501,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 69,
+      "instructionLines": 71,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1832,7 +1833,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 494,
+      "instructionLines": 496,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2055,7 +2056,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-witness.md",
-      "instructionLines": 125,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2183,7 +2184,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 522,
+      "instructionLines": 527,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2229,7 +2230,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/serving-renderings.md",
-      "instructionLines": 157,
+      "instructionLines": 162,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2245,7 +2246,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/data-modelling.md",
-      "instructionLines": 237,
+      "instructionLines": 239,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2722,7 +2723,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 608,
+      "instructionLines": 623,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3103,7 +3104,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-test.md",
-      "instructionLines": 77,
+      "instructionLines": 82,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-test/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-test/output.schema.json",
       "hasInstructions": true,
@@ -3120,7 +3121,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-validate.md",
-      "instructionLines": 28,
+      "instructionLines": 33,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-validate/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-validate/output.schema.json",
       "hasInstructions": true,
@@ -3137,7 +3138,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-plan.md",
-      "instructionLines": 27,
+      "instructionLines": 32,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-plan/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-plan/output.schema.json",
       "hasInstructions": true,
@@ -3169,7 +3170,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-feedback.md",
-      "instructionLines": 29,
+      "instructionLines": 34,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-feedback/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-feedback/output.schema.json",
       "hasInstructions": true,
@@ -3186,7 +3187,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-publish.md",
-      "instructionLines": 28,
+      "instructionLines": 33,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-publish/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-publish/output.schema.json",
       "hasInstructions": true,
@@ -3236,7 +3237,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-review.md",
-      "instructionLines": 38,
+      "instructionLines": 43,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/content-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-review/output.schema.json",
       "hasInstructions": true,
@@ -4130,7 +4131,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 219,
+      "instructionLines": 221,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4195,7 +4196,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/workflow-state.md",
-      "instructionLines": 126,
+      "instructionLines": 128,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4227,7 +4228,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/session-context.md",
-      "instructionLines": 129,
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5119,6 +5120,9 @@
         "method": "command",
         "command": "lean --version"
       },
+      "satisfiesStatement": [
+        "req:lean-verification#lean-compiles"
+      ],
       "fallbackToCapability": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/lean-mcp"
     },
     {
@@ -5314,6 +5318,9 @@
         "method": "command",
         "command": "sushi --version"
       },
+      "satisfiesStatement": [
+        "req:fhir-validation#sushi-compile"
+      ],
       "requiresCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/node-runtime"
       ]
@@ -5339,6 +5346,9 @@
         "method": "command",
         "command": "java -jar ${IG_PUBLISHER_JAR:-/opt/ig-publisher/publisher.jar} --version"
       },
+      "satisfiesStatement": [
+        "req:fhir-validation#ig-publisher-qa"
+      ],
       "requiresCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/java-runtime"
       ]
@@ -34706,7 +34716,414 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-graph-analysis",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-graph-analysis",
+      "title": "Editorial content-graph analysis",
+      "description": "Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 cat-harness/content/pipeline/content-graph-analysis.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Slug",
+            "description": "Restrict the analysis to one chapter directory.",
+            "required": false,
+            "arg": {
+              "flag": "--chapter"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit the whole graph as JSON on stdout and exit.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "md",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Write the report to /tmp/content-graph-report.md.",
+            "required": false,
+            "arg": {
+              "flag": "--md"
+            }
+          },
+          {
+            "name": "visualise",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Render the Graphviz SVGs (needs graphviz).",
+            "required": false,
+            "arg": {
+              "flag": "--visualise"
+            }
+          },
+          {
+            "name": "proposals",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Write concrete reorganisation proposals to /tmp/content-graph-proposals.md.",
+            "required": false,
+            "arg": {
+              "flag": "--proposals"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The ranked findings, or the graph as JSON with `--json`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-graph"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/paper-latex-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "paper-latex-build",
+      "title": "Paper build to LaTeX chapters",
+      "description": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/build.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paperManifest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The paper's `<paper>.ts` manifest; absent, the folio's single paper.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outDir",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the chapters; absent, `chapters/` at the content root.",
+            "required": false,
+            "arg": {
+              "flag": "--out-dir"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "chapters",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `.tex` per chapter under the output directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pages-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "pages-index",
+      "title": "Published-paper index page",
+      "description": "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/generate-index.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "outputHtml",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write index.html.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "paperEmbed",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The file the Paper tab embeds, typically the PDF.",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          },
+          {
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF filename used in download links.",
+            "required": true,
+            "arg": {
+              "flag": "--pdf"
+            }
+          },
+          {
+            "name": "md",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A Markdown rendering to link, when there is one.",
+            "required": false,
+            "arg": {
+              "flag": "--md"
+            }
+          },
+          {
+            "name": "visualizer",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The visualizer page for the second tab.",
+            "required": false,
+            "arg": {
+              "flag": "--visualizer"
+            }
+          },
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch the build is from.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "owner/repo, for links back to the source.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "sha",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/CommitSha",
+            "description": "The commit the build is from.",
+            "required": false,
+            "arg": {
+              "flag": "--sha"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written index.html."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-dependency-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-dependency-graph",
+      "title": "Proof dependency graph",
+      "description": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/generate_dependency_graph.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to read.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the SVG.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          },
+          {
+            "name": "pdfBaseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "The published PDF, for the anchor links.",
+            "required": false,
+            "arg": {
+              "flag": "--pdf-base-url"
+            }
+          },
+          {
+            "name": "dotOnly",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Write DOT source instead of rendering.",
+            "required": false,
+            "arg": {
+              "flag": "--dot-only"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The SVG, or DOT with `--dot-only`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-status-tracking"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-objects-extract",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-objects-extract",
+      "title": "Proof-object extraction",
+      "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/extract_proof_objects.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write proof-objects.json.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-status-tracking"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-status-update",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-status-update",
+      "title": "Proof status from a Lean build",
+      "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/update_proof_status.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to update.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "buildLog",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Lean build log; stdin when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--build-log"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json with statuses updated in place."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-status-tracking"
       ]
     },
     {
@@ -38795,8 +39212,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6f210219cd63fa3a794bc010c82aed9326f0f4e4",
+    "sha": "46144f93e35d161d04fb19e0450ef0df1854c8bb",
     "pr": "main",
-    "run": "35933339101"
+    "run": "35936004178"
   }
 }
