@@ -96,6 +96,19 @@
       ]
     },
     {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "reproduce",
+      "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphKinds [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
+      "graphKinds": [
+        "glossary"
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/glossary/index.md",
+        "skill": "glossary-terms"
+      }
+    },
+    {
       "id": "voices",
       "path": "skills/voices/",
       "dependents": "reproduce",
@@ -128,6 +141,53 @@
       ],
       "coverage": {
         "skill": "where-does-this-go"
+      }
+    },
+    {
+      "id": "core-library",
+      "path": "library/",
+      "dependents": "skip",
+      "description": "L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (arXiv:2510.21603v1) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "skill": "library-ingestion",
+        "docs": "cat-harness/docs/document-ingestion.md"
+      }
+    },
+    {
+      "id": "core-methodologies",
+      "theme": "analyst",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
+      "id": "core-skills",
+      "path": "skills/",
+      "dependents": "skip",
+      "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "core-processes",
+      "path": "processes/",
+      "dependents": "skip",
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
       }
     }
   ],

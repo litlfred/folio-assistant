@@ -1,0 +1,61 @@
+classDiagram
+  direction TB
+  namespace folio_assistant_core__core_skills {
+    class folio_assistant_core_core_skills_folio_voice_v1_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      kgRef [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class folio_assistant_core_core_skills_folio_voice_v1_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class folio_assistant_core_core_skills_folio_voice_v1_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class folio_assistant_core_core_skills_folio_voice_v1_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1["folio-voice/v1"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] string[]
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Source : sources
+  folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
+  folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Terminology : terminology
+  folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Rule : rules
+  cssClass "folio_assistant_core_core_skills_folio_voice_v1_Source" fa_uml_kind_skills
+  cssClass "folio_assistant_core_core_skills_folio_voice_v1_Pattern" fa_uml_kind_skills
+  cssClass "folio_assistant_core_core_skills_folio_voice_v1_Terminology" fa_uml_kind_skills
+  cssClass "folio_assistant_core_core_skills_folio_voice_v1_Rule" fa_uml_kind_skills
+  cssClass "folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1" fa_uml_kind_skills

@@ -277,12 +277,14 @@ export const RULES: Rule[] = [
       "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
+      "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -581,6 +583,14 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
+      // The viewer page's COMMON FIXTURE and its audit (bean `edx7`). Core
+      // beside `check-viewer-backticks.ts` and for the same two reasons: they
+      // guard what every viewer generator writes, and they write into the
+      // rendered site. The navbar MODEL is composed here from the
+      // declarations; the component itself is `lib/navbar.ts`, so this adds a
+      // caller and not a second answer to what the navigation looks like.
+      "scripts/viewer-page.ts",
+      "scripts/check-viewer-nav.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -802,6 +812,8 @@ export const RULES: Rule[] = [
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
+      "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
+      "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
@@ -963,6 +975,15 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
+      // adjudication's codes against, and the loader `namespaces.ts` sits
+      // beside. Needed to RUN a process, so harness — the same test as the
+      // tooling below; a core placement made `process-model.ts` import down.
+      "schemas/code-list.ts",
+      "scripts/code-lists.ts",
+      // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
+      // process, so harness, beside the gates it sits among.
+      "scripts/publish-verify.ts",
       // ── Tooling that the `schemas/` and `content/pipeline/` PREFIXES had
       //    claimed for core, on the content-versus-platform reading this list
       //    predates. The owner's cut, 2026-09-19, is different and sharper:
@@ -1468,6 +1489,14 @@ const PERMITTED_EDGES: readonly PermittedEdge[] = [
       "loading that module is therefore a precondition of calling one. Without it the kind is " +
       "registered only if the process happened to import core first — an import-order property " +
       "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+  },
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/glossary-graph-kind.ts",
+    reason:
+      "The same trigger for core's second kind, `glossary` (owner, 2026-09-23: \"put glossary " +
+      "into folio-assistant-core\"). One entry per endpoint pair, as this list's rule requires; " +
+      "it goes away with the folio entry when the split lands (#223).",
   },
 ];
 

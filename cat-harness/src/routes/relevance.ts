@@ -33,7 +33,7 @@ import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
-import { hasRole, forbidden, getUserRole } from "../core/rbac.js";
+import { allows, forbidden, principalOf } from "../core/rbac.js";
 import { log } from "../core/logging.js";
 import type { MountedRoute, RouteDeps } from "../route-groups.js";
 import type {
@@ -230,8 +230,8 @@ export async function handleRelevancePost(
 ): Promise<Response | null> {
   if (url.pathname !== "/api/relevance/adjudicate") return null;
 
-  if (!hasRole(req, "collaborator")) {
-    return forbidden("adjudicating a relevance verdict", "collaborator");
+  if (!allows(req, "adjudication")) {
+    return forbidden("adjudicating a relevance verdict", "adjudication");
   }
 
   let payload: AdjudicatePayload;
@@ -268,7 +268,7 @@ export async function handleRelevancePost(
   };
 
   writeFileSync(ledgerPath(config.repoRoot), `${JSON.stringify(ledger, null, 2)}\n`);
-  log("relevance", `adjudicated ${payload.key} by ${getUserRole(req)}`);
+  log("relevance", `adjudicated ${payload.key} by ${principalOf(req).actor}`);
 
   return Response.json({ ok: true, entry }, { headers: CORS });
 }

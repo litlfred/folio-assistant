@@ -162,10 +162,13 @@ the pointer lives on the task.
 | relation | written on | never on | why |
 |---|---|---|---|
 | a task implements a skill | the BPMN task (`<folio:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
-| a voice speaks for a role | the voice (`activeIn`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
+| a voice speaks for a role | the voice (`activeIn.roles`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
 | a lane is played by a role | the lane (`<folio:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
-| a user story is for a role | the story (`actor`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
-| a Tool satisfies a skill | the Tool (`satisfies`) | the skill | several Tools may satisfy one skill |
+| a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
+| a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
+| a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |
+| a skill says how to read a graph kind | the skill's front matter (`graph-kinds:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
+| a skill takes and produces a contract | the skill's front matter (`input:`, `output:` — a path into the instance or an https IRI) | a directory named after the skill | the skill can then say its contract is elsewhere, and a contract no skill names is visible as unclaimed |
 | a test checks a skill's contract | the test run | the skill | tests come and go; the contract does not |
 
 **Prose counts.** A skill body that says *"the only step of
@@ -205,7 +208,8 @@ field fails on one that points at nothing.
 
 **Free text stays free text** only when it is not a claim about another node:
 a description, a note, a persona. `useCases` was free text that named things
-the graph could not point at; that is the case this rule exists for.
+the graph could not point at; that is the case this rule exists for, and the
+stories are now nodes that point at their role.
 
 ## What falsifies a model
 

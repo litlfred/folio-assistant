@@ -1,3 +1,10 @@
+---
+satisfies:
+  - "req:content-lifecycle#plan-before-author"
+input: schemas/skills/content-plan/input.schema.json
+output: schemas/skills/content-plan/output.schema.json
+---
+
 # Content Planning
 
 Plan content development by defining scope, team, timeline, and sprint cadence.

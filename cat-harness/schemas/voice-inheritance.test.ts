@@ -132,7 +132,7 @@ describe("the chain has to terminate, and say so when it does not", () => {
 describe("applicability — the CRDM axis", () => {
   test("absent means EVERYWHERE, including a context naming nothing", () => {
     expect(voiceActiveIn({}, {})).toBe(true);
-    expect(voiceActiveIn({}, { process: "Process_Anything", lane: "reviewer" })).toBe(true);
+    expect(voiceActiveIn({}, { process: "Process_Anything", role: "reviewer" })).toBe(true);
   });
 
   test("a declared list is an OR within itself", () => {
@@ -145,9 +145,9 @@ describe("applicability — the CRDM axis", () => {
     // The distinction that makes this the CRDM shape rather than a union: an
     // activity sits in ONE lane of ONE process, so a voice naming both is in
     // force only at that intersection.
-    const v = { activeIn: { processes: ["Process_Crdm"], lanes: ["requirements-analyst"] } };
-    expect(voiceActiveIn(v, { process: "Process_Crdm", lane: "requirements-analyst" })).toBe(true);
-    expect(voiceActiveIn(v, { process: "Process_Crdm", lane: "reviewer" })).toBe(false);
+    const v = { activeIn: { processes: ["Process_Crdm"], roles: [{ role: "requirements-analyst" }] } };
+    expect(voiceActiveIn(v, { process: "Process_Crdm", role: "requirements-analyst" })).toBe(true);
+    expect(voiceActiveIn(v, { process: "Process_Crdm", role: "reviewer" })).toBe(false);
     expect(voiceActiveIn(v, { process: "Process_Crdm" })).toBe(false);
   });
 
