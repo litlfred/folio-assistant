@@ -11,7 +11,7 @@
     <bpmn:participant id="Participant_Process_JsonLdDrift" name="Are the .jsonld siblings still in sync with their .ts manifests?" processRef="Process_JsonLdDrift"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_JsonLdDrift" name="Are the .jsonld siblings still in sync with their .ts manifests?" isExecutable="false">
-    <bpmn:documentation>A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. Five `--check` runs in one job: the JSON-LD context, the block siblings, the library nodes, the site graph, and the label-resolution tests. Each regenerates from the `.ts` manifest that owns it and fails on any difference.&amp;#10;&amp;#10;They are drawn as ONE task rather than five, because they are independent of each other and sequential only because a single job runs them. Five boxes would assert an ordering the workflow does not have.&amp;#10;&amp;#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &amp;#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&amp;#10;&amp;#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one it carries no `&lt;cat-harness.processes:job&gt;`, so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &amp;#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting.</bpmn:documentation>
+    <bpmn:documentation>A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED. Five `--check` runs in one job: the JSON-LD context, the block siblings, the library nodes, the site graph, and the label-resolution tests. Each regenerates from the `.ts` manifest that owns it and fails on any difference.&amp;#10;&amp;#10;They are drawn as ONE task rather than five, because they are independent of each other and sequential only because a single job runs them. Five boxes would assert an ordering the workflow does not have.&amp;#10;&amp;#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &amp;#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&amp;#10;&amp;#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &amp;#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting.</bpmn:documentation>
     <bpmn:extensionElements>
       <!-- STRICT, and declared (bean `30hn`). There is one path, so strictness
            costs nothing here — and that is the argument for declaring it
@@ -20,7 +20,6 @@
            the whole verdict, and a run that skipped it would report a clean
            generated tree it never compared. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/jsonld-gen-check.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_JsonLdDrift">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
@@ -34,9 +33,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="drift-check"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Regenerate the context, block,&amp;#10;library and site graphs &amp;#8212; and diff">

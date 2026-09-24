@@ -20,7 +20,6 @@
            unrelated merge, silently, for months. A process whose whole point
            is a compensation pair cannot be advisory about performing it. -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/docs-site.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_DocsSite">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
@@ -46,9 +45,6 @@
     <bpmn:startEvent id="Start_Push" name="Push to main,&#10;or dispatch">
 
 
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="build-and-deploy"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Regenerate" name="Regenerate every derived&#10;reference from its source">

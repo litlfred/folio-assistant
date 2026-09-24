@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 289,
+      "count": 293,
       "unit": "beans"
     }
   },
@@ -725,6 +725,20 @@
       "file": "beans/defs/folio-assistant-603s--landing-the-lhs-navbar-is-one-themed-section-per-i.md"
     },
     {
+      "id": "folio-assistant-61ca",
+      "title": "B5-fix (#1168): a GitHub workflow names the BPMN it implements; 9 <implements workflow> and <job> flipped",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:22:12Z",
+      "updatedAt": "2026-09-24T17:23:46Z",
+      "preview": "## Why\n9 `<cat-harness.processes:implements workflow=…>` are arrow-direction findings: the diagram names its implementation. Owner decision 2026-09-24: \"Workflow names its BPMN\".\n\n## Plan\n- Each `.github/workflows/*.yml` carries `# bpmn: cat-harness/processes/<x>.bpmn`; each job implementing a node carries `# bpmn-node: <Task_Id>`.\n- `check-workflow-coverage.ts`, `prose-code-pairs.ts`, `pair-claim",
+      "file": "beans/defs/folio-assistant-61ca--b5-fix-1168-a-github-workflow-names-the-bpmn-it-im.md"
+    },
+    {
       "id": "folio-assistant-61n5",
       "title": "qa-results parity test fails intermittently under bun run gates (2 of 4 local runs), never alone or in CI",
       "status": "todo",
@@ -1049,6 +1063,20 @@
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
     },
     {
+      "id": "folio-assistant-8i57",
+      "title": "Document ingestion page has no theme section: Process_IngestTheme is called but documented nowhere",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:22:04Z",
+      "updatedAt": "2026-09-24T17:22:04Z",
+      "preview": "## Why\n`document-ingestion.bpmn` calls `Process_IngestTheme` (`ingest-theme.bpmn`) behind `Gateway_ThemeSource`, and its links pointed at `#ingest-the-theme` and `#a-theme-source` — neither anchor exists. `content/docs/document-ingestion/document-ingestion.ts` has sections for extract / derive / build-KG / gate but none for the theme. Once links are derived from `asset.source` (B5-fix), the theme ",
+      "file": "beans/defs/folio-assistant-8i57--document-ingestion-page-has-no-theme-section-proce.md"
+    },
+    {
       "id": "folio-assistant-8jt6",
       "title": "MEMORY & TODOS: notes an agent or a person carries, attached to the graph",
       "status": "in-progress",
@@ -1331,14 +1359,14 @@
     {
       "id": "folio-assistant-b7wh",
       "title": "INGEST arXiv:2607.14456v1 (specialist BPMN-compiled agents) as evidence + a skill on the processes subgraph",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:25:37Z",
-      "updatedAt": "2026-09-23T22:26:10Z",
+      "updatedAt": "2026-09-24T00:15:16Z",
       "preview": "Owner, 2026-09-23: *\"ingest into library for use as evidence and skills as\nsubgraph on processes in cat-harness\"*.\n\nBorman, Wandabwa, Yu, Kannangara, Liu, Leontjeva and Ng, **\"Beyond Generalist\nLLMs: Specialist Agentic Systems for Structured Code Workflow Execution\"**,\nCommonwealth Bank of Australia. Workshop paper at SCALE, ICML 2026 (PMLR 306);\narXiv:2607.14456v1 [cs.SE], 16 July 2026. Open acce",
       "file": "beans/defs/folio-assistant-b7wh--ingest-arxiv260714456v1-specialist-bpmn-compiled-a.md"
     },
@@ -1541,14 +1569,14 @@
     {
       "id": "folio-assistant-ctp3",
       "title": "INGEST Doc-Researcher (arXiv:2510.21603v1) as a methodology subgraph in folio-assistant-core",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:08Z",
-      "updatedAt": "2026-09-23T21:15:39Z",
+      "updatedAt": "2026-09-24T00:15:16Z",
       "preview": "Owner's request, 2026-09-23: *\"ingest methdolofy subgraph. develop processes skills etc.\napply to folio-asst-core\"*, then *\"it is part of f-a-c subgraph\"*.\n\nDong et al., **\"Doc-Researcher: A Unified System for Multimodal Document Parsing and\nDeep Research\"** (arXiv:2510.21603v1, Huawei, 24 October 2025). Open access.\n\n## What went in\n\nFour new declared directories on `folio-assistant-core`, each d",
       "file": "beans/defs/folio-assistant-ctp3--ingest-doc-researcher-arxiv251021603v1-as-a-method.md"
     },
@@ -2033,15 +2061,15 @@
     {
       "id": "folio-assistant-j820",
       "title": "PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:17Z",
-      "updatedAt": "2026-09-23T21:15:20Z",
-      "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## Measured\n\n| | |\n|---|---|\n| document | `arxiv-2510.21603v1` (Dong et al., Doc-Researcher), staged, **not promoted** |\n| captioned figures in the text | **7** |\n| images `pdf-images.py` placed | **383** |\n",
+      "updatedAt": "2026-09-24T05:10:40Z",
+      "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
     },
     {
@@ -2849,6 +2877,20 @@
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
     },
     {
+      "id": "folio-assistant-rdy0",
+      "title": "Process pages list the docs sections that present them ('Presented on')",
+      "status": "todo",
+      "type": "feature",
+      "priority": "low",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:22:05Z",
+      "updatedAt": "2026-09-24T17:22:05Z",
+      "preview": "## Why\nThe reverse of B5-fix: a generated `/processes/<x>.html` page does not say which prose sections present that process. The index is the same one B5-fix builds (`WebPageNode.asset.source`), so this is navigation for free once it exists.\n\n## Done when\n`gen-processes-viz.ts` emits a \"Presented on\" line per process page, from the same index, with a test.",
+      "file": "beans/defs/folio-assistant-rdy0--process-pages-list-the-docs-sections-that-present.md"
+    },
+    {
       "id": "folio-assistant-rfev",
       "title": "C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time",
       "status": "in-progress",
@@ -2893,14 +2935,14 @@
     {
       "id": "folio-assistant-rn3o",
       "title": "Diagrams: download PNG, download SVG, copy to clipboard on every figure",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-2upx",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T12:41:53Z",
-      "updatedAt": "2026-09-24T13:16:02Z",
+      "updatedAt": "2026-09-24T13:54:05Z",
       "preview": "Owner request 2026-09-24. Add three controls to mountFigure's toolbar in docs-ui.js so every diagram (BPMN, UML portrait/landscape, Mermaid) gets them: Download SVG (serialised or the committed file), Download PNG (canvas, scaled, theme colours), Copy (PNG via ClipboardItem, fall back to SVG text, say which). Keyboard-operable, named; e2e test per control. Queued after B5 (#1268) on the same branc",
       "file": "beans/defs/folio-assistant-rn3o--diagrams-download-png-download-svg-copy-to-clipboa.md"
     },
@@ -3805,6 +3847,20 @@
       "file": "beans/defs/folio-assistant-xies--publish-to-cdn-editor-signoff-merge-human-eyes-cdn.md"
     },
     {
+      "id": "folio-assistant-xl55",
+      "title": "B5-fix (#1168): BPMN subprocess links derived from the page section that presents the process; 10 <link href> removed",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:22:04Z",
+      "updatedAt": "2026-09-24T17:22:04Z",
+      "preview": "## Why\n10 `<cat-harness.processes:link href>` elements are arrow-direction findings: a process (general) names the pages written about it. They are also 5-of-10 broken somewhere, with nothing checking them:\n- `#ingest-the-theme` — no such anchor (no theme section exists).\n- `#a-theme-source` — on a gateway; render-bpmn only reads call activities, so it is inert, and its anchor is missing too.\n- On",
+      "file": "beans/defs/folio-assistant-xl55--b5-fix-1168-bpmn-subprocess-links-derived-from-the.md"
+    },
+    {
       "id": "folio-assistant-xp72",
       "title": "SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget",
       "status": "todo",
@@ -3975,14 +4031,14 @@
     {
       "id": "folio-assistant-yscf",
       "title": "PROVENANCE REFUSAL: yl-3.pdf (ML resource optimization for hybrid ETL) is not admissible as evidence",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:30:19Z",
-      "updatedAt": "2026-09-23T22:30:55Z",
+      "updatedAt": "2026-09-24T00:17:04Z",
       "preview": "Owner attached `yl-3.pdf` on 2026-09-23 with no instruction, then chose *\"verify\nprovenance first, then report\"* over ingesting it. This is that report. **Nothing\nwas filed**; the PDF is not in `uploads/` and no library entry exists.\n\nThe document: \"Machine Learning–Based Resource Optimization for Hybrid ETL\nPipelines Across Multi-Cloud Platforms\", attributed to Anjali Sharma (Stanford),\nWei Chen ",
       "file": "beans/defs/folio-assistant-yscf--provenance-refusal-yl-3pdf-ml-resource-optimizatio.md"
     },

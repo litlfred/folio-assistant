@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/atomic-mass-drift-check.bpmn
 # Generated-file drift gate for QOU/AtomicMass.lean.
 #
 # AtomicMass.lean is generated from a canonical data table
@@ -31,6 +32,7 @@ permissions:
 
 jobs:
   drift-check:
+    # bpmn-node: Start_Change
     name: AtomicMass.lean in sync with data table
     runs-on: ubuntu-latest
     steps:
