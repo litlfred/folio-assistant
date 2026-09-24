@@ -1,0 +1,35 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-harness-state.ts",
+    "script_hash": "317b19765ab1"
+  },
+  "subject": {
+    "kind": "harness-state",
+    "id": "health+todos+interaction+issue-marks"
+  },
+  "updated_at": "2026-09-24T17:37:40.231Z",
+  "families": {
+    "health-result-is-from-the-current-producer": {
+      "summary": "A committed health result was written by a version of its producer that no longer exists, so the remedies it states are the old code's remedies — which is how a reader is told to do something the repository has since established cannot work (bean `7umv`). Examined 1.",
+      "count": 0,
+      "entries": []
+    },
+    "interaction-profile-is-read": {
+      "summary": "A profile declared in the interaction graph that nothing in the corpus names. The person has stated an accommodation and no skill or script will honour it — `dh4f` at the subject where it costs the most, because it fails silently and at one person. Examined 1.",
+      "count": 0,
+      "entries": []
+    },
+    "issue-mark-accounts-for-edits": {
+      "summary": "A mark records how far an agent has read an issue. A comment EDITED after being read keeps its id, so a mark with no `lastUpdatedAt` calls an edited requirement seen — and one whose `checkedAt` precedes its `lastUpdatedAt` claims to have looked before the edit it accounts for. Examined 2.",
+      "count": 0,
+      "entries": []
+    },
+    "todo-process-references-resolve": {
+      "summary": "A todo item's `processes:` entry names a BPMN process id that no diagram declares, so a reader following it looks for a process that is not there. The schema cannot catch it: an id that resolves to nothing is still a well-formed string. Examined 3.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 0
+}
