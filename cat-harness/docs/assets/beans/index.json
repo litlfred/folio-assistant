@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 312,
+      "count": 315,
       "unit": "beans"
     }
   },
@@ -1021,6 +1021,20 @@
       "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
     },
     {
+      "id": "folio-assistant-7mog",
+      "title": "The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean's first premise was WRONG)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-p5wm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:39:39Z",
+      "updatedAt": "2026-09-24T18:10:09Z",
+      "preview": "The owner chose \"1 2\" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.\n\n## What shipped as 1 (PR #1264)\n\n`nav_footer_custom.html` is a single `{% include %}` and composes no markup.\nThe sidebar's navbar is RENDERED by `lib/navbar.ts`. To keep the look\nbyte-for-byte, `docs-ui.css` gained the renderer's class names as ADDITIONAL\nSELECTORS on rules it already",
+      "file": "beans/defs/folio-assistant-7mog--one-stylesheet-for-the-navbar-docs-uicss-aliases-1.md"
+    },
+    {
       "id": "folio-assistant-7po1",
       "title": "WORKFLOWS: bootstrap keeps the bare minimum, cat-harness/workflows elaborates, and workflows/state owns beans+todos",
       "status": "todo",
@@ -1851,14 +1865,14 @@
     {
       "id": "folio-assistant-edx7",
       "title": "NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:30:28Z",
-      "updatedAt": "2026-09-23T13:30:28Z",
+      "updatedAt": "2026-09-24T12:00:24Z",
       "preview": "Owner, 2026-09-23, naming three pages and then the rule:\n\n> navbar should be on sub pages like\n> https://litlfred.github.io/folio-assistant/cat-harness/catalogue/who-iris/\n>\n> or https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n> or library\n>\n> etc... **common fixture unless explicty removed in harness visualtion.**\n\nThe last line is the requirement, and i",
       "file": "beans/defs/folio-assistant-edx7--navbar-is-a-common-fixture-0-of-47-generated-viewe.md"
     },
@@ -2336,7 +2350,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:31:23Z",
-      "updatedAt": "2026-09-24T05:31:23Z",
+      "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Issue #1180, step 5 of `docs/proposals/odrl-prov-actor-model.md`: the agentic engine's after-check. The deterministic engine checks the ODRL policy before a task (t490, #1207); an agent swarm acts first, so the same policy is checked after, from a PROV-O log derived from workflow history. Advisory, as the owner chose.\n\n## Done when\n- [x] `scripts/prov-qaqc.ts`: one `prov:Activity` per activity/dec",
       "file": "beans/defs/folio-assistant-jwoc--prov-o-qaqc-report-over-workflow-instances-the-age.md"
     },
@@ -2518,7 +2532,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T18:03:45Z",
-      "updatedAt": "2026-09-24T12:00:00Z",
+      "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Owner, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), queued for a ROAST before anything is built:\n\n> justthedocs docs/ rendering should include an index of all defined terms extracted from KG assets in the docs/ (e.g. a bpmn diagram swimlane has title/description). make translatable like all assets. make coded-glossary content kind that can be used in KG extraction and visualisation, re-used when",
       "file": "beans/defs/folio-assistant-lqo9--glossary-a-coded-versioned-glossary-content-kind-i.md"
     },
@@ -3129,6 +3143,20 @@
       "file": "beans/defs/folio-assistant-rfev--c-built-ins-self-register-at-the-outermost-layer-w.md"
     },
     {
+      "id": "folio-assistant-rj0n",
+      "title": "KIND VALIDATORS: --require-all can never pass — 7 of 7 'gaps' are category errors or empty",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:38:50Z",
+      "updatedAt": "2026-09-24T18:59:15Z",
+      "preview": "`check:kind-validators` reported *\"7 kind(s) declare no validator\"* and carried\n`--require-all` \"for the day the gap is meant to be closed\".\n\n**That day could not come.** Measured 2026-09-24 — every one of the seven is\neither not JSON at all, or has no nodes:\n\n| kind | what it holds | why a Zod validator cannot apply |\n|---|---|---|\n| `processes` | 77 `.bpmn`, 9 `.dmn` | XML |\n| `uml` | 103 `.puml",
+      "file": "beans/defs/folio-assistant-rj0n--kind-validators-require-all-can-never-pass-7-of-7.md"
+    },
+    {
       "id": "folio-assistant-rjug",
       "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer",
       "status": "in-progress",
@@ -3292,7 +3320,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:26:39Z",
-      "updatedAt": "2026-09-22T21:28:43Z",
+      "updatedAt": "2026-09-24T12:00:07Z",
       "preview": "## What — the owner's spec, verbatim\n\n2026-09-21, with a screenshot of the who-iris rail open and working:\n\n> looks good.\n>\n> we should have same navbar across all folios though.  presented same way.\n> need to comine the two.\n>\n> * keep exploding menu from folio-assisnt\n> * keep [x] from who-iris, keep behavior of open/close, etc.\n> * keep consistent docs/ library/ etc. when content/subgraphs pres",
       "file": "beans/defs/folio-assistant-sjic--one-navbar-for-every-folio-combine-the-folio-assis.md"
     },
@@ -3763,6 +3791,20 @@
       "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md"
     },
     {
+      "id": "folio-assistant-vxho",
+      "title": "A test 14% under the default timeout is a gate that fails on a busy machine, not a red one",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:19:24Z",
+      "updatedAt": "2026-09-24T12:19:24Z",
+      "preview": "Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.\n\n```\ncat-harness/schemas/viz-generators.test.ts:\n(fail) the readers agree with what the generators publish > a queue's\n       declared intake is ONE unit, not one per file it carries [5683.71ms]\n  ^ this test timed out after 5000ms.\n```\n\n**It is not a correctness failure and it was not the diff's.** The diff was two\nbea",
+      "file": "beans/defs/folio-assistant-vxho--a-test-14-under-the-default-timeout-is-a-gate-that.md"
+    },
+    {
       "id": "folio-assistant-w0cr",
       "title": "STREAM 3/3: GOAL 3 — who-iris through a themed harness, and PR #881 (yg29, 15 open beans)",
       "status": "completed",
@@ -3996,7 +4038,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T05:54:04Z",
-      "updatedAt": "2026-09-24T05:54:04Z",
+      "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
