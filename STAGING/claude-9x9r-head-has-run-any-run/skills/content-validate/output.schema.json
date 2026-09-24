@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-9x9r-head-has-run-any-run/skills/content-validate/output.schema.json",
+  "title": "Content Validate Output",
+  "description": "Output schema for content validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "results"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "status"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/9x9r-head-has-run-any-run",
+    "sha": "9412dba1c80f113a207fa59813ff6d6429335c4b",
+    "pr": "1325/merge",
+    "run": "36052066361"
+  }
+}
