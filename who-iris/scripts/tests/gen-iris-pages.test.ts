@@ -22,7 +22,8 @@ import { execFileSync, spawnSync } from "child_process";
 import { createHash } from "crypto";
 
 import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
-import { pngSize } from "../gen-covers.js";
+import { nodes, pngSize } from "../gen-covers.js";
+import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -216,24 +217,57 @@ describe("the IRIS home replica", () => {
     expect(home.toLowerCase()).not.toContain("emblem.svg");
   });
 
-  it("shows every committed cover, and each src RESOLVES from the page", () => {
-    // INVERTED, not deleted. Its previous form asserted the covers were
-    // withheld -- the owner's first ruling of 2026-09-21, that the emblem is
-    // *"logo and other branding"*. Asked whether to show them masked, they
-    // chose masking, so the assertion turns over and the reason stays visible.
+  it("shows every PUBLISHABLE cover, each src RESOLVES, and a withheld one has no <img>", () => {
+    // INVERTED twice, not deleted. It first asserted the covers were withheld
+    // (the owner's 2026-09-21 emblem ruling), then -- once they chose masking --
+    // that every committed cover is shown. Bean `cw35` (2026-09-24) splits it:
+    // a cover is a reproduction of the publication's own cover, so it is shown
+    // only when ITS copyright and restrictions gates are `permitted`. Which
+    // covers that is comes from the catalogue, never a list typed here.
     //
-    // Resolving the src is the half that matters. While the covers were
-    // withheld the `<img>` was never emitted, so a `src` broken by moving
-    // these pages from `docs/` to `library/` (bean `zgba`) sat undetected --
-    // two faults stacked, the outer hiding the inner. Containing the filename
-    // would have passed throughout. Existing on disk is what would not.
-    const covers = readdirSync(LIB).filter((f) => f.endsWith("-cover.png"));
-    expect(covers.length).toBeGreaterThan(0);
-    for (const c of covers) {
-      const m = new RegExp(`<img[^>]*src="([^"]*${c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})"`).exec(home);
-      expect(m, `no <img> for ${c}`).not.toBeNull();
+    // Resolving the src is still the half that matters: while the covers were
+    // withheld the `<img>` was never emitted, so a `src` broken by moving these
+    // pages (bean `zgba`) sat undetected. Existing on disk is what would not.
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const thumbs = nodes().flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
+    const shown = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length === 0);
+    const withheld = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length > 0);
+    // Both halves non-empty today, or one of the two assertions below is vacuous.
+    expect(shown.length).toBeGreaterThan(0);
+    expect(withheld.length).toBeGreaterThan(0);
+    for (const b of shown) {
+      const m = new RegExp(`<img[^>]*src="([^"]*${esc(b.name)})"`).exec(home);
+      expect(m, `no <img> for ${b.name}`).not.toBeNull();
       expect(existsSync(join(LIB, m![1]!)), `${m![1]} does not resolve from library/`).toBe(true);
     }
+    for (const b of withheld) {
+      expect(home, `${b.name} is withheld by its gates and must not be shown`).not.toMatch(new RegExp(`src="[^"]*${esc(b.name)}"`));
+    }
+    expect(home).toContain("cover<br>withheld");
+  });
+
+  it("links a held PDF only when its publication gates permit it, on EVERY replica page (bean cw35)", () => {
+    // The v048 roast: every held PDF carried `copyright: unknown` and all three
+    // were linked from the pages and a CDN. The rule is enforced in one place,
+    // `linkOrWithheld`; this reads every page the generator wrote, so a new
+    // call site that bypasses it goes red here.
+    const pages = readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => readFileSync(join(LIB, f), "utf-8"));
+    const pdfs = nodes().flatMap((n) =>
+      (n.bitstreams ?? []).filter((b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized"),
+    );
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    let linked = 0;
+    for (const b of pdfs) {
+      const href = new RegExp(`href="[^"]*${esc(encodeURI(b.name))}"|href="[^"]*${esc(b.name)}"`);
+      const hits = pages.filter((p) => href.test(p)).length;
+      if (publicationBlockers(b.materialization?.gates).length > 0) {
+        expect(hits, `${b.name} is not publishable but is linked from ${hits} page(s)`).toBe(0);
+      } else {
+        expect(hits, `${b.name} is publishable and should be linked`).toBeGreaterThan(0);
+        linked += 1;
+      }
+    }
+    expect(linked, "no PDF is linked at all -- the check above would pass vacuously").toBeGreaterThan(0);
   });
 
   /**

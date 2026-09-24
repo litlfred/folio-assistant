@@ -55,6 +55,7 @@ import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
 import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -421,8 +422,18 @@ function mb(bytes: number | undefined): string {
   return bytes === undefined ? "not recorded" : `${(bytes / 1048576).toFixed(2)} MB`;
 }
 
-/** The bytes actually on disk for an item, or undefined when there are none. */
-function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: number } | undefined {
+/**
+ * The bytes actually on disk for an item, or undefined when there are none.
+ *
+ * HELD is not PUBLISHED (bean `cw35`). `withheld` names the publication gates
+ * (`copyright`, `restrictions`) that are not `permitted`, with each verdict and
+ * its recorded basis; when it is non-empty no page may link the bytes, and
+ * {@link linkOrWithheld} is the one place that decides. Counts of what is held
+ * here still count it — the copy exists, it is just not ours to redistribute.
+ */
+function assetHref(
+  n: Node,
+): { href: string; cdn: string; name: string; bytes?: number; withheld: string[] } | undefined {
   const b = n.bitstreams?.find(
     (x) => x.bundle !== "THUMBNAIL" && x.materialization?.state === "materialized",
   );
@@ -433,7 +444,24 @@ function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: 
   const found = bytesFor(b.materialization?.localPath, b.name);
   if (!found) return undefined;
   const rel = encPath(repoRelative(found));
-  return { href: `${RAW}/${rel}`, cdn: `${CDN}/${rel}`, name: b.name, bytes: b.bytes };
+  const gates = b.materialization?.gates;
+  const withheld = publicationBlockers(gates).map(
+    (k) => `${k}: ${gates?.[k]?.verdict ?? "not recorded"}${gates?.[k]?.basis ? ` — ${gates[k].basis}` : ""}`,
+  );
+  return { href: `${RAW}/${rel}`, cdn: `${CDN}/${rel}`, name: b.name, bytes: b.bytes, withheld };
+}
+
+/** The download links for a held item — or why it is held and not linked. */
+function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: boolean): string {
+  if (a.withheld.length > 0) {
+    return `<span class="none" title="${esc(a.withheld.join("; "))}">held here, not published — ${esc(
+      a.withheld.map((w) => w.split(" — ")[0]).join(", "),
+    )}</span>`;
+  }
+  return (
+    `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a>` +
+    (withSize ? ` &middot; <code>${esc(mb(a.bytes))}</code>` : "")
+  );
 }
 
 /**
@@ -479,6 +507,14 @@ function assetHref(n: Node): { href: string; cdn: string; name: string; bytes?: 
  */
 const COVERS_SHOWN = true;
 
+/** Why a rendered cover is withheld by its publication gates, or undefined when it is not (bean `cw35`). */
+function coverWithheld(n: Node): string | undefined {
+  const b = n.bitstreams?.find((x) => x.bundle === "THUMBNAIL");
+  if (!b?.materialization?.localPath) return undefined;
+  const blocked = publicationBlockers(b.materialization.gates);
+  return blocked.length ? blocked.map((k) => `${k}: ${b.materialization?.gates?.[k]?.verdict ?? "not recorded"}`).join(", ") : undefined;
+}
+
 function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean } | undefined {
   const b = n.bitstreams?.find((x) => x.bundle === "THUMBNAIL");
   const lp = b?.materialization?.localPath;
@@ -488,6 +524,9 @@ function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean
   // would be covering for a bug of our own making rather than for `yl5w`.
   const abs = join(INSTANCE, lp);
   if (!existsSync(abs)) return undefined;
+  // A cover render reproduces the publication's own cover, so it is published
+  // only when ITS gates permit it (bean `cw35`) — same rule as the PDF.
+  if (publicationBlockers(b.materialization?.gates).length > 0) return undefined;
   // RELATIVE TO THE DIRECTORY THE PAGE IS WRITTEN INTO, computed, not stripped.
   //
   // This was `lp.replace(/^docs\//, "")`, correct for exactly as long as these
@@ -1210,9 +1249,7 @@ function communityList(all: Node[]): string {
   <td>${collectionCell(n, all)}</td>
   <td>${stateBadge("materialized")}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl"><a href="${esc(a!.href)}">Download ${esc(a!.name)}</a>
-      <br><a class="cdn" href="${esc(a!.cdn)}">via CDN</a>
-      <br><code>${esc(mb(a!.bytes))}</code></td>
+  <td class="dl">${linkOrWithheld(a!, true)}</td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`,
     )
@@ -1464,7 +1501,7 @@ function collectionPage(c: Node, all: Node[]): string {
   <td><a href="item-${esc(slug(n.id))}.html">${esc(n.title)}</a><br><code>${esc(n.libraryId ?? n.id)}</code></td>
   <td>${stateBadge(a ? "materialized" : (n.materialization?.state ?? "unknown"))}</td>
   <td class="dl">${upstreamCell(n)}</td>
-  <td class="dl">${a ? `<a href="${esc(a.href)}">Download ${esc(a.name)}</a><br><a class="cdn" href="${esc(a.cdn)}">via CDN</a><br><code>${esc(mb(a.bytes))}</code>` : "not held here"}</td>
+  <td class="dl">${a ? linkOrWithheld(a, true) : "not held here"}</td>
   <td class="dl">${metadataCell(n)}</td>
 </tr>`;
     })
@@ -1532,7 +1569,7 @@ ${bits}
 <tbody>
 <tr><td>Upstream, at WHO</td><td>${sourceOf(n) ? `<a href="${esc(sourceOf(n)!)}">${esc(sourceOf(n)!)}</a>` : "none recorded"}</td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td>${a ? `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a>` : "not held"}</td></tr>
+    <td>${a ? linkOrWithheld(a, false) : "not held"}</td></tr>
 <tr><td>In collection</td><td>${collectionCell(n, all)}</td></tr>
 <tr><td>Ingested text (L1)</td>
     <td>${n.libraryId ? `<a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/${esc(n.libraryId)}/sections">who-iris/library/${esc(n.libraryId)}/sections/</a>` : "—"}</td></tr>
@@ -1719,7 +1756,10 @@ function submission(n: Node): string {
 
   // Three states, not two. A withheld cover and an absent one look the same
   // in a layout and mean opposite things about the catalogue.
-  const coverCell = !cov
+  const withheldBy = coverWithheld(n);
+  const coverCell = withheldBy
+    ? `<span class="nocover" title="A cover is rendered and held here. It is not published: ${esc(withheldBy)}.">cover<br>withheld</span>`
+    : !cov
     ? `<span class="nocover" title="no cover rendered">no cover</span>`
     : COVERS_SHOWN
       ? `<a href="item-${esc(slug(n.id))}.html"><img src="${esc(cov.src)}" width="${cov.w}" height="${cov.h}"
@@ -1740,7 +1780,7 @@ function submission(n: Node): string {
     }
     <p class="sub-links">${
       a
-        ? `<a href="${esc(a.href)}">${esc(a.name)}</a> &middot; <a class="cdn" href="${esc(a.cdn)}">via CDN</a> &middot; <code>${esc(mb(a.bytes))}</code>`
+        ? linkOrWithheld(a, true)
         : `<span class="none">not held here</span>`
     }</p>
   </div>
