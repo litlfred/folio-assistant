@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kind-albattani-0qe9gj/skills/terminology-management/input.schema.json",
+  "title": "Terminology Management Input",
+  "description": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.",
+  "type": "object",
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "create-codesystem",
+        "create-valueset",
+        "create-conceptmap",
+        "validate-bindings",
+        "map-to-standard"
+      ],
+      "description": "Terminology operation to perform."
+    },
+    "targetStandard": {
+      "type": "string",
+      "enum": [
+        "ICD-11",
+        "SNOMED-CT",
+        "LOINC",
+        "IPS",
+        "WHO-FIC",
+        "WHO-ATC"
+      ],
+      "description": "Target standard terminology for mapping."
+    },
+    "inputFile": {
+      "type": "string",
+      "description": "Path to input terminology resource (FSH, JSON, CSV)."
+    }
+  },
+  "staging": {
+    "branch": "claude/kind-albattani-0qe9gj",
+    "sha": "9c2dd57887a010c88ac3a50c5c80c399058c96c7",
+    "pr": "1263/merge",
+    "run": "35998066937"
+  }
+}
