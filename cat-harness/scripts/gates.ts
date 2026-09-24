@@ -125,9 +125,12 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
  * exemption with the same reason, and a test pins it.
  *
- * What the rename does NOT yet reach — `scripts/init-folio.ts` still
- * scaffolds `content/<slug>/`, and these workflows still `cd content` — is
- * `52dz`'s open half and the owner's call, not this table's to settle.
+ * `52dz`'s owner ruling (2026-09-24) settled the rest: the generic QA
+ * workflows and the Lean workflows that `cd content` were moved OUT of
+ * `.github/workflows/` into the platform's `templates/`, which `folio_init`
+ * writes into a new folio pointed at `folio/`. Their entries left this table
+ * with them — an exemption for a step no workflow here runs is the stale
+ * claim `gates.test.ts` refuses.
  *
  * These steps are not broken and not runnable here, and until this table
  * existed nothing could tell either from a real gap.
@@ -341,10 +344,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   // workflows and prose; it is true of these and now declared.
   //
   // WORTH SAYING PLAINLY: several of these were authored for `litlfred/qou`
-  // and live here. One names `quantum-observable-universe` outright. Whether
-  // they belong in the platform repository at all is bean `52dz` — this table
-  // records what they are, and does not pretend that is the same as deciding
-  // where they go.
+  // and lived here. Bean `52dz` decided where they go (owner, 2026-09-24):
+  // `qa-sweep.yml`, `qa-sweep-nightly.yml`, `section-title-audit.yml` and the
+  // four Lean workflows are now templates `folio_init` writes, so the
+  // `qa-staleness` and `qa-section-title-audit.ts` entries went with them.
+  // What remains below still matches a workflow in `.github/workflows/`.
   {
     match: "pipeline/build.ts",
     kind: "no-folio",
@@ -355,16 +359,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "(bean `52dz`, 2026-09-20)",
   },
   {
+    // Since `52dz` the only match is the reusable `folio-staging.yml`, which
+    // runs inside a FOLIO's staging job and sweeps that folio's `folio_dir`.
     match: "qa-sweep",
     kind: "no-folio",
     reason:
-      "sweeps a folio's blocks from `content/`, a root the convention has " +
-      "retired in favour of `folio/` (owner, 2026-09-20)",
-  },
-  {
-    match: "qa-staleness",
-    kind: "no-folio",
-    reason: "as `qa-sweep` — a verdict's freshness against blocks the platform does not have",
+      "runs inside a FOLIO's staging job (`folio-staging.yml`, a reusable " +
+      "workflow) over that folio's blocks; the platform carries no folio. " +
+      "The standalone qa-sweep workflows are folio_init templates (bean `52dz`)",
   },
   {
     match: "check-witnesses",
@@ -380,13 +382,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "latex-overfull-report.ts",
     kind: "no-folio",
     reason: "reads `main.log` from a folio's LaTeX run",
-  },
-  {
-    match: "qa-section-title-audit.ts",
-    kind: "no-folio",
-    reason:
-      "audits section titles from a root `content/` — retired; the " +
-      "convention is `folio/`, which this instance declares",
   },
   {
     match: "scripts/audit-wiring.ts",

@@ -11,10 +11,10 @@ title: |-
 
     ## Done when
 
-    - [ ] decide: shipped-for-a-folio, or dead since the split, per workflow
-    - [ ] the shipped ones have a home that makes their non-running visible rather than silent
-    - [ ] the dead ones go to `fsh-guts/`, never `rm`
-status: in-progress
+    - [x] decide: shipped-for-a-folio, or dead since the split, per workflow
+    - [x] the shipped ones have a home that makes their non-running visible rather than silent
+    - [x] the dead ones go to `fsh-guts/`, never `rm`
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T07:44:35Z
@@ -264,3 +264,20 @@ exemptions for it. That is `5rfy`'s "29 of 32 never fire" as a standing cost.
 - [x] the "vendored by folios" premise checked against the only folio: FALSE
 - [ ] **owner:** the five — templates `folio_init` writes, `fsh-guts/`, or
       reference material outside `.github/workflows/`?
+
+## Summary of Changes
+
+Owner, 2026-09-23/24: *"folio_init templates"* for the generic three, and
+*"Genericise them"* for the Lean four. None was dead, so none went to
+`fsh-guts/`.
+
+- `cat-harness/templates/` is declared as `folio-templates`. `document/`
+  (qa-sweep, qa-sweep-nightly, section-title-audit) is written into every new
+  folio. `paper/` (blueprint, lean-build, lean-build-sidecar, lean_ci, plus
+  their scripts and the lake-cache action) is written into paper folios only.
+- The Lean workflows name no paper. A discover job builds a matrix over every
+  `<folio>/<paper>/lean/` that has a lakefile, and finding none fails the job.
+- Scripts that other files still use were copied, not moved. STEP_EXEMPTIONS
+  and check-workflow-paths lost only the entries that matched nothing.
+- `init-folio.test.ts` pins the document/paper sets, no `qou`, no leftover
+  placeholder, and YAML that parses.

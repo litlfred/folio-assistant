@@ -2,57 +2,52 @@
 Axiom Report Generator
 
 Generates a text-based "Axiom Report" by analyzing Lean build output and
-source files.  Lists all axioms used by key theorems (especially
-`topological_mass_formula`) and provides transparency of the axiomatic
-foundations.
+source files: build status, a sorry audit, every `axiom` declared in the
+source, the axiom dependencies of the paper's key declarations, and a gap
+report of each `sorry` with its `-- Ref:` citation.
 
 Usage:
-    python .github/scripts/axiom_report.py \\
-        [--build-log build.log] \\
-        [--lean-dir lean/] \\
-        [--output axiom-report.txt]
+    FOLIO_PAPER=<paper> python .github/scripts/axiom_report.py \\
+        [--build-log build-logs/<paper>.log] \\
+        [--lean-dir folio/<paper>/lean] \\
+        [--manifest build/<paper>/proof-objects.json] \\
+        [--decl Some.Declaration ...] \\
+        [--output build/<paper>/axiom-report.txt]
+
+The KEY declarations are not listed here. They are every `\\lean{}`
+declaration in the paper's proof-object manifest, plus any `--decl`. The
+module `#print axioms` imports is the package's first `lean_lib`, read from
+its lakefile (override with `--import`).
 
 In CI, this runs after `lake build` and generates a report that is
 published alongside the interactive documentation.
 """
 
 import argparse
+import json
 import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from qou_lib.config import LEAN_DIR, REPO_ROOT
-from qou_lib.git_utils import get_commit_sha
+from folio_lean.config import BUILD_DIR, DEFAULT_MANIFEST, LEAN_DIR, PAPER, lean_libraries
+from folio_lean.git_utils import get_commit_sha
 
-DEFAULT_BUILD_LOG = REPO_ROOT / "build.log"
-DEFAULT_OUTPUT = REPO_ROOT / "axiom-report.txt"
-
-# Key declarations to audit for axiom dependencies.
-KEY_DECLARATIONS = [
-    "QOU.MassDerivation.topological_mass_formula",
-    "QOU.MassDerivation.derive_substrate_q",
-    "QOU.MassDerivation.mass_ratio_from_volume",
-    "QOU.MassDerivation.vol_figure_eight",
-    "QOU.MassDerivation.experimental_mu_e_ratio",
-    "QOU.MassDerivation.quantum_planck",
-    "QOU.KnotTheory.PlanarDiagram",
-    "QOU.KnotTheory.figureEight",
-    "QOU.KnotRegistry.figureEightEntry",
-    "QOU.KnotRegistry.registry_volume_eq_mass_derivation",
-    "QOU.Calculations.full_derivation_chain",
-    "QOU.Calculations.substrate_error_bound",
-    "QOU.Glossary.FrobeniusHopfObject",
-]
+DEFAULT_BUILD_LOG = BUILD_DIR / "build.log"
+DEFAULT_OUTPUT = BUILD_DIR / "axiom-report.txt"
 
 # Axioms that we expect and need to document.
 EXPECTED_AXIOMS = {
-    "QOU.MassDerivation.topological_mass_formula": "Thm. 4.34 — Topological Decomposition of Mass (proved)",
     "propext": "Propositional extensionality (Lean kernel axiom)",
     "Quot.sound": "Quotient soundness (Lean kernel axiom)",
     "Classical.choice": "Classical choice (used by mathlib)",
     "sorryAx": "sorry placeholder — proof incomplete",
 }
+
+
+def lean_sources(lean_dir):
+    """The package's own .lean files — never the dependencies under .lake/."""
+    return [f for f in sorted(Path(lean_dir).rglob("*.lean")) if ".lake" not in f.parts]
 
 
 def parse_build_log(log_path):
@@ -90,7 +85,7 @@ def parse_build_log(log_path):
 def scan_axioms_from_source(lean_dir):
     """Scan Lean source files for axiom declarations."""
     axioms = []
-    for lean_file in sorted(lean_dir.rglob("*.lean")):
+    for lean_file in lean_sources(lean_dir):
         content = lean_file.read_text(encoding="utf-8")
         for m in re.finditer(r"^axiom\s+(\S+)", content, re.MULTILINE):
             rel_path = lean_file.relative_to(lean_dir)
@@ -104,7 +99,7 @@ def scan_axioms_from_source(lean_dir):
 def scan_sorry_from_source(lean_dir):
     """Count sorry occurrences per file."""
     results = {}
-    for lean_file in sorted(lean_dir.rglob("*.lean")):
+    for lean_file in lean_sources(lean_dir):
         content = lean_file.read_text(encoding="utf-8")
         count = len(re.findall(r"\bsorry\b", content))
         if count > 0:
@@ -125,7 +120,7 @@ def scan_sorry_references(lean_dir):
     Returns a list of dicts: {file, line, declaration, ref_key, ref_url, context}.
     """
     results = []
-    for lean_file in sorted(lean_dir.rglob("*.lean")):
+    for lean_file in lean_sources(lean_dir):
         content = lean_file.read_text(encoding="utf-8")
         lines = content.splitlines()
         current_decl = None
@@ -161,14 +156,38 @@ def scan_sorry_references(lean_dir):
     return results
 
 
-def run_print_axioms(lean_dir, decl_name):
+def key_declarations(manifest_path, extra):
+    """The declarations to audit: every `\\lean{}` in the manifest, then --decl."""
+    decls = []
+    if manifest_path and Path(manifest_path).exists():
+        manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+        for obj in manifest.get("objects", []):
+            decl = (obj.get("lean") or {}).get("decl")
+            if decl and decl not in decls:
+                decls.append(decl)
+    for d in extra or []:
+        if d not in decls:
+            decls.append(d)
+    return decls
+
+
+def lean_version(lean_dir):
+    toolchain = Path(lean_dir) / "lean-toolchain"
+    if toolchain.exists():
+        return toolchain.read_text(encoding="utf-8").strip()
+    return "(no lean-toolchain)"
+
+
+def run_print_axioms(lean_dir, decl_name, import_module):
     """Run `#print axioms` for a declaration via lake env lean.
 
     Returns the axiom list as a string, or None on failure.
     """
+    if not import_module:
+        return None
     # Create a temporary Lean file that prints axioms
     tmp_file = lean_dir / "_axiom_check.lean"
-    tmp_content = f'import QOU\n#print axioms {decl_name}\n'
+    tmp_content = f'import {import_module}\n#print axioms {decl_name}\n'
     try:
         tmp_file.write_text(tmp_content, encoding="utf-8")
         result = subprocess.run(
@@ -187,19 +206,19 @@ def run_print_axioms(lean_dir, decl_name):
 
 
 def generate_report(build_info, source_axioms, sorry_counts, lean_dir,
-                     sorry_refs=None):
+                     sorry_refs=None, key_decls=(), import_module=None, title=""):
     """Generate the full axiom report text."""
     lines = []
     sha = get_commit_sha()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
     lines.append("=" * 72)
-    lines.append("QUANTUM OBSERVABLE UNIVERSE — FORMAL VERIFICATION REPORT")
+    lines.append(f"{(title or 'Lean package').upper()} — FORMAL VERIFICATION REPORT")
     lines.append("=" * 72)
     lines.append(f"Generated: {now}")
     lines.append(f"Commit:    {sha}")
-    lines.append(f"Lean:      leanprover/lean4:v4.16.0")
-    lines.append(f"Mathlib:   master (pinned in lakefile.lean)")
+    lines.append(f"Package:   {lean_dir}")
+    lines.append(f"Lean:      {lean_version(lean_dir)}")
     lines.append("")
 
     # Build status
@@ -267,9 +286,15 @@ def generate_report(build_info, source_axioms, sorry_counts, lean_dir,
     lines.append("The following key declarations were checked for axiom dependencies.")
     lines.append("Any use of `sorryAx` indicates an incomplete proof.")
     lines.append("")
-    for decl in KEY_DECLARATIONS:
+    if not key_decls:
+        # Said, not skipped: an empty section reads as "nothing depends on an
+        # axiom", which is a claim nobody checked.
+        lines.append("  No key declarations: the manifest names no \\lean{} declaration")
+        lines.append("  and no --decl was given, so nothing was checked here.")
+        lines.append("")
+    for decl in key_decls:
         lines.append(f"  #print axioms {decl}")
-        output = run_print_axioms(lean_dir, decl)
+        output = run_print_axioms(lean_dir, decl, import_module)
         if output:
             # Parse axiom lines
             axiom_lines = [
@@ -282,58 +307,9 @@ def generate_report(build_info, source_axioms, sorry_counts, lean_dir,
             lines.append("    (could not run — project may not be built)")
         lines.append("")
 
-    # Topological mass theorem transparency
-    lines.append("-" * 72)
-    lines.append("§5  TOPOLOGICAL MASS THEOREM TRANSPARENCY")
-    lines.append("-" * 72)
-    lines.append("")
-    lines.append("The QOU mass derivation rests on the following proved theorem:")
-    lines.append("")
-    lines.append("  theorem topological_mass_formula (tmf : TopologicalMassFormula) :")
-    lines.append("    tmf.mass = tmf.vol / tmf.h_q ^ 2")
-    lines.append("")
-    lines.append("This theorem (Theorem 4.34 in the manuscript) encodes the")
-    lines.append("Topological Decomposition of Mass.  It was formerly stated as a")
-    lines.append("conjecture (axiom); it is now proved via the eigenspace decomposition")
-    lines.append("of the descent involution, additivity of the MI integral, and")
-    lines.append("localisation of transient modes to exceptional divisors.")
-    lines.append("")
-    lines.append("The mass formula is instantiated for specific particles via")
-    lines.append("TopologicalMassFormula structures, with no axioms required.")
-    lines.append("")
-
-    # Knot volume constants
-    lines.append("-" * 72)
-    lines.append("§6  KNOT VOLUME & CODATA CONSTANTS")
-    lines.append("-" * 72)
-    lines.append("")
-    lines.append("  | Parameter    | Value           | Lean Declaration              |")
-    lines.append("  |-------------|-----------------|-------------------------------|")
-    lines.append("  | Vol(4₁)     | 2.0298832128    | MassDerivation.vol_figure_eight  |")
-    lines.append("  | m_μ / m_e   | 206.768283      | MassDerivation.experimental_mu_e_ratio |")
-    lines.append("  | ℏ_q         | 0.09908 (derived)| MassDerivation.quantum_planck  |")
-    lines.append("  | q           | 1.1097 (derived)| MassDerivation.substrate_q     |")
-    lines.append("")
-
-    # Knot Registry audit
-    lines.append("-" * 72)
-    lines.append("§7  KNOT REGISTRY AUDIT (Alexander-Briggs)")
-    lines.append("-" * 72)
-    lines.append("")
-    lines.append("  | A-B Index | QOU Identity | Vol (SnapPy)    | Knot Atlas URL               |")
-    lines.append("  |-----------|-------------|-----------------|------------------------------|")
-    lines.append("  | 0_1       | Neutrino    | 0               | http://katlas.org/wiki/0_1   |")
-    lines.append("  | 3_1       | Electron    | 0 (torus knot)  | http://katlas.org/wiki/3_1   |")
-    lines.append("  | 4_1       | Muon        | 2.0298832128    | http://katlas.org/wiki/4_1   |")
-    lines.append("  | 0_1       | Photon      | 0               | http://katlas.org/wiki/0_1   |")
-    lines.append("")
-    lines.append("  Lean modules:  KnotRegistry.lean  →  Calculations.lean  →  MassDerivation.lean")
-    lines.append("  Bridge check:  KnotRegistry.figureEightEntry.volume.value = MassDerivation.vol_figure_eight")
-    lines.append("")
-
     # Theoretical Gap Report — sorry statements with bibliographic references
     lines.append("-" * 72)
-    lines.append("§8  THEORETICAL GAP REPORT")
+    lines.append("§5  THEORETICAL GAP REPORT")
     lines.append("-" * 72)
     lines.append("")
     lines.append("Each `sorry` below represents an unproved obligation.  Where a")
@@ -374,7 +350,7 @@ def generate_report(build_info, source_axioms, sorry_counts, lean_dir,
     # Warnings summary
     if build_info["warnings"]:
         lines.append("-" * 72)
-        lines.append("§9  BUILD WARNINGS")
+        lines.append("§6  BUILD WARNINGS")
         lines.append("-" * 72)
         for w in build_info["warnings"][:30]:
             lines.append(f"  {w}")
@@ -394,7 +370,17 @@ def main():
     parser.add_argument("--build-log", type=Path, default=DEFAULT_BUILD_LOG)
     parser.add_argument("--lean-dir", type=Path, default=LEAN_DIR)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST,
+                        help="proof-objects.json whose \\lean{} declarations are audited")
+    parser.add_argument("--decl", action="append", default=[],
+                        help="an extra declaration to audit (repeatable)")
+    parser.add_argument("--import", dest="import_module", default=None,
+                        help="module #print axioms imports (default: the first lean_lib)")
+    parser.add_argument("--title", default=PAPER, help="report title (default: the paper slug)")
     args = parser.parse_args()
+
+    libs = lean_libraries(args.lean_dir)
+    import_module = args.import_module or (libs[0] if libs else None)
 
     build_info = parse_build_log(args.build_log)
     source_axioms = scan_axioms_from_source(args.lean_dir)
@@ -402,8 +388,12 @@ def main():
     sorry_refs = scan_sorry_references(args.lean_dir)
 
     report = generate_report(build_info, source_axioms, sorry_counts, args.lean_dir,
-                             sorry_refs=sorry_refs)
+                             sorry_refs=sorry_refs,
+                             key_decls=key_declarations(args.manifest, args.decl),
+                             import_module=import_module,
+                             title=args.title)
 
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(report, encoding="utf-8")
     print(f"✅ Wrote axiom report: {args.output}")
 
