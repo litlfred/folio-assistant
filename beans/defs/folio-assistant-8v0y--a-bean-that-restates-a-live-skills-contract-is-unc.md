@@ -145,5 +145,11 @@ finding names something the bean's OWNER does.
 - [x] registered in `.github/workflows/code-quality-gates.yml`, so `gates.ts` derives it
 - [ ] the sibling session's hand-check of the same candidate set reconciled against this
       rule — **their hand-check is ground truth where we disagree**
-- [ ] owner's call on whether the gate's narrowness is right: it is 0/888 today, which is
-      the post-repair state of a corpus that had exactly one instance
+- [x] owner's call on whether the gate's narrowness is right — **SETTLED 2026-09-24:
+      ship as is.** Asked as a five-column comparison of four options (ship as is /
+      widen to a bulleted phase list / downgrade to `kind: "report"` / defer to the
+      sibling's reading), recommendation marked, default stated. Owner chose **ship as
+      is**. So the gate stays ONE shape with one worked example, and widening later is
+      additive — one predicate plus tests. The option deliberately argued against was
+      widening now: a bulleted-phase-list detector has **zero** live instances, which is
+      the same evidence-free surface three of the brief's four shapes were rejected for
