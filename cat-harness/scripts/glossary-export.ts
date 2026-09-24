@@ -3,6 +3,8 @@
  * The swimlane glossary — the personas a corpus's diagrams put in lanes, as SKOS.
  *
  * @module scripts/glossary-export
+ * @covers glossary, swimlane-glossary, scenarios — it writes the glossary graph AND
+ *   the retirement ledger that `swimlane-glossary` holds
  *
  * Issue #596, bean `lqo9` slice 2. The owner named the source in their own
  * words: *"a bpmn diagram swimlane has title/description"*, and *"name,
@@ -396,7 +398,7 @@ export function buildGlossary(opts: {
         varying.push(l);
         break;
       case "dangling":
-        problems.push(`${l.file}#${l.laneId}: <folio:role ref="${b.ref}"/> names no declared role`);
+        problems.push(`${l.file}#${l.laneId}: <bootstrap.processes:role ref="${b.ref}"/> names no declared role`);
         break;
       case "contradictory":
         problems.push(`${l.file}#${l.laneId}: declares both ref="${b.ref}" and variable="true"`);

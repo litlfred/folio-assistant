@@ -162,8 +162,8 @@ assumed:
 |---|---|---|
 | BPMN 2.0 as the authored control flow | `processes/`, 69 diagrams, `.bpmn` as the source of truth | **none — this is already the premise** |
 | a control plane that enforces branches and joins | `workflow_start` / `workflow_next` / `workflow_gate` / `workflow_complete`, with `workflow_complete` refusing a step that is not enabled | **none of substance** |
-| a node-local policy | `folio:policy enforcement`, `relaxable`, `folio:decision`, `folio:judgement` — four mechanisms, already finer than the paper's one | **this checkout is AHEAD** |
-| a typed tool contract per node | `<folio:skill ref>` names the instruction body; there is no typed input/output contract | **the real gap** |
+| a node-local policy | `cat-harness.processes:policy enforcement`, `relaxable`, `cat-harness.processes:decision`, `cat-harness.processes:judgement` — four mechanisms, already finer than the paper's one | **this checkout is AHEAD** |
+| a typed tool contract per node | `<bootstrap.processes:skill ref>` names the instruction body; there is no typed input/output contract | **the real gap** |
 | context scoped per node | not modelled. A step returns a skill; nothing says what the agent may or must see | **the second real gap** |
 | contract-derived runtime validation with targeted retries | nothing. A step that goes wrong is not caught by the control plane | follows from the first gap |
 | compilation to an executable agent | nothing, and deliberately: the diagrams here govern agents rather than generating them | **out of scope, not a gap** |

@@ -77,6 +77,7 @@
  * exemption is stale, 2 could not check.
  *
  * @module scripts/check-folio-mount
+ * @covers docs, folio
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";

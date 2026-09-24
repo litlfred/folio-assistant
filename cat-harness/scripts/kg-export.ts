@@ -25,7 +25,7 @@
  * ## The edges are the point
  *
  * A list of skills is not a graph. What makes this worth publishing is that
- * BPMN activities carry `<folio:skill ref="…"/>` and sit in a lane, so the
+ * BPMN activities carry `<bootstrap.processes:skill ref="…"/>` and sit in a lane, so the
  * export can say **which process step is implemented by which skill, performed
  * by which role** — a relation that exists on disk today and that no tool
  * surfaces. `check:workflow-refs` already guarantees those refs resolve, so
@@ -272,7 +272,7 @@ export function buildContext(): Record<string, unknown> {
     satisfies: { "@id": termIri("satisfies"), ...link },
     // The role REGISTRY's edge, and the lane's edge to it. `hasSkill` is what
     // the role knows; `bindsRole` is on the LANE, naming the role it binds
-    // (its `<folio:role ref>`). It was `bindsLane` on the role until #1168: a
+    // (its `<bootstrap.processes:role ref>`). It was `bindsLane` on the role until #1168: a
     // role is the general node and must not name its lanes (data-modelling
     // step 8).
     //

@@ -286,6 +286,8 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
+      "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -823,6 +825,12 @@ export const RULES: Rule[] = [
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
+      // The `# bpmn:` / `# bpmn-node:` lines a workflow names its diagram with
+      // (bean `61ca`). Same subject as the coverage check that reads them.
+      "scripts/workflow-bpmn.ts",
+      // Which docs page sections present which process, read from the pages
+      // (bean `xl55`). Harness: it indexes the platform's own docs manifests.
+      "scripts/process-presentations.ts",
       "scripts/claim-bean.ts",
       "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
       "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
@@ -936,6 +944,17 @@ export const RULES: Rule[] = [
       // dropped. Harness machinery over declarations; imports only node:fs.
       "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
+      // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
+      // for the same reason `kg-audit.ts` is: its subject is the graph-kind
+      // registry and the gate set, not the content vocabulary. Beside the audit
+      // it complements rather than duplicates — that one judges the nodes it
+      // covers, this one measures what is covered at all.
+      "scripts/audit-coverage.ts",
+      // The four state/context graphs nothing judged (bean `h1wq`). Harness for
+      // the same reason as the two above: its subjects are the harness's own
+      // bookkeeping — the health report, the work plan, interaction preferences,
+      // issue marks — and it imports no content vocabulary.
+      "scripts/check-harness-state.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and
@@ -1348,6 +1367,25 @@ export const RULES: Rule[] = [
     //
     // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
     // for producing a DAK, as against the block kinds a folio may contain.
+  },
+  {
+    repo: "base",
+    exact: [
+      // Measures whether an IG's SOURCE graph carries dependency edges for its
+      // logic layer — Library, PlanDefinition, Measure (bean `f4gj`). Its name
+      // carries none of the keyword rule's tokens, so it fell through every
+      // rule when it arrived.
+      //
+      // BASE rather than core, although its subject is content and
+      // `check-artifact-index.ts` below is core on exactly that reasoning. The
+      // difference is the import: this one reads `content/pipeline/fsh-cone.ts`
+      // to compare against what that tool extracts, and `fsh-cone` is base by
+      // the keyword rule underneath. Calling this core would buy the one thing
+      // the partition exists to prevent — a `folio-assist-core -> smart-base`
+      // wrong-direction edge — to gain nothing, since FHIR Shorthand and a
+      // cpg/cqfmeasures profile URL are as WHO-specific as a subject gets.
+      "scripts/measure-logic-layer-edges.ts",
+    ],
   },
   {
     repo: "base",

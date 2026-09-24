@@ -32,6 +32,8 @@
  * literal restated here would be a sixth instance of the same mistake.
  *
  * Exit 0 clean · 1 a finding · 2 could not determine, which is never a pass.
+ *
+ * @covers qa
  */
 import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";

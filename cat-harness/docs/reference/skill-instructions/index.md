@@ -76,6 +76,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
 | [Asset extraction](asset-extraction.html) | `asset-extraction` | — | A container arrives in `uploads/`: a zip of a saved web page, a PDF, a |
 | [Associate a harness](associate-harness.html) | `associate-harness` | — | The owner, 2026-09-23, on the ihris folio: |
+| [Audit coverage](audit-coverage.html) | `audit-coverage` | — | **A sidecar count is a fine measurement of sidecars and says nothing about |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
@@ -194,7 +195,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
+| [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |

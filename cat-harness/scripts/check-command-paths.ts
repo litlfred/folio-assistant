@@ -48,6 +48,7 @@
  * Exit: 0 every checked path resolves, 1 one does not, 2 could not check.
  *
  * @module folio-assistant/scripts/check-command-paths
+ * @covers docs
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -214,7 +215,7 @@ export function aboutThisTree(repo: string, tok: string): boolean {
  * ```
  *
  * Same shape as `declared-path-literal:` in `check:declared-paths` and
- * `<folio:no-skill reason="…"/>`: exempt, but **the reason is required**, so
+ * `<cat-harness.processes:no-skill reason="…"/>`: exempt, but **the reason is required**, so
  * silencing the check costs more than satisfying it, and exempted blocks are
  * COUNTED in the summary rather than disappearing.
  *

@@ -3,6 +3,8 @@
  * Generate `navbar-geometry.css` from `lib/navbar-geometry.ts`.
  *
  * @module scripts/gen-navbar-geometry-css
+ * @covers none — generated from `lib/navbar-geometry.ts`; its source is code, which
+ *   `check:partition` and the TypeScript gates already grade
  *
  * Same contract as `gen-avatars-css.ts`: the module is the source and the
  * stylesheet is a rendering of it, so a width has one home. `--check` fails

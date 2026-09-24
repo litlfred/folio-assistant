@@ -8,18 +8,18 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2459 terms: **7 authored** in 1 glossary, and **2452 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2449 terms: **7 authored** in 1 glossary, and **2442 extracted** from knowledge-graph assets in 18 generated schemes, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2452</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2442</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
 
-**Size:** this page holds 2459 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 2449 terms and is 1.5 MB before compression, fetched in one request. There is no search index: the filter below runs over the page itself, and the A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -29,7 +29,7 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <option value="authored">authored only</option>
 <option value="extracted">extracted only</option>
 </select>
-<p aria-live="polite"><span id="fa-gloss-n">2459</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">2449</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -415,14 +415,14 @@ Adjudicate the conflict <span class="fa-gloss-status">candidate, extracted</span
 Adjudicate the criterion disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `folio:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
+<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#Call_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_adjudication.a_adjudicate" data-fa-state="extracted" data-fa-gloss="">
 Adjudicate the disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</p>
+<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>cat-harness/processes/adjudication.bpmn#A_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_adjudication" data-fa-state="extracted" data-fa-gloss="">
@@ -1131,6 +1131,13 @@ Audit the graph [kg:audit] <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, &quot;unbound since it was drawn&quot; and &quot;broken by this change&quot; are indistinguishable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>cat-harness/processes/actor-role-administration.bpmn#Task_RunKgAudit</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--audit-coverage" data-fa-state="extracted" data-fa-gloss="">
+audit-coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/audit-coverage.md"><code>cat-harness/skills/folio-core/audit-coverage.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-review.auditnote.author" data-fa-state="extracted" data-fa-gloss="">
 AuditNote.author <span class="fa-gloss-status">candidate, extracted</span>
@@ -3524,7 +3531,7 @@ ConventionSchema.applies <span class="fa-gloss-status">candidate, extracted</spa
 ConventionSchema.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable id, referenced by `&lt;folio:convention ref=&quot;…&quot;/&gt;`.</p>
+<p>Stable id, referenced by `&lt;cat-harness.processes:convention ref=&quot;…&quot;/&gt;`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/convention.ts"><code>cat-harness/schemas/convention.ts#ConventionSchema.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--convention.conventionschema.rationale" data-fa-state="extracted" data-fa-gloss="">
@@ -4840,6 +4847,13 @@ DocumentImageSchema.narrative <span class="fa-gloss-status">candidate, extracted
 <p>Present only where a description is worth having — see `role`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.narrative</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.placements" data-fa-state="extracted" data-fa-gloss="">
+DocumentImageSchema.placements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every place this image appears, the first one included.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.placements</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--domain-fencing" data-fa-state="extracted" data-fa-gloss="">
 domain-fencing <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -5373,12 +5387,12 @@ ffi-roundtrip-audit <span class="fa-gloss-status">candidate, extracted</span>
 <p>Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/ffi-roundtrip-audit.md"><code>cat-harness/skills/folio-paper-adapter/ffi-roundtrip-audit.md</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--fhir-client-operations" data-fa-state="extracted" data-fa-gloss="">
 fhir-client-operations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/fhir-client-operations.md"><code>fhir-harness/skills/fhir-client/fhir-client-operations.md</code></a></p>
+<p>STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/fhir-client-operations.md"><code>cat-harness/skills/remote-stubs/fhir-client-operations.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--fhir-validation" data-fa-state="extracted" data-fa-gloss="">
 fhir-validation <span class="fa-gloss-status">candidate, extracted</span>
@@ -6197,13 +6211,6 @@ GraphKindDef.validator <span class="fa-gloss-status">candidate, extracted</span>
 <p>What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a Zod schema.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validator</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.within" data-fa-state="extracted" data-fa-gloss="">
-GraphKindDef.within <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The kind this one is a SUB-GRAPH of, when it is one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.graphnodedirectory.graphkinds" data-fa-state="extracted" data-fa-gloss="">
 GraphNodeDirectory.graphKinds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -6485,8 +6492,8 @@ Human eyes on the rendered artefact <span class="fa-gloss-status">candidate, ext
 hypothesis-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/hypothesis-generation/hypothesis-generation.md"><code>cat-harness/skills/hypothesis-generation/hypothesis-generation.md</code></a></p>
+<p>STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/hypothesis-generation.md"><code>cat-harness/skills/remote-stubs/hypothesis-generation.md</code></a></p>
 </dd>
 </dl>
 
@@ -7101,11 +7108,53 @@ interaction-modality <span class="fa-gloss-status">candidate, extracted</span>
 <p>Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/interaction-modality.md"><code>cat-harness/skills/folio-core/interaction-modality.md</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_inventory" data-fa-state="extracted" data-fa-gloss="">
-Inventory what actually renders <span class="fa-gloss-status">candidate, extracted</span>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.dollar-comment" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.$comment <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong.</p>
+<p>Prose for a reader who opens the file; never read by a process.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.$comment</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.default" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.default <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What to assume for somebody with no entry above.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.default</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionnodeschema.users" data-fa-state="extracted" data-fa-gloss="">
+InteractionNodeSchema.users <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Keyed by the identity the agent can resolve — an email today.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionNodeSchema.users</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.note" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the profile means for this person, in their terms or the agent's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.profiles" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.profiles <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.profiles</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--interaction.interactionprofileschema.source" data-fa-state="extracted" data-fa-gloss="">
+InteractionProfileSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How it came to be known — `stated by the user`, a policy, an inference.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/interaction.ts"><code>cat-harness/schemas/interaction.ts#InteractionProfileSchema.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_inventory" data-fa-state="extracted" data-fa-gloss="">
+Inventory the ingested assets <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#A_Inventory</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool-invocation.invocationauthorityschema.actor" data-fa-state="extracted" data-fa-gloss="">
@@ -7211,10 +7260,10 @@ JsonLdContextSchema.binds <span class="fa-gloss-status">candidate, extracted</sp
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/fhir-artifact-index.ts"><code>folio-assistant-core/schemas/fhir-artifact-index.ts#JsonLdContextSchema.binds</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.r_judge" data-fa-state="extracted" data-fa-gloss="">
-Judge the rendered result <span class="fa-gloss-status">candidate, extracted</span>
+Judge the assets in their design <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A person looks at it, at BOTH a web and a mobile width. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
+<p>A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#R_Judge</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--adjudication.judgementcodeschema.means" data-fa-state="extracted" data-fa-gloss="">
@@ -9334,7 +9383,7 @@ Options analysis how to absorb the impact <span class="fa-gloss-status">candidat
 Options analysis how to implement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `folio:bean op=&quot;claim&quot;`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</p>
+<p>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `cat-harness.processes:bean op=&quot;claim&quot;`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--dependency-order.orderedstep.fatal" data-fa-state="extracted" data-fa-gloss="">
@@ -9404,20 +9453,6 @@ Overrule.note <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-P">P</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-tools--package-release-manual" data-fa-state="extracted" data-fa-gloss="">
-Package release by hand <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `&lt;package&gt;-v&lt;version&gt;`, and creates the release on the host. The same four steps with nothing to configure.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#package-release-manual</code></a></p>
-</dd>
-<dt id="cat-harness--kg-skills--package-release" data-fa-state="extracted" data-fa-gloss="">
-package-release <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/package-release.md"><code>cat-harness/skills/folio-core/package-release.md</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_package" data-fa-state="extracted" data-fa-gloss="">
 Package: files plus a manifest of digests <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -9724,7 +9759,7 @@ PermitRequest.actorRoles <span class="fa-gloss-status">candidate, extracted</spa
 Persist the log to the data store <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Capture is explicitly on — by &lt;folio:log capture=&quot;on&quot;/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</p>
+<p>Capture is explicitly on — by &lt;cat-harness.processes:log capture=&quot;on&quot;/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_PersistLog</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_personas" data-fa-state="extracted" data-fa-gloss="">
@@ -9839,6 +9874,34 @@ placement <span class="fa-gloss-status">candidate, extracted</span>
 <p>Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two &quot;stub&quot; conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/placement.md"><code>cat-harness/skills/folio-core/placement.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.imagesonpage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.imagesOnPage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many images share this page.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.note" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this copy serves HERE — never what the image is, which is the narrative's job. &quot;a recurring header for principle 8&quot; belongs here; &quot;an irregular grid of coloured squares&quot; belongs on the image.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.page" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page it sits on, 1-based as a reader counts.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.page</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_lifecycle.task_plan" data-fa-state="extracted" data-fa-gloss="">
 Plan scope, team, artifacts [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -9937,13 +10000,6 @@ Post the retention notice on the PR <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Notice</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.call_themeuireview" data-fa-state="extracted" data-fa-gloss="">
-Post-MVP theme + UI review <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#Call_ThemeUIReview</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--precision-scalar.precisionscalar.dps" data-fa-state="extracted" data-fa-gloss="">
 precisionScalar.dps <span class="fa-gloss-status">candidate, extracted</span>
@@ -11025,7 +11081,7 @@ Raise a finding against the wrong side <span class="fa-gloss-status">candidate, 
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>cat-harness/processes/narrative-code-review.bpmn#A_RaiseFinding</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_raisefindings" data-fa-state="extracted" data-fa-gloss="">
-Raise findings against the authoring <span class="fa-gloss-status">candidate, extracted</span>
+Raise findings before the assets land <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Findings go back to whoever authored the choice, because the choice was theirs: a theme is picked per note by a human or an agent, and there is no mapping to correct instead. Raised, never silently fixed — a reviewer who re-themes a note has substituted their judgement for the author's without saying so.</p>
@@ -11527,13 +11583,6 @@ Relations and cardinalities, both ways <span class="fa-gloss-status">candidate, 
 <dd>
 <p>Stated in both directions, because &quot;one attestation per report&quot; and &quot;one report per attestation&quot; are different claims and a model with only the first cannot say whether a re-signature is an update or a second row.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-data-model.bpmn"><code>cat-harness/processes/crdm-data-model.bpmn#A_Relations</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--release-please" data-fa-state="extracted" data-fa-gloss="">
-release-please (declared, not configured here) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#release-please</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--bib-verification.relevanceassessment.assessed_at" data-fa-state="extracted" data-fa-gloss="">
 RelevanceAssessment.assessed_at <span class="fa-gloss-status">candidate, extracted</span>
@@ -12102,34 +12151,6 @@ Requirement.title <span class="fa-gloss-status">candidate, extracted</span>
 <p>Human-readable title.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#Requirement.title</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.derivedfrom" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.derivedFrom <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Broader requirements this one specialises, by id.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.id" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>`req:&lt;slug&gt;`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.proposedin" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.proposedIn <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.proposedIn</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementfields.supersededby" data-fa-state="extracted" data-fa-gloss="">
-RequirementFields.supersededBy <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>When `superseded`: what replaced it.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementFields.supersededBy</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--assistant-types.requirementstatement.actors" data-fa-state="extracted" data-fa-gloss="">
 RequirementStatement.actors <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -12171,69 +12192,6 @@ RequirementStatement.requirement <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Full requirement text.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#RequirementStatement.requirement</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.activity" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.activity <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — the activity the statement is part of.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.activity</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.actors" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.actors <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The roles it is about, by id in the harness's own role registry.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.actors</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.benefit" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.benefit <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — why (&quot;so that …&quot;).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.capability" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.capability <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>FUNCTIONAL — what the actor wants to be able to do (&quot;I want …&quot;).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.capability</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.category" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.category <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>NON-FUNCTIONAL — which quality it constrains.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.category</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.conformance" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.conformance <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.dependson" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.dependsOn <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Other statements this one presupposes, by &#123;@link requirementRef}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.key" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.key <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Unique within its requirement; with the requirement's id it is the statement's address.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.key</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--requirement.requirementstatementfields.requirement" data-fa-state="extracted" data-fa-gloss="">
-RequirementStatementFields.requirement <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The statement itself, as one sentence a reviewer can say yes or no to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/requirement.ts"><code>cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_resolvebean" data-fa-state="extracted" data-fa-gloss="">
 Resolve or re-open the bean [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -12444,13 +12402,6 @@ Return for correction with annotations <span class="fa-gloss-status">candidate, 
 <dd>
 <p>The reviewer annotates specific passages that need correction and returns to the translator with detailed feedback. Each annotation includes: - The passage in question - What is wrong (terminology, meaning, style) - The suggested correction or reference</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/human-translation-workflow.bpmn"><code>cat-harness/processes/human-translation-workflow.bpmn#Task_ReturnForCorrection</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_review" data-fa-state="extracted" data-fa-gloss="">
-Review contrast and non-colour signal <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (&quot;Never red with green, never blue with yellow&quot;).</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>cat-harness/processes/ingest-theme.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_reviewslices" data-fa-state="extracted" data-fa-gloss="">
 Review each slice [review-task] <span class="fa-gloss-status">candidate, extracted</span>
@@ -12842,7 +12793,7 @@ RoleDef.actorKinds <span class="fa-gloss-status">candidate, extracted</span>
 RoleDef.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable id. Referenced by `&lt;folio:role ref&gt;` and by `inherits`.</p>
+<p>Stable id. Referenced by `&lt;bootstrap.processes:role ref&gt;` and by `inherits`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledef.inherits" data-fa-state="extracted" data-fa-gloss="">
@@ -12877,7 +12828,7 @@ RoleDef.skills <span class="fa-gloss-status">candidate, extracted</span>
 RoleDef.title <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Display text. Not used for matching: a lane binds by `&lt;folio:role ref&gt;`.</p>
+<p>Display text. Not used for matching: a lane binds by `&lt;bootstrap.processes:role ref&gt;`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.title</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.inherits" data-fa-state="extracted" data-fa-gloss="">
@@ -13147,15 +13098,15 @@ scientific-accuracy <span class="fa-gloss-status">candidate, extracted</span>
 scientific-critical-thinking <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md"><code>cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md</code></a></p>
+<p>STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-critical-thinking.md"><code>cat-harness/skills/remote-stubs/scientific-critical-thinking.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--scientific-visualization" data-fa-state="extracted" data-fa-gloss="">
 scientific-visualization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-visualization/scientific-visualization.md"><code>cat-harness/skills/scientific-visualization/scientific-visualization.md</code></a></p>
+<p>STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-visualization.md"><code>cat-harness/skills/remote-stubs/scientific-visualization.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_criterionadjudication.a_scopecriterion" data-fa-state="extracted" data-fa-gloss="">
 Scope the criterion so it stops applying here <span class="fa-gloss-status">candidate, extracted</span>
@@ -13371,7 +13322,7 @@ serving-renderings <span class="fa-gloss-status">candidate, extracted</span>
 session-context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What a state machine tracks across a session, as against one process instance. The six fields, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.</p>
+<p>What a state machine tracks across a session, as against one process instance. What the record carries, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-context.md"><code>cat-harness/skills/workflow/session-context.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--session-intent" data-fa-state="extracted" data-fa-gloss="">
@@ -13385,7 +13336,7 @@ session-intent <span class="fa-gloss-status">candidate, extracted</span>
 session-state-machine <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.</p>
+<p>An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md"><code>cat-harness/skills/workflow/session-state-machine.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--session-context.sessioncontextschema.actor" data-fa-state="extracted" data-fa-gloss="">
@@ -13990,12 +13941,12 @@ smart-base-tools <span class="fa-gloss-status">candidate, extracted</span>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md"><code>cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md</code></a></p>
 </dd>
-<dt id="fhir-harness--kg-skills--smart-launch" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-skills--smart-launch" data-fa-state="extracted" data-fa-gloss="">
 smart-launch <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.</p>
-<p class="fa-gloss-meta">Skills of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md"><code>fhir-harness/skills/fhir-client/smart-launch.md</code></a></p>
+<p>STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md"><code>cat-harness/skills/remote-stubs/smart-launch.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--smart-stack-layering" data-fa-state="extracted" data-fa-gloss="">
 smart-stack-layering <span class="fa-gloss-status">candidate, extracted</span>
@@ -14996,13 +14947,6 @@ TestRunSchema.process <span class="fa-gloss-status">candidate, extracted</span>
 <p>WHAT TESTED IT — runner, configuration, scenario bank.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.process</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--test-run.testrunschema.requirements" data-fa-state="extracted" data-fa-gloss="">
-TestRunSchema.requirements <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164): *&quot;put requirements in Test schema as array&quot;*, as REFERENCES (`req:&lt;slug&gt;` or `req:&lt;slug&gt;#&lt;statement-key&gt;`), never copies: the requirement's text lives in one place, and a copy in every run is a copy free to disagree with it.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts#TestRunSchema.requirements</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--test-run.testrunschema.skill" data-fa-state="extracted" data-fa-gloss="">
 TestRunSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -15059,6 +15003,13 @@ The RULE is the defect — bean it <span class="fa-gloss-status">candidate, extr
 <p>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags &quot;clearly&quot;, and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_RuleIsWrong</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_review" data-fa-state="extracted" data-fa-gloss="">
+Theme and UI review [theme-ui-review] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;; asked directly on 2026-09-24 whether that meant ONLY at ingestion: &quot;Yes only at ingestion&quot;. Bean `9fdi`. So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — &quot;calling it would put a human gate into an automated ingest&quot; — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. &quot;A theme sets the stripe's hue; it never sets its width to zero&quot; — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (&quot;Never red with green, never blue with yellow&quot;). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>cat-harness/processes/ingest-theme.bpmn#Task_Review</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--themes-css" data-fa-state="extracted" data-fa-gloss="">
 Theme stylesheet <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -15105,7 +15056,7 @@ theme-generation <span class="fa-gloss-status">candidate, extracted</span>
 theme-ui-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them.</p>
+<p>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/theme-ui-review.md"><code>cat-harness/skills/folio-core/theme-ui-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--theme-art-intake.themeartfailure.detail" data-fa-state="extracted" data-fa-gloss="">
@@ -15688,27 +15639,6 @@ Transcribe and translate audio <span class="fa-gloss-status">candidate, extracte
 <dd>
 <p>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-derive-content.bpmn"><code>cat-harness/processes/ingest-derive-content.bpmn#Task_Audio</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-faster-whisper" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — faster-whisper (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-faster-whisper</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-vosk" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — vosk (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-vosk</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--transcribe-whisper-cpp" data-fa-state="extracted" data-fa-gloss="">
-Transcribe audio — whisper.cpp (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-whisper-cpp</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--translation-tools.translatableformatschema.extensions" data-fa-state="extracted" data-fa-gloss="">
 TranslatableFormatSchema.extensions <span class="fa-gloss-status">candidate, extracted</span>
@@ -16380,7 +16310,7 @@ VerificationRoster.entries <span class="fa-gloss-status">candidate, extracted</s
 Verify authority against the observatory / registry API <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note.</p>
+<p>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/evidence-retrieval.bpmn"><code>cat-harness/processes/evidence-retrieval.bpmn#Task_VerifyAuthority</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_docssite.call_verify" data-fa-state="extracted" data-fa-gloss="">
@@ -17091,7 +17021,7 @@ WebPageNode.block <span class="fa-gloss-status">candidate, extracted</span>
 WebPageNode.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `&lt;folio:link&gt;` hrefs — resolve against.</p>
+<p>Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPageNode.id</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpagenode.lead" data-fa-state="extracted" data-fa-gloss="">
@@ -17217,7 +17147,7 @@ Work, keeping the body current (this is 'edit') <span class="fa-gloss-status">ca
 workflow-state <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `&lt;folio:bean op&gt;` actually performs, and why an instance and a bean must be one answer rather than two.</p>
+<p>Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `&lt;cat-harness.processes:bean op&gt;` actually performs, and why an instance and a bean must be one answer rather than two.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>cat-harness/skills/workflow/workflow-state.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.workflowdefinition.bindings" data-fa-state="extracted" data-fa-gloss="">
@@ -17343,7 +17273,7 @@ Write the root README, if it is not there <span class="fa-gloss-status">candidat
 Write what changed <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim.</p>
+<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_UpdateSession</code></a></p>
 </dd>
 </dl>
@@ -17366,13 +17296,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th>Skills</th><th>Tools</th><th>BPMN activities</th><th>DMN decisions</th><th>Schema fields</th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>253 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>88 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>502 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1363 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>cat-harness</td><td>255 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>83 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>501 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1359 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>fhir-harness</td><td>4 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>163 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>12 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>103</strong></td><td><strong>531</strong></td><td><strong>9</strong></td><td><strong>1538</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>271</strong></td><td><strong>98</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1534</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">

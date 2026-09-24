@@ -107,6 +107,10 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 
 // ─── ActorDefinition ─────────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
@@ -132,6 +136,10 @@ export const ActorDefinitionSchema = z.object({
 
 // ─── CapabilityDefinition ────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const CapabilityDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -196,6 +204,10 @@ export const SkillSchemaRefSchema = z.object({
   access: z.enum(["read", "write", "read-write"]),
 });
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -271,6 +283,10 @@ export const RequirementStatementRefSchema = z
  * lists what satisfies a statement: that pointer is held by the satisfier
  * (`satisfies:`, above). The base's refinements are re-applied, because a
  * refined schema cannot be extended and the rules must not be lost.
+ */
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
 export const RequirementStatementSchema = RequirementStatementFields.superRefine(refineStatement);
 

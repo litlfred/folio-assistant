@@ -7231,6 +7231,139 @@
     });
   }
 
+  /* ── Figure export: SVG, PNG and the clipboard (#1270) ───────────────── */
+
+  /** The drawing in a figure: the inline <svg> once inlined, else the <img>. */
+  function figureArt(scope) {
+    return scope.querySelector("svg") || scope.querySelector("img");
+  }
+
+  /** A filename stem: the source file's name, else the page title. */
+  function figureName(scope) {
+    var art = figureArt(scope);
+    var src = art ? (art.getAttribute("data-fa-src") || art.getAttribute("src") || "") : "";
+    var stem = src.split("/").pop().replace(/[?#].*$/, "").replace(/\.svg$/i, "");
+    if (!stem) stem = (document.title || "diagram").toLowerCase().replace(/[^a-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
+    return stem || "diagram";
+  }
+
+  /**
+   * The figure as standalone SVG text.
+   *
+   * An inline <svg> is serialised from a clone, with the namespace and an
+   * explicit size added so the file opens on its own. The size comes from the
+   * viewBox, not from the page: zoom and full width are VIEW state, and a
+   * downloaded diagram should be the diagram, not the reader's current zoom.
+   * An <img> that was never inlined is fetched as the file it names.
+   */
+  function figureSvgText(scope) {
+    var art = figureArt(scope);
+    if (!art) return Promise.reject(new Error("no drawing in this figure"));
+    if (String(art.nodeName).toLowerCase() === "img") {
+      var src = art.getAttribute("src") || "";
+      if (!/\.svg([?#]|$)/i.test(src)) return Promise.reject(new Error("the image is not an SVG"));
+      return window.fetch(src).then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.text();
+      });
+    }
+    var clone = art.cloneNode(true);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    clone.removeAttribute("style");
+    clone.removeAttribute("data-fa-src");
+    var size = svgSize(art);
+    clone.setAttribute("width", String(size.w));
+    clone.setAttribute("height", String(size.h));
+    return Promise.resolve('<?xml version="1.0" encoding="UTF-8"?>\n' + new window.XMLSerializer().serializeToString(clone));
+  }
+
+  /** The drawing's own size: its viewBox, else its width/height, else its box. */
+  function svgSize(svg) {
+    var vb = (svg.getAttribute("viewBox") || "").split(/[\s,]+/).map(Number);
+    if (vb.length === 4 && vb[2] > 0 && vb[3] > 0) return { w: vb[2], h: vb[3] };
+    var w = parseFloat(svg.getAttribute("width") || ""), h = parseFloat(svg.getAttribute("height") || "");
+    if (w > 0 && h > 0) return { w: w, h: h };
+    var box = svg.getBoundingClientRect();
+    return { w: Math.max(1, Math.round(box.width)), h: Math.max(1, Math.round(box.height)) };
+  }
+
+  /** The page's own background, so a PNG of a dark-themed page is not transparent. */
+  function pageBackground() {
+    var c = getComputedStyle(document.body).backgroundColor;
+    return !c || c === "transparent" || /rgba\([^)]*,\s*0\)$/.test(c) ? "#ffffff" : c;
+  }
+
+  /**
+   * The figure rendered to a PNG blob at twice its size, for a sharp result
+   * on a high-density screen or in a slide. Rejects — and the caller says so —
+   * when the browser refuses (a drawing that references another origin taints
+   * the canvas), rather than producing an empty image.
+   */
+  function figurePng(scope) {
+    return figureSvgText(scope).then(function (text) {
+      return new Promise(function (resolve, reject) {
+        var dims = svgSize(new window.DOMParser().parseFromString(text, "image/svg+xml").documentElement);
+        var url = URL.createObjectURL(new Blob([text], { type: "image/svg+xml" }));
+        var img = new Image();
+        img.onload = function () {
+          try {
+            var scale = 2;
+            var canvas = document.createElement("canvas");
+            canvas.width = Math.round(dims.w * scale);
+            canvas.height = Math.round(dims.h * scale);
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = pageBackground();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(function (blob) {
+              URL.revokeObjectURL(url);
+              if (blob) resolve(blob); else reject(new Error("the browser produced no image"));
+            }, "image/png");
+          } catch (e) {
+            URL.revokeObjectURL(url);
+            reject(e);
+          }
+        };
+        img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("the SVG would not render")); };
+        img.src = url;
+      });
+    });
+  }
+
+  /** Save a blob under a filename, through a transient link. */
+  function saveBlob(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = el("a", { href: url, download: name }); // href-safe: a blob: URL this function minted over the figure's own bytes, never document data
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+  }
+
+  /**
+   * Copy the figure: as a PNG image where the browser allows writing images
+   * to the clipboard, otherwise as SVG text. Resolves to a sentence saying
+   * WHICH it was, because "copied" alone would leave a reader pasting text
+   * where they expected a picture.
+   */
+  function copyFigure(scope) {
+    var clip = navigator.clipboard;
+    if (!clip) return Promise.resolve("Copy is not available here (the clipboard needs a secure page)");
+    var asText = function () {
+      return figureSvgText(scope)
+        .then(function (text) { return clip.writeText(text); })
+        .then(function () { return "Copied as SVG text — this browser does not accept images on the clipboard"; });
+    };
+    var attempt = typeof window.ClipboardItem === "function" && typeof clip.write === "function"
+      ? clip.write([new window.ClipboardItem({ "image/png": figurePng(scope) })])
+          .then(function () { return "Copied as a PNG image"; })
+          .catch(asText)
+      : asText();
+    return attempt.catch(function (e) { return "Could not copy: " + e.message; });
+  }
+
   function mountFigure(scope, isPlain) {
     if (scope.dataset.faTools === "1") return;
     scope.dataset.faTools = "1";
@@ -7394,7 +7527,35 @@
       e.stopPropagation();
     }, true);
 
-    [out, level, into, reset, wide].forEach(function (n) { tools.appendChild(n); });
+    // Export (#1270, owner: "download rendered png, src svg or copy to
+    // clipboard any diagrams"). On the same toolbar, so every figure that has
+    // zoom has these too. The art is looked up at press time, not mount time:
+    // an <img> is replaced by its inline <svg> after the toolbar mounts.
+    var svgBtn = el("button", { type: "button", class: "fa-figure-export-start", "aria-label": "Download this diagram as SVG" }, "SVG");
+    var pngBtn = el("button", { type: "button", "aria-label": "Download this diagram as PNG" }, "PNG");
+    var copyBtn = el("button", { type: "button", "aria-label": "Copy this diagram to the clipboard" }, "Copy");
+    var said = el("span", { class: "fa-figure-status", role: "status", "aria-live": "polite" });
+    var saidTimer = 0;
+    function say(msg) {
+      said.textContent = msg;
+      clearTimeout(saidTimer);
+      saidTimer = setTimeout(function () { said.textContent = ""; }, 4000);
+    }
+    svgBtn.addEventListener("click", function () {
+      figureSvgText(scope).then(function (text) {
+        saveBlob(new Blob([text], { type: "image/svg+xml" }), figureName(scope) + ".svg");
+        say("SVG downloaded");
+      }).catch(function (e) { say("Could not export SVG: " + e.message); });
+    });
+    pngBtn.addEventListener("click", function () {
+      figurePng(scope).then(function (blob) {
+        saveBlob(blob, figureName(scope) + ".png");
+        say("PNG downloaded");
+      }).catch(function (e) { say("Could not export PNG: " + e.message); });
+    });
+    copyBtn.addEventListener("click", function () { copyFigure(scope).then(say); });
+
+    [out, level, into, reset, wide, svgBtn, pngBtn, copyBtn, said].forEach(function (n) { tools.appendChild(n); });
     scope.parentNode.insertBefore(tools, scope);
     apply();
 
@@ -7495,6 +7656,21 @@
             svg.setAttribute("role", "img");
             svg.setAttribute("aria-label", alt);
           }
+          // The source file, kept for the export controls: "Download SVG"
+          // names the file after it, and it is the committed artefact.
+          svg.setAttribute("data-fa-src", src);
+          // Links inside a drawing are written relative to the SVG FILE, so
+          // one file works wherever it is embedded. Inlined, a relative href
+          // would resolve against the PAGE instead — right from the docs
+          // root, wrong from `processes/` (bean `xl55`) — so each is
+          // re-anchored to the file's own URL, through the same check as
+          // every other link here.
+          var fileUrl = new URL(src, location.href);
+          [].forEach.call(svg.querySelectorAll("a[href]"), function (a) {
+            var checked = safeHref(a.getAttribute("href"));
+            if (checked === undefined) a.removeAttribute("href");
+            else a.setAttribute("href", new URL(checked, fileUrl).href);
+          });
           img.parentNode.replaceChild(document.importNode(svg, true), img);
         })
         .catch(function (e) {

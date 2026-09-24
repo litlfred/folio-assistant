@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -74,6 +75,7 @@ permissions:
 
 jobs:
   lean-bare-import:
+    # bpmn-node: Task_Lean
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
@@ -131,6 +133,7 @@ jobs:
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
   python-imports:
+    # bpmn-node: Task_Python
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
@@ -213,6 +216,7 @@ jobs:
           exit $rc
 
   typescript:
+    # bpmn-node: Task_TypeScript
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
@@ -574,6 +578,60 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # WHICH audits reach which kind of node — the neighbour of the audit
+      # above, not a second answer to it. `kg:audit:check` judges the nodes it
+      # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
+      # before bean `xutg` and which got answered by inference instead: an
+      # agent read a sidecar count of zero over the bean store and reported
+      # beans "effectively unaudited", while eight gates audit them.
+      #
+      # `--check` and NOT `--strict`: it fails on a STALE SIDECAR, which is the
+      # half a reviewer needs (it is what lets "never audited" be told from
+      # "lost its audit in this commit"). The findings are reported — 4 kinds
+      # hold files nothing audits, and a gate refusing every push until
+      # somebody writes criteria for `interaction/` is a gate that gets
+      # switched off. `audit:coverage:strict` is for the day that closes.
+      # `--require-all` as of bean `3srh`: every one of the 145 gates CI runs now
+      # DECLARES what kind of node it covers, so the flag that was "for the day
+      # the gap is closed" enforces a property this tree HAS rather than
+      # demanding work — the same reasoning as `check:skills` above.
+      #
+      # What it buys is the report's own honesty. While any gate was undeclared,
+      # every "unaudited" verdict was only an UPPER BOUND and the output said so.
+      # With none undeclared the four remaining kinds are a verdict, and this
+      # step is what stops a new gate arriving undeclared and quietly turning
+      # them back into an upper bound.
+      - name: audit coverage is measured, current, and every gate has declared
+        run: bun run audit:coverage:require-all
+
+      # The four graphs `audit:coverage` reported as `typed-only` — a schema
+      # parses their nodes and nothing had an opinion about what they SAY.
+      # Bean `h1wq`, at the owner's ask (2026-09-24).
+      #
+      # Three of its four families are determined empties on this tree, and the
+      # fourth caught a real one: the committed health report was written by a
+      # checker that no longer existed, so its staging remedy still told a reader
+      # to apply `staging:cleanup` to an orphaned preview — which bean `7umv`
+      # had already proved cannot work. Stale advice presented as the fix.
+      #
+      # Exit 2 (a family that could not be read) is a FAILURE here, not a pass:
+      # could-not-determine outranks a finding, because a sweep blind on one
+      # family has not cleared the others.
+      - name: harness state graphs are judged, not just typed
+        run: bun run check:harness-state:check
+
+      # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
+      # were the only thing holding it red, and the step above judges them. Wired
+      # on the same reasoning as `check:skills`: it locks in a property this tree
+      # HAS rather than demanding work.
+      #
+      # A SECOND step rather than a third flag on the one above, because the two
+      # lock different things and a reader should be able to see which broke:
+      # `--require-all` that every gate has declared, `--strict` that every kind
+      # with files is JUDGED and not merely typed.
+      - name: every kind with files is judged, not merely typed
+        run: bun run audit:coverage:strict
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
@@ -857,6 +915,10 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The themes page renders every theme in schemas/themes.ts with its
+          # declared art, so it goes stale the moment a theme, a palette or a
+          # crop changes.
+          bun run theme:page:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
@@ -1268,6 +1330,7 @@ jobs:
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
   e2e:
+    # bpmn-node: Task_E2E
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
@@ -1298,6 +1361,7 @@ jobs:
         run: bunx playwright test
 
   rust-wildcard:
+    # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
@@ -1334,6 +1398,7 @@ jobs:
           fi
 
   dependency-advisories:
+    # bpmn-node: Task_Advisories
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:

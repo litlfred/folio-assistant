@@ -72,7 +72,7 @@ Three specific traps:
   posting a question whose answer requires reading it is how a one-character
   decision becomes a twenty-minute one.
 - **Options without their costs.** "A or B" is not a choice; "A, which changes
-  nothing here, or B, which rewrites every `folio:skill` ref in the diagrams"
+  nothing here, or B, which rewrites every `bootstrap.processes:skill` ref in the diagrams"
   is. The BA is deciding on the consequences, so the consequences are the
   question.
 
@@ -379,14 +379,19 @@ For each bean:
    **Never remove a staging preview any other way, and never on your own
    initiative.**
 
-### After the MVP is accepted — review what it RENDERS
+### Theme and UI review is NOT a Phase 6 step — it happens at ingestion
 
-Acceptance is not the last step for anything with a UI.
-[`theme-ui-review`](../../skills/folio-core/theme-ui-review.md) sits on the single edge out of it in
-`crdm-deliver.bpmn`: accessibility **measured** rather than asserted, branding
-against the instance's own declaration, every declared locale. Post-MVP because
-nothing could have been checked earlier — theme choice is an authoring judgement
-per note, so there was never a mapping for an earlier gate to audit.
+This section used to put [`theme-ui-review`](../../skills/folio-core/theme-ui-review.md)
+on the single edge out of MVP acceptance in `crdm-deliver.bpmn`. **That call was
+removed on 2026-09-24.** The owner ruled that theme review happens *"at
+ingestion of graphical assets in context of website or app design"*, and, asked
+whether that meant only there: *"Yes only at ingestion"* (bean `9fdi`).
+
+So `GW_StakeholderOK`'s `accepted` branch now closes the phase directly. The
+review runs when the graphical assets arrive, from `ingest-theme.bpmn`, where a
+finding is a decision about what the assets will be rather than a defect in
+something that shipped. If you are looking for where accessibility, branding and
+locales get checked for a UI, look there — not here.
 
 When a round of implementation is complete (one or more beans resolved):
 1. **Post a round summary comment on the issue** — addressed to the BA and

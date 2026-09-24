@@ -144,7 +144,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Capture is explicitly on — by <folio:log capture=\"on\"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything."
+          "@value": "Capture is explicitly on — by <cat-harness.processes:log capture=\"on\"/> on the process or by config — so the entries go to the git data store. Only this branch commits anything."
         }
       ],
       "skos:notation": "A_PersistLog",
@@ -304,7 +304,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum."
+          "@value": "The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum."
         }
       ],
       "skos:notation": "A_Adjudicate",
@@ -2724,31 +2724,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `folio:bean op=\"claim\"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed."
+          "@value": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `cat-harness.processes:bean op=\"claim\"`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed."
         }
       ],
       "skos:notation": "Call_OptionsAnalysis",
       "dcterms:source": "cat-harness/processes/crdm-deliver.bpmn#Call_OptionsAnalysis",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_crdm_deliver.call_themeuireview",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Post-MVP theme + UI review"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "On the single edge out of stakeholder acceptance, because there is nothing to review until something renders. Choosing a theme is an authoring judgement made per note and there is no role-to-theme mapping, so no build-time gate could have checked it — what gets reviewed is the result. Accessibility measured rather than asserted, branding against the instance's own declaration, and every declared locale."
-        }
-      ],
-      "skos:notation": "Call_ThemeUIReview",
-      "dcterms:source": "cat-harness/processes/crdm-deliver.bpmn#Call_ThemeUIReview",
       "skos:note": "candidate"
     },
     {
@@ -3224,7 +3204,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `folio:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record."
+          "@value": "The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record."
         }
       ],
       "skos:notation": "Call_Adjudicate",
@@ -4224,7 +4204,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the folio:policy note."
+          "@value": "Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note."
         }
       ],
       "skos:notation": "Task_VerifyAuthority",
@@ -5959,12 +5939,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Review contrast and non-colour signal"
+          "@value": "Theme and UI review [theme-ui-review]"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A theme sets the stripe's hue; it never sets its width to zero. Colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide's own rule agrees (\"Never red with green, never blue with yellow\")."
+          "@value": "THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: \"theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI\"; asked directly on 2026-09-24 whether that meant ONLY at ingestion: \"Yes only at ingestion\". Bean `9fdi`. So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — \"calling it would put a human gate into an automated ingest\" — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. \"A theme sets the stripe's hue; it never sets its width to zero\" — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (\"Never red with green, never blue with yellow\"). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning."
         }
       ],
       "skos:notation": "Task_Review",
@@ -9014,7 +8994,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `folio:bean` on this step. It records that a claim happened; it does not claim."
+          "@value": "An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim."
         }
       ],
       "skos:notation": "A_UpdateSession",
@@ -9209,12 +9189,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Inventory what actually renders"
+          "@value": "Inventory the ingested assets"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Which themes are in use, on which surfaces, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). All of it is read off the artefacts rather than the intent. A theme declared and never chosen is not in the review; a surface nobody listed is the one that ships wrong."
+          "@value": "Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong."
         }
       ],
       "skos:notation": "A_Inventory",
@@ -9249,7 +9229,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Raise findings against the authoring"
+          "@value": "Raise findings before the assets land"
         }
       ],
       "skos:definition": [
@@ -9269,12 +9249,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Judge the rendered result"
+          "@value": "Judge the assets in their design"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A person looks at it, at BOTH a web and a mobile width. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking."
+          "@value": "A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking."
         }
       ],
       "skos:notation": "R_Judge",

@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/repository-health-watch.bpmn
 # Repository health watchdog — the daily half of what `ci-health.yml` does weekly.
 #
 # `ci-health.yml` watches whether the WORKFLOWS pass. This watches the
@@ -65,6 +66,7 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Report repository health
     runs-on: ubuntu-latest
     timeout-minutes: 15

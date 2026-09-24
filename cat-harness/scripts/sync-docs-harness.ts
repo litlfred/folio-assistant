@@ -25,6 +25,8 @@
  * reader of the declaration can open. The site serves `docs/` AS its root, so
  * the same file is at `/assets/…` once published. The conversion happens here,
  * once, rather than in the Liquid template where it would be invisible.
+ *
+ * @covers docs
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";

@@ -762,6 +762,18 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:harness-state",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
+  },
+  {
+    script: "audit:coverage:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `audit:coverage:require-all`, which CI runs: that is the same script with `--check --require-all`, so it performs this check's entire job and one more assertion on top. Kept as a script because it is what a contributor runs locally when they want the staleness answer WITHOUT being told about a gate somebody else left undeclared — the two questions have different owners. Bean `3srh`",
+  },
+  {
     script: "schema:viz:check",
     kind: "covered-by",
     reason:

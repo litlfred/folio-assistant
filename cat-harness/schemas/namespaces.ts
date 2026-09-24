@@ -183,7 +183,25 @@ export const OWN_NAMESPACE_VALUES: readonly string[] = ownNamespaces.codes.flatM
 );
 
 /** Every XML namespace this project mints for itself. */
-export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;
+/**
+ * The namespace of the BPMN extension elements BOOTSTRAP declares for its own
+ * diagrams — `skill`, `role`, `precondition` — written with the prefix of the
+ * declaring Subgraph, `bootstrap.processes:` (owner, 2026-09-24, bean `12s9`
+ * stage 2). `<stub>/<subgraph>/ns#`, like every other vocabulary address here.
+ * Its definition is data in bootstrap itself, `processes/ns.jsonld`, which the
+ * site publishes at this address.
+ */
+export const BOOTSTRAP_PROCESSES_NS = ownNamespace("bootstrap-processes");
+
+/**
+ * The namespace of the BPMN extension elements CAT-HARNESS declares — every
+ * one bootstrap does not: `bean`, `policy`, `adjudication`, `raci`, … —
+ * written `cat-harness.processes:` (bean `12s9` stage 3). Defined by
+ * `cat-harness/processes/ns.jsonld`, which the site publishes here.
+ */
+export const CAT_HARNESS_PROCESSES_NS = ownNamespace("cat-harness-processes");
+
+export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, LEGACY_FOLIO_BPMN_NS] as const;
 
 /**
  * The XML namespaces our BPMN extension ELEMENTS are recognised in — by
@@ -198,11 +216,14 @@ export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const
  * Subgraph that declares the element (`bootstrap.processes:`) is unreachable
  * until nothing depends on the prefix, which is what this list is for.
  *
- * The retired {@link LEGACY_FOLIO_BPMN_NS} is deliberately NOT here: no
- * diagram binds it (74 of 74 measured on 2026-09-24 bind this address), and
- * `external-schemas` reports it as drift rather than accepting it.
+ * Two addresses on purpose, one per declaring Subgraph. The single address
+ * {@link FOLIO_BPMN_NS} was here too until 2026-09-24 and is now RETIRED, like
+ * {@link LEGACY_FOLIO_BPMN_NS} before it: no diagram in the owner's
+ * repositories binds it (the last, ihris, moved in litlfred/ihris#24), so an
+ * element under it is no longer ours, and `external-schemas` reports a diagram
+ * that still binds it as drift.
  */
-export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [FOLIO_BPMN_NS];
+export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS];
 
 /**
  * The prefix our extension elements are normalised to once parsed, whatever

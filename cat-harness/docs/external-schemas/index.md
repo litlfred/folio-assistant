@@ -69,14 +69,11 @@ carry a note and were not checked.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **5** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **4** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
-**1 in use and not declared here** — a vocabulary this
-repository writes and has said nothing about.
-
-- `https://litlfred.github.io/folio-assistant/bpmn`
+Every namespace the corpus declares is covered by a record above.
 
 **18 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because

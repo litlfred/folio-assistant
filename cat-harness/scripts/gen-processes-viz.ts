@@ -3,6 +3,7 @@
  * The processes graph → a searchable index over every executable BPMN diagram.
  *
  * @module cat-harness/scripts/gen-processes-viz
+ * @covers processes
  *
  * Bean `prhr`. Owner, 2026-09-21: *"we also need a processes/ visualization as
  * it is controlled.... its basically a bpmn searcher tool or so. with various
@@ -46,7 +47,7 @@
  *
  * Whether a policy declares an **enforcement value** — not whether a policy
  * ELEMENT is present. The two differ, and the corpus contains the case:
- * `crdm-signoff.bpmn:83` is `<folio:policy relaxable="false"/>`, an element
+ * `crdm-signoff.bpmn:83` is `<cat-harness.processes:policy relaxable="false"/>`, an element
  * deliberately authored, carrying no `enforcement`. It counts as *defaulted*
  * here and that is the right answer for the question being asked — *somebody
  * chose an enforcement* vs *nobody said* — but it means this is NOT the same
@@ -84,6 +85,7 @@ import {
   type SkillProvenance,
 } from "../schemas/role-graph.js";
 import { ownElementPattern } from "../schemas/namespaces.js";
+import { processPresentations, type Presentation } from "./process-presentations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -103,20 +105,20 @@ export interface ProcessRow {
   id: string;
   name: string;
   lanes: string[];
-  /** `<folio:role ref>` on a lane — the join that does not depend on spelling. */
+  /** `<bootstrap.processes:role ref>` on a lane — the join that does not depend on spelling. */
   roles: string[];
   skills: string[];
   beanOps: string[];
   enforcement: "strict" | "advisory";
   /**
    * Whether the FILE declares an enforcement VALUE, as opposed to the engine
-   * defaulting one. Not the same as carrying a `<folio:policy>` element — see
+   * defaulting one. Not the same as carrying a `<cat-harness.processes:policy>` element — see
    * the module doc, and `crdm-signoff.bpmn`, which has one and no value.
    */
   enforcementDeclared: boolean;
   activities: number;
   /**
-   * Activities carrying no `<folio:skill ref>`, with the lane and BPMN type
+   * Activities carrying no `<bootstrap.processes:skill ref>`, with the lane and BPMN type
    * that decide whether that is a gap or a design.
    *
    * NOT a defect list, and the first version of this page made it one. See
@@ -205,7 +207,7 @@ export interface LaneDetail {
    */
   roleSkills: SkillProvenance[];
   /**
-   * What the ACTIVITIES IN THIS LANE name, via `<folio:skill ref>`.
+   * What the ACTIVITIES IN THIS LANE name, via `<bootstrap.processes:skill ref>`.
    *
    * **A separate list on purpose — the bean's fourth done-when.** A lane's
    * skills are not the union of its activities' skills in either direction: a
@@ -512,7 +514,7 @@ export function page(rows: readonly ProcessRow[]): string {
   L.push("## What runs this skill?");
   L.push("");
   L.push(
-    "The reverse of `<folio:skill ref>`, which is the join nothing else exposes: a skill " +
+    "The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill " +
       "says what to do, and until now nothing said which processes ask for it.",
   );
   L.push("");
@@ -527,7 +529,7 @@ export function page(rows: readonly ProcessRow[]): string {
   L.push("");
   L.push(
     "A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty lanes " +
-      "spell two dozen positions — so `<folio:role ref>` is the join that does not depend " +
+      "spell two dozen positions — so `<bootstrap.processes:role ref>` is the join that does not depend " +
       "on spelling, and it is reported separately below rather than merged into the name.",
   );
   L.push("");
@@ -542,7 +544,7 @@ export function page(rows: readonly ProcessRow[]): string {
 
   L.push("## Which steps touch the work plan?");
   L.push("");
-  L.push("`<folio:bean op>` — the audit trail for who reserves and resolves work.");
+  L.push("`<cat-harness.processes:bean op>` — the audit trail for who reserves and resolves work.");
   L.push("");
   L.push("| op | diagrams |");
   L.push("|---|---|");
@@ -595,7 +597,7 @@ export function page(rows: readonly ProcessRow[]): string {
     const byLane = new Map<string, number>();
     for (const a of rest) byLane.set(a.lane || "(no lane)", (byLane.get(a.lane || "(no lane)") ?? 0) + 1);
 
-    L.push("### Activities carrying no `<folio:skill ref>` — a census, not a gap list");
+    L.push("### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list");
     L.push("");
     L.push(
       `**${all.length}** across **${noSkill.length}** diagram(s). This section reported them as ` +
@@ -622,7 +624,7 @@ export function page(rows: readonly ProcessRow[]): string {
       "**No verdict is offered on which of these is a gap**, and that is the honest state rather " +
         "than a hedge: distinguishing a person's judgement step from an agent step somebody " +
         "forgot needs the lane's actor KIND, which a free-text lane name does not give — " +
-        "`process-model.ts` notes sixty lanes spell two dozen positions. `<folio:role ref>` is " +
+        "`process-model.ts` notes sixty lanes spell two dozen positions. `<bootstrap.processes:role ref>` is " +
         `the join that would answer it, and it is present on **${rest.filter((a) => a.roleRef).length}** ` +
         `of these **${rest.length}** steps — which is the measurement, not an impression. ` +
         "An earlier draft of this sentence said *few of these* and was counting whether the lane " +
@@ -644,8 +646,18 @@ export function page(rows: readonly ProcessRow[]): string {
  *
  * `skillPages` is the set of skills with a generated instruction page; a skill
  * without one is shown as code rather than as a link that 404s.
+ *
+ * `presentedOn` is the docs page sections whose `asset.source` names this
+ * diagram — read from the PAGES, so the process names none of them (bean
+ * `rdy0`). It is also where a subprocess box lands when more than one section
+ * presents the process (`processTarget`), so the list is the disambiguation.
  */
-export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillPages: ReadonlySet<string>): string {
+export function processPage(
+  row: ProcessRow,
+  rows: readonly ProcessRow[],
+  skillPages: ReadonlySet<string>,
+  presentedOn: readonly Presentation[] = [],
+): string {
   const byId = new Map(rows.map((r) => [r.id, r]));
   const skill = (s: string): string =>
     skillPages.has(s) ? `[\`${s}\`](../reference/skill-instructions/${s}.html)` : `\`${s}\``;
@@ -692,6 +704,15 @@ export function processPage(row: ProcessRow, rows: readonly ProcessRow[], skillP
         "`activity-calls-skill-process` asks whether each should be a call activity.",
     );
   }
+  L.push(
+    `- **Presented on:** ${
+      presentedOn.length
+        ? presentedOn
+            .map((p) => `[${esc(p.pageTitle)}${p.title ? ` — ${esc(p.title)}` : ""}](../${p.page}.html#${p.node})`)
+            .join(", ")
+        : "no docs page section shows this diagram"
+    }`,
+  );
   if (skillPages.has(row.stem)) L.push(`- **Skill:** ${skill(row.stem)}`);
   L.push("");
 
@@ -794,9 +815,17 @@ if (import.meta.main) {
   const skillPages = new Set(
     existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
   );
+  // Which page sections present each diagram, keyed repository-relative so it
+  // matches `row.file` — a page spells its source relative to its OWN instance.
+  const presented = new Map<string, Presentation[]>();
+  for (const root of instanceRoots(REPO)) {
+    for (const [source, list] of await processPresentations(root)) {
+      presented.set(relative(REPO, join(root, source)), list);
+    }
+  }
   const pages = new Map<string, string>([[out, html]]);
   for (const r of rows.filter((x) => x.loadError === undefined)) {
-    pages.set(join(dirname(out), `${r.stem}.md`), processPage(r, rows, skillPages));
+    pages.set(join(dirname(out), `${r.stem}.md`), processPage(r, rows, skillPages, presented.get(r.file)));
   }
   // A page whose diagram is gone is REPORTED, never deleted — the
   // deletion-requires-confirmation rule, applied to generated output too.

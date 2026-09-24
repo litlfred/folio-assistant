@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: actor-role-administration\n"
-"POT-Creation-Date: 2026-09-22T08:18:09.954Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.525Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,157 +14,157 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/actor-role-administration.bpmn:96
+#: processes/actor-role-administration.bpmn:97
 #. Diagram label
 msgid "A change to who can do what"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:128
+#: processes/actor-role-administration.bpmn:129
 #. Diagram element documentation
 msgid "A permission travels with the PARTICIPANT and cross-cuts every lane, so unlike a role it cannot be scoped by the diagram it is used in. Granting one is a standing decision, which is why this lane is person-only and why the log capture on this process is on."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:47
+#: processes/actor-role-administration.bpmn:48
 #. Diagram label
 msgid "Actor and role administration"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:185
+#: processes/actor-role-administration.bpmn:186
 #. Diagram label
 msgid "add actor"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:109
+#: processes/actor-role-administration.bpmn:110
 #. Diagram label
 msgid "Add an actor, and declare its kind"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:68
+#: processes/actor-role-administration.bpmn:69
 #. Diagram label
 msgid "Administrator"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:165
+#: processes/actor-role-administration.bpmn:166
 #. Diagram element documentation
 msgid "AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, \"unbound since it was drawn\" and \"broken by this change\" are indistinguishable."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:69
+#: processes/actor-role-administration.bpmn:70
 #. Diagram element documentation
 msgid "All four administration verbs — add, assign, grant, retire — converge at Gateway_Changed onto the same CallActivity_CodeChangeReview, so no kind of substrate edit gets a lighter review path than another; and Gateway_AuditClean's 'no' branch (A13) loops back to this lane rather than ending the process, because whether a `major` finding holds the change is this lane's policy call, not something Task_RunKgAudit decides for it."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:137
+#: processes/actor-role-administration.bpmn:138
 #. Diagram element documentation
 msgid "An actor id is referenced from roles, diagrams, beans and commits, so removing the file leaves every one of those unable to tell retirement from accident. Same rule, and the same reason, as a scrapped bean."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:186
+#: processes/actor-role-administration.bpmn:187
 #. Diagram label
 msgid "assign roles"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:173
+#: processes/actor-role-administration.bpmn:174
 #. Diagram label
 msgid "Audit clean?"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:164
+#: processes/actor-role-administration.bpmn:165
 #. Diagram label
 msgid "Audit the graph [kg:audit]"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:154
+#: processes/actor-role-administration.bpmn:155
 #. Diagram label
 msgid "Branch, gates, PR and review [code-change-review]"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:155
+#: processes/actor-role-administration.bpmn:156
 #. Diagram element documentation
 msgid "Called rather than restated. The mechanics of getting an edit reviewed and merged are not specific to the role graph, and a second description of them is a second thing free to disagree with the first."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:51
+#: processes/actor-role-administration.bpmn:52
 #. Diagram element documentation
 msgid "Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree. You are in this process when the substrate every other diagram's lanes bind to is what is changing. That is why it is drawn rather than left as a filesystem edit: a role added without an audit is a lane binding that resolves today and may not tomorrow, and nothing else in the corpus would notice. Retirement, never deletion. An actor id is referenced from commits, sidecars and other declarations, so removing one makes an old record unreadable while retiring one leaves it legible and says the actor has stopped."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:146
+#: processes/actor-role-administration.bpmn:147
 #. Diagram label
 msgid "Declaration edited"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:127
+#: processes/actor-role-administration.bpmn:128
 #. Diagram label
 msgid "Grant or revoke a permission"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:84
+#: processes/actor-role-administration.bpmn:85
 #. Diagram label
 msgid "Graph audit (system)"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:180
+#: processes/actor-role-administration.bpmn:181
 #. Diagram label
 msgid "Graph changed and audited"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:110
+#: processes/actor-role-administration.bpmn:111
 #. Diagram element documentation
 msgid "Human, agentic or mechanical. A userTask because the agentic/mechanical line is JUDGEMENT — role-model.md says so — and reading it wrong disqualifies the actor from every judgement task it exists to perform, silently."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:196
+#: processes/actor-role-administration.bpmn:197
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:118
+#: processes/actor-role-administration.bpmn:119
 #. Diagram label
 msgid "Open or close a role to an actor"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:187
+#: processes/actor-role-administration.bpmn:188
 #. Diagram label
 msgid "permission"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:101
+#: processes/actor-role-administration.bpmn:102
 #. Diagram element documentation
 msgid "Read from the request. Deliberately NOT DMN-backed: the four branches are not computable from a fact anyone reports — they are what was asked for, and a table that pretended otherwise would return an answer that is not the request."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:188
+#: processes/actor-role-administration.bpmn:189
 #. Diagram label
 msgid "retire"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:136
+#: processes/actor-role-administration.bpmn:137
 #. Diagram label
 msgid "Retire an actor — never delete one"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:85
+#: processes/actor-role-administration.bpmn:86
 #. Diagram element documentation
 msgid "Runs only after CallActivity_CodeChangeReview has already completed its own review, because the breakage this lane exists to catch — a join across role, lane, actor and skill — is invisible to a code reviewer reading the diff in isolation; ordinary code review clears the edit, and only this lane's whole-graph pass can tell whether it silently broke something three diagrams away."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:174
+#: processes/actor-role-administration.bpmn:175
 #. Diagram element documentation
 msgid "The administrator's call, not the pipeline's: `kg:audit:check` fails on `critical` and `kg:audit:strict` adds `major`, so what holds a change is a policy choice about this instance rather than arithmetic the audit performs."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:119
+#: processes/actor-role-administration.bpmn:120
 #. Diagram element documentation
 msgid "The join every other diagram depends on. An empty `roles` is a DETERMINED empty — it says the actor takes on none — and is not the same as an absent one, which asserts nothing."
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:100
+#: processes/actor-role-administration.bpmn:101
 #. Diagram label
 msgid "Which administration change?"
 msgstr ""
 
-#: processes/actor-role-administration.bpmn:197
+#: processes/actor-role-administration.bpmn:198
 #. Diagram label
 msgid "yes"
 msgstr ""

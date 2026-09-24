@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -100,6 +101,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    # bpmn-node: Start_Push
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
@@ -423,6 +425,15 @@ jobs:
           # it never overwrites: the graph's `.json` copy above has the same
           # name as bootstrap's declaration, and the graph keeps that address.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
 
           # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
           # here, after the line above, for a reason that cost a wrong claim.

@@ -772,14 +772,10 @@ package "cat-harness/memory" as pkg_cat_harness_memory <<memory, waiver>> {
   }
 }
 package "cat-harness/interaction" as pkg_cat_harness_interaction <<interaction>> {
-  class "interaction" as cat_harness_interaction_interaction_shape <<schema: schemas/harness-config.ts>> #f6eedf {
-    //fields not machine-readable: schemas/harness-config.ts names no exported schema//
-  }
+  note "interaction: no node schema declared\n(no node here carries a $schema family interaction names (1 named): could not determine)" as n_cat_harness_interaction_interaction
 }
 package "cat-harness/issue-marks" as pkg_cat_harness_issue_marks <<issue-marks>> {
-  class "issue-marks" as cat_harness_issue_marks_issue_marks_shape <<schema: src/issue-watch/seen-comments.ts>> #f6eedf {
-    //fields not machine-readable: src/issue-watch/seen-comments.ts names no exported schema//
-  }
+  note "issue-marks: no node schema declared\n(no node here carries a $schema family issue-marks names (1 named): could not determine)" as n_cat_harness_issue_marks_issue_marks
 }
 package "cat-harness/uploads" as pkg_cat_harness_uploads <<uploads>> {
   note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (2 named): could not determine)" as n_cat_harness_uploads_uploads

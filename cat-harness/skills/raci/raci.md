@@ -31,16 +31,16 @@ not restate it and declares only the other three:
 | letter | where it comes from HERE |
 |---|---|
 | **R**esponsible | read from the BPMN **lane**, never declared |
-| **A**ccountable | `folio:raci`, exactly one per activity, gated |
-| **C**onsulted | `folio:raci` |
-| **I**nformed | `folio:raci` |
+| **A**ccountable | `cat-harness.processes:raci`, exactly one per activity, gated |
+| **C**onsulted | `cat-harness.processes:raci` |
+| **I**nformed | `cat-harness.processes:raci` |
 
 ```xml
 <bpmn:task id="A_Entities" name="Identify entities">
   <bpmn:extensionElements>
-    <folio:skill ref="crdm-data-model"/>
-    <folio:raci ref="business-analyst" involvement="accountable"/>
-    <folio:raci ref="stakeholder" involvement="consulted"/>
+    <bootstrap.processes:skill ref="crdm-data-model"/>
+    <cat-harness.processes:raci ref="business-analyst" involvement="accountable"/>
+    <cat-harness.processes:raci ref="stakeholder" involvement="consulted"/>
   </bpmn:extensionElements>
 </bpmn:task>
 ```

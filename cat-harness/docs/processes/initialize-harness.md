@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_InitializeHarness` · strict (defaulted) · 9 step(s)
 
-THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces. PRECONDITIONS are DECLARED below as folio:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind="stated": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here. NO folio:bean on any activity: a bean is work-plan machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive.
+THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces. PRECONDITIONS are DECLARED below as bootstrap.processes:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind="stated": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here. NO work-plan element on any activity: a bean is work-plan machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive.
 
 <img src="../assets/img/workflows/initialize-harness.svg" alt="BPMN diagram: Initialize a harness" style="max-width:100%">
 
@@ -19,6 +19,7 @@ THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that ha
 
 - **Called by:** no call activity names this process
 - **Calls:** [Log a message](log-message.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
