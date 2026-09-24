@@ -10,7 +10,7 @@
  * | open | review comments not yet closed (`open` or `addressed`); defects counted apart | how bad the section is; one comment may cover a whole section |
  * | stale | open comments whose block changed AFTER the comment was made | wrong; it means "re-read before replying" |
  * | coverage | changed (added or changed) blocks with a reviewer VERDICT on their CURRENT hash, of those needing one (bean px0t) | "every comment resolved": resolved comments are not a verdict. A verdict on an older version does not count |
- * | qa | the section's blocks whose latest QA verdicts FAIL, and those whose verdicts are STALE (older than the block), from `block-qa.json` | a pass when it is empty of failures: stale and unaudited blocks are counted and said, never read as passing |
+ * | qa | the section's blocks whose latest QA verdicts FAIL, and those whose verdicts are STALE (older than the block), from `block-qa.json` | a pass when it is empty of failures: stale and unaudited blocks are counted and said, never read as passing. Nor is "passing" a full pass: a block whose agent-judged criteria have no verdict is said to pass on SCRIPTS ONLY, with the number of criteria that need an agent (bean `9791`) |
  *
  * A column with no data is SAID, per row, never shown as 0 or blank. Zero
  * would read as "measured, and nothing there", which is the one thing it
@@ -34,6 +34,12 @@ export interface HeatRow {
   /** Blocks whose QA verdicts are older than the block, and blocks never audited. */
   qaStale: number;
   qaUnaudited: number;
+  /** Passing blocks whose agent-judged criteria have no verdict (9791). */
+  qaScriptsOnly: number;
+  /** Criteria, summed over those blocks, that need an agent. */
+  qaNeedsAgent: number;
+  /** Passing blocks from a block-qa.json too old to say what was judged. */
+  qaJudgedUnknown: number;
   /** Blocks in the section the QA summary covers. */
   qaBlocks: number;
   /** Added or changed blocks, which each need a verdict; and those that have one on their current hash. */
@@ -48,7 +54,7 @@ export interface HeatInput {
   /** `blocks.json`: each head block's current hash and section, or null. */
   blocks: Record<string, { hash: string; section?: string }> | null;
   /** `block-qa.json`'s `blocks`, or null when the build published none. */
-  qa?: Record<string, { state: string; worst: string | null }> | null;
+  qa?: Record<string, { state: string; worst: string | null; needsAgent?: number }> | null;
   /** `review-comments.json`'s `verdicts`, or null when there is no such file. */
   verdicts?: Array<{ targetLabel: string; blockHash: string }> | null;
 }
@@ -60,7 +66,7 @@ export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: b
     const k = s || NONE;
     let r = rows.get(k);
     if (!r) {
-      r = { section: k, changed: 0, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 };
+      r = { section: k, changed: 0, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaScriptsOnly: 0, qaNeedsAgent: 0, qaJudgedUnknown: 0, qaBlocks: 0, needReview: 0, reviewed: 0 };
       rows.set(k, r);
     }
     return r;
@@ -115,6 +121,11 @@ export function computeHeat(input: HeatInput): { rows: HeatRow[]; hasComments: b
         if (q.worst && (r.qaWorst === null || RANK[q.worst]! < RANK[r.qaWorst]!)) r.qaWorst = q.worst;
       } else if (q.state === "stale") r.qaStale++;
       else if (q.state === "unaudited") r.qaUnaudited++;
+      else if (q.state === "passing") {
+        // A file published before 9791 has no field: "could not tell", never "all judged".
+        if (typeof q.needsAgent !== "number") r.qaJudgedUnknown++;
+        else if (q.needsAgent > 0) { r.qaScriptsOnly++; r.qaNeedsAgent += q.needsAgent; }
+      }
     }
   }
   // Reading order: sections as the ChangeSet meets them, then any others by name, NONE last.
@@ -142,7 +153,7 @@ export function heatBucket(v: number, max: number): number {
 export function renderHeat(
   doc: Document,
   h: {
-    rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number; qaFailing: number; qaWorst: string | null; qaStale: number; qaUnaudited: number; qaBlocks: number; needReview: number; reviewed: number }>;
+    rows: Array<{ section: string; changed: number; open: number; defects: number; stale: number; qaFailing: number; qaWorst: string | null; qaStale: number; qaUnaudited: number; qaScriptsOnly: number; qaNeedsAgent: number; qaJudgedUnknown: number; qaBlocks: number; needReview: number; reviewed: number }>;
     hasComments: boolean;
     hasBlocks: boolean;
     hasQa: boolean;
@@ -162,7 +173,7 @@ export function renderHeat(
     ["Open comments", "open or addressed; defects in brackets"],
     ["Stale comments", "the block changed after the comment was made: re-read before replying"],
     ["Review coverage", "changed blocks with a reviewer verdict on their current version; resolved comments do not count"],
-    ["QA", "blocks whose latest QA verdicts fail; stale and unaudited blocks are counted, never read as passing"],
+    ["QA", "blocks whose latest QA verdicts fail; stale and unaudited blocks are counted, never read as passing, and a block whose agent-judged criteria have no verdict passes on scripts only"],
   ];
   const head = doc.createElement("thead");
   const hr = doc.createElement("tr");
@@ -223,7 +234,9 @@ export function renderHeat(
       if (r.qaFailing) parts.push(r.qaFailing + " failing" + (r.qaWorst ? " (" + r.qaWorst + ")" : ""));
       if (r.qaStale) parts.push(r.qaStale + " stale");
       if (r.qaUnaudited) parts.push(r.qaUnaudited + " unaudited");
-      const text = parts.length ? parts.join(" \u00b7 ") : r.qaBlocks ? "passing" : "no blocks";
+      if (r.qaScriptsOnly) parts.push(r.qaScriptsOnly + " passing on scripts only (" + r.qaNeedsAgent + " criteria need an agent)");
+      const judged = r.qaJudgedUnknown ? "passing (this build does not say whether agent-judged criteria were run)" : "passing, every applicable criterion judged";
+      const text = parts.length ? parts.join(" \u00b7 ") : r.qaBlocks ? judged : "no blocks";
       tr.appendChild(cell(text, bucket(r.qaFailing, mx.qa), r.qaFailing + " block(s) failing, " + r.qaStale + " stale, " + r.qaUnaudited + " unaudited, of " + r.qaBlocks, !r.qaFailing && !r.qaStale && !r.qaUnaudited));
     }
     body.appendChild(tr);
