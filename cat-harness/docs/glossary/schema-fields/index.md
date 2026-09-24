@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1379 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1380 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1559 terms and is 843 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1560 terms and is 843 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1559</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1560</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -5051,6 +5051,13 @@ LibraryIndexEntrySchema.referencedBy <span class="fa-gloss-status">candidate, ex
 <p>Absent means the reference scan did not run — a third state, not &quot;none&quot;.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--site-indexes.libraryindexentryschema.withheld" data-fa-state="extracted" data-fa-gloss="">
+LibraryIndexEntrySchema.withheld <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheld</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--library-ref.libraryref.instance" data-fa-state="extracted" data-fa-gloss="">
 LibraryRef.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -8908,13 +8915,6 @@ StickyTextSchema.scale <span class="fa-gloss-status">candidate, extracted</span>
 <p>Multiply the words' size. `1` is normal; `0.8` fits more in.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.docs" data-fa-state="extracted" data-fa-gloss="">
-SubgraphCoverageSchema.docs <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The documentation entry, **relative to the REPOSITORY root** — as &#123;@link visualiser}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.docs</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.serialisations" data-fa-state="extracted" data-fa-gloss="">
 SubgraphCoverageSchema.serialisations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -10869,6 +10869,13 @@ WaiverNodeSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>How far it reaches.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/waiver.ts"><code>cat-harness/schemas/waiver.ts#WaiverNodeSchema.scope</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--webpage.webpage.documents" data-fa-state="extracted" data-fa-gloss="">
+WebPage.documents <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this page documents: graph kinds (`library`), or one directory as `&lt;instance&gt;/&lt;id&gt;` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.documents</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpage.heading" data-fa-state="extracted" data-fa-gloss="">
 WebPage.heading <span class="fa-gloss-status">candidate, extracted</span>
