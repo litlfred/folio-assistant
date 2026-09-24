@@ -274,7 +274,6 @@ export const RULES: Rule[] = [
       "scripts/check-tools.ts",              // every Tool `satisfies` resolves to a skill
       "scripts/tool-coverage.ts",            // which uncovered skills warrant a Tool
       "scripts/kg-export.ts",                // the instance's KG → one JSON-LD file
-      "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
       "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
@@ -790,6 +789,12 @@ export const RULES: Rule[] = [
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
+      // Harness for the same reason, and by its SUBJECT twice over: it reads
+      // the agent work plan and compares it against `skills/`, which is the
+      // `kg` graph the harness declares. Bean `8v0y` — a bean restating a
+      // skill's contract is a defect in the harness's own discipline, and a
+      // folio has neither a bean store nor a skill graph to be wrong about.
+      "scripts/check-bean-restates-skill.ts",
       // Harness for the same reason, plus one of its own: its `--github`
       // half asks the forge which PRs are open, and a PR is a fact about
       // this checkout and the forge, not about any folio's material.

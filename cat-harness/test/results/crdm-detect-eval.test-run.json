@@ -2,16 +2,16 @@
   "$schema": "folio-test-run/v1",
   "subject": "crdm-detect phrase signals against the issue corpus",
   "data": {
-    "hash": "9981e6db44dc",
+    "hash": "d211c42e6dfc",
     "inputs": [
       "scripts/eval/crdm-detect-corpus.json"
     ]
   },
   "process": {
-    "hash": "08da3bc2ecc5",
+    "hash": "32a15ac3ac96",
     "inputs": [
-      "methodologies/crdm/crdm-detect.md",
       "scripts/eval-crdm-detect.ts",
+      "skills/crdm/crdm-detect.md",
       "src/crdm/detect-signals.ts"
     ]
   },
@@ -25,5 +25,5 @@
     "recall": 1,
     "f1": 0.9268
   },
-  "updated_at": "2026-09-21T16:23:41.878Z"
+  "updated_at": "2026-09-24T05:12:31.202Z"
 }
