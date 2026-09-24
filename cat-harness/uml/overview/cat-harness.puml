@@ -42,7 +42,6 @@ package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<ext
     specUrl [1] : string<uri>
     namespaces [0..*] : string[]
     use [1] : conforms | reads | cites
-    usedBy [1..*] : string[]
     terms [0..*] : Term[]
     note [0..1] : string
   }
@@ -638,8 +637,10 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : Record<string, TranslationQaEntry[]>
     updated_at [1] : string
   }
-  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4e6e6 {
-    //no schema declared, shape is whatever scripts/gen-docs-pages.ts writes//
+  class "folio-qa-index/v1" as cat_harness_qa_folio_qa_index_v1_folio_qa_index_v1 <<json: QaIndexSchema>> #f4e6e6 {
+    $schema [1] : 'folio-qa-index/v1'
+    page [1] : string
+    badges [1] : map<object>
   }
   class "folio-detangle-sidecar/v1" as cat_harness_qa_folio_detangle_sidecar_v1 <<ts: DetangleSidecar>> #f4e6e6 {
     $schema [1] : 'folio-detangle-sidecar/v1'
@@ -801,19 +802,19 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
   }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_who_iris_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (4 named): could not determine)" as n_cat_harness_who_iris_library_library
 }
 package "cat-harness/agent-skills-library" as pkg_cat_harness_agent_skills_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_agent_skills_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (4 named): could not determine)" as n_cat_harness_agent_skills_library_library
 }
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (4 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
 }
 package "cat-harness/folio-assistant-core-library" as pkg_cat_harness_folio_assistant_core_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (4 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
 }
 package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_smart_base_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (4 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
@@ -910,26 +911,258 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     locales [1] : string[]
     pages [1] : Record<string, IndexedPage>
   }
-  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-docs-pages.ts writes//
+  class "Item" as cat_harness_docs_folio_bean_index_v1_Item <<json: BeanIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    status [1] : string
+    type [1] : string
+    priority [1] : string
+    parent [1] : string
+    blocking [0..*] : string[]
+    blockedBy [0..*] : string[]
+    createdAt [1] : string
+    updatedAt [1] : string
+    preview [1] : string
+    file [1] : string
   }
-  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-translation-status.ts writes//
+  class "Finding" as cat_harness_docs_folio_bean_index_v1_Finding <<json: BeanIndexSchema>> #f4f4f1 {
+    kind [1] : blocked-without-expiry | blocker-closed | blocking-unknown
+    bean [1] : string
+    blocks [1] : string
+    detail [1] : string
   }
-  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-schema-viz.ts writes//
+  class "folio-bean-index/v1" as cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 <<json: BeanIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-bean-index/v1'
+    tile [0..1] : map<object>
+    repoWeb [1] : string
+    items [0..*] : Item[]
+    findings [0..*] : Finding[]
   }
-  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-library-viz.ts writes//
+  class "Locale" as cat_harness_docs_folio_translation_status_v1_Locale <<json: TranslationStatusSchema>> #f4f4f1 {
+    locale [1] : string
+    templates [1] : integer
+    catalogues [1] : integer
+    entries [1] : integer
+    translated [1] : integer
+    fuzzy [1] : integer
+    untranslated [1] : integer
+    unreadable [0..*] : string[]
   }
-  class "folio-library-entry/v1" as cat_harness_docs_folio_library_entry_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-library-viz.ts writes//
+  class "folio-translation-status/v1" as cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 <<json: TranslationStatusSchema>> #f4f4f1 {
+    $schema [1] : 'folio-translation-status/v1'
+    tile [0..1] : map<object>
+    changedAt [1] : string
+    scope [1] : string
+    locales [0..*] : Locale[]
   }
-  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-voices-viz.ts writes//
+  class "Module" as cat_harness_docs_folio_schema_graph_v1_Module <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    module [1] : string
+    instance [1] : string
+    name [1] : string
+    graphNode [1] : schema | none | undeclared
+    reason [0..1] : string
+    summary [0..1] : string
+    isTest [1] : boolean
   }
-  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-folio-viz.ts writes//
+  class "Field" as cat_harness_docs_folio_schema_graph_v1_Field <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    name [1] : string
+    type [1] : string
+    optional [1] : boolean
+    array [1] : boolean
+    doc [0..1] : string
+  }
+  class "Decl" as cat_harness_docs_folio_schema_graph_v1_Decl <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    id [1] : string
+    name [1] : string
+    module [1] : string
+    kind [1] : enum(9)
+    note [0..1] : string
+    doc [0..1] : string
+    fields [0..*] : Field[]
+    extendsNames [0..*] : string[]
+    values [0..*] : string[]
+    refs [0..*] : string[]
+    unresolved [0..*] : string[]
+    external [0..*] : string[]
+    exported [1] : boolean
+  }
+  class "Edge" as cat_harness_docs_folio_schema_graph_v1_Edge <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    from [1] : string
+    to [1] : string
+    via [1] : string
+    kind [1] : field | member | extends | id-ref
+    optional [1] : boolean
+    array [1] : boolean
+  }
+  class "folio-schema-graph/v1" as cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-schema-graph/v1'
+    tile [0..1] : map<object>
+    roots [0..*] : string[]
+    modules [0..*] : Module[]
+    decls [0..*] : Decl[]
+    edges [0..*] : Edge[]
+  }
+  class "ReferencedBy" as cat_harness_docs_folio_library_index_v1_ReferencedBy <<json: LibraryIndexSchema>> #f4f4f1 {
+    kind [1] : string
+    instance [1] : string
+    from [1] : string
+    count [1] : integer
+  }
+  class "Entry" as cat_harness_docs_folio_library_index_v1_Entry <<json: LibraryIndexSchema>> #f4f4f1 {
+    id [1] : string
+    instance [1] : string
+    dir [1] : string
+    title [1] : string
+    provenance [1] : string
+    rung [1] : paged | tabular | none
+    docId [1] : string
+    sourceFile [1] : string
+    sourceSha256 [1] : string
+    arxiv [1] : string
+    doi [1] : string
+    documentClass [1] : string
+    sections [1] : integer
+    blocks [1] : integer
+    images [1] : integer
+    ocrPages [1] : integer
+    hasOcr [1] : boolean
+    hasManifest [1] : boolean
+    hasStructure [1] : boolean
+    hasImagesJson [1] : boolean
+    pageStart [1] : integer | null
+    pageEnd [1] : integer | null
+    words [1] : integer
+    chars [1] : integer
+    bytes [1] : integer
+    upload [1] : match | differs | absent | unknown
+    uploadInstance [1] : string
+    referencedBy [0..*] : ReferencedBy[]
+    avatar [0..1] : object
+    summaries [0..1] : object
+  }
+  class "Upload" as cat_harness_docs_folio_library_index_v1_Upload <<json: LibraryIndexSchema>> #f4f4f1 {
+    file [1] : string
+    kind [1] : file | intake
+    instance [1] : string
+    path [1] : string
+    bytes [1] : integer
+    ext [1] : string
+    ingestedBy [1] : string
+    docId [1] : string
+    title [1] : string
+    declaredFiles [1] : integer
+  }
+  class "Queue" as cat_harness_docs_folio_library_index_v1_Queue <<json: LibraryIndexSchema>> #f4f4f1 {
+    instance [1] : string
+    dir [1] : string
+    total [1] : integer
+    ingested [1] : integer
+    uningested [1] : integer
+  }
+  class "folio-library-index/v1" as cat_harness_docs_folio_library_index_v1_folio_library_index_v1 <<json: LibraryIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-library-index/v1'
+    tile [0..1] : map<object>
+    entries [0..*] : Entry[]
+    uploads [0..*] : Upload[]
+    queues [0..*] : Queue[]
+    refScan [0..1] : object
+  }
+  class "Block" as cat_harness_docs_folio_library_entry_v1_Block <<json: LibraryEntrySchema>> #f4f4f1 {
+    id [1] : string
+    types [0..*] : string[]
+    kind [1] : string
+    title [1] : string
+    pageStart [1] : integer | null
+    pageEnd [1] : integer | null
+    target [1] : string | null
+    narrative [1] : string | null
+    content [1] : string | null
+    truncated [1] : boolean
+    provenance [1] : string
+    summary [1] : object | null
+  }
+  class "folio-library-entry/v1" as cat_harness_docs_folio_library_entry_v1_folio_library_entry_v1 <<json: LibraryEntrySchema>> #f4f4f1 {
+    $schema [1] : 'folio-library-entry/v1'
+    id [1] : string
+    blocks [0..*] : Block[]
+  }
+  class "Directory" as cat_harness_docs_folio_voices_index_v1_Directory <<json: VoicesIndexSchema>> #f4f4f1 {
+    instance [1] : string
+    dir [1] : string
+    present [1] : boolean
+    voices [0..*] : string[]
+  }
+  class "Source" as cat_harness_docs_folio_voices_index_v1_Source <<json: VoicesIndexSchema>> #f4f4f1 {
+    title [1] : string
+    year [0..1] : integer
+  }
+  class "ProvenanceFlag" as cat_harness_docs_folio_voices_index_v1_ProvenanceFlag <<json: VoicesIndexSchema>> #f4f4f1 {
+    code [1] : 'declared-outside-cites-inside'
+    ruleIds [0..*] : string[]
+    detail [1] : string
+  }
+  class "Rule" as cat_harness_docs_folio_voices_index_v1_Rule <<json: VoicesIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : string
+    severity [1] : string
+    patterns [1] : integer
+    terminology [1] : integer
+    judgementOnly [1] : boolean
+    citation [1] : library | kg-node | none
+    cites [0..1] : string
+    citesInstance [0..1] : string
+    pages [0..1] : string
+    quote [1] : string
+    counterintuitive [0..1] : boolean
+    commonError [0..1] : string
+  }
+  class "Voice" as cat_harness_docs_folio_voices_index_v1_Voice <<json: VoicesIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    instance [1] : string
+    path [1] : string
+    provenance [1] : string
+    overlaySeverity [1] : string
+    criterion [1] : string
+    sources [0..*] : Source[]
+    hasInstructions [1] : boolean
+    provenanceFlags [0..*] : ProvenanceFlag[]
+    rules [0..*] : Rule[]
+  }
+  class "folio-voices-index/v1" as cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1 <<json: VoicesIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-voices-index/v1'
+    tile [0..1] : map<object>
+    directories [0..*] : Directory[]
+    voices [0..*] : Voice[]
+    totals [1] : object
+  }
+  class "Directory" as cat_harness_docs_folio_graph_projection_v1_Directory <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    dir [1] : string
+    present [1] : boolean
+    nodes [1] : integer
+  }
+  class "Link" as cat_harness_docs_folio_graph_projection_v1_Link <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string
+  }
+  class "Node" as cat_harness_docs_folio_graph_projection_v1_Node <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    id [1] : string
+    summary [1] : string
+    theme [1] : string | null
+    anchor [1] : string | null
+    declaredIn [1] : string | null
+    links [0..*] : Link[]
+    chars [1] : integer
+    file [1] : string
+  }
+  class "folio-graph-projection/v1" as cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-projection/v1'
+    tile [0..1] : map<object>
+    directories [0..*] : Directory[]
+    nodes [0..*] : Node[]
   }
 }
 package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
@@ -980,26 +1213,258 @@ package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
     locales [1] : string[]
     pages [1] : Record<string, IndexedPage>
   }
-  class "folio-bean-index/v1" as cat_harness_root_docs_folio_bean_index_v1 <<untyped: written by scripts/gen-docs-pages.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-docs-pages.ts writes//
+  class "Item" as cat_harness_root_docs_folio_bean_index_v1_Item <<json: BeanIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    status [1] : string
+    type [1] : string
+    priority [1] : string
+    parent [1] : string
+    blocking [0..*] : string[]
+    blockedBy [0..*] : string[]
+    createdAt [1] : string
+    updatedAt [1] : string
+    preview [1] : string
+    file [1] : string
   }
-  class "folio-translation-status/v1" as cat_harness_root_docs_folio_translation_status_v1 <<untyped: written by scripts/gen-translation-status.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-translation-status.ts writes//
+  class "Finding" as cat_harness_root_docs_folio_bean_index_v1_Finding <<json: BeanIndexSchema>> #f4f4f1 {
+    kind [1] : blocked-without-expiry | blocker-closed | blocking-unknown
+    bean [1] : string
+    blocks [1] : string
+    detail [1] : string
   }
-  class "folio-schema-graph/v1" as cat_harness_root_docs_folio_schema_graph_v1 <<untyped: written by scripts/gen-schema-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-schema-viz.ts writes//
+  class "folio-bean-index/v1" as cat_harness_root_docs_folio_bean_index_v1_folio_bean_index_v1 <<json: BeanIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-bean-index/v1'
+    tile [0..1] : map<object>
+    repoWeb [1] : string
+    items [0..*] : Item[]
+    findings [0..*] : Finding[]
   }
-  class "folio-library-index/v1" as cat_harness_root_docs_folio_library_index_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-library-viz.ts writes//
+  class "Locale" as cat_harness_root_docs_folio_translation_status_v1_Locale <<json: TranslationStatusSchema>> #f4f4f1 {
+    locale [1] : string
+    templates [1] : integer
+    catalogues [1] : integer
+    entries [1] : integer
+    translated [1] : integer
+    fuzzy [1] : integer
+    untranslated [1] : integer
+    unreadable [0..*] : string[]
   }
-  class "folio-library-entry/v1" as cat_harness_root_docs_folio_library_entry_v1 <<untyped: written by scripts/gen-library-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-library-viz.ts writes//
+  class "folio-translation-status/v1" as cat_harness_root_docs_folio_translation_status_v1_folio_translation_status_v1 <<json: TranslationStatusSchema>> #f4f4f1 {
+    $schema [1] : 'folio-translation-status/v1'
+    tile [0..1] : map<object>
+    changedAt [1] : string
+    scope [1] : string
+    locales [0..*] : Locale[]
   }
-  class "folio-voices-index/v1" as cat_harness_root_docs_folio_voices_index_v1 <<untyped: written by scripts/gen-voices-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-voices-viz.ts writes//
+  class "Module" as cat_harness_root_docs_folio_schema_graph_v1_Module <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    module [1] : string
+    instance [1] : string
+    name [1] : string
+    graphNode [1] : schema | none | undeclared
+    reason [0..1] : string
+    summary [0..1] : string
+    isTest [1] : boolean
   }
-  class "folio-graph-projection/v1" as cat_harness_root_docs_folio_graph_projection_v1 <<untyped: written by scripts/gen-folio-viz.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/gen-folio-viz.ts writes//
+  class "Field" as cat_harness_root_docs_folio_schema_graph_v1_Field <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    name [1] : string
+    type [1] : string
+    optional [1] : boolean
+    array [1] : boolean
+    doc [0..1] : string
+  }
+  class "Decl" as cat_harness_root_docs_folio_schema_graph_v1_Decl <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    id [1] : string
+    name [1] : string
+    module [1] : string
+    kind [1] : enum(9)
+    note [0..1] : string
+    doc [0..1] : string
+    fields [0..*] : Field[]
+    extendsNames [0..*] : string[]
+    values [0..*] : string[]
+    refs [0..*] : string[]
+    unresolved [0..*] : string[]
+    external [0..*] : string[]
+    exported [1] : boolean
+  }
+  class "Edge" as cat_harness_root_docs_folio_schema_graph_v1_Edge <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    from [1] : string
+    to [1] : string
+    via [1] : string
+    kind [1] : field | member | extends | id-ref
+    optional [1] : boolean
+    array [1] : boolean
+  }
+  class "folio-schema-graph/v1" as cat_harness_root_docs_folio_schema_graph_v1_folio_schema_graph_v1 <<json: SchemaGraphIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-schema-graph/v1'
+    tile [0..1] : map<object>
+    roots [0..*] : string[]
+    modules [0..*] : Module[]
+    decls [0..*] : Decl[]
+    edges [0..*] : Edge[]
+  }
+  class "ReferencedBy" as cat_harness_root_docs_folio_library_index_v1_ReferencedBy <<json: LibraryIndexSchema>> #f4f4f1 {
+    kind [1] : string
+    instance [1] : string
+    from [1] : string
+    count [1] : integer
+  }
+  class "Entry" as cat_harness_root_docs_folio_library_index_v1_Entry <<json: LibraryIndexSchema>> #f4f4f1 {
+    id [1] : string
+    instance [1] : string
+    dir [1] : string
+    title [1] : string
+    provenance [1] : string
+    rung [1] : paged | tabular | none
+    docId [1] : string
+    sourceFile [1] : string
+    sourceSha256 [1] : string
+    arxiv [1] : string
+    doi [1] : string
+    documentClass [1] : string
+    sections [1] : integer
+    blocks [1] : integer
+    images [1] : integer
+    ocrPages [1] : integer
+    hasOcr [1] : boolean
+    hasManifest [1] : boolean
+    hasStructure [1] : boolean
+    hasImagesJson [1] : boolean
+    pageStart [1] : integer | null
+    pageEnd [1] : integer | null
+    words [1] : integer
+    chars [1] : integer
+    bytes [1] : integer
+    upload [1] : match | differs | absent | unknown
+    uploadInstance [1] : string
+    referencedBy [0..*] : ReferencedBy[]
+    avatar [0..1] : object
+    summaries [0..1] : object
+  }
+  class "Upload" as cat_harness_root_docs_folio_library_index_v1_Upload <<json: LibraryIndexSchema>> #f4f4f1 {
+    file [1] : string
+    kind [1] : file | intake
+    instance [1] : string
+    path [1] : string
+    bytes [1] : integer
+    ext [1] : string
+    ingestedBy [1] : string
+    docId [1] : string
+    title [1] : string
+    declaredFiles [1] : integer
+  }
+  class "Queue" as cat_harness_root_docs_folio_library_index_v1_Queue <<json: LibraryIndexSchema>> #f4f4f1 {
+    instance [1] : string
+    dir [1] : string
+    total [1] : integer
+    ingested [1] : integer
+    uningested [1] : integer
+  }
+  class "folio-library-index/v1" as cat_harness_root_docs_folio_library_index_v1_folio_library_index_v1 <<json: LibraryIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-library-index/v1'
+    tile [0..1] : map<object>
+    entries [0..*] : Entry[]
+    uploads [0..*] : Upload[]
+    queues [0..*] : Queue[]
+    refScan [0..1] : object
+  }
+  class "Block" as cat_harness_root_docs_folio_library_entry_v1_Block <<json: LibraryEntrySchema>> #f4f4f1 {
+    id [1] : string
+    types [0..*] : string[]
+    kind [1] : string
+    title [1] : string
+    pageStart [1] : integer | null
+    pageEnd [1] : integer | null
+    target [1] : string | null
+    narrative [1] : string | null
+    content [1] : string | null
+    truncated [1] : boolean
+    provenance [1] : string
+    summary [1] : object | null
+  }
+  class "folio-library-entry/v1" as cat_harness_root_docs_folio_library_entry_v1_folio_library_entry_v1 <<json: LibraryEntrySchema>> #f4f4f1 {
+    $schema [1] : 'folio-library-entry/v1'
+    id [1] : string
+    blocks [0..*] : Block[]
+  }
+  class "Directory" as cat_harness_root_docs_folio_voices_index_v1_Directory <<json: VoicesIndexSchema>> #f4f4f1 {
+    instance [1] : string
+    dir [1] : string
+    present [1] : boolean
+    voices [0..*] : string[]
+  }
+  class "Source" as cat_harness_root_docs_folio_voices_index_v1_Source <<json: VoicesIndexSchema>> #f4f4f1 {
+    title [1] : string
+    year [0..1] : integer
+  }
+  class "ProvenanceFlag" as cat_harness_root_docs_folio_voices_index_v1_ProvenanceFlag <<json: VoicesIndexSchema>> #f4f4f1 {
+    code [1] : 'declared-outside-cites-inside'
+    ruleIds [0..*] : string[]
+    detail [1] : string
+  }
+  class "Rule" as cat_harness_root_docs_folio_voices_index_v1_Rule <<json: VoicesIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    category [1] : string
+    severity [1] : string
+    patterns [1] : integer
+    terminology [1] : integer
+    judgementOnly [1] : boolean
+    citation [1] : library | kg-node | none
+    cites [0..1] : string
+    citesInstance [0..1] : string
+    pages [0..1] : string
+    quote [1] : string
+    counterintuitive [0..1] : boolean
+    commonError [0..1] : string
+  }
+  class "Voice" as cat_harness_root_docs_folio_voices_index_v1_Voice <<json: VoicesIndexSchema>> #f4f4f1 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    instance [1] : string
+    path [1] : string
+    provenance [1] : string
+    overlaySeverity [1] : string
+    criterion [1] : string
+    sources [0..*] : Source[]
+    hasInstructions [1] : boolean
+    provenanceFlags [0..*] : ProvenanceFlag[]
+    rules [0..*] : Rule[]
+  }
+  class "folio-voices-index/v1" as cat_harness_root_docs_folio_voices_index_v1_folio_voices_index_v1 <<json: VoicesIndexSchema>> #f4f4f1 {
+    $schema [1] : 'folio-voices-index/v1'
+    tile [0..1] : map<object>
+    directories [0..*] : Directory[]
+    voices [0..*] : Voice[]
+    totals [1] : object
+  }
+  class "Directory" as cat_harness_root_docs_folio_graph_projection_v1_Directory <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    dir [1] : string
+    present [1] : boolean
+    nodes [1] : integer
+  }
+  class "Link" as cat_harness_root_docs_folio_graph_projection_v1_Link <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    label [1] : string
+    href [1] : string
+  }
+  class "Node" as cat_harness_root_docs_folio_graph_projection_v1_Node <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    id [1] : string
+    summary [1] : string
+    theme [1] : string | null
+    anchor [1] : string | null
+    declaredIn [1] : string | null
+    links [0..*] : Link[]
+    chars [1] : integer
+    file [1] : string
+  }
+  class "folio-graph-projection/v1" as cat_harness_root_docs_folio_graph_projection_v1_folio_graph_projection_v1 <<json: FolioGraphProjectionSchema>> #f4f4f1 {
+    $schema [1] : 'folio-graph-projection/v1'
+    tile [0..1] : map<object>
+    directories [0..*] : Directory[]
+    nodes [0..*] : Node[]
   }
 }
 package "cat-harness/folio-assist-core-schemas" as pkg_cat_harness_folio_assist_core_schemas <<schemas, cat-harness>> {
@@ -1101,8 +1566,48 @@ cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_libr
 cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
+cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
+cat_harness_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_docs_folio_translation_status_v1_Locale : locales
+cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Module : modules
+cat_harness_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Field : fields
+cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Decl : decls
+cat_harness_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_docs_folio_schema_graph_v1_Edge : edges
+cat_harness_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_docs_folio_library_index_v1_ReferencedBy : referencedBy
+cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Entry : entries
+cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Upload : uploads
+cat_harness_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_docs_folio_library_index_v1_Queue : queues
+cat_harness_docs_folio_library_entry_v1_folio_library_entry_v1 *-- "0..*" cat_harness_docs_folio_library_entry_v1_Block : blocks
+cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_docs_folio_voices_index_v1_Directory : directories
+cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_Source : sources
+cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_ProvenanceFlag : provenanceFlags
+cat_harness_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_docs_folio_voices_index_v1_Rule : rules
+cat_harness_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_docs_folio_voices_index_v1_Voice : voices
+cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Directory : directories
+cat_harness_docs_folio_graph_projection_v1_Node *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Link : links
+cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Node : nodes
 cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations
 cat_harness_root_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Item : items
+cat_harness_root_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_root_docs_folio_bean_index_v1_Item : items
+cat_harness_root_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_root_docs_folio_bean_index_v1_Finding : findings
+cat_harness_root_docs_folio_translation_status_v1_folio_translation_status_v1 *-- "0..*" cat_harness_root_docs_folio_translation_status_v1_Locale : locales
+cat_harness_root_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_root_docs_folio_schema_graph_v1_Module : modules
+cat_harness_root_docs_folio_schema_graph_v1_Decl *-- "0..*" cat_harness_root_docs_folio_schema_graph_v1_Field : fields
+cat_harness_root_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_root_docs_folio_schema_graph_v1_Decl : decls
+cat_harness_root_docs_folio_schema_graph_v1_folio_schema_graph_v1 *-- "0..*" cat_harness_root_docs_folio_schema_graph_v1_Edge : edges
+cat_harness_root_docs_folio_library_index_v1_Entry *-- "0..*" cat_harness_root_docs_folio_library_index_v1_ReferencedBy : referencedBy
+cat_harness_root_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_root_docs_folio_library_index_v1_Entry : entries
+cat_harness_root_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_root_docs_folio_library_index_v1_Upload : uploads
+cat_harness_root_docs_folio_library_index_v1_folio_library_index_v1 *-- "0..*" cat_harness_root_docs_folio_library_index_v1_Queue : queues
+cat_harness_root_docs_folio_library_entry_v1_folio_library_entry_v1 *-- "0..*" cat_harness_root_docs_folio_library_entry_v1_Block : blocks
+cat_harness_root_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_root_docs_folio_voices_index_v1_Directory : directories
+cat_harness_root_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_root_docs_folio_voices_index_v1_Source : sources
+cat_harness_root_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_root_docs_folio_voices_index_v1_ProvenanceFlag : provenanceFlags
+cat_harness_root_docs_folio_voices_index_v1_Voice *-- "0..*" cat_harness_root_docs_folio_voices_index_v1_Rule : rules
+cat_harness_root_docs_folio_voices_index_v1_folio_voices_index_v1 *-- "0..*" cat_harness_root_docs_folio_voices_index_v1_Voice : voices
+cat_harness_root_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_root_docs_folio_graph_projection_v1_Directory : directories
+cat_harness_root_docs_folio_graph_projection_v1_Node *-- "0..*" cat_harness_root_docs_folio_graph_projection_v1_Link : links
+cat_harness_root_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_root_docs_folio_graph_projection_v1_Node : nodes
 ' grid: portrait, 5 column(s) — pkg_cat_harness_tools pkg_cat_harness_external_schemas pkg_cat_harness_code_lists pkg_cat_harness_schemas pkg_cat_harness_uml pkg_cat_harness_skills pkg_cat_harness_scenarios pkg_cat_harness_policies pkg_cat_harness_processes pkg_cat_harness_methodologies pkg_cat_harness_qa pkg_cat_harness_fsh_guts pkg_cat_harness_health pkg_cat_harness_beans pkg_cat_harness_todos pkg_cat_harness_memory pkg_cat_harness_interaction pkg_cat_harness_issue_marks pkg_cat_harness_uploads pkg_cat_harness_library pkg_cat_harness_who_iris_library pkg_cat_harness_agent_skills_library pkg_cat_harness_folio_assistant_sci_library pkg_cat_harness_folio_assistant_core_library pkg_cat_harness_smart_base_library pkg_cat_harness_translation_sources pkg_cat_harness_folio pkg_cat_harness_smart_base_methodologies pkg_cat_harness_folio_assistant_core_methodologies pkg_cat_harness_folio_assistant_core_skills pkg_cat_harness_smart_base_processes pkg_cat_harness_docs pkg_cat_harness_root_docs pkg_cat_harness_folio_assist_core_schemas pkg_cat_harness_large_datasets_skills pkg_cat_harness_who_iris_skills pkg_cat_harness_large_datasets_schemas pkg_cat_harness_swimlane_glossary pkg_cat_harness_cat_harness_scripts pkg_cat_harness_cat_harness_src pkg_cat_harness_cat_harness_adapters pkg_cat_harness_cat_harness_tests pkg_cat_harness_folio_assistant_core_processes
 pkg_cat_harness_tools -[hidden]down- pkg_cat_harness_skills
 pkg_cat_harness_external_schemas -[hidden]down- pkg_cat_harness_scenarios
