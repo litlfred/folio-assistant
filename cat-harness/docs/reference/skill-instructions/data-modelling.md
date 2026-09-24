@@ -193,6 +193,20 @@ decision table, convention or precondition. It cannot see a bare string field
 with no `@ref` (step 9 is how those become visible) or prose, so a clean run
 is a claim about declared pointers only.
 
+**Prose may name a dependent; data may not.** The rule governs references,
+the things a tool follows. A general node's prose can still name a
+dependent to explain itself. For example, a process's documentation may say
+"`feature-staging.yml` publishes the branch" so the reader knows why a step
+exists. The owner kept those explanations on 2026-09-24, since deleting them
+loses the reason a step exists (bean `epbt`). If the relation matters to a
+tool, it must also exist as data held by the dependent, like a workflow's
+`# bpmn:` line. The prose then explains that data and does not replace it.
+What prose cannot do is notice a rename, so `kg:audit`'s advisory
+`prose-names-resolve` criterion lists a named path whose directory exists
+and whose file does not. A bare name that nothing in the repository carries
+is left undetermined, because it could be a run's output, a folio's file or
+an example.
+
 ### 9. Make every cross-node reference a typed KG reference
 
 A reference is a claim that another node exists. A bare string makes that
