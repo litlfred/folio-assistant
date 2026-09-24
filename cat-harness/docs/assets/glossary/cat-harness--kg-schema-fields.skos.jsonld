@@ -6453,25 +6453,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.docs",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SubgraphCoverageSchema.docs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.docs",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.serialisations",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -25906,6 +25887,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/waiver.ts#WaiverNodeSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/webpage.webpage.documents",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WebPage.documents"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this page documents: graph kinds (`library`), or one directory as `<instance>/<id>` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/webpage.ts#WebPage.documents",
       "skos:note": "candidate"
     },
     {

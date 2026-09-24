@@ -6819,13 +6819,6 @@
           "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
         },
         {
-          "name": "docs",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        },
-        {
           "name": "serialisations",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -34341,6 +34334,13 @@
           "optional": true,
           "array": false,
           "doc": "just-the-docs nav front matter."
+        },
+        {
+          "name": "documents",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What this page documents: graph kinds (`library`), or one directory as"
         },
         {
           "name": "parent",

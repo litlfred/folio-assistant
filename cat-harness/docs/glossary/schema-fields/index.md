@@ -13,7 +13,7 @@ Candidate terms extracted from every schema field with a doc comment: `<Declarat
 
 From: cat-harness 1379 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1553 terms and is 839 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1553 terms and is 840 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -8866,13 +8866,6 @@ StickyTextSchema.scale <span class="fa-gloss-status">candidate, extracted</span>
 <p>Multiply the words' size. `1` is normal; `0.8` fits more in.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.docs" data-fa-state="extracted" data-fa-gloss="">
-SubgraphCoverageSchema.docs <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The documentation entry, **relative to the REPOSITORY root** — as &#123;@link visualiser}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.docs</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.serialisations" data-fa-state="extracted" data-fa-gloss="">
 SubgraphCoverageSchema.serialisations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -10827,6 +10820,13 @@ WaiverNodeSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>How far it reaches.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/waiver.ts"><code>cat-harness/schemas/waiver.ts#WaiverNodeSchema.scope</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--webpage.webpage.documents" data-fa-state="extracted" data-fa-gloss="">
+WebPage.documents <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this page documents: graph kinds (`library`), or one directory as `&lt;instance&gt;/&lt;id&gt;` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/webpage.ts"><code>cat-harness/schemas/webpage.ts#WebPage.documents</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--webpage.webpage.heading" data-fa-state="extracted" data-fa-gloss="">
 WebPage.heading <span class="fa-gloss-status">candidate, extracted</span>
