@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 317,
+      "count": 320,
       "unit": "beans"
     }
   },
@@ -599,6 +599,20 @@
       "file": "beans/defs/folio-assistant-4kj4--avatars-per-kind-avatar-in-and-out-of-trash-both-s.md"
     },
     {
+      "id": "folio-assistant-4l5q",
+      "title": "B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:50:21Z",
+      "updatedAt": "2026-09-24T19:50:21Z",
+      "preview": "Owner 2026-09-24: 'A' for coverage.skill, and 'skill names the directory' for a domain skill over a generic-kind directory. 24 kind claims added to skills' graph-kinds:; 5 directories whose kinds are all generic named in governs: as <instance>/<id>. scripts/skill-governance.ts reads both; a kind claim reaches the skill's instance, its dependents, and the platform. check-subgraph-coverage derives t",
+      "file": "beans/defs/folio-assistant-4l5q--b7b-1168-a-skill-declares-the-directories-it-gover.md"
+    },
+    {
       "id": "folio-assistant-4pm8",
       "title": "PAGEFIND: evaluate as the search engine for the large-datasets subgraph",
       "status": "todo",
@@ -608,7 +622,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:21:09Z",
-      "updatedAt": "2026-09-23T02:45:00Z",
+      "updatedAt": "2026-09-24T19:30:00Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
     },
@@ -825,14 +839,14 @@
     {
       "id": "folio-assistant-6brk",
       "title": "FLAKE: check-declaration-filename's corpus scan runs 4.2s against a 5000ms test budget on a clean main — any corpus growth tips it",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T06:21:41Z",
-      "updatedAt": "2026-09-24T06:21:41Z",
+      "updatedAt": "2026-09-24T19:53:28Z",
       "preview": "`check-declaration-filename.test.ts` scans the whole markdown and workflow\ncorpus. **Measured 2026-09-24, directly, three runs per tree:**\n\n| tree | ms per `checkDeclarationFilename()` |\n|---|---|\n| clean `main` | **4476, 4198, 3927** |\n| `main` + ~150 lines of markdown (PR #1188) | **4927, 4216, 4249** |\n\nThe test budget is **5000 ms**. So on a clean `main`, before anybody adds\nanything, the scan",
       "file": "beans/defs/folio-assistant-6brk--flake-check-declaration-filenames-corpus-scan-runs.md"
     },
@@ -1795,14 +1809,14 @@
     {
       "id": "folio-assistant-d4lb",
       "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:42:45Z",
-      "updatedAt": "2026-09-24T18:51:25Z",
+      "updatedAt": "2026-09-24T19:50:21Z",
       "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
       "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
     },
@@ -3381,6 +3395,20 @@
       "file": "beans/defs/folio-assistant-slw1--ingest-one-pipeline-from-uploads-to-a-complete-l1.md"
     },
     {
+      "id": "folio-assistant-sop8",
+      "title": "B7c (#1168): docs pages declare what they document (documents:); coverage.docs removed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:50:21Z",
+      "updatedAt": "2026-09-24T19:50:21Z",
+      "preview": "Owner 2026-09-24: 'A: pages declare'. 28 coverage.docs entries over 9 pages (16 → subgraph-viewers.md, 9 → five generated pages, 3 hand-written). WebPage manifests gain documents: [<kind>…]; hand-written pages carry it in front matter; who-iris/docs/index.html gets it from its generator. Derive each directory's docs page; remove coverage.docs.",
+      "file": "beans/defs/folio-assistant-sop8--b7c-1168-docs-pages-declare-what-they-document-doc.md"
+    },
+    {
       "id": "folio-assistant-sopq",
       "title": "Mine the WHO IG starter kit SOPs for DAK QA criteria",
       "status": "todo",
@@ -3873,6 +3901,20 @@
       "updatedAt": "2026-09-23T16:59:22Z",
       "preview": "Measured 2026-09-23. The test `kg export > a preview says so in its type and links every node back to canonical` (`cat-harness/scripts/tests/kg-export.test.ts:440`) calls `buildExport()` twice, once for the preview and once for canonical, with nothing cached. On a session container it takes about 5.2 s when run alone. That is over bun's default 5 s test timeout, and the same on `main` (`04b8ed02`)",
       "file": "beans/defs/folio-assistant-w82m--test-cost-kg-export-a-preview-says-so-builds-the-e.md"
+    },
+    {
+      "id": "folio-assistant-w91p",
+      "title": "B7a (#1168): the 10 gen-*-viz scripts become Tools (renders:, maintains:); coverage.visualiser removed",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:50:21Z",
+      "updatedAt": "2026-09-24T19:50:21Z",
+      "preview": "Owner 2026-09-24: 'A: viz scripts become Tools'. 36 coverage.visualiser entries (23 single, 13 lists); none of the 10 gen-*-viz scripts is a declared Tool (tools/index.ts has 61). Each becomes a Tool with renders: <graph kind> and maintains: its pages; per-instance pages computed from Tool + directory id; the 13 lists need a rule. Derive each directory's viewers; remove coverage.visualiser.",
+      "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
       "id": "folio-assistant-wekz",
