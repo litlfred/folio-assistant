@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 314,
+      "count": 315,
       "unit": "beans"
     }
   },
@@ -1022,15 +1022,15 @@
     },
     {
       "id": "folio-assistant-7mog",
-      "title": "ONE stylesheet for the navbar: docs-ui.css aliases 12 rules that navbarCss() already owns",
-      "status": "todo",
+      "title": "The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean's first premise was WRONG)",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:39:39Z",
-      "updatedAt": "2026-09-24T17:39:39Z",
+      "updatedAt": "2026-09-24T18:10:09Z",
       "preview": "The owner chose \"1 2\" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.\n\n## What shipped as 1 (PR #1264)\n\n`nav_footer_custom.html` is a single `{% include %}` and composes no markup.\nThe sidebar's navbar is RENDERED by `lib/navbar.ts`. To keep the look\nbyte-for-byte, `docs-ui.css` gained the renderer's class names as ADDITIONAL\nSELECTORS on rules it already",
       "file": "beans/defs/folio-assistant-7mog--one-stylesheet-for-the-navbar-docs-uicss-aliases-1.md"
     },
@@ -2651,14 +2651,14 @@
     {
       "id": "folio-assistant-n2l9",
       "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:59Z",
-      "updatedAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-24T17:20:57Z",
       "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
       "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
     },
@@ -3141,6 +3141,20 @@
       "updatedAt": "2026-09-21T15:35:10Z",
       "preview": "**Owner's decision, 2026-09-21: C now, B as the destination.** Answering the\nthree-way question `zlmp` parked — who registers a BUILT-IN adapter's\ncontributions. C is built-ins self-registering at the outermost layer; B is no\nbuilt-ins at all, every adapter a real dependency with a `contributes` module.\n\n## Why this is wiring, not extending\n\n`schemas/contributions.ts` is 370 lines and complete — c",
       "file": "beans/defs/folio-assistant-rfev--c-built-ins-self-register-at-the-outermost-layer-w.md"
+    },
+    {
+      "id": "folio-assistant-rj0n",
+      "title": "KIND VALIDATORS: --require-all can never pass — 7 of 7 'gaps' are category errors or empty",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:38:50Z",
+      "updatedAt": "2026-09-24T18:59:15Z",
+      "preview": "`check:kind-validators` reported *\"7 kind(s) declare no validator\"* and carried\n`--require-all` \"for the day the gap is meant to be closed\".\n\n**That day could not come.** Measured 2026-09-24 — every one of the seven is\neither not JSON at all, or has no nodes:\n\n| kind | what it holds | why a Zod validator cannot apply |\n|---|---|---|\n| `processes` | 77 `.bpmn`, 9 `.dmn` | XML |\n| `uml` | 103 `.puml",
+      "file": "beans/defs/folio-assistant-rj0n--kind-validators-require-all-can-never-pass-7-of-7.md"
     },
     {
       "id": "folio-assistant-rjug",
