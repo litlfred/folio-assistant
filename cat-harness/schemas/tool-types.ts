@@ -128,6 +128,8 @@ export const PackageNameSchema = z
 /**
  * A BPMN process id — the stem of a `.bpmn` under a declared workflow
  * directory, e.g. `crdm-requirements`.
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
 export const ProcessIdSchema = z
   .string()
