@@ -62,7 +62,7 @@ instance root and reported ten phantom absences out of 35. It is an easy error
 to make twice, which is the argument for `resolveDeclaredPath` being exported
 and named.
 
-## Measured, 2026-09-23, on `7c4c7fd23`
+## Measured, 2026-09-23, on `7c4c7fd23`, and re-measured after merging `main`
 
 Instances discovered with `instanceRootsIn`, never by globbing — a path literal
 is what `check:declared-paths` refuses, and one written earlier was silently
@@ -80,7 +80,13 @@ THE REMAINING GAP:                           11   (26 files)
 ```
 
 Re-derive rather than quoting; these move, and this document is a claim about
-one commit.
+one commit. They moved during the writing of it: after merging `origin/main` and
+removing the three QOU directories below, the same script reports **82 top-level
+directories, 72 fully covered, 9 holding an uncovered file** (excluding the
+gitignored `node_modules/`) — `cat-harness/content` plus **8 directories holding
+22 files**. `main` declared several `<instance>/skills/` and `library/`
+directories in the interval, which is also how the double-declaration below came
+into view.
 
 ### Three corrections, and why they are in the proposal rather than a footnote
 
@@ -363,6 +369,107 @@ links would have to land on: it carries `papers/`, and it carries **no
 `blueprint/` and no `blueprint.pdf`**. The page indexes a site that does not
 have two of the three things it points at, in a repository that does not
 publish it. There is nothing to rescue, so it is not pushed anywhere.
+
+## The mirror defect: 15 paths are declared TWICE, and the gate counts them as 15 extra directories
+
+A sibling session working the same ruling flagged one double declaration and
+suggested counting the rest was worth more than the files still uncovered. It
+was. Measured on this branch:
+
+```
+declared directory ENTRIES:                                      91
+distinct PATHS declared:                                         76
+paths carrying more than one entry:                              15
+  ...sharing ONE id, so the by-id override collapses them:        4
+  ...with DIFFERENT ids on the same path:                        11
+```
+
+**`bun run check:declared-dirs` reports `91 declared director(ies) across 17
+instance(s) … 0 finding(s)`.** Seventy-six directories exist. The gate that
+guards the declaration layer counts fifteen of them twice and calls the result
+clean, because the only question it asks is whether each declared path is on
+disk — and a path declared twice is on disk twice over.
+
+Every one of the fifteen has the same shape: **`cat-harness` declares the
+directory with `scope: "repository"`, and the instance that owns it declares it
+too**, at instance scope.
+
+| path | cat-harness's id | the owner's id |
+|---|---|---|
+| `agent-skills/library` | `agent-skills-library` | `library` |
+| `who-iris/library` | `who-iris-library` | `library` |
+| `folio-assistant-sci/library` | `folio-assistant-sci-library` | `library` |
+| `folio-assistant-core/library` | `folio-assistant-core-library` | `core-library` |
+| `smart-base/library` | `smart-base-library` | `library` |
+| `smart-base/methodologies` | `smart-base-methodologies` | `methodologies` |
+| `smart-base/methodologies/processes` | `smart-base-processes` | `processes` |
+| `folio-assistant-core/methodologies` | `folio-assistant-core-methodologies` | `core-methodologies` |
+| `folio-assistant-core/skills` | `folio-assistant-core-skills` | `core-skills` |
+| `folio-assistant-core/schemas` | `folio-assist-core-schemas` | `core-schemas` |
+| `folio-assistant-core/processes` | `folio-assistant-core-processes` | `core-processes` |
+
+**Why the differing id is the whole problem, and not a cosmetic one.** AGENTS.md
+states the resolution rule: *"Overrides match on the entry's `id`, not its
+`path` — matching on path makes two knowledge graphs out of one relocation, and
+every consumer then scans a directory that is not there."* That rule is right,
+and it is exactly what makes these eleven bite: **two entries with different ids
+over one path are not one entry overriding another. They are two graphs.** A
+consumer that fans out over instances resolves both and scans the directory
+twice.
+
+The remaining four — `bootstrap-tools/schemas`, `large-datasets/skills`,
+`who-iris/skills`, `large-datasets/schemas` — carry the **same** id on both
+sides, so the by-id override does collapse them to one. They are duplicates in
+the file and not in the resolved set. That distinction is the finding: the same
+surface shape has two very different consequences, and only the id says which.
+
+`directory-conventions` permits an unavoidable duplicate and refuses an
+unchecked one. These are unchecked: nothing reports them, and the gate nearest
+to them reports a count that already includes them.
+
+**Not fixed here**, because the fix is a decision and not an edit. Deleting
+cat-harness's repository-scoped copy is the obvious move and it is not
+obviously right: those entries are what let the root instance see a sibling's
+directories without depending on it, which is the same mechanism that correctly
+declares `beans/`, `memory/` and `issue-marks/`. Whether the duplicate should be
+removed, or the ids reconciled so the override collapses them, or the checker
+taught to report a path with two entries, is one question with three answers and
+it belongs to whoever owns the declaration schema.
+
+## Coordination — a sibling session declared three of these
+
+Branch `claude/declare-three-subgraphs-clean`, commit `675ffa4f8`, pushed and
+not merged at the time of writing, declares `cat-harness/deploy/`,
+`cat-harness/ui/` and `cat-harness/blueprint/` as `graphKinds: ["code"]`. It
+reached the `scope: "repository"` correction independently, which is worth
+recording: two sessions measuring the same thing found the same bug, so it is a
+property of the model rather than of one agent's carelessness.
+
+Two things need saying across that boundary.
+
+**`blueprint/` should not be declared, because it is leaving.** It is imported
+to [qou#7453](https://github.com/litlfred/qou/pull/7453) and removed here once
+that merges. Declaring a directory that is about to be deleted mints the `dh4f`
+defect the same commit's message cites — declared and absent, every consumer
+scanning nothing and reporting clean. `deploy/` and `ui/` are unaffected and
+their reasoning holds; only the third entry conflicts.
+
+**The two preambles are not two copies of one file, and the question that
+blocked `latex/` has an answer.** That commit recorded the open question
+faithfully — `blueprint/src/preamble.tex` is 26 lines, `latex/preamble.tex` is
+830, they differ, nothing says which is live — and deliberately left `latex/`
+undeclared so it stayed visible. Measured:
+
+- `blueprint/src/preamble.tex` is the **blueprint's own** preamble. `web.tex`
+  and `print.tex` each `\input{preamble}`, resolving to the sibling in
+  `blueprint/src/`.
+- `latex/preamble.tex` is the **shared paper** preamble, self-described as such,
+  and it is `qou/main.tex` — 811 of its 830 lines in common.
+
+They share a basename and nothing else: one is 26 lines of blueprint setup, the
+other 830 lines of document-class, packages and macros. Both were live, for
+different documents. `latex/` is now removed rather than declared, because qou
+holds the newer and corrected copy.
 
 ## What would falsify this
 
