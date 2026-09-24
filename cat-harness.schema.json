@@ -226,11 +226,12 @@
                 "jurisdiction-endpoint",
                 "none"
               ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
             }
-          },
-          "required": [
-            "host"
-          ]
+          }
         },
         "topology": {
           "type": "object",
@@ -700,9 +701,6 @@
             "minLength": 1
           }
         },
-        "publishable": {
-          "type": "boolean"
-        },
         "id": {
           "type": "string",
           "minLength": 1
@@ -723,8 +721,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "b9e61d992509e1f4d2455b6fdba085902fa9cd78",
+    "sha": "08feccf0b82ae0a64590f4b149ca870a822a51c6",
     "pr": "main",
-    "run": "36048747925"
+    "run": "36051038911"
   }
 }
