@@ -51,9 +51,10 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join, relative, sep } from "node:path";
 
-import { readLibraryGraph, type LibraryGraph,
+import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
   readEntryBlocks,
 } from "./library-graph.ts";
+import { tally } from "./summaries.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
@@ -151,6 +152,21 @@ export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
   border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
 }
 #blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
+/* EXTRACT AND AGENT SUMMARY, SIDE BY SIDE -- owner, 2026-09-24: "the extract
+   of a node is shown, but no agentic summary". Beside, never instead: the
+   extract is the source's words and the summary is an agent's account of
+   them, so a reader must be able to hold one against the other. Two columns
+   where there is room, stacked on a phone, extract first either way. */
+#blocks td { white-space: normal; vertical-align: top; }
+#blocks td.bt { min-width: 15rem; }
+#blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+@media (min-width: 760px) { #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#blocks .pair > div { min-width: 0; }
+#blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; }
+#blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
+  font-size: 13px; line-height: 1.5; }
+#blocks .sum p { margin: .35rem 0 0; }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -424,6 +440,7 @@ function renderDesk(){
       '<div class="rows">' +
         "<span>sections</span><b>"+e.sections+"</b>" +
         "<span>blocks</span><b>"+e.blocks+"</b>" +
+        (e.summaries && e.summaries.prose ? "<span>summarised</span><b>"+e.summaries.summarised+" / "+e.summaries.prose+"</b>" : "") +
         "<span>images</span><b>"+e.images+"</b>" +
         "<span>pages</span><b>"+(e.pageStart==null?"—":e.pageStart+"–"+e.pageEnd)+"</b>" +
         "<span>words</span><b>"+e.words.toLocaleString()+"</b>" +
@@ -535,9 +552,18 @@ function renderBlocks(id, data, err){
       ' has no blocks. Nothing failed \u2014 the entry carries none.</p>';
     return;
   }
+  /* THE DRAIN, for this entry -- counted over the rows below, so the line and
+     the table cannot disagree. Advisory: a backlog is work nobody has done
+     yet, not a defect. */
+  var sums = bs.filter(function(b){ return b.summary; }).map(function(b){ return b.summary.status; });
+  var prose = sums.filter(function(x){ return x !== "empty" && x !== "unreadable"; }).length;
+  var done = sums.filter(function(x){ return x === "draft" || x === "confirmed"; }).length;
+  var drain = prose ? '<p class="note">Agent summaries: <b>' + done + '</b> of ' + prose +
+    ' prose block(s) summarised, <b>' + (prose - done) + '</b> still in the queue. ' +
+    'Summaries are drafted by an agent a few at a time and confirmed only by a person.</p>' : '';
   el.innerHTML = '<h2>Blocks \u2014 ' + esc(id) + ' <span class="note">(' + bs.length +
-    ', in page order)</span></h2><table><thead><tr>' +
-    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative</th></tr></thead><tbody>' +
+    ', in page order)</span></h2>' + drain + '<table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative / summary</th></tr></thead><tbody>' +
     bs.map(function(b){
       /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
          something without knowing our vocabulary, and showing only ours
@@ -547,7 +573,8 @@ function renderBlocks(id, data, err){
       /* A narrative state is three-valued and none of them is an error:
          not-authored means nobody has written one, which is a fact rather
          than a gap. Rendered as plain text for that reason. */
-      var nar = b.narrative == null ? '\u2014' : esc(b.narrative);
+      var nar = b.summary ? summaryBadge(b.summary)
+        : b.narrative == null ? '\u2014' : esc(b.narrative);
       /* THE CONTENT IS BEHIND A NATIVE <details> — bean lrmo.
          The owner opened this view and said "i expected to be able to see
          narrative content of extracted node": a row carrying only a state
@@ -563,9 +590,13 @@ function renderBlocks(id, data, err){
       var title = esc(b.title || '\u2014');
       var body;
       if (b.content) {
+        var extract = '<pre>' + esc(b.content) + '</pre>' +
+          (b.truncated ? '<p class="note">Excerpt \u2014 the first 600 characters. The section file holds the rest.</p>' : '');
         body = '<details><summary>' + title + '</summary><div class="block-body">' +
-          '<pre>' + esc(b.content) + '</pre>' +
-          (b.truncated ? '<p class="note">Excerpt \u2014 the first 600 characters. The section file holds the rest.</p>' : '') +
+          (b.summary
+            ? '<div class="pair"><div><p class="lbl">Extract</p>' + extract + '</div>' +
+              '<div><p class="lbl">Agent summary</p>' + summaryPanel(b.summary) + '</div></div>'
+            : extract) +
           '</div></details>';
       } else {
         /* No content is a DETERMINED answer for a page-scan or an image with
@@ -573,9 +604,51 @@ function renderBlocks(id, data, err){
         body = title + ' <span class="note">(no content carried)</span>';
       }
       return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
-        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td>' + body +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td class="bt">' + body +
         '</td><td>' + nar + '</td></tr>';
     }).join("") + '</tbody></table>';
+}
+/* A BLOCK SUMMARY'S STATE, in words. Owner, 2026-09-24. Every state is said
+   as text rather than colour alone, and none is styled as an error: "not yet
+   summarised" is the drain's backlog, which is expected and slow on purpose.
+   A draft names its MODEL, because "a model wrote this" without which one is
+   the provenance gap schemas/attribution.ts closes. */
+function summaryLabel(s){
+  var d = s.draftedBy;
+  switch (s.status) {
+    case "draft":
+      return { cls: "info", t: d && d.kind === "agent"
+        ? "agent draft (model " + (d.model || "unknown") + ")"
+        : "draft by " + (d ? d.id : "unknown") };
+    case "confirmed": return { cls: "ok", t: "confirmed by " + (s.confirmedBy || "a person") };
+    case "stale": return { cls: "warn", t: "stale: source changed" };
+    case "rejected": return { cls: "warn", t: "rejected \u2014 back in the queue" };
+    case "empty": return { cls: "", t: "no text to summarise" };
+    case "unreadable": return { cls: "warn", t: "text unreadable" };
+    default: return { cls: "", t: "not yet summarised" };
+  }
+}
+function summaryBadge(s){
+  var l = summaryLabel(s);
+  return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
+}
+function summaryPanel(s){
+  var why = {
+    "not-summarised": "No agent has summarised this block yet. The queue is drained a few blocks at a time.",
+    "empty": "The block holds no text, so there is nothing to summarise.",
+    "unreadable": "The block names a text file that could not be read."
+  }[s.status];
+  var who = s.draftedBy
+    ? "Drafted by " + s.draftedBy.kind + " " + s.draftedBy.id +
+      (s.draftedBy.model ? ", model " + s.draftedBy.model : "") + (s.draftedAt ? ", " + s.draftedAt : "") + ". " +
+      (s.status === "confirmed" ? "Confirmed by " + (s.confirmedBy || "a person") + "."
+        : s.status === "stale" ? "The block's text has changed since; this summary may no longer match it."
+        : s.status === "rejected" ? "Rejected by a person: " + (s.rejectionReason || "no reason recorded") + "."
+        : "Not yet confirmed by a person.")
+    : "";
+  return '<div class="sum">' + summaryBadge(s) +
+    (s.text ? '<p>' + esc(s.text) + '</p>' : '<p>' + esc(why || "") + '</p>') +
+    (who ? '<p class="note">' + esc(who) + '</p>' : '') + '</div>';
 }
 function loadBlocks(id){
   fetch(blocksHref(id), {cache: "no-store"})
@@ -611,6 +684,17 @@ fetch(DATA_HREF).then(function(r){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\\"color:var(--muted)\\">of "+q.total+"</span></span>";
   }).join("");
+  /* THE SUMMARY DRAIN'S BACKLOG, for the entries this page shows. Advisory,
+     like every drain here: styled as a count, never as a failure. Absent
+     when the projection carries no count -- nobody counted is not zero. */
+  var counted = scoped.filter(function(e){ return e.summaries; });
+  if (counted.length) {
+    var sb = counted.reduce(function(n,e){ return n + e.summaries.backlog; }, 0);
+    var sp = counted.reduce(function(n,e){ return n + e.summaries.prose; }, 0);
+    var sd = counted.reduce(function(n,e){ return n + e.summaries.draft; }, 0);
+    $("badges").innerHTML += '<span class="badge"><b>' + sb + "</b> of " + sp +
+      " prose block(s) not yet summarised" + (sd ? ", <b>" + sd + "</b> agent draft(s) awaiting a person" : "") + "</span>";
+  }
   if (G.refScan) {
     var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
     $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
@@ -832,6 +916,18 @@ if (import.meta.main) {
     scoped[id] = entries(g.entries.filter((e) => e.instance === subject).length);
   }
 
+  // Each entry's blocks are read ONCE, before the index is written, because
+  // the index now carries the summary drain's counts (owner, 2026-09-24:
+  // "slowly drain") and those are a fact about the blocks. The per-entry
+  // files below reuse the same reading, so the count on the index and the
+  // rows a reader opens cannot disagree.
+  const blocksOf = new Map<string, LibraryBlock[]>();
+  for (const e of g.entries) {
+    const blocks = readEntryBlocks(join(repoRoot, e.dir));
+    blocksOf.set(e.id, blocks);
+    e.summaries = tally(blocks.flatMap((b) => (b.summary ? [b.summary] : [])));
+  }
+
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
 
   // ── PER-ENTRY BLOCK GRAPHS (bean `7nvr`) ──────────────────────────────
@@ -848,7 +944,7 @@ if (import.meta.main) {
   // `library/<id>/manifest.jsonld` under the built tree), so the viewer cannot
   // simply fetch the source. A projection is the only thing it can read.
   for (const e of g.entries) {
-    const blocks = readEntryBlocks(join(repoRoot, e.dir));
+    const blocks = blocksOf.get(e.id) ?? [];
     // An entry with no blocks still gets a file. The alternative is a 404 the
     // viewer has to tell apart from a network failure, and "this entry has no
     // blocks" is a determined answer that deserves to be served as one.
