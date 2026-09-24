@@ -16,7 +16,9 @@ import { CAT_HARNESS_NS } from "../../schemas/namespaces";
 import { buildFshGutsExport } from "../fsh-guts-export";
 import { buildGlossary } from "../glossary-export";
 import { buildVocabulary } from "../ns-export";
-import { HTML_UNIQUE_IDS, JSONLD_EXPAND, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
+import { codeListDirs, loadCodeLists } from "../../schemas/code-list";
+import { buildCodeListsDoc } from "../code-lists";
+import { HTML_UNIQUE_IDS, JSONLD_EXPAND, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
   const dir = mkdtempSync(join(tmpdir(), "publish-verify-"));
@@ -119,5 +121,39 @@ describe("the documents this platform actually publishes", () => {
   test("the content context resolves locally, never over the network", async () => {
     const r = await localLoader(tmpdir())(CONTENT_CONTEXT_URL);
     expect(r.document).toHaveProperty("@context");
+  });
+});
+
+describe("a document published at our address is ours, whatever vocabulary it speaks — bean 7h1c", () => {
+  const INSTANCE = join(import.meta.dir, "..", "..");
+  const BASE = declaredBase(INSTANCE)!;
+  const skosOnly = (id: string) => ({
+    "@context": { skos: "http://www.w3.org/2004/02/skos/core#", prefLabel: "skos:prefLabel" },
+    "@id": id,
+    prefLabel: "x",
+  });
+
+  test("the declaration names the base — otherwise every case below is vacuous", () => {
+    expect(BASE).toMatch(/^https:\/\//);
+  });
+
+  test("an @id under a base makes a SKOS-only document ours; a lookalike prefix does not", () => {
+    expect(isOurs(skosOnly(`${BASE}/cat-harness-code-lists.jsonld`), [BASE])).toBe(true);
+    expect(isOurs(skosOnly(`${BASE}-evil/x.jsonld`), [BASE])).toBe(false);
+    expect(isOurs(skosOnly(`${BASE}/x.jsonld`))).toBe(false);
+  });
+
+  test("the REAL code-lists document is checked, not counted out of scope", async () => {
+    // The defect this bean records: its context binds only skos/dcterms/owl/rdf,
+    // so the context test alone scoped it out and nothing verified it.
+    const lists = [...loadCodeLists(await codeListDirs(INSTANCE)).values()];
+    const doc = buildCodeListsDoc(lists, `${BASE}/cat-harness-code-lists.jsonld`);
+    const dir = site({ "cat-harness-code-lists.jsonld": doc });
+    const before = await verify(dir, JSONLD);
+    expect(before.results[0]!.outOfScope).toBe(1);
+    const after = await verify(dir, JSONLD, { bases: [BASE] });
+    expect(after.exit).toBe(0);
+    expect(after.results[0]!.checked).toBe(1);
+    expect(after.results[0]!.outOfScope).toBe(0);
   });
 });

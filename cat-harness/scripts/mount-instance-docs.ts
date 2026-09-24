@@ -726,16 +726,33 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
 const NAVIGATED = /<nav class="fa-nav"|id="site-nav"/;
 
 /**
- * Where this pass does NOT go, with the reason, and meant to be emptied.
+ * Where this pass does NOT go — **empty, and that is the answer rather than an
+ * oversight**.
  *
- * `api/` is TypeDoc's own site: 1816 pages that already carry a toolbar, a
- * sidebar and a search dialog. Putting a second navigation beside those is a
- * LAYOUT question rather than a missing-navigation defect, and the owner asked
- * for it as its own change so the question can be answered where a reviewer
- * sees it. One entry, named rather than silently skipped, and this constant
- * goes away when it is decided.
+ * `api/` held the only entry. TypeDoc's 1816 pages already carry a toolbar, a
+ * module list and a search dialog, so a second navigation there was a LAYOUT
+ * question rather than a missing-navigation defect, and it was kept out of the
+ * first pass so the question could be answered where a reviewer sees it.
+ *
+ * **It was answered by rendering, not by argument.** A real published TypeDoc
+ * page was railed locally and both versions opened in a browser at 1280px:
+ *
+ * | | harness rail | TypeDoc toolbar | horizontal scroll |
+ * |---|---|---|---|
+ * | before | — | x=0, w=1280 | none |
+ * | after | x=0, **w=56** | x=56, w=1224 | none |
+ *
+ * The rail renders as its 56px COLLAPSED STRIP and the toolbar reflows beside
+ * it; `scrollWidth` equals `innerWidth` in both, so nothing is pushed off the
+ * page. TypeDoc's module list keeps its own column to the right of the strip.
+ * Two navigations, neither obscuring the other.
+ *
+ * The constant stays rather than being deleted, because the NEXT family that
+ * needs excluding should find a documented place to say so and a test that
+ * makes the exclusion visible — which is what an empty array with this comment
+ * provides and a removed one does not.
  */
-const NOT_THIS_PASS = ["api"];
+const NOT_THIS_PASS: readonly string[] = [];
 
 export function railStandalonePages(
   siteAbs: string,

@@ -180,12 +180,47 @@ export function withViewerNav(html: string, pageAbs: string, o: ViewerNav): stri
   });
 
   const harnesses = instantiatedHarnesses(o.built, toRoot);
-  return injectRail(html, {
+  const railed = injectRail(html, {
     instance,
     toRoot,
     links,
     ...(harnesses ? { harnesses } : {}),
   });
+  return railed === undefined ? undefined : withNarrowViewport(railed);
+}
+
+/**
+ * The narrow-viewport rules, inlined into a standalone viewer page — bean `2r2n`.
+ *
+ * A standalone page loads no theme stylesheet, so the rules that stop a wide
+ * table widening the page at 390 px reach it only if they are written INTO it.
+ * They come from the same file the themed pages link
+ * (`assets/css/narrow-viewport.css`), read at generation time, so there is one
+ * set of rules and not a copy per surface. Before this, 19 of these pages
+ * scrolled sideways at phone width.
+ *
+ * Rides on the rail because this is the one write every viewer generator makes.
+ * Idempotent: a page that already carries the block is returned unchanged.
+ */
+export function withNarrowViewport(html: string): string {
+  if (html.includes(NARROW_MARK)) return html;
+  const head = /<\/head>/i.exec(html);
+  const block = `<style ${NARROW_MARK}>\n${narrowViewportCss()}</style>\n`;
+  if (head) return html.slice(0, head.index) + block + html.slice(head.index);
+  const body = /<body\b[^>]*>/i.exec(html);
+  if (!body) return html;
+  const at = body.index + body[0].length;
+  return html.slice(0, at) + block + html.slice(at);
+}
+
+const NARROW_MARK = `data-folio-narrow-viewport`;
+
+let narrowCss: string | undefined;
+function narrowViewportCss(): string {
+  // declared-path-literal: a platform asset beside this module, not a folio
+  // directory. The docs site publishes it at the same relative path.
+  narrowCss ??= readFileSync(new URL("../docs/assets/css/narrow-viewport.css", import.meta.url), "utf-8");
+  return narrowCss;
 }
 
 /** What {@link makeEmit} needs in order to be the fixture rather than a writer. */

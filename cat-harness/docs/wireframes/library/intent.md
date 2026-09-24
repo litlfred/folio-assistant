@@ -17,9 +17,11 @@ All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-depend
 - search entries
 - tell the three OCR states apart (`scanned`, `not scanned`, `empty`), none styled as an error
 - see the uploads queue that feeds the library, and what is still uningested
+- open an entry and read its blocks: for each prose block, the **extract** (the first 600 characters of the section) and, **beside it**, the **agent summary** with its state in words — "agent draft (model …)", "confirmed by …", "stale: source changed", "rejected — back in the queue", "not yet summarised". Owner, 2026-09-24: *"on library/ page, the extract of a node is shown, but no agentic summary"*; and on scope, *"Make as QA sidecar as part of general doc ingestion to slowly drain."*
+- see how much of the summary drain is left: a badge counts the prose blocks not yet summarised and the agent drafts awaiting a person, and an opened entry states its own count. The count is advisory, never styled as an error.
 - "Pull out to folio" an entry. The page is otherwise read-only by the owner's ruling (*"just on that subgraph w/o edit functionality"*).
 
-**What it must show:** a heading and a summary line (instance · entries · words · sections), badges (uningested uploads, json files scanned for references), the toolbar, the listing (13 columns: slug with the entry's cover and the pull-out control, title, instance, rung, sections, blocks, images, OCR, pages, words, size, referenced by, source), and the "Uploads — the queue feeding this" table.
+**What it must show:** a heading and a summary line (instance · entries · words · sections), badges (uningested uploads, json files scanned for references, prose blocks not yet summarised), the toolbar, the listing (13 columns: slug with the entry's cover and the pull-out control, title, instance, rung, sections, blocks, images, OCR, pages, words, size, referenced by, source), the "Uploads — the queue feeding this" table, and, once an entry is opened, its blocks with the extract and the agent summary side by side (stacked at 390 px).
 
 ## Observed on main (re-checked against main 0bcf94bd)
 
@@ -40,3 +42,7 @@ Rendered at 1280×800 and 390×844, served from the checkout. Since e112deae the
 4. **Entries cannot be opened.** Neither the slug, the title nor the cover is a link, in either view. Rows and cards carry a `data-fa-library-href`, but nothing on the page lets a reader reach an entry's sections or source.
 5. **The titles shown are extraction artefacts.** "Abies" is the title shown for `who-pub-tps-931` (the WHO editorial style manual, per the uploads table). "PUBLICATION AND INFORMATION" is cut short, and "Handbook forGuideline" is missing a space. The same text is also the pull-out button's accessible name ("Pull Abies out to your folio glass"). At 34 × 46 px the cover is too small to settle what an entry is, so the reader still has to cross-check against the uploads table.
 6. **"Referenced by" details are in a `title` tooltip only.** The pill "1 catalogue, 1 voices" puts the referencing file paths in its `title` attribute, which touch and keyboard users cannot reach.
+
+## Update, 2026-09-24: the agent summary beside the extract
+
+The blocks panel (bean `lrmo`) showed a prose block's extract and, in its last column, only a narrative STATE. It now carries the block's agent summary from the entry's `summaries.json` sidecar (`schemas/block-summary.ts`) **beside** the extract, never in its place: two columns at 1280 px, stacked with the extract first at 390 px. The last column is "narrative / summary", and for a prose block it shows the summary's state as a word badge. A header badge counts the backlog of the summary drain (`bun run summaries`) for the entries in scope. Checked by rendering the cat-harness page at both widths with `arxiv-2312.07755v1` opened: no horizontal page scroll at 390 px, and no script errors.
