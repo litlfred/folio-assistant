@@ -14,7 +14,7 @@
  *   or red on every branch the moment somebody else merges a page.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -25,6 +25,7 @@ import {
   isStandalonePage,
   sitePathForPage,
   toRootForPage,
+  withNarrowViewport,
 } from "../viewer-page.ts";
 
 const PAGE = (body: string, head = ""): string =>
@@ -195,3 +196,27 @@ describe("the gate refuses a REGRESSION, not an absence", () => {
     expect(regressions(qa([at("/a/", "railed")]), qa([]))).toEqual([]);
   });
 });
+
+describe("the narrow-viewport rules ride on the fixture — bean `2r2n`", () => {
+  const css = readFileSync(new URL("../../docs/assets/css/narrow-viewport.css", import.meta.url), "utf-8");
+
+  test("inlined into the head, from the one file the themed pages link", () => {
+    const out = withNarrowViewport(PAGE("<table><tr><td>x</td></tr></table>"));
+    const head = out.slice(0, out.search(/<\/head>/i));
+    expect(head).toContain(css);
+  });
+
+  test("idempotent: a second pass adds nothing", () => {
+    const once = withNarrowViewport(PAGE("<p>x</p>"));
+    expect(withNarrowViewport(once)).toBe(once);
+  });
+
+  test("the rules keep wide content in its own box, never the page", () => {
+    expect(css).toContain("overflow-x: auto");
+    expect(css).toMatch(/max-width:\s*799\.98px/);
+    // The theme's own wrapper already scrolls; the navbar is not content.
+    expect(css).toContain(":not(.table-wrapper > table)");
+    expect(css).toContain(":not(.fa-nav table)");
+  });
+});
+

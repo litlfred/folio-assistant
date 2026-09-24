@@ -1199,12 +1199,30 @@
 /* The control itself is never seen -- the two labels are the interface. A real
    checkbox rather than a styled div so it is focusable and announces its own
    state, and off-screen rather than `display: none`, because a hidden control
-   is not focusable and the keyboard would lose the toggle. */
+   is not focusable and the keyboard would lose the toggle.
+
+   CLIPPED IN PLACE, not parked at `left: -9999px`. On a right-to-left page
+   the scrollable overflow runs to the LEFT, so an element 9999px off that
+   edge made the Arabic onboarding guide 10,389px wide at a 390px viewport
+   (bean `2r2n`, measured 2026-09-24). A clip has no direction to get wrong. */
 .fa-nav-open {
   position: absolute;
-  left: -9999px;
   width: 1px;
   height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The theme's skip link parks itself at `left: -999px` for the same purpose,
+   and on a right-to-left page that is the scrollable side. Mirror it, but only
+   while it is hidden: on focus the theme brings it on screen. */
+[dir="rtl"] a.skip-to-main:not(:focus):not(:active) {
+  left: auto;
+  right: -999px;
 }
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
