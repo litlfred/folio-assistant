@@ -887,7 +887,8 @@
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
-  .side-bar .fa-nav-home__label {
+  .side-bar .fa-nav-home__label,
+  .side-bar .fa-glass-handle__label {
     opacity: var(--fa-nav-text, 1);
     transition: opacity .12s ease;
   }
@@ -3907,6 +3908,36 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   outline-offset: 2px;
 }
 
+/* IN THE LEFT NAVBAR — owner, 2026-09-24: "folio handle on LHS on navbar".
+ * `docs-ui.js` (`placeHandle`) puts the handle in the harness rail or the
+ * theme's sidebar and adds this class. It keeps its fill, border and weight,
+ * so it is still the one control on the page that is not page ("pronounced").
+ * What it drops is the overhang: it is an item in the navigation's flow, so it
+ * covers nothing. It stays above an open glass (z-index) so the control that
+ * opened the glass can always close it. */
+.fa-glass-handle.fa-glass-handle--in-nav {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  display: block;
+  /* Both navbars rest as a 3.5rem strip (`NAV_COLLAPSED_PX`, and the
+     theme's sidebar strip). Sized to the strip, the handle is whole at rest
+     rather than a sliver of a wider button, and at this width the label
+     stacks as "▾" over "Folio". */
+  width: 3rem;
+  margin: 0.25rem;
+  min-height: 2.75rem;
+  padding: 0.2rem 0.1rem;
+  border: 2px solid #8c74f0;
+  border-radius: 8px;
+  box-shadow: none;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  white-space: normal;
+  text-align: center;
+}
+
 /* RESERVE THE HANDLE'S BAND on the harness's own standalone viewers — bean
  * `015u`.
  *
@@ -3932,41 +3963,6 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  * the phone rule) with a few pixels of air. */
 html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
   padding-top: 3.5rem;
-}
-
-/* ON A REPLICA THE HANDLE IS A BOTTOM-RIGHT TAB — bean `269z`.
- *
- * A replica carries the folio mount (`<script data-fa-folio-mount>`,
- * `scripts/folio-mount.ts`) and must be UNCHANGED while the glass is closed
- * (bean `jpjt`, asserted by `folio-mount.e2e`), so it cannot reserve a band
- * the way a viewer does. Centred at the top, the handle covered the who-iris
- * "INGESTED COPY — not WHO" banner, and at 1280 px a link centred under it
- * opened the glass instead.
- *
- * Measured 2026-09-24 before choosing: a TOP-right tab still covered banner
- * text at 1280 and 390 px, because the banner runs the full width. At the
- * bottom right it covers nothing at rest at 1280 px, and at 390 px it floats over
- * whatever body text scrolls past, the way any floating button does. Owner,
- * 2026-09-24: "Bottom-right tab".
- *
- * Only the HANDLE moves. The page's own boxes are untouched, which is what
- * `jpjt` protects. A harness VIEWER carries the mount too (the library viewer
- * does), so viewers are excluded by their own mark and keep the reserved band
- * above: measured, a bottom-right tab on the library viewer landed on a row's
- * "Pull out to folio" button at 390 px. */
-html:has(script[data-fa-folio-mount]):not(:has(style[data-folio-narrow-viewport])) .fa-glass-handle {
-  top: auto;
-  bottom: 0;
-  left: auto;
-  right: 0;
-  transform: none;
-  min-height: 2.75rem;
-  padding: 0 0.9rem;
-  border: 2px solid #8c74f0;
-  border-right: 0;
-  border-bottom: 0;
-  border-radius: 10px 0 0 0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.35);
 }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which

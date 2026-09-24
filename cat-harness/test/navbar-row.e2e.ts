@@ -511,6 +511,9 @@ test.describe("the document index — the fixed top, about the page rather than 
       .evaluateAll((ns) => ns.map((n) => n.className || n.tagName.toLowerCase()));
     expect(order).toEqual([
       expect.stringContaining("site-header"),
+      // The folio handle, IN the navbar under the header: owner,
+      // 2026-09-24, "folio handle on LHS on navbar".
+      expect.stringContaining("fa-glass-handle"),
       expect.stringContaining("fa-nav-icons"),
       expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),

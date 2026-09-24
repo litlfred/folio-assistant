@@ -51,3 +51,24 @@ corner is the viewport's corner, the body has no band, and the `h1` is above
 it, at 1280 and 390 px. Both checks fail with the rule disabled. 97 pass across
 the six related e2e files.
 
+## Superseded the same day — the handle moves INTO the left navbar
+
+Owner, 2026-09-24, after the bottom-right tab was built: **"folio handle on LHS
+on navbar"**. That replaces both placements: the replica tab above, and the
+viewer band from `015u`. It does not add a third.
+
+- `docs-ui.js` `placeHandle` puts the handle inside the harness rail (under the
+  `☰` head) or the theme's sidebar (under the site header). Only a page with no
+  navbar keeps the old top-centre place.
+- The handle is now a mark (`▾`) plus a label (`Folio`). At rest a strip shows
+  marks only, which is the owner's earlier *"only icons/avatars so compat"*, so the
+  label shows when the strip opens, in both navbars.
+- The bottom-right replica rule is removed. The viewer band rule stays only
+  as the fallback for a handle at body level, which no navbar page has now.
+
+Measured at 1280 and 390 px on home, the library viewer and the who-iris
+replica: the handle sits inside the navbar on each, and covers no content.
+`glass.e2e.ts` checks that, with a rail and with a theme sidebar, at both widths,
+the handle is IN the navbar, covers no `h1`, and still opens and closes the glass.
+137 pass across the related e2e files, and `bun run gates` passes 145.
+
