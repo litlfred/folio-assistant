@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:26:19Z
-updated_at: 2026-09-23T13:26:05Z
+updated_at: 2026-09-24T05:46:41Z
 parent: folio-assistant-1swy
 ---
 
@@ -54,3 +54,62 @@ Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency
 - [x] falsified both ways: replaying the real pair (d0c91582 against main at 10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the real defect — exit 1; a clean control (current main against itself) passes 135/135, exit 0. The first replay also showed two false failures from path-sensitive tests (`folio-root.test.ts` requires the checkout directory be named `folio-assistant`); fixed by naming the worktree after the checkout, and re-proved.
 - [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run gates 135/135; PR
 - [ ] owner switches on the merge queue for `main` (Settings → Rules/Branch protection → Require merge queue) — the owner's action, not an agent's
+
+---
+
+## 2026-09-24, stream 4 (`kpcl`) — re-derived, and the one open box is the owner's
+
+Picked up under `1swy`. Everything below the last box re-derived rather than
+read off the ticks:
+
+| claim | re-derived on `main` @ `6099ff34` |
+|---|---|
+| `merge_group:` on the two gating workflows | present — `code-quality-gates.yml`, `jsonld-gen-check.yml` |
+| `check:merged` + its script | `package.json:167`, `scripts/check-merged.ts` present |
+
+So the agent half is done and the remaining box is *"owner switches on the merge
+queue for `main`"*.
+
+### Whether it is already on: UNKNOWN, and that is the answer rather than "off"
+
+Asked the forge directly:
+
+| source | answer |
+|---|---|
+| `/repos/.../rulesets` | `[]` — **readable**, and no ruleset defines a merge queue |
+| `/repos/.../branches/main/protection` | **403 `Resource not accessible by integration`** |
+
+A merge queue can be configured either way, and the second is unreadable with
+this session's token. So the honest state is **unknown**: no ruleset has one,
+and classic branch protection could not be asked. Rendering that as *"the merge
+queue is off"* would be a verdict from a failed query — the `check:ci-health`
+rule this stream keeps applying, and the reason the block below says *confirm*
+rather than *do*.
+
+## Blocked on
+
+- **waits on:** the owner turning on the merge queue for `main` (Settings →
+  Rules, or branch protection → Require merge queue), **or** confirming it is
+  already on — this session's token gets 403 on branch protection and cannot
+  tell. Only a repository admin can do either, and it changes how every merge
+  to `main` behaves, so it is not an agent's to switch.
+- **since:** 2026-09-24T10:30Z
+- **expires:** 2026-10-01T10:30Z
+- **handoff:** a **re-ask date, not a takeover date** — no agent may change a
+  repository's merge policy. On expiry, re-raise on #956 with the state
+  re-measured (the rulesets endpoint is readable, so at least that half can be
+  re-checked), move this date out, and record that it was re-asked. Do **not**
+  attempt the setting, and do **not** read the empty ruleset list as "off".
+
+## Todo
+
+- [x] `merge_group:` on the two gating workflows — re-derived 2026-09-24
+- [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node
+      `gates-merged`; `/prepare-merge` skill and command — re-derived 2026-09-24
+- [x] falsified both ways: replaying the real pair (d0c91582 against main at
+      10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the
+      real defect — exit 1; a clean control passes 135/135, exit 0
+- [x] registered: partition rule; `covered-by` exemption (the merge queue is its
+      CI counterpart)
+- [ ] **owner switches on the merge queue for `main`** — the owner's action, not
+      an agent's. See §"Blocked on": the current state is `unknown`, not off.
