@@ -1544,6 +1544,14 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/deep-researcher",
+      "@type": "skos:Concept",
+      "prefLabel": "Deep researcher",
+      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "notation": "deep-researcher",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/evidence-agent",
       "@type": "skos:Concept",
       "prefLabel": "Evidence agent",

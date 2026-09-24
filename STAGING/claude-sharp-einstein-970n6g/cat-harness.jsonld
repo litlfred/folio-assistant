@@ -273,26 +273,26 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T00:29:02.580Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c9e1e76602d0c9792460f247c8284c61269b4fae",
-  "sourceCommitSha": "c9e1e76602d0c9792460f247c8284c61269b4fae",
-  "sourceCommitAt": "2026-09-24T00:26:28Z",
+  "generatedAt": "2026-09-24T00:38:05.149Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98a53e0855bee68efb09f21cc3caee12d779ff8a",
+  "sourceCommitSha": "98a53e0855bee68efb09f21cc3caee12d779ff8a",
+  "sourceCommitAt": "2026-09-24T00:35:53Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 255,
-    "Actor": 32,
+    "Skill": 257,
+    "Actor": 33,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 15,
-    "Process": 70,
-    "SequenceFlow": 898,
-    "Role": 146,
-    "ProcessNode": 851,
+    "SkillPackage": 16,
+    "Process": 71,
+    "SequenceFlow": 908,
+    "Role": 148,
+    "ProcessNode": 860,
     "Tool": 83,
     "Schema": 114,
     "GraphKind": 32,
-    "Directory": 40,
+    "Directory": 44,
     "Asset": 3
   },
   "@graph": [
@@ -4461,7 +4461,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
-      "instructionLines": 235,
+      "instructionLines": 278,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4484,6 +4484,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/specification-compiled-agents",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "specification-compiled-agents",
+      "title": "Specification-compiled agents",
+      "description": "When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/specification-compiled-agents.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/normative-statements",
@@ -4556,6 +4573,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deep-document-research",
+      "title": "Deep document research",
+      "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/skills"
+      ],
+      "instructionsPath": "../folio-assistant-core/skills/deep-document-research.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/materialize-remote",
@@ -5243,6 +5277,25 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/author"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#actor/deep-researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "deep-researcher",
+      "actorKind": "agent",
+      "title": "Deep researcher",
+      "description": "Answers a question from the corpus this folio ALREADY HOLDS, and stands behind the answer's citations. `agent` rather than `person`, and the reason is the opposite of `librarian`'s: nothing in this loop decides what may be redistributed or what a source means in law — it plans, retrieves, filters and synthesises over material a person has already admitted. The role admits `person` too, and no person-shaped actor is registered for it because none has been named; inventing one would assert a party this repository does not have. WHAT THIS ACTOR MAY NOT DO is report an agent's draft figure description as what the figure shows — `schemas/narrative.ts` holds that line, and it is why an agent performing this is legitimate in the first place. ITS PERMISSION IS IN THE ODRL POLICY, not here: #1186 moved every actor's own `permissions` list into `policies/folio-defaults.jsonld` as an assignee/action rule, and `odrl.test.ts` fails any actor file that still carries one. This actor was written with a `permissions` list about two hours before that landed; the grant itself is unchanged — `content-authoring`, stated once, in the policy.",
+      "meta": {
+        "workflow": "folio-assistant-core/processes/deep-document-research.bpmn#Lane_DeepResearcher"
+      },
+      "hasCapability": [],
+      "roleName": [
+        "deep-researcher"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/deep-researcher"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#actor/platform-boundary-guard",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
       "localId": "platform-boundary-guard",
@@ -5700,6 +5753,15 @@
         "python"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#convention/comment-why-not-what"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "skills",
+      "path": "../folio-assistant-core/skills",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/large-datasets",
@@ -6174,6 +6236,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/session-state-machine",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/specification-compiled-agents",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
@@ -34333,6 +34396,310 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Deep document research",
+      "enforcement": "advisory",
+      "sourcePath": "../folio-assistant-core/processes/deep-document-research.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question"
+      ],
+      "nodeCount": 9,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "held",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not held",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet, and iterations remain",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "sufficient",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "out of iterations",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Deep researcher",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/deep-researcher",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Deep%20researcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A question about held documents",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Is the corpus there to search?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not held — a question for library-ingestion",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Filter the corpus, choose the granularity, decompose the question",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Retrieve for each sub-question",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Deduplicate, and keep what is actually relevant",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Enough, or out of iterations?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Synthesise, cite to a location, and say what was not found",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Answered, with its citations and its gaps",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#tool/folio-block-qa-summary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "folio-block-qa-summary",
@@ -40820,6 +41187,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/librarian"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/deep-researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/deep-researcher"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#role/evidence-agent",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "evidence-agent",
@@ -41510,6 +41893,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-library",
+      "path": "folio-assistant-core/library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
+      ],
+      "description": "The core layer's library -- `arxiv-2510.21603v1` (Doc-Researcher), and nothing else. Same staging arrangement and the same reason as `who-iris-library` and `folio-assistant-sci-library` above: the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, `ingest-document`'s own destination list -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). `ingest-document` is what proved it: with the directory declared ONLY in `folio-assistant-core.json` it refused the destination as matching none, because it reads the list from here. Declared in both, exactly as the four siblings are.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-library"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/smart-base-library",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "smart-base-library",
@@ -41565,6 +41959,28 @@
       ],
       "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-methodologies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-methodologies",
+      "path": "folio-assistant-core/methodologies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
+      ],
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason it is separate from `smart-kg-methodologies`: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-skills",
+      "path": "folio-assistant-core/skills/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
+      ],
+      "description": "The core layer's skills, reached from here for the same reason its library and methodologies are: the consumers that resolve a `<folio:skill ref>` run from this root, and a skill they cannot see is a DANGLING ref reported against a diagram that is correct.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/smart-base-processes",
@@ -41720,6 +42136,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-processes",
+      "path": "folio-assistant-core/processes/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
+      ],
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception. Declared here as well, repository-scoped, because the consumers that scan for diagrams run from this root.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -41753,8 +42180,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "2483cb964a88801754d8834d5e057f3e27981bc3",
+    "sha": "5cd913f9739836458445abd85199119452ee6d81",
     "pr": "1228/merge",
-    "run": "35938455181"
+    "run": "35939140729"
   }
 }
