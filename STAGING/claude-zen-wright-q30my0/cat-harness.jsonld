@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T20:22:39.831Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/757759e58060bf97d35b432db465f408648ae953",
-  "sourceCommitSha": "757759e58060bf97d35b432db465f408648ae953",
-  "sourceCommitAt": "2026-09-24T20:20:37Z",
+  "generatedAt": "2026-09-24T21:34:58.651Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9747bcc343d16344c450640b7ded091c8d888595",
+  "sourceCommitSha": "9747bcc343d16344c450640b7ded091c8d888595",
+  "sourceCommitAt": "2026-09-24T21:32:58Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -289,7 +289,7 @@
     "SequenceFlow": 908,
     "Role": 148,
     "ProcessNode": 860,
-    "Tool": 89,
+    "Tool": 101,
     "Schema": 122,
     "GraphKind": 34,
     "Directory": 43,
@@ -38274,6 +38274,522 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/sibling-sessions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/external-schemas-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "external-schemas-viewer",
+      "title": "External schemas viewer",
+      "description": "Render the declared external schemas, and which of this instance's modules conform to each, as one page.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run external-schemas:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/external-schemas-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/folio-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "folio-viewer",
+      "title": "Folio viewer",
+      "description": "Render each declared folio directory as a browsable page over its published index.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/folio-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/library-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "library-viewer",
+      "title": "Library viewer",
+      "description": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run library:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/library-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/methodologies-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "methodologies-viewer",
+      "title": "Methodologies viewer",
+      "description": "Render the declared methodology graph as one page.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run methodologies:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/methodologies-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/processes-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "processes-viewer",
+      "title": "Processes viewer",
+      "description": "Render the declared BPMN processes as an index page and one page per diagram.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run processes:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/processes-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/schemas-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "schemas-viewer",
+      "title": "Schemas viewer",
+      "description": "Render each declared schema directory as a page per subject instance, over one shared data index.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run schema:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/schemas-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/tools-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "tools-viewer",
+      "title": "Tools viewer",
+      "description": "Render this instance's Tool nodes, and the skills each satisfies, as one page.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run tools:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/tools-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/uploads-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "uploads-viewer",
+      "title": "Uploads viewer",
+      "description": "Render each declared uploads directory's intakes as a page per subject instance.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run uploads:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/uploads-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/voices-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "voices-viewer",
+      "title": "Voices viewer",
+      "description": "Render each declared voices directory as a page per subject instance.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run voices:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/voices-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/state-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "state-viewer",
+      "title": "State graph viewer",
+      "description": "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run state:visualizer"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/state-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/translation-status-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "translation-status-viewer",
+      "title": "Translation status viewer",
+      "description": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run translation:status"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/translation-status-viewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/docs-auto-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "docs-auto-viewer",
+      "title": "Generated index pages",
+      "description": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run docs:auto"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/docs-auto-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zen-wright-q30my0/cat-harness.jsonld#tool/check-dependencies",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "check-dependencies",
@@ -42730,8 +43246,8 @@
   ],
   "staging": {
     "branch": "claude/zen-wright-q30my0",
-    "sha": "ce018b21fab732523d88fca4e1d22d9c42ca707e",
+    "sha": "f7343398e8ec10628529c4efc3f034aefe42bc03",
     "pr": "1183/merge",
-    "run": "36054237815"
+    "run": "36062200235"
   }
 }
