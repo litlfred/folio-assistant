@@ -424,6 +424,26 @@ jobs:
           # name as bootstrap's declaration, and the graph keeps that address.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
 
+          # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
+          # here, after the line above, for a reason that cost a wrong claim.
+          #
+          # A page Jekyll copies through verbatim inherits no layout and so no
+          # sidebar. `mount-instance-docs.ts` rails the MOUNT ROUTES, and
+          # `viewer-page.ts` rails what the generators emit; everything else
+          # fell between them — 23 wireframe `as-is.html` pages with no
+          # navigation and no outward link at all, and bootstrap's 10.
+          #
+          # The first version called this from `mount-instance-docs.ts`, 142
+          # lines above, where bootstrap's pages DO NOT YET EXIST. It railed the
+          # wireframes (committed) and silently missed bootstrap (generated),
+          # and no unit test could see it because a fixture hands the pass a
+          # finished directory. Caught by counting the staged build.
+          #
+          # So: LAST, after every generator that writes a page. It is
+          # idempotent — `injectRail` refuses a page that already has one — so
+          # anything railed earlier is left byte-identical.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,

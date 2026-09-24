@@ -7069,6 +7069,13 @@
       "status": "candidate"
     },
     {
+      "id": "test-run.testrunschema.cases",
+      "prefLabel": "TestRunSchema.cases",
+      "definition": "The cases, when the runner records them. Absent is a real state: a run that only records aggregates cannot be checked against the contract, and `test-run-conforms` says so rather than passing it.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.cases",
+      "status": "candidate"
+    },
+    {
       "id": "test-run.testrunschema.data",
       "prefLabel": "TestRunSchema.data",
       "definition": "WHAT was tested.",
@@ -7087,6 +7094,13 @@
       "prefLabel": "TestRunSchema.process",
       "definition": "WHAT TESTED IT — runner, configuration, scenario bank.",
       "source": "cat-harness/schemas/test-run.ts#TestRunSchema.process",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testrunschema.skill",
+      "prefLabel": "TestRunSchema.skill",
+      "definition": "The skill this run tests, by name.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.skill",
       "status": "candidate"
     },
     {

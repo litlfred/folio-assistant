@@ -211,6 +211,36 @@ describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
   });
 });
 
+/**
+ * ONE scan of this repository, shared by the three tests that need it.
+ *
+ * Each of them called `checkDeclarationFilename()` itself, so the same walk of
+ * ~4,100 markdown files and every workflow ran three times, at roughly five
+ * seconds each — against bun's five-second per-test budget. It passed on a
+ * quiet machine and failed on a busy one, and which of the three went red
+ * varied between identical runs.
+ *
+ * It tipped over on 2026-09-24 when promoting `arxiv-2510.21603v1` added that
+ * paper's 22 sections to the corpus (4,071 → 4,093 files). That is the point
+ * worth recording: NOTHING WAS WRONG WITH THE SCAN OR THE PROMOTION. The cost
+ * grows with the corpus, every promotion adds to it, and three copies of one
+ * pure read is what made an ordinary increment look like a regression.
+ *
+ * Lazy rather than top-level so the fixture tests above still run instantly
+ * when this file is filtered to one of them.
+ *
+ * The three tests that use it also carry {@link SCAN_TIMEOUT}. Hoisting cut
+ * the file from 15.2s to 4.6s in isolation, and 4.6s under bun's 5s default is
+ * a test that passes alone and fails inside the full suite — which is what it
+ * then did, at 6.3s. An explicit budget is the honest fix: this is a whole-repo
+ * read whose cost grows with the corpus, so five seconds was never the right
+ * number for it, and raising it weakens no assertion.
+ */
+/** Generous on purpose. A timeout here must mean "wedged", not "the repo grew". */
+const SCAN_TIMEOUT = 60_000;
+let REPO_SCAN: ReturnType<typeof checkDeclarationFilename> | undefined;
+const repoScan = () => (REPO_SCAN ??= checkDeclarationFilename());
+
 describe("the workflow scan reports unknown, never zero", () => {
   test("a checkout with no .github/workflows gives null, and null is not clean", () => {
     const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));
@@ -224,9 +254,9 @@ describe("the workflow scan reports unknown, never zero", () => {
   });
 
   test("this repository's own workflows carry no USE", () => {
-    const r = checkDeclarationFilename();
+    const r = repoScan();
     expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
-  });
+  }, SCAN_TIMEOUT);
 });
 
 /**
@@ -313,13 +343,13 @@ describe("the retired name is matched as a FILENAME, on both sides", () => {
 
 describe("the markdown corpus, on this repository", () => {
   test("carries no STALE PATH", () => {
-    const r = checkDeclarationFilename();
+    const r = repoScan();
     expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
-  });
+  }, SCAN_TIMEOUT);
 
   test("and was actually examined — an empty corpus is not a pass", () => {
-    const r = checkDeclarationFilename();
+    const r = repoScan();
     expect(r.markdown).not.toBeNull();
     expect(r.markdown!.length).toBeGreaterThan(0);
-  });
+  }, SCAN_TIMEOUT);
 });

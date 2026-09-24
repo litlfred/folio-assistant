@@ -284,6 +284,7 @@ export const RULES: Rule[] = [
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
+      "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -590,6 +591,10 @@ export const RULES: Rule[] = [
       // caller and not a second answer to what the navigation looks like.
       "scripts/viewer-page.ts",
       "scripts/check-viewer-nav.ts",
+      // The rail over the FINISHED site (bean `oi1y`). Core beside
+      // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
+      // rather than guessing them, and which it deliberately runs after.
+      "scripts/rail-standalone-pages.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.

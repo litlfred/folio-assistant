@@ -65,6 +65,7 @@
  *
  * @module scripts/tool-coverage
  */
+import { skillContracts } from "./skill-contracts.js";
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -184,9 +185,9 @@ export async function triage(): Promise<SkillTriage[]> {
 
   const scripts = declaredScripts();
 
-  const io = new Set<string>();
-  const ioRoot = join(ROOT, "schemas", "skills");
-  if (existsSync(ioRoot)) for (const e of readdirSync(ioRoot, { withFileTypes: true })) if (e.isDirectory()) io.add(e.name);
+  // The skills that NAME a contract (`input:`/`output:`, #1168 B3b) — not the
+  // directories under `schemas/skills/`, which is the convention B3b retired.
+  const io = new Set(skillContracts(ROOT).keys());
 
   const auto = new Set<string>();
   const human = new Set<string>();
