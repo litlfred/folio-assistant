@@ -1984,7 +1984,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // So of the three dispatch points the bean proposed:
     //
     //   · the BPMN trigger ALREADY EXISTS — `Task_RoundTripQA` carries
-    //     `<folio:skill ref="translation-manager"/>`, so `workflow_next` already
+    //     `<bootstrap.processes:skill ref="translation-manager"/>`, so `workflow_next` already
     //     hands an agent the skill. (A `folio:skill` names a SKILL, never a
     //     script; the mechanism is what this node is for.)
     //   · a `qa-sweep` axis would be WRONG, not merely awkward: the sweep cannot

@@ -7,7 +7,7 @@
  * arithmetic over `proof_status` and `lean_build`, and asking an agent to
  * "decide" it invites a judgement where a computation belongs.
  *
- * A gateway that carries `<folio:decision ref="file.dmn#Decision_Id"/>` has its
+ * A gateway that carries `<cat-harness.processes:decision ref="file.dmn#Decision_Id"/>` has its
  * outcome **computed** from facts the caller supplies, rather than chosen. The
  * agent reports numbers; the table returns the branch. That is determinism in
  * the strict sense, as opposed to a recorded judgement.

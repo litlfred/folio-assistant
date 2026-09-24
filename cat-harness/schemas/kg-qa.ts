@@ -12,7 +12,7 @@
  *
  * The joins in "an actor performs a task in a process as a role, using that
  * role's skills" were, until this module, checked at exactly one point:
- * `scripts/check-workflow-refs.ts` verified that a `<folio:skill ref>` names a
+ * `scripts/check-workflow-refs.ts` verified that a `<bootstrap.processes:skill ref>` names a
  * skill that exists. Everything else was unjoined, and the numbers say so —
  * measured 2026-09-18 across twenty diagrams: **60 distinct lane names**, bound
  * to nothing, for roughly two dozen actual positions; four `.dmn` files whose
@@ -490,7 +490,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["process"],
     severity: "major",
     summary:
-      "A lane declares <folio:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
+      "A lane declares <bootstrap.processes:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
       "a role has not got a varying performer, and reading either one first would make the other silently " +
       "have no effect. `n/a` when no lane in the diagram declares a varying performer, which is also how a " +
       "reader tells a lane that binds no role BY DESIGN from one nobody got round to.",
@@ -499,7 +499,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     id: "role-ref-resolves",
     applies: ["process"],
     severity: "critical",
-    summary: "A lane's explicit <folio:role ref> names a role that is not declared.",
+    summary: "A lane's explicit <bootstrap.processes:role ref> names a role that is not declared.",
   },
   {
     id: "activity-in-lane",
@@ -546,7 +546,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // exists to replace. The check is that what IS bound resolves.
     severity: "critical",
     summary:
-      "A `<folio:convention ref>` on a process, lane or activity names a convention that is not in " +
+      "A `<cat-harness.processes:convention ref>` on a process, lane or activity names a convention that is not in " +
       "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
   },
   {
@@ -558,7 +558,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // from real gaps — a stakeholder's sign-off and an unwritten skill both
     // showed up as "names no skill", so gating would have forced a fake ref
     // onto a real step. That is no longer true: an `actedUpon` lane, a
-    // `judgementOnly` lane and `<folio:no-skill reason>` each SAY SO, and are
+    // `judgementOnly` lane and `<cat-harness.processes:no-skill reason>` each SAY SO, and are
     // recorded `n/a`. What remains is an activity whose performer is handed
     // nothing and which has not said why — a missing join, which is `major`.
     //
@@ -568,7 +568,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "An activity names no skill and declares no reason for having none. Exempt: a call activity (implemented " +
       "by the process it calls), a lane whose role is `actedUpon` (written to, never acts) or `judgementOnly` " +
-      "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
+      "(acts, but no procedure yields the answer), and an activity carrying `<cat-harness.processes:no-skill reason=\"…\"/>`.",
   },
   {
     id: "raci-role-resolves",
@@ -581,7 +581,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // depending on which attribute carries it.
     severity: "critical",
     summary:
-      "A `<folio:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
+      "A `<cat-harness.processes:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
       "dereferences to nothing.",
   },
   {
@@ -617,10 +617,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // involvement somebody wrote had simply evaporated.
     severity: "major",
     summary:
-      "A `<folio:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
+      "A `<cat-harness.processes:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
       "`supportive` where only RACI's four letters are in force. The value is neither coerced to a " +
       "neighbouring letter nor silently dropped; a process opts in to the fifth letter with " +
-      "`<folio:involvement vocabulary=\"rasci\"/>`.",
+      "`<cat-harness.processes:involvement vocabulary=\"rasci\"/>`.",
   },
   {
     id: "activity-fulfilment-kind",
@@ -636,7 +636,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "human (BPMN: \"by a human being with the assistance of a software application\"); a `serviceTask` runs " +
       "without one, so an agentic or mechanical actor performs it. `bpmn:Task` and a call activity assert " +
       "nothing and are `n/a`, as is a lane whose role is `actedUpon` — a store is written to, never asked to " +
-      "perform. Override the derived answer with `<folio:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
+      "perform. Override the derived answer with `<cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
       "required at load time, because widening `kinds` is the cheapest way to make this criterion pass.",
   },
   {
@@ -699,7 +699,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A single step names a skill that has its own process of the same name, but is a plain task rather than a " +
       "call activity — so the diagram re-describes the procedure instead of descending into it, and the called " +
-      "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
+      "process's page cannot say who calls it. Exempt: a step carrying `<cat-harness.processes:no-call reason=\"…\"/>`, which " +
       "records that it uses the skill for one slice rather than running its whole process.",
   },
   // ── Documentation completeness past activities (bean `6hq4`, issue #1044) ─
@@ -721,7 +721,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A decision (an exclusive gateway with more than one way out) carries no `<bpmn:documentation>`, so its page " +
       "shows the question and not what answers it: who decides, from what evidence, and what each branch commits " +
-      "the process to. A DMN table or a `<folio:judgement reason>` is not a substitute — it says how the answer is " +
+      "the process to. A DMN table or a `<cat-harness.processes:judgement reason>` is not a substitute — it says how the answer is " +
       "reached, not what is being asked.",
   },
   {

@@ -347,7 +347,7 @@ async function auditProcess(
       }
     }
     // A call activity is implemented by the process it calls, not by a skill.
-    // Demanding a `<folio:skill ref>` of it asks the diagram to name a second,
+    // Demanding a `<bootstrap.processes:skill ref>` of it asks the diagram to name a second,
     // redundant implementation — and the one that matters is checked by
     // `call-activity-resolves` below, so the exemption leaves no gap.
     //
@@ -360,7 +360,7 @@ async function auditProcess(
     // Three declared exemptions, and each one is READ from a declaration
     // rather than inferred: an `actedUpon` lane (nothing performs it), a
     // `judgementOnly` lane (somebody performs it, but no procedure yields the
-    // answer), and `<folio:no-skill reason>` on the activity itself. Because
+    // answer), and `<cat-harness.processes:no-skill reason>` on the activity itself. Because
     // every legitimate case now SAYS SO, what is left is a real gap — which is
     // what lets this criterion gate instead of staying advisory.
     if (
@@ -373,8 +373,8 @@ async function auditProcess(
       noSkill.push({
         where: n.id,
         detail:
-          `"${n.name}" names no skill. Give it <folio:skill ref="…"/>, or, if none could exist, ` +
-          `declare <folio:no-skill reason="…"/> saying why.`,
+          `"${n.name}" names no skill. Give it <bootstrap.processes:skill ref="…"/>, or, if none could exist, ` +
+          `declare <cat-harness.processes:no-skill reason="…"/> saying why.`,
       });
     }
     if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
@@ -404,7 +404,7 @@ async function auditProcess(
   }
   const shouldCall: KgFinding[] = [];
   for (const [ref, ns] of namers) {
-    // A declared `<folio:no-call reason>` is the recorded judgement that this
+    // A declared `<cat-harness.processes:no-call reason>` is the recorded judgement that this
     // step uses the skill without being its process — `n/a` for that step.
     if (ns.length !== 1 || ns[0].calledElement !== undefined || ns[0].noCallReason !== undefined) continue;
     shouldCall.push({
@@ -412,7 +412,7 @@ async function auditProcess(
       detail:
         `"${ns[0].name}" names skill "${ref}", which owns ${ref}.bpmn, but is a plain task. Make it a ` +
         `<bpmn:callActivity calledElement="…"> so the diagram descends into that process, or declare ` +
-        `<folio:no-call reason="…"/> saying why it only uses the skill.`,
+        `<cat-harness.processes:no-call reason="…"/> saying why it only uses the skill.`,
     });
   }
 
@@ -471,7 +471,7 @@ async function auditProcess(
       case "contradictory":
         contradictoryPerformer.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" declares BOTH <folio:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
+          detail: `lane "${lane.name ?? lane.id}" declares BOTH <bootstrap.processes:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
         });
         break;
       case "variable":
@@ -480,13 +480,13 @@ async function auditProcess(
         // else, and so a sidecar shows the declaration rather than silence.
         variablePerformer.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" declares <folio:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
+          detail: `lane "${lane.name ?? lane.id}" declares <bootstrap.processes:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
         });
         break;
       case "unbound":
         unboundLane.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
+          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <bootstrap.processes:role ref="…"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable="true"/>.`,
         });
         break;
     }
@@ -539,14 +539,14 @@ async function auditProcess(
       // exactly backwards.
       if (role.actorKinds.some((k) => allowed.includes(k))) continue;
       const how = n.fulfilment
-        ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
+        ? `<cat-harness.processes:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
         : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
       wrongKind.push({
         where: n.id,
         detail:
           `"${n.name}" — ${how}, but its lane's role "${roleId}" admits only ${role.actorKinds.join(", ")}. ` +
           `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
-          `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
+          `in which case say so with <cat-harness.processes:fulfilment kinds="…" reason="…"/>.`,
       });
     }
   }
@@ -759,7 +759,7 @@ async function auditDecisions(
     for (const id of ids) {
       const ref = `${f}#${id}`;
       if (!referenced.has(ref)) {
-        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
+        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <cat-harness.processes:decision ref="decisions/${ref}"/> or delete it.` });
         continue;
       }
       try {
@@ -1089,12 +1089,12 @@ function auditRoles(
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
-    // A lane binds a role by its own `<folio:role ref>`; the role lists no lanes
+    // A lane binds a role by its own `<bootstrap.processes:role ref>`; the role lists no lanes
     // (data-modelling step 8, #1168).
     const bindsSomething = explicitRefs.has(r.id);
     const laneFindings: KgFinding[] = bindsSomething
       ? []
-      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
+      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
 
     const criteria: Record<string, KgCriterionEntry> = {
       "role-skills-resolve": entry(badSkills),
@@ -1195,7 +1195,7 @@ function auditRoles(
  * `satisfiedBy` and three `derivedFrom` refs pointed at nothing.
  *
  * They are `critical` rather than `major` for the same reason a dangling
- * `<folio:skill ref>` is: a reader following the reference gets nothing. The
+ * `<bootstrap.processes:skill ref>` is: a reader following the reference gets nothing. The
  * grading check is `major` — an ungraded statement is still readable, it just
  * cannot be conformance-tested.
  */
