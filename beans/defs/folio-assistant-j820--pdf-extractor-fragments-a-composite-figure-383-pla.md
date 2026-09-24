@@ -269,3 +269,40 @@ could reject an empty array, so the schema CRASHED instead of refusing.
   has done it.
 - The QR-code contradiction above.
 - MAPS's blank cover fragments survive dedup and remain `m4xy`'s.
+
+## The QR-code finding, corrected 2026-09-24 — I overstated it
+
+This bean, issue #1234 and the #1235 merge commit all said `9789240081949-eng`
+held *"five byte-identical QR codes described as if each encoded a different
+category — one image, five incompatible claims."* **That was too harsh, and
+reading the five properly is what showed it.**
+
+Four of the five are CONSISTENT. Each says: the same code, on a different
+category page, with the page text offering `bit.ly/CDISAH` — and the one claim
+about the target is hedged, *"which the code likely encodes"*. That is a correct
+description of one image placed five times, written before anything could tell
+the describer it was one image.
+
+**Exactly one claim was wrong**: the page-64 note opened *"A second square QR
+code…"*. It is not a second code; it is PDF xref 540 again. And that note had
+already said its own target *"could not be determined from the extracted
+image"* — so the describer was careful, and the only error was arithmetic
+about identity, which is precisely what per-placement entries made invisible.
+
+So the collapse did expose a real defect, and the defect is smaller and more
+specific than this bean claimed. The overstatement is left here rather than
+edited away, for the same reason the `doc-researcher.md` one is.
+
+### What was measured
+
+- **One image object.** PDF xref 540, placed on pages 20, 27, 37, 45 and 64.
+- **The payload is NOT recoverable from this document.** The embedded raster is
+  36×36. `cv2.QRCodeDetector` decodes nothing from it, from its page regions
+  re-rendered at 600 dpi, or from whole pages at 300, 600 and 1200 dpi —
+  upsampling cannot restore data the embedding never carried. Recorded so
+  nobody spends the attempt again.
+- **The probable target is an inference, and is now labelled as one.** The text
+  offers `bit.ly/CDISAH` at each occurrence and `bit.ly/cdisah_feedback` also on
+  page 64.
+
+The narrative and the page-64 note now say all of that. Both remain `draft`.
