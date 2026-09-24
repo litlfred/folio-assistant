@@ -74,6 +74,20 @@ test.describe("the glass exists on a page that is not the harness's", () => {
     // would pass for the old reason and the change would be untested.
     expect(await page.locator(".fa-sticky-board").count()).toBe(0);
   });
+
+  // Bean `015u`. With no theme header to sit in, the handle landed on the
+  // page's first content: the library viewer's h1 and the who-iris replica's
+  // "INGESTED COPY" banner. The page must reserve the handle's band.
+  for (const width of [1280, 390]) {
+    test(`the handle covers none of the page's first content at ${width} px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      const hb = await page.locator(handle).boundingBox();
+      const h1 = await page.locator("h1").boundingBox();
+      expect(hb).not.toBeNull();
+      expect(h1).not.toBeNull();
+      expect(h1!.y).toBeGreaterThanOrEqual(hb!.y + hb!.height);
+    });
+  }
 });
 
 test.describe("pulled down, and put away", () => {

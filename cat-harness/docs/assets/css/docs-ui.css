@@ -3907,6 +3907,27 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   outline-offset: 2px;
 }
 
+/* RESERVE THE HANDLE'S BAND where there is no theme header to hold it — bean
+ * `015u`.
+ *
+ * On a just-the-docs page the handle sits in the header bar's empty middle,
+ * and measured 2026-09-24 it covers no text there at 1280 or 390 px. A page
+ * with NO theme header (a standalone viewer, or a replica carrying the folio
+ * mount) starts its content at y = 0, directly under a 52 px handle:
+ *
+ *   - folio / library viewers at 390 px: the page's own `h1`;
+ *   - the who-iris replica: its "INGESTED COPY — not WHO" banner, which is
+ *     that page's requirement 1, and at 1280 px the centre of a link, so a
+ *     click meant for the link opened the glass instead.
+ *
+ * 3.5rem clears the handle at both of its heights (3.25rem min, 46 px under
+ * the phone rule) with a few pixels of air. Selected by what the page LACKS,
+ * not by a list of pages: any future page that mounts the glass without the
+ * theme gets the band. */
+body:has(> .fa-glass-handle):not(:has(.main-header)) {
+  padding-top: 3.5rem;
+}
+
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
  *
