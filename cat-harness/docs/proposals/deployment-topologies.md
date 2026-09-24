@@ -128,6 +128,12 @@ hosted one are both real configurations. Collapsing them into one
 "model supply" axis was the first draft's error and it is what made the
 air-gapped contradiction in §3 invisible.
 
+**Owner, 2026-09-24 (beans `4y2i`, `61tg`): a data store is something the
+harness sits BESIDE, never something it connects to** — in sovereign cloud
+it produces artefacts a deployment pulls ("artefacts only"). The one
+exception under discussion is custody of wallet credentials in
+self-sovereign mode: see [wallet custody](wallet-custody.md).
+
 **Axis 9 is a set, not a single value.** A sovereign deployment may hold a HAPI
 FHIR store *and* reach a national portal. Every other axis takes one value.
 
