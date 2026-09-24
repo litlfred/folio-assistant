@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 315,
+      "count": 316,
       "unit": "beans"
     }
   },
@@ -1077,6 +1077,20 @@
       "file": "beans/defs/folio-assistant-7sf1--move-memorymd-into-the-kg-graph-with-correct-skill.md"
     },
     {
+      "id": "folio-assistant-7w1a",
+      "title": "METHODOLOGIES TABLE MISRENDERS: a truncated cell cuts a code span open and the whole table prints as text",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:58:58Z",
+      "updatedAt": "2026-09-24T18:58:58Z",
+      "preview": "Owner 2026-09-24, with a screenshot: \"bean: table misrenders https://litlfred.github.io/folio-assistant/methodologies/ — need QA audit report\".\n\n## Cause\ngen-methodologies-viz.ts short() cuts applies-when at 150 chars. The madr row is cut inside a code span, (see `kepner-tregoe…, and the unmatched backtick pairs with a later one on the line, swallowing the cell pipes. kramdown then renders the who",
+      "file": "beans/defs/folio-assistant-7w1a--methodologies-table-misrenders-a-truncated-cell-cu.md"
+    },
+    {
       "id": "folio-assistant-7wgs",
       "title": "Record when a materialized copy is last READ, so cache:index can rank eviction by use",
       "status": "todo",
@@ -1767,14 +1781,14 @@
     {
       "id": "folio-assistant-d4lb",
       "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:42:45Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
       "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
     },
@@ -1851,14 +1865,14 @@
     {
       "id": "folio-assistant-dv8v",
       "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
