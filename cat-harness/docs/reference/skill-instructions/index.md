@@ -156,6 +156,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
+| [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |

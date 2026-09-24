@@ -2145,6 +2145,59 @@ export function tools(baseUrl?: string): ToolDefinition[] {
      * `uploads/` or `library/` to transcribe (measured 2026-09-20 and still
      * true); choosing one and installing it is `1r0p`'s first step when the
      * first recording arrives. `install.cli` says how, and is not run. */
+    // `package-release` (bean `v7bg`, owner 2026-09-24: "Yes, general skill").
+    // Two mechanisms for the same four steps. release-please is DECLARED, not
+    // configured here: `.github/workflows/release-please.yml` is dispatch-only
+    // with no config and zero tags (bean `frq2`), so this node says what it
+    // would do and what it needs, and claims no release it has made.
+    defineTool({
+      id: "release-please",
+      title: "release-please (declared, not configured here)",
+      description:
+        "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
+      invoke: { shell: "release-please release-pr" },
+      requires: { runtime: ["node", "release-please"], network: true },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo-url" }, description: "owner/name of the repository whose packages are released." },
+          { name: "config", schema: t("RepoPath"), required: false, arg: { flag: "--config-file" }, description: "The release config. Must exist: a missing one falls back to defaults that find nothing." },
+        ],
+        outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["package-release-manual"],
+      selection: {
+        when:
+          "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
+        limits:
+          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`).",
+        cost: "Not configured here. One config file and one manifest per repository; each run is a few seconds of API calls.",
+      },
+    }),
+    defineTool({
+      id: "package-release-manual",
+      title: "Package release by hand",
+      description:
+        "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "package", schema: t("PackageName"), required: true, description: "The package being released." },
+        ],
+        outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["release-please"],
+      selection: {
+        when: "A first release, a rare one, or a repository whose commit messages carry no conventional prefixes.",
+        limits: "Every step is a person's, so each is a place to slip; the skill's rules (build first, no reused version) are checked by nobody.",
+        cost: "A few minutes of a person's time per release.",
+      },
+      requires: {},
+    }),
+
     defineTool({
       id: "transcribe-whisper-cpp",
       title: "Transcribe audio — whisper.cpp (option, not installed)",

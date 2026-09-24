@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>86</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>59</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>68</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>88</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>60</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>69</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 68 |
+| <span class="tg-tag tg-shell">shell</span> | 69 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
-| <span class="tg-tag tg-manual">manual</span> | 5 |
+| <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 78 |
-| `cli` | 8 |
+| `none` | 79 |
+| `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **59** skills named across **86** tools resolve to a
+Yes — all **60** skills named across **88** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -98,6 +98,7 @@ tool advertising a capability the graph cannot locate.
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | `mcp-contract` | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 0 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
+| `package-release-manual`<br>Package release by hand | A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure. | <span class="tg-tag tg-manual">manual</span> | `package-release` | 1 in / 1 out |
 | `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 8 in / 1 out |
 | `pages-publish`<br>GitHub Pages publish | Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
 | `paper-latex-build`<br>Paper build to LaTeX chapters | Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none. | <span class="tg-tag tg-shell">shell</span> | `content-validation` | 2 in / 1 out |
@@ -110,6 +111,7 @@ tool advertising a capability the graph cannot locate.
 | `qa-sweep`<br>QA sweep | Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish "never checked" from "checked and clean". | <span class="tg-tag tg-shell">shell</span> | `content-test` | 4 in / 1 out |
 | `readme-audit`<br>Audit README links | Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 3 in / 1 out |
 | `readme-sync`<br>Sync generated README sections | Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 5 in / 1 out |
+| `release-please`<br>release-please (declared, not configured here) | Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`). | <span class="tg-tag tg-shell">shell</span> | `package-release` | 2 in / 1 out |
 | `render-log`<br>Record what the publish branch served | Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace. | <span class="tg-tag tg-shell">shell</span> | `render-logging` | 9 in / 1 out |
 | `render-order`<br>The render pipeline, in dependency order | Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
 | `schema-docs`<br>Skill contract reference | Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
