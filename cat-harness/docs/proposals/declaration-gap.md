@@ -292,7 +292,7 @@ a claim about those two and not about all of them.
 | `cat-harness/computations/wall-violations.witness.json` | **yes**, at the same relative path, `computations/wall-violations.witness.json` | **removed** |
 | `cat-harness/latex/preamble.tex` | **yes**, as `qou/main.tex` — 811 of its 830 lines are common | **removed** |
 | `cat-harness/blueprint/` | **no** — no `blueprint/` on `main` or `gh-pages` | **held** — pushed to qou as [qou#7453](https://github.com/litlfred/qou/pull/7453); removed here once that merges |
-| `cat-harness/home_page/` | **no** — qou holds no `_config.yml` at all | **removed** — nothing to rescue; see below |
+| `cat-harness/home_page/` | **no** — qou holds no `_config.yml` at all | **held**, like `blueprint/` — removed here only once qou has it. Reversed once; see below |
 
 Two of the four are not a matter of degree, and both are worth stating exactly.
 
@@ -362,13 +362,34 @@ stays here until that PR merges, and is removed in a follow-up rather than in
 this one — deleting the only copy on the strength of an unmerged PR is the
 thing `deletion-requires-confirmation` exists to prevent.
 
-**`home_page/` is removed.** Two files: a Jekyll `_config.yml` with
-`baseurl: "/qou"` and an `index.md` linking to `papers/…`, `blueprint/` and
-`blueprint.pdf`. Checked against qou's `gh-pages`, which is the site those
-links would have to land on: it carries `papers/`, and it carries **no
-`blueprint/` and no `blueprint.pdf`**. The page indexes a site that does not
-have two of the three things it points at, in a repository that does not
-publish it. There is nothing to rescue, so it is not pushed anywhere.
+**`home_page/` was removed, and that was reversed.** Two files: a Jekyll
+`_config.yml` with `baseurl: "/qou"` and an `index.md` linking to `papers/…`,
+`blueprint/` and `blueprint.pdf`. Checked against qou's `gh-pages`, which is the
+site those links would have to land on: it carries `papers/`, and it carries
+**no `blueprint/` and no `blueprint.pdf`**. The page indexes a site missing two
+of the three things it points at, in a repository that does not publish it — so
+the first decision was to drop it rather than push it anywhere.
+
+That was overruled, and the reason given is the one that governs both
+directories rather than just one: **qou does not have these files, so removing
+them here loses them.** It applies to `home_page/` exactly as to `blueprint/`.
+The dead links are an argument about the file's *value*, which is a question for
+whoever reviews it in qou; they are not an argument for destroying the only
+copy, which is a question about *reversibility*, and the two were being
+conflated.
+
+So `home_page/` is restored and travels with `blueprint/`: it leaves this
+repository once qou has it and **that has been confirmed**, not merely opened as
+a PR. Restoring cost nothing and the end state is identical under either
+reading — both have the directory gone from here — so the ordering was the whole
+disagreement, and the safer order wins.
+
+**One thing the qou reviewer should know before deciding where it lands**: those
+two dead links. `index.md` points at `blueprint/` and `blueprint.pdf`, and
+neither is published on qou's `gh-pages` today. Importing the page does not make
+them resolve. It is carried here rather than buried, because a page whose links
+do not resolve is a different artefact from one whose links do, and the person
+choosing its home should be choosing with that in front of them.
 
 ## The mirror defect: 15 paths are declared TWICE, and the gate counts them as 15 extra directories
 
