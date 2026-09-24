@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Title search prototype</title>
+<link rel="icon" href="data:,">
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+  input { font: inherit; width: 100%; box-sizing: border-box; padding: .4rem; }
+  #out { margin-top: 1rem; }
+  #out li { margin: .25rem 0; }
+</style>
+</head>
+<body>
+<h1>Title search prototype</h1>
+<p>A measured prototype (bean <code>4pm8</code>): Pagefind over the titles of nodes this
+site <em>references</em> but does not hold. It searches the small committed fixture,
+built into <code>build/fixture/</code> by <code>bun run pagefind:fixture</code>.
+It is not part of the site's documentation, which loads no search engine.</p>
+<form id="f">
+  <label for="q">Words from a title</label>
+  <input id="q" name="q" autocomplete="off" spellcheck="false">
+</form>
+<div id="out" role="status" aria-live="polite"></div>
+<script type="module">
+  const out = document.getElementById("out");
+  const q = document.getElementById("q");
+  const params = new URLSearchParams(location.search);
+  let pf;
+  try {
+    pf = await import("./build/fixture/pagefind/pagefind.js");
+    await pf.options({ excerptLength: 0 });
+    await pf.init();
+  } catch (e) {
+    pf = undefined;
+    out.textContent = "The index is not built here (" + e.message + "). Search is unavailable, which is not the same as no results. Run `bun run pagefind:fixture`.";
+  }
+  async function run(value) {
+    if (!pf || !value.trim()) return [];
+    const s = await pf.search(value);
+    const top = await Promise.all(s.results.slice(0, 10).map((r) => r.data()));
+    out.replaceChildren();
+    if (!top.length) { out.textContent = "No title matches."; return top; }
+    const ol = document.createElement("ol");
+    for (const d of top) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = d.url;
+      a.textContent = d.meta.title;
+      li.append(a);
+      ol.append(li);
+    }
+    out.append(s.results.length + " match" + (s.results.length === 1 ? "" : "es") + (s.results.length > 10 ? "; the first 10:" : ":"), ol);
+    return top;
+  }
+  document.getElementById("f").addEventListener("submit", (e) => { e.preventDefault(); run(q.value); });
+  window.__titleSearch = async (v) => (await run(v)).map((d) => ({ url: d.url, title: d.meta.title }));
+  window.__titleSearchReady = !!pf;
+  if (params.get("q")) { q.value = params.get("q"); run(q.value); }
+</script>
+</body>
+</html>

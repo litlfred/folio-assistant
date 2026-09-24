@@ -210,6 +210,8 @@
     "iris:pages:check": "bun run who-iris/scripts/gen-iris-pages.ts --check",
     "id-lookup": "bun run large-datasets/scripts/gen-id-lookup.ts",
     "id-lookup:check": "bun run large-datasets/scripts/gen-id-lookup.ts --check",
+    "pagefind:bench": "bun run large-datasets/scripts/bench-pagefind.ts",
+    "pagefind:fixture": "bun run large-datasets/scripts/bench-pagefind.ts --fixture",
     "audit:coverage": "bun run cat-harness/scripts/audit-coverage.ts",
     "audit:coverage:check": "bun run cat-harness/scripts/audit-coverage.ts --check",
     "audit:coverage:strict": "bun run cat-harness/scripts/audit-coverage.ts --check --strict",
@@ -350,6 +352,7 @@
     "unist-util-visit": "^5.1.0",
     "zod": "^4.6.5"
   },
+  "_devDependencies_pagefind_comment": "`pagefind` is a DEV dependency of the large-datasets prototype only (bean `4pm8`; owner, 2026-09-24: 'Prototype Pagefind in large-datasets'). Pinned exactly, because its numbers are recorded in the bean and a different build would measure something else. MIT, as are its platform binaries (`@pagefind/<os>-<arch>`), which npm fetches as optional dependencies. It is used by `large-datasets/scripts/bench-pagefind.ts` and nothing else; `pagefind-guard.test.ts` fails if a file under `cat-harness/docs/` loads it, because the plain docs pipeline is 'no extensions. no fancy. no js (if possible)'.",
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "1.61.1",
@@ -360,6 +363,7 @@
     "eslint": "^10.8.0",
     "fast-xml-parser": "^5.10.1",
     "jsonld": "8",
+    "pagefind": "1.5.2",
     "typescript-eslint": "^8.66.0",
     "yaml": "^2.9.1"
   },
