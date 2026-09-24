@@ -273,24 +273,24 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T13:26:37.101Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/54c5eb58289af1063f75895fb914e425f46e888d",
-  "sourceCommitSha": "54c5eb58289af1063f75895fb914e425f46e888d",
-  "sourceCommitAt": "2026-09-24T13:17:08Z",
+  "generatedAt": "2026-09-24T19:24:38.021Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2a1c41f4d3706b5dbcc2ef6996c19bd59533f3e9",
+  "sourceCommitSha": "2a1c41f4d3706b5dbcc2ef6996c19bd59533f3e9",
+  "sourceCommitAt": "2026-09-24T19:22:12Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
     "Skill": 260,
-    "Actor": 35,
+    "Actor": 36,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 71,
-    "SequenceFlow": 909,
+    "SequenceFlow": 908,
     "Role": 148,
-    "ProcessNode": 861,
-    "Tool": 83,
-    "Schema": 116,
+    "ProcessNode": 860,
+    "Tool": 84,
+    "Schema": 119,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -360,7 +360,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/theming"
       ],
       "instructionsPath": "skills/theming/theme-art-intake.md",
-      "instructionLines": 176,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -772,7 +772,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-rendering.md",
-      "instructionLines": 140,
+      "instructionLines": 142,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -805,7 +805,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 343,
+      "instructionLines": 348,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1464,7 +1464,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/docs-auto.md",
-      "instructionLines": 127,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1599,7 +1599,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 173,
+      "instructionLines": 210,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1952,7 +1952,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 496,
+      "instructionLines": 517,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2172,7 +2172,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/swimlane-glossary.md",
-      "instructionLines": 151,
+      "instructionLines": 168,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2285,13 +2285,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/theme-ui-review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "theme-ui-review",
-      "title": "Post-MVP, because there is nothing to check before there is a render",
-      "description": "Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them.",
+      "title": "At ingestion, and only at ingestion",
+      "description": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/theme-ui-review.md",
-      "instructionLines": 98,
+      "instructionLines": 144,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2342,7 +2342,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/feature-staging.md",
-      "instructionLines": 189,
+      "instructionLines": 212,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2358,7 +2358,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 186,
+      "instructionLines": 195,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2391,7 +2391,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/data-modelling.md",
-      "instructionLines": 251,
+      "instructionLines": 265,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2510,7 +2510,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/adjudication.md",
-      "instructionLines": 265,
+      "instructionLines": 268,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2679,7 +2679,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 387,
+      "instructionLines": 390,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2764,7 +2764,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/audit-coverage.md",
-      "instructionLines": 191,
+      "instructionLines": 255,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2932,7 +2932,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 190,
+      "instructionLines": 307,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3304,7 +3304,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/continual-progress.md",
-      "instructionLines": 239,
+      "instructionLines": 262,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4462,7 +4462,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 188,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4526,12 +4526,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "session-context",
       "title": "Session context",
-      "description": "What a state machine tracks across a session, as against one process instance. The six fields, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
+      "description": "What a state machine tracks across a session, as against one process instance. What the record carries, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/session-context.md",
-      "instructionLines": 131,
+      "instructionLines": 144,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4705,7 +4705,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#package/who-iris"
       ],
       "instructionsPath": "../who-iris/skills/iris-dspace.md",
-      "instructionLines": 222,
+      "instructionLines": 224,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4754,6 +4754,20 @@
         "stakeholder"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/stakeholder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#actor/claude",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "claude",
+      "actorKind": "agent",
+      "title": "Claude (agent session)",
+      "description": "The LLM agent that works in this repository's sessions, under the name it writes into workflow history (`actor: \"claude\"` in `beans/workflows/*.json`). Declared so the PROV-O QA/QC report can resolve that name to an actor (owner, 2026-09-24: \"Declare both\"). The id is the name the agent asserts, not a login: history records it as `asserted` and nothing here authenticates it, and which session or account it was is the data store's to know. `roles` are the lanes its history entries occupy and whose role admits an agent: `authoring-agent` (every code-change-review step it recorded, and the CRDM agent steps) and `code-reviewer` (`Task_Review` in code-change-review). It also recorded one `BA_Submit` in the `business-analyst` lane; that role admits only a person, so it is NOT listed here and the report keeps that step as `not-eligible` for the owner to settle. What it may DO is in the ODRL policies, and none grants it anything yet.",
+      "hasCapability": [],
+      "roleName": [
+        "authoring-agent",
+        "code-reviewer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/claude"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#actor/board-renderer",
@@ -10031,9 +10045,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_IngestTheme/node/Task_Review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Review contrast and non-colour signal",
+      "name": "Theme and UI review",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_IngestTheme",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
       "implementedBy": [
@@ -25240,7 +25254,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
-      "name": "Post-MVP theme and UI review",
+      "name": "Theme and UI review — at ingestion",
       "enforcement": "strict",
       "sourcePath": "processes/theme-ui-review.bpmn",
       "startNode": [
@@ -25337,7 +25351,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview/node/Start_TUR",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "MVP accepted",
+      "name": "Graphical assets ingested",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25355,7 +25369,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview/node/A_Inventory",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Inventory what actually renders",
+      "name": "Inventory the ingested assets",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25443,7 +25457,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview/node/R_Judge",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Judge the rendered result",
+      "name": "Judge the assets in their design",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25484,7 +25498,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Raise findings against the authoring",
+      "name": "Raise findings before the assets land",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25506,7 +25520,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview/node/End_TUR",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Reviewed",
+      "name": "Assets reviewed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -29766,8 +29780,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
       ],
-      "nodeCount": 15,
-      "flowCount": 17,
+      "nodeCount": 14,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver"
     },
@@ -29917,18 +29931,9 @@
       "name": "accepted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/GW_StakeholderOK",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
@@ -30208,26 +30213,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/BA_TranslateFeedback"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Post-MVP theme + UI review",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#role/Agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase complete",
@@ -30239,7 +30224,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/processes",
@@ -38854,6 +38839,79 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/skill-list"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#tool/user-auth",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "user-auth",
+      "title": "Who is asking, and what may they do",
+      "description": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "mcp": {
+          "tool": "auth_whoami"
+        },
+        "inProcess": {
+          "module": "src/tools/auth.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "A declared actor the caller is acting as.",
+            "required": false
+          },
+          {
+            "name": "action",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "An ODRL action to ask about, e.g. content-authoring.",
+            "required": false
+          },
+          {
+            "name": "process",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "Process id, to scope the question or check a task.",
+            "required": false
+          },
+          {
+            "name": "task",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "Node id; with process, runs the task-authorization check.",
+            "required": false
+          },
+          {
+            "name": "role",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "The role the lane binds.",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Text",
+            "description": "The content acted on.",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "answer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/tool-types.schema.json#/$defs/Markdown",
+            "description": "Identity, GitHub role, ODRL grants and decisions, and what GitHub's grain cannot express."
+          }
+        ]
+      },
+      "requirements": {
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/task-authorization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/deployment-auth"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/user-auth"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#tool/stakeholder-map",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "stakeholder-map",
@@ -39909,6 +39967,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "interaction",
+      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "module": "schemas/interaction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -40180,6 +40247,15 @@
       "module": "schemas/session-context.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/site-indexes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "site-indexes",
+      "title": "The published index files the site's viewers read — each `$schema` family",
+      "module": "schemas/site-indexes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/site-indexes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/skill-package",
@@ -40462,6 +40538,15 @@
       "module": "schemas/window-stack.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/window-stack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/withheld",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "withheld",
+      "title": "`folio-withheld/v1` — what a mounted directory must NOT publish.",
+      "module": "schemas/withheld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/withheld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#schema/adjudication",
@@ -41318,7 +41403,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/materialize-remote",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/paper-importer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/proof-status-tracking"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/proof-status-tracking",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-pot-paper/cat-harness.jsonld#skill/theme-ui-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent"
     },
@@ -42314,8 +42401,8 @@
   ],
   "staging": {
     "branch": "claude/glossary-pot-paper",
-    "sha": "d5c1a30ddab348a7b6af6c045671afd236176a91",
+    "sha": "4a3ebc1af899bd56f76db405b4b2009ff69ff955",
     "pr": "1277/merge",
-    "run": "36005434994"
+    "run": "36047688289"
   }
 }
