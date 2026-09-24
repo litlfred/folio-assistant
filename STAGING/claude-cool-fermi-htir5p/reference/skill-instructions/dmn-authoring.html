@@ -450,28 +450,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790254444">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/narrow-viewport.css?v=1790254444">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790254444">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790254444">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790254444">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790254444">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -488,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790252956" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790254444" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -836,7 +840,7 @@ that back this repository’s own computed gateways.</p>
     
 
 <p>In this repository a DMN table has a second job: an exclusive gateway carrying
-<code class="language-plaintext highlighter-rouge">&lt;folio:decision ref="decisions/&lt;file&gt;.dmn#&lt;Decision_Id&gt;"/&gt;</code> has its branch
+<code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:decision ref="decisions/&lt;file&gt;.dmn#&lt;Decision_Id&gt;"/&gt;</code> has its branch
 <strong>computed</strong> from the table rather than picked by the agent.</p>
 
 <p><code class="language-plaintext highlighter-rouge">workflow_complete</code> <strong>refuses a hand-supplied <code class="language-plaintext highlighter-rouge">outcome</code></strong> at such a gateway.
@@ -844,7 +848,7 @@ Asserting the answer would defeat the point of writing the table. You pass
 <code class="language-plaintext highlighter-rouge">facts</code> — e.g. <code class="language-plaintext highlighter-rouge">{ failCritical: 0, failMajor: 2 }</code> from <code class="language-plaintext highlighter-rouge">qa_sweep</code> totals — and
 the table returns the branch.</p>
 
-<p>Adding one means adding the <code class="language-plaintext highlighter-rouge">.dmn</code>, the <code class="language-plaintext highlighter-rouge">folio:decision</code> ref, and nothing else:
+<p>Adding one means adding the <code class="language-plaintext highlighter-rouge">.dmn</code>, the <code class="language-plaintext highlighter-rouge">cat-harness.processes:decision</code> ref, and nothing else:
 the loader checks that <strong>every outcome the table can return names a real
 outgoing flow</strong>, so a table that can route somewhere the diagram cannot go is a
 load error rather than a surprise at the moment of decision.</p>

@@ -450,28 +450,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790254444">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/narrow-viewport.css?v=1790254444">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790254444">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790254444">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790254444">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790254444">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -488,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790252956" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790254444" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -911,7 +915,7 @@ against the server’s own location. It is accurate today and it is a second
 answer to a question <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> already answers — so a directory the
 instance declares and the registry omits is invisible to <code class="language-plaintext highlighter-rouge">skill_fetch</code>. That
 has bitten: <code class="language-plaintext highlighter-rouge">content-lifecycle</code> was absent from the table until 2026-09-18
-while <strong>52</strong> <code class="language-plaintext highlighter-rouge">&lt;folio:skill ref&gt;</code> activities across the workflow diagrams named
+while <strong>52</strong> <code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref&gt;</code> activities across the workflow diagrams named
 its skills, so <code class="language-plaintext highlighter-rouge">workflow_next</code> handed an agent <code class="language-plaintext highlighter-rouge">content-validate</code> and
 <code class="language-plaintext highlighter-rouge">skill_fetch</code> answered <em>“package not found”</em> — for every step of every content
 process. <code class="language-plaintext highlighter-rouge">kg:audit</code>’s <code class="language-plaintext highlighter-rouge">skill-servable</code> criterion exists to keep that shut.</p>
@@ -967,7 +971,7 @@ so they cannot disagree.</p>
   <li><strong><code class="language-plaintext highlighter-rouge">.claude/skills/</code> is not uniformly skills.</strong> <code class="language-plaintext highlighter-rouge">actors/</code>, <code class="language-plaintext highlighter-rouge">capabilities/</code>,
 <code class="language-plaintext highlighter-rouge">roles/</code>, <code class="language-plaintext highlighter-rouge">hooks/</code> and <code class="language-plaintext highlighter-rouge">requirements/</code> are other node kinds that live there.
 Reading the tree as skills put 46 non-skills into the set, at which point
-<code class="language-plaintext highlighter-rouge">&lt;folio:skill ref="viewer"/&gt;</code> resolved — to a capability probe.</li>
+<code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref="viewer"/&gt;</code> resolved — to a capability probe.</li>
   <li><strong>A <code class="language-plaintext highlighter-rouge">.md</code> under the skills path that declares its own <code class="language-plaintext highlighter-rouge">$schema</code> is not a
 skill.</strong> The agent-memory nodes under <code class="language-plaintext highlighter-rouge">memory/</code> declare
 <code class="language-plaintext highlighter-rouge">folio-memory/v1</code>. Without this rule the audit treated all 25 as skills and

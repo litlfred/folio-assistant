@@ -431,28 +431,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790254444">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/narrow-viewport.css?v=1790254444">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790254444">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790254444">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790254444">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790252956">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790254444">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -469,7 +473,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790252956" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790254444" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -853,7 +857,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Options analysis how to implement</strong><br /><code class="language-plaintext highlighter-rouge">Call_OptionsAnalysis</code></td>
       <td>Agent</td>
       <td>calls <a href="options-analysis.html">Options analysis</a></td>
-      <td>On the single edge from <code class="language-plaintext highlighter-rouge">Start_Process_CRDM_Deliver</code> into <code class="language-plaintext highlighter-rouge">A_Implement</code>, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at <code class="language-plaintext highlighter-rouge">Call_Needs</code> there is nothing to weigh, and after <code class="language-plaintext highlighter-rouge">A_Implement</code> the choice has been made in code. Note where this is NOT. The work-plan named <code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code>, and <code class="language-plaintext highlighter-rouge">A_Implement</code> is not in that diagram — <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>. The call goes where the step is, not where the plan said to look. The three loop-backs into <code class="language-plaintext highlighter-rouge">A_Implement</code> — <code class="language-plaintext highlighter-rouge">_5</code> (increment rejected), <code class="language-plaintext highlighter-rouge">_7</code> (MVP not ready), <code class="language-plaintext highlighter-rouge">_13</code> (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code>. Contrast <code class="language-plaintext highlighter-rouge">upstream-version-adoption</code>, where the loop DOES re-enter the analysis. There the loop-back returns to <code class="language-plaintext highlighter-rouge">A_Impact</code>, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. <code class="language-plaintext highlighter-rouge">A_Implement</code> carries <code class="language-plaintext highlighter-rouge">folio:bean op="claim"</code>; this step carries no bean op, because <code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code> ends with its own <code class="language-plaintext highlighter-rouge">decision-audit</code> note on the bean the caller claimed.</td>
+      <td>On the single edge from <code class="language-plaintext highlighter-rouge">Start_Process_CRDM_Deliver</code> into <code class="language-plaintext highlighter-rouge">A_Implement</code>, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at <code class="language-plaintext highlighter-rouge">Call_Needs</code> there is nothing to weigh, and after <code class="language-plaintext highlighter-rouge">A_Implement</code> the choice has been made in code. Note where this is NOT. The work-plan named <code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code>, and <code class="language-plaintext highlighter-rouge">A_Implement</code> is not in that diagram — <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>. The call goes where the step is, not where the plan said to look. The three loop-backs into <code class="language-plaintext highlighter-rouge">A_Implement</code> — <code class="language-plaintext highlighter-rouge">_5</code> (increment rejected), <code class="language-plaintext highlighter-rouge">_7</code> (MVP not ready), <code class="language-plaintext highlighter-rouge">_13</code> (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code>. Contrast <code class="language-plaintext highlighter-rouge">upstream-version-adoption</code>, where the loop DOES re-enter the analysis. There the loop-back returns to <code class="language-plaintext highlighter-rouge">A_Impact</code>, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. <code class="language-plaintext highlighter-rouge">A_Implement</code> carries <code class="language-plaintext highlighter-rouge">cat-harness.processes:bean op="claim"</code>; this step carries no bean op, because <code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code> ends with its own <code class="language-plaintext highlighter-rouge">decision-audit</code> note on the bean the caller claimed.</td>
     </tr>
     <tr>
       <td><strong>Phase 6: Implement (feature branch + PR)</strong><br /><code class="language-plaintext highlighter-rouge">A_Implement</code></td>

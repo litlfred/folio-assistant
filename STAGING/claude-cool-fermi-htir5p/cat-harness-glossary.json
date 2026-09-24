@@ -1594,7 +1594,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#process/Process_BeanLifecycle",
       "label": "Sibling session or human (not yours to close)",
-      "scopeNote": "The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
+      "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/bean-lifecycle.bpmn"
     },
     {

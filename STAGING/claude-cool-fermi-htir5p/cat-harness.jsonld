@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T12:30:31.305Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/92c0e658271c071dec353dea03df1ffb67f36d9a",
-  "sourceCommitSha": "92c0e658271c071dec353dea03df1ffb67f36d9a",
-  "sourceCommitAt": "2026-09-24T12:28:02Z",
+  "generatedAt": "2026-09-24T12:55:34.095Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f03405618dda3a18490b689a7d00bcbc2cccd3b3",
+  "sourceCommitSha": "f03405618dda3a18490b689a7d00bcbc2cccd3b3",
+  "sourceCommitAt": "2026-09-24T12:51:09Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -4440,7 +4440,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "session-state-machine",
       "title": "Playing a state machine",
-      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
+      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/workflow"
       ],
@@ -4462,7 +4462,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 166,
+      "instructionLines": 188,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4492,7 +4492,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
       "title": "State in a running process",
-      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/workflow"
       ],
@@ -42314,8 +42314,8 @@
   ],
   "staging": {
     "branch": "claude/cool-fermi-htir5p",
-    "sha": "876fd92ce8a7fce1031284bd925c23d0fc1dbb0b",
+    "sha": "4776568b4dd0546b504a966d08d5d8e194a643fa",
     "pr": "1241/merge",
-    "run": "35999246228"
+    "run": "36001892548"
   }
 }
