@@ -155,7 +155,7 @@ export interface SubgraphReport {
    * moved to `fsh-guts/`, which is `scope: "repository"` and therefore sits
    * OUTSIDE this instance — and `owningDirectory` compares in the instance's
    * path space, so every repository-scoped directory was skipped without a
-   * word. `bootstrap/skills/`, `smart-kg/` and `uploads/` are skipped the
+   * word. `bootstrap/skills/` and `uploads/` are skipped the
    * same way.
    *
    * Skipping retired content is defensible; skipping it SILENTLY is not,
