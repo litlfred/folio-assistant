@@ -4,6 +4,7 @@
  * nodes, or check that the committed one is current.
  *
  * @module large-datasets/scripts/gen-id-lookup
+ * @covers catalogue — every referenced node of the catalogue must resolve through the committed shards
  *
  * Bean `folio-assistant-4pm8`. The shape and the budget are in
  * `../schemas/id-lookup.ts`; this file only selects the nodes and writes
