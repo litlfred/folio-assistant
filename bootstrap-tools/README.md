@@ -6,12 +6,12 @@ does not have one.**
 `bootstrap/README.md` states the invariant this instance exists to
 protect:
 
-> An Initiator has **no** harness, no server, no tools and no work plan.
+> A Bootstrapping Agent has **no** harness, no server, no tools and no work plan.
 > It is a file you read, not something you run.
 
 Measured: `bootstrap/` holds `.md`, `.json` and `.bpmn`, and **no
 executable code of any kind**. That is the design, not an omission — an
-Initiator runs before Bun, before Zod, before the harness exists.
+Bootstrapping Agent runs before Bun, before Zod, before the harness exists.
 
 So bootstrap's shapes cannot be Zod *in bootstrap*. Owner, 2026-09-20:
 

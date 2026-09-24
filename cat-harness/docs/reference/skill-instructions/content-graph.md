@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/content-graph.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/content-graph.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/content-graph.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/content-graph.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/content-graph.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/content-graph.md){: .fa-edit-source }
 
 {% raw %}
 # Content Graph — Editorial Organisation Skill
@@ -452,11 +452,18 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 
 ## Drawing it
 
-The drawing above is made by `content-graph-analysis.py`, which re-parses the
-sources and has no staleness check.
-[`graph-rendering`](../graph-management/graph-rendering.md) states what a
-drawing of this graph owes: chapters as groups, editorial and formal edges drawn
-distinctly, a stamped check. Bean `o3p3` tracks bringing it under those rules.
+`bun run content:graph:uml --root <content dir> --out <dir> [--status proof-objects.json]`
+(Tool `content-graph-uml`) draws this graph under the
+[`graph-rendering`](../graph-management/graph-rendering.md) rules:
+- chapters as packages;
+- `uses[]` and `interprets` solid, Lean `type` and `value` dashed purple;
+- status fills from `proof-objects.json`;
+- one diagram per chapter, with blocks in other chapters as dashed stubs;
+- portrait and landscape views, and a `--check` that needs no Java.
+
+It builds on `buildContentGraph`, so it draws exactly the graph the QA checks
+read. The older `content-graph-analysis.py` drawing re-parses the sources and
+has no staleness check.
 {% endraw %}
 
 ## Processes that run this skill

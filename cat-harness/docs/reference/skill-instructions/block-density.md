@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/block-density.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/block-density.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/block-density.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/block-density.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/block-density.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/block-density.md){: .fa-edit-source }
 
 {% raw %}
 # Block Density — Topic Coherence and Table Extraction Skill

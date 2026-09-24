@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ingest-l1-completeness-gate\n"
-"POT-Creation-Date: 2026-09-23T16:48:12.931Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.124Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,34 +14,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ingest-l1-completeness-gate.bpmn:88
+#: processes/ingest-l1-completeness-gate.bpmn:93
 #. Diagram element documentation
 msgid "A machine can detect that two readings differ. Which one is right is a human call."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:81
+#: processes/ingest-l1-completeness-gate.bpmn:84
 #. Diagram label
 msgid "Adjudicate the flagged passage"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:76
+#: processes/ingest-l1-completeness-gate.bpmn:101
+#. Diagram element documentation
+msgid "All three converge on Task_Verdict, and that is deliberate rather than the codes being decoration: this lane adjudicates ONE passage while Lane_0 still owns the completeness verdict as a whole, so the outcome of a passage is a REASON recorded against that verdict, never a different next step. The same shape criterion-adjudication uses, where three outcomes converge on one write because what makes an outcome legitimate is that its reason was recorded. What differs is what gets written and what it obliges. `real` is drift to fix in the translation. `spurious` is a false positive, and recording it is what stops the same passage being re-flagged every run. `source-wrong` points at the SOURCE rather than the translation — the one answer that sends work out of this process entirely, because no amount of re-translating a wrong source produces a right target."
+msgstr ""
+
+#: processes/ingest-l1-completeness-gate.bpmn:79
 #. Diagram element documentation
 msgid "Answered by the round-trip translation QA: did it flag semantic drift or a terminology miss? `drift` sends the passage to a person to adjudicate, since which reading is right is a human call; `clean` records the verdict directly."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:111
+#: processes/ingest-l1-completeness-gate.bpmn:137
 #. Diagram label
 msgid "clean"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:109
+#: processes/ingest-l1-completeness-gate.bpmn:126
 #. Diagram label
 msgid "drift"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:74
+#: processes/ingest-l1-completeness-gate.bpmn:77
 #. Diagram label
 msgid "Drift or bad terminology?"
+msgstr ""
+
+#: processes/ingest-l1-completeness-gate.bpmn:131
+#. Diagram label
+msgid "false positive"
 msgstr ""
 
 #: processes/ingest-l1-completeness-gate.bpmn:25
@@ -59,42 +69,42 @@ msgstr ""
 msgid "Ingestion subprocess — the L1 completeness gate"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:55
+#: processes/ingest-l1-completeness-gate.bpmn:58
 #. Diagram label
 msgid "Is every derived artefact present?"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:52
+#: processes/ingest-l1-completeness-gate.bpmn:55
 #. Diagram label
 msgid "L1 graph built"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:61
+#: processes/ingest-l1-completeness-gate.bpmn:64
 #. Diagram element documentation
 msgid "L1 source to L1 KG is NOT complete while a required derived artefact is missing. This is the gate that makes the derivation steps obligatory rather than aspirational."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:70
+#: processes/ingest-l1-completeness-gate.bpmn:73
 #. Diagram element documentation
 msgid "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Back-translate each localized narrative into its source language and compare meaning, to catch semantic drift and bad terminology that a forward-only check cannot see."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:94
+#: processes/ingest-l1-completeness-gate.bpmn:111
 #. Diagram element documentation
 msgid "Record the completeness verdict in three states — met, unmet, or not yet derivable — as bun run check:l1-complete reports it. Not-yet-derivable is never a pass. An unmet verdict opens a bean and returns to derivation; only a met one lets the entry into library/."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:92
+#: processes/ingest-l1-completeness-gate.bpmn:109
 #. Diagram label
 msgid "Record the L1 completeness verdict"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:47
+#: processes/ingest-l1-completeness-gate.bpmn:48
 #. Diagram label
 msgid "Reviewer (SME or editor)"
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:65
+#: processes/ingest-l1-completeness-gate.bpmn:68
 #. Diagram label
 msgid "Round-trip translation QA"
 msgstr ""
@@ -104,12 +114,27 @@ msgstr ""
 msgid "Runs both QA checks unattended and hands off exactly where the role's persona says it must: Gateway_Drift's 'drift' branch leaves this lane the moment a passage needs a judgement about which of two readings is right, rather than guessing — but Task_Verdict, which records the outcome either way, stays in this lane, so Lane_1 adjudicates a single passage while this lane still owns the completeness verdict as a whole."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:48
+#: processes/ingest-l1-completeness-gate.bpmn:128
+#. Diagram label
+msgid "the drift is real"
+msgstr ""
+
+#: processes/ingest-l1-completeness-gate.bpmn:49
 #. Diagram element documentation
 msgid "The only human involvement anywhere in this subprocess: Lane_0 runs both checks and records the verdict unattended, so this lane exists solely for the single case machine QA cannot resolve on its own — a flagged passage where round-trip translation produced two different readings and somebody has to say which is right."
 msgstr ""
 
-#: processes/ingest-l1-completeness-gate.bpmn:103
+#: processes/ingest-l1-completeness-gate.bpmn:134
+#. Diagram label
+msgid "the SOURCE is wrong"
+msgstr ""
+
+#: processes/ingest-l1-completeness-gate.bpmn:120
 #. Diagram label
 msgid "Verdict recorded"
+msgstr ""
+
+#: processes/ingest-l1-completeness-gate.bpmn:97
+#. Diagram label
+msgid "Which reading was right?"
 msgstr ""

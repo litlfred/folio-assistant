@@ -5,7 +5,7 @@
     "id": "lean-authoring-agent",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:5f7f3a893a18ed7bd775f9294d52db8639aee58851a8e4c81339292699bc5faf",
+  "source_hash": "sha256:125f12745fe56f55e38de3f09f9da80a611068d31fa4840565480c82415d3cff",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -20,7 +20,7 @@
       "findings": [
         {
           "where": "lean-authoring-agent",
-          "detail": "role \"lean-authoring-agent\" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead."
+          "detail": "role \"lean-authoring-agent\" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
         }
       ]
     },
@@ -28,11 +28,7 @@
       "result": "pass",
       "findings": []
     },
-    "role-declares-voice": {
-      "result": "pass",
-      "findings": []
-    },
-    "role-has-use-cases": {
+    "role-has-story": {
       "result": "pass",
       "findings": []
     },
@@ -46,7 +42,7 @@
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 6,
     "fail": 1,
     "n/a": 0,
     "unknown": 0

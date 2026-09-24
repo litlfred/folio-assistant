@@ -5,13 +5,13 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/kg-navigation/kg-navigation.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg-navigation/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
-> lives at `bootstrap/skills` and is published as
+> is published as
 > [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
 > Edit this page's source, never the stub.
 
@@ -34,7 +34,7 @@ memorise.** An instance says where its graph is, in its declaration at its
 repository root. It may put it anywhere. In *this* instance the entry reads:
 
 ```json
-{ "id": "cat-harness", "path": "skills/", "graphs": ["cat-harness"] }
+{ "id": "skills", "path": "skills/", "graphKinds": ["skills"] }
 ```
 
 Read that as three separate things, because they change independently:
@@ -43,7 +43,7 @@ Read that as three separate things, because they change independently:
 |---|---|---|
 | `id` | this instance's name for the directory | stable across a relocation — that is its job |
 | `path` | where it happens to be **here** | not stable, and not yours to assume |
-| `graphs` | what kind of graph lives there | the vocabulary, shared across instances |
+| `graphKinds` | what kind of graph lives there | the vocabulary, shared across instances |
 
 An agent that learned `skills/` learned the one column that is allowed to
 change. Ask for the graph; do not navigate to the path.
@@ -53,8 +53,14 @@ change. Ask for the graph; do not navigate to the path.
 > it, like `CatHarness` itself. `GRAPH_KIND_ALIASES` in
 > `schemas/cat-harness.ts` maps `kg` → `cat-harness`, so a declaration or a
 > query using `kg` resolves and is marked deprecated. **Do not read `kg` as a
-> directory `id`** — in this instance the id is `cat-harness`, and text that
+> directory `id`** — in this instance the id is `skills`, and text that
 > tells you otherwise predates the rename.
+>
+> **A Subgraph id is its name inside its Harness**, and the Harness name
+> qualifies it: `cat-harness.skills`, `bootstrap.skills`. The id was
+> `cat-harness` until 2026-09-23. `RENAMED_DIRECTORY_IDS` in
+> `schemas/cat-harness.ts` still reads that id as `skills`, so an older
+> declaration keeps overriding the entry it meant.
 
 ## Tool 1 — the MCP pair
 

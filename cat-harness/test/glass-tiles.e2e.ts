@@ -195,7 +195,9 @@ test.describe("todos → glass", () => {
     await row.locator(".fa-pullout").click();
     const card = page.locator('.fa-glass-asset[data-fa-asset="todo/t-one"]');
     await expect(card).toBeVisible();
-    await expect(card.locator('.fa-avatar[data-fa-kind="todos"]')).toBeAttached();
+    // A STICKY NOTE, not the thin outline glyph — owner, 2026-09-23: *"todos
+    // should have stick note avatar"* (bean `b8eq`).
+    await expect(card.locator('.fa-sticky-note-avatar[data-fa-kind="todos"]')).toBeVisible();
     // The row now says where it is, and offers no second close.
     await expect(row.locator(".fa-pullout-state")).toHaveText("On your folio glass");
   });

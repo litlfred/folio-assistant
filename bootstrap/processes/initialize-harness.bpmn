@@ -11,24 +11,25 @@
     <bpmn:participant id="Participant_Process_InitializeHarness" name="Initialize a harness" processRef="Process_InitializeHarness"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_InitializeHarness" name="Initialize a harness" isExecutable="false">
-    <bpmn:documentation>THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. An Initiator that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces.
+    <bpmn:documentation>THE ONLY PROCESS IN CAT_BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap/README.md is at its start event and has nowhere else to begin. The other diagrams here are not entry points and cannot be confused with this one: `log-message` is an independent SUB-PROCESS, called from a step and never started; `discussion` is entered from within this process when a fact is needed that no file holds — WHICH harness this should become and WHICH repositories are read from and written to, judgements no instruction body produces.
 
-PRECONDITIONS are DECLARED below as folio:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind="stated": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Initiator read it. Reading is not observable from here.
+PRECONDITIONS are DECLARED below as folio:precondition elements rather than asserted here (bean `lv3j`). Three of the four are kind="stated": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here.
 
-NO folio:bean on any activity: a bean is work-plan machinery and an Initiator runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data an Initiator reads, not a process bootstrap can drive.</bpmn:documentation>
+NO folio:bean on any activity: a bean is work-plan machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive.</bpmn:documentation>
     <bpmn:extensionElements>
       <folio:precondition id="knows-the-vocabulary" kind="stated"
-        text="The Initiator understands what a task, a role, a process, an actor and a skill are."/>
-      <folio:precondition id="told-it-is-an-initiator" kind="stated"
-        text="The Initiator has been told that it is an Initiator."/>
+        text="The Bootstrapping Agent understands what a task, a role, a process, an actor and a skill are."/>
+      <folio:precondition id="told-it-is-a-bootstrapping-agent" kind="stated"
+        text="The Bootstrapping Agent has been told that it is a Bootstrapping Agent."/>
       <folio:precondition id="at-the-start" kind="stated"
-        text="The Initiator is at the start of this process and has not begun it elsewhere."/>
+        text="The Bootstrapping Agent is at the start of this process and has not begun it elsewhere."/>
       <folio:precondition id="readme-present" kind="checkable" check="file-exists" ref="bootstrap/README.md"
-        text="The README this process tells the Initiator to read exists in this checkout."/>
+        text="The README this process tells the Bootstrapping Agent to read exists in this checkout."/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_InitializeHarness">
-      <bpmn:lane id="Lane_Initiator" name="Initiator">
+      <bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent">
         <bpmn:documentation>Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="bootstrapping-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_InitializeHarness</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListHarnesses</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListLocations</bpmn:flowNodeRef>
@@ -43,11 +44,13 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
         <bpmn:flowNodeRef>End_Failed</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Requestor" name="Requestor">
-        <bpmn:documentation>The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Initiator's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Initiator may not break that tie itself.</bpmn:documentation>
+        <bpmn:documentation>The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Bootstrapping Agent's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Bootstrapping Agent may not break that tie itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="requestor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_ConfirmHarness</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store">
-        <bpmn:documentation>Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Initiator writes anything.</bpmn:documentation>
+        <bpmn:documentation>Not an actor: the location itself, read rather than acting. Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="knowledge-graph-data-store"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_ReadLocation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ReadDeclaration</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -57,7 +60,7 @@ NO folio:bean on any activity: a bean is work-plan machinery and an Initiator ru
 
     <bpmn:task id="A_ListHarnesses" name="List the harnesses
 this could be">
-      <bpmn:documentation>Zero or more. The DEFAULT is bootstrap itself. Context may name others — "please initialize litlfred/folio-assistant" in a discussion is one, and so is a derivative such as cat-harness or smart-guidelines. This step narrows; it does not decide.</bpmn:documentation>
+      <bpmn:documentation>Zero or more. The DEFAULT is bootstrap itself. Context may name others: "please set up &lt;owner&gt;/&lt;repo&gt; here" in a discussion names one, and so does any Harness built on bootstrap that the Requestor mentions. This step narrows; it does not decide.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -69,7 +72,7 @@ this could install to">
 
     <bpmn:userTask id="A_ConfirmHarness" name="Confirm WHICH harness,
 and where">
-      <bpmn:documentation>The only step needing a person, and the only place a judgement is made. IN, from the Initiator: a list of zero or more harnesses and a list of zero or more locations. OUT, from the Requestor: zero or ONE harness, and a list of zero or more locations. One at most — a list of two is not an answer, and the Initiator may not break the tie itself.</bpmn:documentation>
+      <bpmn:documentation>The only step needing a person, and the only place a judgement is made. IN, from the Bootstrapping Agent: a list of zero or more harnesses and a list of zero or more locations. OUT, from the Requestor: zero or ONE harness, and a list of zero or more locations. One at most — a list of two is not an answer, and the Bootstrapping Agent may not break the tie itself.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="confirm-harness"/></bpmn:extensionElements>
     </bpmn:userTask>
 
@@ -87,7 +90,7 @@ Before reading the chosen harness rather than after, deliberately: if the locati
 
     <bpmn:task id="A_ReadDeclaration" name="Read the harness's
 declaration and instructions">
-      <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets an Initiator be pointed at one nobody has written yet.</bpmn:documentation>
+      <bpmn:documentation>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -103,7 +106,7 @@ A callActivity rather than a task: `log-message` is an independent sub-process, 
 
     <bpmn:task id="A_Install" name="Follow them, at
 each location">
-      <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what f-a-sci or smart-guidelines requires, and does not need to.</bpmn:documentation>
+      <bpmn:documentation>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what any Harness above it requires, and does not need to.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -130,7 +133,7 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
     <bpmn:endEvent id="End_Failed" name="Failed">
       <bpmn:documentation>Three ways in, and all are logged rather than retried: no harness was chosen, a location is ALREADY initialized, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.
 
-"Already initialized" is a failure of THIS process and not a fault in the repository — the usual case is that the work is done. It ends here because the alternative is re-initialising over an instance that already has content, history and dependents, and the damage from that is not recoverable by running anything again. What the Requestor does next — upgrade it, initialise elsewhere, or nothing — is a new decision, and a new decision starts at A_ConfirmHarness rather than being taken by an Initiator that has just been told to stop.</bpmn:documentation>
+"Already initialized" is a failure of THIS process and not a fault in the repository — the usual case is that the work is done. It ends here because the alternative is re-initialising over an instance that already has content, history and dependents, and the damage from that is not recoverable by running anything again. What the Requestor does next — upgrade it, initialise elsewhere, or nothing — is a new decision, and a new decision starts at A_ConfirmHarness rather than being taken by a Bootstrapping Agent that has just been told to stop.</bpmn:documentation>
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="SF_IH_1" sourceRef="Start_InitializeHarness" targetRef="A_ListHarnesses"/>
@@ -155,7 +158,7 @@ The two ways in are the reason it is ONE call rather than two: what differs betw
       <bpmndi:BPMNShape id="Shape_Participant_Process_InitializeHarness" bpmnElement="Participant_Process_InitializeHarness" isHorizontal="true">
         <dc:Bounds x="140" y="80" width="3050" height="720"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Lane_Initiator" bpmnElement="Lane_Initiator" isHorizontal="true">
+      <bpmndi:BPMNShape id="Shape_Lane_BootstrappingAgent" bpmnElement="Lane_BootstrappingAgent" isHorizontal="true">
         <dc:Bounds x="170" y="80" width="3020" height="240"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">

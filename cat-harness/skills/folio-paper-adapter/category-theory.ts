@@ -9,7 +9,6 @@ export const categoryTheory: SkillDefinition = {
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],
-  mcpServices: ["lean-lsp"],
   routingPatterns: [
     "diagram",
     "naturality",

@@ -1,128 +1,61 @@
 ---
 name: bootstrap-graph-emission
 description: >
-  How bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that
-  emission is the one obligation the layer cannot trade away. bootstrap is
-  exempt from the visualiser requirement every layer above it carries; what it
-  owes instead is this document — in the owner's words, its `.json`/`.jsonld`
-  *"is its existence"*. A layer that cannot emit its own graph has not shown it
-  is a graph.
-
-  Prefixed `bootstrap-` for the reason `bootstrap-kg-navigation` is:
-  both resolvers prefer `skills/folio-core/` on a bare name, and a cold agent
-  served a harness-assuming body is the exact failure bootstrap exists to
-  prevent.
+  What bootstrap's own Knowledge Graph must be when it is written out as a data
+  file, `.jsonld` with a `.json` copy. bootstrap renders no pages for a person
+  to browse, so this file is how it shows it is a Knowledge Graph at all.
 consulted: true
 ---
 
-# Emitting bootstrap's own graph
+# Writing out bootstrap's own Knowledge Graph
 
-**The exemption and this skill are one trade, not two facts.** bootstrap
-renders nothing a human looks at — it is the navbar *footer*, and the
-[harness-instances](../../cat-harness/docs/architecture/harness-instances.md)
-page records the floor-that-rises rule: visualiser exempt at this layer,
-required at `cat-harness` and above. The exemption is declared in
-`bootstrap/bootstrap.json` under `renderExemption`, and it carries an `owes`
-field naming this document. **An exemption with no substitute is a hole**; the
-`owes` field is what stops it being one.
+bootstrap renders nothing for a person to look at. What it owes instead is its
+own Knowledge Graph, written out as one data file. `bootstrap.json` records
+that trade under `renderExemption`, and its `owes` field names this Skill. An
+exemption with nothing owed in its place would be a gap.
 
-## The generator, the Tool, and the schema
+bootstrap runs nothing (FR-7 of the [README](../README.md)), so the file is
+written by a Tool of the Harness that publishes bootstrap, not by anything
+here. This Skill states what that Tool must produce. Its shape is fixed by a
+schema, and the Tool is tested against it.
 
-Three different things, kept apart on purpose (bean `n350`):
+## What goes in it
 
-- **This skill** says what the document must be.
-- **The Tool that performs it** is cat-harness's `kg-graph-export`
-  (`bun run kg:export --instance ./bootstrap`), which `satisfies` this skill
-  and [`bootstrap-graph-publication`](bootstrap-graph-publication.md). It is
-  the one publisher.
-- **The shape** is `BootstrapGraphDocumentSchema` in
-  `bootstrap-tools/schemas/bootstrap-graph.ts`, and the tests parse every build
-  against it.
+The declaration itself, its Subgraphs and their Graph Kinds, the declared
+Assets, the Skills in the `skills` Subgraph, the Processes in `processes`
+(with their steps and arrows), and the Roles in `scenarios`. The Tool finds each Subgraph
+**through the declaration**, never by walking the directory tree, so a
+Subgraph the declaration does not name is never exported by accident.
 
-`cat-harness/scripts/gen-bootstrap-graph.ts`, exposed as
-`bun run bootstrap:graph`, is the generator the properties below are tested
-against. It resolves the directories to scan **from the
-declaration**, never by walking the tree — which is the axis
-`scripts/tests/bootstrap-graph.test.ts` defends on purpose: the disk side
-of each assertion *names* the directory, the exporter *resolves* it, and a
-resolver that stops finding `bootstrap/skills/` would otherwise export an
-empty section and report a clean run over it. That is the `dh4f` defect in the
-artefact whose whole job is to say what is here.
+## Four properties
 
-## Four properties, and none of them is a count
-
-The document is a **pure function of its inputs**, and every property below is
-asserted against `buildCatBootstrapDocument()` rather than against bytes:
-
-| property | why it is not optional |
+| property | why |
 |---|---|
-| **pure** — two builds byte-identical | a `--check` that fails on an untouched tree is switched off within a week |
-| **ordered** — `@graph` sorted by `@id` | collectors walk directories, so node order was `readdirSync` order: stable on the container that wrote it, different in CI. A build compared against itself in one process cannot fail on ordering at all, so the ORDER is asserted directly |
-| **no timestamp, no commit SHA in the GRAPH** — provenance sits beside it, at the top level, and only in the published copy | see §"Provenance: narrowed, not dropped" below |
-| **no absolute path from the build machine** | caught before shipping once: the "no `.bpmn` directory" problem string embedded an absolute root, so CI — a different checkout path — would have failed on a tree nobody touched, and the obvious "fix" would have been to delete the gate |
+| **The same input gives the same file.** Two builds of one tree are byte-identical. | A check that fails on an unchanged tree gets switched off. |
+| **Nodes are sorted by `@id`.** | Directory order differs between machines. |
+| **The nodes carry no time and no commit.** Where the file was built from is recorded once, at the top level, and only in the published copy. | Two builds of one tree then agree on every node. |
+| **No absolute path from the machine that built it.** | A different checkout path would make an untouched tree fail. |
 
-### Provenance: narrowed, not dropped
+Counts of nodes are deliberately not checked. A count cannot tell "the export
+still works" from "somebody deleted a Skill".
 
-This row used to say the document carries **no timestamp and no commit SHA**,
-because *a generated file cannot name its own commit*: the best it could name is
-the one before it. That was true while the document was **committed**. It
-stopped being true on 2026-09-20, when the document became a build output
-published by `kg-export` and was no longer committed (see
-[`bootstrap-graph-publication`](bootstrap-graph-publication.md)).
+## What it says it did not look at
 
-A published build does not name its OWN commit. It names the commit it was
-**derived from**, as PROV: `generatedAt` (`prov:generatedAtTime`) and
-`sourceCommit` (`prov:wasDerivedFrom`), plus `sourceCommitSha`, `sourceCommitAt`
-and `sourceTreeDirty`. Or it says `sourceCommitUnavailable`. That is correct by
-construction, and it is what lets a reader tell which tree a published graph
-describes.
+The file's `omitted` list names what the Tool did not collect for bootstrap,
+such as Tools. "bootstrap has no Tools" and "nobody looked for Tools" are
+different facts, and an empty section must not be read as the first when it
+means the second. Its `problems` list names anything that could not be read.
 
-The owner ruled 2026-09-23 (bean `hwzu`) that every published graph carries this
-provenance. So the rule is narrowed to what still holds:
+## Adding a Skill
 
-- the **`@graph`**, the nodes themselves, carries no timestamp and no SHA, so two
-  builds of one tree agree on every node;
-- **provenance is top-level only**, and the publisher adds it. The generator
-  `buildCatBootstrapDocument()` does not, which is why the purity row above is
-  asserted against it and not against the published bytes.
-
-`BootstrapGraphDocumentSchema` reflects this: the provenance fields are optional,
-because one document carries them and the other does not.
-
-**Counts are deliberately not asserted.** `Skill: 2` was pinned and broke the
-moment `log-message` landed; `Process: 1` was pinned and broke on
-`log-message.bpmn`. A count makes "the export still works" and "somebody
-deleted a skill" indistinguishable, and it fails on the change that was
-correct. What is defended is the RELATION — the export sees what is on disk,
-and it publishes only the graph kinds the declaration names.
-
-## What it admits it did not look at
-
-`omitted: [packages, registry, schemas, tools]`. **"bootstrap has no tools"
-and "tools were never looked for" are different facts**, and an empty section
-rendered as a clean one is the same `dh4f` shape as above. The `omitted` list
-is how the document says which one it means.
-
-`problems[]` is the other half: zero diagrams is a determined empty *only if
-something looked*, and an instance declaring no `kg` directory has nowhere to
-look — which is a different answer from "nothing was found", and reporting the
-first as the second once failed the repository root on that message alone.
-
-## Adding a skill here
-
-Drop the `.md` in `bootstrap/skills/`, add its name to that directory's
-`package-manifest.json`, and the export picks it up —
-no edit to the generator. `isSkillMd` decides by **declaration over location**:
-a front matter carrying `$schema:` says the file is some other node kind, so
-`README.md` and `AGENTS.md`, which declare neither, stay out by being declared
-assets instead.
-
-The one place that does need the edit is `skillFilesOnDisk()` in the test,
-which names its directories — that is the axis, not an oversight.
+Put the `.md` in `skills/` and add its name to `skills/package-manifest.json`.
+A `.md` counts as a Skill unless its front matter declares `$schema:`, which
+says it is some other kind of file. `README.md` and `AGENTS.md` are declared as
+Assets instead, which is why they sit outside `skills/`.
 
 ## Related
 
-- [`bootstrap-graph-publication`](bootstrap-graph-publication.md) — where
-  the document lands and why its `@id` must equal that path
-- [`bootstrap-kg-navigation`](../skills/bootstrap-kg-navigation.md) —
-  reading a graph with nothing installed
+- [`bootstrap-graph-publication`](bootstrap-graph-publication.md): where the
+  file is published, and why its `@id` must equal that address
+- [`bootstrap-kg-navigation`](bootstrap-kg-navigation.md): reading a
+  Knowledge Graph with nothing installed

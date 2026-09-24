@@ -6,7 +6,7 @@
  *
  * ## These shapes describe `bootstrap`, and deliberately do not live in it
  *
- * `bootstrap/README.md` promises an Initiator that it needs **no harness,
+ * `bootstrap/README.md` promises a Bootstrapping Agent that it needs **no harness,
  * no server, no tools and no work plan**, and that what it reads is "a file
  * you read, not something you run". Measured: that directory holds `.md`,
  * `.json` and `.bpmn` and **no executable code**. So its shapes cannot be Zod
@@ -46,7 +46,7 @@ export const RepositoryRefSchema = z.object({
   url: z
     .string()
     .describe(
-      "Clone URL or path. Not required to be reachable — an Initiator may have been told about a repository it cannot yet fetch.",
+      "Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told about a repository it cannot yet fetch.",
     ),
   role: z
     .enum(["read-from", "written-to"])
@@ -80,7 +80,7 @@ export type Participant = z.infer<typeof ParticipantSchema>;
  * The occasion for asking: what the agent already knows, and which unknown is
  * still open.
  *
- * Deliberately small — an Initiator has read one README and can look nothing
+ * Deliberately small — a Bootstrapping Agent has read one README and can look nothing
  * up, so an input it cannot populate is an input that stops the process.
  */
 export const DiscussionInputSchema = z.object({
@@ -95,7 +95,7 @@ export const DiscussionInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe(
-      "Harnesses the agent has already narrowed to from context — a repository carrying `cat-harness/harness.json` is not a blank slate. Narrowing first is what keeps this to one question.",
+      "Harnesses the agent has already narrowed to from context — a repository whose root already holds a declaration, `<name>.json`, is not a blank slate. Narrowing first is what keeps this to one question.",
     ),
   knownRepositories: z
     .array(RepositoryRefSchema)
@@ -151,7 +151,7 @@ export const DiscussionOutputObjectSchema = z.object({
     .string()
     .optional()
     .describe(
-      "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open.",
+      "The harness this repository is to become — `bootstrap`, or any Harness built on it. Required when `outcome` is `settled` and `harness` was open.",
     ),
   repositories: z
     .array(RepositoryRefSchema)

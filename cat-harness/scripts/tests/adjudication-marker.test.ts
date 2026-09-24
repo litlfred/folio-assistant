@@ -501,27 +501,42 @@ describe("the split — bean `bvuk`, the owner's shape", () => {
     expect(m.nodes.get("A_Dispensation")!.relaxable).toBe(false);
   });
 
-  test("the two QA callers now call the specialisation, not the shared half", async () => {
+  test("the criterion callers call the specialisation, not the shared half", async () => {
+    // `wireframe-design-review` joined 2026-09-23: reviewers disagreeing on ONE
+    // criterion is a criterion disagreement, and its own documentation already
+    // spoke of "the checker's entry" and "the dispensation".
+    //
+    // It joined as a CORRECTION, which is worth keeping because the PR that
+    // made the split said the opposite. #1074 reported that all four remaining
+    // callers "no longer reach A_ScopeCriterion or A_Dispensation" and framed
+    // that as the intended effect. True for the three below; here it removed
+    // the two steps the diagram documents, so for this one caller it was a
+    // regression rather than a fix.
     for (const [f, id] of [
       ["review-narrative.bpmn", "Task_AdjudicateVoice"],
       ["voice-review.bpmn", "Task_Adjudicate"],
+      ["wireframe-design-review.bpmn", "Call_Adjudicate"],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_CriterionAdjudication");
     }
   });
 
-  test("the other four call the shared half and reach NO outcome task", async () => {
+  test("the other four call the shared half, reach NO outcome task, and declare their OWN answers", async () => {
     // The defect this closes, asserted as reachability rather than as a name:
-    // before the split every one of these ran A_ScopeCriterion's gateway.
-    for (const [f, id] of [
-      ["refresh-materialized.bpmn", "Task_Adjudicate"],
-      ["translation-workflow.bpmn", "Task_Adjudicate"],
-      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift"],
-      ["wireframe-design-review.bpmn", "Call_Adjudicate"],
+    // before the split every one of these ran A_ScopeCriterion's gateway. And
+    // each now names the answers ITS question admits (owner, 2026-09-23; the
+    // three multi-answer sets are the owner's own design, #1156), so
+    // no caller runs an adjudication whose answers nobody stated.
+    for (const [f, id, codes] of [
+      ["refresh-materialized.bpmn", "Task_Adjudicate", ["defer", "local", "merge", "remote"]],
+      ["translation-workflow.bpmn", "Task_Adjudicate", ["accept", "edit", "retranslate"]],
+      ["ingest-l1-completeness-gate.bpmn", "Task_FlagDrift", ["real", "source-wrong", "spurious"]],
+      ["content-change-review.bpmn", "Call_Adjudication", ["stands", "withdrawn"]],
     ] as const) {
       const m = await loadProcessModel(join(dir, f));
       expect(m.nodes.get(id)!.calledElement, f).toBe("Process_Adjudication");
+      expect(m.nodes.get(id)!.adjudication!.codes.slice().sort(), f).toEqual([...codes]);
       const child = m.children.get(id)!;
       expect([...child.nodes.keys()], f).not.toContain("A_ScopeCriterion");
       expect([...child.nodes.keys()], f).not.toContain("A_Dispensation");

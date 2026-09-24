@@ -14,7 +14,7 @@
       "description": "`unsettled` is a real outcome, not an error: a participant may decline, and the process has an end for it. What an `unsettled` result must never contain is a guess."
     },
     "harness": {
-      "description": "The harness this repository is to become — `bootstrap`, or a derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`. Required when `outcome` is `settled` and `harness` was open.",
+      "description": "The harness this repository is to become — `bootstrap`, or any Harness built on it. Required when `outcome` is `settled` and `harness` was open.",
       "type": "string"
     },
     "repositories": {
@@ -25,7 +25,7 @@
         "properties": {
           "url": {
             "type": "string",
-            "description": "Clone URL or path. Not required to be reachable — an Initiator may have been told about a repository it cannot yet fetch."
+            "description": "Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told about a repository it cannot yet fetch."
           },
           "role": {
             "type": "string",

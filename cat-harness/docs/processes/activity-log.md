@@ -25,10 +25,10 @@ What an agent writes down about its own run, and what a person can do with it af
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent (this session) | — | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
-| Activity log | — | — |
-| Log operator (human) | — | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
-| Scheduled log sweep | — | — |
+| Agent (this session) | `authoring-agent` | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
+| Activity log | `log` | — |
+| Log operator (human) | `user` | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
+| Scheduled log sweep | `build-pipeline` | — |
 
 ## Steps
 

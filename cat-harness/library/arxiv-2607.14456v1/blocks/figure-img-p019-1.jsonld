@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p019-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p019-1.png",
+  "pageStart": 19,
+  "pageEnd": 19,
+  "narrative": {
+    "text": "Figure 10, the News workflow. It receives a data_source_plan and an expanded_query_set, validates the payloads, initialises a run context with run_id and timestamps, loads provider config and API credentials, selects providers, builds base query parameters (keywords, date range, regions) and applies source-specific constraints (rate limits, page size, caps). It then sends a request to provider 1 and asks \"Response success?\". On success it parses the payload, asks whether it contains articles, extracts and normalises the article fields (title, url, source, timestamp, language), filters unsupported languages and appends to a collection buffer; \"Is there a next page token?\" and \"Can request next page?\" form the pagination loop back to the request. On failure it increments error_count and records the error. \"More providers to query?\" loops through \"Select next provider\" and \"Update metrics for provider switch\" back to the top; the No branch closes open sessions, builds the unified raw_news_articles structure, attaches run metadata, persists metrics to a monitoring API, builds a run summary and emits a summary event.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-019",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

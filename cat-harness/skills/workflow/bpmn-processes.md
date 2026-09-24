@@ -35,6 +35,39 @@ the exemptions for the legitimate cases are *declarations*, not silence — see
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
 the duration. [`role-model`](../folio-core/role-model.md) carries that model.
 
+## Edge routing: rectilinear, and never over a task
+
+Owner, 2026-09-23, on `document-ingestion`'s rendered diagram: **"keep
+rectilinear if possible, no overlapping."** Two rules, and the second is the
+one that actually bites.
+
+**Rectilinear.** A sequence flow turns at right angles. A diagonal reads as a
+different kind of edge to anybody who has seen a BPMN diagram before, and the
+notation has no such kind — so the reader spends attention deciding whether
+the difference means something. It does not.
+
+**Never over a task, a lane label or another edge.** The case that prompted
+this: the `gap` flow from *Record the gap as a bean* back to *Derive content
+from the assets* was drawn as one long diagonal crossing the full width of the
+process, passing under every task in the lane. It is a perfectly ordinary
+loop-back and it was the hardest edge on the page to follow.
+
+A loop-back belongs in the **channel below the lane's tasks** — out of the row,
+back along it, and up into its target. That is where a reader already looks for
+one, and it crosses nothing.
+
+**This is about the DIAGRAM, not the process.** `BPMNDiagram` carries where a
+thing was drawn and the process carries what is true, so a routing fix changes
+no semantics and needs no re-validation of the flow — the same split
+`board-diagram-interchange` draws one level up. What it changes is whether
+somebody can read the thing.
+
+**Check it by looking at the rendered SVG, not the XML.** Waypoints that look
+orderly in source can still emit a diagonal, and `render:bpmn` is what a reader
+sees. The rendered page is the artefact under review — `preview:site` exists
+for exactly this reason, after a generator shipped 22 headings with one anchor
+and every gate was green across it.
+
 ## Running one: the engine refuses work claimed out of order
 
 The list / start / next / complete calls run a process from its diagram.
@@ -44,6 +77,15 @@ something to act on rather than a bare step name.
 
 **Completion refuses a step that is not enabled.** That is what makes the
 diagram a control rather than a picture.
+
+**Completion also checks WHO.** Before any task or decision is recorded, the
+engine asks four questions: is the actor authenticated, eligible for the role
+the lane binds (`roleRef`), permitted by an ODRL policy to `perform-task` in
+this process and task, and allowed to touch the target content? This is
+generic engine behaviour, so **do not draw an authorization task into a
+diagram**: a check drawn into some processes is a check missing from the rest.
+What a diagram owes the check is a lane bound to a declared role. See
+[`task-authorization`](../folio-core/task-authorization.md).
 
 **Instance state is committed**, alongside the work plan, so a sibling session
 sees the same position. That is the whole reason not to hand-roll a second

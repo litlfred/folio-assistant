@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/remote-stubs/smart-launch.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/remote-stubs/smart-launch.md) — do not edit here.
+> Generated from [`cat-harness/skills/remote-stubs/smart-launch.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/remote-stubs/smart-launch.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/remote-stubs/smart-launch.md){: .fa-edit-source }
 
 {% raw %}
 # smart-launch — a stub, and it is not working

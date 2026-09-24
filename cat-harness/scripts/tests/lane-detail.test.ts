@@ -34,7 +34,6 @@ const GRAPH: RoleGraph = {
       title: "Reviewer",
       description: "r",
       actorKinds: ["person", "agent"],
-      lanes: ["Reviewer"],
       skills: ["read-findings"],
     },
     {
@@ -42,7 +41,6 @@ const GRAPH: RoleGraph = {
       title: "Adjudicator",
       description: "a",
       actorKinds: ["person", "agent"],
-      lanes: ["Adjudicator"],
       skills: ["adjudication"],
       inherits: ["reviewer"],
     },
@@ -53,7 +51,6 @@ const GRAPH: RoleGraph = {
       // Nobody performs it — a lane tasks act ON. Zero skills here is n/a
       // rather than a gap, which is what `actedUpon` exists to say.
       actorKinds: [],
-      lanes: ["Corpus"],
       skills: [],
       actedUpon: true,
     },
@@ -72,13 +69,13 @@ describe("the binding verdict is `laneBinding`'s, not this file's", () => {
     expect(d.roleId).toBe("adjudicator");
   });
 
-  test("a lane bound by NAME resolves too — the case that was missed", () => {
-    // No `roleRef` at all. An implementation that only honoured the explicit
-    // ref reported 140 of the corpus's 184 lanes as unbound; every one of them
-    // is bound by name through `RoleDef.lanes`.
+  test("a lane with no `roleRef` is UNBOUND, whatever its name", () => {
+    // Roles no longer list lane names (data-modelling step 8, #1168): the 140
+    // lanes that bound by name were each given an explicit ref. A name that
+    // happens to equal a role's title binds nothing, so a lane that lost its
+    // ref is a finding rather than a silent match.
     const d = laneDetail({ id: "L", name: "Reviewer" }, ACTS, GRAPH);
-    expect(d.binding).toBe("bound");
-    expect(d.roleId).toBe("reviewer");
+    expect(d.binding).toBe("unbound");
   });
 
   test("a ref naming no declared role is `dangling`, not `unbound`", () => {

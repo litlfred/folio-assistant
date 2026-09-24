@@ -277,11 +277,14 @@ export const RULES: Rule[] = [
       "scripts/kg-detangle.ts",              // measure candidate subgraphs; folded in from its own instance (bean `byql`)
       "scripts/glossary-export.ts",          // the instance's swimlane personas → SKOS
       "scripts/kg-locale-export.ts",         // that graph again, once per locale
+      "scripts/publish-instance-files.ts",   // an instance's own files, .md also as .html (bean `iwtn`)
       "scripts/check-model-languages.ts",    // a model declares its languages, or it is a finding
       "scripts/harness-schema-export.ts",    // the declaration's JSON Schema, at its `$id`
       "scripts/gen-object-model-uml.ts",     // the harness object model, derived from its JSON Schemas
       "scripts/gen-uml-overview.ts",         // UML per named sub-graph, PlantUML + Mermaid from one model
       "scripts/uml-palette.ts",              // the UML colours, read from uml.css for the .puml files
+      "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
+      "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -314,6 +317,7 @@ export const RULES: Rule[] = [
       // about any folio's subject matter — a folio could not make it answer
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
+      "scripts/harness-panel.ts",            // every harness → its config panel row (issue #1146)
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -344,6 +348,7 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
+      "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
       "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
@@ -493,6 +498,12 @@ export const RULES: Rule[] = [
       "schemas/dak-blocks.ts",
       "adapters/manifest-entries.ts",        // reads author-written manifests
       "scripts/gen-docs-pages.ts",           // webpage manifest → docs/<slug>.md
+      // CORE, not harness beside gen-uml-overview: it needs a folio to have
+      // anything to do, and its input is the core content model
+      // (`content/pipeline/content-graph.ts`). The shared PlantUML machinery it
+      // imports (`scripts/plantuml-render.ts`) stays harness, so the edge runs
+      // core → harness, the allowed direction.
+      "scripts/gen-content-graph-uml.ts",    // a paper's block graph (uses[] vs Lean), graph-rendering rules
       "scripts/gen-jsonld-context.ts",       // from schemas/jsonld.ts
       // Re-triaged 2026-09-19, bean `zlmp`. Listed as harness until then, on
       // "editing-process authorisation gate". But AGENTS.md says it runs IN a
@@ -572,6 +583,14 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
+      // The viewer page's COMMON FIXTURE and its audit (bean `edx7`). Core
+      // beside `check-viewer-backticks.ts` and for the same two reasons: they
+      // guard what every viewer generator writes, and they write into the
+      // rendered site. The navbar MODEL is composed here from the
+      // declarations; the component itself is `lib/navbar.ts`, so this adds a
+      // caller and not a second answer to what the navigation looks like.
+      "scripts/viewer-page.ts",
+      "scripts/check-viewer-nav.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -599,6 +618,7 @@ export const RULES: Rule[] = [
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
       "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
+      "scripts/cache-index.ts",              // what is materialized, how big, how old, what could go — derived from the same walk (bean `54rk`)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -792,6 +812,8 @@ export const RULES: Rule[] = [
       // its knowledge graph, and a folio has neither of those as content.
       "scripts/check-workflow-coverage.ts",
       "scripts/claim-bean.ts",
+      "scripts/beans-landed.ts",            // open beans named in a merged PR title — reported, never closed (bean `4d22`)
+      "scripts/check-duplicate-ids.ts",     // no built page carries one id twice — run on the staged site (bean `uknu`)
       "scripts/front-matter.ts",
       "scripts/gen-themes-css.ts",
       "scripts/playwright-chromium.ts",
@@ -869,6 +891,8 @@ export const RULES: Rule[] = [
       // no wrong-direction edge — and leaving them unclassified would have made
       // `src/workflow/` and `src/tools/workflow.ts` read as harness → core.
       "schemas/role-graph.ts",
+      "schemas/odrl.ts",                     // W3C ODRL 2.2 policies: what an Actor may do (issue #1180)
+      "schemas/prov.ts",                     // W3C PROV-O task-run record (issue #1180)
       "schemas/kg-qa.ts",
       // Whether a path can be CHECKED OUT. It imports nothing at all, so it
       // sits at or below every consumer by construction — but it is harness by
@@ -951,6 +975,15 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
+      // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
+      // adjudication's codes against, and the loader `namespaces.ts` sits
+      // beside. Needed to RUN a process, so harness — the same test as the
+      // tooling below; a core placement made `process-model.ts` import down.
+      "schemas/code-list.ts",
+      "scripts/code-lists.ts",
+      // The pre-deploy verifier set (bean `vigi`): needed to RUN the publish
+      // process, so harness, beside the gates it sits among.
+      "scripts/publish-verify.ts",
       // ── Tooling that the `schemas/` and `content/pipeline/` PREFIXES had
       //    claimed for core, on the content-versus-platform reading this list
       //    predates. The owner's cut, 2026-09-19, is different and sharper:
@@ -1072,6 +1105,7 @@ export const RULES: Rule[] = [
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
+      "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
       "scripts/check-publishable.ts",     // is an instance PUBLISHED at all — the declaration, three-state (instance-versioning §3.1)
       "scripts/check-version-bump.ts",    // the bump computed from the exported surface (instance-versioning §4.1)
       "scripts/check-graph-kind-work.ts", // every state kind says whether it records work (bean `76sa`)
@@ -1455,6 +1489,14 @@ const PERMITTED_EDGES: readonly PermittedEdge[] = [
       "loading that module is therefore a precondition of calling one. Without it the kind is " +
       "registered only if the process happened to import core first — an import-order property " +
       "that threw `unknown graph kind \"folio\"` on a valid declaration, five times in PR #465.",
+  },
+  {
+    from: "schemas/cat-harness.ts",
+    to: "schemas/glossary-graph-kind.ts",
+    reason:
+      "The same trigger for core's second kind, `glossary` (owner, 2026-09-23: \"put glossary " +
+      "into folio-assistant-core\"). One entry per endpoint pair, as this list's rule requires; " +
+      "it goes away with the folio entry when the split lands (#223).",
   },
 ];
 

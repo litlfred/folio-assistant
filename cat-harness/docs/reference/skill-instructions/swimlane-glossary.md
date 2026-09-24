@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/swimlane-glossary.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/swimlane-glossary.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/swimlane-glossary.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swimlane-glossary.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/swimlane-glossary.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/swimlane-glossary.md){: .fa-edit-source }
 
 {% raw %}
 # Swimlane Glossary Skill
@@ -105,7 +105,9 @@ delete a role and its concept simply stops appearing, which is what
 alike ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)),
 so the one non-derivable fact — **this term was once minted** — is
 committed at `<instance>/glossary/glossary-ledger.json`, declared as
-graph kind `glossary` (`holds: "state"`).
+graph kind `swimlane-glossary` (`holds: "state"`; renamed from `glossary` on
+2026-09-23, when that name went to core's glossary kind; see
+[`glossary-terms`](glossary-terms.md), whose `glossary/` page reads this ledger as one source).
 
 Three rules for it:
 

@@ -25,13 +25,10 @@ package scenario {
   }
   class "Role" as Role <<json: RoleDefSchema>> #e8f0ee {
     persona [0..1] : string
-    voice [0..1] : string
-    useCases [0..*] : string[]
     id [1] : string
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
-    lanes [0..*] : string[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -45,23 +42,17 @@ package scenario {
     requiredCapabilities [0..*] : {capabilityId, degradation}[]
     dependsOn [0..*] : {ref, kind, conformance}[]
     allowedTools [0..*] : string[]
-    scripts [0..*] : {path, runtime, phase, args}[]
-    mcpServices [0..*] : string[]
-    validators [0..*] : {id, path, runtime, scope}[]
     routingPatterns [0..*] : string[]
     tags [0..*] : string[]
     package [0..1] : string
     lifecycleStages [0..*] : list<plan | author | validate | review | test | publish | feedback | retire>
-    schemaRef [0..1] : string
   }
-  class "User Story" as UserStory <<ext: SMART DAK FunctionalRequirement>> #e8f0ee {
-    resourceType [1] : 'FunctionalRequirement'
+  class "User Story" as UserStory <<json: UserStorySchema>> #e8f0ee {
     id [1] : string
-    activity [1] : string
-    actor [0..*] : object[]
-    capability[x] [0..1] : string | object
-    benefit[x] [0..1] : string | object
-    classification [0..*] : object[]
+    role.instance [0..1] : string
+    role.role [1] : string
+    want [1] : string
+    soThat [0..1] : string
   }
 }
 
@@ -131,10 +122,9 @@ package test {
 }
 
 note bottom of UserStory
-  As a <actor> I want <capability>
-  so that <benefit> — smart-base SGUserStory.
-  The harness itself still holds stories as
-  Role.useCases (free text).
+  As a <role> I want <want> so that <soThat>.
+  scenarios/stories.json; the role names none.
+  SMART DAK's SGUserStory is the external shape.
 end note
 note bottom of Process
   XSD, not JSON Schema: the elements
@@ -145,9 +135,9 @@ end note
 Actor --> "0..*" Role : takes on\nroles
 Role --> "0..*" Role : inherits
 Role --> "0..*" Skill : carries\nskills
-UserStory --> "0..*" Role : as a\nactor
+UserStory --> "1" Role : as a\nrole.role
 Task --> "1" Process : in\nprocess
-Task ..> "1" Role : in lane of\n«folio:role ref on the lane / Role.lanes»
+Task ..> "1" Role : in lane of\n«folio:role ref on the lane»
 Task ..> "1" Skill : uses\n«folio:skill ref»
 KgQaReport --> "1" Role : audits\nsubject.kind
 KgQaReport --> "1" Process : audits\nsubject.kind

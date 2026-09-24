@@ -4,8 +4,8 @@ An agent that has just read `bootstrap/README.md` knows the shape of a
 harness and nothing about **this** one. Two questions have no answer in any
 file it can reach:
 
-- **which harness** this repository should become — `bootstrap` itself, or a
-  derivative such as `cat-harness`, `folio-assistant`, `smart-guidelines`;
+- **which harness** this repository should become: `bootstrap` itself, or
+  any Harness built on it;
 - **which repositories** are involved — where the dependency is read from,
   where the new declaration is written to, and whether they are the same.
 
@@ -28,7 +28,7 @@ Each clause does work here:
 | **judgement** | which question to put, to whom, and when one answer is enough |
 | **using tools** | the `discuss` tool: put a question to a participant, receive an answer |
 | **output schema** | `discussion.output.schema.json` — the harness and repositories, **determined** |
-| **in a process** | `workflows/discussion.bpmn`, and never outside one |
+| **in a process** | always inside one: the process's task points at this skill, never the reverse |
 
 The distinction the table makes is the one worth holding: **the tool does not
 decide.** It carries a question out and an answer back. Judgement chooses what
@@ -44,9 +44,9 @@ checkable; "we discussed it" is not.
 
 Both directions are the same skill:
 
-- **human ↔ agent** — the Requestor is a person; the Initiator asks.
+- **human ↔ agent** — the Requestor is a person; the Bootstrapping Agent asks.
 - **agent ↔ agent** — a sibling session already holds the answer; the
-  Initiator asks it rather than re-deriving it.
+  Bootstrapping Agent asks it rather than re-deriving it.
 
 The output records **who** answered (`kind: person | agent`), because an
 answer from a sibling agent is evidence of a different weight from an answer
@@ -55,10 +55,10 @@ conflated.
 
 ## Rules
 
-**Ask the fewest questions that settle it.** The Initiator's persona is
+**Ask the fewest questions that settle it.** The Bootstrapping Agent's persona is
 "asks exactly one question when it must". Narrow the candidate list from
-context first — a repository that already carries `cat-harness/cat-harness.json`
-is not a blank slate — and put the residue as one question with the
+context first (a repository whose root already holds a declaration,
+`<name>.json`, is not a blank slate) and put the residue as one question with the
 candidates named. A question a reader must go and research is not ready.
 
 **Never infer the answer from a default.** If nothing is known, the output's
@@ -81,7 +81,7 @@ guess, and not an error. The process has an end for it.
   `determinedBy`, `answeredBy`, and the `exchange` that produced it.
 
 Both sit beside this file, in `bootstrap/skills/`, and are plain JSON Schema.
-That is deliberate: an Initiator has no MCP server and no validator, so the
+That is deliberate: a Bootstrapping Agent has no MCP server and no validator, so the
 contract has to be something it can **read**, not something it must call.
 
 ## Why this is in bootstrap at all
@@ -94,13 +94,13 @@ half of it decides nothing and the whole of it decides everything:
 
 > logging is optional, **unless indicated on tasks**.
 
-`log-message` is in `bootstrap/` for precisely that reason — the tasks in
-`initialize-harness` indicate it, and drawing the call is how a task says so.
+`log-message` is in `bootstrap/` for precisely that reason — bootstrap's own
+tasks indicate it, and drawing the call is how a task says so.
 "Optional" is a property of the blanket feature, not of a step whose
 instructions require it.
 
 `discussion` earns its place on a different footing, and a narrower one: an
 agent that cannot determine which harness and which repositories are involved
-cannot take the first step of `initialize-harness` at all, and no amount of
+cannot take the first step of installing a harness at all, and no amount of
 reading will supply it. Not indicated by a task — presupposed by every one of
 them.

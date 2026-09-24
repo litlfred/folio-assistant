@@ -92,14 +92,13 @@ describe("laneBinding — the five answers the audit judges", () => {
         title: "Logger",
         description: "Records and decides nothing.",
         actorKinds: ["system"],
-        lanes: ["Logger"],
         skills: [],
       },
     ],
   };
 
-  test("a lane whose name a role claims is BOUND", () => {
-    expect(laneBinding(graph, { name: "Logger" })).toEqual({ kind: "bound", role: graph.roles[0]! });
+  test("a lane whose ref names a declared role is BOUND", () => {
+    expect(laneBinding(graph, { name: "Logger", roleRef: "logger" })).toEqual({ kind: "bound", role: graph.roles[0]! });
   });
 
   test("a lane with neither a match nor a declaration is UNBOUND — still a finding", () => {

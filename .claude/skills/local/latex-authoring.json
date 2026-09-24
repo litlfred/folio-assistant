@@ -9,12 +9,8 @@
   "dependsOn": [
     { "ref": "req:lean-verification", "kind": "requirement", "conformance": "SHOULD" }
   ],
-  "scripts": [
-    { "path": "scripts/latex-build.sh", "runtime": "bash", "phase": "execute" }
-  ],
   "routingPatterns": ["latex", "paper", "document", "compile pdf"],
   "tags": ["math", "latex", "authoring"],
   "package": "authoring-math",
-  "lifecycleStages": ["author", "publish"],
-  "schemaRef": "schemas/skills/latex-authoring"
+  "lifecycleStages": ["author", "publish"]
 }

@@ -660,6 +660,35 @@ describe("bean-store", () => {
     expect(metrics(r)).not.toContain("bean-quiet-claims");
   });
 
+  // ── Bean `7umv`: an action must name a mechanism that can reach its subject ──
+
+  it("the ORPHAN action does not offer the label, because it cannot reach an orphan", () => {
+    // `feature-staging.yml`'s `cleanup` reads labels from the
+    // `pull_request_target: closed` payload, and a preview is only findable as
+    // an orphan once that event has fired — so labelling afterwards fires
+    // nothing (bean `w2g5`). The action used to name the label FIRST.
+    // Measured cost: the owner applied it to both orphaned slugs and 201.2 MB
+    // stayed exactly where it was.
+    const r = stagingOrphanCheck(healthyContext({
+      staging: {
+        state: "ok",
+        value: { branch: "present", previews: [{ slug: "gone-branch", bytes: 99 * MB, files: 10 }], command: "fixture" },
+      },
+      openPrHeads: { state: "ok", value: [] },
+      branches: { state: "ok", value: { candidates: [], defaultBranch: "main", command: "fixture" } },
+    }));
+    expect(r.findings.length).toBeGreaterThan(0);
+    const action = r.findings[0].action!;
+    // The mechanism that WORKS is named, with the exact inputs.
+    expect(action).toContain("workflow_dispatch");
+    expect(action).toContain("cleanup_slug: gone-branch");
+    expect(action).toContain("cleanup_confirm: gone-branch");
+    // And the one that does not is named as not working, rather than omitted —
+    // a reader who has already tried it needs to know why it did nothing.
+    expect(action).toMatch(/DOES NOT WORK|does not work/);
+    expect(action).toContain("w2g5");
+  });
+
   it("fires `major` on a duplicate title — the 14,688-duplicate shape, at its leading edge", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {

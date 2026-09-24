@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/uml-overview.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/uml-overview.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/uml-overview.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/uml-overview.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/uml-overview.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/uml-overview.md){: .fa-edit-source }
 
 {% raw %}
 # UML overview: generated from declarations and schemas, never drawn
@@ -100,7 +100,8 @@ as the default. Owner, 2026-09-23: "can we have portrait and landscape
 views?".
 
 - **The committed `.puml` is the portrait view.** The landscape view is
-  derived from it by `landscapeOf` in `gen-uml-overview.ts` and rendered to
+  derived from it by `landscapeOf` in `scripts/plantuml-render.ts`, shared with
+  every PlantUML generator, and rendered to
   `<name>.landscape.svg`. It is not committed as a second source, so the two
   views cannot say different things.
 - **ELK ignores direction.** `left to right direction` and arrow hints left

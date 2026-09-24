@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/data-modelling.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/data-modelling.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/data-modelling.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/data-modelling.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/data-modelling.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/data-modelling.md){: .fa-edit-source }
 
 {% raw %}
 # Data modelling — the entities, before the fields
@@ -144,6 +144,73 @@ variant that overrides a value **cites why**, the same as any other asserted
 fact — otherwise the model records what the value is and loses where it came
 from, which is the failure the `uses[]` rule exists to prevent elsewhere.
 
+### 8. Point from the dependent at the general node
+
+A relation between two entities is written on ONE of them. Write it on the
+entity that DEPENDS, pointing at the one it depends on. **A general, reused
+node never holds a field naming the things that use it.**
+
+Owner, 2026-09-23 (#1168): *"tasks are used to implement skills, skills
+should not know about tasks"* and *"voice external to a role. should not be in
+data model... need to flip arrows."*
+
+The test is the step-3 question applied to the relation: **if every user of
+this node disappeared, would the node still be complete?** A skill with no
+task implementing it is still a skill; a task with no skill is not a task. So
+the pointer lives on the task.
+
+| relation | written on | never on | why |
+|---|---|---|---|
+| a task implements a skill | the BPMN task (`<folio:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
+| a voice speaks for a role | the voice (`activeIn.roles`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
+| a lane is played by a role | the lane (`<folio:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
+| a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
+| a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
+| a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |
+| a skill says how to read a graph kind | the skill's front matter (`graph-kinds:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
+| a skill takes and produces a contract | the skill's front matter (`input:`, `output:` — a path into the instance or an https IRI) | a directory named after the skill | the skill can then say its contract is elsewhere, and a contract no skill names is visible as unclaimed |
+| a test checks a skill's contract | the test run | the skill | tests come and go; the contract does not |
+
+**Prose counts.** A skill body that says *"the only step of
+initialize-harness"* knows its caller just as surely as a field does, and goes
+stale the same way. Say what the skill does, not who calls it; the caller's
+own declaration says the rest.
+
+**The general node owns its CONTRACT.** What a skill takes and returns is a
+fact about the skill, so it is declared there: an **input** and an **output**
+schema reference, each either a KG schema or a pinned external schema. Tasks,
+Tools and tests point at the skill and are checked against that contract. That
+is how a general node stays complete without naming its users.
+
+### 9. Make every cross-node reference a typed KG reference
+
+A reference is a claim that another node exists. A bare string makes that
+claim in a vocabulary nothing resolves: a typo, a rename or a deleted node
+reads exactly like a valid name. Owner, 2026-09-23: *"Things like skills
+should be KG reference."*
+
+So a field that names another node holds a **KG reference**: the target's
+kind and id, resolvable in the knowledge graph, and projected by `kg-export`
+as an `@id` link, never a literal. Use the helpers that already exist rather
+than inventing one:
+
+| helper | shape | for |
+|---|---|---|
+| `KgRefSchema` (`schemas/carried-note.ts`) | `{kind, id, note?}` | any KG node |
+| `TaskRefSchema` (`schemas/carried-note.ts`) | `{process, task}` | a BPMN task: the pair, never a bare task id |
+| `VoiceRefSchema` (`schemas/voices.ts`) | `{instance?, voiceId}` | a voice, possibly in another instance |
+| `SkillNameSchema` (`schemas/tool-types.ts`) | kebab id | a skill id, where a whole ref is not needed |
+| `module#Export`, `instance:module#Export` (`parseValidatorRef`) | string with a checked grammar | a schema |
+
+A reference that crosses into another instance says which instance. And a
+reference is **resolved by a check**, not trusted: the audit that reads the
+field fails on one that points at nothing.
+
+**Free text stays free text** only when it is not a claim about another node:
+a description, a note, a persona. `useCases` was free text that named things
+the graph could not point at; that is the case this rule exists for, and the
+stories are now nodes that point at their role.
+
 ## What falsifies a model
 
 Write these down as you go and check them at the end. A model nobody tried to
@@ -157,6 +224,8 @@ break is a diagram.
 | count the facts nothing reads | the part you modelled for its own sake |
 | find two kinds whose consumers take the SAME code path | one of them is an override wearing a discriminator |
 | find a required field a variant can never state | requiredness is being checked before resolution, not after |
+| delete every user of a general node; is it still complete? | a field on the general node names its users (step 8) |
+| rename a node; does anything still read as valid? | a reference is a bare string, not a KG reference (step 9) |
 
 ## What this skill is NOT
 

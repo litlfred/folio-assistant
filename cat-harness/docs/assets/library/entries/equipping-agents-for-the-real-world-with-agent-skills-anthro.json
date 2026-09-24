@@ -1,0 +1,294 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "equipping-agents-for-the-real-world-with-agent-skills-anthro",
+  "blocks": [
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Engineering at Anthropic\nEquipping agents for the real world with\nAgent Skills\nClaude is powerful, but real work requires procedural knowledge\nand organizational context. Introducing Agent Skills, a new way to\nbuild specialized agents using files and folders.\nPublished Oct 16, 2025\nUpdate: We've published Agent Skills as an open standard for cross-platform\nportability. (December 18, 2025)\nAs model capabilities improve, we can now build general-purpose agents that interact\nwith full-fledged computing environments. Claude Code, for example, can\naccomplish complex tasks across domains using local",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p002-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-1.png",
+      "narrative": "draft",
+      "content": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill — skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "This led us to create Agent Skills: organized folders of instructions, scripts, and\nresources that agents can discover and load dynamically to perform better at specific\ntasks. Skills extend Claude’s capabilities by packaging your expertise into composable\nresources for Claude, transforming general-purpose agents into specialized agents\nthat fit your needs.\nBuilding a skill for an agent is like putting together an onboarding guide for a new\nhire. Instead of building fragmented, custom-designed agents for each use case,\nanyone can now specialize their agents with composable capabilities by capt",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p003-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-1.png",
+      "narrative": "draft",
+      "content": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "description . At startup, the agent pre-loads the name and description of\nevery installed skill into its system prompt.\nThis metadata is the first level of progressive disclosure: it provides just enough\ninformation for Claude to know when each skill should be used without loading all of\nit into context. The actual body of this file is the second level of detail. If Claude\nthinks the skill is relevant to the current task, it will load the skill by reading its full\nSKILL.md into context.\nA SKILL.md file must begin with YAML Frontmatter that contains a file name and description,\nwhich is loaded",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p004-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../images/img-p004-1.png",
+      "narrative": "draft",
+      "content": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at — pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p004-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../images/img-p004-2.png",
+      "narrative": "draft",
+      "content": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files — text files, scripts, data — loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "You can incorporate more context (via additional files) into your skill that can then be triggered\nby Claude based on the system prompt.\nProgressive disclosure is the core design principle that makes Agent Skills flexible\nand scalable. Like a well-organized manual that starts with a table of contents, then\nspecific chapters, and finally a detailed appendix, skills let Claude load information\nonly as needed:\nAgents with a filesystem and code execution tools don’t need to read the entirety of a\nskill into their context window when working on a particular task. This means that the\namount of conte",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p005-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-1.png",
+      "narrative": "draft",
+      "content": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present — the body and the bundled files are read on demand.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "The following diagram shows how the context window changes when a skill is\ntriggered by a user’s message.\nSkills are triggered in the context window via your system prompt.\nThe sequence of operations shown:\n1. To start, the context window has the core system prompt and the metadata for each\nof the installed skills, along with the user’s initial message;\n2. Claude triggers the PDF skill by invoking a Bash tool to read the contents of\npdf/SKILL.md ;\n3. Claude chooses to read the forms.md file bundled with the skill;\n4. Finally, Claude proceeds with the user’s task now that it has loaded relevant",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p006-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-1.png",
+      "narrative": "draft",
+      "content": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "In our example, the PDF skill includes a pre-written Python script that reads a PDF\nand extracts all form fields. Claude can run this script without loading either the script\nor the PDF into context. And because code is deterministic, this workflow is consistent\nand repeatable.\nSkills can also include code for Claude to execute as tools at its discretion based on the nature\nof the task.\nDeveloping and evaluating skills\nHere are some helpful guidelines for getting started with authoring and testing skills:\nStart with evaluation: Identify specific gaps in your agents’ capabilities by running\nthe",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "overreliance on certain contexts. Pay special attention to the name and\ndescription of your skill. Claude will use these when deciding whether to\ntrigger the skill in response to its current task.\nIterate with Claude: As you work on a task with Claude, ask Claude to capture its\nsuccessful approaches and common mistakes into reusable context and code\nwithin a skill. If it goes off track when using a skill to complete a task, ask it to self-\nreflect on what went wrong. This process will help you discover what context\nClaude actually needs, instead of trying to anticipate it upfront.\nSecurity con",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "Skills are a simple concept with a correspondingly simple format. This simplicity\nmakes it easier for organizations, developers, and end users to build customized\nagents and give them new capabilities.\nWe’re excited to see what people build with Skills. Get started today by checking out\nour Skills docs and cookbook.\nAcknowledgements\nWritten by Barry Zhang, Keith Lazuka, and Mahesh Murag, who all really like folders.\nSpecial thanks to the many others across Anthropic who championed, supported, and\nbuilt Skills.\nGet the developer newsletter\nProduct updates, how-tos, community spotlights, and mor",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "Claude Design\nClaude Science\nClaude Security\nClaude in Chrome\nClaude for Microsoft 365\nSkills\nDownload app\nPricing\nLog in to Claude\nModels\nMythos\nFable\nOpus\nSonnet\nHaiku\nSolutions\nAI agents\nCode modernization\nCoding\nCommerce\nCustomer support\nCybersecurity\nEnterprise\nFinancial services\nGovernment\nHealthcare\nHigher education\nK-12 teachers\nLegal\n9/20/26, 4:40 PM\nEquipping agents for the real world with Agent Skills \\ Anthropic\nhttps://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills\n9/12",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "Life sciences\nNonprofits\nSales\nSmall business\nClaude Platform\nOverview\nDeveloper docs\nPricing\nEcosystem\nMarketplace\nRegional compliance\nClaude on AWS\nGoogle Cloud\nMicrosoft Foundry\nConsole login\nResources\nBlog\nClaude partner network\nCommunity\nConnectors\nCourses\nCustomer stories\nEngineering at Anthropic\nEvents\nPlugins\nPowered by Claude\nService partners\nTutorials\n9/20/26, 4:40 PM\nEquipping agents for the real world with Agent Skills \\ Anthropic\nhttps://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills\n10/12",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "Use cases\nPrograms\nStartups\nScientists\nHelp and security\nAvailability\nStatus\nSupport center\nCompany\nAnthropic\nCareers\nLeadership\nPolicy\nEconomic Futures\nResearch\nNews\nClaude’s Constitution\nClaude Corps\nKeep thinking\nPolicy on the AI Exponential\nResponsible Scaling Policy\nSecurity and compliance\nTransparency\nTerms and policies\nPrivacy choices\nPrivacy policy\nConsumer health data privacy policy\n9/20/26, 4:40 PM\nEquipping agents for the real world with Agent Skills \\ Anthropic\nhttps://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills\n11/12",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "Responsible disclosure policy\nTerms of service: Commercial\nTerms of service: Consumer\nTerms of Service: US K-12\nData Processing Agreement: US K-12\nUsage policy\n© 2026 Anthropic PBC\n9/20/26, 4:40 PM\nEquipping agents for the real world with Agent Skills \\ Anthropic\nhttps://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills\n12/12",
+      "truncated": false,
+      "provenance": "ingested"
+    }
+  ]
+}

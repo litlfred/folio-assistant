@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
   "title": "Discussion Input",
-  "description": "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — an Initiator has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
+  "description": "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
   "type": "object",
   "properties": {
     "open": {
@@ -39,7 +39,7 @@
       "description": "Who is being asked. The two participant kinds are symmetric — the same skill serves human-to-agent and agent-to-agent — but the answer's weight differs, so the kind is recorded rather than inferred."
     },
     "candidates": {
-      "description": "Harnesses the agent has already narrowed to from context — a repository carrying `cat-harness/harness.json` is not a blank slate. Narrowing first is what keeps this to one question.",
+      "description": "Harnesses the agent has already narrowed to from context — a repository whose root already holds a declaration, `<name>.json`, is not a blank slate. Narrowing first is what keeps this to one question.",
       "type": "array",
       "items": {
         "type": "string"
@@ -53,7 +53,7 @@
         "properties": {
           "url": {
             "type": "string",
-            "description": "Clone URL or path. Not required to be reachable — an Initiator may have been told about a repository it cannot yet fetch."
+            "description": "Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told about a repository it cannot yet fetch."
           },
           "role": {
             "type": "string",
