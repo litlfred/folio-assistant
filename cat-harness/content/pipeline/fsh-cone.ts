@@ -216,9 +216,18 @@ export function buildFshGraph(root: string): FshGraph {
       bump(edgeKinds, "cql include");
     }
   }
+  // SUSHI defaults an Instance's id to its NAME when no `Id:` is declared, so
+  // the id to match on is `node.id ?? node.name`. Guarding on `node.id` alone
+  // made this whole edge kind dead on the IG it was written for: measured on
+  // smart-immunizations 2026-09-23 (bean `f4gj`), ALL 279 Library instances
+  // omit `Id:` and ALL 279 names match a CQL library, so the edge fired 0
+  // times and was absent from `edgeKinds` entirely. Every Library's only
+  // dependency was the shared `LogicLibrary` RuleSet it inserts — one target
+  // for 279 artefacts, which cannot distinguish any of them.
   for (const node of nodes.values()) {
-    if (node.kind === "Instance" && node.id && cqlByName.has(node.id)) {
-      node.deps.add(cqlByName.get(node.id)!);
+    const instanceId = node.id ?? node.name;
+    if (node.kind === "Instance" && cqlByName.has(instanceId)) {
+      node.deps.add(cqlByName.get(instanceId)!);
       bump(edgeKinds, "Library ↔ cql (by name)");
     }
   }

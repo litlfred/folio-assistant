@@ -53,6 +53,13 @@ bimodal, confirmed:  <=10 nodes: 31   <=50: 74   >200: 52
 re-derived and the 8.2 % figure should not be re-quoted without saying which commit
 window produced it.
 
+**And after fixing (a), the same replay gives 16.0 %.** A correct graph made the
+incremental case *weaker*, which is the honest result: the optimistic figure was
+optimistic **because 279 edges were missing**. `267x`'s 8.2 % was measured on the same
+defective graph. An incremental build sized from the pre-fix number would **under-rebuild**
+— the one failure `fsh-cone`'s own header calls dangerous. Do not quote a rebuild fraction
+without naming the graph that produced it.
+
 ### 3. The export side — re-derived, and it holds
 
 `smart-immunizations/fhir-artifact-index/index.json`: 748 artefacts, Library 279 +
@@ -102,15 +109,34 @@ Expanding FSH `RuleSet` parameters — what SUSHI does — and re-extracting:
 So the logic-layer edges exist in the IG source, at full per-artefact resolution, with no
 fork. `fsh-cone` misses all of them for **two named, separable reasons**:
 
-**(a) A one-line defect.** `fsh-cone.ts:220` guards
+**(a) A one-line defect — FIXED in this PR, on the owner's explicit instruction.**
+`fsh-cone.ts:220` guarded
 `if (node.kind === "Instance" && node.id && cqlByName.has(node.id))`. **All 279** Library
 instances omit `Id:` and rely on SUSHI's name→id default; **all 279** names match a CQL
-library name. So `node.id` is `undefined`, the guard short-circuits, and the documented
-`Library ↔ cql (by name)` edge kind fires **0 times** — it is absent from the edge-kind
-table entirely. 279 edges lost to a missing fallback. Honouring the default raises
-Library's backward-cone median from 0 to 12 and its distinct reachable targets from 1 to 280.
+library name. So `node.id` was `undefined`, the guard short-circuited, and the documented
+`Library ↔ cql (by name)` edge kind fired **0 times** — absent from the edge-kind table
+entirely. The fix is `node.id ?? node.name`.
 
-**(b) Real work, not a bug.** PlanDefinition and Measure write their library edge *inside a
+Its own test suite stayed green throughout, because the fixture declared `Id: LibX`
+explicitly — it tested the shape that works and never the shape that exists in the wild.
+A second fixture Library with no `Id:` is added as the regression guard.
+
+**Re-measured on smart-immunizations after the fix:**
+
+| | before | after |
+|---|---|---|
+| distinct targets, all 458 | 8 | **287** |
+| logic→logic edges | 0 | **279** |
+| internal edges | 2,478 | **2,757** |
+| nodes with no dependent | 715 | **536** |
+| backward-cone median | 3 | **8** |
+| largest forward cone | 278 | **551** |
+| `Library ↔ cql (by name)` | absent | **279** |
+
+**(a) closes the Library third and nothing else: 279 of 458 now reach a logic artefact;
+179 — every PlanDefinition and every Measure — still reach none.**
+
+**(b) Real work, not a bug — STILL OPEN.** PlanDefinition and Measure write their library edge *inside a
 parameterised RuleSet*: `* library = Canonical({library}Logic)` in `PlanDefMain(library,
 version)`, and `* library = "…/Library/{library}Logic"` in `MeasureProportionBasic`,
 reached through a second level via `MeasureProportion`. `fsh-cone` reads RuleSet bodies
@@ -185,4 +211,7 @@ It takes an IG root and the artefact index and prints every table above.
 - [x] Establish ground truth by expanding RuleSet parameters
 - [x] Name what a source edge cannot carry that a resolved AST edge could
 - [x] Land the measurement script + propose the skill edit in a PR
-- [ ] Owner decision on the proposed skill edit — NOT mine to merge
+- [x] Owner decision: take the proposed skill edit; fix the `fsh-cone` defect in this PR
+- [x] Fix (a) `node.id ?? node.name`, add the no-`Id:` regression fixture, re-measure
+- [ ] (b) RuleSet parameter substitution — NOT attempted; needs its own decision
+- [ ] Owner review and merge — NOT mine to merge

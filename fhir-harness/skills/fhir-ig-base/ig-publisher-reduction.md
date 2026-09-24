@@ -127,23 +127,49 @@ not depend on a fork for the *existence* of logic-layer edges; those are in the
 IG source at full per-artefact resolution. What the fork uniquely delivers is
 **resolved, version-pinned, cross-package** edges.
 
-#### ...and it is not a route today
+#### ...and it was not a route, for two separable reasons — one now fixed
 
-`fsh-cone` **as merged** extracts none of them. For all 458 artefacts it reaches
-**8 distinct targets, every one a shared `RuleSet`** — **0 logic→logic edges**.
-Aggregate "coverage" reads 99.8 %, which is boilerplate: every Library's mean
-out-degree is exactly **1.00** and all 279 point at the same node, so the graph
-cannot tell one Library from another. Both staleness directions are wrong — a
-change to a Library's own CQL marks **nothing** stale; a change to
-`LogicLibrary.fsh` marks **all 279**. **Break any such number down by resource
-type**; the aggregate hid this.
+As first measured, `fsh-cone` extracted **none** of them: all 458 artefacts
+reached **8 distinct targets, every one a shared `RuleSet`** — **0 logic→logic
+edges**. Aggregate "coverage" read 99.8 %, which was boilerplate: every
+Library's mean out-degree was exactly **1.00** and all 279 pointed at the same
+node, so the graph could not tell one Library from another. Both staleness
+directions were wrong — a change to a Library's own CQL marked **nothing**
+stale; a change to `LogicLibrary.fsh` marked **all 279**. **Break any such
+number down by resource type**; the aggregate hid this.
 
-Two separable causes: **(a)** `fsh-cone`'s `Library ↔ cql (by name)` edge is
-guarded on `node.id`, and all 279 Library instances omit `Id:` and rely on
-SUSHI's name→id default, so the edge fires 0 times; **(b)** PlanDefinition and
-Measure write their library edge *inside a parameterised RuleSet*
-(`* library = Canonical({library}Logic)`), which needs SUSHI's substitution to
-recover.
+**(a) The Library→CQL edge — FIXED.** `fsh-cone`'s `Library ↔ cql (by name)`
+edge was guarded on `node.id`, and all 279 Library instances omit `Id:` and rely
+on SUSHI's name→id default, so it fired 0 times and was absent from the
+edge-kind table entirely. Honouring the default (`node.id ?? node.name`) is the
+whole fix. Re-measured:
+
+| | before | after |
+|---|---|---|
+| distinct targets, all 458 | 8 | **287** |
+| logic→logic edges | 0 | **279** |
+| internal edges | 2,478 | **2,757** |
+| nodes with no dependent | 715 | **536** |
+| backward-cone median | 3 | **8** |
+
+**(b) The library canonical inside a parameterised RuleSet — STILL OPEN.**
+PlanDefinition and Measure write it as `* library = Canonical({library}Logic)`
+in `PlanDefMain(library, version)`, and as a string URL in
+`MeasureProportionBasic` reached through a second level. The token `fsh-cone`
+sees is `{library}Logic`, which resolves to nothing, so the edge is attributed
+to the RuleSet. Recovering it needs SUSHI's RuleSet parameter substitution.
+**179 of the 458 — every PlanDefinition and every Measure — still reach no logic
+artefact at all.**
+
+#### A correct graph made the incremental case WEAKER, and that is the honest result
+
+Replaying the same 257 commits before and after (a): mean rebuild per commit
+goes from **9.4 % to 16.0 %** of the IG, and the largest forward cone from 278
+to 551. The optimistic figure was optimistic *because 279 edges were missing*.
+`267x`'s quoted 8.2 % is lower still and was measured on the same defective
+graph. **Do not quote a rebuild fraction without saying which graph produced
+it** — an incremental build sized from the pre-fix number would under-rebuild,
+which is the one failure `fsh-cone`'s own header calls dangerous.
 
 #### What a source edge still cannot carry
 

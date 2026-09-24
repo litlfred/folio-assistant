@@ -13,9 +13,9 @@
  * side, per resource type, because an aggregate hides the answer:
  *
  *   1. EXPORT      — the artefact index's logic-layer count, and its edge count.
- *   2. AS MERGED   — what `fsh-cone` on `main` actually extracts for those same
- *                    artefacts, including **how many DISTINCT targets** they reach.
- *                    That last column is the one that matters: 458 artefacts each
+ *   2. EXTRACTED   — what `fsh-cone` actually extracts for those same artefacts,
+ *                    including **how many DISTINCT targets** they reach. That
+ *                    last column is the one that matters: 458 artefacts each
  *                    carrying one edge to the same shared `RuleSet` is 100 %
  *                    "coverage" and zero information.
  *   3. GROUND TRUTH — what is in the source once FSH `RuleSet` parameters are
@@ -23,6 +23,26 @@
  *                    ever sees a resource.
  *
  * The gap between (2) and (3) is the finding. See bean `folio-assistant-f4gj`.
+ *
+ * ## The gap was two causes, and this branch closed ONE of them
+ *
+ * When first measured, pass 2 found **0 logic→logic edges** for all 458
+ * artefacts — 8 distinct targets between them, every one a shared `RuleSet`.
+ * Two separable causes:
+ *
+ * **(a) FIXED in this branch.** `fsh-cone`'s `Library ↔ cql (by name)` edge was
+ * guarded on `node.id`, and every Library instance omits `Id:` and relies on
+ * SUSHI's name→id default, so it fired 0 times. Libraries now reach their CQL
+ * bodies.
+ *
+ * **(b) STILL OPEN.** PlanDefinition and Measure write their library edge
+ * *inside a parameterised RuleSet* — `* library = Canonical({library}Logic)` —
+ * so the token `fsh-cone` sees is `{library}Logic` and resolves to nothing.
+ * Recovering it needs SUSHI's RuleSet parameter substitution, which is pass 3's
+ * job and pass 3 is an approximation, not an extractor.
+ *
+ * So a run of this tool today should show Library closed and the other two open.
+ * **If pass 2 ever reports 0 logic→logic edges for Library again, (a) regressed.**
  *
  * ## The ground-truth pass is an APPROXIMATION, deliberately labelled
  *
@@ -315,7 +335,7 @@ export function report(m: Measurement): string {
     (m.unmatchedExportIds.length ? `  e.g. ${m.unmatchedExportIds.slice(0, 5).join(", ")}` : ""));
 
   out.push("");
-  out.push("== 2. fsh-cone AS MERGED — edges it extracts for those same artefacts ==");
+  out.push("== 2. fsh-cone AS IT STANDS — edges it extracts for those same artefacts ==");
   out.push("   'distinct targets' is the column that matters: N artefacts each carrying one");
   out.push("   edge to the SAME shared RuleSet is 100% coverage and zero information.");
   out.push("");
@@ -356,8 +376,10 @@ export function report(m: Measurement): string {
   }
   out.push(`   ${"TOTAL".padEnd(16)}${String(gn).padStart(4)}  ${String(gh).padStart(6)} (${pct(gh, gn)})`);
   out.push("");
-  out.push("   The gap between (2) and (3) is the finding: the edges are in the source,");
-  out.push("   and fsh-cone as merged does not extract them. Bean folio-assistant-f4gj.");
+  out.push("   The gap between (2) and (3) is the finding: an edge present in the source");
+  out.push("   that (2) does not extract is an artefact whose staleness cannot be marked.");
+  out.push("   Cause (a), the Library->CQL edge, is fixed; (b), the library canonical");
+  out.push("   written inside a parameterised RuleSet, is open. Bean folio-assistant-f4gj.");
   return out.join("\n");
 }
 

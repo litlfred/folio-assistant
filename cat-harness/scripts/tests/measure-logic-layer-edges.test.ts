@@ -13,7 +13,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { LOGIC_TYPES, logicTypeOf, measure, readCqlNames, readFshBlocks, report } from "../measure-logic-layer-edges.ts";
+import { logicTypeOf, measure, readCqlNames, readFshBlocks, report } from "../measure-logic-layer-edges.ts";
 
 let root: string;
 let indexPath: string;
@@ -123,26 +123,34 @@ describe("the export side", () => {
 });
 
 describe("fsh-cone as merged — coverage and information are different numbers", () => {
-  test("every Library carries an edge, and they all reach the SAME single target", () => {
+  test("coverage and information are different numbers, and only the second moved", () => {
+    // Before cause (a) was fixed, both Libraries carried one edge each, BOTH to
+    // the shared `LogicLibrary` RuleSet: 100% "coverage", one distinct target,
+    // and no way to tell one Library from another. Coverage is unchanged at
+    // 100%; what the fix bought is the target count.
     const r = measure(root, indexPath).rows.Library;
     expect(r.n).toBe(2);
-    expect(r.withOutEdge).toBe(2);        // 100% "coverage"...
-    expect(r.meanOutDegree).toBe(1);
-    expect(r.distinctTargets.size).toBe(1); // ...and one bit of information
-    expect([...r.distinctTargets]).toEqual(["LogicLibrary"]);
+    expect(r.withOutEdge).toBe(2);           // coverage: unchanged
+    expect(r.meanOutDegree).toBe(2);         // the RuleSet AND the CQL body
+    expect(r.distinctTargets.size).toBe(3);  // information: 1 -> 3
+    expect([...r.distinctTargets].sort()).toEqual(["LogicLibrary", "cql:ACommon", "cql:AOneLogic"]);
   });
 
-  test("the Library -> CQL edge is lost when the instance omits `Id:`", () => {
-    // The regression this whole measurement turns on: `fsh-cone` guards the
-    // cql-by-name edge on `node.id`, and SUSHI defaults an Instance's id to its
-    // name. Neither Library reaches its own CQL body.
+  test("a Library that omits `Id:` still reaches its CQL body — cause (a), fixed", () => {
+    // The defect this measurement found: `fsh-cone` guarded the cql-by-name edge
+    // on `node.id`, and SUSHI defaults an Instance's id to its NAME, so the edge
+    // was dead on every real IG. `ACommon` and `AOneLogic` both omit `Id:`.
+    // If this ever goes back to zero, cause (a) has regressed.
     const m = measure(root, indexPath);
-    for (const t of m.rows.Library.distinctTargets) {
-      expect(m.graph.nodes.get(t)?.kind).not.toBe("CQL");
-    }
+    const reached = [...m.rows.Library.distinctTargets]
+      .filter((t) => m.graph.nodes.get(t)?.kind === "CQL");
+    expect(reached.sort()).toEqual(["cql:ACommon", "cql:AOneLogic"]);
   });
 
-  test("a PlanDefinition's library edge lands on the RuleSet, not the Library", () => {
+  test("a PlanDefinition's library edge still lands on the RuleSet — cause (b), open", () => {
+    // `* library = Canonical({library}Logic)` lives inside `PlanDefMain`, so the
+    // token is `{library}Logic` and resolves to nothing. Unlike (a) this is not
+    // a one-line guard: it needs SUSHI's RuleSet parameter substitution.
     const r = measure(root, indexPath).rows.PlanDefinition;
     expect(r.withOutEdge).toBe(1);
     expect([...r.distinctTargets]).toEqual(["PlanDefMain"]);
@@ -168,25 +176,32 @@ describe("ground truth — after RuleSet parameter substitution", () => {
     expect([...r.distinctLogicTargets]).toEqual(["AOneLogic"]);
   });
 
-  test("ground truth strictly exceeds what fsh-cone extracts — that gap IS the finding", () => {
+  test("ground truth still exceeds what fsh-cone extracts — the REMAINING gap is (b)", () => {
     const m = measure(root, indexPath);
-    const asMerged = new Set<string>();
-    const truth = new Set<string>();
-    for (const t of LOGIC_TYPES) {
-      for (const x of m.rows[t].distinctTargets) asMerged.add(x);
-      for (const x of m.rows[t].distinctLogicTargets) truth.add(x);
+    // Library: closed. Extraction now finds the same logic target ground truth does.
+    expect(m.rows.Library.withLogicEdge).toBe(m.rows.Library.n);
+    const libExtracted = [...m.rows.Library.distinctTargets]
+      .filter((t) => m.graph.nodes.get(t)?.kind === "CQL").length;
+    expect(libExtracted).toBe(m.rows.Library.distinctLogicTargets.size);
+
+    // PlanDefinition and Measure: open. Ground truth names a logic artefact that
+    // extraction does not reach at all, which is exactly what (b) costs.
+    for (const t of ["PlanDefinition", "Measure"] as const) {
+      expect(m.rows[t].distinctLogicTargets.size).toBeGreaterThan(0);
+      for (const target of m.rows[t].distinctLogicTargets) {
+        expect(m.rows[t].distinctTargets.has(target)).toBe(false);
+      }
     }
-    // Disjoint: as-merged reaches only RuleSets, ground truth only logic artefacts.
-    expect([...asMerged].every((x) => !truth.has(x))).toBe(true);
-    expect(truth.size).toBeGreaterThan(0);
   });
 });
 
 describe("report", () => {
   test("names the distinct-target collapse rather than only printing a percentage", () => {
     const text = report(measure(root, indexPath));
-    expect(text).toContain("every distinct target is a shared RuleSet: YES");
-    expect(text).toContain("logic -> logic edges: 0");
     expect(text).toContain("a field that could hold a dependency edge: NONE");
+    // (a) fixed: the two Libraries reach their CQL bodies, so not every target
+    // is a RuleSet any more and the logic->logic count is no longer zero.
+    expect(text).toContain("every distinct target is a shared RuleSet: no");
+    expect(text).toContain("logic -> logic edges: 2");
   });
 });
