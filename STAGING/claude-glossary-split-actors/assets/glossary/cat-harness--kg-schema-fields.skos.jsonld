@@ -25769,7 +25769,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `<folio:link>` hrefs — resolve against."
+          "@value": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against."
         }
       ],
       "dcterms:source": "cat-harness/schemas/webpage.ts#WebPageNode.id",
