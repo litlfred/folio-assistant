@@ -129,20 +129,17 @@ describe("the two deploy variants differ ONLY at a staging-only viewer", () => {
 });
 
 describe("the template composes nothing", () => {
-  test("it is still the hand-written one, and this test says when that changes", () => {
-    // The switch is a LATER commit: `docs-ui.css` carries 39 rules for
-    // `fa-harness-tab*` and essentially none for the renderer's `fa-nav-*`
-    // classes, so including the generated file today would render an unstyled
-    // sidebar. Asserted rather than left implicit so that the switch has to
-    // come here and change this test deliberately — the alternative is a
-    // half-migration nobody notices.
+  test("it is a single include and not one tag of markup", () => {
+    // THE SWITCH. This test previously asserted the opposite — that the
+    // template was still the hand-written one — so that moving to the
+    // generated include had to come back here and change it deliberately
+    // rather than happen quietly. It has, and this is the other half.
+    //
+    // No element may be composed here. A `{% include %}` and Liquid control
+    // flow are not markup; a `<div>` is, and one tag is all it takes for the
+    // sidebar to start deciding something the renderer already decided.
     const t = readFileSync(TEMPLATE, "utf-8");
-    const switched = t.includes("generated/navbar-footer.html");
-    if (!switched) {
-      expect(t).toContain("fa-harness-tab");
-      return;
-    }
-    // Once switched: the template composes no markup at all. Not a tag.
+    expect(t).toContain("generated/navbar-footer.html");
     expect(t).not.toMatch(/<(?!!--)[a-z]/i);
   });
 });
