@@ -14566,6 +14566,13 @@
           "doc": "What RUNTIME-VALIDATES a node of this kind — `module#Export`, naming a"
         },
         {
+          "name": "validatorNotApplicable",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "WHY a runtime validator does not apply to this kind — a reason, not a flag."
+        },
+        {
           "name": "nodeSchemas",
           "type": "Readonly<Record<string, NodeSchemaRef>>",
           "optional": true,
