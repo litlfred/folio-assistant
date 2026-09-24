@@ -1,0 +1,88 @@
+/**
+ * Does every arrow point from the dependent to the general node?
+ *
+ * The rule is data-modelling step 8: when two nodes are related, the one that
+ * depends on the other holds the pointer, and the general node names none of
+ * its dependents. #1168 flipped the arrows that broke it — lanes, voices,
+ * stories, scripts, `satisfiedBy`, a graph kind's skill, a test's subject.
+ * This is what stops the next one being written (B5).
+ *
+ * Which nodes are general is a MODELLING DECISION, so it is declared, never
+ * inferred: a schema declaration whose doc comment carries `@general`
+ * (`schema-graph.ts` reads it). Two sources are checked:
+ *
+ * - **Schemas.** A `@general` declaration may `@ref` only another `@general`
+ *   one. A field pointing from a general node at anything else is the
+ *   general node naming a dependent.
+ * - **Processes.** A BPMN diagram is the authored form of a Process, which is
+ *   general, so each `<folio:…>` element that points at another artefact
+ *   must point at a general one. {@link PROCESS_POINTERS} lists the elements
+ *   that do; any other element carrying a pointer attribute is a finding.
+ *
+ * What it cannot see is stated rather than implied: a bare string field with
+ * no `@ref` holds no arrow this reader can follow (B8 types those), and a
+ * general node's PROSE naming its dependents is not parsed here.
+ *
+ * @module scripts/arrow-direction
+ */
+import type { SchemaGraph } from "./schema-graph.js";
+
+export interface ArrowFinding {
+  where: string;
+  detail: string;
+}
+
+/**
+ * The `<folio:…>` elements in a BPMN diagram that may carry a pointer, and
+ * the general node each points at. Anything else carrying one of
+ * {@link POINTER_ATTRS} is a process naming something that depends on it.
+ */
+export const PROCESS_POINTERS: Readonly<Record<string, string>> = {
+  skill: "the skill a task implements",
+  role: "the role a lane binds",
+  raci: "the role a task involves",
+  decision: "the process's own decision table",
+  convention: "a convention the process follows",
+  precondition: "a precondition the process requires",
+};
+
+/** Attributes that name another artefact, as against describing this one. */
+export const POINTER_ATTRS = ["ref", "href", "workflow"] as const;
+
+/** A `@general` schema that `@ref`s a declaration which is not `@general`. */
+export function schemaArrowFindings(graph: SchemaGraph): ArrowFinding[] {
+  const byId = new Map(graph.decls.map((d) => [d.id, d]));
+  const out: ArrowFinding[] = [];
+  for (const e of graph.edges) {
+    if (e.kind !== "id-ref") continue;
+    const from = byId.get(e.from);
+    const to = byId.get(e.to);
+    if (!from?.general || !to || to.general) continue;
+    out.push({
+      where: `${from.module}#${from.name}.${e.via}`,
+      detail:
+        `general node ${from.name} points at ${to.name}, which is not general — the dependent should ` +
+        `hold this pointer (data-modelling step 8). Either move it, or mark ${to.name} @general if it is one.`,
+    });
+  }
+  return out;
+}
+
+/** The `<folio:…>` pointers in one diagram's text that name a non-general node. */
+export function processArrowFindings(file: string, text: string): ArrowFinding[] {
+  const out: ArrowFinding[] = [];
+  const attrs = POINTER_ATTRS.join("|");
+  for (const m of text.matchAll(/<folio:([A-Za-z-]+)\b([^>]*)>/g)) {
+    const element = m[1]!;
+    if (element in PROCESS_POINTERS) continue;
+    const a = new RegExp(`\\b(${attrs})="([^"]*)"`).exec(m[2]!);
+    if (!a) continue;
+    out.push({
+      where: file,
+      detail:
+        `<folio:${element} ${a[1]}="${a[2]}"> — the process names ${a[1] === "href" ? "a page about it" : "something that implements or depends on it"}. ` +
+        `A process is general; the ${a[1] === "href" ? "page" : "implementation"} should point at the process instead.`,
+    });
+  }
+  return out;
+}

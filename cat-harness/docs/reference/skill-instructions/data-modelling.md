@@ -182,6 +182,17 @@ schema reference, each either a KG schema or a pinned external schema. Tasks,
 Tools and tests point at the skill and are checked against that contract. That
 is how a general node stays complete without naming its users.
 
+**Declare which nodes are general, and let the audit hold the line.** Which
+nodes are general is a modelling decision, so it is written down: the schema
+declaration's doc comment carries `@general`. Today that is Role, Skill,
+Requirement statement, Graph kind, Capability, Actor and Process (#1168, B5).
+`kg:audit`'s `arrow-direction` criterion then reports two things: a `@general`
+schema whose `@ref` names a declaration that is not general, and a BPMN
+`<folio:…>` element pointing from a process at anything but a skill, role,
+decision table, convention or precondition. It cannot see a bare string field
+with no `@ref` (step 9 is how those become visible) or prose, so a clean run
+is a claim about declared pointers only.
+
 ### 9. Make every cross-node reference a typed KG reference
 
 A reference is a claim that another node exists. A bare string makes that
