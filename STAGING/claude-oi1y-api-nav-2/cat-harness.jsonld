@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T06:26:05.402Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/64499be9a085dd9b2ddf7cb84190948360a02565",
-  "sourceCommitSha": "64499be9a085dd9b2ddf7cb84190948360a02565",
-  "sourceCommitAt": "2026-09-24T06:18:31Z",
+  "generatedAt": "2026-09-24T09:53:18.964Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9067db953350ae1506f4ff9d9a8c1e8046d89ed1",
+  "sourceCommitSha": "9067db953350ae1506f4ff9d9a8c1e8046d89ed1",
+  "sourceCommitAt": "2026-09-24T09:45:48Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 258,
+    "Skill": 259,
     "Actor": 35,
     "Capability": 28,
     "Convention": 2,
@@ -292,7 +292,7 @@
     "Tool": 83,
     "Schema": 115,
     "GraphKind": 32,
-    "Directory": 43,
+    "Directory": 42,
     "Asset": 3
   },
   "@graph": [
@@ -712,6 +712,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/toolchain-ownership"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/grade",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "grade",
+      "title": "grade",
+      "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/grade.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/grade"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "edge-kinds-and-blast-radius",
@@ -738,7 +755,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-detanglement.md",
-      "instructionLines": 304,
+      "instructionLines": 305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -821,9 +838,11 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 231,
+      "instructionLines": 236,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/skills/crdm-detect/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect"
@@ -1580,7 +1599,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 109,
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1630,7 +1649,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-report-signing.md",
-      "instructionLines": 109,
+      "instructionLines": 111,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3355,7 +3374,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/evidence-appraisal.md",
-      "instructionLines": 92,
+      "instructionLines": 98,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5907,6 +5926,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/dak-postprocessing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/dak-preprocessing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/grade",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/ig-artifact-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#skill/l2-dak-authoring",
@@ -41830,7 +41850,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies. RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#directory/methodologies",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodologies"
     },
@@ -42018,17 +42038,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#directory/smart-kg-methodologies",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "smart-kg-methodologies",
-      "path": "smart-kg/methodologies/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
-      ],
-      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-kg-methodologies"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-oi1y-api-nav-2/cat-harness.jsonld#directory/smart-base-methodologies",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "smart-base-methodologies",
@@ -42036,7 +42045,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-methodologies"
     },
     {
@@ -42047,7 +42056,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason it is separate from `smart-kg-methodologies`: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-methodologies"
     },
     {
@@ -42247,8 +42256,8 @@
   ],
   "staging": {
     "branch": "claude/oi1y-api-nav-2",
-    "sha": "a75c3caff847c9f2dceeb5fcc6ced2d059ff371f",
+    "sha": "9b407696f5b6684a1818de1a105847e186775924",
     "pr": "1236/merge",
-    "run": "35964303658"
+    "run": "35983797449"
   }
 }
