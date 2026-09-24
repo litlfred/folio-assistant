@@ -38,6 +38,7 @@ import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 import { activeCodes, codeListDirs, loadCodeLists, type CodeList } from "../../schemas/code-list.js";
 import { findInstanceRoot } from "../../schemas/cat-harness.js";
+import { CANONICAL_EXTENSION_PREFIX, isOwnExtensionNamespace } from "../../schemas/namespaces.js";
 
 /** Element types the interpreter can walk faithfully. */
 const ACTIVITY_TYPES = [
@@ -1126,6 +1127,45 @@ export function evaluatePreconditions(
   }));
 }
 
+/**
+ * Rename every parsed extension element by the NAMESPACE it is in, not the
+ * prefix the diagram wrote (bean `12s9`).
+ *
+ * `bpmn-moddle` is given no descriptor for our extensions, so it keeps each
+ * one as a generic element whose `$type` is the prefix as written — and every
+ * reader below matches `$type === "folio:…"`. Left alone, a diagram binding
+ * `bootstrap.processes:` to our address would parse cleanly with all of its
+ * extensions ignored, and one binding `folio:` to a FOREIGN address would have
+ * its elements read as ours. The parser does record the resolved namespace on
+ * each element (`$descriptor.ns.uri`), so both are fixed here, once:
+ *
+ * - in one of OUR namespaces → `folio:<local>`, whatever the prefix;
+ * - spelt `folio:` but in someone else's → `<uri>#<local>`, which no reader
+ *   matches.
+ *
+ * Mutates in place; typed BPMN elements are untouched, because their `$type`
+ * never starts with the canonical prefix and their namespace is not ours.
+ */
+export function normaliseOwnExtensions(root: unknown): void {
+  const seen = new Set<object>();
+  const walk = (v: unknown): void => {
+    if (v === null || typeof v !== "object" || seen.has(v)) return;
+    seen.add(v);
+    if (Array.isArray(v)) {
+      for (const x of v) walk(x);
+      return;
+    }
+    const el = v as { $type?: unknown; $descriptor?: { ns?: { uri?: string; localName?: string } } };
+    const ns = el.$descriptor?.ns;
+    if (typeof el.$type === "string" && ns?.localName !== undefined) {
+      if (isOwnExtensionNamespace(ns.uri)) el.$type = `${CANONICAL_EXTENSION_PREFIX}:${ns.localName}`;
+      else if (el.$type.startsWith(`${CANONICAL_EXTENSION_PREFIX}:`)) el.$type = `${ns.uri ?? "urn:unbound"}#${ns.localName}`;
+    }
+    for (const k of Object.keys(v)) if (!k.startsWith("$")) walk((v as Record<string, unknown>)[k]);
+  };
+  walk(root);
+}
+
 export async function loadProcessModel(
   bpmnPath: string,
   /** Process ids already on the load path, so a call-activity cycle is refused. */
@@ -1133,6 +1173,7 @@ export async function loadProcessModel(
 ): Promise<ProcessModel> {
   const moddle = new BpmnModdle();
   const { rootElement, warnings } = await moddle.fromXML(readFileSync(bpmnPath, "utf-8"));
+  normaliseOwnExtensions(rootElement);
   if (warnings.length > 0) {
     throw new UnsupportedBpmn(
       `${basename(bpmnPath)}: ${warnings.length} parse warning(s) — ` +

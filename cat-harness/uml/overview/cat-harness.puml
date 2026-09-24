@@ -780,21 +780,44 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Superseded" as cat_harness_library_folio_block_summaries_v1_Superseded <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    text [1] : string | null
+    state [1] : not-authored | draft | confirmed | rejected
+    drafted_by [0..1] : object
+    drafted_at [0..1] : string
+    confirmed_by [0..1] : object
+    confirmed_at [0..1] : string
+    rejected_by [0..1] : object
+    rejected_at [0..1] : string
+    rejection_reason [0..1] : string
+  }
+  class "Summary" as cat_harness_library_folio_block_summaries_v1_Summary <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    block [1] : string
+    source [1] : string
+    source_hash [1] : string
+    narrative [1] : object
+    superseded [0..*] : Superseded[]
+  }
+  class "folio-block-summaries/v1" as cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-summaries/v1'
+    entry [1] : string
+    summaries [0..*] : Summary[]
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_who_iris_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_who_iris_library_library
 }
 package "cat-harness/agent-skills-library" as pkg_cat_harness_agent_skills_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_agent_skills_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_agent_skills_library_library
 }
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
 }
 package "cat-harness/folio-assistant-core-library" as pkg_cat_harness_folio_assistant_core_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
 }
 package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (2 named): could not determine)" as n_cat_harness_smart_base_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (3 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
@@ -1078,6 +1101,8 @@ cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurement
 cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
 cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
 cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
+cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
+cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_root_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_root_docs_folio_todo_index_v1_Relation : relations

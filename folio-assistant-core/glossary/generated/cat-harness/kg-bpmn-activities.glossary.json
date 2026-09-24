@@ -2342,6 +2342,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_ingestion.task_summaryqueue",
+      "prefLabel": "Prose blocks enter the summary queue [library-ingestion]",
+      "definition": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.",
+      "notation": "Task_SummaryQueue",
+      "source": "cat-harness/processes/document-ingestion.bpmn#Task_SummaryQueue",
+      "status": "candidate"
+    },
+    {
       "id": "process_ingesttheme.task_contradictions",
       "prefLabel": "Record contradictions IN the source",
       "definition": "A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice.",

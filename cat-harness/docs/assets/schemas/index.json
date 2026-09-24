@@ -1,12 +1,8 @@
 {
   "$schema": "folio-schema-graph/v1",
   "tile": {
-    "bootstrap-tools-schemas": {
-      "count": 5,
-      "unit": "modules"
-    },
     "schemas": {
-      "count": 158,
+      "count": 165,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -19,53 +15,11 @@
     }
   },
   "roots": [
-    "bootstrap-tools/schemas",
     "cat-harness/schemas",
     "folio-assistant-core/schemas",
     "large-datasets/schemas"
   ],
   "modules": [
-    {
-      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
-      "instance": "bootstrap-tools",
-      "name": "bootstrap-graph",
-      "graphNode": "schema",
-      "summary": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
-      "isTest": false
-    },
-    {
-      "module": "bootstrap-tools/schemas/discussion.test.ts",
-      "instance": "bootstrap-tools",
-      "name": "discussion.test",
-      "graphNode": "none",
-      "reason": "a test",
-      "summary": "The generated bootstrap schemas, against the contract they replace.",
-      "isTest": true
-    },
-    {
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "instance": "bootstrap-tools",
-      "name": "discussion",
-      "graphNode": "schema",
-      "summary": "The two documents the `discussion` process carries, as Zod.",
-      "isTest": false
-    },
-    {
-      "module": "bootstrap-tools/schemas/graph.test.ts",
-      "instance": "bootstrap-tools",
-      "name": "graph.test",
-      "graphNode": "undeclared",
-      "summary": "bootstrap defines its own terms, and nothing in it points above it",
-      "isTest": true
-    },
-    {
-      "module": "bootstrap-tools/schemas/graph.ts",
-      "instance": "bootstrap-tools",
-      "name": "graph",
-      "graphNode": "schema",
-      "summary": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
-      "isTest": false
-    },
     {
       "module": "cat-harness/schemas/actor-reach.test.ts",
       "instance": "cat-harness",
@@ -171,6 +125,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/block-summary.ts",
+      "instance": "cat-harness",
+      "name": "block-summary",
+      "graphNode": "schema",
+      "summary": "An agent's summary of a library block, kept BESIDE the block — the QA",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/board-positions.test.ts",
       "instance": "cat-harness",
       "name": "board-positions.test",
@@ -200,6 +162,14 @@
       "name": "board",
       "graphNode": "schema",
       "summary": "A board — the surface a folio's notes and its content are read on together.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/bootstrap-graph.ts",
+      "instance": "cat-harness",
+      "name": "bootstrap-graph",
+      "graphNode": "schema",
+      "summary": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
       "isTest": false
     },
     {
@@ -398,12 +368,37 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/discussion.test.ts",
+      "instance": "cat-harness",
+      "name": "discussion.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The generated bootstrap schemas, against the contract they replace.",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/discussion.ts",
+      "instance": "cat-harness",
+      "name": "discussion",
+      "graphNode": "schema",
+      "summary": "The two documents the `discussion` process carries, as Zod.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/document-image.ts",
       "instance": "cat-harness",
       "name": "document-image",
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/extension-namespace.test.ts",
+      "instance": "cat-harness",
+      "name": "extension-namespace.test",
+      "graphNode": "undeclared",
+      "summary": "Our BPMN extension elements are recognised by NAMESPACE, never by the prefix",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/folio-dir.test.ts",
@@ -459,6 +454,22 @@
       "name": "graph-kind-registry",
       "graphNode": "schema",
       "summary": "The graph-kind registry — **a leaf, and that is its whole job**.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/graph.test.ts",
+      "instance": "cat-harness",
+      "name": "graph.test",
+      "graphNode": "undeclared",
+      "summary": "bootstrap defines its own terms, and nothing in it points above it",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/graph.ts",
+      "instance": "cat-harness",
+      "name": "graph",
+      "graphNode": "schema",
+      "summary": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
       "isTest": false
     },
     {
@@ -1544,595 +1555,6 @@
     }
   ],
   "decls": [
-    {
-      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocument",
-      "name": "BootstrapGraphDocument",
-      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
-      "name": "BootstrapGraphDocumentSchema",
-      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "@context",
-          "type": "z.unknown()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@id",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Must equal the path the document is published at (bootstrap-graph-publication)."
-        },
-        {
-          "name": "@type",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "repository",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's declared name."
-        },
-        {
-          "name": "omitted",
-          "type": "z.array(z.string().min(1))",
-          "optional": false,
-          "array": true,
-          "doc": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools"
-        },
-        {
-          "name": "problems",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Sources that could not be read, counted rather than silently dropped."
-        },
-        {
-          "name": "counts",
-          "type": "z.record(z.string(), z.number().int().nonnegative()).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "generatedAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommit",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitSha",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceTreeDirty",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitUnavailable",
-          "type": "z.unknown().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Said instead of `sourceCommit*` when the build could not read git."
-        },
-        {
-          "name": "@graph",
-          "type": "z.array(BootstrapGraphNodeSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
-      "name": "BootstrapGraphNodeSchema",
-      "module": "bootstrap-tools/schemas/bootstrap-graph.ts",
-      "kind": "zod-object",
-      "doc": "One node of the graph. Only the two keys every node carries are required.",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@type",
-          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInput",
-      "name": "DiscussionInput",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
-      "name": "DiscussionInputSchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "The occasion for asking: what the agent already knows, and which unknown is",
-      "fields": [
-        {
-          "name": "open",
-          "type": "z .array(z.enum(OPEN_QUESTIONS)) .min(1) .describe(\"Which unknowns this exchange is to settle. At least one, or there i…",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "askedOf",
-          "type": "ParticipantSchema.describe( \"Who is being asked. The two participant kinds are symmetric — the same skill serves human-…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "candidates",
-          "type": "z .array(z.string()) .optional() .describe( \"Harnesses the agent has already narrowed to from context — a repository wh…",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "knownRepositories",
-          "type": "z .array(RepositoryRefSchema) .optional() .describe( \"Repositories already evident from the checkout, each with the par…",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "context",
-          "type": "z .string() .optional() .describe( \"What the agent read to get this far, in one or two sentences. Lets the participant …",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
-        "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPEN_QUESTIONS",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutput",
-      "name": "DiscussionOutput",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "name": "DiscussionOutputObjectSchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "The output document's shape, before the two conditional rules.",
-      "fields": [
-        {
-          "name": "outcome",
-          "type": "z .enum([\"settled\", \"unsettled\"]) .describe( \"`unsettled` is a real outcome, not an error: a participant may decline, a…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "harness",
-          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or any Harness built on it.…",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "repositories",
-          "type": "z .array(RepositoryRefSchema) .optional() .describe( \"The repositories involved, each with the part it plays. Recorded …",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "determinedBy",
-          "type": "z .enum([\"asked\", \"assumed\"]) .optional() .describe( \"`asked` means a participant said so. `assumed` is permitted only …",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "assumption",
-          "type": "z .string() .optional() .describe( \"Required when `determinedBy` is `assumed`: the documented default relied on, and wh…",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "answeredBy",
-          "type": "ParticipantSchema.describe( \"Who settled it. An answer from a sibling agent is evidence of a different weight from the …",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "exchange",
-          "type": "z .array(ExchangeEntrySchema) .min(1) .describe( \"What was actually put and what came back, in order. One entry is the …",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "stillOpen",
-          "type": "z .array(z.enum(OPEN_QUESTIONS)) .optional() .describe( \"Required in substance when `outcome` is `unsettled`: what rema…",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
-        "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
-        "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "OPEN_QUESTIONS",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputSchema",
-      "name": "DiscussionOutputSchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "What the exchange determined: which harness, which repositories, on whose",
-      "fields": [],
-      "extendsNames": [
-        "DiscussionOutputObjectSchema"
-      ],
-      "values": [],
-      "refs": [
-        "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#ExchangeEntry",
-      "name": "ExchangeEntry",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
-      "name": "ExchangeEntrySchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "One question put, and what came back.",
-      "fields": [
-        {
-          "name": "asked",
-          "type": "z .string() .describe( \"The question as put, with its candidates named. A question a reader must go and research is not…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "answered",
-          "type": "z .string() .optional() .describe( \"The reply as received. Absent means the question was put and nothing came back, whi…",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "at",
-          "type": "z.string().datetime().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#Participant",
-      "name": "Participant",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
-      "name": "ParticipantSchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "Who is being asked, or who answered.",
-      "fields": [
-        {
-          "name": "kind",
-          "type": "z.enum([\"person\", \"agent\"])",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "id",
-          "type": "z .string() .optional() .describe(\"Session id, handle or name, where one is known. Absent is normal for a person.\")",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#RepositoryRef",
-      "name": "RepositoryRef",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
-      "name": "RepositoryRefSchema",
-      "module": "bootstrap-tools/schemas/discussion.ts",
-      "kind": "zod-object",
-      "doc": "A repository and the part it plays.",
-      "fields": [
-        {
-          "name": "url",
-          "type": "z .string() .describe( \"Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told abou…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "z .enum([\"read-from\", \"written-to\"]) .describe( \"Which part this repository plays. A flat list loses the distinction, a…",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "note",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/graph.ts#AssetSchema",
-      "name": "AssetSchema",
-      "module": "bootstrap-tools/schemas/graph.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "src",
-          "type": "z.string().min(1).describe(\"The file, relative to the declaration.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "role",
-          "type": "z.string().min(1).describe(\"The part the file plays, such as `instance-readme`.\")",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/graph.ts#BootstrapTerm",
-      "name": "BootstrapTerm",
-      "module": "bootstrap-tools/schemas/graph.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
-      "name": "KnowledgeGraphDeclarationSchema",
-      "module": "bootstrap-tools/schemas/graph.ts",
-      "kind": "zod-object",
-      "doc": "The shape every `<name>.json` shares. Loose on purpose: a Harness above bootstrap adds fields.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "z.string().min(1).describe(\"The Knowledge Graph's name. The declaration file is `<name>.json`.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "directories",
-          "type": "z.array(SubgraphSchema).optional().describe(\"Its Subgraphs: zero or more.\")",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "assets",
-          "type": "z.array(AssetSchema).optional()",
-          "optional": true,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "bootstrap-tools/schemas/graph.ts#AssetSchema",
-        "bootstrap-tools/schemas/graph.ts#SubgraphSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
-      "name": "SubgraphSchema",
-      "module": "bootstrap-tools/schemas/graph.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "id",
-          "type": "z.string().min(1).describe(\"The Subgraph's name, unique within its Knowledge Graph.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "path",
-          "type": "z.string().min(1).describe(\"The directory, relative to the declaration.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "graphKinds",
-          "type": "z.array(z.string().min(1)).min(1).describe(\"The Graph Kinds it holds.\")",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "description",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
     {
       "id": "cat-harness/schemas/actor-reach.ts#ActorReachSchema",
       "name": "ActorReachSchema",
@@ -5182,6 +4604,137 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecar",
+      "name": "BlockSummariesSidecar",
+      "module": "cat-harness/schemas/block-summary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema",
+      "name": "BlockSummariesSidecarSchema",
+      "module": "cat-harness/schemas/block-summary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(BLOCK_SUMMARIES_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entry",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The library entry's slug — the directory this file sits in."
+        },
+        {
+          "name": "summaries",
+          "type": "z.array(BlockSummarySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/block-summary.ts#BlockSummarySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "BLOCK_SUMMARIES_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/block-summary.ts#BlockSummary",
+      "name": "BlockSummary",
+      "module": "cat-harness/schemas/block-summary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
+      "name": "BlockSummarySchema",
+      "module": "cat-harness/schemas/block-summary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "block",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The block's `@id`, e.g. `library/<slug>/blocks/prose-sec-000`."
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The text file summarised, ENTRY-relative, e.g. `sections/sec-000-intro.md`."
+        },
+        {
+          "name": "source_hash",
+          "type": "z.string().regex(SHA256_HEX, \"`source_hash` is a 64-hex sha256\")",
+          "optional": false,
+          "array": false,
+          "doc": "sha256 of {@link proseBody} of `source` when the summary was drafted."
+        },
+        {
+          "name": "narrative",
+          "type": "NarrativeSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The summary itself, with its state and its author."
+        },
+        {
+          "name": "superseded",
+          "type": "z.array(NarrativeSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Earlier narratives this one replaced — a rejected draft, or one whose"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/narrative.ts#NarrativeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SHA256_HEX",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/block-summary.ts#SummaryStatus",
+      "name": "SummaryStatus",
+      "module": "cat-harness/schemas/block-summary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/board-positions.ts#BoardPosition",
       "name": "BoardPosition",
       "module": "cat-harness/schemas/board-positions.ts",
@@ -5420,6 +4973,155 @@
       "unresolved": [],
       "external": [
         "BOARD_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocument",
+      "name": "BootstrapGraphDocument",
+      "module": "cat-harness/schemas/bootstrap-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "name": "BootstrapGraphDocumentSchema",
+      "module": "cat-harness/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "@context",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@id",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "Must equal the path the document is published at (bootstrap-graph-publication)."
+        },
+        {
+          "name": "@type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repository",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's declared name."
+        },
+        {
+          "name": "omitted",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true,
+          "doc": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools"
+        },
+        {
+          "name": "problems",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Sources that could not be read, counted rather than silently dropped."
+        },
+        {
+          "name": "counts",
+          "type": "z.record(z.string(), z.number().int().nonnegative()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "generatedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommit",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitSha",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceTreeDirty",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sourceCommitUnavailable",
+          "type": "z.unknown().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Said instead of `sourceCommit*` when the build could not read git."
+        },
+        {
+          "name": "@graph",
+          "type": "z.array(BootstrapGraphNodeSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "name": "BootstrapGraphNodeSchema",
+      "module": "cat-harness/schemas/bootstrap-graph.ts",
+      "kind": "zod-object",
+      "doc": "One node of the graph. Only the two keys every node carries are required.",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "@type",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
         "z"
       ],
       "exported": true
@@ -11758,6 +11460,309 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/discussion.ts#DiscussionInput",
+      "name": "DiscussionInput",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
+      "name": "DiscussionInputSchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "The occasion for asking: what the agent already knows, and which unknown is",
+      "fields": [
+        {
+          "name": "open",
+          "type": "z .array(z.enum(OPEN_QUESTIONS)) .min(1) .describe(\"Which unknowns this exchange is to settle. At least one, or there i…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "askedOf",
+          "type": "ParticipantSchema.describe( \"Who is being asked. The two participant kinds are symmetric — the same skill serves human-…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "candidates",
+          "type": "z .array(z.string()) .optional() .describe( \"Harnesses the agent has already narrowed to from context — a repository wh…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "knownRepositories",
+          "type": "z .array(RepositoryRefSchema) .optional() .describe( \"Repositories already evident from the checkout, each with the par…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "context",
+          "type": "z .string() .optional() .describe( \"What the agent read to get this far, in one or two sentences. Lets the participant …",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/discussion.ts#ParticipantSchema",
+        "cat-harness/schemas/discussion.ts#RepositoryRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPEN_QUESTIONS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#DiscussionOutput",
+      "name": "DiscussionOutput",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "name": "DiscussionOutputObjectSchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "The output document's shape, before the two conditional rules.",
+      "fields": [
+        {
+          "name": "outcome",
+          "type": "z .enum([\"settled\", \"unsettled\"]) .describe( \"`unsettled` is a real outcome, not an error: a participant may decline, a…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "harness",
+          "type": "z .string() .optional() .describe( \"The harness this repository is to become — `bootstrap`, or any Harness built on it.…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "repositories",
+          "type": "z .array(RepositoryRefSchema) .optional() .describe( \"The repositories involved, each with the part it plays. Recorded …",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "determinedBy",
+          "type": "z .enum([\"asked\", \"assumed\"]) .optional() .describe( \"`asked` means a participant said so. `assumed` is permitted only …",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "assumption",
+          "type": "z .string() .optional() .describe( \"Required when `determinedBy` is `assumed`: the documented default relied on, and wh…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "answeredBy",
+          "type": "ParticipantSchema.describe( \"Who settled it. An answer from a sibling agent is evidence of a different weight from the …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "exchange",
+          "type": "z .array(ExchangeEntrySchema) .min(1) .describe( \"What was actually put and what came back, in order. One entry is the …",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "stillOpen",
+          "type": "z .array(z.enum(OPEN_QUESTIONS)) .optional() .describe( \"Required in substance when `outcome` is `unsettled`: what rema…",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
+        "cat-harness/schemas/discussion.ts#ParticipantSchema",
+        "cat-harness/schemas/discussion.ts#RepositoryRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "OPEN_QUESTIONS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#DiscussionOutputSchema",
+      "name": "DiscussionOutputSchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "What the exchange determined: which harness, which repositories, on whose",
+      "fields": [],
+      "extendsNames": [
+        "DiscussionOutputObjectSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#ExchangeEntry",
+      "name": "ExchangeEntry",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
+      "name": "ExchangeEntrySchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "One question put, and what came back.",
+      "fields": [
+        {
+          "name": "asked",
+          "type": "z .string() .describe( \"The question as put, with its candidates named. A question a reader must go and research is not…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "answered",
+          "type": "z .string() .optional() .describe( \"The reply as received. Absent means the question was put and nothing came back, whi…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string().datetime().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#Participant",
+      "name": "Participant",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "name": "ParticipantSchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "Who is being asked, or who answered.",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.enum([\"person\", \"agent\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z .string() .optional() .describe(\"Session id, handle or name, where one is known. Absent is normal for a person.\")",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#RepositoryRef",
+      "name": "RepositoryRef",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "name": "RepositoryRefSchema",
+      "module": "cat-harness/schemas/discussion.ts",
+      "kind": "zod-object",
+      "doc": "A repository and the part it plays.",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z .string() .describe( \"Clone URL or path. Not required to be reachable — a Bootstrapping Agent may have been told abou…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z .enum([\"read-from\", \"written-to\"]) .describe( \"Which part this repository plays. A flat list loses the distinction, a…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/document-image.ts#CaptureBasis",
       "name": "CaptureBasis",
       "module": "cat-harness/schemas/document-image.ts",
@@ -14525,6 +14530,143 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph.ts#AssetSchema",
+      "name": "AssetSchema",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "src",
+          "type": "z.string().min(1).describe(\"The file, relative to the declaration.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1).describe(\"The part the file plays, such as `instance-readme`.\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph.ts#BootstrapTerm",
+      "name": "BootstrapTerm",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "name": "KnowledgeGraphDeclarationSchema",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "zod-object",
+      "doc": "The shape every `<name>.json` shares. Loose on purpose: a Harness above bootstrap adds fields.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1).describe(\"The Knowledge Graph's name. The declaration file is `<name>.json`.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "z.array(SubgraphSchema).optional().describe(\"Its Subgraphs: zero or more.\")",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "assets",
+          "type": "z.array(AssetSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/graph.ts#AssetSchema",
+        "cat-harness/schemas/graph.ts#SubgraphSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph.ts#SubgraphSchema",
+      "name": "SubgraphSchema",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1).describe(\"The Subgraph's name, unique within its Knowledge Graph.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1).describe(\"The directory, relative to the declaration.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "z.array(z.string().min(1)).min(1).describe(\"The Graph Kinds it holds.\")",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "description",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -19605,10 +19747,10 @@
         },
         {
           "name": "cat-harness:underPolicy",
-          "type": "z.string().min(1)",
+          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
           "optional": false,
           "array": false,
-          "doc": "The ODRL policy uid the run was under. Required: a run under no policy cannot be checked."
+          "doc": "The ODRL policy uid(s) the run was under. Required: a run under no policy"
         }
       ],
       "extendsNames": [],
@@ -25610,6 +25752,48 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/test-run.ts#TestCase",
+      "name": "TestCase",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-run.ts#TestCaseSchema",
+      "name": "TestCaseSchema",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "zod-object",
+      "doc": "One case the run exercised: what went in and what came out, as the skill's",
+      "fields": [
+        {
+          "name": "input",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "output",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/test-run.ts#TestRun",
       "name": "TestRun",
       "module": "cat-harness/schemas/test-run.ts",
@@ -25633,6 +25817,13 @@
           "type": "z.literal(TEST_RUN_SCHEMA_ID)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "skill",
+          "type": "SkillNameSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The skill this run tests, by name."
         },
         {
           "name": "subject",
@@ -25663,6 +25854,13 @@
           "doc": "The measurements themselves, in whatever shape the runner records."
         },
         {
+          "name": "cases",
+          "type": "z.array(TestCaseSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The cases, when the runner records them. Absent is a real state: a run"
+        },
+        {
           "name": "updated_at",
           "type": "z.string().min(1)",
           "optional": false,
@@ -25673,7 +25871,9 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/test-run.ts#HashBasisSchema"
+        "cat-harness/schemas/test-run.ts#HashBasisSchema",
+        "cat-harness/schemas/test-run.ts#TestCaseSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -33876,7 +34076,7 @@
           "type": "z.string().optional()",
           "optional": true,
           "array": false,
-          "doc": "The section listing it: `<manifest dir>::<section label | title | #n>`."
+          "doc": "The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build)."
         },
         {
           "name": "index",
@@ -37366,78 +37566,6 @@
   ],
   "edges": [
     {
-      "from": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
-      "to": "bootstrap-tools/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
-      "via": "@graph",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
-      "via": "askedOf",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
-      "via": "knownRepositories",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
-      "via": "exchange",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
-      "via": "answeredBy",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
-      "via": "repositories",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputSchema",
-      "to": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "via": "",
-      "kind": "extends",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
-      "to": "bootstrap-tools/schemas/graph.ts#AssetSchema",
-      "via": "assets",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
-      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
-      "to": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
-      "via": "directories",
-      "kind": "field",
-      "optional": true,
-      "array": true
-    },
-    {
       "from": "cat-harness/schemas/actor-reach.ts#ReachConflict",
       "to": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "via": "actor",
@@ -37910,6 +38038,30 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/block-summary.ts#BlockSummariesSidecarSchema",
+      "to": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
+      "via": "summaries",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "via": "narrative",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/block-summary.ts#BlockSummarySchema",
+      "to": "cat-harness/schemas/narrative.ts#NarrativeSchema",
+      "via": "superseded",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/board-positions.ts#BoardPositionsSchema",
       "to": "cat-harness/schemas/board-positions.ts#BoardPositionSchema",
       "via": "boards",
@@ -37924,6 +38076,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
+      "to": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
+      "via": "@graph",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
@@ -39126,6 +39286,54 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
+      "to": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "via": "askedOf",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
+      "to": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "via": "knownRepositories",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
+      "via": "exchange",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "via": "answeredBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "via": "repositories",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputSchema",
+      "to": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/document-image.ts#DocumentImageSchema",
       "to": "cat-harness/schemas/document-image.ts#ImageBasisSchema",
       "via": "basis",
@@ -39532,6 +39740,22 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "cat-harness/schemas/graph.ts#AssetSchema",
+      "via": "assets",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "cat-harness/schemas/graph.ts#SubgraphSchema",
+      "via": "directories",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/harness-config.ts#ClosedContentType",
@@ -40967,6 +41191,14 @@
     },
     {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
+      "via": "skill",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/test-run.ts#HashBasisSchema",
       "via": "data",
       "kind": "field",
@@ -40977,6 +41209,22 @@
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/test-run.ts#HashBasisSchema",
       "via": "process",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/test-run.ts#TestCaseSchema",
+      "via": "cases",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skill",
       "kind": "field",
       "optional": false,
       "array": false

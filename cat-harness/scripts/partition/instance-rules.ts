@@ -592,6 +592,10 @@ export const RULES: Rule[] = [
       // caller and not a second answer to what the navigation looks like.
       "scripts/viewer-page.ts",
       "scripts/check-viewer-nav.ts",
+      // The rail over the FINISHED site (bean `oi1y`). Core beside
+      // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
+      // rather than guessing them, and which it deliberately runs after.
+      "scripts/rail-standalone-pages.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -1450,6 +1454,10 @@ export const RULES: Rule[] = [
       // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
       "scripts/extract-assets.ts",          // container → extraction record, metadata by default
       "scripts/narratives.ts",              // the narrative review queue
+      // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
+      // writes `summaries.json` beside them, a folio's own material, through
+      // `schemas/block-summary.ts` and `schemas/narrative.ts` — both core.
+      "scripts/summaries.ts",               // the block-summary drain
       // Same test, same answer: it reads `library/<bib-slug>/images.json`,
       // which is a folio's own material, and imports `schemas/attribution.ts`
       // and `schemas/document-image.ts` — the latter reaching `narrative.ts`
