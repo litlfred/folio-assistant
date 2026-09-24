@@ -727,6 +727,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     within: "docs",
     // `content`: authored argument, re-authored rather than regenerated.
     holds: "content",
+    validatorNotApplicable:
+      "its nodes are markdown pages of argument with no fixed shape; a proposal is judged by the owner, " +
+      "not parsed. What IS checked mechanically is the move out of it: `check:requirements` refuses a slug " +
+      "that sits in both proposals and requirements.",
     summary:
       "Proposals for the harness's own features — initial analysis, MVP, " +
       "options — argued before anything is agreed. A sub-graph of `docs`. When " +
@@ -741,6 +745,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     within: "docs",
     holds: "content",
     schema: "../bootstrap/schemas/requirement.schema.json",
+    validatorNotApplicable:
+      "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a " +
+      "JSON node, so one here would be a category error. `check:requirements` extracts the front matter " +
+      "and parses it against the Requirement schema instead, and requires the id to match the file name.",
     summary:
       "What the harness promises, one document per shipped feature, each carrying " +
       "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +

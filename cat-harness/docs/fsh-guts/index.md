@@ -20,7 +20,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**30 file(s)** across 2 group(s). Each links to the file itself —
+**31 file(s)** across 2 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -33,7 +33,7 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 19 | carries the tag itself |
+| <span class="fg-tag fg-ok">declared</span> | 20 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 4 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 7 | **neither** — a gap, not a format limit |
 
@@ -43,12 +43,13 @@ summary count is the failure this table exists to avoid.
 
 ## retired
 
-14 file(s).
+15 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
 | [detangle-schema-viewer.html](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.html) | — | <span class="fg-tag fg-gap">undeclared</span> |
 | [detangle-schema-viewer.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/detangle-schema-viewer.md) | detangle's schema viewer page — retired 2026-09-23 | <span class="fg-tag fg-ok">declared</span> |
+| [external-schema-w3c-dcat-3.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/external-schema-w3c-dcat-3.md) | The record, as it was | <span class="fg-tag fg-ok">declared</span> |
 | [remote-stubs-package.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/remote-stubs-package.md) | `remote-stubs`, as it was at retirement | <span class="fg-tag fg-ok">declared</span> |
 | [skill-definition-roles.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-definition-roles.md) | `SkillDefinition.roles` — retired 2026-09-20 | <span class="fg-tag fg-ok">declared</span> |
 | [skill-instructions-AGENTS.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/retired/skill-instructions-AGENTS.md) | AGENTS.md — kg-navigation | <span class="fg-tag fg-ok">declared</span> |

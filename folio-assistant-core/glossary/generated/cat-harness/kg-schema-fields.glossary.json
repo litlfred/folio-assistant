@@ -4563,6 +4563,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.within",
+      "prefLabel": "GraphKindDef.within",
+      "definition": "The kind this one is a SUB-GRAPH of, when it is one.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.closedcontenttype.own",
       "prefLabel": "ClosedContentType.own",
       "definition": "`true` when the marker is on the root itself rather than a dependency.",
@@ -6369,6 +6376,97 @@
       "status": "candidate"
     },
     {
+      "id": "requirement.requirementfields.derivedfrom",
+      "prefLabel": "RequirementFields.derivedFrom",
+      "definition": "Broader requirements this one specialises, by id.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementfields.id",
+      "prefLabel": "RequirementFields.id",
+      "definition": "`req:<slug>`.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementFields.id",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementfields.proposedin",
+      "prefLabel": "RequirementFields.proposedIn",
+      "definition": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementFields.proposedIn",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementfields.supersededby",
+      "prefLabel": "RequirementFields.supersededBy",
+      "definition": "When `superseded`: what replaced it.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementFields.supersededBy",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.activity",
+      "prefLabel": "RequirementStatementFields.activity",
+      "definition": "FUNCTIONAL — the activity the statement is part of.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.activity",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.actors",
+      "prefLabel": "RequirementStatementFields.actors",
+      "definition": "The roles it is about, by id in the harness's own role registry.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.actors",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.benefit",
+      "prefLabel": "RequirementStatementFields.benefit",
+      "definition": "FUNCTIONAL — why (\"so that …\").",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.capability",
+      "prefLabel": "RequirementStatementFields.capability",
+      "definition": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\").",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.capability",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.category",
+      "prefLabel": "RequirementStatementFields.category",
+      "definition": "NON-FUNCTIONAL — which quality it constrains.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.category",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.conformance",
+      "prefLabel": "RequirementStatementFields.conformance",
+      "definition": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.dependson",
+      "prefLabel": "RequirementStatementFields.dependsOn",
+      "definition": "Other statements this one presupposes, by {@link requirementRef}.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.key",
+      "prefLabel": "RequirementStatementFields.key",
+      "definition": "Unique within its requirement; with the requirement's id it is the statement's address.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.key",
+      "status": "candidate"
+    },
+    {
+      "id": "requirement.requirementstatementfields.requirement",
+      "prefLabel": "RequirementStatementFields.requirement",
+      "definition": "The statement itself, as one sentence a reviewer can say yes or no to.",
+      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.actordef.roles",
       "prefLabel": "ActorDef.roles",
       "definition": "Roles this actor is eligible to take on. Advisory, not a permission system: it says who is expected in a lane, and the audit uses it to report a role no actor can fill. Empty means \"unconstrained\", not \"none\".",
@@ -7241,6 +7339,13 @@
       "prefLabel": "TestRunSchema.process",
       "definition": "WHAT TESTED IT — runner, configuration, scenario bank.",
       "source": "cat-harness/schemas/test-run.ts#TestRunSchema.process",
+      "status": "candidate"
+    },
+    {
+      "id": "test-run.testrunschema.requirements",
+      "prefLabel": "TestRunSchema.requirements",
+      "definition": "WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164): *\"put requirements in Test schema as array\"*, as REFERENCES (`req:<slug>` or `req:<slug>#<statement-key>`), never copies: the requirement's text lives in one place, and a copy in every run is a copy free to disagree with it.",
+      "source": "cat-harness/schemas/test-run.ts#TestRunSchema.requirements",
       "status": "candidate"
     },
     {
