@@ -6,7 +6,7 @@
       "unit": "modules"
     },
     "schemas": {
-      "count": 157,
+      "count": 158,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1257,6 +1257,14 @@
       "name": "version-bump",
       "graphNode": "schema",
       "summary": "version-bump.ts — `instance-versioning.md` §4: what a version MEANS, and",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "instance": "cat-harness",
+      "name": "viewer-nav-qa",
+      "graphNode": "schema",
+      "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
       "isTest": false
     },
     {
@@ -31685,6 +31693,153 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPage",
+      "name": "ViewerNavPage",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema",
+      "name": "ViewerNavPageSchema",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page's published path, e.g. `/cat-harness/library/who-iris/`."
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative source, so a finding names a file somebody can open."
+        },
+        {
+          "name": "verdict",
+          "type": "ViewerNavVerdictSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why, for anything other than `railed`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavVerdictSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavQa",
+      "name": "ViewerNavQa",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavQaSchema",
+      "name": "ViewerNavQaSchema",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VIEWER_NAV_QA_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "root",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The published docs root the audit walked, repo-relative."
+        },
+        {
+          "name": "totals",
+          "type": "z.object({ pages: z.number().int().nonnegative(), railed: z.number().int().nonnegative(), declined: z.number().int().no…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.array(ViewerNavPageSchema)",
+          "optional": false,
+          "array": true,
+          "doc": "Every page, sorted by published path, so the diff is stable."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "VIEWER_NAV_QA_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavVerdict",
+      "name": "ViewerNavVerdict",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavVerdictSchema",
+      "name": "ViewerNavVerdictSchema",
+      "module": "cat-harness/schemas/viewer-nav-qa.ts",
+      "kind": "zod-enum",
+      "doc": "What a page's state is, and the three are NOT a severity scale.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "railed",
+        "declined",
+        "missing"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/vocabulary.ts#TermGloss",
       "name": "TermGloss",
       "module": "cat-harness/schemas/vocabulary.ts",
@@ -41654,6 +41809,22 @@
       "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",
       "to": "cat-harness/schemas/version-bump.ts#SurfaceSubject",
       "via": "removed",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema",
+      "to": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavVerdictSchema",
+      "via": "verdict",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavQaSchema",
+      "to": "cat-harness/schemas/viewer-nav-qa.ts#ViewerNavPageSchema",
+      "via": "pages",
       "kind": "field",
       "optional": false,
       "array": true
