@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T05:44:19.662Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/86940993e61726d72187c1b21ebc36e87d960526",
-  "sourceCommitSha": "86940993e61726d72187c1b21ebc36e87d960526",
-  "sourceCommitAt": "2026-09-24T07:41:39+02:00",
+  "generatedAt": "2026-09-24T06:01:57.313Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/10b48aed60a0404d9d57b936b008902c9ffd9e82",
+  "sourceCommitSha": "10b48aed60a0404d9d57b936b008902c9ffd9e82",
+  "sourceCommitAt": "2026-09-24T07:58:57+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -288,7 +288,7 @@
     "Tool": 83,
     "Schema": 115,
     "GraphKind": 32,
-    "Directory": 44,
+    "Directory": 43,
     "Asset": 3
   },
   "@graph": [
@@ -714,7 +714,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 230,
+      "instructionLines": 237,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2834,7 +2834,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 156,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37198,6 +37198,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bootstrap-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "bootstrap-graph",
+      "title": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
+      "module": "schemas/bootstrap-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/carried-note",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "carried-note",
@@ -37321,6 +37329,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "discussion",
+      "title": "The two documents the `discussion` process carries, as Zod.",
+      "module": "schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "document-image",
@@ -37366,6 +37382,14 @@
       "name": "graph-kind-registry",
       "title": "The graph-kind registry — **a leaf, and that is its whole job**.",
       "module": "schemas/graph-kind-registry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "graph",
+      "title": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
+      "module": "schemas/graph.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
@@ -38006,30 +38030,6 @@
       "title": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
       "module": "../large-datasets/schemas/source-descriptor.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bootstrap-graph",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "bootstrap-graph",
-      "title": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
-      "module": "../bootstrap-tools/schemas/bootstrap-graph.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "discussion",
-      "title": "The two documents the `discussion` process carries, as Zod.",
-      "module": "../bootstrap-tools/schemas/discussion.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/graph",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "graph",
-      "title": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
-      "module": "../bootstrap-tools/schemas/graph.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools",
@@ -39578,17 +39578,6 @@
       "description": "The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20)."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-tools-schemas",
-      "path": "bootstrap-tools/schemas/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
-      ],
-      "description": "The Zod that bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "swimlane-glossary",
@@ -39684,8 +39673,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "86940993e61726d72187c1b21ebc36e87d960526",
+    "sha": "10b48aed60a0404d9d57b936b008902c9ffd9e82",
     "pr": "main",
-    "run": "35961075154"
+    "run": "35962345378"
   }
 }
