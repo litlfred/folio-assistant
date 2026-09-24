@@ -350,7 +350,8 @@
                                 "type": "string",
                                 "enum": [
                                   "navbar",
-                                  "board"
+                                  "board",
+                                  "glass"
                                 ]
                               }
                             },
@@ -477,6 +478,47 @@
               "id",
               "url",
               "graphKinds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
             ],
             "additionalProperties": false
           }
@@ -681,8 +723,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld",
   "staging": {
     "branch": "dependabot/github_actions/actions-c1d4c18a44",
-    "sha": "2b3d18f9757694f7c2d3c8cda0bc39bfa05eaccf",
+    "sha": "f74063ef794fee7b5c74eb9749e8863fa9acff7d",
     "pr": "915/merge",
-    "run": "35837678324"
+    "run": "36049457465"
   }
 }

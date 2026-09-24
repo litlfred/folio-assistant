@@ -4,9 +4,9 @@
     "dcterms": "http://purl.org/dc/terms/",
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "bs": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
-    "cat": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "fac": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "bootstrap": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
@@ -52,6 +52,7 @@
         "Contributor (human or agent)",
         "Human actor",
         "Log operator (human)",
+        "Owner",
         "Reader (any actor)",
         "User (person)"
       ],
@@ -64,7 +65,10 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_GettingStarted/Lane_User",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human"
       ]
     },
@@ -123,6 +127,15 @@
       "source": "cat-harness/processes/materialize-remote.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_MethodologyFromSource",
+      "label": "Owner",
+      "scopeNote": "Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status.",
+      "source": "cat-harness/processes/methodology-from-source.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/user",
@@ -130,6 +143,24 @@
       "label": "Contributor (human or agent)",
       "scopeNote": "Reached only when both upstream and local changed, which is the one case this process refuses to resolve by rule: which side wins depends on why the local edit was made, a fact only this lane has.",
       "source": "cat-harness/processes/refresh-materialized.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_RelatedWork",
+      "label": "User",
+      "scopeNote": "Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).",
+      "source": "cat-harness/processes/related-work.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_0",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Contributor (human or agent)",
+      "scopeNote": "One decision, and it is the one no file answers: what the sample is FOR. Which items, into which store, and whether the result is meant to last. The last question decides the destination, and asking it after the copy exists would mean moving a copy that was already landed somewhere under the wrong obligations.",
+      "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
@@ -307,6 +338,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_NonMechanical",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review"
@@ -336,7 +368,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_ContentChangeReview",
       "label": "Review Committee",
-      "scopeNote": "Compares staged against main and judges the impact assessment, and — unusually for this role elsewhere in this corpus — is where the accept decision itself is made: Task_Approve triggers the merge and the rebuild, so a rejection routes back to Task_Iterate in the agent's lane rather than to the author.",
+      "scopeNote": "Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, \"Approve and merge\", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author.",
       "source": "cat-harness/processes/content-change-review.bpmn"
     },
     {
@@ -385,6 +417,15 @@
       "source": "cat-harness/processes/ingest-l1-completeness-gate.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_NarrativeCodeReview",
+      "label": "Reviewer",
+      "scopeNote": "The generic reviewer, taking this lane for the call path only: it reads what the pair checks left open and settles each item one of three ways. It can attest and raise findings but cannot overrule a checker on its own say-so — that is what the call into adjudication is for.",
+      "source": "cat-harness/processes/narrative-code-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/reviewer",
@@ -399,7 +440,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_ThemeUIReview",
       "label": "Reviewer",
-      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches.",
+      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the ingested assets as a whole, in the design they are for — not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean ingest, a passing accessibility check and a correct branding pass can each be true and still miss what only laying the assets out and looking catches.",
       "source": "cat-harness/processes/theme-ui-review.bpmn"
     },
     {
@@ -410,6 +451,29 @@
       "label": "Reviewer / SME",
       "scopeNote": "Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it.",
       "source": "cat-harness/processes/upstream-version-adoption.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/review-coordinator",
+      "@type": "skos:Concept",
+      "prefLabel": "Review coordinator",
+      "definition": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
+      "altLabel": [
+        "Review Coordinator"
+      ],
+      "notation": "review-coordinator",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ContentChangeReview/Lane_Coordinator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ContentChangeReview/Lane_Coordinator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/review-coordinator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_ContentChangeReview",
+      "label": "Review Coordinator",
+      "scopeNote": "Organises a review large enough to need organising, and decides nothing about the content: ingests the reviewers' tagged comments, slices the change into pieces a reviewer can hold, assigns each slice to a review lane, and watches coverage until every changed block has a verdict or a reasoned waiver. A separate role from the editor on the owner's ruling of 2026-09-23 (bean en2d): organising a review and deciding its outcome are different accountabilities, and a process where one lane did both could not say which it was doing.",
+      "source": "cat-harness/processes/content-change-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/narrative-reviewer",
@@ -630,6 +694,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_PubMgr",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication"
       ]
@@ -678,6 +743,15 @@
       "label": "Publication manager",
       "scopeNote": "The last lane and the only one with no path back into the loop — reaching it means Task_IgPublisher already succeeded on Lane_Qc's clean verdict. It does not itself decide whether the release is authorised: that call is draft-to-publication.bpmn's, and Task_PublishIg only executes what that separate process has already cleared.",
       "source": "cat-harness/processes/l3-fhir-pipeline.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/publication-manager",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_PublishAlert",
+      "label": "Publication manager",
+      "scopeNote": "The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release.",
+      "source": "cat-harness/processes/publish-alert.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
@@ -927,7 +1001,9 @@
       "notation": "adjudicator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator"
       ]
     },
     {
@@ -940,14 +1016,36 @@
       "source": "cat-harness/processes/adjudication.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_CriterionAdjudication",
+      "label": "Adjudicator",
+      "scopeNote": "One lane, because every step here is the adjudicator's: asking the question, choosing among the answers, and writing the entry. The feedback provider's lane is in `adjudication.bpmn`, where stating a finding happens — a provider has no entitlement to settle what it reported, and drawing it here would suggest otherwise.\n\nThe role admits person and agent. `refresh-materialized` already gives the reason in its own words — \"a human or agentic decision, never a merge rule\" — and the steps are plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.",
+      "source": "cat-harness/processes/criterion-adjudication.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_WireframeDesignReview",
+      "label": "Adjudicator",
+      "scopeNote": "Reached only when entries for one criterion disagree. Settles the disagreement with a reason, and decides between surviving candidates through options analysis.",
+      "source": "cat-harness/processes/wireframe-design-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/feedback-provider",
       "@type": "skos:Concept",
       "prefLabel": "Feedback provider",
       "definition": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "altLabel": [
+        "Feedback providers"
+      ],
       "notation": "feedback-provider",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers"
       ]
     },
     {
@@ -958,6 +1056,15 @@
       "label": "Feedback provider",
       "scopeNote": "Drawn once for any number of providers — the owner's \"Judgment of &gt;= 1 Feedback Provider's feedback\" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.\n\nThis lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.",
       "source": "cat-harness/processes/adjudication.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/feedback-provider",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_WireframeDesignReview",
+      "label": "Feedback providers",
+      "scopeNote": "One or more reviewers (agent and human) who see candidates shuffled, without their author, and record pass, warn or fail per criterion with a reason. There are no scores and no averages.",
+      "source": "cat-harness/processes/wireframe-design-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/stakeholder",
@@ -1043,6 +1150,7 @@
         "Agent (this session)",
         "Agent / platform (automated)",
         "Authoring agent (system)",
+        "Designer",
         "Folio-Assistant Agent"
       ],
       "notation": "authoring-agent",
@@ -1064,11 +1172,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
       ]
     },
     {
@@ -1216,6 +1326,24 @@
       "source": "cat-harness/processes/graph-detanglement.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_MethodologyFromSource",
+      "label": "Agent",
+      "scopeNote": "Does every step between the share and the review, and records each decision it made with its reason, so the owner reviews a record rather than an impression.",
+      "source": "cat-harness/processes/methodology-from-source.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_RelatedWork",
+      "label": "Agent",
+      "scopeNote": "Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work's owners.",
+      "source": "cat-harness/processes/related-work.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/authoring-agent",
@@ -1223,15 +1351,6 @@
       "label": "Agent (playing the machine)",
       "scopeNote": "Classifies every turn into exactly one of three effects at Gateway_TurnEffect — nothing changed, state changed, ending — a fresh judgement each time because a table cannot key on intent and a wrong read is corrected by the next turn. It records that a bean was claimed or an instance closed, at A_UpdateSession, but performs none of those actions itself: the record and the thing it describes are kept deliberately separate.",
       "source": "cat-harness/processes/session-state-machine.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_ThemeUIReview",
-      "label": "Agent",
-      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
-      "source": "cat-harness/processes/theme-ui-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
@@ -1259,6 +1378,15 @@
       "label": "Agent",
       "scopeNote": "Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely.",
       "source": "cat-harness/processes/upstream-version-adoption.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_WireframeDesignReview",
+      "label": "Designer",
+      "scopeNote": "Writes the intent, produces candidates with real content, and runs the mechanical checks. Does not review its own candidates.",
+      "source": "cat-harness/processes/wireframe-design-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/onboarding-agent",
@@ -1303,7 +1431,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_L1Gate/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent"
       ]
     },
     {
@@ -1321,7 +1451,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
+      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
       "source": "cat-harness/processes/document-ingestion.bpmn"
     },
     {
@@ -1375,7 +1505,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_MaterializeRemote",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.",
+      "scopeNote": "Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused. Before the first gate it resolves the request against the source DESCRIPTOR (Task_Enumerate), because the size being gated is the closure's, not the request's — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.",
       "source": "cat-harness/processes/materialize-remote.bpmn"
     },
     {
@@ -1388,11 +1518,37 @@
       "source": "cat-harness/processes/refresh-materialized.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Ingestion Engine (agent, runs unattended)",
+      "scopeNote": "Calls the two shared subprocesses and does the part that is this process's own: landing the copy in the destination the contributor chose, importing it into the store, and testing the import. It never re-asks a gate: it acts on materialize-remote's outcome. It also answers the second entry, an upstream change to a permanent sample, by calling refresh-materialized rather than re-importing.",
+      "source": "cat-harness/processes/sample-import.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_ThemeUIReview",
+      "label": "Agent",
+      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
+      "source": "cat-harness/processes/theme-ui-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/librarian",
       "@type": "skos:Concept",
       "prefLabel": "Librarian",
       "definition": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
       "notation": "librarian",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/deep-researcher",
+      "@type": "skos:Concept",
+      "prefLabel": "Deep researcher",
+      "definition": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "notation": "deep-researcher",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness-glossary.jsonld"
     },
     {
@@ -1438,7 +1594,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_BeanLifecycle",
       "label": "Sibling session or human (not yours to close)",
-      "scopeNote": "The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
+      "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/bean-lifecycle.bpmn"
     },
     {
@@ -1477,6 +1633,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_Build",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
@@ -1588,7 +1746,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_HumanTranslation",
       "label": "Automated Pipeline",
-      "scopeNote": "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.",
+      "scopeNote": "Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.",
       "source": "cat-harness/processes/human-translation-workflow.bpmn"
     },
     {
@@ -1635,6 +1793,24 @@
       "label": "Scheduled log sweep",
       "scopeNote": "Three exit states, and the job's own colour tracks none of them the way a reader would expect: a finding is fully recorded — issue tracked, PR commented — and the job still ends GREEN, because the finding is the repository's problem to see in the tracking issue, not this lane's to fail on. Only UNKNOWN turns the job itself RED, and one unreadable PR is enough to fail the whole sweep — this lane never reports a partial clean.",
       "source": "cat-harness/processes/pr-checks-present.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_PublishAlert",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.",
+      "source": "cat-harness/processes/publish-alert.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_PublishVerification",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
+      "source": "cat-harness/processes/publish-verification.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
@@ -1986,7 +2162,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/work-plan",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_IgIncremental",
       "label": "Work plan — beans (shared by humans and agents)",
-      "scopeNote": "Where both failure branches land before the process ends rather than just stopping: Gateway_Valid's `no` and Gateway_QcPass's `no` each write their findings here — Task_LogFindings, Task_QcBeans — before either EndEvent_Findings or EndEvent_FindingsQc, so a run that stops short always leaves a record of why rather than only a red check.",
+      "scopeNote": "Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.",
       "source": "cat-harness/processes/ig-incremental-build.bpmn"
     },
     {
@@ -2028,7 +2204,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_BuildL1Kg/Lane_1",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2"
       ]
     },
     {
@@ -2093,6 +2270,15 @@
       "label": "Corpus — L1 source knowledge graph",
       "scopeNote": "Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good.",
       "source": "cat-harness/processes/refresh-materialized.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/corpus",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#process/Process_SampleImport",
+      "label": "Corpus — L1 source knowledge graph",
+      "scopeNote": "Every path ends here with something written down. A refused sample stays referenced with the refusing gate's reason, a failed import records what failed, and a passed one records where it landed. None ends in silence, because an import nobody can tell was tried is the one somebody tries again.",
+      "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#role/external-registry",
