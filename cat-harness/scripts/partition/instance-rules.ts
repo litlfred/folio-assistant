@@ -219,6 +219,11 @@ export const RULES: Rule[] = [
       // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
       // not about what a folio holds.
       "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
+      // Its reader of `withheld.json` (bean `mkao`): what an instance must not
+      // publish. Same layer — it is a question about what a harness puts on
+      // the site, answered from a list the instance declares — and shared with
+      // the library viewer so the two publishing channels read ONE answer.
+      "scripts/lib/withheld.ts",
       // The harness navigation it injects into those pages. Same layer by the
       // same argument: the rail is the HARNESS's chrome, and it exists because
       // a mounted page gets no Jekyll layout. Putting it in a folio's
@@ -349,6 +354,7 @@ export const RULES: Rule[] = [
       // the reason a `<graph>/<stub>/` layout would carry the answer in the
       // path instead of in this list.
       "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
+      "schemas/withheld.ts",                 // what an instance must not publish — read by the harness mount (bean `mkao`)
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution

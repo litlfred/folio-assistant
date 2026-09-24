@@ -1314,6 +1314,7 @@ classDiagram
       upload [1] match | differs | absent | unknown
       uploadInstance [1] string
       referencedBy [0..*] ReferencedBy[]
+      withheld [0..1] string
       avatar [0..1] object
       summaries [0..1] object
     }
@@ -1649,6 +1650,7 @@ classDiagram
       upload [1] match | differs | absent | unknown
       uploadInstance [1] string
       referencedBy [0..*] ReferencedBy[]
+      withheld [0..1] string
       avatar [0..1] object
       summaries [0..1] object
     }
