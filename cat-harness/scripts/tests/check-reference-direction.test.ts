@@ -285,3 +285,12 @@ describe("a file that DECLARES itself generated is not read", () => {
     expect(verdicts(r)).toEqual(["low/d.json wrong-direction"]);
   });
 });
+
+// NO TEST OVER THE REAL TREE, and PENDING is the case that most invites one.
+//
+// Staleness both ways -- a listed file that no longer leaks, and an unlisted
+// file that does -- is enforced by the CHECK, which exits 1 on either and
+// runs in CI on every push. A test asserting the same thing would add a
+// second full walk of the corpus for no extra coverage. Measured when it was
+// briefly written that way: 5.89s for this file, against 198ms without it,
+// and a sibling test's budget is 5s.

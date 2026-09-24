@@ -215,18 +215,115 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
 ];
 
 /**
- * Known-unfixed wrong-direction references, as `<file>: <count>`.
+ * Known wrong-direction references awaiting the owner's ruling.
  *
- * Exactly `iwtn`'s `PENDING`, and for the same reason: a leak nobody has
- * ruled on yet is made VISIBLE rather than silent. It is compared as a SET,
- * so a new leak fails and so does a fixed one — a `PENDING` that only ever
- * grows is a list that stops meaning anything.
+ * `iwtn`'s `PENDING`, generalised: a leak nobody has ruled on yet is made
+ * VISIBLE rather than silent. Every entry is a FILE, with the number of
+ * distinct instances it names, and it earns its place by ONE property —
+ * **it names more than one instance above it, so "move it up" has no single
+ * destination.**
  *
- * Populated by `--emit-pending` once the owner has ruled on the classes in
- * the report. Empty is honest today: nothing has been ruled, so nothing is
- * pending rather than everything being quietly excused.
+ * That is the whole membership rule, and it is mechanical: `names > 1`. It
+ * is checked, not asserted — an entry whose file has dropped to one target
+ * is reported stale, the same as one with no findings left.
+ *
+ * ## Why these are pending rather than exempt
+ *
+ * The owner ruled on 2026-09-24 that naming is naming: a lower instance may
+ * not name a higher one, and the fix is to move the file up. For the 117
+ * files that name exactly one instance that is a well-defined instruction.
+ * For these 50 it is not, and the reasons differ by kind:
+ *
+ *  - **Declarations and registries** — `cat-harness.json` names
+ *    `folio-assistant-core/schemas/` BECAUSE IT DECLARES THAT DIRECTORY.
+ *    Moving it up does not remove the reference; it removes the
+ *    declaration. Same for `avatars.ts`, `ig-chrome.ts`, `graph-kind-
+ *    registry.ts`, `namespaces.ts` — registries keyed by instance.
+ *  - **Specifications about the layering** — `instance-rules.ts` names the
+ *    repos it partitions into; `smart-stack-layering.md` names all eight
+ *    layers because it is the document that DEFINES the stack. Move it up
+ *    to any one layer and it can no longer describe the other seven.
+ *  - **Prose naming two or more** — a genuine choice between destinations
+ *    that nobody has made.
+ *
+ * Grouping them by kind here would be a judgement this list has no standing
+ * to make: the owner's ruling settles the single-destination case and
+ * explicitly did NOT settle this one, so the honest record is the mechanical
+ * fact (`names`) plus the count, not a category somebody could mistake for a
+ * decision. Issue #1219.
+ *
+ * **It compares as a SET.** A new multi-target file fails, and so does a
+ * FIXED one — a PENDING that only grows stops meaning anything.
  */
-const PENDING: readonly string[] = [];
+const PENDING: readonly { file: string; names: number }[] = [
+  // THIS FILE, and it is listed rather than exempted on purpose.
+  //
+  // A findings list names the files it holds findings about, and the name of
+  // a file under `smart-base/` contains `smart-base` — so this module cannot
+  // record a finding without matching itself, and its rationale above cannot
+  // explain the classes without naming them. A narrow exemption was written
+  // first and then deleted: an exemption carved by the checker, for the
+  // checker, is the one carve nobody else can audit, and the list it would
+  // have kept it off is the list that exists to be audited. It qualifies on
+  // exactly the published rule — it names more than one instance above it
+  // and has no single destination — so it goes where everything else that
+  // qualifies goes.
+  { file: "cat-harness/scripts/check-reference-direction.ts", names: 4 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md", names: 8 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
+  { file: "cat-harness/docs/cat-harness/published-graphs.md", names: 4 },
+  { file: "cat-harness/cat-harness.json", names: 2 },
+  { file: "cat-harness/schemas/avatars.ts", names: 6 },
+  { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
+  { file: "cat-harness/scripts/ingest-ig-artifacts.ts", names: 3 },
+  { file: "cat-harness/schemas/ig-chrome.ts", names: 6 },
+  { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
+  { file: "cat-harness/skills/folio-core/directory-conventions.md", names: 2 },
+  // declared-path-literal: a FINDING's location, recorded repo-root-relative because that is
+  // what `analyse` reports. No declaration can answer where a finding is, and this one does not
+  // resolve from THIS instance's root because the file is in another instance — which is the
+  // very fact the entry records.
+  { file: "folio-assistant-core/schemas/fhir-artifact-index.ts", names: 2 },
+  { file: "fhir-harness/fhir-harness.json", names: 6 },
+  { file: "cat-harness/schemas/jsonld.ts", names: 2 },
+  { file: "fhir-harness/AGENTS.md", names: 4 },
+  { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
+  { file: "cat-harness/skills/folio-core/kg-export.md", names: 2 },
+  { file: "cat-harness/schemas/graph-kind-registry.ts", names: 2 },
+  { file: "cat-harness/scripts/dak-pdf.ts", names: 2 },
+  { file: "cat-harness/scripts/external-schemas.ts", names: 3 },
+  { file: "cat-harness/docs/methodologies/index.md", names: 2 },
+  { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md", names: 2 },
+  { file: "cat-harness/schemas/dak.ts", names: 2 },
+  { file: "cat-harness/schemas/namespaces.ts", names: 2 },
+  { file: "cat-harness/scripts/kg-export.ts", names: 2 },
+  { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
+  { file: "cat-harness/tools/discover.ts", names: 2 },
+  { file: "cat-harness/docs/ig-publisher.md", names: 3 },
+  { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
+  { file: "cat-harness/schemas/harness-config.ts", names: 3 },
+  { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
+  { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
+  { file: "cat-harness/scripts/check-artifact-index.ts", names: 2 },
+  { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
+  { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },
+  { file: "smart-ig/README.md", names: 2 },
+  { file: "smart-ig/AGENTS.md", names: 2 },
+  { file: "smart-base/smart-base.json", names: 2 },
+  { file: "smart-base/README.md", names: 2 },
+  { file: "smart-base/AGENTS.md", names: 2 },
+  { file: "smart-base/tools/index.ts", names: 2 },
+  { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
+  { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
+  { file: "cat-harness/scripts/ingest-ig-chrome.ts", names: 2 },
+  { file: "cat-harness/scripts/gen-object-model-uml.ts", names: 2 },
+  { file: "cat-harness/docs/processes/index.md", names: 2 },
+  { file: "cat-harness/docs/publication-workflow.md", names: 2 },
+  { file: "smart-ig/smart-ig.json", names: 2 },
+];
 
 // ── Discovery ───────────────────────────────────────────────────
 
@@ -431,11 +528,30 @@ function main(): void {
     for (const c of undet.slice(0, 200)) console.log(`    ${c.occurrence.file}:${c.occurrence.line}  ${c.verdict.basis}`);
   }
 
-  const found = [...new Set(wrong.map((c) => c.occurrence.file))].sort();
-  const stale = PENDING.filter((p) => !found.includes(p));
-  if (stale.length > 0) {
-    console.error(`\n✗ ${stale.length} PENDING entr(y/ies) no longer leak — delete them, a PENDING that only grows stops meaning anything:`);
-    for (const s of stale) console.error(`    ${s}`);
+  // PENDING is checked BOTH ways, which is the half that makes it honest.
+  const byFile = new Map<string, Set<string>>();
+  for (const c of wrong) {
+    byFile.set(c.occurrence.file, new Set([...(byFile.get(c.occurrence.file) ?? []), c.occurrence.to]));
+  }
+  const pendingFiles = new Set(PENDING.map((p) => p.file));
+  const held = wrong.filter((c) => pendingFiles.has(c.occurrence.file));
+  console.log(
+    `\n  of the wrong-direction count, ${held.length} occurrence(s) in ${PENDING.length} file(s) are PENDING —` +
+      ` each names more than one instance above it, so there is no single place to move it to (issue #1219)`,
+  );
+
+  const gone = PENDING.filter((p) => !byFile.has(p.file));
+  const settled = PENDING.filter((p) => (byFile.get(p.file)?.size ?? 0) === 1);
+  if (gone.length > 0 || settled.length > 0) {
+    console.error(`\n✗ ${gone.length + settled.length} PENDING entr(y/ies) no longer qualify — delete them:`);
+    for (const p of gone) console.error(`    ${p.file} — no wrong-direction reference left`);
+    for (const p of settled) console.error(`    ${p.file} — now names ONE instance, so it has a destination and is not pending`);
+    process.exit(1);
+  }
+  const missing = [...byFile].filter(([f, to]) => to.size > 1 && !pendingFiles.has(f));
+  if (missing.length > 0) {
+    console.error(`\n✗ ${missing.length} file(s) name several instances above them and are not in PENDING:`);
+    for (const [f, to] of missing) console.error(`    ${f} — names ${to.size}`);
     process.exit(1);
   }
 
