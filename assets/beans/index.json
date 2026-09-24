@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 273,
+      "count": 274,
       "unit": "beans"
     }
   },
@@ -3359,7 +3359,7 @@
     {
       "id": "folio-assistant-w82m",
       "title": "TEST COST: kg-export 'a preview says so' builds the export twice and sits at bun's 5 s timeout (fails alone, locally, on main too)",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -3383,6 +3383,20 @@
       "updatedAt": "2026-09-23T21:44:43Z",
       "preview": "Owner authorised `beans archive` 2026-09-23, the last outstanding\n`bean-store` finding on [#860](https://github.com/litlfred/folio-assistant/issues/860).\nIt ran, it moved 631 beans, and it left two things behind that are worth\nrecording rather than quietly repairing.\n\n## 1. A moved bean's relative links break — measured, not predicted\n\n`check:subgraphs` was **GREEN before the archive and RED after",
       "file": "beans/defs/folio-assistant-wekz--archive-moving-a-bean-one-level-deeper-breaks-its.md"
+    },
+    {
+      "id": "folio-assistant-wg7r",
+      "title": "MISFILED: smart-kg/methodologies/grade.md belongs in a skill + SKOS code list, and smart-kg/ leaves this repo",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:52:50Z",
+      "updatedAt": "2026-09-23T22:52:50Z",
+      "preview": "Owner, 2026-09-23: *\"misfiled smart-kg/methodologies/grade.md, needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\"*.\n\n## What is wrong\n\n- `smart-kg/methodologies/grade.md` (85 lines, `folio-methodology/v1`) is the only file under `smart-kg/`, a directory named after a repository that **already exists on its own**. Keeping a stub of it here is a second h",
+      "file": "beans/defs/folio-assistant-wg7r--misfiled-smart-kgmethodologiesgrademd-belongs-in-a.md"
     },
     {
       "id": "folio-assistant-wggr",

@@ -454,28 +454,28 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790226493">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790228073">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790226493">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790228073">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790226493">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790228073">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790226493">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790228073">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790226493">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790228073">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -492,7 +492,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790226493" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790228073" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -832,18 +832,74 @@ It carries a <code class="language-plaintext highlighter-rouge">reason</code> a 
 
 <p>A candidate is never presented as a definition. An extractor writes
 candidates; only a person moves one to <code class="language-plaintext highlighter-rouge">authored</code>.</p>
-<h2 id="iris">
+<h2 id="conventions">
   
   
-    <a href="#iris" class="anchor-heading" aria-labelledby="iris"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> IRIs
+    <a href="#conventions" class="anchor-heading" aria-labelledby="conventions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Conventions
   
   
 </h2>
     
 
-<p>A term’s IRI is <code class="language-plaintext highlighter-rouge">&lt;instance namespace&gt;glossary/&lt;scheme id&gt;/&lt;term id&gt;</code>, in the
-instance’s namespace, never the asset’s: moving the asset must not move the
+<p>The owner, 2026-09-24: <em>“What does folio-assistant do? B should follow. Update
+skills so known.”</em> Every folio follows these; none re-decides them.</p>
+
+<p><strong>The instance namespace.</strong> A term’s IRI is
+<code class="language-plaintext highlighter-rouge">&lt;instance namespace&gt;glossary/&lt;scheme id&gt;/&lt;term id&gt;</code>, and the instance
+namespace is <code class="language-plaintext highlighter-rouge">&lt;publication root&gt;&lt;instance stub&gt;/ns#</code> (<code class="language-plaintext highlighter-rouge">instanceNs</code> in
+<code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/glossary-page.ts</code>; <code class="language-plaintext highlighter-rouge">schemeIri</code> and <code class="language-plaintext highlighter-rouge">termIri</code> in
+<code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/glossary.ts</code>). For example:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>instance</th>
+      <th>namespace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
+      <td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ihris</code> (its own site)</td>
+      <td><code class="language-plaintext highlighter-rouge">https://litlfred.github.io/ihris/ihris/ns#</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The namespace is never the asset’s path: moving the asset must not move the
 term (bean <code class="language-plaintext highlighter-rouge">lqo9</code>, 2026-09-21).</p>
+
+<p><strong>One ConceptScheme per code list.</strong> This follows <code class="language-plaintext highlighter-rouge">schemas/code-list.ts</code>
+(<code class="language-plaintext highlighter-rouge">codeListToSkos</code>): <em>“a code is addressable and two lists may share a code
+without sharing a concept”</em>. The same code in two lists gives two concepts.
+A relation between them is a SKOS match, never a merge.</p>
+
+<p><strong>The basis of a match is recorded, never assumed.</strong> A match comes from a
+mapping the repository verified, such as a FHIR <code class="language-plaintext highlighter-rouge">ConceptMap</code> whose
+equivalence implies one:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">equal</code>/<code class="language-plaintext highlighter-rouge">equivalent</code> gives <code class="language-plaintext highlighter-rouge">exactMatch</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">wider</code>/<code class="language-plaintext highlighter-rouge">subsumes</code> gives <code class="language-plaintext highlighter-rouge">broadMatch</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">narrower</code>/<code class="language-plaintext highlighter-rouge">specializes</code> gives <code class="language-plaintext highlighter-rouge">narrowMatch</code>;</li>
+  <li>nothing else gives a match.</li>
+</ul>
+
+<p>Any other basis needs the owner’s explicit acceptance. One example is a
+<code class="language-plaintext highlighter-rouge">ValueSet</code> that binds a local code list to the external code system itself,
+so that the local code <em>is</em> the external code. When the owner accepts such a
+basis:</p>
+<ul>
+  <li>the scheme’s <code class="language-plaintext highlighter-rouge">description</code> names the basis and the ruling;</li>
+  <li>the builder lists the accepted systems explicitly;</li>
+  <li>QA recomputes the matches from the same source.</li>
+</ul>
+
+<p>ihris’s ISCO-08 lists to ESCO are the worked example (owner, 2026-09-24,
+litlfred/ihris#19). An IRI built from a publisher’s pattern but never
+dereferenced says so.</p>
 <h2 id="then">
   
   
@@ -1064,7 +1120,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35958539523"><code>cfbbd47</code></a> &middot; 2026-09-24T05:08:08Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/35960454512"><code>2569db5</code></a> &middot; 2026-09-24T05:34:27Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

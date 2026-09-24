@@ -26,8 +26,20 @@
   "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 17,
+  "nodeCount": 18,
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/detangle-schema-viewer.md",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
+      "name": "detangle's own schema viewer page — retired",
+      "nodeKind": "retired",
+      "sourcePath": "fsh-guts/retired/detangle-schema-viewer.md",
+      "movedOn": "2026-09-23",
+      "movedFrom": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
+      "bean": "folio-assistant-byql",
+      "description": "The schema viewer page for the detangle instance, generated while detangle was its own instance with its own declared schemas directory. When bean byql folded detangle into cat-harness (2026-09-23, #1123), its two schema modules moved into cat-harness/schemas/ and now render on the cat-harness schema page. The generator (schema:viz) then pruned this page as an orphan on every run, and a sibling session kept restoring it because deleting it was the owner's call. The owner ruled, 2026-09-23: move it here. Kept, not deleted, so it is still addressable.",
+      "body": "# detangle's schema viewer page — retired 2026-09-23\n\nThe file beside this note, `detangle-schema-viewer.html`, is the page that used\nto be published at `cat-harness/docs/cat-harness/schemas/detangle/index.html`.\n\n**Why it stopped being generated.** It rendered the `schemas` graph of the\n`detangle` instance. Bean `byql` folded that instance into cat-harness: its\n`detangle.ts` and `detangle-sidecar.ts` now live in `cat-harness/schemas/`,\ndeclared by cat-harness's own `schemas` directory, so they appear on the\ncat-harness schema page. No declaration names a `detangle` schemas graph any\nmore, so `schema:viz` has nothing to render here and prunes the page as an\norphan.\n\n**Why it is here and not deleted.** A generated page nobody asked to remove\nwas being pruned by one process and restored by another, each correctly\nfollowing its own rule. The owner settled it: move it to the kept, unpublished\ntrashcan, so it stays addressable and neither process fights over it."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-definition-roles.md",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#FshGutsNode",
@@ -234,6 +246,10 @@
     }
   ],
   "skipped": [
+    {
+      "path": "fsh-guts/retired/detangle-schema-viewer.html",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
     {
       "path": "fsh-guts/scripts/extract-lean-blocks.py",
       "reason": "declares no $schema, so it is not a node of this graph"
