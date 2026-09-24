@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T17:28:35.318Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6d7d09c484b9309776d4a41f01c73d1cd2679b62",
-  "sourceCommitSha": "6d7d09c484b9309776d4a41f01c73d1cd2679b62",
-  "sourceCommitAt": "2026-09-24T17:26:05Z",
+  "generatedAt": "2026-09-24T17:36:16.772Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d47487672fe7cbd7dfb315be77e06cc433b2e8a0",
+  "sourceCommitSha": "d47487672fe7cbd7dfb315be77e06cc433b2e8a0",
+  "sourceCommitAt": "2026-09-24T17:33:38Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -290,7 +290,7 @@
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 83,
-    "Schema": 116,
+    "Schema": 117,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -2764,7 +2764,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/audit-coverage.md",
-      "instructionLines": 191,
+      "instructionLines": 250,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39880,6 +39880,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#schema/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "interaction",
+      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "module": "schemas/interaction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -42287,8 +42296,8 @@
   ],
   "staging": {
     "branch": "claude/stream-3-goal3-who-iris",
-    "sha": "daeff8e7357b958581bfd8be3495ac6c9f1813f1",
+    "sha": "92c9e48c4c5e3ca9eb3537283cd7a038f991cf0a",
     "pr": "1114/merge",
-    "run": "36034300974"
+    "run": "36035172906"
   }
 }
