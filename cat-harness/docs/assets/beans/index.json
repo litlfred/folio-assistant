@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 262,
+      "count": 268,
       "unit": "beans"
     }
   },
@@ -1245,6 +1245,20 @@
       "file": "beans/defs/folio-assistant-b5f0--instantiation-what-it-means-to-instantiate-a-harne.md"
     },
     {
+      "id": "folio-assistant-b7wh",
+      "title": "INGEST arXiv:2607.14456v1 (specialist BPMN-compiled agents) as evidence + a skill on the processes subgraph",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:25:37Z",
+      "updatedAt": "2026-09-23T22:26:10Z",
+      "preview": "Owner, 2026-09-23: *\"ingest into library for use as evidence and skills as\nsubgraph on processes in cat-harness\"*.\n\nBorman, Wandabwa, Yu, Kannangara, Liu, Leontjeva and Ng, **\"Beyond Generalist\nLLMs: Specialist Agentic Systems for Structured Code Workflow Execution\"**,\nCommonwealth Bank of Australia. Workshop paper at SCALE, ICML 2026 (PMLR 306);\narXiv:2607.14456v1 [cs.SE], 16 July 2026. Open acce",
+      "file": "beans/defs/folio-assistant-b7wh--ingest-arxiv260714456v1-specialist-bpmn-compiled-a.md"
+    },
+    {
       "id": "folio-assistant-b963",
       "title": "COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path",
       "status": "in-progress",
@@ -1425,6 +1439,20 @@
       "updatedAt": "2026-09-22T11:55:46Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
+    },
+    {
+      "id": "folio-assistant-ctp3",
+      "title": "INGEST Doc-Researcher (arXiv:2510.21603v1) as a methodology subgraph in folio-assistant-core",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:14:08Z",
+      "updatedAt": "2026-09-23T21:15:39Z",
+      "preview": "Owner's request, 2026-09-23: *\"ingest methdolofy subgraph. develop processes skills etc.\napply to folio-asst-core\"*, then *\"it is part of f-a-c subgraph\"*.\n\nDong et al., **\"Doc-Researcher: A Unified System for Multimodal Document Parsing and\nDeep Research\"** (arXiv:2510.21603v1, Huawei, 24 October 2025). Open access.\n\n## What went in\n\nFour new declared directories on `folio-assistant-core`, each d",
+      "file": "beans/defs/folio-assistant-ctp3--ingest-doc-researcher-arxiv251021603v1-as-a-method.md"
     },
     {
       "id": "folio-assistant-cy4p",
@@ -1737,6 +1765,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hj9d",
+      "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T00:26:28Z",
+      "updatedAt": "2026-09-24T00:26:28Z",
+      "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
+      "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
+    },
+    {
       "id": "folio-assistant-hs08",
       "title": "MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio",
       "status": "in-progress",
@@ -1875,6 +1917,20 @@
       "updatedAt": "2026-09-23T16:32:08Z",
       "preview": "Owner, 2026-09-20, defining the term after four carves had already been picked by judgement:\n\n> 'candidate subgraph = large collection of thematiactally related content that is diconnected (maybe some light detagling) from other parts of the KG. (part of larger process detangle knwoedlge graph. look in lean, paper layout for related. generalize, make subprocess, deangle heuristics...).'\n\nTHIS IS A",
       "file": "beans/defs/folio-assistant-j79e--detangle-a-candidate-subgraph-is-measured-cohesive.md"
+    },
+    {
+      "id": "folio-assistant-j820",
+      "title": "PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:14:17Z",
+      "updatedAt": "2026-09-23T21:15:20Z",
+      "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## Measured\n\n| | |\n|---|---|\n| document | `arxiv-2510.21603v1` (Dong et al., Doc-Researcher), staged, **not promoted** |\n| captioned figures in the text | **7** |\n| images `pdf-images.py` placed | **383** |\n",
+      "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
     },
     {
       "id": "folio-assistant-jg8s",
@@ -2227,6 +2283,20 @@
       "updatedAt": "2026-09-23T10:36:14Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/glossary/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **There is no way to find a term** except scrolling or the browser's find. The page has no search, no filter and no A–Z jump, and its 46 rows run to about 8,00",
       "file": "beans/defs/folio-assistant-n5be--glossary-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-nafz",
+      "title": "glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:14:17Z",
+      "updatedAt": "2026-09-23T21:15:20Z",
+      "preview": "Found 2026-09-23 while ingesting the `doc-researcher` methodology (bean `ctp3`).\nA **reporting** inconsistency, not a wrong answer: both generators are internally\nright and they disagree about what \"this corpus\" means.\n\n## Measured\n\n`folio-assistant-core/processes/deep-document-research.bpmn` declares a lane\n`Deep researcher`, bound to the `deep-researcher` role.\n\n| generator | reaches that diagra",
+      "file": "beans/defs/folio-assistant-nafz--glossary-export-walks-one-instances-diagrams-while.md"
     },
     {
       "id": "folio-assistant-nba0",
@@ -3607,6 +3677,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
+    },
+    {
+      "id": "folio-assistant-yscf",
+      "title": "PROVENANCE REFUSAL: yl-3.pdf (ML resource optimization for hybrid ETL) is not admissible as evidence",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:30:19Z",
+      "updatedAt": "2026-09-23T22:30:55Z",
+      "preview": "Owner attached `yl-3.pdf` on 2026-09-23 with no instruction, then chose *\"verify\nprovenance first, then report\"* over ingesting it. This is that report. **Nothing\nwas filed**; the PDF is not in `uploads/` and no library entry exists.\n\nThe document: \"Machine Learning–Based Resource Optimization for Hybrid ETL\nPipelines Across Multi-Cloud Platforms\", attributed to Anjali Sharma (Stanford),\nWei Chen ",
+      "file": "beans/defs/folio-assistant-yscf--provenance-refusal-yl-3pdf-ml-resource-optimizatio.md"
     },
     {
       "id": "folio-assistant-yt7j",
