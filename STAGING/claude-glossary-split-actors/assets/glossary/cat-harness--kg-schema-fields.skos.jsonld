@@ -9360,6 +9360,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.documentimageschema.placements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DocumentImageSchema.placements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every place this image appears, the first one included."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.placements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.geometrybasisschema.coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -9509,6 +9528,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/document-image.ts#InspectionBasisSchema.saw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.coverage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.imagesonpage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.imagesOnPage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many images share this page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this copy serves HERE — never what the image is, which is the narrative's job. \"a recurring header for principle 8\" belongs here; \"an irregular grid of coloured squares\" belongs on the image."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.placementschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PlacementSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page it sits on, 1-based as a reader counts."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
       "skos:note": "candidate"
     },
     {
