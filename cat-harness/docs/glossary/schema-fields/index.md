@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1348 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 163 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1353 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 163 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1523 terms and is 823 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1528 terms and is 826 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1523</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1528</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2904,6 +2904,13 @@ DocumentImageSchema.narrative <span class="fa-gloss-status">candidate, extracted
 <dd>
 <p>Present only where a description is worth having — see `role`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.narrative</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.documentimageschema.placements" data-fa-state="extracted" data-fa-gloss="">
+DocumentImageSchema.placements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every place this image appears, the first one included.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#DocumentImageSchema.placements</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--dublin-core.dublincorerecordschema.id" data-fa-state="extracted" data-fa-gloss="">
 DublinCoreRecordSchema.id <span class="fa-gloss-status">candidate, extracted</span>
@@ -5927,6 +5934,34 @@ PermitRequest.actorRoles <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>The roles the actor may act as (`ActorDef.roles`); empty or absent means unconstrained.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts#PermitRequest.actorRoles</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.coverage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.imagesonpage" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.imagesOnPage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many images share this page.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.note" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What this copy serves HERE — never what the image is, which is the narrative's job. &quot;a recurring header for principle 8&quot; belongs here; &quot;an irregular grid of coloured squares&quot; belongs on the image.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--document-image.placementschema.page" data-fa-state="extracted" data-fa-gloss="">
+PlacementSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page it sits on, 1-based as a reader counts.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/document-image.ts"><code>cat-harness/schemas/document-image.ts#PlacementSchema.page</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.planardiagram.crossing_count" data-fa-state="extracted" data-fa-gloss="">
 PlanarDiagram.crossing_count <span class="fa-gloss-status">candidate, extracted</span>
