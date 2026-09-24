@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 308,
+      "count": 311,
       "unit": "beans"
     }
   },
@@ -1595,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
     {
+      "id": "folio-assistant-ceud",
+      "title": "CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:00Z",
+      "updatedAt": "2026-09-24T17:30:00Z",
+      "preview": "Measured 2026-09-24, working PR #1241.\n\n`6603c3fbc4d` was pushed to `claude/cool-fermi-htir5p`, an open PR branch.\n**No workflow fired for it at all** — not `code-quality-gates`, not\n`jsonld-gen-check`, not `feature-staging`. The latest run of every workflow\nstayed on the previous SHA, `f1fb1556576`, for 35 minutes.\n\n## What was ruled out\n\n- **The push landed.** `git ls-remote origin claude/cool-f",
+      "file": "beans/defs/folio-assistant-ceud--ci-a-push-to-a-pr-branch-fired-no-workflow-at-all.md"
+    },
+    {
       "id": "folio-assistant-cflw",
       "title": "Generated artefacts collide: 218 sidecars rewritten by one auditor edit",
       "status": "in-progress",
@@ -1737,6 +1751,20 @@
       "file": "beans/defs/folio-assistant-d3yq--testing-theme-an-engineering-grumpy-cat-theme-and.md"
     },
     {
+      "id": "folio-assistant-d4lb",
+      "title": "B6b-2 (#1168): folio-intake/v1 rebuilt from existing schemas; adapter writes it; strict MaterializationSchema",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:42:45Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
+      "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
+      "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
+    },
+    {
       "id": "folio-assistant-d5f1",
       "title": "INGEST: narrative description per image, localized, including images extracted from PDFs",
       "status": "in-progress",
@@ -1808,15 +1836,15 @@
     },
     {
       "id": "folio-assistant-dv8v",
-      "title": "B6b (#1168): the 9 writtenBy families get Zod schemas; the writtenBy form removed",
-      "status": "todo",
+      "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:07:58Z",
+      "updatedAt": "2026-09-24T18:42:45Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
@@ -2015,6 +2043,20 @@
       "updatedAt": "2026-09-23T02:45:00Z",
       "preview": "Owner, 2026-09-20: 'noting cacheing olean stragety for \"compiled/compuable\" data sources whchich will apply to sushi/fhr assets -> AST in planned FHIR publication iterartive issue.'\n\nA THIRD KIND OF REMOTE CONTENT, and `materialization.ts` currently has two purposes (`working`, `archival`) with no room for it. A COMPILED artefact is neither:\n- it is DERIVED, so it is not archival — the source is e",
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
+    },
+    {
+      "id": "folio-assistant-h1wq",
+      "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T17:30:16Z",
+      "updatedAt": "2026-09-24T17:40:31Z",
+      "preview": "From `audit-coverage`'s `typed-only` finding. Four kinds declare a validator that\nparses their nodes, and nothing had an opinion about what those nodes SAY. The\nowner chose all four (2026-09-24), having been told the risk: `health` and\n`todos` already have machinery, so a criterion here could be a second answer to\na settled question.\n\n## Summary of Changes\n\n`cat-harness/scripts/check-harness-state",
+      "file": "beans/defs/folio-assistant-h1wq--judge-the-four-typed-only-kinds-health-todos-inter.md"
     },
     {
       "id": "folio-assistant-h2s9",
@@ -3441,14 +3483,14 @@
     {
       "id": "folio-assistant-u63y",
       "title": "B6a (#1168): a file that uses an external spec declares it; ExternalSchema.usedBy removed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:07:58Z",
-      "updatedAt": "2026-09-24T18:25:14Z",
+      "updatedAt": "2026-09-24T18:42:44Z",
       "preview": "## Owner decision 2026-09-24\n\"B: users declare it\" — each dependent declares the spec, not the spec its users (36 hand-written usedBy entries over 16 records).\n\n## Plan\n- TS: `@conformsTo <spec-id>` in the module doc comment.\n- Skill .md: `conformsTo:` front matter.\n- BPMN: the `xmlns` binding already declares the namespace in-file.\n- JSON-LD: a namespace IRI in `@context` declares it; plain JSON ",
       "file": "beans/defs/folio-assistant-u63y--b6a-1168-a-file-that-uses-an-external-spec-declare.md"
     },

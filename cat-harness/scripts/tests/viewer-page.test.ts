@@ -26,6 +26,8 @@ import {
   sitePathForPage,
   toRootForPage,
   withNarrowViewport,
+  withSavedScheme,
+  schemeKey,
 } from "../viewer-page.ts";
 
 const PAGE = (body: string, head = ""): string =>
@@ -217,6 +219,26 @@ describe("the narrow-viewport rules ride on the fixture — bean `2r2n`", () => 
     // The theme's own wrapper already scrolls; the navbar is not content.
     expect(css).toContain(":not(.table-wrapper > table)");
     expect(css).toContain(":not(.fa-nav table)");
+  });
+});
+
+describe("the reader's saved scheme reaches a standalone viewer — bean `dc64`", () => {
+  test("the key is the one docs-ui.js stores the scheme under", () => {
+    const js = readFileSync(new URL("../../docs/assets/js/docs-ui.js", import.meta.url), "utf-8");
+    expect(js).toContain(`var SCHEME_KEY = "${schemeKey()}";`);
+  });
+
+  test("a script in the HEAD applies only a stored light or dark, before first paint", () => {
+    const out = withSavedScheme(PAGE("<p>x</p>"));
+    const head = out.slice(0, out.search(/<\/head>/i));
+    expect(head).toContain(`localStorage.getItem(${JSON.stringify(schemeKey())})`);
+    expect(head).toContain('s==="light"||s==="dark"');
+    expect(head).toContain('setAttribute("data-fa-scheme",s)');
+  });
+
+  test("idempotent: a second pass adds nothing", () => {
+    const once = withSavedScheme(PAGE("<p>x</p>"));
+    expect(withSavedScheme(once)).toBe(once);
   });
 });
 

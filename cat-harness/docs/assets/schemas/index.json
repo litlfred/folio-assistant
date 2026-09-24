@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 166,
+      "count": 167,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1012,6 +1012,14 @@
       "name": "session-context",
       "graphNode": "schema",
       "summary": "What a state machine tracks across a SESSION, as opposed to an instance.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "instance": "cat-harness",
+      "name": "site-indexes",
+      "graphNode": "schema",
+      "summary": "The published index files the site's viewers read — each `$schema` family",
       "isTest": false
     },
     {
@@ -23055,6 +23063,751 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+      "name": "BeanIndexItemSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "One work-plan bean, as the board and the work-plan viewer read it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "priority",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "parent",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "`\"\"` when the bean has no parent."
+        },
+        {
+          "name": "blocking",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blockedBy",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "preview",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The body, trimmed to its first 400 characters."
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repository-relative path of the bean file."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "name": "BeanIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repoWeb",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "items",
+          "type": "z.array(BeanIndexItemSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "findings",
+          "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: z.string(), …",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#BlockSummaryViewSchema",
+      "name": "BlockSummaryViewSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "A block summary as the library viewer shows it; optional keys are omitted when empty.",
+      "fields": [
+        {
+          "name": "status",
+          "type": "z.enum(SUMMARY_STATUSES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "draftedBy",
+          "type": "z.object({ kind: z.string(), id: z.string(), model: z.string().optional() }).strict().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "draftedAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "confirmedBy",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rejectionReason",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "SUMMARY_STATUSES"
+      ],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#Count",
+      "name": "Count",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#envelope",
+      "name": "envelope",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "undetermined",
+      "note": "<T extends string>(tag: T) => ({ $schema: z.literal(tag), tile: TileCountsSchema, })",
+      "doc": "A generated-index envelope: its `$schema` tag and the navbar count.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#FolioGraphProjectionSchema",
+      "name": "FolioGraphProjectionSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "directories",
+          "type": "z.array(z.object({ dir: z.string(), present: z.boolean(), nodes: Count }).strict())",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "nodes",
+          "type": "z.array( z .object({ id: z.string(), summary: z.string(), theme: z.string().nullable(), /** `\"<kind>:<page>\"`, or null …",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryEntrySchema",
+      "name": "LibraryEntrySchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-library-entry/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blocks",
+          "type": "z.array( z .object({ id: z.string(), types: StringList, kind: z.string(), title: z.string(), pageStart: PageNumber, pag…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#BlockSummaryViewSchema",
+        "cat-harness/schemas/site-indexes.ts#PageNumber",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "name": "LibraryIndexEntrySchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dir",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rung",
+          "type": "z.enum([\"paged\", \"tabular\", \"none\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "docId",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sourceFile",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sourceSha256",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "arxiv",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doi",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "documentClass",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "blocks",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "images",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ocrPages",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hasOcr",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hasManifest",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hasStructure",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hasImagesJson",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pageStart",
+          "type": "PageNumber",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pageEnd",
+          "type": "PageNumber",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "words",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "chars",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "Count",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "upload",
+          "type": "z.enum([\"match\", \"differs\", \"absent\", \"unknown\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "uploadInstance",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "referencedBy",
+          "type": "z .array(z.object({ kind: z.string(), instance: z.string(), from: z.string(), count: Count }).strict()) .optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Absent means the reference scan did not run — a third state, not \"none\"."
+        },
+        {
+          "name": "avatar",
+          "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summaries",
+          "type": "z .object({ prose: Count, summarised: Count, backlog: Count, draft: Count, confirmed: Count, stale: Count, rejected: Co…",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#PageNumber"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "name": "LibraryIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "entries",
+          "type": "z.array(LibraryIndexEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "uploads",
+          "type": "z.array( z .object({ file: z.string(), kind: z.enum([\"file\", \"intake\"]), instance: z.string(), path: z.string(), bytes:…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "queues",
+          "type": "z.array( z.object({ instance: z.string(), dir: z.string(), total: Count, ingested: Count, uningested: Count }).strict()…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "refScan",
+          "type": "z.object({ filesRead: Count, unreadable: StringList }).strict().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "name": "PageNumber",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
+      "name": "QaIndexBadgeSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "doc": "A QA badge's verdict: the roll-up state and the counts behind it.",
+      "fields": [
+        {
+          "name": "state",
+          "type": "z.enum([\"fail\", \"warn\", \"pass\", \"unswept\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "counts",
+          "type": "z.object({ fail: Count, warn: Count, pass: Count, na: Count, unknown: Count }).strict()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#QaIndexSchema",
+      "name": "QaIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-qa-index/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "page",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page's slug."
+        },
+        {
+          "name": "badges",
+          "type": "z.record(z.string().min(1), QaIndexBadgeSchema)",
+          "optional": false,
+          "array": false,
+          "doc": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#SchemaGraphIndexSchema",
+      "name": "SchemaGraphIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "roots",
+          "type": "StringList",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "modules",
+          "type": "z.array( z .object({ module: z.string(), instance: z.string(), name: z.string(), graphNode: z.enum([\"schema\", \"none\", \"…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "decls",
+          "type": "z.array( z .object({ id: z.string(), name: z.string(), module: z.string(), kind: z.enum(DECL_KINDS), note: z.string().o…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "edges",
+          "type": "z.array( z .object({ from: z.string(), to: z.string(), via: z.string(), kind: z.enum([\"field\", \"member\", \"extends\", \"id…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "DECL_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#StringList",
+      "name": "StringList",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
+      "name": "TranslationStatusSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "changedAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "`YYYY-MM-DD`: the day the counts last changed."
+        },
+        {
+          "name": "scope",
+          "type": "z.string()",
+          "optional": false,
+          "array": false,
+          "doc": "The translations directory counted, repository-relative."
+        },
+        {
+          "name": "locales",
+          "type": "z.array( z .object({ locale: z.string().min(1), templates: Count, catalogues: Count, entries: Count, translated: Count,…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/site-indexes.ts#VoicesIndexSchema",
+      "name": "VoicesIndexSchema",
+      "module": "cat-harness/schemas/site-indexes.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "directories",
+          "type": "z.array( z.object({ instance: z.string(), dir: z.string(), present: z.boolean(), voices: StringList }).strict(), )",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "voices",
+          "type": "z.array( z .object({ id: z.string().min(1), title: z.string(), description: z.string(), instance: z.string(), path: z.s…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "totals",
+          "type": "z .object({ voices: Count, rules: Count, citingLibrary: Count, citingKgNode: Count, mechanical: Count }) .strict()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/site-indexes.ts#Count",
+        "cat-harness/schemas/site-indexes.ts#StringList"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/skill-package.ts#ActorDefinition",
       "name": "ActorDefinition",
       "module": "cat-harness/schemas/skill-package.ts",
@@ -41042,6 +41795,278 @@
       "from": "cat-harness/schemas/session-context.ts#SessionContextSchema",
       "to": "cat-harness/schemas/session-context.ts#OpenInstanceSchema",
       "via": "open",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "blockedBy",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "blocking",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+      "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#FolioGraphProjectionSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "directories",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#FolioGraphProjectionSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "nodes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#BlockSummaryViewSchema",
+      "via": "blocks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "blocks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "blocks",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "blocks",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "bytes",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "chars",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "images",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "ocrPages",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "referencedBy",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "summaries",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "words",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "pageEnd",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "to": "cat-harness/schemas/site-indexes.ts#PageNumber",
+      "via": "pageStart",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "queues",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "refScan",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "uploads",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema",
+      "via": "entries",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#LibraryIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "refScan",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "counts",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#QaIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#QaIndexBadgeSchema",
+      "via": "badges",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#SchemaGraphIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "decls",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#SchemaGraphIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "roots",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "locales",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "locales",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#VoicesIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "totals",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#VoicesIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#Count",
+      "via": "voices",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#VoicesIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "directories",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#VoicesIndexSchema",
+      "to": "cat-harness/schemas/site-indexes.ts#StringList",
+      "via": "voices",
       "kind": "field",
       "optional": false,
       "array": true
