@@ -73,7 +73,9 @@ prevents is stated beside it.
    block-graph SVGs do this through `scripts/plantuml-render.ts`, which every
    PlantUML generator shares, with its pinned jar and one JVM for all diagrams.
 9. **Show it in a zoomable figure.** On the site, use the `bpmn-figure`
-   markup so `docs-ui.js` adds zoom, reset and full-width controls. A pages
+   markup so `docs-ui.js` adds zoom, reset and full-width controls, and the
+   export ones: download the SVG, download a 2× PNG, or copy it (as an image
+   where the browser allows, else as SVG text, and it says which; #1270). A pages
    template missing `layout: default` renders with no site script and so no
    controls, and nothing reports it.
 10. **Put the measurement on the drawing.** When a graph is being partitioned,
