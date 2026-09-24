@@ -24,25 +24,34 @@
  *
  * The gap between (2) and (3) is the finding. See bean `folio-assistant-f4gj`.
  *
- * ## The gap was two causes, and this branch closed ONE of them
+ * ## The gap was two causes, and this branch closed BOTH
  *
  * When first measured, pass 2 found **0 logic→logic edges** for all 458
  * artefacts — 8 distinct targets between them, every one a shared `RuleSet`.
- * Two separable causes:
+ * Two separable causes, both now fixed in `content/pipeline/fsh-cone.ts`:
  *
- * **(a) FIXED in this branch.** `fsh-cone`'s `Library ↔ cql (by name)` edge was
- * guarded on `node.id`, and every Library instance omits `Id:` and relies on
- * SUSHI's name→id default, so it fired 0 times. Libraries now reach their CQL
- * bodies.
+ * **(a)** The `Library ↔ cql (by name)` edge was guarded on `node.id`, and
+ * every Library instance omits `Id:` and relies on SUSHI's name→id default, so
+ * it fired 0 times.
  *
- * **(b) STILL OPEN.** PlanDefinition and Measure write their library edge
- * *inside a parameterised RuleSet* — `* library = Canonical({library}Logic)` —
- * so the token `fsh-cone` sees is `{library}Logic` and resolves to nothing.
- * Recovering it needs SUSHI's RuleSet parameter substitution, which is pass 3's
- * job and pass 3 is an approximation, not an extractor.
+ * **(b)** PlanDefinition and Measure write their library edge *inside a
+ * parameterised RuleSet* — `* library = Canonical({library}Logic)` — so the
+ * token read literally was `{library}Logic`, which resolves to nothing.
+ * `buildFshGraph` now substitutes a RuleSet's positional arguments into its
+ * body before scanning, and tags what it finds `insert (parameter expanded)`.
  *
- * So a run of this tool today should show Library closed and the other two open.
- * **If pass 2 ever reports 0 logic→logic edges for Library again, (a) regressed.**
+ * Measured on smart-immunizations, pass 2 now reaches **458 of 458** and every
+ * logic target pass 3 names. **This tool's job is to keep it that way:** if
+ * pass 2's logic→logic count ever drops below pass 3's, one of the two
+ * regressed, and the difference says which.
+ *
+ * ## Pass 3 is still an approximation, and still not the extractor
+ *
+ * Passes 2 and 3 now agree on this IG, which is the point — but they are not
+ * the same code and must not be collapsed. Pass 3 is a deliberately separate
+ * reading of the source, so that pass 2 has something to be wrong against. An
+ * IG whose RuleSets use a form only one of them handles will show up as a
+ * disagreement, which is the signal this file exists to produce.
  *
  * ## The ground-truth pass is an APPROXIMATION, deliberately labelled
  *
@@ -376,10 +385,10 @@ export function report(m: Measurement): string {
   }
   out.push(`   ${"TOTAL".padEnd(16)}${String(gn).padStart(4)}  ${String(gh).padStart(6)} (${pct(gh, gn)})`);
   out.push("");
-  out.push("   The gap between (2) and (3) is the finding: an edge present in the source");
-  out.push("   that (2) does not extract is an artefact whose staleness cannot be marked.");
-  out.push("   Cause (a), the Library->CQL edge, is fixed; (b), the library canonical");
-  out.push("   written inside a parameterised RuleSet, is open. Bean folio-assistant-f4gj.");
+  out.push("   (2) and (3) read the same source by different means, so a DISAGREEMENT is");
+  out.push("   the signal: an edge (3) names that (2) misses is an artefact whose staleness");
+  out.push("   cannot be marked. Both causes are fixed; they agreed 458/458 when last");
+  out.push("   measured on smart-immunizations. Bean folio-assistant-f4gj.");
   return out.join("\n");
 }
 

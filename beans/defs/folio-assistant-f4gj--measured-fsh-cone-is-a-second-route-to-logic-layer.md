@@ -53,12 +53,22 @@ bimodal, confirmed:  <=10 nodes: 31   <=50: 74   >200: 52
 re-derived and the 8.2 % figure should not be re-quoted without saying which commit
 window produced it.
 
-**And after fixing (a), the same replay gives 16.0 %.** A correct graph made the
-incremental case *weaker*, which is the honest result: the optimistic figure was
-optimistic **because 279 edges were missing**. `267x`'s 8.2 % was measured on the same
-defective graph. An incremental build sized from the pre-fix number would **under-rebuild**
-— the one failure `fsh-cone`'s own header calls dangerous. Do not quote a rebuild fraction
-without naming the graph that produced it.
+**After (a) the same replay gives 16.0 %; after (b), 23.5 %.**
+
+| graph | mean rebuild per commit |
+|---|---|
+| `267x`, quoted | 8.2 % |
+| as merged, re-derived | 9.4 % |
+| after (a) | 16.0 % |
+| **after (b)** | **23.5 %** |
+
+A correct graph made the incremental case *weaker at every step*, which is the honest
+result: the optimistic figures were optimistic **because edges were missing**. The total
+is nearly **three times** the figure `267x`'s case rested on. An incremental build sized
+from any of the first three would **under-rebuild** — the one failure `fsh-cone`'s own
+header calls dangerous. Do not quote a rebuild fraction without naming the graph that
+produced it. Whether ~24 % per commit still pays for the machinery is an **open question
+this measurement does not answer**, and a different question from whether the edges exist.
 
 ### 3. The export side — re-derived, and it holds
 
@@ -133,10 +143,25 @@ A second fixture Library with no `Id:` is added as the regression guard.
 | largest forward cone | 278 | **551** |
 | `Library ↔ cql (by name)` | absent | **279** |
 
-**(a) closes the Library third and nothing else: 279 of 458 now reach a logic artefact;
-179 — every PlanDefinition and every Measure — still reach none.**
+**(a) closed the Library third: 279 of 458. (b) closed the rest.** Combined, measured at
+each step:
 
-**(b) Real work, not a bug — STILL OPEN.** PlanDefinition and Measure write their library edge *inside a
+| | as merged | after (a) | after (b) |
+|---|---|---|---|
+| logic→logic edges, of 458 | **0** | 279 | **458** |
+| distinct targets, all 458 | 8 | 287 | **469** |
+| internal edges | 2,478 | 2,757 | **3,329** |
+| nodes with no dependent | 715 | 536 | **354** |
+| backward-cone median | 3 | 8 | **11** |
+| largest forward cone | 278 | 551 | **856** |
+
+Extraction now reaches **every** logic target an independent RuleSet-substituting read of
+the source names, verified per resource type. One caution recorded for the next reader:
+comparing the two key spaces raw reports a **false** gap for all 279 Libraries, because
+ground truth names a target `IMMZAgeConcepts` while the graph keys it `cql:IMMZAgeConcepts`.
+The test normalises, and says why.
+
+**(b) Real work, not a bug — ALSO FIXED, on the owner's "Go".** PlanDefinition and Measure write their library edge *inside a
 parameterised RuleSet*: `* library = Canonical({library}Logic)` in `PlanDefMain(library,
 version)`, and `* library = "…/Library/{library}Logic"` in `MeasureProportionBasic`,
 reached through a second level via `MeasureProportion`. `fsh-cone` reads RuleSet bodies
@@ -213,5 +238,8 @@ It takes an IG root and the artefact index and prints every table above.
 - [x] Land the measurement script + propose the skill edit in a PR
 - [x] Owner decision: take the proposed skill edit; fix the `fsh-cone` defect in this PR
 - [x] Fix (a) `node.id ?? node.name`, add the no-`Id:` regression fixture, re-measure
-- [ ] (b) RuleSet parameter substitution — NOT attempted; needs its own decision
+- [x] (b) RuleSet parameter substitution in `buildFshGraph`, tagged `insert (parameter expanded)`
+- [x] Re-measure after (b): 458/458 logic edges; extraction reaches every target ground truth names
+- [x] Record that (b)'s fix is itself a partial reimplementation of SUSHI, and what it does not do
+- [ ] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here
 - [ ] Owner review and merge — NOT mine to merge

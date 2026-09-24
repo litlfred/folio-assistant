@@ -127,7 +127,7 @@ not depend on a fork for the *existence* of logic-layer edges; those are in the
 IG source at full per-artefact resolution. What the fork uniquely delivers is
 **resolved, version-pinned, cross-package** edges.
 
-#### ...and it was not a route, for two separable reasons — one now fixed
+#### ...and it was not a route, for two separable reasons — both now fixed
 
 As first measured, `fsh-cone` extracted **none** of them: all 458 artefacts
 reached **8 distinct targets, every one a shared `RuleSet`** — **0 logic→logic
@@ -138,50 +138,79 @@ directions were wrong — a change to a Library's own CQL marked **nothing**
 stale; a change to `LogicLibrary.fsh` marked **all 279**. **Break any such
 number down by resource type**; the aggregate hid this.
 
-**(a) The Library→CQL edge — FIXED.** `fsh-cone`'s `Library ↔ cql (by name)`
-edge was guarded on `node.id`, and all 279 Library instances omit `Id:` and rely
-on SUSHI's name→id default, so it fired 0 times and was absent from the
-edge-kind table entirely. Honouring the default (`node.id ?? node.name`) is the
-whole fix. Re-measured:
+**(a) The Library→CQL edge.** The `Library ↔ cql (by name)` edge was guarded on
+`node.id`, and all 279 Library instances omit `Id:` and rely on SUSHI's name→id
+default, so it fired 0 times and was absent from the edge-kind table entirely.
+The fix is `node.id ?? node.name`.
 
-| | before | after |
-|---|---|---|
-| distinct targets, all 458 | 8 | **287** |
-| logic→logic edges | 0 | **279** |
-| internal edges | 2,478 | **2,757** |
-| nodes with no dependent | 715 | **536** |
-| backward-cone median | 3 | **8** |
+**(b) The library canonical inside a parameterised RuleSet.** PlanDefinition and
+Measure write it as `* library = Canonical({library}Logic)` in
+`PlanDefMain(library, version)`, and as a string URL in
+`MeasureProportionBasic` reached through a second level. Read literally the
+token is `{library}Logic`, which resolves to nothing, so the edge was
+attributed to the RuleSet. `buildFshGraph` now substitutes a RuleSet's
+positional arguments into its body before scanning, tagging what it finds
+`insert (parameter expanded)` so the two claims stay distinguishable.
 
-**(b) The library canonical inside a parameterised RuleSet — STILL OPEN.**
-PlanDefinition and Measure write it as `* library = Canonical({library}Logic)`
-in `PlanDefMain(library, version)`, and as a string URL in
-`MeasureProportionBasic` reached through a second level. The token `fsh-cone`
-sees is `{library}Logic`, which resolves to nothing, so the edge is attributed
-to the RuleSet. Recovering it needs SUSHI's RuleSet parameter substitution.
-**179 of the 458 — every PlanDefinition and every Measure — still reach no logic
-artefact at all.**
+Re-measured on smart-immunizations at each step:
 
-#### A correct graph made the incremental case WEAKER, and that is the honest result
+| | as merged | after (a) | after (b) |
+|---|---|---|---|
+| logic→logic edges, of 458 | **0** | 279 | **458** |
+| distinct targets, all 458 | 8 | 287 | **469** |
+| internal edges | 2,478 | 2,757 | **3,329** |
+| nodes with no dependent | 715 | 536 | **354** |
+| backward-cone median | 3 | 8 | **11** |
+| largest forward cone | 278 | 551 | **856** |
 
-Replaying the same 257 commits before and after (a): mean rebuild per commit
-goes from **9.4 % to 16.0 %** of the IG, and the largest forward cone from 278
-to 551. The optimistic figure was optimistic *because 279 edges were missing*.
-`267x`'s quoted 8.2 % is lower still and was measured on the same defective
-graph. **Do not quote a rebuild fraction without saying which graph produced
-it** — an incremental build sized from the pre-fix number would under-rebuild,
-which is the one failure `fsh-cone`'s own header calls dangerous.
+Source extraction now reaches every logic target an independent
+RuleSet-substituting read of the source names — 458 of 458, verified per
+resource type.
+
+#### A correct graph made the incremental case WEAKER at every step
+
+Replaying the same 257 commits after each correction:
+
+| graph | mean rebuild per commit |
+|---|---|
+| `267x`, quoted | 8.2 % |
+| as merged, re-derived | 9.4 % |
+| after (a) | 16.0 % |
+| **after (b)** | **23.5 %** |
+
+Every correction made the number worse, and the total is nearly **three times**
+the figure the original proposal's case rested on. The optimistic figures were
+optimistic *because edges were missing*. **Do not quote a rebuild fraction
+without saying which graph produced it** — an incremental build sized from any
+of the first three would under-rebuild, which is the one failure `fsh-cone`'s
+own header calls dangerous. Whether ~24 % of an IG per commit still pays for
+the machinery is an **open question this measurement does not answer**, and it
+is a different question from whether the edges exist.
 
 #### What a source edge still cannot carry
 
 Even with (a) and (b), the second route answers *which artefact* is stale, not
-*what a reader must be told*. It cannot carry **version pinning** (`resolveRef`
-strips `|version`, and `PlanDefMain` takes `library` and `version` as separate
-parameters that are never associated), **cross-package references** (dropped by
-design — `InstanceOf` contributes 3 edges across the whole IG because 179 of the
-458 are `InstanceOf:` a cpg/cqfmeasures profile URL), or **post-SUSHI
-expansion** except by reimplementing SUSHI, where one silently wrong edge is
-precisely what the staleness contract forbids. Rendering-time coupling is
-invisible to it too; a cone is a **lower bound**.
+*what a reader must be told*. It cannot carry:
+
+- **Version pinning.** `resolveRef` strips `|version`, and `PlanDefMain` takes
+  `library` and `version` as separate parameters that are never associated. The
+  graph cannot tell a dependency on `X|1.0.0` from one on `X|2.0.0`.
+- **Cross-package references.** Dropped by design — `InstanceOf` contributes 3
+  edges across the whole IG, because 179 of the 458 are `InstanceOf:` a
+  cpg/cqfmeasures profile URL that resolves into a dependency package.
+- **Rendering-time coupling.** Invisible to it; a cone is a **lower bound**.
+
+And the fix for (b) is itself the fourth limit, which is why it is stated here
+rather than only in the code. **Substituting RuleSet parameters is a partial
+reimplementation of SUSHI.** It handles positional `{param}` substitution,
+nested inserts and multi-line argument lists; it does **not** evaluate soft
+indexing, apply a RuleSet's defaults, or know which of SUSHI's
+context-sensitive rules would have applied. An edge it derives is a claim about
+the **source**, not about the compiled resource. That is the same standing the
+rest of this graph has — but the derived edges are tagged
+`insert (parameter expanded)` precisely so a reader can tell which claims rest
+on a substitution this codebase performed rather than on a token the source
+wrote literally.
 
 So: the second route can supply the **dependency-edge** third of P3's visible
 mark and the rebuild set behind it, the **index** third only as a lower bound,

@@ -13,7 +13,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { logicTypeOf, measure, readCqlNames, readFshBlocks, report } from "../measure-logic-layer-edges.ts";
+import { LOGIC_TYPES, logicTypeOf, measure, readCqlNames, readFshBlocks, report } from "../measure-logic-layer-edges.ts";
 
 let root: string;
 let indexPath: string;
@@ -147,13 +147,21 @@ describe("fsh-cone as merged — coverage and information are different numbers"
     expect(reached.sort()).toEqual(["cql:ACommon", "cql:AOneLogic"]);
   });
 
-  test("a PlanDefinition's library edge still lands on the RuleSet — cause (b), open", () => {
+  test("a PlanDefinition reaches its Logic library through the RuleSet — cause (b), fixed", () => {
     // `* library = Canonical({library}Logic)` lives inside `PlanDefMain`, so the
-    // token is `{library}Logic` and resolves to nothing. Unlike (a) this is not
-    // a one-line guard: it needs SUSHI's RuleSet parameter substitution.
+    // token read literally is `{library}Logic` and resolves to nothing. With the
+    // call's arguments substituted it resolves to `AOneLogic`. The edge to the
+    // RuleSet itself stays: a RuleSet change still invalidates its users.
     const r = measure(root, indexPath).rows.PlanDefinition;
     expect(r.withOutEdge).toBe(1);
-    expect([...r.distinctTargets]).toEqual(["PlanDefMain"]);
+    expect([...r.distinctTargets].sort()).toEqual(["AOneLogic", "PlanDefMain"]);
+  });
+
+  test("a Measure reaches its Logic library through TWO levels of RuleSet", () => {
+    // `MeasureProportion` forwards `{library}` to `MeasureProportionBasic`,
+    // which writes the canonical as a string URL rather than a `Canonical()`.
+    const r = measure(root, indexPath).rows.Measure;
+    expect([...r.distinctTargets].sort()).toEqual(["AOneLogic", "MeasureProportion"]);
   });
 });
 
@@ -176,21 +184,23 @@ describe("ground truth — after RuleSet parameter substitution", () => {
     expect([...r.distinctLogicTargets]).toEqual(["AOneLogic"]);
   });
 
-  test("ground truth still exceeds what fsh-cone extracts — the REMAINING gap is (b)", () => {
+  test("extraction reaches every logic target ground truth names — the guard, for every type", () => {
+    // The durable assertion. Passes 2 and 3 read the same source by different
+    // means; a target (3) names that (2) misses is an artefact whose staleness
+    // cannot be marked. Compared per RESOURCE TYPE, because an aggregate would
+    // let one type regress behind another's surplus.
+    //
+    // Key spaces differ — (3) names a logic target by its bare name, the graph
+    // keys a CQL node `cql:<name>` — so normalise before comparing. Comparing
+    // them raw reports a false gap for all 279 Libraries.
     const m = measure(root, indexPath);
-    // Library: closed. Extraction now finds the same logic target ground truth does.
-    expect(m.rows.Library.withLogicEdge).toBe(m.rows.Library.n);
-    const libExtracted = [...m.rows.Library.distinctTargets]
-      .filter((t) => m.graph.nodes.get(t)?.kind === "CQL").length;
-    expect(libExtracted).toBe(m.rows.Library.distinctLogicTargets.size);
-
-    // PlanDefinition and Measure: open. Ground truth names a logic artefact that
-    // extraction does not reach at all, which is exactly what (b) costs.
-    for (const t of ["PlanDefinition", "Measure"] as const) {
-      expect(m.rows[t].distinctLogicTargets.size).toBeGreaterThan(0);
-      for (const target of m.rows[t].distinctLogicTargets) {
-        expect(m.rows[t].distinctTargets.has(target)).toBe(false);
-      }
+    const bare = (x: string) => x.replace(/^cql:/, "");
+    for (const t of LOGIC_TYPES) {
+      const r = m.rows[t];
+      expect(r.distinctLogicTargets.size).toBeGreaterThan(0);
+      const reached = new Set([...r.distinctTargets].map(bare));
+      const missed = [...r.distinctLogicTargets].map(bare).filter((x) => !reached.has(x));
+      expect({ type: t, missed }).toEqual({ type: t, missed: [] });
     }
   });
 });
@@ -202,6 +212,8 @@ describe("report", () => {
     // (a) fixed: the two Libraries reach their CQL bodies, so not every target
     // is a RuleSet any more and the logic->logic count is no longer zero.
     expect(text).toContain("every distinct target is a shared RuleSet: no");
-    expect(text).toContain("logic -> logic edges: 2");
+    // one per logic artefact: two Libraries to their CQL, the PlanDefinition
+    // and the Measure to `AOneLogic` — which they share, hence 3 distinct
+    expect(text).toContain("logic -> logic edges: 3");
   });
 });
