@@ -9,22 +9,19 @@
       "key": "work-is-visible",
       "label": "Work in progress is visible to others",
       "conformance": "SHALL",
-      "requirement": "An agent SHALL record what it is working on in the shared work plan before doing it, so a human can steer and a sibling session does not pick up the same item.",
-      "satisfiedBy": [{ "kind": "skill", "ref": "todo-manager" }]
+      "requirement": "An agent SHALL record what it is working on in the shared work plan before doing it, so a human can steer and a sibling session does not pick up the same item."
     },
     {
       "key": "acts-as-a-role",
       "label": "An agent acts as a declared role",
       "conformance": "SHALL",
-      "requirement": "An agent performing a task in a process SHALL do so as a role the process's lane binds, using that role's skills. It SHALL NOT perform a step belonging to a lane it is not acting in.",
-      "satisfiedBy": [{ "kind": "skill", "ref": "role-model" }]
+      "requirement": "An agent performing a task in a process SHALL do so as a role the process's lane binds, using that role's skills. It SHALL NOT perform a step belonging to a lane it is not acting in."
     },
     {
       "key": "process-is-declared",
       "label": "Process position is declared, not improvised",
       "conformance": "SHALL",
-      "requirement": "Where a BPMN process governs the work, the agent SHALL take its next step from that process rather than deciding the order itself, and a step that is not enabled SHALL be refused.",
-      "satisfiedBy": [{ "kind": "skill", "ref": "process-state" }]
+      "requirement": "Where a BPMN process governs the work, the agent SHALL take its next step from that process rather than deciding the order itself, and a step that is not enabled SHALL be refused."
     },
     {
       "key": "judgement-stays-human",
@@ -37,8 +34,7 @@
       "key": "context-before-question",
       "label": "A decision handed over carries its context",
       "conformance": "SHOULD",
-      "requirement": "When an agent hands a decision to a person, it SHOULD state what differs between the options and what each costs, so the decision is answerable without opening anything.",
-      "satisfiedBy": [{ "kind": "skill", "ref": "interaction-modality" }]
+      "requirement": "When an agent hands a decision to a person, it SHOULD state what differs between the options and what each costs, so the decision is answerable without opening anything."
     }
   ]
 }

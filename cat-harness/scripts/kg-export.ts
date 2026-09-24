@@ -47,6 +47,7 @@ import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
+import { readPolicyGrants } from "../schemas/odrl.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
@@ -63,6 +64,7 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
+import { isExternalContract, skillContracts } from "./skill-contracts.js";
 import {
   isSkillMd,
   kgDirectories,
@@ -459,6 +461,9 @@ export function buildContext(): Record<string, unknown> {
     // until those registries are nodes, and `roleName`/`permissionName` say so
     // instead of implying an edge the graph cannot honour.
     roleName: termIri("roleName"),
+    // A literal like `roleName`: requirement statements are not nodes of this
+    // graph, so a `req:<id>#<key>` is a name here, not a link (#1168, B3).
+    satisfiesStatement: termIri("satisfiesStatement"),
     permissionName: termIri("permissionName"),
 
     // ---- Structured values whose own vocabulary this graph does not model ---
@@ -881,21 +886,28 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
     }
   }
 
-  const ioRoot = join(root, SKILL_IO_DIR);
-  if (existsSync(ioRoot)) {
-    for (const e of readdirSync(ioRoot, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const s = get(e.name);
-      const inp = join(ioRoot, e.name, "input.schema.json");
-      const out = join(ioRoot, e.name, "output.schema.json");
-      // The PUBLISHED IRI, minted by the one function that owns it — not the
-      // repo-relative path. A relative value here resolves against this
-      // document's own IRI and names something nothing serves; and since the
-      // context now coerces these to `@id`, a relative value would silently
-      // become a wrong absolute one rather than an obviously local string.
-      if (existsSync(inp)) s.inputSchema = skillIoIri(base, e.name, "input");
-      if (existsSync(out)) s.outputSchema = skillIoIri(base, e.name, "output");
-    }
+  // Each skill names its own contracts (`input:`/`output:` in its front
+  // matter, #1168 B3b); nothing is inferred from a directory name. A local
+  // contract publishes under the schemas base at its path below `schemas/`;
+  // an external one is already an IRI.
+  //
+  // The PUBLISHED IRI, never the repo-relative path. A relative value here
+  // resolves against this document's own IRI and names something nothing
+  // serves; and since the context coerces these to `@id`, a relative value
+  // would silently become a wrong absolute one rather than an obviously local
+  // string.
+  // Minted by `skillIoIri`, the one function that owns a contract's IRI, so a
+  // local contract outside `schemas/skills/<skill>/<io>.schema.json` has no
+  // published address and is left unset rather than composed here.
+  const contractIri = (ref: string): string | undefined => {
+    if (isExternalContract(ref)) return ref;
+    const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
+    return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
+  };
+  for (const c of skillContracts(root).values()) {
+    const s = get(c.skill);
+    if (c.input !== undefined) s.inputSchema = contractIri(c.input);
+    if (c.output !== undefined) s.outputSchema = contractIri(c.output);
   }
 
   // The skill documenting an unpublished kind is itself unpublished — it
@@ -995,9 +1007,13 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, fallbackTo, ...other } = rest;
+    const { requires, fallbackTo, satisfies, ...other } = rest;
     return {
       ...other,
+      // Not `satisfies`: that term is a LINK to a skill, and a Tool's. A
+      // capability discharges a requirement STATEMENT, which this graph does
+      // not hold as a node, so the ref stays a name (#1168, B3).
+      ...(satisfies === undefined ? {} : { satisfiesStatement: names(satisfies) }),
       ...(requires === undefined
         ? {}
         : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),
@@ -1014,6 +1030,11 @@ function registryFields(
 
 function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
+  // What an actor may do lives in the ODRL policies since issue #1180, not on
+  // the actor file. Restored here so `permissionName` still says what it held.
+  // declared-path-literal: the convention home of the policies graph kind,
+  // resolved beside the actor registry this function already reads by path.
+  const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
     const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
     if (!existsSync(abs)) continue;
@@ -1022,6 +1043,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
       try {
         const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
         const id = String(d.id ?? d.name ?? f.slice(0, -5));
+        if (group === "actors" && d.permissions === undefined && grants.has(id)) d.permissions = grants.get(id);
 
         // The registry files carry `id` and `type` of their own, and spreading
         // them verbatim put BOTH a keyword and its alias on 71 nodes: `id`
@@ -1548,7 +1570,7 @@ async function collectProcesses(
  * cat-harness because a Tool is cat-harness's vocabulary and bootstrap may
  * not import it — recorded there as *a limitation rather than a decision*,
  * with the nodes moving unchanged once tool collection stops being
- * import-bound. The SKILLS live in bootstrap so an Initiator can read them
+ * import-bound. The SKILLS live in bootstrap so a Bootstrapping Agent can read them
  * with nothing installed. So the edge crosses instances by construction.
  *
  * While cat-harness declared `bootstrap/skills/` the crossing was hidden:

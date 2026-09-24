@@ -99,10 +99,12 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
+import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
 import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
+import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -278,26 +280,11 @@ export interface RoleDef {
    * that contradicts its lane is worse than none — it looks authoritative.
    */
   persona?: string;
-  /**
-   * The voice to address this reader in.
-   *
-   * Named here rather than inferred, because it does not follow from the
-   * persona: the same reader is addressed differently in a normative standard
-   * and in a tutorial. The authoring agent picks the voice from here; the QA
-   * agent judges against the same string rather than against its own taste,
-   * which is what makes a voice finding reviewable instead of an opinion.
-   */
-  voice?: string;
-  /**
-   * What this reader is actually trying to do — the cases the content has to
-   * serve.
-   *
-   * Guides both agents in the direction a persona alone cannot: an author
-   * knows which questions to answer, and a QA reviewer can ask whether the
-   * page answers them. "Is this well written" is unanswerable; "does this let
-   * a reviewer find what changed since they last looked" is not.
-   */
-  useCases?: string[];
+  // No `voice` and no `useCases` (#1168, B2). Both are DEPENDENTS of the
+  // role: a voice is addressed TO a reader, and a story is told AS one. Each
+  // now points here — a voice profile by `activeIn.roles`, a user story by
+  // `role` in `scenarios/stories.json` — so the role names neither, and a new
+  // voice or story is added without editing the role (data-modelling step 8).
   /** Skills available to an actor in this role, before inheritance. */
   skills: string[];
   /** Roles this one IS-A. Skills are unioned transitively; cycles rejected. */
@@ -362,8 +349,6 @@ export const RoleDefSchema = z.object({
   // accepts and Zod strips is written by an author, type-checks, and vanishes
   // (bean `zdrf`).
   persona: z.string().optional(),
-  voice: z.string().optional(),
-  useCases: z.array(z.string()).optional(),
   id: z.string().min(1),
   // Required here, though `kgNodeLabelShape` makes both optional in general: a
   // role nobody can name or describe is a lane nobody can fill, and `kg-audit`
@@ -377,7 +362,7 @@ export const RoleDefSchema = z.object({
    *
    * @ref SkillDefinitionSchema
    */
-  skills: z.array(z.string()).default([]),
+  skills: z.array(SkillNameSchema).default([]),
   /**
    * Roles this one IS-A, outermost last. Static composition, not the scoped
    * subprocess stack.
@@ -409,6 +394,25 @@ export const RoleDefSchema = z.object({
   // declaration that silently means less than it says is worse than one that
   // refuses to load and names the key.
 }).strict();
+
+/**
+ * A pointer AT a role, from whatever depends on one — a voice addressed to
+ * that reader, a user story told as them.
+ *
+ * The dependent holds this; the role holds nothing back (data-modelling step
+ * 8). `instance` is the declared NAME of the instance whose role graph
+ * declares the role, absent for the pointer's own instance — a name, never a
+ * path, as `VoiceRuleSourceSchema.instance` spells it.
+ *
+ * @ref RoleDefSchema
+ */
+export const RoleRefSchema = z
+  .object({
+    instance: z.string().min(1).optional(),
+    role: z.string().min(1),
+  })
+  .strict();
+export type RoleRef = z.infer<typeof RoleRefSchema>;
 
 export const RoleGraphSchema = z.object({
   name: z.string().min(1),
@@ -606,7 +610,20 @@ function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach 
   return raw.reach as NetworkReach;
 }
 
-export function readActors(actorsDir: string): LoadedActor[] {
+function grantsFor(grants: ReadonlyMap<string, readonly string[]> | undefined, id: string): string[] | undefined {
+  const g = grants?.get(id);
+  return g ? [...g] : undefined;
+}
+
+/**
+ * Read the actor directory.
+ *
+ * `grants` supplies each actor's permissions from the ODRL policies
+ * ({@link readPolicyGrants} in `schemas/odrl.ts`, issue #1180). An actor file
+ * that still carries its own `permissions` list keeps it: that is an
+ * unmigrated downstream registry, and reading it is better than dropping it.
+ */
+export function readActors(actorsDir: string, grants?: ReadonlyMap<string, readonly string[]>): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
   for (const f of readdirSync(actorsDir).filter((f) => f.endsWith(".json")).sort()) {
@@ -624,7 +641,9 @@ export function readActors(actorsDir: string): LoadedActor[] {
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
-      permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
+      permissions: Array.isArray(raw.permissions)
+        ? (raw.permissions as string[])
+        : grantsFor(grants, String(raw.id ?? f.slice(0, -5))),
       reach: actorReachOf(raw, p),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
@@ -898,6 +917,14 @@ export interface PermissionDef {
   /** Display text and the sentence under it — `schemas/kg-node.ts`, like every node. */
   title: string;
   description: string;
+  /**
+   * The broader actions this one is part of: another action here, or one of
+   * ODRL's common vocabulary (`schemas/odrl.ts#ODRL_ACTIONS`). This is what
+   * makes the vocabulary an ODRL profile (issue #1180): a permission to a
+   * broader action permits every action included in it. Required and
+   * non-empty, so every action has a way up to `odrl:use`.
+   */
+  includedIn: string[];
 }
 
 export interface PermissionVocabulary {
@@ -909,6 +936,7 @@ export const PermissionDefSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  includedIn: z.array(z.string().min(1)).min(1),
 });
 
 export const PermissionVocabularySchema = z.object({
@@ -937,6 +965,15 @@ export function readPermissions(kgRoot: string): PermissionVocabulary | undefine
   for (const perm of parsed.data.permissions) {
     if (ids.has(perm.id)) throw new Error(`${p}: permission id "${perm.id}" is declared twice.`);
     ids.add(perm.id);
+  }
+  // Every `includedIn` resolves, to an action here or to ODRL's own. A dangling
+  // one would cut an action off from everything granted above it.
+  for (const perm of parsed.data.permissions) {
+    for (const up of perm.includedIn) {
+      if (!ids.has(up) && !(up in ODRL_ACTIONS)) {
+        throw new Error(`${p}: "${perm.id}" is includedIn "${up}", which is neither declared here nor an ODRL action.`);
+      }
+    }
   }
   return parsed.data;
 }

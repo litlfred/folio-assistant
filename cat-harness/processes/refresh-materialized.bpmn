@@ -109,7 +109,7 @@ since">
       <bpmn:extensionElements>
         <folio:skill ref="materialize-remote" />
         <folio:skill ref="adjudication" />
-        <folio:adjudication codes="remote local merge defer" />
+        <folio:adjudication codes="remote local merge defer" list="adjudication-materialized-conflict"/>
         <folio:fulfilment kinds="person agent" reason="this task's own documentation is the constraint — `a human or agentic decision, never a merge rule` — and the engine refuses `system` or `external` on any step carrying folio:adjudication, so the restriction cannot drift." />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>

@@ -1,5 +1,5 @@
 {
-  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. An Initiator that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
+  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
   "name": "bootstrap",
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
   "title": "Bootstrap",
@@ -55,7 +55,7 @@
   ],
   "directories": [
     {
-      "id": "cat-harness",
+      "id": "skills",
       "path": "skills/",
       "dependents": "skip",
       "graphKinds": [
@@ -75,7 +75,7 @@
       "id": "scenarios",
       "path": "scenarios/",
       "dependents": "reproduce",
-      "description": "bootstrap's four Roles: Initiator, Requestor, Knowledge Graph Data Store and Logger.",
+      "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
       "graphKinds": [
         "scenarios"
       ]
@@ -99,12 +99,12 @@
       ]
     },
     {
-      "id": "glossary",
+      "id": "swimlane-glossary",
       "path": "glossary/",
       "dependents": "skip",
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
       "graphKinds": [
-        "glossary"
+        "swimlane-glossary"
       ]
     },
     {
@@ -125,8 +125,8 @@
     ],
     "reason": "bootstrap is what an agent reads before it knows what a repository is, with nothing installed: no Skills beyond its own, no Knowledge Graph loaded, no server and no Tools. So it renders nothing for a person to browse.",
     "owes": "Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
-    "reachableAt": "cat-harness/docs/bootstrap/initialization.md",
-    "_reachableAt_comment": "Where a person is sent to read about bootstrap, since bootstrap renders no pages of its own. The page lives with the Harness that publishes bootstrap. Whether bootstrap should point there at all is an open question for the owner (bean iwtn)."
+    "reachableAt": "README.md",
+    "_reachableAt_comment": "Where a person is sent to read about bootstrap, since bootstrap renders no pages of its own: its own README, relative to this directory. The site build publishes bootstrap's files as they sit, with each `.md` also rendered as `.html`, so the link stays inside bootstrap."
   },
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. An EMPTY list is an assertion that this instance sits on nothing — the floor — while an ABSENT one means nobody has said, and the two are different answers.",
   "needs": []

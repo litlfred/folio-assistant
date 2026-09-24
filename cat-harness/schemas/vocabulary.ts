@@ -259,6 +259,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "Authored content — the folio itself, rendered to a website.",
     seeAlso: "/content-types.html",
   },
+  GlossaryGraph: {
+    layer: "core",
+    gloss:
+      "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+  },
   PreviewGraph: {
     layer: "core",
     gloss: "A staging target: the same folio built for review rather than for release.",
@@ -346,6 +351,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   issue: { gloss: "The issue that superseded this node, or that it was written for." },
   bean: { gloss: "The work-plan item a node was written under, where there is one." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
+  layer: {
+    gloss:
+      "Which layer of the platform mints a term — bootstrap, harness or core. Declared so a JSON-LD " +
+      "processor keeps it: undeclared, it was silently dropped from all 159 vocabulary terms (bean vigi).",
+  },
+  skipped: { gloss: "A file an exporter looked at and left out, with the reason — so a short output is never mistaken for a small input." },
   flowCount: { gloss: "How many sequence flows a process carries." },
 
   // ── Actors, roles, skills ────────────────────────────────────────────
@@ -396,6 +407,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   isA: { gloss: "A role this one inherits from, statically and everywhere." },
   roleName: { gloss: "The role's own name, as a lane binds it." },
+  satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
   performedBy: { gloss: "The role that performs this activity." },
   implementedBy: { gloss: "The skill that implements this activity." },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },

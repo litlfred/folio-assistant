@@ -10,16 +10,14 @@
       "label": "Planning precedes authoring",
       "conformance": "SHALL",
       "requirement": "Content authoring MUST NOT begin until a project plan with defined scope and team is established.",
-      "actors": ["programme-manager"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }]
+      "actors": ["programme-manager"]
     },
     {
       "key": "validate-before-review",
       "label": "Validation precedes review",
       "conformance": "SHALL",
       "requirement": "Content MUST pass automated validation (schema, FHIR, Lean) before entering formal review.",
-      "dependsOn": ["plan-before-author"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-validate" }]
+      "dependsOn": ["plan-before-author"]
     },
     {
       "key": "review-before-test",
@@ -27,8 +25,7 @@
       "conformance": "SHALL",
       "requirement": "Content MUST receive formal review approval before integration testing.",
       "dependsOn": ["validate-before-review"],
-      "actors": ["content-reviewer"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-review" }]
+      "actors": ["content-reviewer"]
     },
     {
       "key": "test-before-publish",
@@ -36,8 +33,7 @@
       "conformance": "SHALL",
       "requirement": "Content MUST pass all tests before publication.",
       "dependsOn": ["review-before-test"],
-      "actors": ["qc-reviewer"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-test" }]
+      "actors": ["qc-reviewer"]
     },
     {
       "key": "publish-authorized",
@@ -45,16 +41,14 @@
       "conformance": "SHALL",
       "requirement": "Publication MUST be authorized by the Programme Manager or designated authority.",
       "dependsOn": ["test-before-publish"],
-      "actors": ["programme-manager", "publication-manager"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-publish" }]
+      "actors": ["programme-manager", "publication-manager"]
     },
     {
       "key": "feedback-collected",
       "label": "Feedback collected post-publication",
       "conformance": "SHOULD",
       "requirement": "Feedback SHOULD be collected from implementers and users after publication and triaged for the next iteration.",
-      "dependsOn": ["publish-authorized"],
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-feedback" }]
+      "dependsOn": ["publish-authorized"]
     }
   ],
   "tags": ["common", "lifecycle"]

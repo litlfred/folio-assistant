@@ -220,7 +220,7 @@ currently tells a new owner which.
 
 ### `bootstrap/README.md` is the first one
 
-It is the page an Initiator reads before it knows anything — *"you have been
+It is the page a Bootstrapping Agent reads before it knows anything — *"you have been
 pointed at a repository, you know nothing about it"* — and it is written for
 **this** repository. Measured 2026-09-21: it resolves **13 links into
 `../cat-harness/`**, across **6 distinct files**:

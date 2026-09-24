@@ -1,10 +1,11 @@
 ---
 # folio-assistant-2j09
 title: The undeclared-namespace check reads only BPMN xmlns, so a JSON-LD vocabulary can go unpinned forever
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-22T11:48:29Z
-updated_at: 2026-09-22T11:48:29Z
+updated_at: 2026-09-23T19:29:49Z
 parent: folio-assistant-1swy
 ---
 
@@ -28,6 +29,10 @@ The same argument the OWN-namespace block in that file already makes: a gate who
 
 ## Done when
 
-- [ ] Decide which JSON-LD-bound namespaces need a record, and at which `use` level
-- [ ] Either widen `undeclaredNamespaces` to a declared source set, or record why the diagram-only reading is the right scope
-- [ ] Whichever way it goes, the check must not report clean over a namespace nobody decided about — "nobody has said" is not "nothing to check"
+- [x] Decide which JSON-LD-bound namespaces need a record, and at which `use` level — owner, 2026-09-23: every external namespace this instance's emitters bind; RDF, RDFS, OWL, XSD, PROV, Web Annotation, CSVW, SPAR, schema.org at `conforms`, HL7 FHIR and WHO SMART base at `reads`; ingested WHO artefacts of other instances out of scope
+- [x] Widened to a declared source set: `jsonLdNamespacesInUse` — `.ts` files under directories declared `code`/`schemas` that write an `@context`, plus committed `.jsonld` in the instance
+- [x] It does not: its first run found `…/folio-assistant-core/ns/dspace#`, ours and unlisted, which is now in the own-namespaces code list
+
+## Summary of Changes
+
+Done inside the code-lists feature PR (owner chose one PR for all three stages). `external-schemas:check` now reconciles JSON-LD `@context` bindings as well as BPMN `xmlns`; 11 new records under `cat-harness/external-schemas/` (unpinned editions carry a `note` saying why); the own-namespace test reads the `own-namespaces` code list instead of a hand list.

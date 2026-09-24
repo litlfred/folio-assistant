@@ -22,10 +22,10 @@ Four objects, each with a home:
 |---|---|---|
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
-| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `schemas/skills/<name>/`, `.claude/skills/local/` |
+| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
-| **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
-| **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
+| **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
+| **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -274,20 +274,58 @@ be wrong, the lane may be wrong, or the step may really admit that kind — and
 only the third is a `<folio:fulfilment/>`. Reaching for the exemption first is
 how it becomes a rubber stamp.
 
-## An actor has three lists, and they answer three different questions
+## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
+// .claude/skills/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
-  "permissions":  ["admin-settings", "role-management", "release-authorization"],
   "capabilities": ["git-push"] }
+
+// policies/folio-defaults.jsonld: a W3C ODRL 2.2 Set
+{ "permission": [ { "assignee": "admin", "action": "role-management" }, … ] }
 ```
 
-| field | question | scope |
+| question | answered by | scope |
 |---|---|---|
-| `roles` | what may it act **AS**? | per lane |
-| `permissions` | what may it **DO**? | every lane |
-| `capabilities` | what does its **machine have**? | the environment |
+| what may it act **AS**? | `roles` on the actor | per lane |
+| what may it **DO**? | ODRL rules in `policies/` naming it as `assignee` | everywhere, or as narrow as a rule's `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints |
+| what does its **machine have**? | `capabilities` on the actor | the environment |
+
+**What an actor may DO moved off the actor on 2026-09-23** (issue #1180; owner:
+*"W3C ODRL 2.2 and W3C PROV-O for logging"*). Every `permissions` list became
+one ODRL rule per action, and `schemas/odrl.test.ts` pins that nobody lost or gained
+one. What this buys:
+
+- **Inheritance.** Each action in `permissions.json` says which broader actions
+  it is `includedIn`, ending at ODRL's own (`odrl:display`, `odrl:modify`,
+  `odrl:execute`, …). A grant of a broader action permits everything included
+  in it. The graph need not be a tree and may have cycles.
+- **Scope.** A rule may be limited to a Process, a Task or a Role. No
+  constraint means everywhere.
+- **One question, three answers.** `permits()` in `schemas/odrl.ts` returns
+  `permit`, `deny` or `unknown`, and `unknown` is never permit. Performing a
+  task in a lane needs the permission **and** the lane's role, so eligibility
+  (`roles`) and permission stay separate, as below.
+- **Anyone.** `cat-harness:anyone` is an unauthenticated reader. The owner's floor:
+  it may `visualize` and `render`, and nothing else.
+
+**Identity is not here.** Which login is which actor is the data store's to
+know (owner, 2026-09-23). No actor file and no policy carries a login.
+
+**Who reads all three before a task runs:** the BPMN executor. Before any task
+or decision is recorded, `authorizeTask` asks whether the actor is
+authenticated, eligible for the lane's role (`roles`), and permitted by policy
+to `perform-task` here and on this content. A role mismatch or a `deny`
+refuses; `unknown` is recorded while the rollout is advisory. The HTTP routes
+ask the same policies through `src/core/rbac.ts`. See
+[`task-authorization`](task-authorization.md), issue #1207.
+
+**Adding a permission:** declare the action in `permissions.json` with its
+`includedIn`, then add a rule to a policy in `policies/`. Never add a
+`permissions` list to an actor file: the audit reads it (an unmigrated
+downstream registry still works), but a list there is invisible to every
+scoped decision.
 
 **These were one field until 2026-09** (bean `ind9`), and the conflation meant
 nothing could resolve any of them: 27 claims across 19 names pointed at a
@@ -307,8 +345,9 @@ The line that does hold: **a skill answers what the performer of this task needs
 to KNOW, and belongs to the lane. A permission answers what this participant may
 DO, and travels with the participant through every lane it enters.**
 
-Both are audited and both are `critical` — `actor-permissions-resolve` and
-`actor-capabilities-resolve`. The latter was `major` only while the field was
+Both are audited and both are `critical` — `actor-permissions-resolve` (which
+also checks that every policy rule names a declared action and a declared actor
+or `cat-harness:anyone`) and `actor-capabilities-resolve`. The latter was `major` only while the field was
 overloaded, carrying entries no vocabulary could ever resolve.
 
 **Three names were neither**: `cql-authoring`, `data-dictionary-authoring` and
@@ -326,21 +365,31 @@ A requirement is not a skill and not a role. It is an obligation *about* them:
   "actors": ["author", "admin"],
   "statements": [
     { "key": "no-secrets", "conformance": "SHALL",
-      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…",
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }] } ] }
+      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…" } ] }
 ```
 
-Three reference types, all audited: `requirement-satisfied-by-resolves`,
-`requirement-actors-resolve` and `requirement-derived-from-resolves` are all
-`critical`, because a reader following a broken one gets nothing — the same test
-as a dangling `<folio:skill ref>`. `requirement-statements-graded` is `major`: an
+and a skill that discharges a statement says so in its own front matter:
+
+```yaml
+satisfies:
+  - "req:commit-hygiene#no-secrets"
+```
+
+The statement names no satisfier (#1168): a requirement is written once, and
+what discharges it arrives later, so the pointer lives on the arrival.
+
+The references are audited. `satisfies-resolves`, `requirement-actors-resolve`
+and `requirement-derived-from-resolves` are `critical`, because a reader
+following a broken one gets nothing — the same test as a dangling
+`<folio:skill ref>`. `requirement-statement-satisfied` is `minor` coverage: a
+statement nothing claims is visible only from the requirement's side. `requirement-statements-graded` is `major`: an
 ungraded statement is readable, it just cannot be conformance-tested, and
 SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.
 
 **Do not fold a requirement into the skill that satisfies it.** The grading, the
-`derivedFrom` lattice, the actor binding and the many-to-many `satisfiedBy` are
+`derivedFrom` lattice, the actor binding and the many-to-many `satisfies` are
 the only machine-checkable things about it, and prose in a skill doc carries
-none of them. `satisfiedBy` is many-to-many in both directions — one skill
+none of them. `satisfies` is many-to-many in both directions — one skill
 discharges statements in several requirements — so inlining duplicates rather
 than relocates.
 

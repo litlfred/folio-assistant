@@ -37,7 +37,7 @@ import { workflowFiles } from "../../scripts/known-skills.js";
 import { z } from "zod";
 import { basename, join, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
-import { complete, describe, startInstance } from "../workflow/instance.js";
+import { complete, describe, startInstance, type InstanceState } from "../workflow/instance.js";
 import { describePreflight, preflight, preflightRefusal } from "../workflow/preflight.js";
 import { describeCapture, writeLogEntry } from "../logging/log-writer.js";
 import { instanceId, listInstances, loadInstance, saveInstance } from "../workflow/store.js";
@@ -45,6 +45,8 @@ import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 import { type RoleGraph } from "../../schemas/role-graph.js";
 import { roleGraphFor } from "../../scripts/known-skills.js";
+import { accessContext, principalFromEnv } from "../core/access.js";
+import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "../workflow/authorize.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
@@ -70,6 +72,22 @@ async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel
         ? files.map((f) => basename(f, ".bpmn")).join(", ")
         : "none — no declared directory holds a .bpmn"),
   );
+}
+
+/**
+ * The authorization verdict a step was just recorded under. A step inside a
+ * subprocess is recorded in that child's history, so the search descends.
+ */
+function lastVerdict(state: InstanceState, node: string): TaskAuthVerdict | undefined {
+  for (let i = state.history.length - 1; i >= 0; i--) {
+    const h = state.history[i]!;
+    if (h.node === node && h.authz) return h.authz;
+  }
+  for (const child of Object.values(state.children ?? {})) {
+    const v = lastVerdict(child, node);
+    if (v) return v;
+  }
+  return undefined;
 }
 
 export function registerWorkflowTools(server: McpServer, repoRoot: string): void {
@@ -217,19 +235,34 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     {
       instance: z.string(),
       activity: z.string().describe("Node id, e.g. `Task_Commit`"),
+      actor: z.string().optional().describe("Who would perform it: a declared actor id"),
+      target: z.string().optional().describe("The content it would act on: a block id, path or bean id"),
     },
-    async ({ instance, activity }) => {
+    async ({ instance, activity, actor, target }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
       const relaxations = loadRelaxations(root);
       validateRelaxations(relaxations, [model]);
       const verdict = checkGate(model, state, activity, relaxations);
+      // The second question a gate answers: not only "may this step run now"
+      // but "may THIS actor run it" (issue #1207). Both are shown; either
+      // refusing refuses.
+      const owner = findInModel(model, activity);
+      const authz = authorizeTask(accessContext(root), {
+        principal: principalFromEnv(actor, process.env),
+        process: owner?.model.id ?? model.id,
+        task: activity,
+        role: owner?.model.nodes.get(activity)?.roleRef,
+        target,
+      });
+      const allowed = verdict.allowed && authz.allowed;
       return text(
-        `${verdict.allowed ? "ALLOWED" : "REFUSED"} — ${verdict.reason}` +
+        `${allowed ? "ALLOWED" : "REFUSED"} — ${verdict.reason}` +
           (verdict.relaxedBy
             ? `\n\nDeclared in skills/${verdict.relaxedBy.package}/workflow-policy.json.`
-            : ""),
+            : "") +
+          `\n\n${describeVerdict(authz)}`,
       );
     },
   );
@@ -257,14 +290,27 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
             "it reads, e.g. { failCritical: 0, failMajor: 2 } from qa_sweep totals. " +
             "The table returns the branch — do not pass `outcome` for these.",
         ),
-      actor: z.string().optional().describe("Who did it: a role, or an agent name"),
+      actor: z
+        .string()
+        .optional()
+        .describe(
+          "Who did it: a declared actor id (.claude/skills/actors/). Checked against the lane's role " +
+            "and the ODRL policies before the step is recorded",
+        ),
+      target: z.string().optional().describe("The content the step acted on: a block id, path or bean id"),
       note: z.string().optional().describe("What happened, for the instance history"),
     },
-    async ({ instance, node, outcome, facts, actor, note }) => {
+    async ({ instance, node, outcome, facts, actor, target, note }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
-      const next = complete(model, state, node, { outcome, facts, actor, note });
+      const next = complete(model, state, node, {
+        outcome,
+        facts,
+        actor,
+        note,
+        authz: { ctx: accessContext(root), principal: principalFromEnv(actor, process.env), target },
+      });
       saveInstance(root, next);
 
       // A bean-marked step IS the work-plan operation, not a step about it.
@@ -278,6 +324,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       // — silently, which is the worst way for a work-plan write to stop.
       // `instanceCompleted` stays the PARENT's status on purpose: a bean is
       // resolved when the whole process finished, not when one phase did.
+      const authz = lastVerdict(next, node);
       const op = findInModel(model, node)?.model.nodes.get(node)?.workPlanOp;
       const plan = op
         ? applyWorkPlanOp(root, next.bean, op, {
@@ -296,7 +343,10 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
         {
           event: "task-end",
           summary: `completed ${node} in ${model.id}`,
-          detail: `instance ${next.id} is now ${next.status}` + (note ? ` — ${note}` : ""),
+          detail:
+            `instance ${next.id} is now ${next.status}` +
+            (note ? ` — ${note}` : "") +
+            (authz ? ` — ${describeVerdict(authz)}` : ""),
           process: model.id,
           task: node,
           role: findInModel(model, node)?.model.nodes.get(node)?.lane,
@@ -307,6 +357,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       );
       return text(
         describe(model, next, roles()) +
+          (authz ? `\n\n  authorization: ${describeVerdict(authz)}` : "") +
           (plan ? `\n\n  work plan: ${plan.summary}` : "") +
           `\n  ${describeCapture(log)}`,
       );

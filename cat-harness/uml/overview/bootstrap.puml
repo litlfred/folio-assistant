@@ -8,8 +8,8 @@ skinparam shadowing false
 skinparam packageStyle rectangle
 hide empty methods
 
-package "bootstrap/cat-harness" as pkg_bootstrap_cat_harness <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_cat_harness_skills
+package "bootstrap/skills" as pkg_bootstrap_skills <<skills>> {
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_skills_skills
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "KnownRepository" as bootstrap_schemas_discussion_input_schema_json_KnownRepository <<schema: discussion.input.schema.json>> #e9edf3 {
@@ -62,12 +62,23 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     directories [0..*] : Directory[]
     assets [0..*] : Asset[]
   }
+  class "Model" as bootstrap_schemas_model_registry_schema_json_Model <<schema: model-registry.schema.json>> #e9edf3 {
+    id [1] : string
+    title [1] : string
+    preferredLanguages [0..*] : string[]
+    validation [1] : unverified | self-reported | human-validated
+    validatedBy [0..1] : string
+    validatedOn [0..1] : string
+    note [0..1] : string
+  }
+  class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
+    $schema [1] : 'folio-model-registry/v1'
+    models [0..*] : Model[]
+  }
 }
 package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
   class "Role" as bootstrap_scenarios_Role <<json: RoleGraphSchema>> #e8f0ee {
     persona [0..1] : string
-    voice [0..1] : string
-    useCases [0..*] : string[]
     id [1] : string
     title [1] : string
     description [1] : string
@@ -131,8 +142,8 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
     models [0..*] : Model[]
   }
 }
-package "bootstrap/glossary" as pkg_bootstrap_glossary <<glossary>> {
-  class "folio-glossary-ledger/v1" as bootstrap_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #e8f0ee {
+package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
+  class "folio-glossary-ledger/v1" as bootstrap_swimlane_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #f4f4f1 {
     $schema [1] : string
     instance [1] : string
     concepts [1] : Record<string, LedgerEntry>
@@ -153,13 +164,14 @@ bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "0..*" boo
 bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" bootstrap_schemas_discussion_output_schema_json_Exchange : exchange
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
+bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-' grid: portrait, 2 column(s) — pkg_bootstrap_cat_harness pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_glossary pkg_bootstrap_bootstrap_translations
-pkg_bootstrap_cat_harness -[hidden]down- pkg_bootstrap_scenarios
+' grid: portrait, 2 column(s) — pkg_bootstrap_skills pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_swimlane_glossary pkg_bootstrap_bootstrap_translations
+pkg_bootstrap_skills -[hidden]down- pkg_bootstrap_scenarios
 pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes
 pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_models
-pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_glossary
+pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_swimlane_glossary
 pkg_bootstrap_models -[hidden]down- pkg_bootstrap_bootstrap_translations
 @enduml
