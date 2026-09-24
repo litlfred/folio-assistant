@@ -91,7 +91,7 @@ Measured the same hour:
 - **`enforced`** — reverse it and something breaks. A TypeScript `import`, a
   BPMN `calledElement`. The direction is a property of the system.
 - **`recorded`** — the direction is *where the author put the pointer*.
-  `<folio:skill ref="S">` is written on the diagram, so the arrow runs
+  `<bootstrap.processes:skill ref="S">` is written on the diagram, so the arrow runs
   diagram → skill. Had the repo put `workflows: [...]` in each skill's front
   matter instead, the identical coupling would be stored the other way and
   `processes` would measure as a **sink**.
@@ -145,7 +145,7 @@ which is what a declared dependency list would actually hold.
 Both were in the measurement, not the graph, and both are recorded because a
 number nobody can re-derive is a number nobody can argue with.
 
-1. **Name collision in resolution.** Five `<folio:skill ref>` values —
+1. **Name collision in resolution.** Five `<bootstrap.processes:skill ref>` values —
    `activity-log`, `getting-started`, `l2-dak-authoring`, `qa-report-signing`,
    `upstream-version-adoption` — are *also* basenames of diagrams in the same
    directory. Preferring a same-group hit resolved every one to the diagram

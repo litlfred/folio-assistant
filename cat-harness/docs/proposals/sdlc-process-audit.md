@@ -161,7 +161,7 @@ discovers the gate list by grepping `package.json`.
 
 ## 4. A second finding the audit turned up on the way
 
-**16 of the 33 diagrams declare no `<folio:policy enforcement>`.**
+**16 of the 33 diagrams declare no `<cat-harness.processes:policy enforcement>`.**
 `process-model.ts:502` reads `declared === "advisory" ? "advisory" : "strict"`,
 so each of those 16 is **strict by omission**.
 

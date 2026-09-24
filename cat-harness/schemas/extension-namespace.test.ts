@@ -14,7 +14,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { loadProcessModel } from "../src/workflow/process-model.ts";
-import { FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "./namespaces.ts";
+import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, FOLIO_BPMN_NS, ownElementPattern, ownExtensionPrefixes } from "./namespaces.ts";
+import { execSync } from "node:child_process";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const DIAGRAM = join("processes", "initialize-harness.bpmn");
@@ -45,12 +46,19 @@ function skillsOf(model: unknown): string[] {
 }
 
 describe("the parser follows the namespace, not the prefix", () => {
-  test("a diagram whose prefix is bootstrap.processes loads into the same model", async () => {
+  test("bootstrap's diagram, written bootstrap.processes:, binds bootstrap's own address (stage 2)", () => {
+    const xml = readFileSync(join(REPO_ROOT, "bootstrap", DIAGRAM), "utf-8");
+    expect(ownExtensionPrefixes(xml)).toEqual(["bootstrap.processes"]);
+    expect(xml).toContain(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`);
+    expect(xml).not.toMatch(/<\/?folio:/);
+  });
+
+  test("the same address under any other prefix loads into the same model", async () => {
     const same = variant("same", (x) => x);
     const renamed = variant("renamed", (x) =>
-      x.replace(/xmlns:folio=/g, "xmlns:bootstrap.processes=").replace(/(<\/?)folio:/g, "$1bootstrap.processes:"),
+      x.replace(/xmlns:bootstrap\.processes=/g, "xmlns:x=").replace(/(<\/?)bootstrap\.processes:/g, "$1x:"),
     );
-    expect(readFileSync(renamed, "utf-8")).not.toContain("folio:skill");
+    expect(readFileSync(renamed, "utf-8")).not.toContain("bootstrap.processes:skill");
     const a = await modelOf(same, join(tmp, "same"));
     const b = await modelOf(renamed, join(tmp, "renamed"));
     // Vacuity: the original must carry extensions for "identical" to mean anything.
@@ -58,8 +66,23 @@ describe("the parser follows the namespace, not the prefix", () => {
     expect(b).toEqual(a);
   });
 
+  test("the older single address is still ours, so a diagram not yet moved reads the same", async () => {
+    const older = variant("older", (x) =>
+      x
+        .replace(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`, `xmlns:folio="${FOLIO_BPMN_NS}"`)
+        .replace(/(<\/?)bootstrap\.processes:/g, "$1folio:"),
+    );
+    const a = await modelOf(variant("same2", (x) => x), join(tmp, "same2"));
+    expect(await modelOf(older, join(tmp, "older"))).toEqual(a);
+  });
+
   test("folio: bound to someone else's namespace is not ours, whatever it spells", async () => {
-    const foreign = variant("foreign", (x) => x.replace(`xmlns:folio="${FOLIO_BPMN_NS}"`, 'xmlns:folio="urn:somebody-else"'));
+    const foreign = variant("foreign", (x) =>
+      x
+        .replace(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`, 'xmlns:folio="urn:somebody-else"')
+        .replace(/(<\/?)bootstrap\.processes:/g, "$1folio:"),
+    );
+    expect(readFileSync(foreign, "utf-8")).toContain("<folio:skill");
     const control = await modelOf(variant("control", (x) => x), join(tmp, "control"));
     expect(skillsOf(control).length).toBeGreaterThan(0);
     expect(skillsOf(await modelOf(foreign, join(tmp, "foreign")))).toEqual([]);
@@ -91,23 +114,33 @@ describe("raw-XML readers follow the namespace too", () => {
 
 describe("nothing matches our elements by the text folio: again", () => {
   /**
-   * A regex LITERAL containing `folio:<name>` in code (not a comment, not a
-   * test) is a reader matching the prefix text — the defect stage 1 removed.
+   * A regex LITERAL containing `folio:<element>` in code or in a test (not a
+   * comment, not an error-message matcher) is a reader matching the prefix
+   * text — the defect stage 1 removed. Tests are included since stage 3: two
+   * test files read the real diagrams this way and, once the diagrams moved to
+   * the new prefixes, counted zero and still passed.
    * `$type === "folio:…"` is fine: the parser has already normalised it by
    * namespace. Use `ownElementPattern` from `schemas/namespaces.ts` instead.
    */
-  const LITERAL = /(^|[\s(=,!&|?:])\/(?:[^/\\\n]|\\.)*folio:[a-z]/;
+  const ELEMENTS =
+    "skill|role|precondition|bean|policy|adjudication|no-skill|no-call|job|implements|judgement|fulfilment|raci|involvement|link|decision|log|convention";
+  const LITERAL = new RegExp(String.raw`(^|[\s(=,!&|?:])\/(?:[^/\\\n]|\\.)*folio:(?:${ELEMENTS})\b`);
+  /** A regex that only matches an ERROR MESSAGE naming an element is not a reader of diagrams. */
+  const MESSAGE = /toThrow\(|rejects|toMatch\(/;
   const offenders: string[] = [];
   const walk = (d: string) => {
     for (const f of readdirSync(d)) {
       if (f === "node_modules" || f.startsWith(".")) continue;
       const p = join(d, f);
       if (statSync(p).isDirectory()) walk(p);
-      else if (f.endsWith(".ts") && !f.endsWith(".test.ts") && !f.endsWith(".d.ts")) {
-        readFileSync(p, "utf-8").split("\n").forEach((line, i) => {
+      else if (f.endsWith(".ts") && !f.endsWith(".d.ts")) {
+        const lines = readFileSync(p, "utf-8").split("\n");
+        lines.forEach((line, i) => {
           const t = line.trimStart();
           if (t.startsWith("*") || t.startsWith("/*") || t.startsWith("//")) return;
-          if (LITERAL.test(line)) offenders.push(`${p.slice(REPO_ROOT.length + 1)}:${i + 1}`);
+          // A matcher's argument often sits on the line after `toThrow(`.
+          const message = MESSAGE.test(line) || MESSAGE.test(lines[i - 1] ?? "");
+          if (LITERAL.test(line) && !message) offenders.push(`${p.slice(REPO_ROOT.length + 1)}:${i + 1}`);
         });
       }
     }
@@ -116,5 +149,42 @@ describe("nothing matches our elements by the text folio: again", () => {
 
   test("no regex literal matches folio:<element> in raw text", () => {
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("every diagram writes each element under the Subgraph that defines it (stage 3)", () => {
+  const diagrams = execSync("git ls-files '*.bpmn'", { cwd: REPO_ROOT }).toString().trim().split("\n");
+  /** Element names an `ns.jsonld` vocabulary defines, keyed by its namespace. */
+  const defined = new Map<string, Set<string>>();
+  for (const [ns, file] of [
+    [BOOTSTRAP_PROCESSES_NS, "bootstrap/processes/ns.jsonld"],
+    [CAT_HARNESS_PROCESSES_NS, "cat-harness/processes/ns.jsonld"],
+  ] as const) {
+    const doc = JSON.parse(readFileSync(join(REPO_ROOT, file), "utf-8")) as { "@graph": { "@id": string; label: string }[] };
+    for (const g of doc["@graph"]) expect(g["@id"]).toBe(`${ns}${g.label}`);
+    defined.set(ns, new Set(doc["@graph"].map((g) => g.label)));
+  }
+
+  test("no diagram binds the older single address any more", () => {
+    expect(diagrams.length).toBeGreaterThan(70);
+    expect(diagrams.filter((f) => readFileSync(join(REPO_ROOT, f), "utf-8").includes(`"${FOLIO_BPMN_NS}"`))).toEqual([]);
+  });
+
+  test("each element used is defined by the vocabulary of the address it is written under", () => {
+    const wrong: string[] = [];
+    let used = 0;
+    for (const f of diagrams) {
+      const xml = readFileSync(join(REPO_ROOT, f), "utf-8");
+      const bound = new Map([...xml.matchAll(/\bxmlns:([\w.-]+)="([^"]*)"/g)].map((m) => [m[1]!, m[2]!]));
+      for (const m of xml.matchAll(/<([\w.-]+):([a-z-]+)\b/g)) {
+        const vocab = defined.get(bound.get(m[1]!) ?? "");
+        if (vocab === undefined) continue;
+        used++;
+        if (!vocab.has(m[2]!)) wrong.push(`${f}: ${m[1]}:${m[2]}`);
+      }
+    }
+    // Vacuity: hundreds of elements are checked, not none.
+    expect(used).toBeGreaterThan(500);
+    expect(wrong).toEqual([]);
   });
 });

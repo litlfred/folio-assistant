@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_ReviewTask"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -43,7 +43,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
     <bpmn:laneSet id="LaneSet_Review">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">
         <bpmn:documentation>Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ChangeToReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ClassifyChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Kind</bpmn:flowNodeRef>
@@ -56,7 +56,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
       </bpmn:lane>
       <bpmn:lane id="Lane_EditorDecides" name="Editors + authoring agents">
         <bpmn:documentation>Kept a separate lane on purpose, holding the one activity this diagram gives it: the reviewer who classified and judged the change is never the party that accepts it, so consolidated findings cross a lane boundary before anything is decided on them.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="editor"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_EditorDecides</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -69,7 +69,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         makes on its own: everything after it is made inside a subprocess by
         the role that lane binds.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="semantic-review-scoping"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="semantic-review-scoping"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Kind" name="Prose, code,&#10;or both?">
@@ -105,7 +105,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         One report from however many subprocesses ran. Findings are advice: a
         reviewer cannot accept the change.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_EditorDecides" name="Accept, or send back">
@@ -113,7 +113,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         The editor's lane, kept separate on purpose: the reviewer who judged the
         change is not the position that accepts it.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-validate"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-validate"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Reviewed" name="Decision&#10;recorded"/>
