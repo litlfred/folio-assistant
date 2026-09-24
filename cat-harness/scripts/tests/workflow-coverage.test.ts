@@ -20,7 +20,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { FOLIO_BPMN_NS } from "../../schemas/namespaces.ts";
+import { BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS } from "../../schemas/namespaces.ts";
 
 import {
   autoTriggered,
@@ -32,18 +32,18 @@ import {
 } from "../check-workflow-coverage.js";
 
 /** The binding every real diagram carries; readers recognise our elements by it (bean 12s9). */
-const BINDS = `xmlns:folio="${FOLIO_BPMN_NS}"`;
+const BINDS = `xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}" xmlns:cat-harness.processes="${CAT_HARNESS_PROCESSES_NS}"`;
 
 describe("a diagram DECLARES its subject", () => {
   test("a declaration in a document that never binds our namespace is not ours", () => {
     // Bean 12s9: elements are recognised by namespace, not by the text `folio:`.
-    expect(declaredWorkflows(`<folio:implements workflow=".github/workflows/x.yml"/>`)).toEqual([]);
+    expect(declaredWorkflows(`<cat-harness.processes:implements workflow=".github/workflows/x.yml"/>`)).toEqual([]);
   });
 
   test("the declaration is read", () => {
     const xml =
       `<bpmn:process ${BINDS}><bpmn:extensionElements>` +
-      `<folio:implements workflow=".github/workflows/docs-site.yml"/>` +
+      `<cat-harness.processes:implements workflow=".github/workflows/docs-site.yml"/>` +
       `</bpmn:extensionElements></bpmn:process>`;
     expect(declaredWorkflows(xml)).toEqual([".github/workflows/docs-site.yml"]);
   });
@@ -58,8 +58,8 @@ describe("a diagram DECLARES its subject", () => {
   test("several declarations on one diagram are all read", () => {
     const xml =
       `<bpmn:process ${BINDS}>` +
-      `<folio:implements workflow=".github/workflows/a.yml"/>` +
-      `<folio:implements workflow=".github/workflows/b.yml"/>` +
+      `<cat-harness.processes:implements workflow=".github/workflows/a.yml"/>` +
+      `<cat-harness.processes:implements workflow=".github/workflows/b.yml"/>` +
       `</bpmn:process>`;
     expect(declaredWorkflows(xml)).toEqual([".github/workflows/a.yml", ".github/workflows/b.yml"]);
   });
@@ -116,7 +116,7 @@ describe("the survey's three states", () => {
   }
   const declares = (w: string): string =>
     `<?xml version="1.0"?><bpmn:definitions ${BINDS}><bpmn:process id="p"><bpmn:extensionElements>` +
-    `<folio:implements workflow="${w}"/></bpmn:extensionElements></bpmn:process></bpmn:definitions>`;
+    `<cat-harness.processes:implements workflow="${w}"/></bpmn:extensionElements></bpmn:process></bpmn:definitions>`;
 
   test("COVERED — a declaration names it", () => {
     const root = repoWith(
@@ -224,7 +224,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
     job === undefined
       ? `<bpmn:startEvent id="${id}" name="x"><bpmn:outgoing>f</bpmn:outgoing></bpmn:startEvent>`
       : `<bpmn:startEvent id="${id}" name="x"><bpmn:extensionElements>` +
-        `<folio:job name="${job}"/></bpmn:extensionElements></bpmn:startEvent>`;
+        `<cat-harness.processes:job name="${job}"/></bpmn:extensionElements></bpmn:startEvent>`;
 
   /** Inside a document that binds our namespace, as every real diagram does (bean 12s9). */
   const doc = (body: string): string => `<bpmn:definitions ${BINDS}>${body}</bpmn:definitions>`;
@@ -249,7 +249,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
 
     test("a node with extension elements but no `folio:job` declares nothing", () => {
       const xml = doc(`<bpmn:task id="T" name="x"><bpmn:extensionElements>` +
-        `<folio:skill ref="s"/></bpmn:extensionElements></bpmn:task>`);
+        `<bootstrap.processes:skill ref="s"/></bpmn:extensionElements></bpmn:task>`);
       expect(declaredJobs(xml)).toEqual([]);
     });
   });
@@ -321,7 +321,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
     }
     const diagram = (body: string): string =>
       `<?xml version="1.0"?><bpmn:definitions ${BINDS}><bpmn:process id="p"><bpmn:extensionElements>` +
-      `<folio:implements workflow=".github/workflows/a.yml"/></bpmn:extensionElements>` +
+      `<cat-harness.processes:implements workflow=".github/workflows/a.yml"/></bpmn:extensionElements>` +
       `${body}</bpmn:process></bpmn:definitions>`;
     const twoJobs = "on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n";
 
