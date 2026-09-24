@@ -52,6 +52,15 @@
  *
  * @module schemas/jsonld
  * @graphNode schema
+ *
+ * @conformsTo hl7-fhir
+ * @conformsTo spar-doco-deo-cito
+ * @conformsTo w3c-csvw
+ * @conformsTo w3c-web-annotation
+ * @conformsTo who-smart-base
+ * @conformsTo w3c-prov-o
+ * @conformsTo w3c-skos
+ * @conformsTo w3c-xsd11-datatypes
  */
 
 import {

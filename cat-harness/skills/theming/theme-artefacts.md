@@ -71,7 +71,7 @@ Measured off a 5–10% grid overlay of each card, as fractions `x y w h`:
 | `landing-operations-card` | 0.17 0.475 0.27 0.27 |
 | `landing-engineer-card` | 0.00 0.40 0.46 0.46 |
 | `landing-analyst-card` | 0.05 0.48 0.36 0.36 |
-| `landing-architecture-card` | 0.00 0.36 0.46 0.46 |
+| `landing-architecture-card` | 0.02 0.38 0.44 0.44 |
 
 **Only CARD crops carry one.** The avatar is cut from the square crop; a box on
 the laptop or mobile art would be measured against a composition the frame

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-12s9
 title: 'PREFIX = DECLARING SUBGRAPH: rename the folio: BPMN prefix and folio-*/v1 schema ids to the path of the Subgraph that declares them (owner ruling iwtn #1)'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-23T21:03:10Z
-updated_at: 2026-09-23T21:03:10Z
+updated_at: 2026-09-24T18:02:28Z
 parent: folio-assistant-88mg
 ---
 
@@ -35,10 +36,10 @@ Programs match on the namespace address, never on the prefix. The prefix is what
 
 ## Stages (each stage is one PR, and each stage is green on its own)
 
-- [ ] 1. Declare one namespace address per declaring Subgraph, in `schemas/namespaces.ts`. The parser and the moddle descriptor accept both the old address and the new one.
+- [x] 1. Declare one namespace address per declaring Subgraph, in `schemas/namespaces.ts`. The parser and the moddle descriptor accept both the old address and the new one.
 - [x] 2. Migrate bootstrap's 3 diagrams, and remove the ALLOW entries in `graph.test.ts` (it lives in `cat-harness/schemas/` since 319n).
-- [ ] 3. Migrate the rest of this repository's diagrams, and move the `folio-*/v1` schema ids with a read-both window.
-- [ ] 4. Folio repositories (qou needs the owner's go-ahead first), then drop the old address.
+- [x] 3. Migrate the rest of this repository's diagrams, and move the `folio-*/v1` schema ids with a read-both window.
+- [x] 4. Folio repositories (qou needs the owner's go-ahead first), then drop the old address.
 
 ## Done when
 
@@ -95,7 +96,7 @@ No file under `bootstrap/` carries `folio:` or `folio-*/v1`, and the ALLOW list 
 - **Found:** two TEST files, `processes-viz` and `skill-coverage`, read the real diagrams with a raw `folio:` regex. After the rename they counted zero, and three of the processes-viz tests **still passed**. All are fixed, and the gate now covers test files, matches only real element names, and ignores error-message matchers.
 
 ## Next
-- [ ] 4. Folios in other repositories (qou needs the owner's go-ahead first), then retire the old `…/bpmn` address. The 15 test fixtures that still bind it are part of that.
+- [x] 4. Folios in other repositories (qou needs the owner's go-ahead first), then retire the old `…/bpmn` address. The 15 test fixtures that still bind it are part of that.
 
 ### Stage 4 plan — measured 2026-09-24
 The owner chose "plan all repos first". I listed every `litlfred` repository and read the recently active candidates (shallow, read-only). Only each repository's own tracked files were counted; a vendored platform submodule was not.
@@ -109,8 +110,18 @@ The owner chose "plan all repos first". I listed every `litlfred` repository and
 | smart-trust, smart-immunizations | 0 | 0 | 0 |
 | cat-harness-test | empty repository | | |
 
-- [ ] 4a. ihris: `gen_bpmn.py` emits `xmlns:bootstrap.processes` (skill, role) and `xmlns:cat-harness.processes` (no-skill); regenerate the 3 diagrams. One PR, which needs the owner's go-ahead because it is another repository.
+- [x] 4a. ihris: `gen_bpmn.py` emits `xmlns:bootstrap.processes` (skill, role) and `xmlns:cat-harness.processes` (no-skill); regenerate the 3 diagrams. One PR, which needs the owner's go-ahead because it is another repository.
 - [x] 4a. ihris PR: litlfred/ihris#24 (generator plus 3 regenerated diagrams; parsed models identical, 14 skill refs and 40 role refs; ihris `validate.py` OK).
 - [x] 4b-i. The test fixtures here moved off the old address: 13 of 14 files. `extension-namespace.test.ts` keeps it on purpose, because it tests that the old address is still accepted. Tags are rewritten only inside quoted fixtures, never inside regex literals, which match the code's error messages.
-- [ ] 4b-ii. Messages: the parser's errors still tell an author to write `<folio:fulfilment …>` or `declare <folio:adjudication codes …>`. They should name the new prefix. The tests that match them change with them.
-- [ ] 4b-iii. Here: retire the old address. Mark it `retired` in `own-namespaces.json` (as `legacy-folio-bpmn` is) and remove it from `OWN_BPMN_EXTENSION_NAMESPACES`, so `external-schemas` reports it as drift. Only after 4a merges.
+- [x] 4b-ii. Messages: the parser's errors still tell an author to write `<folio:fulfilment …>` or `declare <folio:adjudication codes …>`. They should name the new prefix. The tests that match them change with them.
+- [x] 4b-iii. Here: retire the old address. Mark it `retired` in `own-namespaces.json` (as `legacy-folio-bpmn` is) and remove it from `OWN_BPMN_EXTENSION_NAMESPACES`, so `external-schemas` reports it as drift. Only after 4a merges.
+
+## Summary of Changes
+
+The owner's ruling ("use `<sub>:` as prefix when assets are declared in `<sub>`", with a dotted path for nesting and addresses of the form `<stub>/<subgraph>/ns#`) is in force across every repository that used the old address.
+
+- **#1255, stage 1:** readers recognise our elements by namespace address, never by the prefix text. A gate (extended to test files in stage 3) stops that regressing.
+- **#1263, stage 2:** bootstrap's diagrams write `bootstrap.processes:` under `…/bootstrap/processes/ns#`, defined by `bootstrap/processes/ns.jsonld` and published at that address.
+- **#1267, stage 3:** the other 71 diagrams write `bootstrap.processes:` (skill, role, precondition) and `cat-harness.processes:` (15 elements), under `…/cat-harness/processes/ns#`, defined by `cat-harness/processes/ns.jsonld`. All 71 parsed models were checked identical before and after.
+- **Stage 4, measured first across the owner's repositories:** only ihris used the old address, moved in litlfred/ihris#24; qou needed nothing. #1283 moved the test fixtures here. **This PR** retires `…/folio-assistant/bpmn`: marked `retired` in `own-namespaces.json`, dropped from `OWN_BPMN_EXTENSION_NAMESPACES`, reported as drift by `external-schemas`, and the test that accepted it is inverted. The parser's error messages and audit texts (about 190 mentions in 39 files) now tell authors to write the new prefixes.
+- **Found along the way:** #1249 (a stale PROV report had turned main red), #1257 (the site had stopped deploying), and bean 391j (`regen` misses checks that are enforced from inside a test).

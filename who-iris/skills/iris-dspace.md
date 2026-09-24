@@ -5,6 +5,8 @@ description: >
   systems, MeSH as a controlled vocabulary, bundles, and the containment path.
   What a later tool needs from a record, stated as requirements it can be
   checked against.
+conformsTo:
+  - dcmi-terms
 ---
 
 # IRIS, DSpace and Dublin Core

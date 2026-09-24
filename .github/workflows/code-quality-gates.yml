@@ -604,6 +604,34 @@ jobs:
       - name: audit coverage is measured, current, and every gate has declared
         run: bun run audit:coverage:require-all
 
+      # The four graphs `audit:coverage` reported as `typed-only` — a schema
+      # parses their nodes and nothing had an opinion about what they SAY.
+      # Bean `h1wq`, at the owner's ask (2026-09-24).
+      #
+      # Three of its four families are determined empties on this tree, and the
+      # fourth caught a real one: the committed health report was written by a
+      # checker that no longer existed, so its staging remedy still told a reader
+      # to apply `staging:cleanup` to an orphaned preview — which bean `7umv`
+      # had already proved cannot work. Stale advice presented as the fix.
+      #
+      # Exit 2 (a family that could not be read) is a FAILURE here, not a pass:
+      # could-not-determine outranks a finding, because a sweep blind on one
+      # family has not cleared the others.
+      - name: harness state graphs are judged, not just typed
+        run: bun run check:harness-state:check
+
+      # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
+      # were the only thing holding it red, and the step above judges them. Wired
+      # on the same reasoning as `check:skills`: it locks in a property this tree
+      # HAS rather than demanding work.
+      #
+      # A SECOND step rather than a third flag on the one above, because the two
+      # lock different things and a reader should be able to see which broke:
+      # `--require-all` that every gate has declared, `--strict` that every kind
+      # with files is JUDGED and not merely typed.
+      - name: every kind with files is judged, not merely typed
+        run: bun run audit:coverage:strict
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
@@ -891,6 +919,10 @@ jobs:
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
           bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
