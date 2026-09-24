@@ -20,6 +20,8 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
+import { FOLIO_BPMN_NS } from "../../schemas/namespaces.ts";
+
 import {
   autoTriggered,
   compareJobs,
@@ -29,10 +31,18 @@ import {
   workflowJobs,
 } from "../check-workflow-coverage.js";
 
+/** The binding every real diagram carries; readers recognise our elements by it (bean 12s9). */
+const BINDS = `xmlns:folio="${FOLIO_BPMN_NS}"`;
+
 describe("a diagram DECLARES its subject", () => {
+  test("a declaration in a document that never binds our namespace is not ours", () => {
+    // Bean 12s9: elements are recognised by namespace, not by the text `folio:`.
+    expect(declaredWorkflows(`<folio:implements workflow=".github/workflows/x.yml"/>`)).toEqual([]);
+  });
+
   test("the declaration is read", () => {
     const xml =
-      `<bpmn:process><bpmn:extensionElements>` +
+      `<bpmn:process ${BINDS}><bpmn:extensionElements>` +
       `<folio:implements workflow=".github/workflows/docs-site.yml"/>` +
       `</bpmn:extensionElements></bpmn:process>`;
     expect(declaredWorkflows(xml)).toEqual([".github/workflows/docs-site.yml"]);
@@ -47,8 +57,10 @@ describe("a diagram DECLARES its subject", () => {
 
   test("several declarations on one diagram are all read", () => {
     const xml =
+      `<bpmn:process ${BINDS}>` +
       `<folio:implements workflow=".github/workflows/a.yml"/>` +
-      `<folio:implements workflow=".github/workflows/b.yml"/>`;
+      `<folio:implements workflow=".github/workflows/b.yml"/>` +
+      `</bpmn:process>`;
     expect(declaredWorkflows(xml)).toEqual([".github/workflows/a.yml", ".github/workflows/b.yml"]);
   });
 });
@@ -103,7 +115,7 @@ describe("the survey's three states", () => {
     return root;
   }
   const declares = (w: string): string =>
-    `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"><bpmn:extensionElements>` +
+    `<?xml version="1.0"?><bpmn:definitions ${BINDS}><bpmn:process id="p"><bpmn:extensionElements>` +
     `<folio:implements workflow="${w}"/></bpmn:extensionElements></bpmn:process></bpmn:definitions>`;
 
   test("COVERED — a declaration names it", () => {
@@ -214,27 +226,30 @@ describe("drift — the diagram still matches the workflow it documents", () => 
       : `<bpmn:startEvent id="${id}" name="x"><bpmn:extensionElements>` +
         `<folio:job name="${job}"/></bpmn:extensionElements></bpmn:startEvent>`;
 
+  /** Inside a document that binds our namespace, as every real diagram does (bean 12s9). */
+  const doc = (body: string): string => `<bpmn:definitions ${BINDS}>${body}</bpmn:definitions>`;
+
   describe("reading the declaration", () => {
     test("a job is attributed to the element that CONTAINS it", () => {
-      expect(declaredJobs(node("Start_A", "stage"))).toEqual([{ node: "Start_A", job: "stage" }]);
+      expect(declaredJobs(doc(node("Start_A", "stage")))).toEqual([{ node: "Start_A", job: "stage" }]);
     });
 
     test("a SELF-CLOSING node declares nothing, and does not steal the next job", () => {
       // The near-miss a proximity match makes: walking back to the nearest
       // preceding `id="…"` attributes a job to whatever was typed above it,
       // which reads correct in every example somebody tries.
-      const xml = `<bpmn:endEvent id="End_X" name="x"/>` + node("Start_A", "stage");
+      const xml = doc(`<bpmn:endEvent id="End_X" name="x"/>` + node("Start_A", "stage"));
       expect(declaredJobs(xml)).toEqual([{ node: "Start_A", job: "stage" }]);
     });
 
     test("several nodes each declaring a job are all read", () => {
-      const xml = node("S1", "a") + node("S2", "b");
+      const xml = doc(node("S1", "a") + node("S2", "b"));
       expect(declaredJobs(xml).map((j) => j.job)).toEqual(["a", "b"]);
     });
 
     test("a node with extension elements but no `folio:job` declares nothing", () => {
-      const xml = `<bpmn:task id="T" name="x"><bpmn:extensionElements>` +
-        `<folio:skill ref="s"/></bpmn:extensionElements></bpmn:task>`;
+      const xml = doc(`<bpmn:task id="T" name="x"><bpmn:extensionElements>` +
+        `<folio:skill ref="s"/></bpmn:extensionElements></bpmn:task>`);
       expect(declaredJobs(xml)).toEqual([]);
     });
   });
@@ -305,7 +320,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
       return root;
     }
     const diagram = (body: string): string =>
-      `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"><bpmn:extensionElements>` +
+      `<?xml version="1.0"?><bpmn:definitions ${BINDS}><bpmn:process id="p"><bpmn:extensionElements>` +
       `<folio:implements workflow=".github/workflows/a.yml"/></bpmn:extensionElements>` +
       `${body}</bpmn:process></bpmn:definitions>`;
     const twoJobs = "on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n";

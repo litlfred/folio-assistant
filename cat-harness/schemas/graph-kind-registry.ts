@@ -537,8 +537,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //    would misrepresent the standard.
   //
   // Any layer may declare a directory of this kind: the harness carries the
-  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
-  // grading belongs to WHO L1 guideline development rather than to the harness.
+  // domain-neutral ones, `smart-base` carries DIIG and core carries
+  // Doc-Researcher. GRADE is not a methodology node: since 2026-09-24 (bean
+  // `wg7r`) it is the `grade` skill with its vocabularies as code lists.
   methodology: {
     type: termIri("MethodologyGraph"),
     renderable: false,

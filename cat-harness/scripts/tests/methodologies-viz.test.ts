@@ -171,7 +171,7 @@ describe("which instance declared it — `instanceOf`", () => {
     // nine rows, because it split the path instead of resolving it. Caught by
     // reading the page, so it is pinned here rather than trusted to review.
     expect(instanceOf("../smart-base/methodologies/diig.md", INSTANCE, REPO)).toBe("smart-base");
-    expect(instanceOf("../smart-kg/methodologies/grade.md", INSTANCE, REPO)).toBe("smart-kg");
+    expect(instanceOf("../folio-assistant-core/methodologies/doc-researcher.md", INSTANCE, REPO)).toBe("folio-assistant-core");
   });
 });
 

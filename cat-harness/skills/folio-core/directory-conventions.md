@@ -411,7 +411,7 @@ under `vendors/` loads, a voice under any other nested directory does not.
 
 **A declared directory never sits inside another declared directory.** An
 instance's assets hang directly off its stub — `cat-harness/skills/`,
-`who-iris/library/`, `smart-kg/methodologies/` — and a package inside one of
+`who-iris/library/`, `smart-base/methodologies/` — and a package inside one of
 those is a package, not a second graph.
 
 The owner, 2026-09-22: *"dont bury sub-graph assets. same for `<stub>/skills`,
