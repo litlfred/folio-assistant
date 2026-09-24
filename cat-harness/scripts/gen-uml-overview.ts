@@ -44,6 +44,7 @@
  *   bun run cat-harness/scripts/gen-uml-overview.ts --check   # stale or orphaned?
  *
  * @module scripts/gen-uml-overview
+ * @covers uml
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";

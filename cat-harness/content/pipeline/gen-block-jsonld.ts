@@ -35,6 +35,7 @@
  *   bun run content/pipeline/gen-block-jsonld.ts --paper <dir>
  *
  * @module content/pipeline/gen-block-jsonld
+ * @covers folio
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";

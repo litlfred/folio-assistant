@@ -3,6 +3,7 @@
  * A model declared without a checked language list is a FINDING, not a default.
  *
  * @module scripts/check-model-languages
+ * @covers models
  *
  * Bean `46uh`. The owner: *"should clarify each new model added to bootstrap
  * which of the preferred languages ... especially if human validated"*.

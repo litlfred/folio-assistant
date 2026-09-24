@@ -52,6 +52,7 @@
  * `1wef` and are not this file's.
  *
  * @module scripts/check-workflow-injection
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";

@@ -2,6 +2,7 @@
  * The translation status page — what the gettext side actually covers.
  *
  * @module scripts/gen-translation-status
+ * @covers translation-sources
  *
  * Bean `lnur`. Owner, 2026-09-21: *"need translation status visualtion page,
  * translations/ needs to be a declared sub-graph/dir of cat-harness and is

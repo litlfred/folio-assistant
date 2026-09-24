@@ -3,6 +3,7 @@
  * Publish the folio graph as a projection, and a viewer over it.
  *
  * @module scripts/gen-folio-viz
+ * @covers folio
  * @graphNode none — a generator over the folio graph, not a schema itself
  *
  * Owner, 2026-09-22: *"folio must be in cat-harness and visualizer owned by

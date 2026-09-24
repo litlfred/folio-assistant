@@ -560,6 +560,22 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # WHICH audits reach which kind of node — the neighbour of the audit
+      # above, not a second answer to it. `kg:audit:check` judges the nodes it
+      # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
+      # before bean `xutg` and which got answered by inference instead: an
+      # agent read a sidecar count of zero over the bean store and reported
+      # beans "effectively unaudited", while eight gates audit them.
+      #
+      # `--check` and NOT `--strict`: it fails on a STALE SIDECAR, which is the
+      # half a reviewer needs (it is what lets "never audited" be told from
+      # "lost its audit in this commit"). The findings are reported — 4 kinds
+      # hold files nothing audits, and a gate refusing every push until
+      # somebody writes criteria for `interaction/` is a gate that gets
+      # switched off. `audit:coverage:strict` is for the day that closes.
+      - name: audit coverage is measured and current
+        run: bun run audit:coverage:check
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a

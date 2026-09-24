@@ -4,6 +4,7 @@
  * came from, and whether this checkout holds the source it rests on.
  *
  * @module cat-harness/scripts/gen-methodologies-viz
+ * @covers methodology
  *
  * ## The gap this closes
  *

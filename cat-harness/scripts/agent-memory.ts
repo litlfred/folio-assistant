@@ -2,6 +2,7 @@
  * Agent memory as graph nodes, assembled into the file the harness reads.
  *
  * @module scripts/agent-memory
+ * @covers memory
  *
  * ## What this is for
  *

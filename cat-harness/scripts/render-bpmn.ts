@@ -12,6 +12,8 @@
  * catch a `.bpmn` edit that never had its SVG regenerated.
  *
  * Never hand-edit `docs/assets/img/workflows/*.svg` — regenerate instead.
+ *
+ * @covers processes
  */
 import { chromium } from "@playwright/test";
 import { workflowFiles } from "./known-skills.js";

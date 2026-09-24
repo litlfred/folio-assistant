@@ -44,6 +44,7 @@
  * an unexaminable case and an examined-clean case must not look alike.
  *
  * @module cat-harness/scripts/check-docs-templates
+ * @covers docs
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

@@ -62,6 +62,7 @@
  * outlived one.
  *
  * @module scripts/check-published-refs
+ * @covers cat-harness
  */
 
 import { existsSync, readFileSync } from "node:fs";

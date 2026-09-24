@@ -3,6 +3,7 @@
  * The processes graph → a searchable index over every executable BPMN diagram.
  *
  * @module cat-harness/scripts/gen-processes-viz
+ * @covers processes
  *
  * Bean `prhr`. Owner, 2026-09-21: *"we also need a processes/ visualization as
  * it is controlled.... its basically a bpmn searcher tool or so. with various

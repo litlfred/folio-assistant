@@ -3,6 +3,7 @@
  * Generate `bootstrap`'s JSON Schema from `bootstrap-tools`' Zod.
  *
  * @module scripts/gen-bootstrap-schemas
+ * @covers schemas
  * @graphNode none — a generator over the bootstrap schemas, not a schema itself
  *
  * ## Why the source and the output are in different instances

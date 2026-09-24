@@ -4,6 +4,7 @@
  * theirs, and build the SKOS document `glossary-export` publishes.
  *
  * @module scripts/code-lists
+ * @covers code-list
  *
  * Owner, 2026-09-23: *"list of codes and corresponding narrative desc and
  * source should be part of a node/asset"*, published through the existing

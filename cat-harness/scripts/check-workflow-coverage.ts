@@ -3,6 +3,7 @@
  * Which GitHub Actions workflows are documented as BPMN, and which are not?
  *
  * @module scripts/check-workflow-coverage
+ * @covers processes
  *
  * Owner, 2026-09-20: *"make sure all workflows documented as bpmn"* — bean
  * `7yvd`. `AGENTS.md` says every process here is BPMN and the diagrams are
