@@ -7,8 +7,23 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { GlossarySchema, termIri, toSkos, type Glossary } from "./glossary.ts";
-import { collect, counts, instanceNs, outputs, renderPage } from "../scripts/glossary-page.ts";
+import { GlossarySchema, schemeIri, termIri, toSkos, type Glossary } from "./glossary.ts";
+import {
+  PAGE_KEYS,
+  budgetOf,
+  collect,
+  counts,
+  instanceNs,
+  instanceOwners,
+  ownerOfPath,
+  repoPathOf,
+  schemeOwner,
+  outputs,
+  pageOf,
+  pagePath,
+  permalinkOf,
+  renderPages,
+} from "../scripts/glossary-page.ts";
 import {
   ASSET_TYPES,
   EXTRACTED_PREFIX,
@@ -110,10 +125,90 @@ describe("this repository", () => {
   });
 
   test("the page lists every term once, and SKOS is published for every scheme", () => {
-    const page = renderPage(c);
+    const pages = renderPages(c);
+    const ids = [...pages.values()].flatMap((p) => [...p.matchAll(/<dt id="([^"]+)"/g)].map((m) => m[1]!));
     const terms = c.glossaries.flatMap((s) => s.glossary.terms);
-    expect((page.match(/<dt id=/g) ?? []).length).toBe(terms.length);
+    expect(ids.length).toBe(terms.length);
+    expect(new Set(ids).size).toBe(ids.length);
     expect([...outputs(c).keys()].filter((p) => p.endsWith(".skos.jsonld")).length).toBe(c.glossaries.length);
+  });
+});
+
+/**
+ * Owner, 2026-09-24: "Split per asset type". The index keeps the authored
+ * terms, the counts and the sources; each asset type has a page of its own.
+ */
+describe("the glossary pages", () => {
+  const c = collect();
+  const pages = renderPages(c);
+  const idsOn = (page: string) => [...page.matchAll(/<dt id="([^"]+)"/g)].map((m) => m[1]!);
+  const idOf = (s: (typeof c.glossaries)[number], t: { id: string }) => `${s.instance}--${s.glossary.id}--${t.id}`;
+
+  test("there is an index and one page per asset type, and each is an output", () => {
+    expect([...pages.keys()]).toEqual([...PAGE_KEYS]);
+    expect(PAGE_KEYS).toEqual(["index", ...ASSET_TYPES]);
+    const out = outputs(c);
+    for (const k of PAGE_KEYS) expect(out.get(pagePath(k))).toBe(pages.get(k)!);
+  });
+
+  test("every term appears exactly once across all the pages, and on the page its scheme belongs to", () => {
+    const seen = new Map<string, string>();
+    for (const [k, page] of pages) {
+      for (const id of idsOn(page)) {
+        expect(seen.has(id) ? `${id} on ${seen.get(id)} and ${k}` : "").toBe("");
+        seen.set(id, k);
+      }
+    }
+    const all = c.glossaries.flatMap((s) => s.glossary.terms.map((t) => ({ s, t })));
+    expect(all.length).toBeGreaterThan(ASSET_TYPES.length); // vacuity guard
+    expect(seen.size).toBe(all.length);
+    for (const { s, t } of all) expect(seen.get(idOf(s, t))).toBe(pageOf(s));
+  });
+
+  test("the index holds the authored terms only; each type's page holds that type's extracted terms only", () => {
+    const n = counts(c);
+    const index = pages.get("index")!;
+    expect((index.match(/data-fa-state="extracted"/g) ?? []).length).toBe(0);
+    expect(idsOn(index).length).toBe(c.glossaries.filter((s) => !s.extracted).reduce((k, s) => k + s.glossary.terms.length, 0));
+    for (const t of ASSET_TYPES) {
+      const page = pages.get(t)!;
+      const want = c.glossaries.filter((s) => s.extracted === t).reduce((k, s) => k + s.glossary.terms.length, 0);
+      expect(idsOn(page).length).toBe(want);
+      expect((page.match(/data-fa-state="extracted"/g) ?? []).length).toBe(want);
+      expect((page.match(/candidate, extracted<\/span>/g) ?? []).length).toBe(want);
+    }
+    expect(n.authored).toBeGreaterThan(0);
+  });
+
+  test("each page is under its stated size budget, and says so", () => {
+    for (const [k, page] of pages) {
+      const bytes = Buffer.byteLength(page, "utf-8");
+      expect(`${k} ${bytes <= budgetOf(k) ? "within" : `over: ${bytes} > ${budgetOf(k)}`}`).toBe(`${k} within`);
+      expect(page).toMatch(/is [0-9.]+ (MB|KB) before compression, (fetched in one request, )?within its budget of [0-9.]+ (MB|KB)/);
+    }
+    // The budgets are what the split was for: the index stays small, and no
+    // type's page is fetched at the size the single page had (1.4 MB).
+    expect(budgetOf("index")).toBeLessThanOrEqual(64 * 1024);
+    for (const t of ASSET_TYPES) expect(budgetOf(t)).toBeLessThan(1.4 * 1024 * 1024);
+  });
+
+  test("the index links every per-type page, and each per-type page links back", () => {
+    const index = pages.get("index")!;
+    for (const t of ASSET_TYPES) {
+      expect(index).toContain(`{{ '${permalinkOf(t)}' | relative_url }}`);
+      const page = pages.get(t)!;
+      expect(page).toContain(`permalink: ${permalinkOf(t)}\n`);
+      expect(page).toContain("parent: Glossary\n");
+      expect(page).toContain(`{{ '${permalinkOf("index")}' | relative_url }}`);
+    }
+    expect(index).toContain("has_children: true\n");
+  });
+
+  test("every page keeps the text filter and the A–Z bar", () => {
+    for (const [k, page] of pages) {
+      if (!idsOn(page).length) continue;
+      expect(`${k}: ${page.includes('id="fa-gloss-q"') && page.includes('<nav aria-label="Letters">')}`).toBe(`${k}: true`);
+    }
   });
 });
 
@@ -243,23 +338,31 @@ describe("extracted KG terms", () => {
       lanes.get(p)!);
     const fromLanes = terms.filter(({ t }) => pathOf(t.source!).endsWith(".bpmn") && laneIds(pathOf(t.source!)).has(anchorOf(t.source!)!));
     expect(fromLanes.map(({ t }) => t.source)).toEqual([]);
-    expect(renderPage(c)).toContain("docs-auto/glossary/glossary/");
+    expect(renderPages(c).get("index")).toContain("docs-auto/glossary/glossary/");
   });
 
-  test("the page tells extracted from authored, and only authored terms reach schema.org", () => {
-    const page = renderPage(c);
+  test("the pages tell extracted from authored, and only authored terms reach schema.org", () => {
+    const pages = renderPages(c);
+    const all = [...pages.values()].join("\n");
     const n = counts(c);
     expect(n.extracted).toBe(terms.length);
-    expect((page.match(/data-fa-state="extracted"/g) ?? []).length).toBe(n.extracted);
-    expect((page.match(/data-fa-state="authored"/g) ?? []).length).toBe(n.authored);
-    expect((page.match(/candidate, extracted<\/span>/g) ?? []).length).toBe(n.extracted);
-    const ld = JSON.parse(/<script type="application\/ld\+json">\n([\s\S]*?)\n<\/script>/.exec(page)![1]!) as {
+    expect((all.match(/data-fa-state="extracted"/g) ?? []).length).toBe(n.extracted);
+    expect((all.match(/data-fa-state="authored"/g) ?? []).length).toBe(n.authored);
+    expect((all.match(/candidate, extracted<\/span>/g) ?? []).length).toBe(n.extracted);
+    const index = pages.get("index")!;
+    const ld = JSON.parse(/<script type="application\/ld\+json">\n([\s\S]*?)\n<\/script>/.exec(index)![1]!) as {
       hasDefinedTerm: unknown[];
     };
     expect(ld.hasDefinedTerm.length).toBe(n.authored);
-    // The page states its size and term count, which is how a reader learns
-    // the load cost before scrolling 2,000 terms.
-    expect(page).toMatch(new RegExp(`holds ${terms.length + n.authored} terms and is [0-9.]+ (MB|KB) before compression`));
+    // Only the index carries the DefinedTermSet.
+    expect(all.match(/<script type="application\/ld\+json">/g)?.length).toBe(1);
+    // Each page states its term count and size, which is how a reader learns
+    // the load cost before scrolling.
+    expect(index).toMatch(new RegExp(`holds ${n.authored} terms and is [0-9.]+ (MB|KB) before compression`));
+    for (const t of ASSET_TYPES) {
+      const k = extracted.filter((s) => s.extracted === t).reduce((m, s) => m + s.glossary.terms.length, 0);
+      expect(pages.get(t)!).toMatch(new RegExp(`holds ${k} terms and is [0-9.]+ (MB|KB) before compression`));
+    }
   });
 
   test("extracted schemes are written under core's glossary directory, never over an authored file", () => {
@@ -288,3 +391,92 @@ describe("extraction helpers", () => {
     expect(decodeXml("a &amp;lt; b &#183; &#x41; <![CDATA[c]]>")).toBe("a &lt; b · A c");
   });
 });
+
+/**
+ * Owner, 2026-09-24: *"make sure all glossary terms properly localed to ihris
+ * so [no] collision w/ other subgraphs. general rule/skill"*. A term lives in
+ * the namespace of the instance that owns its source asset, never of whichever
+ * instance happens to declare the `glossary/` directory. Each check below runs
+ * over the REAL repository and works its answer out independently of
+ * `collect()`: the instance holding a path is found here by walking the
+ * declared roots, not by calling the code under test.
+ */
+describe("every term in the namespace of the instance that owns its source", () => {
+  const REPO = resolve(import.meta.dir, "..", "..");
+  const c = collect();
+  // Independent: every declared root, longest first.
+  const roots = instanceRootsIn(REPO)
+    .map((r) => ({ root: resolve(r), decl: readDeclaration(r)! }))
+    .filter((r) => r.decl)
+    .sort((a, b) => b.root.length - a.root.length);
+  const nsOfName = new Map(roots.map((r) => [r.decl.name, instanceNs(r.decl.name, r.decl.stub)] as const));
+  const holder = (path: string) => {
+    const p = resolve(REPO, path);
+    return roots.find((r) => p === r.root || p.startsWith(`${r.root}/`))?.decl.name;
+  };
+  // A repository path is one that exists; a scheme's dcterms:source may be prose.
+  const isPath = (src?: string) =>
+    !!src && !/^[a-z][a-z0-9+.-]*:\/\//i.test(src) && existsSync(resolve(REPO, src.split("#", 2)[0]!));
+
+  test("(a) no two schemes, in any instance, mint one scheme IRI", () => {
+    expect(c.findings.invalid.filter((f) => f.includes("collision"))).toEqual([]);
+    const iris = c.glossaries.map((s) => schemeIri(s.ns, s.glossary));
+    expect(iris.length).toBeGreaterThan(ASSET_TYPES.length); // vacuity guard
+    expect(iris.filter((x, i) => iris.indexOf(x) !== i)).toEqual([]);
+  });
+
+  test("(b) no two instances resolve to one namespace", () => {
+    const all = [...nsOfName.values()];
+    expect(all.length).toBeGreaterThan(1); // vacuity guard
+    expect(all.filter((x, i) => all.indexOf(x) !== i)).toEqual([]);
+  });
+
+  test("(c) every term with a repository source is minted in the namespace of the instance whose root holds it, authored and extracted alike", () => {
+    const wrong: string[] = [];
+    let checked = 0;
+    let authored = 0;
+    for (const s of c.glossaries) {
+      // A scheme whose own source is a repository path is DEFINED by that
+      // instance, and a term contributed from elsewhere (a code list extended
+      // by another package) is still the defining instance's.
+      const defining = isPath(s.glossary.source) ? holder(s.glossary.source!.split("#", 2)[0]!) : undefined;
+      for (const t of s.glossary.terms) {
+        if (!isPath(t.source)) continue;
+        const owner = defining ?? holder(t.source!.split("#", 2)[0]!);
+        const ns = owner ? nsOfName.get(owner) : undefined;
+        checked++;
+        if (!s.extracted) authored++;
+        const iri = termIri(s.ns, s.glossary, t.id);
+        if (!ns || !iri.startsWith(ns)) wrong.push(`${iri} (source ${t.source}, owner ${owner ?? "none"})`);
+      }
+    }
+    expect(checked).toBeGreaterThan(1000); // vacuity guard: extracted terms
+    expect(authored).toBeGreaterThan(0); // and authored ones, which are what the rule added
+    expect(wrong).toEqual([]);
+  });
+
+  test("an authored scheme sourced in several instances with no defining source is refused, not guessed", () => {
+    const owners = instanceOwners(REPO);
+    const g = (over: Record<string, unknown>) => GlossarySchema.parse({ $schema: "folio-glossary/v1", id: "x", title: "X", ...over });
+    const mixed = g({
+      terms: [
+        { id: "a", prefLabel: "a", status: "candidate", source: "cat-harness/schemas/odrl.ts" },
+        { id: "b", prefLabel: "b", status: "candidate", source: "folio-assistant-core/schemas/glossary.ts" },
+      ],
+    });
+    expect("error" in schemeOwner(REPO, mixed, "folio-assistant-core", owners)).toBe(true);
+    // The code-list case: the scheme names the instance that DEFINES it.
+    expect(schemeOwner(REPO, { ...mixed, source: "cat-harness/schemas/odrl.ts" }, "folio-assistant-core", owners)).toEqual({ owner: "cat-harness" });
+    // One instance holds every source: that instance, not the declaring one.
+    expect(schemeOwner(REPO, g({ terms: [mixed.terms[0]] }), "folio-assistant-core", owners)).toEqual({ owner: "cat-harness" });
+    // No repository source at all: the instance whose directory holds the file.
+    expect(schemeOwner(REPO, g({ terms: [] }), "folio-assistant-core", owners)).toEqual({ owner: "folio-assistant-core" });
+    // A sub-instance, never the root, holds a path inside it.
+    expect(ownerOfPath(REPO, "cat-harness/schemas/odrl.ts", owners)).toBe("cat-harness");
+    expect(ownerOfPath(REPO, "package.json", owners)).toBe("folio-assistant");
+    expect(repoPathOf("https://example.org/x#y", REPO)).toBeUndefined();
+    expect(repoPathOf("Skills of cat-harness", REPO)).toBeUndefined();
+    expect(repoPathOf("cat-harness/schemas/odrl.ts#Policy", REPO)).toBe("cat-harness/schemas/odrl.ts");
+  });
+});
+
