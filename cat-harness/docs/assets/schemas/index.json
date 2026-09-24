@@ -23736,6 +23736,13 @@
           "doc": "Absent means the reference scan did not run — a third state, not \"none\"."
         },
         {
+          "name": "withheld",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
