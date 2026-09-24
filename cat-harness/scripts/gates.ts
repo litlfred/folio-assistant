@@ -151,6 +151,27 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
+    // `as-is.html` and bootstrap's `.md`-rendered siblings — which inherit no
+    // layout and so no sidebar.
+    //
+    // `ci-only` for the same reason as `mount-instance-docs`: it WRITES INTO a
+    // built `./_site`, which only the deploy and staging jobs produce, so there
+    // is nothing for it to operate on in the fast set. Its logic is pinned by
+    // `standalone-rail.test.ts` in `bun test`, over a fixture site carrying one
+    // page per case, and `bun run preview:site` builds a site to run it on.
+    //
+    // Its ORDERING is the part no unit test can hold: it must run after every
+    // generator that writes a page, and a version that ran 142 lines earlier
+    // missed ten pages silently. That is asserted by
+    // `check:invocation-parity`, which requires both workflows to run it.
+    match: "rail-standalone-pages",
+    kind: "ci-only",
+    reason:
+      "writes into the built ./_site that only the deploy and staging jobs produce; its logic is " +
+      "pinned by standalone-rail.test.ts in `bun test`, and its ordering by check:invocation-parity",
+  },
+  {
     // The unattended PR sweep and its `gh` plumbing. `ci-only` rather than a
     // gate, for the same reason the script itself is exempt: a CI job asking
     // whether a commit has a CI run has already answered it. Bean `3pqn`.

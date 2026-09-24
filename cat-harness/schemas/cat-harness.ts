@@ -1362,9 +1362,10 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    *
    * ## Judgement applied: the methodologies take `analyst`, and nothing else does
    *
-   * `methodologies`, `methodology-crdm`, `methodology-raci` and
-   * `smart-kg-methodologies` — the four directories that hold or index a
-   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * `methodologies` and `folio-assistant-core-methodologies` — the
+   * directories that hold a methodology and carry a theme. (`methodology-crdm`
+   * and `methodology-raci` went 2026-09-22; `smart-kg-methodologies` went
+   * 2026-09-24, bean `wg7r`, when GRADE became a skill plus code lists.) MADR and SDLC are named in the instruction and do not exist
    * yet; they inherit the answer when they are declared, which is the point of
    * writing it on the directory rather than per page.
    *
@@ -3460,7 +3461,7 @@ function pathContains(outer: string, inner: string): boolean {
  *
  * Scope matters and is honoured: a `repository`-scoped entry and an
  * instance-relative one resolve against different roots, so they are
- * compared by ABSOLUTE path where one is available. `smart-kg/methodologies/`
+ * compared by ABSOLUTE path where one is available. `smart-base/methodologies/`
  * is repository-scoped precisely so it lifts out whole, and reading it as a
  * child of an instance-relative `methodologies/` would be wrong on both the
  * path and the intent.

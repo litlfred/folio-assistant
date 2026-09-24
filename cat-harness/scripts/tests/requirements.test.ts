@@ -12,11 +12,11 @@ import {
   RequirementRefSchema,
   RequirementSchema,
   requirementRef,
-} from "../../../bootstrap-tools/schemas/requirement.ts";
+} from "../../schemas/requirement.ts";
 import { RequirementSchema as HarnessRequirementSchema } from "../../schemas/skill-package.ts";
 import { TestRunSchema } from "../../schemas/test-run.ts";
 import { checkRequirementPage, collisions, declaredDirFor } from "../check-requirements.ts";
-import { bootstrapSchemaDirs, scan } from "../check-bootstrap-concepts.ts";
+import { bootstrapSchemaDirs, bootstrapSchemaSources, scan } from "../check-bootstrap-concepts.ts";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
@@ -132,6 +132,7 @@ describe("the harness's Requirement is built on it", () => {
 describe("a test run lists the requirements it checks", () => {
   const run = {
     $schema: "folio-test-run/v1",
+    skill: "content-test",
     subject: "glass navigation",
     data: { hash: "abc123def456", inputs: ["a.json"] },
     process: { hash: "123abc456def", inputs: ["b.ts"] },
@@ -193,5 +194,10 @@ describe("check:bootstrap-concepts", () => {
   });
   test("reads the declared schema directories — never an empty list", () => {
     expect(bootstrapSchemaDirs(REPO).length).toBeGreaterThan(0);
+  });
+  test("…and the Zod sources they are generated from, not the generator's helpers", () => {
+    const names = bootstrapSchemaSources(REPO).map((p) => p.split("/").pop());
+    expect(names).toContain("requirement.ts");
+    expect(names).not.toContain("cat-harness.ts");
   });
 });

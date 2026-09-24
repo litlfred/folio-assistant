@@ -64,6 +64,10 @@
           "detail": "no role carries \"generalise-the-fix\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "grade",
+          "detail": "no role carries \"grade\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "graph-rendering",
           "detail": "no role carries \"graph-rendering\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -189,6 +193,18 @@
       "result": "pass",
       "findings": []
     },
+    "test-run-skill-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-conforms": {
+      "result": "pass",
+      "findings": []
+    },
+    "test-run-checkable": {
+      "result": "pass",
+      "findings": []
+    },
     "skill-contract-claimed": {
       "result": "pass",
       "findings": []
@@ -203,10 +219,6 @@
         {
           "where": "beans/beans.json",
           "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
-          "where": "bootstrap-tools/bootstrap-tools.json",
-          "detail": "nested instance \"bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "bootstrap/bootstrap.json",
@@ -264,7 +276,7 @@
     }
   },
   "totals": {
-    "pass": 12,
+    "pass": 15,
     "fail": 3,
     "n/a": 0,
     "unknown": 0

@@ -30,14 +30,20 @@ classDiagram
       criteria [1] map~object[]~
       updated_at [1] string
     }
+    class cat_harness_qa_folio_test_run_v1_Case["Case"] {
+      <<json: TestRunSchema>>
+      input [1] any
+      output [1] any
+    }
     class cat_harness_qa_folio_test_run_v1_folio_test_run_v1["folio-test-run/v1"] {
       <<json: TestRunSchema>>
       $schema [1] 'folio-test-run/v1'
+      skill [1] string
       subject [1] string
       data [1] object
       process [1] object
       outcome [1] map~any~
-      requirements [0..*] string[]
+      cases [0..*] Case[]
       updated_at [1] string
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
@@ -113,10 +119,12 @@ classDiagram
     }
   }
   cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+  cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
   cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
   cssClass "cat_harness_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "cat_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_block_qa_v1_block_qa_v1" fa_uml_kind_qa
+  cssClass "cat_harness_qa_folio_test_run_v1_Case" fa_uml_kind_qa
   cssClass "cat_harness_qa_folio_test_run_v1_folio_test_run_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_qa_witness_v1" fa_uml_kind_qa
   cssClass "cat_harness_qa_qa_results_v1" fa_uml_kind_qa

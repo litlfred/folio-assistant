@@ -221,11 +221,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-4 of 5 published.
+3 of 4 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})

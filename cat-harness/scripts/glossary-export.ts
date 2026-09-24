@@ -120,7 +120,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
+import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
@@ -234,8 +234,8 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
           laneId,
           laneName: /name="([^"]+)"/.exec(attrs)?.[1] ?? null,
           documentation: doc !== undefined && doc.length > 0 ? doc : null,
-          roleRef: /<folio:role[^>]*\bref="([^"]+)"/.exec(body)?.[1],
-          performerVaries: /<folio:role[^>]*\bvariable="true"/.test(body),
+          roleRef: ownElementPattern(xml, "role", String.raw`[^>]*\bref="([^"]+)"`, "").exec(body)?.[1],
+          performerVaries: ownElementPattern(xml, "role", String.raw`[^>]*\bvariable="true"`, "").test(body),
           activities: [...members].filter((x) => acts.has(x)).length,
         });
       }

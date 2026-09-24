@@ -5,7 +5,7 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md) — do not edit here.
+> Generated from [`cat-harness/skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md) — do not edit here. Typed contract: [schema reference](../skills/crdm-detect.html).
 >
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-detect.md){: .fa-edit-source }
 

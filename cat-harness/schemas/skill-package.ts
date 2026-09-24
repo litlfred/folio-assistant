@@ -39,7 +39,7 @@ import {
   RequirementStatementFields,
   refineRequirement,
   refineStatement,
-} from "../../bootstrap-tools/schemas/requirement.ts";
+} from "./requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -266,7 +266,7 @@ export const RequirementStatementRefSchema = z
 
 /*
  * BUILT ON THE BOOTSTRAP BASE (issue #1164, owner: "1 + 2"). The base in
- * `bootstrap/schemas/requirement.schema.json` (Zod source: `bootstrap-tools/schemas/requirement.ts`) is what every harness gets — the
+ * `bootstrap/schemas/requirement.schema.json` (Zod source: `cat-harness/schemas/requirement.ts`) is what every harness gets — the
  * statement, its level, the functional and non-functional fields. Neither
  * lists what satisfies a statement: that pointer is held by the satisfier
  * (`satisfies:`, above). The base's refinements are re-applied, because a

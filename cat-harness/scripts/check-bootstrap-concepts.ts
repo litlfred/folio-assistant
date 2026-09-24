@@ -16,21 +16,27 @@
  *
  * ## Beside bean `iwtn`'s test, not instead of it
  *
- * `bootstrap-tools/schemas/graph.test.ts` holds ALL of `bootstrap/` to a
- * stricter list — no layer above it may be named either (`cat-harness`,
- * `folio`), because bootstrap is self-definitional. That list cannot apply to
- * `bootstrap-tools/`, which is the bridge and names cat-harness by design. This
- * check covers the narrower rule — no OUTSIDE concept — across the declared
- * schema directories of BOTH instances, so the tooling layer's schemas are
- * held to it too. Where the two overlap (`bootstrap/schemas/`), they agree.
+ * `cat-harness/schemas/graph.test.ts` holds ALL of `bootstrap/` to a stricter
+ * list — no layer above it may be named either (`cat-harness`, `folio`),
+ * because bootstrap is self-definitional. This check covers the narrower
+ * rule, no OUTSIDE concept, and applies it to one thing that test does not
+ * read: the Zod SOURCES bootstrap's schemas are generated from. Those moved
+ * into `cat-harness/schemas/` when the `bootstrap-tools` instance was retired
+ * (bean `319n`), where they may name cat-harness, but still may not name an
+ * outside concept, since their text becomes the published schema.
  *
- * ## Which directories
+ * ## Which files
  *
- * READ FROM THE DECLARATIONS, not hardcoded: every directory that a bootstrap
- * instance (`bootstrap/`, `bootstrap-tools/`) declares with the `schemas`
- * graph kind. An instance named here whose declaration cannot be read is a
- * failure, not a skip — a check that silently scanned nothing would report
- * clean over exactly the files it exists to guard.
+ * Both halves are DERIVED, not listed:
+ *
+ * - every directory the `bootstrap` instance declares with the `schemas`
+ *   graph kind, where the published `*.schema.json` live; and
+ * - every `../schemas/*.ts` module `gen-bootstrap-schemas.ts` imports, which
+ *   are the sources those documents are generated from.
+ *
+ * A declaration that cannot be read is a failure, not a skip. A check that
+ * silently scanned nothing would report clean over exactly the files it
+ * exists to guard.
  *
  * ## What counts
  *
@@ -45,7 +51,7 @@ import { join, relative } from "node:path";
 const REPO = join(import.meta.dir, "..", "..");
 
 /** The bootstrap instances, by root directory. */
-const BOOTSTRAP_INSTANCES = ["bootstrap", "bootstrap-tools"];
+const BOOTSTRAP_INSTANCES = ["bootstrap"];
 
 /** Each forbidden term, with the reason a reader will see if it appears. */
 export const FORBIDDEN: { pattern: RegExp; why: string }[] = [
@@ -67,7 +73,7 @@ function filesUnder(dir: string): string[] {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) out.push(...filesUnder(p));
     // A TEST is not a schema, and one that lists the forbidden names in order
-    // to forbid them (`bootstrap-tools/schemas/graph.test.ts`) is not a leak.
+    // to forbid them (`cat-harness/schemas/graph.test.ts`) is not a leak.
     else if (/\.(ts|json)$/.test(name) && !/\.test\.ts$/.test(name)) out.push(p);
   }
   return out;
@@ -88,6 +94,20 @@ export function bootstrapSchemaDirs(repo: string): string[] {
   return dirs;
 }
 
+/** The Zod modules the bootstrap schemas are GENERATED from, read off the generator's imports. */
+export function bootstrapSchemaSources(repo: string): string[] {
+  const gen = join(repo, "cat-harness", "scripts", "gen-bootstrap-schemas.ts");
+  const text = readFileSync(gen, "utf8");
+  const out = new Set<string>();
+  // Only a module imported FOR A SCHEMA is a source: the generator also
+  // imports `cat-harness.ts` for its instance helpers, and that module's text
+  // never reaches a published document.
+  for (const m of text.matchAll(/import\s*\{([^}]*)\}\s*from\s+"\.\.\/schemas\/([a-z0-9-]+\.ts)"/g)) {
+    if (/\b\w+Schema\b/.test(m[1]!)) out.add(join(repo, "cat-harness", "schemas", m[2]!));
+  }
+  return [...out].sort();
+}
+
 export function scan(files: { path: string; text: string }[]): Finding[] {
   const found: Finding[] = [];
   for (const f of files) {
@@ -103,8 +123,9 @@ export function scan(files: { path: string; text: string }[]): Finding[] {
 
 if (import.meta.main) {
   const dirs = bootstrapSchemaDirs(REPO).filter((d) => existsSync(d));
-  const files = dirs.flatMap(filesUnder).map((p) => ({ path: relative(REPO, p), text: readFileSync(p, "utf8") }));
-  console.log(`Bootstrap schemas — ${files.length} file(s) in ${dirs.length} declared schema director${dirs.length === 1 ? "y" : "ies"}`);
+  const sources = bootstrapSchemaSources(REPO).filter((p) => existsSync(p));
+  const files = [...dirs.flatMap(filesUnder), ...sources].map((p) => ({ path: relative(REPO, p), text: readFileSync(p, "utf8") }));
+  console.log(`Bootstrap schemas — ${files.length} file(s): ${dirs.length} declared schema director${dirs.length === 1 ? "y" : "ies"}, and ${sources.length} Zod source(s) they are generated from`);
   // NEVER A CLEAN RUN OVER NOTHING.
   if (files.length === 0) {
     console.error("  ✗ no bootstrap schema file was found — that is not the same as none naming an outside concept");

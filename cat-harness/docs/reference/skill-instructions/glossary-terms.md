@@ -44,11 +44,49 @@ Core's `glossary` graph kind. Core declares `glossary/` with
 A candidate is never presented as a definition. An extractor writes
 candidates; only a person moves one to `authored`.
 
-## IRIs
+## Conventions
 
-A term's IRI is `<instance namespace>glossary/<scheme id>/<term id>`, in the
-instance's namespace, never the asset's: moving the asset must not move the
+The owner, 2026-09-24: *"What does folio-assistant do? B should follow. Update
+skills so known."* Every folio follows these; none re-decides them.
+
+**The instance namespace.** A term's IRI is
+`<instance namespace>glossary/<scheme id>/<term id>`, and the instance
+namespace is `<publication root><instance stub>/ns#` (`instanceNs` in
+`folio-assistant-core/scripts/glossary-page.ts`; `schemeIri` and `termIri` in
+`folio-assistant-core/schemas/glossary.ts`). For example:
+
+| instance | namespace |
+|---|---|
+| `folio-assistant-core` | `https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#` |
+| `ihris` (its own site) | `https://litlfred.github.io/ihris/ihris/ns#` |
+
+The namespace is never the asset's path: moving the asset must not move the
 term (bean `lqo9`, 2026-09-21).
+
+**One ConceptScheme per code list.** This follows `schemas/code-list.ts`
+(`codeListToSkos`): *"a code is addressable and two lists may share a code
+without sharing a concept"*. The same code in two lists gives two concepts.
+A relation between them is a SKOS match, never a merge.
+
+**The basis of a match is recorded, never assumed.** A match comes from a
+mapping the repository verified, such as a FHIR `ConceptMap` whose
+equivalence implies one:
+- `equal`/`equivalent` gives `exactMatch`;
+- `wider`/`subsumes` gives `broadMatch`;
+- `narrower`/`specializes` gives `narrowMatch`;
+- nothing else gives a match.
+
+Any other basis needs the owner's explicit acceptance. One example is a
+`ValueSet` that binds a local code list to the external code system itself,
+so that the local code *is* the external code. When the owner accepts such a
+basis:
+- the scheme's `description` names the basis and the ruling;
+- the builder lists the accepted systems explicitly;
+- QA recomputes the matches from the same source.
+
+ihris's ISCO-08 lists to ESCO are the worked example (owner, 2026-09-24,
+litlfred/ihris#19). An IRI built from a publisher's pattern but never
+dereferenced says so.
 
 ## Then
 
@@ -60,6 +98,28 @@ document that does not validate and on a stale page.
 The harness's swimlane-role terms (`swimlane-glossary`, the
 [`swimlane-glossary`](swimlane-glossary.md) skill) are one more source the page
 links to, not copies of.
+
+## Extracted terms (bean `lqo9`, piece 1)
+
+`glossary:page` also extracts a `candidate` term from every knowledge-graph
+asset that carries a title and a description
+(`folio-assistant-core/scripts/glossary-extract.ts`): skills, Tool nodes, BPMN
+tasks and call activities, DMN decisions, and schema fields with a doc
+comment. One scheme per asset type per instance (`kg-skills`, `kg-tools`,
+`kg-bpmn-activities`, `kg-dmn-decisions`, `kg-schema-fields`), written to
+`generated/<instance>/<type>.glossary.json` inside core's `glossary/`.
+
+- They are generated. Never edit them: fix the asset, then re-run.
+- The `kg-` scheme prefix is reserved for them. An authored scheme that takes
+  it fails `check:glossary`.
+- A definition is the asset's own text, verbatim. An asset with no
+  description gives a candidate with no definition.
+- To promote one, author a term in a glossary of your own with a definition
+  you have checked, `status: authored`, and the same `source`.
+- BPMN lanes and roles are not extracted: the swimlane ledger carries them.
+- The page shows extracted terms apart from authored ones ("candidate,
+  extracted", and a "Show" filter), and only authored terms go into the
+  schema.org `DefinedTermSet`.
 
 ## Not here
 

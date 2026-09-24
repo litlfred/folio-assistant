@@ -31,7 +31,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, join, relative } from "node:path";
 import { parse as parseYaml } from "yaml";
 
-import { RequirementFields, RequirementSchema } from "../../bootstrap-tools/schemas/requirement.ts";
+import { RequirementFields, RequirementSchema } from "../schemas/requirement.ts";
 import { nestedDirectories, readDeclaration } from "../schemas/cat-harness.ts";
 
 const REPO = join(import.meta.dir, "..", "..");

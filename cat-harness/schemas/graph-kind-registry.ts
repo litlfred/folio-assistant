@@ -555,8 +555,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   //    would misrepresent the standard.
   //
   // Any layer may declare a directory of this kind: the harness carries the
-  // domain-neutral ones, `smart-kg` carries GRADE, because certainty-of-evidence
-  // grading belongs to WHO L1 guideline development rather than to the harness.
+  // domain-neutral ones, `smart-base` carries DIIG and core carries
+  // Doc-Researcher. GRADE is not a methodology node: since 2026-09-24 (bean
+  // `wg7r`) it is the `grade` skill with its vocabularies as code lists.
   methodology: {
     type: termIri("MethodologyGraph"),
     renderable: false,
@@ -1183,6 +1184,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
+      // Agent summaries of prose blocks, beside the blocks rather than in
+      // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
+      // The semantic half of its QA is `block-summaries` in check-l1-complete.
+      "folio-block-summaries/v1": { validator: "schemas/block-summary.ts#BlockSummariesSidecarSchema" },
     },
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
