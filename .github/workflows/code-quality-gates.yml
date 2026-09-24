@@ -372,6 +372,20 @@ jobs:
           bun run glossary:check
           bun run glossary:check:bootstrap
 
+      # Core's glossary (owner, 2026-09-23: "put glossary into
+      # folio-assistant-core"): every `folio-glossary/v1` document validates,
+      # and the glossary/ page and its SKOS JSON-LD are current.
+      - name: glossary page and SKOS
+        run: bun run check:glossary
+
+      # The agentic engine's after-check (#1180 step 5): every workflow
+      # instance's history as W3C PROV-O, with authorizeTask re-run on each
+      # step. ADVISORY (owner, 2026-09-23): findings are reported on the
+      # prov-qaqc/ page, never fatal. This fails only on stale outputs, a
+      # prov:Activity that does not validate, or an internal error.
+      - name: PROV-O QA/QC report
+        run: bun run check:prov-qaqc
+
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
       # 58 of 62 .pot templates are diagrams and none has a .po). It checks
@@ -601,9 +615,9 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `bootstrap-tools`, because bootstrap promises an Initiator it needs
-      # no tools and therefore cannot hold a `.ts` of its own. This is the
+      # `bootstrap`'s JSON Schemas are GENERATED from Zod in
+      # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
+      # needs no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
       # whether their output still matched their input.
@@ -611,7 +625,7 @@ jobs:
       # A red here means the Zod moved and the published document did not —
       # and that document sits at an `$id` consumers already follow.
       - name: bootstrap schemas are current
-        run: bun run bootstrap-tools:schemas:check
+        run: bun run bootstrap:schemas:check
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -820,6 +834,19 @@ jobs:
           # here; the general reverse needs the API and prints as undetermined
           # rather than as clean.
           bun run check:bean-issue-links
+          # Bean `8v0y`: a bean that carries a SKILL'S CONTRACT instead of
+          # pointing at it. `kn0t` held a second copy of
+          # ig-publisher-reduction.md and it had drifted in four places; the P1
+          # one turned "the navigation is DIFFED, and the difference is empty
+          # or explained entry by entry" into "navigation matches", which would
+          # have let a phase be declared done on an impression -- the first
+          # entry in that skill's own `Do not` list. NOT a similarity check:
+          # kn0t's three real drifts score Jaccard 0.25/0.54/0.33, all below
+          # any usable floor, because semantic drift is a REWRITE. Structural
+          # instead -- a table enumerating phases, each row carrying its own
+          # exit condition. Measured over the whole store: 0 of 888 beans, and
+          # 1 of 1 on kn0t as it stood before PR #1185.
+          bun run check:bean-restates-skill
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
@@ -1164,6 +1191,18 @@ jobs:
       # above states. Bean `7ofc`.
       - name: folio projection and viewer are current
         run: bun run folio:viz:check
+
+      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
+      # than an exception to it. The viewer-nav audit walks the whole docs
+      # tree, so its sidecar goes stale the moment anybody adds a generated
+      # page anywhere — gating on staleness would make a red mean "somebody
+      # else merged", which is the shape the owner ruled ungated on
+      # 2026-09-20. A page that WAS railed and is not any more is the author
+      # of the diff, every time. Staleness and the still-unwired pages are
+      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # Bean `edx7`.
+      - name: viewer pages keep the navbar they had
+        run: bun run check:viewer-nav
 
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each

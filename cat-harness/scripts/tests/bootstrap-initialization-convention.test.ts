@@ -106,7 +106,7 @@ describe("the README tells an agent the same path the code computes", () => {
   test("the convention is stated in ONE place, not echoed into the skill", () => {
     // `confirm-harness.md` deliberately does NOT repeat the path. It used to,
     // and this test asserted it did — two copies of a convention are two
-    // things to keep in step, and the README is where an Initiator is sent.
+    // things to keep in step, and the README is where a Bootstrapping Agent is sent.
     // What the skill owns is the CONTRACT (at most one harness); what the
     // README owns is WHERE that harness keeps its instructions.
     const skill = readFileSync(join(REPO_ROOT, "bootstrap", "skills", "confirm-harness.md"), "utf-8");

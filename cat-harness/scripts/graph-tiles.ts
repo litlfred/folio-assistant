@@ -352,7 +352,6 @@ export function withTileCounts(
  *
  * | subject | declared directory id |
  * |---|---|
- * | `bootstrap-tools` | `bootstrap-tools-schemas` |
  * | `detangle` | `detangle-schemas` |
  * | `large-datasets` | `large-datasets-schemas` |
  * | **`folio-assistant-core`** | **`folio-assist-core-schemas`** |

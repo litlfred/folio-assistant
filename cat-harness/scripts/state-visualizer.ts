@@ -131,7 +131,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
@@ -146,6 +146,7 @@ import {
 import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
+import { withViewerNav } from "./viewer-page.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -434,8 +435,20 @@ export function prunableDashboards(site: string, wantedIds: readonly string[]): 
   return owned.map((dir) => join(dir, "index.html")).sort();
 }
 
-/** One generated file, with the `--check` contract every generator here uses. */
+/**
+ * One generated file, with the `--check` contract every generator here uses.
+ *
+ * THE NAVBAR IS APPLIED HERE, before the staleness comparison, because this is
+ * this generator's single write — bean `edx7`, and the same chokepoint rule the
+ * shared `makeEmit` follows. Applying it after the comparison would make the
+ * gate green over pages that gain a rail only when somebody runs the generator.
+ *
+ * Its dashboard pages are keyed by GRAPH ID (`beans`, `todos`, `qa`), not by
+ * instance, so the rail lists this instance's graphs and no instance is
+ * inferred from the id.
+ */
 function emit(path: string, content: string): void {
+  content = withViewerNav(content, path, { built: basename(ROOT), docsRoot: SITE }) ?? content;
   const rel = relative(ROOT, path);
   if (check) {
     if (!existsSync(path)) {

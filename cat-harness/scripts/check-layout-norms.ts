@@ -5,7 +5,7 @@
  * ## The norm, in one sentence
  *
  * An instance's assets live at `<stub>/<asset>` — `cat-harness/skills/`,
- * `who-iris/library/`, `smart-kg/methodologies/`. The owner, 2026-09-22:
+ * `who-iris/library/`, `smart-base/methodologies/`. The owner, 2026-09-22:
  * *"dont bury sub-graph assets. same for `<stub>/skills`, etc."*
  *
  * ## What it measures, against the owner's NEWER ruling

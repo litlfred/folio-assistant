@@ -51,6 +51,7 @@ import { basename, dirname, join, relative, resolve, sep } from "path";
 import { readDeclaration, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
+import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
 import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
@@ -2235,10 +2236,17 @@ function main(): number {
       rel: `who-iris/${key}`,
       html,
     })),
+    // THE NAVBAR GOES ON THE SITE SIDE ONLY — bean `edx7`.
+    //
+    // The split is already here and it is the right one. `siteFiles` are
+    // cat-harness's own viewers of this catalogue, and the owner named
+    // `/cat-harness/catalogue/who-iris/` as a page that SHOULD carry the rail.
+    // `files` are the REPLICA, copied to look like IRIS; folio-assistant's
+    // chrome on those would be the opposite of what a replica is for.
     ...[...siteFiles].map(([abs, html]) => ({
       abs,
       rel: relative(REPO_ROOT, abs),
-      html,
+      html: withViewerNav(html, abs, { built: basename(HARNESS_ROOT), docsRoot: join(HARNESS_ROOT, siteDirFor(HARNESS_ROOT)) }) ?? html,
     })),
   ];
   for (const { abs, rel, html } of targets) {

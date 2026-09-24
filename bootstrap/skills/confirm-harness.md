@@ -8,13 +8,13 @@ description: >
 
 # Which harness, and where
 
-**You are the Initiator.** You may narrow; only the Requestor may decide.
+**You are the Bootstrapping Agent.** You may narrow; only the Requestor may decide.
 
 ## The contract
 
 | | |
 |---|---|
-| **in**, from the Initiator | 0 or more harnesses · 0 or more locations |
+| **in**, from the Bootstrapping Agent | 0 or more harnesses · 0 or more locations |
 | **out**, from the Requestor | **0 or 1** harness · 0 or more locations |
 
 **At most one.** A list of two harnesses is not an answer, and you may not
