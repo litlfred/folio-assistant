@@ -61,6 +61,7 @@ import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from ".
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
@@ -647,18 +648,16 @@ ${mount}
 }
 
 let stale = 0;
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
+/**
+ * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ *
+ * `emit` writes what it is given; `emitPage` is the same write with the rail,
+ * and takes the nav per call because a SUBJECT page lists that subject's
+ * graphs while the index lists this instance's. Both are facts this generator
+ * already holds, and neither is parsed back out of a path it just composed.
+ */
+const emit = makeEmit({ check, onStale: () => { stale++; } });
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 /** `emit` for a binary file: same check-or-write contract, compared byte for byte. */
 function emitBytes(path: string, content: Buffer): void {
@@ -869,10 +868,11 @@ if (import.meta.main) {
     if (!e.avatar) continue;
     emitBytes(join(site, e.avatar.href.slice(1)), readFileSync(join(repoRoot, e.avatar.src)));
   }
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
   }
 
 

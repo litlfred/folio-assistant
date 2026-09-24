@@ -402,8 +402,9 @@ export interface SkillDefinition {
    * (`UserRole`), 3 were BPMN roles. Eight of the 51 were `reader`, which is
    * not a `UserRole` either; that tier is spelled `viewer`.
    *
-   * And nothing enforced any of it. `src/core/rbac.ts` is header-driven and
-   * every route hardcodes its own minimum, so a skill declaring
+   * And nothing enforced any of it. `src/core/rbac.ts` was header-driven and
+   * every route hardcoded its own minimum (it asks the ODRL policies since
+   * issue #1207), so a skill declaring
    * `roles: ["reader", "collaborator", "owner"]` beside a working RBAC module
    * read as gated and was not. That is why it was removed rather than left:
    * dead weight is cheap, but a false claim of enforcement is not.

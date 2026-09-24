@@ -313,6 +313,14 @@ one. What this buys:
 **Identity is not here.** Which login is which actor is the data store's to
 know (owner, 2026-09-23). No actor file and no policy carries a login.
 
+**Who reads all three before a task runs:** the BPMN executor. Before any task
+or decision is recorded, `authorizeTask` asks whether the actor is
+authenticated, eligible for the lane's role (`roles`), and permitted by policy
+to `perform-task` here and on this content. A role mismatch or a `deny`
+refuses; `unknown` is recorded while the rollout is advisory. The HTTP routes
+ask the same policies through `src/core/rbac.ts`. See
+[`task-authorization`](task-authorization.md), issue #1207.
+
 **Adding a permission:** declare the action in `permissions.json` with its
 `includedIn`, then add a rule to a policy in `policies/`. Never add a
 `permissions` list to an actor file: the audit reads it (an unmigrated
