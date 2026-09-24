@@ -1,3 +1,8 @@
+---
+input: schemas/skills/document-authoring/input.schema.json
+output: schemas/skills/document-authoring/output.schema.json
+---
+
 # document-authoring
 
 Author a **document** folio: policy guidance, a standard, a report, a

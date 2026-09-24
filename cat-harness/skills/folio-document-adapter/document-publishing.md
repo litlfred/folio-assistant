@@ -1,3 +1,8 @@
+---
+input: schemas/skills/document-publishing/input.schema.json
+output: schemas/skills/document-publishing/output.schema.json
+---
+
 # document-publishing
 
 Take a document folio from corpus to published artifact — without a TeX

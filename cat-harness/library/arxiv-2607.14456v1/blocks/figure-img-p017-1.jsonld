@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p017-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p017-1.png",
+  "pageStart": 17,
+  "pageEnd": 17,
+  "narrative": {
+    "text": "Figure 8, the Deal workflow. From Start it receives a deal-type preference as input and reaches a \"Deal Type Preference?\" gateway with three outgoing edges: \"Online\" to Fetch Online Deals, \"In-Store\" to Fetch In-Store Deals, and a third also labelled \"In-Store\" to Fetch Both Types of Deals — two edges carrying the same label to different tasks, which as drawn does not determine a unique path. All three converge on a \"Deals Found?\" gateway; Yes filters by user preferences, ranks by discount and relevance and presents the best deals, No informs the user there are none, and both reach End.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-017",
+  "sourceDocument": "library/arxiv-2607.14456v1/manifest",
+  "provenance": "ingested"
+}

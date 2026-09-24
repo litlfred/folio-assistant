@@ -331,7 +331,14 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
+| [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](../../methodologies/specification-compile |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
+
+## Content layer (folio-assistant-core)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Deep document research](deep-document-research.html) | `deep-document-research` | — | Renders `methodologies/doc-researcher.md` — Dong et al., arXiv:2510.21603v1 — |
 
 ## Large data sets (subsetting, materializing, publishing)
 

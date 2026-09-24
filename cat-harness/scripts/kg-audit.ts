@@ -44,6 +44,7 @@
 import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
@@ -101,7 +102,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
@@ -1253,6 +1254,51 @@ function unknownSkillGraphKinds(): KgFinding[] {
     .map(({ value, from }) => ({ where: from, detail: `names graph kind "${value}", which is not registered.` }));
 }
 
+/**
+ * A skill's `input:`/`output:` that is malformed or names a local file that is
+ * not there (#1168, B3b). An external https IRI is not fetched here.
+ */
+function brokenSkillContracts(): KgFinding[] {
+  const out: KgFinding[] = [];
+  for (const c of skillContracts(root).values()) {
+    for (const io of ["input", "output"] as const) {
+      const ref = c[io];
+      if (ref === undefined) continue;
+      const shape = contractRefProblem(ref);
+      const file = contractFile(root, ref);
+      if (shape) out.push({ where: c.from, detail: `${io}: ${ref} — ${shape}.` });
+      else if (file !== undefined && !existsSync(file)) {
+        out.push({ where: c.from, detail: `${io}: ${ref} — no such file in this instance.` });
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * A contract file no skill names (#1168, B3b). The skill points at its
+ * contract, so a contract nothing points at is specified for nobody.
+ */
+function unclaimedSkillContracts(): KgFinding[] {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const dir = join(instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas"), "skills");
+  if (!existsSync(dir)) return [];
+  const claimed = new Set<string>();
+  for (const c of skillContracts(root).values()) {
+    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
+  }
+  const out: KgFinding[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    for (const f of readdirSync(join(dir, e.name))) {
+      if (!f.endsWith(".schema.json")) continue;
+      const ref = relative(root, join(dir, e.name, f));
+      if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+    }
+  }
+  return out;
+}
+
 /** One declared `satisfies` ref, and who declared it. */
 interface Satisfier {
   /** `req:<requirement>#<statement key>`. */
@@ -1799,6 +1845,8 @@ function auditGraph(
       // the only place a mistyped claim can be caught.
       "satisfies-resolves": entry(badSatisfies),
       "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
+      "skill-contract-resolves": entry(brokenSkillContracts()),
+      "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );

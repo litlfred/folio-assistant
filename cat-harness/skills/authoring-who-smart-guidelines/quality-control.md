@@ -1,3 +1,8 @@
+---
+input: schemas/skills/quality-control/input.schema.json
+output: schemas/skills/quality-control/output.schema.json
+---
+
 # quality-control
 
 > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` ·
