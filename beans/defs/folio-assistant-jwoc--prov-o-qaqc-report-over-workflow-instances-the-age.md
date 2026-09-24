@@ -30,3 +30,11 @@ Issue #1180, step 5 of `docs/proposals/odrl-prov-actor-model.md`: the agentic en
 - **`litlfred` is NOT declared.** It is a GitHub login, and the earlier owner ruling puts the login → actor mapping in the data store only: "an actor file never carries a login" (`docs/proposals/odrl-prov-actor-model.md`, `role-model.md`). An actor file with `id: "litlfred"`, `kind: person`, described as the owner, would record exactly that mapping. Its 11 steps stay `undeclared-actor` until the owner decides either to lift the ruling for this case, or that history should name a declared actor (e.g. `owner`) and let the data store resolve the login.
 
 Findings, before and after (5 instances, 61 steps): `undeclared-actor` 61 → 11, `not-eligible` 0 → 1, `unknown` 61 → 61, `node-not-in-model` 4, `source-moved` 9; total 135 → 86.
+
+## Owner rulings, 2026-09-24 — actors settled
+
+- *"person acting w/ no login = reader/browser"*, confirmed *"Yes, exactly"*: the repository owner is the existing `owner` actor (no login in the file); workflow history names `owner`, and the login → `owner` mapping is the data store's alone. The 11 history steps recorded as the login are now recorded as `owner`. A person without a login is `cat-harness:anyone` (visualize, render). Written into `role-model.md`.
+- *"Allow agents as BA"*: `business-analyst` admits `agent`, and `claude` holds it. The one `not-eligible` finding (`BA_Submit`) is gone.
+- *"No aliases"* for the six moved glossary IRIs: nothing to do.
+
+PROV-O QA/QC after: `undeclared-actor` 0, `not-eligible` 0.

@@ -85,7 +85,9 @@ on:
         description: >
           Where the folio links the platform (a submodule, or a sibling
           checkout). If absent after checkout, the platform is checked out
-          there at `platform_ref`.
+          there at `platform_ref`. A path outside the workspace (a sibling
+          link such as `../folio-assistant`) is checked out inside it and
+          linked to that path (bean `zdfa`).
         required: false
         default: folio-assistant
         type: string
@@ -155,10 +157,21 @@ jobs:
           submodules: recursive
 
       - name: Locate the platform
+        # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
+        # path outside the checkout, where `actions/checkout` cannot write. So
+        # the platform is checked out INSIDE the workspace and linked to the
+        # path the folio names. The folio's builder shim and build command
+        # then resolve the same way in CI as on the author's machine.
         id: platform
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
         run: |
+          ABS=$(realpath -m "$PLATFORM_DIR")
+          case "$ABS/" in
+            "$GITHUB_WORKSPACE"/*) echo "checkout=$PLATFORM_DIR" >> "$GITHUB_OUTPUT"; echo "outside=false" >> "$GITHUB_OUTPUT" ;;
+            *) echo "checkout=.folio-platform" >> "$GITHUB_OUTPUT"; echo "outside=true" >> "$GITHUB_OUTPUT" ;;
+          esac
+          echo "abs=$ABS" >> "$GITHUB_OUTPUT"
           if [ -f "$PLATFORM_DIR/folio-assistant-core/schemas/changeset.ts" ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
@@ -172,7 +185,21 @@ jobs:
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
-          path: ${{ inputs.platform_dir }}
+          path: ${{ steps.platform.outputs.checkout }}
+
+      - name: Link the platform where the folio names it
+        if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
+        env:
+          ABS: ${{ steps.platform.outputs.abs }}
+        run: |
+          set -eu
+          if [ -e "$ABS" ]; then
+            echo "::error::$ABS exists but holds no platform; refusing to replace it"
+            exit 1
+          fi
+          mkdir -p "$(dirname "$ABS")"
+          ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
+          echo "linked $ABS -> the platform checked out in the workspace"
 
       - uses: oven-sh/setup-bun@v2
 
@@ -524,10 +551,21 @@ jobs:
           submodules: recursive
 
       - name: Locate the platform
+        # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
+        # path outside the checkout, where `actions/checkout` cannot write. So
+        # the platform is checked out INSIDE the workspace and linked to the
+        # path the folio names. The folio's builder shim and build command
+        # then resolve the same way in CI as on the author's machine.
         id: platform
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
         run: |
+          ABS=$(realpath -m "$PLATFORM_DIR")
+          case "$ABS/" in
+            "$GITHUB_WORKSPACE"/*) echo "checkout=$PLATFORM_DIR" >> "$GITHUB_OUTPUT"; echo "outside=false" >> "$GITHUB_OUTPUT" ;;
+            *) echo "checkout=.folio-platform" >> "$GITHUB_OUTPUT"; echo "outside=true" >> "$GITHUB_OUTPUT" ;;
+          esac
+          echo "abs=$ABS" >> "$GITHUB_OUTPUT"
           if [ -f "$PLATFORM_DIR/cat-harness/scripts/publish-main-site.ts" ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
@@ -541,7 +579,21 @@ jobs:
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
-          path: ${{ inputs.platform_dir }}
+          path: ${{ steps.platform.outputs.checkout }}
+
+      - name: Link the platform where the folio names it
+        if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
+        env:
+          ABS: ${{ steps.platform.outputs.abs }}
+        run: |
+          set -eu
+          if [ -e "$ABS" ]; then
+            echo "::error::$ABS exists but holds no platform; refusing to replace it"
+            exit 1
+          fi
+          mkdir -p "$(dirname "$ABS")"
+          ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
+          echo "linked $ABS -> the platform checked out in the workspace"
 
       - uses: oven-sh/setup-bun@v2
 

@@ -8,8 +8,10 @@ allowed-tools: Read Grep Glob TodoWrite AskUserQuestion
 satisfies:
   - "req:agent-workflow#work-is-visible"
 graph-kinds:
-  - boards
+  - beans
   - board-positions
+  - boards
+  - todos
 ---
 
 # Session Task Manager (`beans`)
