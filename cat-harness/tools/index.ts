@@ -25,6 +25,7 @@ import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
 import { sessionTools } from "./sessions.js";
+import { viewerTools } from "./viewers.js";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 
 // The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
@@ -2133,6 +2134,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // served over MCP, so it is a sibling module rather than a row in
     // `mcp.ts` — see that file's header on why the two are kept apart.
     ...sessionTools(t),
+
+    // The viewer generators, each declaring the graph kinds it renders
+    // (#1168 B7a). A sibling module for the same reason as `sessions.ts`.
+    ...viewerTools(t),
 
     ...mcpTools(t),
   ];

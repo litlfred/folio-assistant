@@ -312,6 +312,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/docs-auto-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Generated index pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory."
+        }
+      ],
+      "skos:notation": "docs-auto-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/external-schemas-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "External schemas viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the declared external schemas, and which of this instance's modules conform to each, as one page."
+        }
+      ],
+      "skos:notation": "external-schemas-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#external-schemas-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/feature-staging",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -389,6 +429,26 @@
       ],
       "skos:notation": "folio-init",
       "dcterms:source": "cat-harness/tools/mcp.ts#folio-init",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/folio-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Folio viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared folio directory as a browsable page over its published index."
+        }
+      ],
+      "skos:notation": "folio-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#folio-viewer",
       "skos:note": "candidate"
     },
     {
@@ -752,6 +812,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/library-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Library viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance."
+        }
+      ],
+      "skos:notation": "library-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#library-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/log-message",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -789,6 +869,26 @@
       ],
       "skos:notation": "mcp-capture",
       "dcterms:source": "cat-harness/tools/index.ts#mcp-capture",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/methodologies-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Methodologies viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the declared methodology graph as one page."
+        }
+      ],
+      "skos:notation": "methodologies-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#methodologies-viewer",
       "skos:note": "candidate"
     },
     {
@@ -949,6 +1049,26 @@
       ],
       "skos:notation": "pdf-cover",
       "dcterms:source": "cat-harness/tools/index.ts#pdf-cover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/processes-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Processes viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the declared BPMN processes as an index page and one page per diagram."
+        }
+      ],
+      "skos:notation": "processes-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#processes-viewer",
       "skos:note": "candidate"
     },
     {
@@ -1132,6 +1252,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/schemas-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Schemas viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared schema directory as a page per subject instance, over one shared data index."
+        }
+      ],
+      "skos:notation": "schemas-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#schemas-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/serve-rendering",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1249,6 +1389,26 @@
       ],
       "skos:notation": "stakeholder-map",
       "dcterms:source": "cat-harness/tools/mcp.ts#stakeholder-map",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/state-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "State graph viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in."
+        }
+      ],
+      "skos:notation": "state-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#state-viewer",
       "skos:note": "candidate"
     },
     {
@@ -1372,6 +1532,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tools-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Tools viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render this instance's Tool nodes, and the skills each satisfies, as one page."
+        }
+      ],
+      "skos:notation": "tools-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/translation-extract",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1472,6 +1652,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/translation-status-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translation status viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render the translation status of every declared translation-sources directory, per locale, as one page."
+        }
+      ],
+      "skos:notation": "translation-status-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#translation-status-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/translation-validate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1532,6 +1732,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/uploads-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Uploads viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared uploads directory's intakes as a page per subject instance."
+        }
+      ],
+      "skos:notation": "uploads-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#uploads-viewer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/user-auth",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1549,6 +1769,26 @@
       ],
       "skos:notation": "user-auth",
       "dcterms:source": "cat-harness/tools/mcp.ts#user-auth",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/voices-viewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Voices viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared voices directory as a page per subject instance."
+        }
+      ],
+      "skos:notation": "voices-viewer",
+      "dcterms:source": "cat-harness/tools/viewers.ts#voices-viewer",
       "skos:note": "candidate"
     },
     {

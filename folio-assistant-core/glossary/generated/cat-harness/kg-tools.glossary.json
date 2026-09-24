@@ -126,6 +126,22 @@
       "status": "candidate"
     },
     {
+      "id": "docs-auto-viewer",
+      "prefLabel": "Generated index pages",
+      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
+      "notation": "docs-auto-viewer",
+      "source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schemas-viewer",
+      "prefLabel": "External schemas viewer",
+      "definition": "Render the declared external schemas, and which of this instance's modules conform to each, as one page.",
+      "notation": "external-schemas-viewer",
+      "source": "cat-harness/tools/viewers.ts#external-schemas-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "feature-staging",
       "prefLabel": "Stage a branch's preview",
       "definition": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
@@ -155,6 +171,14 @@
       "definition": "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       "notation": "folio-init",
       "source": "cat-harness/tools/mcp.ts#folio-init",
+      "status": "candidate"
+    },
+    {
+      "id": "folio-viewer",
+      "prefLabel": "Folio viewer",
+      "definition": "Render each declared folio directory as a browsable page over its published index.",
+      "notation": "folio-viewer",
+      "source": "cat-harness/tools/viewers.ts#folio-viewer",
       "status": "candidate"
     },
     {
@@ -302,6 +326,14 @@
       "status": "candidate"
     },
     {
+      "id": "library-viewer",
+      "prefLabel": "Library viewer",
+      "definition": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+      "notation": "library-viewer",
+      "source": "cat-harness/tools/viewers.ts#library-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "log-message",
       "prefLabel": "Log a message to the discussion",
       "definition": "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
@@ -315,6 +347,14 @@
       "definition": "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
       "notation": "mcp-capture",
       "source": "cat-harness/tools/index.ts#mcp-capture",
+      "status": "candidate"
+    },
+    {
+      "id": "methodologies-viewer",
+      "prefLabel": "Methodologies viewer",
+      "definition": "Render the declared methodology graph as one page.",
+      "notation": "methodologies-viewer",
+      "source": "cat-harness/tools/viewers.ts#methodologies-viewer",
       "status": "candidate"
     },
     {
@@ -379,6 +419,14 @@
       "definition": "Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.",
       "notation": "pdf-cover",
       "source": "cat-harness/tools/index.ts#pdf-cover",
+      "status": "candidate"
+    },
+    {
+      "id": "processes-viewer",
+      "prefLabel": "Processes viewer",
+      "definition": "Render the declared BPMN processes as an index page and one page per diagram.",
+      "notation": "processes-viewer",
+      "source": "cat-harness/tools/viewers.ts#processes-viewer",
       "status": "candidate"
     },
     {
@@ -454,6 +502,14 @@
       "status": "candidate"
     },
     {
+      "id": "schemas-viewer",
+      "prefLabel": "Schemas viewer",
+      "definition": "Render each declared schema directory as a page per subject instance, over one shared data index.",
+      "notation": "schemas-viewer",
+      "source": "cat-harness/tools/viewers.ts#schemas-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "serve-rendering",
       "prefLabel": "Local rendering server",
       "definition": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
@@ -499,6 +555,14 @@
       "definition": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
       "notation": "stakeholder-map",
       "source": "cat-harness/tools/mcp.ts#stakeholder-map",
+      "status": "candidate"
+    },
+    {
+      "id": "state-viewer",
+      "prefLabel": "State graph viewer",
+      "definition": "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
+      "notation": "state-viewer",
+      "source": "cat-harness/tools/viewers.ts#state-viewer",
       "status": "candidate"
     },
     {
@@ -550,6 +614,14 @@
       "status": "candidate"
     },
     {
+      "id": "tools-viewer",
+      "prefLabel": "Tools viewer",
+      "definition": "Render this instance's Tool nodes, and the skills each satisfies, as one page.",
+      "notation": "tools-viewer",
+      "source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "translation-extract",
       "prefLabel": "Extract translatable strings",
       "definition": "Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated.",
@@ -590,6 +662,14 @@
       "status": "candidate"
     },
     {
+      "id": "translation-status-viewer",
+      "prefLabel": "Translation status viewer",
+      "definition": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+      "notation": "translation-status-viewer",
+      "source": "cat-harness/tools/viewers.ts#translation-status-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "translation-validate",
       "prefLabel": "Validate a translation",
       "definition": "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
@@ -614,11 +694,27 @@
       "status": "candidate"
     },
     {
+      "id": "uploads-viewer",
+      "prefLabel": "Uploads viewer",
+      "definition": "Render each declared uploads directory's intakes as a page per subject instance.",
+      "notation": "uploads-viewer",
+      "source": "cat-harness/tools/viewers.ts#uploads-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "user-auth",
       "prefLabel": "Who is asking, and what may they do",
       "definition": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
       "notation": "user-auth",
       "source": "cat-harness/tools/mcp.ts#user-auth",
+      "status": "candidate"
+    },
+    {
+      "id": "voices-viewer",
+      "prefLabel": "Voices viewer",
+      "definition": "Render each declared voices directory as a page per subject instance.",
+      "notation": "voices-viewer",
+      "source": "cat-harness/tools/viewers.ts#voices-viewer",
       "status": "candidate"
     },
     {
