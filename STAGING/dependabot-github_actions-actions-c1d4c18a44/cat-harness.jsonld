@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T19:39:38.173Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6b740efb58376d125d362f1f6fbb789c9e1a5f49",
-  "sourceCommitSha": "6b740efb58376d125d362f1f6fbb789c9e1a5f49",
-  "sourceCommitAt": "2026-09-24T19:37:49Z",
+  "generatedAt": "2026-09-24T19:54:54.604Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c7ebe2b8d96edb96a77a2f1ca53435bdde135bd6",
+  "sourceCommitSha": "c7ebe2b8d96edb96a77a2f1ca53435bdde135bd6",
+  "sourceCommitAt": "2026-09-24T19:52:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -1852,7 +1852,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/review-heatmap.md",
-      "instructionLines": 106,
+      "instructionLines": 119,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2927,12 +2927,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "task-authorization",
       "title": "Task authorization — four questions before every task",
-      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 307,
+      "instructionLines": 324,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5093,7 +5093,8 @@
       "permissionName": [
         "content-authoring",
         "review-comments",
-        "adjudication"
+        "adjudication",
+        "perform-task"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/collaborator"
     },
@@ -5109,7 +5110,8 @@
       "permissionName": [
         "content-authoring",
         "review-comments",
-        "adjudication"
+        "adjudication",
+        "perform-task"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/owner"
     },
@@ -39467,7 +39469,7 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/tool-types.schema.json#/$defs/Text",
-            "description": "The declared actor who would perform it; checked against the lane's role and the ODRL policies (issue #1207).",
+            "description": "Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for (issue #1207).",
             "required": false
           },
           {
@@ -39546,7 +39548,7 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-c1d4c18a44/tool-types.schema.json#/$defs/Text",
-            "description": "The declared actor who performed the step. Checked against the lane's role and the ODRL policies before anything is recorded (issue #1207).",
+            "description": "Who you say performed the step, written to the history. Authorization is decided on the principal GitHub vouches for, in strict mode (issue #1207).",
             "required": false
           },
           {
@@ -42410,8 +42412,8 @@
   ],
   "staging": {
     "branch": "dependabot/github_actions/actions-c1d4c18a44",
-    "sha": "f74063ef794fee7b5c74eb9749e8863fa9acff7d",
+    "sha": "37b1d1d5b828818376d7f3541a874513aded5f62",
     "pr": "915/merge",
-    "run": "36049457465"
+    "run": "36051127587"
   }
 }
