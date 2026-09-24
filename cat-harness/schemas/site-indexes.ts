@@ -209,6 +209,8 @@ export const LibraryIndexEntrySchema = z
     referencedBy: z
       .array(z.object({ kind: z.string(), instance: z.string(), from: z.string(), count: Count }).strict())
       .optional(),
+    /** Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt. */
+    withheld: z.string().min(1).optional(),
     avatar: z.object({ href: z.string(), src: z.string(), source: z.enum(["cover", "figure"]) }).strict().optional(),
     summaries: z
       .object({

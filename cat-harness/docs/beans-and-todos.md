@@ -2,6 +2,9 @@
 layout: default
 title: Beans and todos
 nav_order: 6
+documents:
+  - beans
+  - todos
 lang: en
 available_locales: ["en"]
 ---

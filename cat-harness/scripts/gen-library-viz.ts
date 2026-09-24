@@ -47,7 +47,7 @@
  *   bun run library:viz          # write
  *   bun run library:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join, relative, sep } from "node:path";
 
@@ -757,6 +757,24 @@ function emitBytes(path: string, content: Buffer): void {
   console.log(`  ✓ ${path}`);
 }
 
+/**
+ * Avatar copies under `avatarRoot/<instance>/` that no entry names — this
+ * generator's own stale output (bean `cw35`). `wanted` holds absolute paths.
+ * The directory is written by this generator alone, which is what makes a
+ * file in it that nothing names safe to call an orphan.
+ */
+export function orphanAvatars(avatarRoot: string, wanted: ReadonlySet<string>): string[] {
+  const out: string[] = [];
+  for (const inst of existsSync(avatarRoot) ? readdirSync(avatarRoot) : []) {
+    const d = join(avatarRoot, inst);
+    for (const f of existsSync(d) ? readdirSync(d) : []) {
+      const abs = join(d, f);
+      if (!wanted.has(abs)) out.push(abs);
+    }
+  }
+  return out.sort();
+}
+
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
   const g = readLibraryGraph([ROOT, repoRoot]);
@@ -923,7 +941,8 @@ if (import.meta.main) {
   // rows a reader opens cannot disagree.
   const blocksOf = new Map<string, LibraryBlock[]>();
   for (const e of g.entries) {
-    const blocks = readEntryBlocks(join(repoRoot, e.dir));
+    // A withheld entry (bean `cw35`) publishes no verbatim text.
+    const blocks = readEntryBlocks(join(repoRoot, e.dir), { verbatim: !e.withheld });
     blocksOf.set(e.id, blocks);
     e.summaries = tally(blocks.flatMap((b) => (b.summary ? [b.summary] : [])));
   }
@@ -963,6 +982,24 @@ if (import.meta.main) {
   for (const e of g.entries) {
     if (!e.avatar) continue;
     emitBytes(join(site, e.avatar.href.slice(1)), readFileSync(join(repoRoot, e.avatar.src)));
+  }
+  // AVATAR ORPHANS (bean `cw35`). A copy the graph no longer names stays
+  // committed AND published — the 2026-09-24 audit found both refused covers
+  // still served from here after their entries were withheld. This directory
+  // is written by this generator alone, so a file in it that no entry names
+  // is its own stale output: pruned on a write, a finding under `--check`.
+  {
+    const avatarRoot = join(site, "assets", "library", "avatars");
+    const wanted = new Set(g.entries.flatMap((e) => (e.avatar ? [join(site, e.avatar.href.slice(1))] : [])));
+    for (const abs of orphanAvatars(avatarRoot, wanted)) {
+      if (check) {
+        console.error(`  ✗ ${abs} is an orphan avatar — no entry names it`);
+        stale++;
+        continue;
+      }
+      rmSync(abs);
+      console.log(`  ✗ pruned orphan avatar ${abs}`);
+    }
   }
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));

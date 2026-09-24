@@ -9,7 +9,7 @@
  */
 import { describe, it, expect } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 import {
@@ -56,8 +56,18 @@ function instance(
   // A governing skill is declared by the SKILL since #1168 B7b, not by the
   // directory: a fixture asking for `skill: "x"` gets a skill file whose
   // front matter names the directory's kinds, and the directory names none.
-  const { skill, ...rest } = (coverage ?? {}) as Record<string, unknown>;
+  const { skill, docs, ...rest } = (coverage ?? {}) as Record<string, unknown>;
   const kinds = opts.graphKinds ?? ["cat-harness"];
+  // Likewise the docs page (#1168 B7c): a fixture asking for `docs: "x.md"`
+  // gets that page declaring the directory's kinds under `documents:`. Only
+  // when the page is meant to exist — a fixture naming a page it never
+  // writes is asking for an undocumented directory. The page sits INSIDE the
+  // instance, since a kind claim reaches only from an instance in reach.
+  if (typeof docs === "string" && (opts.realTargets ?? []).includes(docs)) {
+    const abs = join(root, docs);
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, `---\ntitle: doc\ndocuments:\n${kinds.map((k) => `  - ${k}\n`).join("")}---\n# doc\n`);
+  }
   if (typeof skill === "string") {
     mkdirSync(join(root, "skills"), { recursive: true });
     writeFileSync(

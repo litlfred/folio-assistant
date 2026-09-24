@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4l5q
 title: 'B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T19:50:21Z
-updated_at: 2026-09-24T19:50:21Z
+updated_at: 2026-09-24T19:59:59Z
 parent: folio-assistant-tr05
 ---
 

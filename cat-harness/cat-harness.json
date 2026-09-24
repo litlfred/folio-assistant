@@ -496,7 +496,6 @@
       "id": "tools",
       "_coverage_comment": "`docs` pointed at `cat-harness/docs/skills.md` until 2026-09-22 — a page titled \"Skills & roles\" whose headings are Skills, Roles and Capabilities, with no tools section in it. The tools graph had no documentation of its own and named a page about something else. That is worse than an absent ref, because an absent one is a legible gap while a ref that RESOLVES reports coverage: the check in force asks only whether the path exists, it did, and nothing ever flagged it. Found by applying the owner's instruction of 2026-09-21, \"keep tools and skills separate!\". `tool-graph.md` is the prose; `tools/index.md` is the generated view, and the two are different objects rather than two names for one.",
       "coverage": {
-        "docs": "cat-harness/docs/tool-graph.md",
         "visualiser": [
           {
             "ref": "cat-harness/docs/tools/index.md",
@@ -548,8 +547,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html"
       }
     },
     {
@@ -607,8 +605,7 @@
         "processes"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/processes/index.md",
-        "docs": "cat-harness/docs/publication-workflow.md"
+        "visualiser": "cat-harness/docs/processes/index.md"
       }
     },
     {
@@ -677,8 +674,7 @@
             "ref": "cat-harness/docs/beans/index.html",
             "icon": "beans"
           }
-        ],
-        "docs": "cat-harness/docs/beans-and-todos.md"
+        ]
       },
       "path": "beans/",
       "dependents": "reproduce",
@@ -691,8 +687,7 @@
     {
       "id": "todos",
       "coverage": {
-        "visualiser": "cat-harness/docs/todos/index.html",
-        "docs": "cat-harness/docs/beans-and-todos.md"
+        "visualiser": "cat-harness/docs/todos/index.html"
       },
       "path": "todos/",
       "dependents": "reproduce",
@@ -715,9 +710,6 @@
     },
     {
       "id": "interaction",
-      "coverage": {
-        "docs": "cat-harness/docs/agentic-harness.md"
-      },
       "path": "interaction/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -741,7 +733,6 @@
       "path": "uploads/",
       "dependents": "reproduce",
       "coverage": {
-        "docs": "cat-harness/docs/document-ingestion.md",
         "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count — 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library — which the library viewer cannot do by construction.",
         "visualiser": [
           {
@@ -760,7 +751,6 @@
       "path": "library/",
       "dependents": "reproduce",
       "coverage": {
-        "docs": "cat-harness/docs/document-ingestion.md",
         "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
       },
       "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
@@ -778,8 +768,7 @@
         "library"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html"
       }
     },
     {
@@ -792,8 +781,7 @@
         "library"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html"
       }
     },
     {
@@ -806,8 +794,7 @@
         "library"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html"
       }
     },
     {
@@ -818,10 +805,7 @@
       "description": "The core layer's library -- `arxiv-2510.21603v1` (Doc-Researcher), and nothing else. Same staging arrangement and the same reason as `who-iris-library` and `folio-assistant-sci-library` above: the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, `ingest-document`'s own destination list -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). `ingest-document` is what proved it: with the directory declared ONLY in `folio-assistant-core.json` it refused the destination as matching none, because it reads the list from here. Declared in both, exactly as the four siblings are.",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "docs": "cat-harness/docs/document-ingestion.md"
-      }
+      ]
     },
     {
       "id": "smart-base-library",
@@ -836,7 +820,6 @@
     {
       "id": "translation-sources",
       "coverage": {
-        "docs": "cat-harness/docs/translation-support.md",
         "visualiser": "cat-harness/docs/translation-status/index.html",
         "_visualiser_comment": "Bean lnur. This graph owed a visualiser and kg:audit said so — cat-harness declares several graphs with no published viewer and this was one. Generated by scripts/gen-translation-status.ts, which measures the .pot/.po files on each run. NOT a state-visualizer dashboard: that generator draws only STATE graphs, and translation-sources is the INPUT to injection rather than something a process writes as it runs, so it is correctly skipped there and always will be."
       },
@@ -850,7 +833,6 @@
     {
       "id": "folio",
       "coverage": {
-        "docs": "cat-harness/docs/content-types.md",
         "_visualiser_comment": "Bean 7ofc, on the owner's ruling of 2026-09-22: \"folio must be in cat-harness and visualizer owned by it\". `folio` is the only renderable kind — its CONTENT already comes out as the landing board via gen-landing-data — so check:subgraph-coverage never asked for this and owesVisualiser exempts the kind, exactly as it exempted library (jbx2) and voices (bu2q). What had no view was the GRAPH: which nodes exist, what each anchors to, its theme, where it was declared, and the links it carries. Generated by scripts/gen-folio-viz.ts, which re-reads the directories on every run and gives a declared-but-absent one a ROW rather than silence.",
         "visualiser": "cat-harness/docs/cat-harness/folio/index.html"
       },
@@ -940,8 +922,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
       }
     },
     {
@@ -991,8 +972,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md"
+        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html"
       }
     },
     {

@@ -1114,8 +1114,10 @@ export const SubgraphCoverageSchema = z.object({
    * behaviour rather than changing it.
    */
   visualiser: VisualiserDeclarationSchema.optional(),
-  /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
-  docs: z.string().min(1).optional(),
+  // NO `docs`: the documentation page says what it documents — a
+  // `documents:` list in its front matter (generated pages get it from their
+  // WebPage manifest) or `<meta name="documents">` — #1168 B7c,
+  // `scripts/docs-declarations.ts`. A waiver is still `exempt.docs` below.
   // NO `skill`: the governing skill is read from the SKILLS, whose front
   // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
   // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory

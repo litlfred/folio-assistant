@@ -724,6 +724,12 @@ function renderPage(page: WebPage): string {
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
+  // What the page documents (#1168 B7c): read from here by the coverage
+  // check, since the directory no longer names its page.
+  if (page.documents?.length) {
+    lines.push("documents:");
+    for (const d of page.documents) lines.push(`  - ${d}`);
+  }
   lines.push(`lang: ${SOURCE_LOCALE}`);
   if (locales.length > 0) {
     lines.push(`available_locales: ${JSON.stringify(locales)}`);
