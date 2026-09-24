@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 289,
+      "count": 290,
       "unit": "beans"
     }
   },
@@ -727,14 +727,14 @@
     {
       "id": "folio-assistant-61n5",
       "title": "qa-results parity test fails intermittently under bun run gates (2 of 4 local runs), never alone or in CI",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T07:09:46Z",
-      "updatedAt": "2026-09-23T07:09:46Z",
+      "updatedAt": "2026-09-24T12:40:45Z",
       "preview": "The test \"every family in the committed result matches the export's own field\" in cat-harness/scripts/tests/qa-results.test.ts failed in 2 of 4 local `bun run gates` runs on 2026-09-23, on diffs that don't touch kg-export (the a1lq and 423d work). It passed 3 of 3 plain `bun test` runs, passes when run alone, and passed in CI every time.\n\nIt compares the committed kg-export.qa-results.json against",
       "file": "beans/defs/folio-assistant-61n5--qa-results-parity-test-fails-intermittently-under.md"
     },
@@ -1331,14 +1331,14 @@
     {
       "id": "folio-assistant-b7wh",
       "title": "INGEST arXiv:2607.14456v1 (specialist BPMN-compiled agents) as evidence + a skill on the processes subgraph",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:25:37Z",
-      "updatedAt": "2026-09-23T22:26:10Z",
+      "updatedAt": "2026-09-24T00:15:16Z",
       "preview": "Owner, 2026-09-23: *\"ingest into library for use as evidence and skills as\nsubgraph on processes in cat-harness\"*.\n\nBorman, Wandabwa, Yu, Kannangara, Liu, Leontjeva and Ng, **\"Beyond Generalist\nLLMs: Specialist Agentic Systems for Structured Code Workflow Execution\"**,\nCommonwealth Bank of Australia. Workshop paper at SCALE, ICML 2026 (PMLR 306);\narXiv:2607.14456v1 [cs.SE], 16 July 2026. Open acce",
       "file": "beans/defs/folio-assistant-b7wh--ingest-arxiv260714456v1-specialist-bpmn-compiled-a.md"
     },
@@ -1541,14 +1541,14 @@
     {
       "id": "folio-assistant-ctp3",
       "title": "INGEST Doc-Researcher (arXiv:2510.21603v1) as a methodology subgraph in folio-assistant-core",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:08Z",
-      "updatedAt": "2026-09-23T21:15:39Z",
+      "updatedAt": "2026-09-24T00:15:16Z",
       "preview": "Owner's request, 2026-09-23: *\"ingest methdolofy subgraph. develop processes skills etc.\napply to folio-asst-core\"*, then *\"it is part of f-a-c subgraph\"*.\n\nDong et al., **\"Doc-Researcher: A Unified System for Multimodal Document Parsing and\nDeep Research\"** (arXiv:2510.21603v1, Huawei, 24 October 2025). Open access.\n\n## What went in\n\nFour new declared directories on `folio-assistant-core`, each d",
       "file": "beans/defs/folio-assistant-ctp3--ingest-doc-researcher-arxiv251021603v1-as-a-method.md"
     },
@@ -2033,15 +2033,15 @@
     {
       "id": "folio-assistant-j820",
       "title": "PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:17Z",
-      "updatedAt": "2026-09-23T21:15:20Z",
-      "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## Measured\n\n| | |\n|---|---|\n| document | `arxiv-2510.21603v1` (Dong et al., Doc-Researcher), staged, **not promoted** |\n| captioned figures in the text | **7** |\n| images `pdf-images.py` placed | **383** |\n",
+      "updatedAt": "2026-09-24T05:10:40Z",
+      "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
     },
     {
@@ -2399,14 +2399,14 @@
     {
       "id": "folio-assistant-n2l9",
       "title": "TASK AUTHORIZATION STRICT: grant perform-task per lane, count unknowns in kg:audit, then flip the engine to strict",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:52:59Z",
-      "updatedAt": "2026-09-23T22:52:59Z",
+      "updatedAt": "2026-09-24T17:20:57Z",
       "preview": "Follow-up to t490 / #1207 (PR #1214). The engine check is advisory because on 2026-09-23 no policy granted perform-task: 615 tasks/gateways, 0 permit, 574 unknown, 41 in lanes no declared actor may take.\n\n## Done when\n- [ ] a kg:audit criterion counts tasks whose eligible actors get unknown from authorizeTask (reporting before gating, with a vacuity guard)\n- [ ] perform-task rules, scoped by cat-h",
       "file": "beans/defs/folio-assistant-n2l9--task-authorization-strict-grant-perform-task-per-l.md"
     },
@@ -3201,6 +3201,20 @@
       "file": "beans/defs/folio-assistant-txut--review-visualiser-a-review-page-per-folio-showing.md"
     },
     {
+      "id": "folio-assistant-u19y",
+      "title": "THEMES PAGE: publish the theme sheet as themes/ on the site",
+      "status": "completed",
+      "type": "feature",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T13:46:49Z",
+      "updatedAt": "2026-09-24T13:46:49Z",
+      "preview": "Owner 2026-09-24: \"have the themes harness make themes/ page to browse\".\n\n## Summary of Changes\n- render-theme-sheet.ts: one renderer (sheetBody) now feeds both outputs — the standalone theme:sheet (images inlined) and a new site page, docs/themes/index.md (images linked via relative_url). Adds a \"worn by\" line per theme, read from the landing board's declared contributions, and each crop's pixel ",
+      "file": "beans/defs/folio-assistant-u19y--themes-page-publish-the-theme-sheet-as-themes-on-t.md"
+    },
+    {
       "id": "folio-assistant-u2ol",
       "title": "TYPESCRIPT 7: the compiler API exists, and every path to it is namespaced `unstable/`",
       "status": "todo",
@@ -3975,14 +3989,14 @@
     {
       "id": "folio-assistant-yscf",
       "title": "PROVENANCE REFUSAL: yl-3.pdf (ML resource optimization for hybrid ETL) is not admissible as evidence",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T22:30:19Z",
-      "updatedAt": "2026-09-23T22:30:55Z",
+      "updatedAt": "2026-09-24T00:17:04Z",
       "preview": "Owner attached `yl-3.pdf` on 2026-09-23 with no instruction, then chose *\"verify\nprovenance first, then report\"* over ingesting it. This is that report. **Nothing\nwas filed**; the PDF is not in `uploads/` and no library entry exists.\n\nThe document: \"Machine Learning–Based Resource Optimization for Hybrid ETL\nPipelines Across Multi-Cloud Platforms\", attributed to Anjali Sharma (Stanford),\nWei Chen ",
       "file": "beans/defs/folio-assistant-yscf--provenance-refusal-yl-3pdf-ml-resource-optimizatio.md"
     },

@@ -878,6 +878,9 @@ export const RULES: Rule[] = [
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
+      // User authN/authZ (issue #1207): asks GitHub and the ODRL policies,
+      // the harness's own declarations, and needs no folio.
+      "src/tools/auth.ts",
       "src/tools/folio-init.ts",
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
