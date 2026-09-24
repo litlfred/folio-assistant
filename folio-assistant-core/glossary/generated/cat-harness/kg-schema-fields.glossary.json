@@ -2036,13 +2036,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.catharnessdeclaration.publishable",
-      "prefLabel": "CatHarnessDeclaration.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.catharnessdeclaration.remotegraphs",
       "prefLabel": "CatHarnessDeclaration.remoteGraphs",
       "definition": "Graphs known but not held — {@link RemoteGraph}.",
@@ -2117,13 +2110,6 @@
       "prefLabel": "CatHarnessDeclarationSchema.needs",
       "definition": "The instances this one is BUILT ON — its layer stack, foundation first.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.catharnessdeclarationschema.publishable",
-      "prefLabel": "CatHarnessDeclarationSchema.publishable",
-      "definition": "Is this instance PUBLISHED for consumers outside this repository?",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable",
       "status": "candidate"
     },
     {
@@ -2306,6 +2292,20 @@
       "prefLabel": "MaterialisedDirectory.scope",
       "definition": "Which root `path` was resolved against; absent means the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory.scope",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.publication.host",
+      "prefLabel": "Publication.host",
+      "definition": "WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.host",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.publication.state",
+      "prefLabel": "Publication.state",
+      "definition": "WHAT STATE this instance's publication is in. `draft`, always, today.",
+      "source": "cat-harness/schemas/cat-harness.ts#Publication.state",
       "status": "candidate"
     },
     {
@@ -5015,6 +5015,69 @@
       "prefLabel": "IgMenuSourceSchema.ref",
       "definition": "The commit it was read at. Provenance.",
       "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakefileschema.role",
+      "prefLabel": "IntakeFileSchema.role",
+      "definition": "What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`.",
+      "source": "cat-harness/schemas/intake.ts#IntakeFileSchema.role",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakefileschema.type",
+      "prefLabel": "IntakeFileSchema.type",
+      "definition": "What the file is: `publication`, `full-item-record`, `item-page`, `upload`…",
+      "source": "cat-harness/schemas/intake.ts#IntakeFileSchema.type",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema._comment",
+      "prefLabel": "IntakeSchema._comment",
+      "definition": "Authored context for a person reading the file.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema._comment",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.doc_id",
+      "prefLabel": "IntakeSchema.doc_id",
+      "definition": "The upload directory's name.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.doc_id",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.item",
+      "prefLabel": "IntakeSchema.item",
+      "definition": "The catalogue node this capture is of, by its `id` (`item/<uuid>`).",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.item",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.record",
+      "prefLabel": "IntakeSchema.record",
+      "definition": "The Dublin Core record describing it, relative to this file.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.record",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakeschema.title",
+      "prefLabel": "IntakeSchema.title",
+      "definition": "A title — only for a capture nothing else describes.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakesourceschema.capturedat",
+      "prefLabel": "IntakeSourceSchema.capturedAt",
+      "definition": "The capture moment — not when this record was written.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "intake.intakesourceschema.capturedby",
+      "prefLabel": "IntakeSourceSchema.capturedBy",
+      "definition": "Who or what captured it.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSourceSchema.capturedBy",
       "status": "candidate"
     },
     {

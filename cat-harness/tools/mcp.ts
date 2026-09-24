@@ -503,7 +503,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
         inputs: [
           { name: "instance", schema: t("InstanceId"), required: true, arg: { positional: 0 } },
           { name: "activity", schema: t("NodeId"), required: true, arg: { positional: 1 } },
-          { name: "actor", schema: t("Text"), required: false, description: "The declared actor who would perform it; checked against the lane's role and the ODRL policies (issue #1207)." },
+          { name: "actor", schema: t("Text"), required: false, description: "Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for (issue #1207)." },
           { name: "target", schema: t("Text"), required: false, description: "The content it would act on, for the access check." },
         ],
         outputs: [{ name: "verdict", schema: t("Markdown"), description: "Permitted, refused with the reason, or advisory — and the task-authorization verdict." }],
@@ -536,7 +536,7 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
             required: false,
             description: "Facts a DMN table is evaluated against. Structured, so it is never a command-line word.",
           },
-          { name: "actor", schema: t("Text"), required: false, description: "The declared actor who performed the step. Checked against the lane's role and the ODRL policies before anything is recorded (issue #1207)." },
+          { name: "actor", schema: t("Text"), required: false, description: "Who you say performed the step, written to the history. Authorization is decided on the principal GitHub vouches for, in strict mode (issue #1207)." },
           { name: "target", schema: t("Text"), required: false, description: "The content the step acted on, for the access check." },
           // Free prose, and prose is not a command-line word — see
           // `tool-types` on why `Markdown` is excluded from INJECTION_SAFE.

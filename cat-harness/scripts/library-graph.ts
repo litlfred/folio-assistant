@@ -588,6 +588,39 @@ export function readEntryBlocks(dir: string): LibraryBlock[] {
   );
 }
 
+/**
+ * What an intake is a capture OF, as a title (bean `d4lb`).
+ *
+ * `folio-intake/v1` no longer repeats what another record says: it names a
+ * catalogue `item`, or a Dublin Core `record`, and carries its own `title`
+ * only when neither exists. So the title is looked up in that order — the
+ * intake's own, then the catalogue node (in the instance's declared
+ * `catalogue` graph), then the record's `dc.title` — and is `""` when none
+ * answers, which the uploads view already renders as untitled.
+ */
+function intakeTitle(intake: { title?: string; item?: string; record?: string }, dir: string): string {
+  if (intake.title) return intake.title;
+  if (intake.item) {
+    const instanceRoot = dirname(dirname(dir));
+    for (const cat of directoriesForGraph(instanceRoot, "catalogue")) {
+      const nodes = join(cat, "nodes");
+      if (!existsSync(nodes)) continue;
+      for (const f of readdirSync(nodes).filter((n) => n.endsWith(".json"))) {
+        const node = readJson<{ id?: string; title?: string }>(join(nodes, f));
+        if (node?.id === intake.item && node.title) return node.title;
+      }
+    }
+  }
+  if (intake.record) {
+    const rec = readJson<{ fields?: { element?: string; qualifier?: string; values?: { value?: string }[] }[] }>(
+      join(dir, intake.record),
+    );
+    const t = rec?.fields?.find((f) => f.element === "title" && !f.qualifier)?.values?.[0]?.value;
+    if (t) return t;
+  }
+  return "";
+}
+
 export function readLibraryGraph(roots: string[]): LibraryGraph | null {
   const repoRoot = repoRootFor(roots[0] ?? ".");
   const libDirs = new Set<string>();
@@ -715,6 +748,8 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       const intake = readJson<{
         doc_id?: string;
         title?: string;
+        item?: string;
+        record?: string;
         files?: unknown[];
       }>(join(sub, "intake.json"));
       // A subdirectory with no intake is not a queued unit and not an error
@@ -733,7 +768,7 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         ext: "",
         ingestedBy: hit,
         docId,
-        title: intake.title ?? "",
+        title: intakeTitle(intake, sub),
         declaredFiles: intake.files?.length ?? 0,
       });
       const e = byId.get(docId);

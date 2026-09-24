@@ -33,7 +33,7 @@
  * @module scripts/init-folio
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, realpathSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
 import { instanceDeclarationFilename } from "../schemas/cat-harness";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
@@ -534,13 +534,20 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
   // `issue_comment` refreshes the preview's review comments when a reviewer
   // writes one (bean 423d, the `review-comments` skill). The reusable
   // workflow's `comments` job runs only on it, and checks out no PR code.
+  // `push` to main publishes main's site at the gh-pages root, which is the
+  // "before" side every preview is compared with (bean 5uuf). Without it the
+  // before pictures are all missing and "view on main" 404s.
   const trigger = on
     ? `  pull_request:
     types: [opened, synchronize, reopened]
   issue_comment:
     types: [created, edited]
+  push:
+    branches: [main]
   workflow_dispatch:`
     : `  workflow_dispatch:
+  # push:
+  #   branches: [main]
   # pull_request:
   #   types: [opened, synchronize, reopened]
   # issue_comment:
@@ -549,7 +556,8 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
 
 # A before/after preview of this folio for every pull request, published to
 # STAGING/<branch>/ on gh-pages, with the ChangeSet (what changed, block by
-# block) beside it. The mechanics live in the platform's reusable workflow.
+# block) beside it. A push to main publishes main's site at the gh-pages root:
+# the "before" side. The mechanics live in the platform's reusable workflow.
 #
 ${header}
 
@@ -702,6 +710,25 @@ platform's \`document-intake\` skill.
 
 // ── Writer ───────────────────────────────────────────────────────
 
+/**
+ * The root of a git repository that ENCLOSES `root` without being it, or
+ * `null`. Bean `zdfa`: a folio scaffolded into a subfolder of an existing
+ * repository got its workflow at `<sub>/.github/workflows/`, which GitHub
+ * never reads, and a nested `git init`.
+ */
+export function enclosingRepoRoot(root: string): string | null {
+  let probe = resolve(root);
+  while (!existsSync(probe)) {
+    const up = dirname(probe);
+    if (up === probe) return null;
+    probe = up;
+  }
+  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: probe, stdio: "pipe" });
+  if (r.status !== 0) return null;
+  const top = realpathSync(r.stdout.toString().trim());
+  return top === realpathSync(probe) && probe === resolve(root) ? null : top;
+}
+
 function defaultAssistantPath(link: LinkMode): string {
   return link === "submodule" ? "folio-assistant" : "../folio-assistant";
 }
@@ -750,6 +777,9 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
     result.created.push(relPath);
   };
 
+  // Checked before anything is written: whether this folio is the root of
+  // its repository decides where its workflow can go (bean `zdfa`).
+  const enclosing = enclosingRepoRoot(root);
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
@@ -765,8 +795,21 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
-  write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
-  if (o.contentType !== "document") {
+  if (enclosing) {
+    // GitHub reads workflows only at the repository root, and the reusable
+    // workflow builds from the repository root. A caller written here would
+    // never run, and one written at the root would build the wrong directory,
+    // so neither is written, and the author is told.
+    result.notes.push(
+      `This folio is in a subfolder of the repository at '${enclosing}'. GitHub reads workflows only from ` +
+        `that repository's root .github/workflows/, and the platform's folio-staging.yml builds from the ` +
+        `repository root, so it cannot stage a folio below it yet. No staging workflow was written, so this ` +
+        `folio gets no preview. Scaffold it at a repository root to have one.`,
+    );
+  } else {
+    write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
+  }
+  if (!enclosing && o.contentType !== "document") {
     result.notes.push(
       "Staging previews are wired but OFF: set build_command in .github/workflows/staging.yml " +
         "and uncomment its pull_request trigger. Until then there is no STAGING build to review.",
@@ -879,7 +922,11 @@ function linkPlatform(
   result: InitFolioResult,
 ): void {
   const isRepo = existsSync(join(root, ".git"));
-  if (!isRepo) {
+  const enclosing = enclosingRepoRoot(root);
+  if (enclosing) {
+    // Never a repository nested inside another by accident (bean `zdfa`).
+    result.notes.push(`Inside the repository at '${enclosing}', so no git init: the folio is part of that repository.`);
+  } else if (!isRepo) {
     const init = spawnSync("git", ["init"], { cwd: root, stdio: "pipe" });
     if (init.status === 0) result.notes.push("Initialized a git repository.");
     else {
@@ -891,7 +938,8 @@ function linkPlatform(
   if (o.link === "sibling") {
     result.notes.push(
       `Linked as a sibling checkout at '${assistant}' — nothing to add to version control. ` +
-      `Note that a fresh clone of this folio will not have it.`,
+      `Note that a fresh clone of this folio will not have it; the staging workflow checks the platform ` +
+      `out in CI and links it at that path.`,
     );
     return;
   }

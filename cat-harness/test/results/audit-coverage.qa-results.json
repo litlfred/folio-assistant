@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T19:26:16.629Z",
+  "updated_at": "2026-09-24T19:51:59.618Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 150 gate(s), 68 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 151 gate(s), 68 criteria.",
       "count": 42,
       "entries": [
         {
@@ -323,7 +323,8 @@
           "gates": [
             "bun run check:glossary",
             "bun run glossary:check",
-            "bun run glossary:check:bootstrap"
+            "bun run glossary:check:bootstrap",
+            "bun run glossary:pot:check"
           ],
           "typed": false,
           "hasFiles": true
@@ -767,6 +768,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run glossary:pot:check",
             "bun run translate-bpmn:bootstrap:check",
             "bun run translate-bpmn:check",
             "bun run translate-kg-viewer:check",
@@ -938,7 +940,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 150 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 151 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }

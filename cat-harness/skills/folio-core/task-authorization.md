@@ -5,7 +5,7 @@ description: >
   is the actor authenticated, assigned to the role the lane binds, authorized
   by an ODRL policy to perform the task, and allowed access to the content it
   acts on? One generic check in the engine rather than a step drawn in some
-  diagrams; advisory today, and what would make it strict. Also how the HTTP
+  diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP
   routes ask the same policies. Triggers on: may this actor, who may perform,
   authorization, authentication, access rights, permission check, RBAC,
   rbac.ts, workflow_complete refused, not eligible for role.
@@ -207,25 +207,42 @@ ends by restating the weakness.
    ruled OpenFGA *later*). The policies do not change when it arrives. Only
    the place that evaluates them does.
 
-## Advisory now, and what makes it strict
+## Strict since 2026-09-24, and how it got there
 
-Owner: *"Advisory now."* In advisory mode:
+The engine started **advisory** (owner, 2026-09-23: *"Advisory now."*): a
+`deny` or a role mismatch refused, while `unknown`, `asserted` and `none` were
+allowed and recorded. **Measured then**, across 615 tasks and gateways:
+**0** had a `perform-task` permit, **574** were `unknown`, and **41** sat in a
+lane no declared actor could take. Strict mode would have stopped every
+process.
 
-- **`deny` refuses**, and so does **a role the actor may not take**. Both are
-  decisions somebody wrote down.
-- **`unknown` is allowed and recorded as `unknown`.** It is never read as
-  permit. `unknown` means no rule speaks to the request (`schemas/odrl.ts`,
-  "three answers, never two").
-- An `asserted`, `none` or undeclared actor is allowed and recorded.
+Three owner rulings on 2026-09-24 removed the reason:
 
-**Measured 2026-09-23**, across all 615 tasks and gateways in `processes/`
-(counting each once, with every eligible actor asked): **0** have a
-`perform-task` permit, **574** are `unknown`, and **41** sit in a lane no
-declared actor may take. Strict mode today would stop every process. Strict
-(`mode: "strict"`) additionally refuses `unknown`, `asserted`, `none` and an
-undeclared actor. Turn it on once policies grant `perform-task` for the lanes
-in use, and **re-measure first**: quote the count from a run, not from this
-paragraph.
+1. The actors are `owner`, `collaborator` and `viewer`, which are GitHub's
+   personal-account levels (see the table above).
+2. *"All write roles collapse"*, so `policies/http-gateway.jsonld` grants
+   `perform-task` to `owner` and `collaborator` in every lane. `viewer` gets
+   nothing beyond the anyone floor.
+3. The principal is the one **GitHub** vouches for (`githubPrincipalFor`), not
+   an actor name the caller types.
+
+So `workflow_gate` and `workflow_complete` run in **strict** mode
+(`ENGINE_MODE` in `src/tools/workflow.ts`). Strict refuses `deny`, a role
+mismatch, `unknown`, an asserted identity, nobody, and an undeclared actor.
+The `actor` a caller passes is still written to the history, as what it said
+it was acting as; it does not decide anything.
+
+**Measured 2026-09-24**, across all 628 tasks and gateways in `processes/`,
+with a GitHub-authenticated principal: `owner` 628 allowed, `collaborator`
+628 allowed, `viewer` 628 refused (`unknown`), nobody 628 refused.
+`scripts/tests/task-authorization-strict.test.ts` pins this, so re-run it
+rather than quoting this paragraph.
+
+**What strict costs:** if GitHub cannot be asked (no token, no network, rate
+limit), no step can be recorded. That is the price of authentication being
+real rather than typed. `authorizeTask` itself still defaults to advisory, so
+a reader that re-checks history (the PROV-O report below) is not strict by
+accident.
 
 ## The HTTP routes ask the same policies
 
@@ -261,6 +278,24 @@ pins that.
 3. **`deny`:** a prohibition was written on purpose. Ask the user; never
    remove it yourself ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
 
+## The engine writes its own PROV-O record
+
+Since 2026-09-24 (bean `n2l9`), `complete()` attaches a `prov:Activity` to
+each history entry it records under an authorization context
+(`src/workflow/prov-record.ts`, `HistoryEntry.prov`):
+
+- `prov:agent` is the actor GitHub vouched for, not a typed name;
+- `prov:hadRole` is the lane's role, and `prov:hadPlan` is
+  `<process file stem>#<node id>`;
+- `cat-harness:underPolicy` is every policy in force, because `decide`
+  evaluated every one;
+- `prov:used` is the target, when the step names one.
+
+It is written **at the moment it is true**, which the after-check below
+cannot do from a name alone. The same no-invention rule applies: a refused
+step, a step with no actor, or a step in a lane that binds no role gets no
+activity.
+
 ## The after-check: the PROV-O QA/QC report
 
 The engine checks **before** a step. An agent swarm acts first, so the same
@@ -274,8 +309,12 @@ its subprocesses, and for each history entry on an activity or decision:
   `prov:hadPlan` is `<process file stem>#<node id>`, and
   `cat-harness:underPolicy` is every policy evaluated. One log per instance
   goes to `docs/assets/prov/<instance>.prov.jsonld`;
-- re-runs `authorizeTask` itself, with the actor `asserted`, because history
-  records only a name.
+- re-runs `authorizeTask` itself. For an entry recorded under a verdict it
+  re-checks **the principal that verdict recorded** (the actor GitHub vouched
+  for); only for an older entry, which records just a name, does it use that
+  name, `asserted`;
+- emits the engine's own `prov:Activity` when the entry carries one, and
+  derives one only for entries that predate it.
 
 Findings: `unknown`, `deny`, `not-eligible`, `undeclared-actor`, a recorded
 `authz` that disagrees with the recomputed one (`authz-disagrees`), and gaps
@@ -289,7 +328,7 @@ bun run prov:qaqc          # write docs/prov-qaqc/index.md and the logs
 bun run check:prov-qaqc    # CI: fail when they are stale
 ```
 
-It is **advisory**, like the engine: findings are listed on the
+It is **advisory**, unlike the engine, which has been strict since 2026-09-24: findings are listed on the
 `/prov-qaqc/` page and never fail the build. `check:prov-qaqc` fails only on
 stale outputs, a `prov:Activity` that does not validate, or an internal
 error. Quote the counts from a run, not from the page you remember.
@@ -302,5 +341,6 @@ error. Quote the counts from a run, not from the page you remember.
 - `src/core/github-auth.ts`: `githubIdentity`, `principalFromGithub`, `GITHUB_ROLE_ACTOR`
 - `src/tools/auth.ts`: `auth_whoami` (Tool node `user-auth`), `whoami`, `grainNote`
 - `schemas/odrl.ts`: `decide` (every policy; any `deny` wins), `PERFORM_TASK`
+- `src/workflow/prov-record.ts`: `provActivityFor` (the engine's record)
 - `scripts/prov-qaqc.ts`: `buildReport`, `reportInstance` (the after-check)
-- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/user-auth.test.ts`, `scripts/tests/prov-qaqc.test.ts`
+- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/task-authorization-strict.test.ts`, `scripts/tests/user-auth.test.ts`, `scripts/tests/prov-qaqc.test.ts`, `scripts/tests/prov-record.test.ts`

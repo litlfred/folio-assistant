@@ -475,6 +475,19 @@ export function formatPot(entries: PotEntry[], metadata?: {
 }
 
 /**
+ * A `.pot` with its creation timestamp blanked, for comparison only.
+ *
+ * Never written back: the header is real metadata a translator's tooling
+ * reads. It is excluded from the COMPARISON because it is the one line that
+ * changes on every run regardless of content. Shared by every template
+ * checker (`translate-bpmn`, core's `glossary-pot`), so the two cannot
+ * disagree about what "unchanged" means.
+ */
+export function potWithoutTimestamp(text: string): string {
+  return text.replace(/^"POT-Creation-Date:.*$/m, '"POT-Creation-Date: <ignored>\\n"');
+}
+
+/**
  * Quote a string for POT format — handles multiline and escaping.
  */
 function potQuote(s: string): string {
