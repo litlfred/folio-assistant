@@ -440,7 +440,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#process/Process_ThemeUIReview",
       "label": "Reviewer",
-      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches.",
+      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the ingested assets as a whole, in the design they are for — not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean ingest, a passing accessibility check and a correct branding pass can each be true and still miss what only laying the assets out and looking catches.",
       "source": "cat-harness/processes/theme-ui-review.bpmn"
     },
     {
@@ -1175,7 +1175,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
@@ -1354,15 +1353,6 @@
       "source": "cat-harness/processes/session-state-machine.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#process/Process_ThemeUIReview",
-      "label": "Agent",
-      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
-      "source": "cat-harness/processes/theme-ui-review.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#role/authoring-agent",
@@ -1442,7 +1432,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent"
       ]
     },
     {
@@ -1534,6 +1525,15 @@
       "label": "Ingestion Engine (agent, runs unattended)",
       "scopeNote": "Calls the two shared subprocesses and does the part that is this process's own: landing the copy in the destination the contributor chose, importing it into the store, and testing the import. It never re-asks a gate: it acts on materialize-remote's outcome. It also answers the second entry, an upstream change to a permanent sample, by calling refresh-materialized rather than re-importing.",
       "source": "cat-harness/processes/sample-import.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#process/Process_ThemeUIReview",
+      "label": "Agent",
+      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
+      "source": "cat-harness/processes/theme-ui-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-glossary-split-actors/cat-harness.jsonld#role/librarian",
