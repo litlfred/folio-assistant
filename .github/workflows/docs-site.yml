@@ -539,6 +539,16 @@ jobs:
           # no longer carries them, so this file is the only place a consumer
           # can see what the QA pass found about the document it just fetched.
           find cat-harness/test/results -maxdepth 1 -name '*.qa-results.json' -exec cp {} ./_site/assets/qa/ \;
+          # THE KG AUDITOR, published beside the witnesses it belongs to.
+          #
+          # Bean `mcdj`: a kg witness no longer carries the auditor's
+          # `script_hash` in every criterion -- one value copied into 20
+          # documents, which could not carry information the manifest does not
+          # and rewrote all 20 whenever the auditor changed. The panel now
+          # fetches this file ONCE per page instead, so it has to be served.
+          # Without it the provenance field reads "not recorded", which is
+          # honest but strictly less than the reader had before.
+          cp cat-harness/skills/kg-qa.manifest.json ./_site/assets/qa/kg-qa.manifest.json
           echo "Published $(find ./_site/assets/qa -name '*.json' | wc -l) QA document(s)"
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not

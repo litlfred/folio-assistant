@@ -97,8 +97,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/docs-site.yml",
+          "detail": ".github/workflows/docs-site.yml changed since cat-harness/processes/docs-site-publish.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -106,8 +111,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 12,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },

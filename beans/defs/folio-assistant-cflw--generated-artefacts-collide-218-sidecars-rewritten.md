@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cflw
 title: 'Generated artefacts collide: 218 sidecars rewritten by one auditor edit'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T06:19:28Z
-updated_at: 2026-09-19T06:19:44Z
+updated_at: 2026-09-24T06:33:16Z
 parent: folio-assistant-1swy
 ---
 
@@ -68,3 +68,50 @@ they need committing before touching the shared schema.*
 **Not closing this bean.** Its Done-when is *"an auditor-only edit changes one
 file. Currently 21; 1 after the residue above is resolved."* It is 21. `mcdj` is
 what takes it to 1, and this stays open until it does.
+
+## Closed 2026-09-24 — 218 → 21 → **1**
+
+`mcdj` landed on the owner's ruling (option B): the kg branch of
+`qa-witness.ts` no longer copies the auditor's hash into every criterion, the
+panel fetches `kg-qa.manifest.json` once per page instead, and the manifest is
+published beside the witnesses by both workflows.
+
+Re-measured with **this bean's own probe** — one comment appended to
+`scripts/kg-audit.ts`, then `kg:audit` and `gen-docs-pages.ts`:
+
+| | files changed besides the edit |
+|---|---|
+| before `cflw` | **218** |
+| after `cflw` | 21 |
+| after `mcdj` | **1** — `skills/kg-qa.manifest.json` |
+
+**This bean's Done-when, verbatim:** *"an auditor-only edit changes one file.
+Currently 21; 1 after the residue above is resolved."* It is 1.
+
+### What the fix actually was, in one sentence
+
+Both halves were the same move at two scales: **stop storing a once-per-run
+value once per file.** `cflw` took it out of 214 sidecars into a manifest;
+`mcdj` took it out of the 20 projections of that manifest. The sentence this
+bean wrote on day one — *"the per-file auditor hash never added precision the
+generator could deliver"* — turned out to be true of the projections too, and
+a document-level copy would not have helped: 20 files still move together when
+the auditor does.
+
+### The residue's residue, recorded rather than left implied
+
+The **113 block witnesses still carry `scriptHash` per criterion, and should.**
+There `qa-checkers-voice.ts` and `qa-checkers-extended.ts` are genuinely
+different scripts ruling on different criteria of one block, so the per-file
+copies differ and carry information. The field stays optional on `QaWitness`
+for exactly that reason. If block checkers are ever unified into one script,
+this bean's argument applies there too and nothing currently says so.
+
+## Summary of Changes
+
+The auditor's identity is recorded once, in `skills/kg-qa.manifest.json`, and
+read from there by the only two consumers that need it: the freshness
+comparison and the docs QA panel. An auditor-only edit now dirties one file
+instead of 218, so two branches touching the graph no longer conflict by
+construction and each regeneration no longer invalidates every other open PR.
+Verified by running the probe rather than by reading the diff, at every step.

@@ -7262,6 +7262,64 @@
     return row;
   }
 
+  /* ── The kg auditor, fetched ONCE instead of copied into every criterion ──
+   *
+   * Bean `mcdj`, the owner's ruling 2026-09-24. A kg witness used to carry the
+   * auditor's `scriptHash` in EVERY criterion of EVERY file — one value from
+   * `skills/kg-qa.manifest.json`, copied into 20 documents and many hundreds of
+   * places. It could not carry information the manifest does not; what it could
+   * do was change together, so one comment appended to `kg-audit.ts` rewrote 21
+   * files and invalidated every open branch touching the graph.
+   *
+   * A per-DOCUMENT copy would not have fixed it — 20 files still move together
+   * when the auditor does. So the witness stops carrying it, and the panel asks
+   * the manifest instead: one fetch, cached, for however many criteria a page
+   * shows.
+   *
+   * Only for `family === "kg"`. The BLOCK family keeps its per-criterion hashes
+   * because they are real information there — `qa-checkers-voice.ts` and
+   * `qa-checkers-extended.ts` are different scripts ruling on different
+   * criteria of one block — and enriching those would overwrite a true value
+   * with a wrong one.
+   *
+   * A FAILED MANIFEST FETCH IS NOT AN ERROR HERE. The verdicts are the point of
+   * the panel and they are already in hand; refusing to render them because a
+   * provenance field could not be resolved would trade the finding for the
+   * footnote. The field falls back to `qaField`'s "not recorded", which is what
+   * it already showed for any witness that records no hash — honest, and
+   * distinguishable from a hash that is present.
+   */
+  var KG_MANIFEST_CACHE = {};
+
+  function qaManifestUrl(src) {
+    var marker = "/assets/qa/";
+    var at = src.lastIndexOf(marker);
+    return at === -1 ? null : src.slice(0, at + marker.length) + "kg-qa.manifest.json";
+  }
+
+  function qaWithKgAuditor(doc, src) {
+    if (!doc || doc.family !== "kg") return Promise.resolve(doc);
+    var url = qaManifestUrl(src);
+    if (!url) return Promise.resolve(doc);
+    var pending = KG_MANIFEST_CACHE[url];
+    if (!pending) {
+      pending = fetch(url, { credentials: "same-origin" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+      KG_MANIFEST_CACHE[url] = pending;
+    }
+    return pending.then(function (manifest) {
+      var a = manifest && manifest.auditor;
+      if (!a || !a.script_hash) return doc;
+      (doc.criteria || []).forEach(function (c) {
+        (c.witnesses || []).forEach(function (w) {
+          if (w.kind === "script" && !w.scriptHash) w.scriptHash = a.script_hash;
+        });
+      });
+      return doc;
+    });
+  }
+
   function qaWitnessCard(w) {
     var card = el("div", { class: "fa-qa-witness fa-qa-kind-" + (w.kind || "script") });
 
@@ -7545,6 +7603,9 @@
       .then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
+      })
+      .then(function (doc) {
+        return qaWithKgAuditor(doc, src);
       })
       .then(function (doc) {
         QA_CACHE[src] = doc;

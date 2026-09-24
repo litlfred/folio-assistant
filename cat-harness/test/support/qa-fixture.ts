@@ -165,3 +165,35 @@ export function applyVerdicts(
 export function sidecar(path: string): string {
   return readFileSync(path, "utf8");
 }
+
+/**
+ * Read the kg auditor manifest unchanged, and fail by NAME if it carries no
+ * hash to assert against.
+ *
+ * Bean `mcdj`. A kg witness no longer copies the auditor's `script_hash` into
+ * every criterion — one value from one file, written into 20 documents, which
+ * rewrote all 20 whenever the auditor changed. The panel fetches this instead,
+ * once per page, so a spec covering that path needs the same document the site
+ * serves.
+ *
+ * Verbatim like {@link sidecar}, and for the same reason: what the spec asserts
+ * is that the panel SHOWS the recorded hash, whatever it is. Writing the hash
+ * out as a literal would be `iumj`'s defect — a value the corpus holds asserted
+ * as a property of the panel, red on the next correct edit to `kg-audit.ts`.
+ *
+ * The throw is the part worth having. If the manifest ever stops carrying a
+ * hash, a spec asserting "the panel shows it" would otherwise compare against
+ * `undefined` and pass over a panel showing nothing — the empty-set pass that
+ * `iumj` records finding twice.
+ */
+export function kgAuditorManifest(path: string): { json: string; scriptHash: string } {
+  const json = readFileSync(path, "utf8");
+  const hash = (JSON.parse(json) as { auditor?: { script_hash?: string } }).auditor?.script_hash;
+  if (!hash) {
+    throw new Error(
+      `fixture: ${path} records no \`auditor.script_hash\` — a spec asserting the panel ` +
+        `shows it would have nothing to compare against.`,
+    );
+  }
+  return { json, scriptHash: hash };
+}

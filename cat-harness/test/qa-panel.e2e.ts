@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { applyVerdicts, sidecar, sidecarWithVerdicts } from "./support/qa-fixture.js";
+import { applyVerdicts, kgAuditorManifest, sidecar, sidecarWithVerdicts } from "./support/qa-fixture.js";
 import { siteDirFor } from "../schemas/cat-harness.ts";
 
 /**
@@ -181,6 +181,17 @@ const KG_JSON = sidecar(
   join(ROOT, "test/results/witnesses/publication-workflow/editing-and-the-hci-validation-gate.kg.json"),
 );
 
+/**
+ * The kg auditor, as the site serves it — bean `mcdj`.
+ *
+ * A kg witness no longer carries `scriptHash` in every criterion, so the panel
+ * fetches this document once per page instead. Read verbatim and asserted by
+ * VALUE rather than as a literal, for `iumj`'s reason: the hash is a thing the
+ * corpus holds, and writing it out here would turn the next correct edit to
+ * `kg-audit.ts` into a red panel test.
+ */
+const KG_MANIFEST = kgAuditorManifest(join(ROOT, "skills/kg-qa.manifest.json"));
+
 const PAGE_URL = "http://qa.test/page.html";
 
 function badge(family: string, state: string, src: string, label: string): string {
@@ -218,7 +229,11 @@ const HARNESS = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 </div>
 <script>${JS}</script></body></html>`;
 
+/** Whether THIS test serves the auditor manifest. Reset before each. */
+let serveManifest = false;
+
 test.beforeEach(async ({ page }) => {
+  serveManifest = false;
   await page.route("http://qa.test/**", (route) => {
     const url = route.request().url();
     if (url.endsWith("/page.html")) {
@@ -232,6 +247,16 @@ test.beforeEach(async ({ page }) => {
     }
     if (url.endsWith("/assets/qa/kg.json")) {
       return route.fulfill({ contentType: "application/json", body: KG_JSON });
+    }
+    /* The manifest is served ONLY when a spec opts in, so the DEFAULT for
+     * every kg test below is the manifest missing. That is deliberate: the
+     * fallback path is the one that must never take the panel down, and a
+     * fixture that always supplies the file would have covered only the happy
+     * case while the 404 is what a stale deploy actually serves. */
+    if (url.endsWith("/assets/qa/kg-qa.manifest.json")) {
+      return serveManifest
+        ? route.fulfill({ contentType: "application/json", body: KG_MANIFEST.json })
+        : route.fulfill({ status: 404, body: "not found" });
     }
     // Everything else — including `gone.json` — is a 404, on purpose.
     return route.fulfill({ status: 404, body: "not found" });
@@ -371,4 +396,36 @@ test("two icons on one page open independently", async ({ page }) => {
   // which verdict belongs to which node.
   await expect(page.locator(".fa-qa-subject").first()).toContainText("crdm-what_is_not_built_yet");
   await expect(page.locator(".fa-qa-subject").nth(1)).toContainText("Process_Editing");
+});
+
+/* ── The kg auditor comes from the manifest, not from the witness ──────────
+ *
+ * Bean `mcdj`, the owner's ruling 2026-09-24. Both directions, because the
+ * interesting one is the failure: a provenance field that cannot be resolved
+ * must not cost the reader the verdicts, which are the point of the panel.
+ */
+
+test("a kg criterion shows the auditor hash fetched from the manifest", async ({ page }) => {
+  serveManifest = true;
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qa-fam-kg").first().click();
+  const witness = page.locator(".fa-qa-witness").first();
+  await expect(witness).toContainText("checker source hash");
+  // By VALUE from the manifest, never as a literal — see `KG_MANIFEST`.
+  await expect(witness).toContainText(KG_MANIFEST.scriptHash.replace(/^sha256:/, "").slice(0, 12));
+});
+
+test("a kg panel whose manifest 404s still renders, and says 'not recorded'", async ({ page }) => {
+  // `serveManifest` stays false: the manifest is absent, which is what a stale
+  // deploy serves. The verdicts are already in hand by then, so refusing to
+  // render them over a missing provenance field would trade the finding for
+  // the footnote.
+  await page.goto(PAGE_URL);
+  await page.locator(".fa-qa-fam-kg").first().click();
+  const panel = page.locator(".fa-qa-panel").first();
+  await expect(panel).toBeVisible();
+  await expect(panel.locator(".fa-qa-crit").first()).toBeVisible();
+  const witness = page.locator(".fa-qa-witness").first();
+  await expect(witness).toContainText("checker source hash");
+  await expect(witness).toContainText("not recorded");
 });

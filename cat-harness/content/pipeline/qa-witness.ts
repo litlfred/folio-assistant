@@ -579,7 +579,43 @@ export function readWitnessDoc(
             kind: "script",
             id: auditor?.script ?? "unrecorded",
             version: auditor?.engine_version,
-            scriptHash: auditor?.script_hash,
+            // `scriptHash` IS DELIBERATELY ABSENT HERE, and it is the point of
+            // the bean rather than an oversight. Bean `mcdj`, the owner's
+            // ruling 2026-09-24.
+            //
+            // It used to be `auditor?.script_hash`, written into EVERY
+            // criterion of EVERY kg witness — one value, 20 files, and on this
+            // corpus many hundreds of copies. The manifest above is already
+            // the single source, so the copies could not carry information it
+            // does not; what they could do is change together. Measured with
+            // `cflw`'s probe: one comment appended to `kg-audit.ts` rewrote 21
+            // files, of which 20 were these. Two branches that both touch the
+            // graph then conflict by construction, and each regeneration
+            // invalidates every other open PR — quadratic in open branches,
+            // which is the 218-file cost `cflw` measured before it moved the
+            // hash out of the sidecars.
+            //
+            // A DOCUMENT-LEVEL copy would not have fixed it. One hash per file
+            // instead of one per criterion is still one per file, and all 20
+            // still move together when the auditor does. The churn goes away
+            // only when the witness stops carrying the value at all.
+            //
+            // `id` and `version` stay: they are stable strings
+            // (`scripts/kg-audit.ts`, `"1"`) that do not move when the script's
+            // bytes do, so they cost nothing and keep the witness able to say
+            // WHO ruled without saying which build of them.
+            //
+            // The hash is not lost — `skills/kg-qa.manifest.json` holds it, and
+            // it is published beside the witnesses so the panel can ask for it
+            // once per page rather than reading it 48 times from one document.
+            //
+            // NOT touched for the `block` family below: there the per-criterion
+            // hash is REAL information, because `qa-checkers-voice.ts` and
+            // `qa-checkers-extended.ts` are genuinely different scripts ruling
+            // on different criteria of one block. 113 block witnesses carry it
+            // and should. The field stays optional on `QaWitness` for exactly
+            // this reason.
+            //
             // `kg-audit` records no timestamp and no repo SHA. Absent rather
             // than invented: a witness with a made-up date is worse than one
             // that admits it has none, and the panel says "not recorded".

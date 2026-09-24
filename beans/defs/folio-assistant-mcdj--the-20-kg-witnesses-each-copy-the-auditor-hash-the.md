@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mcdj
 title: The 20 kg witnesses each copy the auditor hash the manifest already holds, so one auditor edit still rewrites 21 files
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T17:21:08Z
-updated_at: 2026-09-23T17:21:36Z
+updated_at: 2026-09-24T06:32:51Z
 parent: folio-assistant-1swy
 ---
 
@@ -142,16 +142,94 @@ auditor edit while no check reads what is in them, and the site never sees them.
 re-homed; B is narrower and costs a panel change. Both are the owner's, and both
 are now informed rather than guessed.
 
+## 2026-09-24 — the owner ruled B, and it is done: 21 files become 1
+
+**Ruling: B — omit `scriptHash` on the kg branch only.**
+
+### 21 → 1, measured with `cflw`'s own probe
+
+Append one comment to `scripts/kg-audit.ts`, run `kg:audit` then
+`gen-docs-pages.ts`:
+
+| | before | after |
+|---|---|---|
+| files changed besides the edit | **21** | **1** — the manifest |
+| kg witnesses carrying `scriptHash` | 20 | **0** |
+
+That is `cflw`'s Done-when verbatim — *"an auditor-only edit changes one file.
+Currently 21; 1 after the residue above is resolved."*
+
+### A document-level copy would NOT have fixed it
+
+Worth writing down because it is the obvious first design and it is wrong. One
+hash per witness file instead of one per criterion is still one per file, and
+all 20 still move together when the auditor does. **The churn goes away only
+when the witness stops carrying the value at all.** `QaWitnessDoc` gained no
+field; the kg branch simply omits one.
+
+`id` and `version` stay. They are stable strings — `scripts/kg-audit.ts`, `"1"` —
+that do not move when the script's bytes do, so the witness can still say WHO
+ruled without saying which build of them.
+
+### The block family is untouched, and that was the constraint
+
+`qa-witness/v1` is shared, and there the per-criterion hash is **real
+information**: `qa-checkers-voice.ts` and `qa-checkers-extended.ts` are
+genuinely different scripts ruling on different criteria of one block. **113**
+block witnesses carry `scriptHash` and still do. The field stays optional on
+`QaWitness` for exactly this reason, and the existing panel spec that asserts a
+block's checker hash still passes.
+
+### The reader loses nothing — the panel asks the manifest once
+
+`docs-ui.js` gains `qaWithKgAuditor`: for a `family === "kg"` document it
+fetches `assets/qa/kg-qa.manifest.json` **once**, cached per URL, and fills the
+hash in before the panel renders. The manifest is now published beside the
+witnesses by **both** `docs-site.yml` and `feature-staging.yml` — mirrored,
+because a test asserts they are and publishing it in one would give two
+different sites.
+
+**A failed manifest fetch is not an error.** The verdicts are the point of the
+panel and are already in hand; refusing to render them because a provenance
+field could not be resolved would trade the finding for the footnote. The field
+falls back to `qaField`'s existing *"not recorded"*.
+
+### Both directions are covered, and the pass is not vacuous
+
+Two specs in `qa-panel.e2e.ts`, using the `page.route` fixture already there:
+
+- manifest served → the panel shows the hash, asserted **by value from the
+  manifest**, never as a literal. Writing the hash out would be `iumj`'s defect:
+  a value the corpus holds asserted as a property of the panel, red on the next
+  correct edit to `kg-audit.ts`.
+- manifest 404 → the panel still renders, the criteria are visible, and the
+  field reads *"not recorded"*. **The 404 is the DEFAULT** in the fixture, so
+  every other kg spec exercises the fallback rather than the happy path.
+
+`kgAuditorManifest()` **throws by name** if the manifest ever stops carrying a
+hash — otherwise a spec asserting "the panel shows it" would compare against
+`undefined` and pass over a panel showing nothing, which is the empty-set pass
+`iumj` records finding twice.
+
+**Mutation-checked rather than assumed.** Disabling the enrichment
+(`if (true) return doc`) turns the served-manifest spec **red** and leaves the
+404 spec green — so the pass is evidence, not coincidence. 9 of 9 with it
+restored; `bun run gates` 136 of 136.
+
 ## Done when
 
 - [x] The prior question is answered with evidence, not reasoning: the published
       site regenerates the witnesses and does not serve the committed copies
       (`docs-site.yml` 140 then 532; `feature-staging.yml` 204 then 893)
-- [ ] The owner has ruled between A, B and C — asked as selectable options, with
+- [x] The owner has ruled between A, B and C — asked as selectable options, with
       this measurement, not as a description of the code. **A is cheaper than it
       read and costs `d2kp`'s existence guard; B costs a panel change at
       `docs-ui.js:7312`**
-- [ ] Whichever is chosen is measured with the same probe: an auditor-only edit
-      changes **1** file, or the reason it still changes more is written down
-- [ ] The `script_hash` / `scriptHash` spelling trap is closed or recorded where
-      the next reader greps — it returns the opposite of the truth today
+- [x] Whichever is chosen is measured with the same probe: an auditor-only edit
+      changes **1** file — measured 2026-09-24, down from 21
+- [x] The `script_hash` / `scriptHash` spelling trap is closed for the kg family
+      by construction: no kg witness carries `scriptHash` at all now, so the
+      grep that returned the opposite of the truth returns 0 and is RIGHT. It
+      is recorded in `qa-witness.ts` at the omission and in `cflw`, because the
+      manifest still spells it `script_hash` and the block family still spells
+      it `scriptHash`

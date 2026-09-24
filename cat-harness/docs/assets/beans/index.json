@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 638,
+      "count": 639,
       "unit": "beans"
     }
   },
@@ -4512,7 +4512,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T01:17:56Z",
-      "updatedAt": "2026-09-23T09:58:54Z",
+      "updatedAt": "2026-09-24T05:28:12Z",
       "preview": "## What happened\n\n`main` went red at `78a399ee5` on `End-to-end + accessibility (hard)` — two\nspecs in `tests/qa-panel.e2e.ts`. Fixed on `claude/ecstatic-goldberg-eroyaz`\n(PR #314); this bean is the general defect that fix does not close.\n\nA composition failure. #317 added the e2e job, green against the corpus as it\nthen stood. #302 adjudicated all 26 `voice-*` findings to zero — correctly —\nand w",
       "file": "beans/defs/folio-assistant-iumj--e2e-fixtures-read-the-live-qa-corpus-so-adjudicati.md"
     },
@@ -5361,6 +5361,20 @@
       "file": "beans/defs/folio-assistant-mc8h--merge-forward-treadmill-re-merging-main-faster-tha.md"
     },
     {
+      "id": "folio-assistant-mcdj",
+      "title": "The 20 kg witnesses each copy the auditor hash the manifest already holds, so one auditor edit still rewrites 21 files",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T17:21:08Z",
+      "updatedAt": "2026-09-23T17:21:36Z",
+      "preview": "The residue `cflw` named and said *\"wants its own bean\"*. This is it, with the\nnumber re-derived rather than inherited.\n\n## Measured 2026-09-23, with `cflw`'s own probe\n\nAppend one comment line to `scripts/kg-audit.ts`, then:\n\n| run | files changed |\n|---|---|\n| `bun run kg:audit` alone | **2** — the probe itself, and `skills/kg-qa.manifest.json` |\n| `bun run regen` (43 verify/write pairs) | **2**",
+      "file": "beans/defs/folio-assistant-mcdj--the-20-kg-witnesses-each-copy-the-auditor-hash-the.md"
+    },
+    {
       "id": "folio-assistant-mgdg",
       "title": "GRAPH LAYER: name the content-vs-state axis on GraphKindDef",
       "status": "completed",
@@ -5706,7 +5720,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:26:19Z",
-      "updatedAt": "2026-09-23T13:26:05Z",
+      "updatedAt": "2026-09-24T05:46:41Z",
       "preview": "_2026-09-19T00:35:15Z_ — A THIRD instance of this shape, 2026-09-19, different mechanism again — worth recording together because the FAMILY is what matters. feature-staging's stage job checks out github.event.pull_request.head.ref, the BRANCH HEAD, while the workflow FILE comes from the merge ref. So main's steps run against the branch's files. PR #307 added both a new step ('Emit the knowledge-g",
       "file": "beans/defs/folio-assistant-nytj--a-sidecar-records-its-auditor-s-hash-so-two-concur.md"
     },
@@ -6718,7 +6732,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:04Z",
-      "updatedAt": "2026-09-22T18:54:19Z",
+      "updatedAt": "2026-09-23T16:55:55Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
@@ -7695,14 +7709,14 @@
     {
       "id": "folio-assistant-v556",
       "title": "Two kg-export sidecars carry three script hashes between them, and no gate can see it: a generator with no --check is invisible to check:artefact-verification",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T10:24:29Z",
-      "updatedAt": "2026-09-22T10:24:29Z",
+      "updatedAt": "2026-09-23T17:20:54Z",
       "preview": "MEASURED 2026-09-22 on main at `f4de6c1e20`, clean tree, by running `bun run kg:export` and reading both committed sidecars back.\n\n`scripts/kg-export.ts` writes two `qa-results/v1` sidecars. Between them and the script actually in the tree there are **three different hashes for one script**:\n\n| file | committed `producer.script_hash` |\n|---|---|\n| `cat-harness/test/results/kg-export.qa-results.jso",
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
     },
