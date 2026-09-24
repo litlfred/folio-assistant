@@ -27,8 +27,9 @@ not there is the `dh4f` defect** — every consumer scans nothing and reports a
 clean run over it.
 
 Candidate content exists and has **not** been moved here on anybody's say-so:
-the WHO digital-health corpus is in `smart-base/library/`, and `smart-kg/`
-holds GRADE. Whether either belongs here is a judgement about what each asset
+the WHO digital-health corpus is in `smart-base/library/`. (GRADE, the other
+candidate once, became the `grade` skill and code lists in `cat-harness` on
+2026-09-24, bean `wg7r`.) Whether it belongs here is a judgement about what each asset
 *is*, and it is not settled by this layer existing.
 
 Placement:
