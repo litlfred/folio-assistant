@@ -7329,7 +7329,7 @@
   /** Save a blob under a filename, through a transient link. */
   function saveBlob(blob, name) {
     var url = URL.createObjectURL(blob);
-    var a = el("a", { href: url, download: name });
+    var a = el("a", { href: url, download: name }); // href-safe: a blob: URL this function minted over the figure's own bytes, never document data
     a.style.display = "none";
     document.body.appendChild(a);
     a.click();
