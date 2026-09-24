@@ -15,7 +15,7 @@ be followed mechanically rather than inferred:
 | Skill, Capability | `satisfies` | Requirement statement |
 | Skill | `graph-kinds` | Graph kind |
 | Skill | `input`, `output` | Schema (its contract) |
-| Test | exercises | Skill |
+| Test run | `skill` | Skill |
 | any content node | `$schema` | Schema |
 | Folio | the board layer | Board, then Position, then Note |
 

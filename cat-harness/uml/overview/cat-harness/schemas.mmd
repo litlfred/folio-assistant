@@ -155,6 +155,16 @@ classDiagram
       overallStatus [1] pass | warnings | errors
       results [0..*] Result[]
     }
+    class cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input["CRDM Detect Input"] {
+      <<schema: skills/crdm-detect/input.schema.json>>
+      text [1] string
+    }
+    class cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output["CRDM Detect Output"] {
+      <<schema: skills/crdm-detect/output.schema.json>>
+      fires [1] boolean
+      categories [0..*] list~direct-capability | workflow-gap | platform-change | cross-cutting | review-surfaced | self-declared-genre~
+      excluded [1] boolean
+    }
     class cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable["InputVariable"] {
       <<schema: skills/dmn-authoring/input.schema.json>>
       name [1] string
@@ -501,6 +511,8 @@ classDiagram
   cssClass "cat_harness_schemas_skills_content_validate_input_schema_json_Content_Validate_Input" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_skills_content_validate_output_schema_json_Result" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_skills_content_validate_output_schema_json_Content_Validate_Output" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input" fa_uml_kind_schemas
+  cssClass "cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_skills_dmn_authoring_input_schema_json_DMN_Authoring_Input" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_skills_dmn_authoring_output_schema_json_DMN_Authoring_Output" fa_uml_kind_schemas

@@ -45,6 +45,7 @@ import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
+import { checkTestRuns } from "./test-run-conformance.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
@@ -1299,6 +1300,22 @@ function unclaimedSkillContracts(): KgFinding[] {
   return out;
 }
 
+/**
+ * The recorded test runs, followed to the skill each names and on to that
+ * skill's contract (#1168, B4). Three criteria rather than one, because
+ * "could not check" is a different finding from "checked and wrong".
+ */
+function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
+  const any = r.runs > 0;
+  return {
+    "test-run-skill-resolves": entry(r.unresolved, any),
+    "test-run-conforms": entry(r.nonconforming, any),
+    "test-run-checkable": entry(r.unchecked, any),
+  };
+}
+
 /** One declared `satisfies` ref, and who declared it. */
 interface Satisfier {
   /** `req:<requirement>#<statement key>`. */
@@ -1846,6 +1863,7 @@ function auditGraph(
       "satisfies-resolves": entry(badSatisfies),
       "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
       "skill-contract-resolves": entry(brokenSkillContracts()),
+      ...testRunCriteria(skills),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
