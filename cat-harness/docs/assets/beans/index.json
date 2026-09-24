@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 315,
+      "count": 316,
       "unit": "beans"
     }
   },
@@ -1075,6 +1075,20 @@
       "updatedAt": "2026-09-19T00:37:53Z",
       "preview": "Queued 2026-09-19 while the `skill-not-a-document` split was in flight; not\nstarted. Requested as: *\"move MEMORY.md into kg and make sure in right skill /\ntask pairings\"*.\n\n## What is there now\n\n`.claude/agents/` defines three subagents carrying `memory: project`, each with\na `MEMORY.md` under `.claude/agent-memory/<agent>/`:\n\n- `platform-boundary-guard` — folio-vs-platform boundary, adapter vs pr",
       "file": "beans/defs/folio-assistant-7sf1--move-memorymd-into-the-kg-graph-with-correct-skill.md"
+    },
+    {
+      "id": "folio-assistant-7w1a",
+      "title": "METHODOLOGIES TABLE MISRENDERS: a truncated cell cuts a code span open and the whole table prints as text",
+      "status": "completed",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:58:58Z",
+      "updatedAt": "2026-09-24T18:58:58Z",
+      "preview": "Owner 2026-09-24, with a screenshot: \"bean: table misrenders https://litlfred.github.io/folio-assistant/methodologies/ — need QA audit report\".\n\n## Cause\ngen-methodologies-viz.ts short() cuts applies-when at 150 chars. The madr row is cut inside a code span, (see `kepner-tregoe…, and the unmatched backtick pairs with a later one on the line, swallowing the cell pipes. kramdown then renders the who",
+      "file": "beans/defs/folio-assistant-7w1a--methodologies-table-misrenders-a-truncated-cell-cu.md"
     },
     {
       "id": "folio-assistant-7wgs",
