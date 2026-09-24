@@ -5866,13 +5866,6 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
-          "name": "publishable",
-          "type": "boolean",
-          "optional": true,
-          "array": false,
-          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
-        },
-        {
           "name": "id",
           "type": "string",
           "optional": true,
@@ -6014,13 +6007,6 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
-        },
-        {
-          "name": "publishable",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
         },
         {
           "name": "id",
@@ -6546,8 +6532,16 @@
         {
           "name": "host",
           "type": "PublicationHost",
-          "optional": false,
-          "array": false
+          "optional": true,
+          "array": false,
+          "doc": "WHAT KIND of host serves the renderings. Optional: absent is a third"
+        },
+        {
+          "name": "state",
+          "type": "\"draft\"",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT STATE this instance's publication is in. `draft`, always, today."
         }
       ],
       "extendsNames": [],
@@ -6580,8 +6574,14 @@
       "fields": [
         {
           "name": "host",
-          "type": "z.enum(PUBLICATION_HOSTS)",
-          "optional": false,
+          "type": "z.enum(PUBLICATION_HOSTS).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.literal(\"draft\").optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -6841,13 +6841,6 @@
           "optional": true,
           "array": false,
           "doc": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        },
-        {
-          "name": "skill",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The skill that governs it, by NAME rather than by path, so no base applies."
         },
         {
           "name": "serialisations",
@@ -10948,8 +10941,7 @@
       "fields": [],
       "extendsNames": [],
       "values": [
-        "undecided",
-        "internal",
+        "no-uri",
         "unresolved",
         "unreadable"
       ],
@@ -39859,7 +39851,7 @@
       "to": "cat-harness/schemas/cat-harness.ts#PublicationHost",
       "via": "host",
       "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": false
     },
     {

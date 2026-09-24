@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1380 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1379 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 12 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1560 terms and is 843 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1553 terms and is 839 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1560</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1553</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1389,13 +1389,6 @@ CatHarnessDeclaration.publication <span class="fa-gloss-status">candidate, extra
 <p>WHAT KIND of host serves this instance's renderings.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publication</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.publishable" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclaration.publishable <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Is this instance PUBLISHED for consumers outside this repository?</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.publishable</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.remotegraphs" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.remoteGraphs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1472,13 +1465,6 @@ CatHarnessDeclarationSchema.needs <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>The instances this one is BUILT ON — its layer stack, foundation first.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.publishable" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclarationSchema.publishable <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Is this instance PUBLISHED for consumers outside this repository?</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.publishable</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.remotegraphs" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.remoteGraphs <span class="fa-gloss-status">candidate, extracted</span>
@@ -3961,34 +3947,6 @@ IdentifierSystemSchema.authoritative <span class="fa-gloss-status">candidate, ex
 <p>Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away.</p>
 <p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative</code></a></p>
 </dd>
-<dt id="large-datasets--kg-schema-fields--id-lookup.identry.id" data-fa-state="extracted" data-fa-gloss="">
-IdEntry.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>`kind/local`, lower-case, as the catalogue names the node.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdEntry.id</code></a></p>
-</dd>
-<dt id="large-datasets--kg-schema-fields--id-lookup.identry.url" data-fa-state="extracted" data-fa-gloss="">
-IdEntry.url <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Where the node is held: the source's own page for it.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdEntry.url</code></a></p>
-</dd>
-<dt id="large-datasets--kg-schema-fields--id-lookup.idlookupmanifestschema.selection" data-fa-state="extracted" data-fa-gloss="">
-IdLookupManifestSchema.selection <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Which nodes, and from where. A count with no statement of what was counted cannot be checked.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.selection</code></a></p>
-</dd>
-<dt id="large-datasets--kg-schema-fields--id-lookup.idlookupmanifestschema.source" data-fa-state="extracted" data-fa-gloss="">
-IdLookupManifestSchema.source <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The corpus this indexes, by its instance name.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.source</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--ig-chrome.igchromeconflictschema.kind" data-fa-state="extracted" data-fa-gloss="">
 IgChromeConflictSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -5570,13 +5528,6 @@ ModelEntrySchema.validation <span class="fa-gloss-status">candidate, extracted</
 
 <h2 id="letter-N">N</h2>
 <dl class="fa-gloss">
-<dt id="large-datasets--kg-schema-fields--id-lookup.namespaceindexschema.shards" data-fa-state="extracted" data-fa-gloss="">
-NamespaceIndexSchema.shards <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema.shards</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.narrativemapping.context" data-fa-state="extracted" data-fa-gloss="">
 NarrativeMapping.context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -6417,6 +6368,20 @@ ProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.publication.host" data-fa-state="extracted" data-fa-gloss="">
+Publication.host <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHAT KIND of host serves the renderings. Optional: absent is a third state — the deployment has not said, NOT `github-pages`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Publication.host</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.publication.state" data-fa-state="extracted" data-fa-gloss="">
+Publication.state <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>WHAT STATE this instance's publication is in. `draft`, always, today.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Publication.state</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-package.pythondependency.package" data-fa-state="extracted" data-fa-gloss="">
 PythonDependency.package <span class="fa-gloss-status">candidate, extracted</span>
@@ -8103,13 +8068,6 @@ ShapeField.type <span class="fa-gloss-status">candidate, extracted</span>
 <p>The type as written in the source.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kind-validator.ts"><code>cat-harness/schemas/kind-validator.ts#ShapeField.type</code></a></p>
 </dd>
-<dt id="large-datasets--kg-schema-fields--id-lookup.shardschema.entries" data-fa-state="extracted" data-fa-gloss="">
-ShardSchema.entries <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#ShardSchema.entries</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--tabular-csvw.sheetanchorschema.cell" data-fa-state="extracted" data-fa-gloss="">
 SheetAnchorSchema.cell <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -8921,13 +8879,6 @@ SubgraphCoverageSchema.serialisations <span class="fa-gloss-status">candidate, e
 <dd>
 <p>What produces this directory's SERIALISATIONS — `json`, `jsonld` and `schema.json` at the directory's own URL.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.serialisations</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.skill" data-fa-state="extracted" data-fa-gloss="">
-SubgraphCoverageSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The skill that governs it, by NAME rather than by path, so no base applies.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.skill</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.visualiser" data-fa-state="extracted" data-fa-gloss="">
 SubgraphCoverageSchema.visualiser <span class="fa-gloss-status">candidate, extracted</span>

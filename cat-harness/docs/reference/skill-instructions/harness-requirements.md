@@ -26,7 +26,7 @@ how to read it and what to do before adding to it.
 |---|---|---|
 | **visualiser** | `coverage.visualiser` on the directory entry | can a person LOOK at this? |
 | **docs** | `coverage.docs` | can a person READ ABOUT this? |
-| **skill** | `coverage.skill` | is an agent handed something that GOVERNS this? |
+| **skill** | by the SKILL: `graph-kinds:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
 | **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
 | **README** | an `instance-readme` asset, inside the instance | can a reader ENTER this instance at all? |
 

@@ -1,7 +1,7 @@
 /** The review heat map's numbers (bean qbfi). */
 import { describe, expect, test } from "bun:test";
 
-import { computeHeat, heatBucket } from "../review-heat.js";
+import { computeHeat, heatBucket, renderHeat } from "../review-heat.js";
 
 const change = (label: string, section: string) => ({ label, head: { section } });
 const comment = (targetLabel: string, status: string, kind: string, blockHash: string | null, orphaned = false) => ({
@@ -29,15 +29,15 @@ describe("computeHeat", () => {
       ],
     });
     expect(h.rows).toEqual([
-      { section: "doc::sec:one", changed: 2, open: 2, defects: 1, stale: 1, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
-      { section: "doc::sec:two", changed: 1, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
-      { section: "doc::sec:three", changed: 0, open: 1, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
+      { section: "doc::sec:one", changed: 2, open: 2, defects: 1, stale: 1, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaScriptsOnly: 0, qaNeedsAgent: 0, qaJudgedUnknown: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
+      { section: "doc::sec:two", changed: 1, open: 0, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaScriptsOnly: 0, qaNeedsAgent: 0, qaJudgedUnknown: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
+      { section: "doc::sec:three", changed: 0, open: 1, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaScriptsOnly: 0, qaNeedsAgent: 0, qaJudgedUnknown: 0, qaBlocks: 0, needReview: 0, reviewed: 0 },
     ]);
   });
 
   test("an orphaned open comment is still counted, under no section, last", () => {
     const h = computeHeat({ changes, blocks, comments: [comment("gone", "open", "question", "g1", true)] });
-    expect(h.rows.at(-1)).toEqual({ section: "(listed in no section)", changed: 0, open: 1, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaBlocks: 0, needReview: 0, reviewed: 0 });
+    expect(h.rows.at(-1)).toEqual({ section: "(listed in no section)", changed: 0, open: 1, defects: 0, stale: 0, qaFailing: 0, qaWorst: null, qaStale: 0, qaUnaudited: 0, qaScriptsOnly: 0, qaNeedsAgent: 0, qaJudgedUnknown: 0, qaBlocks: 0, needReview: 0, reviewed: 0 });
   });
 
   test("QA: a failing or stale block is counted in its section; a clean unchanged section gets no row", () => {
@@ -61,6 +61,24 @@ describe("computeHeat", () => {
   test("QA: a stale verdict in an unchanged section IS a place to look, and is not a pass", () => {
     const h = computeHeat({ changes, blocks, comments: [], qa: { u: { state: "stale", worst: null } } });
     expect(h.rows.at(-1)).toMatchObject({ section: "doc::sec:three", qaStale: 1, qaFailing: 0 });
+  });
+
+  test("QA: a passing block with agent-judged criteria never run passes on SCRIPTS ONLY, and says how many (9791)", () => {
+    const h = computeHeat({
+      changes,
+      blocks,
+      comments: [],
+      qa: { a: { state: "passing", worst: null, needsAgent: 15 }, b: { state: "passing", worst: null, needsAgent: 0 }, c: { state: "passing", worst: null } },
+    });
+    expect(h.rows[0]).toMatchObject({ qaBlocks: 2, qaScriptsOnly: 1, qaNeedsAgent: 15, qaJudgedUnknown: 0 });
+    // A file from before 9791 has no field: "could not tell", never "all judged".
+    expect(h.rows[1]).toMatchObject({ qaBlocks: 1, qaScriptsOnly: 0, qaJudgedUnknown: 1 });
+  });
+
+  test("QA wording: scripts-only and fully judged are different words (9791)", () => {
+    const src = renderHeat.toString();
+    expect(src).toContain("passing on scripts only (");
+    expect(src).toContain("passing, every applicable criterion judged");
   });
 
   test("QA without blocks.json cannot be placed, so it is not published rather than guessed", () => {
