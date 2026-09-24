@@ -1155,6 +1155,18 @@ jobs:
       - name: folio projection and viewer are current
         run: bun run folio:viz:check
 
+      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
+      # than an exception to it. The viewer-nav audit walks the whole docs
+      # tree, so its sidecar goes stale the moment anybody adds a generated
+      # page anywhere — gating on staleness would make a red mean "somebody
+      # else merged", which is the shape the owner ruled ungated on
+      # 2026-09-20. A page that WAS railed and is not any more is the author
+      # of the diff, every time. Staleness and the still-unwired pages are
+      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # Bean `edx7`.
+      - name: viewer pages keep the navbar they had
+        run: bun run check:viewer-nav
+
       # The handler namespace's own index. Gated on the same ground as the
       # voices projection: it derives from the DECLARATIONS (which kinds each
       # instance declares, and whether a `coverage.visualiser` names a

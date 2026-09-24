@@ -583,6 +583,14 @@ export const RULES: Rule[] = [
       // Guards the page template all four viewer generators build as one
       // string literal; the generators are core, so its gate is too.
       "scripts/check-viewer-backticks.ts",
+      // The viewer page's COMMON FIXTURE and its audit (bean `edx7`). Core
+      // beside `check-viewer-backticks.ts` and for the same two reasons: they
+      // guard what every viewer generator writes, and they write into the
+      // rendered site. The navbar MODEL is composed here from the
+      // declarations; the component itself is `lib/navbar.ts`, so this adds a
+      // caller and not a second answer to what the navigation looks like.
+      "scripts/viewer-page.ts",
+      "scripts/check-viewer-nav.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.

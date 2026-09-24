@@ -48,10 +48,11 @@
  * tests in this session hardcoding it.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 
 import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
 import { tileCounts } from "../schemas/tile-count.js";
+import { withViewerNav, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
@@ -416,7 +417,15 @@ function main(): void {
   const assetPath = join(assetDir, "index.json");
   const pagePath = join(pageDir, "index.html");
 
-  const page = (changedAt: string) => statusPage({ locales, changedAt, scope: doc.scope });
+  // THE NAVBAR COMES WITH THE PAGE — bean `edx7`. Applied inside `page` rather
+  // than at the write, because the staleness comparison below runs on this
+  // same function's output: railing after the comparison would leave the gate
+  // green over a page that gains its rail only when somebody re-runs this.
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  const page = (changedAt: string) => {
+    const html = statusPage({ locales, changedAt, scope: doc.scope });
+    return withViewerNav(html, pagePath, nav) ?? html;
+  };
   const json = (changedAt: string) => `${JSON.stringify({ ...doc, changedAt }, null, 2)}\n`;
 
   const today = new Date().toISOString().slice(0, 10);

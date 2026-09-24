@@ -181,7 +181,7 @@ describe("per-family node schemas (bean rdkm)", () => {
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
       "block-qa/v1", "folio-detangle-sidecar/v1", "folio-qa-index/v1", "folio-test-run/v1", "kg-qa/v1",
-      "qa-results/v1", "qa-witness/v1", "translation-qa/v1",
+      "qa-results/v1", "qa-witness/v1", "translation-qa/v1", "viewer-nav-qa/v1",
     ]);
     expect(fams.filter((f) => f.state === "unresolvable")).toEqual([]);
     expect(fams.find((f) => f.tag === "kg-qa/v1")?.state).toBe("resolved");
