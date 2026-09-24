@@ -9582,7 +9582,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "Stable id, referenced by `<folio:convention ref=\"…\"/>`."
+          "doc": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`."
         },
         {
           "name": "statement",
@@ -22290,14 +22290,14 @@
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Stable id. Referenced by `<folio:role ref>` and by `inherits`."
+          "doc": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`."
         },
         {
           "name": "title",
           "type": "string",
           "optional": false,
           "array": false,
-          "doc": "Display text. Not used for matching: a lane binds by `<folio:role ref>`."
+          "doc": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`."
         },
         {
           "name": "description",
@@ -28467,7 +28467,7 @@
       "name": "SkillNameSchema",
       "module": "cat-harness/schemas/tool-types.ts",
       "kind": "zod-scalar",
-      "doc": "The name of a skill, as an activity's `<folio:skill ref>` writes it.",
+      "doc": "The name of a skill, as an activity's `<bootstrap.processes:skill ref>` writes it.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -34851,13 +34851,6 @@
           "type": "z.enum(SPEC_USES)",
           "optional": false,
           "array": false
-        },
-        {
-          "name": "usedBy",
-          "type": "z.array(z.string().min(1)).min(1)",
-          "optional": false,
-          "array": true,
-          "doc": "What in this repository depends on it, so a bump has a blast radius."
         },
         {
           "name": "terms",
