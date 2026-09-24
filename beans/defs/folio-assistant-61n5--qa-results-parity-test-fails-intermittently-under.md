@@ -1,10 +1,11 @@
 ---
 # folio-assistant-61n5
 title: qa-results parity test fails intermittently under bun run gates (2 of 4 local runs), never alone or in CI
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-23T07:09:46Z
-updated_at: 2026-09-23T07:09:46Z
+updated_at: 2026-09-24T12:40:45Z
 parent: folio-assistant-zzmr
 ---
 
