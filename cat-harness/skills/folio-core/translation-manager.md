@@ -7,6 +7,8 @@ description: >-
   automatic badge rendering, and the poSources fallback resolution chain.
 capability: translation
 package: folio-core
+graph-kinds:
+  - translation-sources
 ---
 
 # Translation manager

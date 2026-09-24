@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>77</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>57</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>59</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>83</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>59</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>65</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>22</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 59 |
+| <span class="tg-tag tg-shell">shell</span> | 65 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 22 |
 | <span class="tg-tag tg-mcp">mcp</span> | 22 |
 | <span class="tg-tag tg-manual">manual</span> | 5 |
 
 | installation | tools |
 |---|---|
-| `none` | 72 |
+| `none` | 78 |
 | `cli` | 5 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **57** skills named across **77** tools resolve to a
+Yes — all **59** skills named across **83** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -66,9 +66,10 @@ tool advertising a capability the graph cannot locate.
 | `check-tools`<br>Do the Tool nodes agree with their skills? | Check every Tool node's joins: that each `satisfies` resolves to a real skill and agrees with that skill's declared contract, that every io port names a declared type, and that no argv input has a type able to express a shell payload. | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 0 in / 1 out |
 | `ci-health`<br>Is CI passing on the default branch? | Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start. | <span class="tg-tag tg-shell">shell</span> | `ci-health` | 3 in / 1 out |
 | `content-context`<br>Content JSON-LD context | Emit the published JSON-LD `@context` that both populations share — authored block siblings and ingested `library/**` nodes reference it by URL — generated from its TypeScript definition rather than hand-kept. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
+| `content-graph-analysis`<br>Editorial content-graph analysis | Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one. | <span class="tg-tag tg-shell">shell</span> | `content-graph` | 6 in / 1 out |
 | `content-graph-build`<br>Content graph | Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
 | `content-graph-uml`<br>A paper's block graph as UML | Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper. | <span class="tg-tag tg-shell">shell</span> | `content-graph`<br>`graph-rendering` | 4 in / 1 out |
-| `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate` | 2 in / 1 out |
+| `content-manifest-validate`<br>Content manifest validation | Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while. | <span class="tg-tag tg-shell">shell</span> | `content-validate`<br>`content-validation` | 2 in / 1 out |
 | `context-prefixes`<br>JSON-LD prefix check | Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `discuss`<br>discussion | Put a question to a person or a sibling agent and receive an answer, to determine which harness this repository should become and which repositories are read from and written to. The two facts no file holds. | <span class="tg-tag tg-manual">manual</span> | `discussion` | 2 in / 1 out |
 | `feature-staging`<br>Stage a branch's preview | Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes. | <span class="tg-tag tg-shell">shell</span> | `feature-staging` | 3 in / 1 out |
@@ -97,10 +98,15 @@ tool advertising a capability the graph cannot locate.
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | `mcp-contract` | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 0 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
+| `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 8 in / 1 out |
 | `pages-publish`<br>GitHub Pages publish | Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
+| `paper-latex-build`<br>Paper build to LaTeX chapters | Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none. | <span class="tg-tag tg-shell">shell</span> | `content-validation` | 2 in / 1 out |
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `build-docs`<br>`build-pdf` | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `rendering-auditor`<br>`staging-review` | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | `asset-extraction` | 5 in / 1 out |
+| `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | `docs-generation`<br>`proof-status-tracking` | 4 in / 1 out |
+| `proof-objects-extract`<br>Proof-object extraction | Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read. | <span class="tg-tag tg-shell">shell</span> | `proof-status-tracking` | 1 in / 1 out |
+| `proof-status-update`<br>Proof status from a Lean build | Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status. | <span class="tg-tag tg-shell">shell</span> | `proof-status-tracking` | 2 in / 1 out |
 | `qa-sweep`<br>QA sweep | Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish "never checked" from "checked and clean". | <span class="tg-tag tg-shell">shell</span> | `content-test` | 4 in / 1 out |
 | `readme-audit`<br>Audit README links | Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 3 in / 1 out |
 | `readme-sync`<br>Sync generated README sections | Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 5 in / 1 out |

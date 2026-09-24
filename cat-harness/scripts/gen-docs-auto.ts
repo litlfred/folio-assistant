@@ -486,7 +486,7 @@ export const TYPES: AutoDocType[] = [
   {
     id: "glossary",
     title: "Glossary",
-    graph: "glossary",
+    graph: "swimlane-glossary",
     extracts:
       "every term this instance's swimlanes define — the role's title and description, " +
       "the lane names that bind it, and whether the term has been retired",
@@ -525,7 +525,7 @@ export const TYPES: AutoDocType[] = [
       }
 
       const items: AutoDocItem[] = [];
-      for (const d of declaredDirectories("glossary")) {
+      for (const d of declaredDirectories("swimlane-glossary")) {
         for (const f of walk(d.absPath, (n) => n === "glossary-ledger.json")) {
           let parsed: { instance?: string; concepts?: Record<string, { prefLabel?: string; firstSeen?: string; retiredOn?: string | null }> };
           try {

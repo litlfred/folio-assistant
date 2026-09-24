@@ -61,3 +61,4 @@
  * has loaded core; it does not excuse production from loading it.
  */
 import "./folio-graph-kind.js";
+import "./glossary-graph-kind.js";

@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:content-lifecycle#feedback-collected"
+---
+
 # Content Feedback Collection
 
 Gather and triage feedback on published content for future iterations.
