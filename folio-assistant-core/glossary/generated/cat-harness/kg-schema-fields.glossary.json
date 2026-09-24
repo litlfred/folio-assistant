@@ -2850,7 +2850,7 @@
     {
       "id": "convention.conventionschema.id",
       "prefLabel": "ConventionSchema.id",
-      "definition": "Stable id, referenced by `<folio:convention ref=\"…\"/>`.",
+      "definition": "Stable id, referenced by `<cat-harness.processes:convention ref=\"…\"/>`.",
       "source": "cat-harness/schemas/convention.ts#ConventionSchema.id",
       "status": "candidate"
     },
@@ -3450,6 +3450,13 @@
       "status": "candidate"
     },
     {
+      "id": "document-image.documentimageschema.placements",
+      "prefLabel": "DocumentImageSchema.placements",
+      "definition": "Every place this image appears, the first one included.",
+      "source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.placements",
+      "status": "candidate"
+    },
+    {
       "id": "document-image.geometrybasisschema.coverage",
       "prefLabel": "GeometryBasisSchema.coverage",
       "definition": "Placed area over page area. The number the role was computed from.",
@@ -3503,6 +3510,34 @@
       "prefLabel": "InspectionBasisSchema.saw",
       "definition": "What was seen, in a few words. NOT the description — the reason.",
       "source": "cat-harness/schemas/document-image.ts#InspectionBasisSchema.saw",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.coverage",
+      "prefLabel": "PlacementSchema.coverage",
+      "definition": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.coverage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.imagesonpage",
+      "prefLabel": "PlacementSchema.imagesOnPage",
+      "definition": "How many images share this page.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.note",
+      "prefLabel": "PlacementSchema.note",
+      "definition": "What this copy serves HERE — never what the image is, which is the narrative's job. \"a recurring header for principle 8\" belongs here; \"an irregular grid of coloured squares\" belongs on the image.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.page",
+      "prefLabel": "PlacementSchema.page",
+      "definition": "The page it sits on, 1-based as a reader counts.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
       "status": "candidate"
     },
     {
@@ -4521,6 +4556,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.validatornotapplicable",
+      "prefLabel": "GraphKindDef.validatorNotApplicable",
+      "definition": "WHY a runtime validator does not apply to this kind — a reason, not a flag.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.closedcontenttype.own",
       "prefLabel": "ClosedContentType.own",
       "definition": "`true` when the marker is on the root itself rather than a dependency.",
@@ -4973,6 +5015,48 @@
       "prefLabel": "IgMenuSourceSchema.ref",
       "definition": "The commit it was read at. Provenance.",
       "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionnodeschema.default",
+      "prefLabel": "InteractionNodeSchema.default",
+      "definition": "What to assume for somebody with no entry above.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.default",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionnodeschema.dollar-comment",
+      "prefLabel": "InteractionNodeSchema.$comment",
+      "definition": "Prose for a reader who opens the file; never read by a process.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.$comment",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionnodeschema.users",
+      "prefLabel": "InteractionNodeSchema.users",
+      "definition": "Keyed by the identity the agent can resolve — an email today.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionNodeSchema.users",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.note",
+      "prefLabel": "InteractionProfileSchema.note",
+      "definition": "What the profile means for this person, in their terms or the agent's.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.profiles",
+      "prefLabel": "InteractionProfileSchema.profiles",
+      "definition": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.profiles",
+      "status": "candidate"
+    },
+    {
+      "id": "interaction.interactionprofileschema.source",
+      "prefLabel": "InteractionProfileSchema.source",
+      "definition": "How it came to be known — `stated by the user`, a policy, an inference.",
+      "source": "cat-harness/schemas/interaction.ts#InteractionProfileSchema.source",
       "status": "candidate"
     },
     {
@@ -6364,7 +6448,7 @@
     {
       "id": "role-graph.roledef.id",
       "prefLabel": "RoleDef.id",
-      "definition": "Stable id. Referenced by `<folio:role ref>` and by `inherits`.",
+      "definition": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.id",
       "status": "candidate"
     },
@@ -6399,7 +6483,7 @@
     {
       "id": "role-graph.roledef.title",
       "prefLabel": "RoleDef.title",
-      "definition": "Display text. Not used for matching: a lane binds by `<folio:role ref>`.",
+      "definition": "Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.title",
       "status": "candidate"
     },
@@ -6618,6 +6702,62 @@
       "prefLabel": "SessionContextSchema.waitingOn",
       "definition": "What the session is waiting on, if anything.",
       "source": "cat-harness/schemas/session-context.ts#SessionContextSchema.waitingOn",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.file",
+      "prefLabel": "BeanIndexItemSchema.file",
+      "definition": "Repository-relative path of the bean file.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.parent",
+      "prefLabel": "BeanIndexItemSchema.parent",
+      "definition": "`\"\"` when the bean has no parent.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.preview",
+      "prefLabel": "BeanIndexItemSchema.preview",
+      "definition": "The body, trimmed to its first 400 characters.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.referencedby",
+      "prefLabel": "LibraryIndexEntrySchema.referencedBy",
+      "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.badges",
+      "prefLabel": "QaIndexSchema.badges",
+      "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.page",
+      "prefLabel": "QaIndexSchema.page",
+      "definition": "The page's slug.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.changedat",
+      "prefLabel": "TranslationStatusSchema.changedAt",
+      "definition": "`YYYY-MM-DD`: the day the counts last changed.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.scope",
+      "prefLabel": "TranslationStatusSchema.scope",
+      "definition": "The translations directory counted, repository-relative.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
       "status": "candidate"
     },
     {
@@ -7276,6 +7416,13 @@
       "prefLabel": "ThemeBackdropSchema.scrim",
       "definition": "The layer between art and ink, as a CSS colour — normally a translucent form of `surface`. Required; see module docs.",
       "source": "cat-harness/schemas/theme.ts#ThemeBackdropSchema.scrim",
+      "status": "candidate"
+    },
+    {
+      "id": "theme.themedtodofieldsschema.layout",
+      "prefLabel": "ThemedTodoFieldsSchema.layout",
+      "definition": "Which of the theme's three crops this sticky shows. ABSENT means the square `card` crop, on every screen — owner, 2026-09-24: *\"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified.\"* Absent rather than defaulted, for the same reason as `theme`: \"the author chose card\" and \"nobody chose\" stay distinguishable.",
+      "source": "cat-harness/schemas/theme.ts#ThemedTodoFieldsSchema.layout",
       "status": "candidate"
     },
     {
@@ -9416,7 +9563,7 @@
     {
       "id": "webpage.webpagenode.id",
       "prefLabel": "WebPageNode.id",
-      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN `<folio:link>` hrefs — resolve against.",
+      "definition": "Stable identity. Becomes the heading anchor (pinned, not derived from the title), the local part of the node's `@id`, and the fragment that inbound links — including the BPMN subprocess links derived from `asset.source` — resolve against.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.id",
       "status": "candidate"
     },
@@ -9439,6 +9586,20 @@
       "prefLabel": "WebPageNode.title",
       "definition": "Heading text. Free to change without breaking a link.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.title",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.path",
+      "prefLabel": "WithheldEntrySchema.path",
+      "definition": "Relative to the directory holding the file; a directory takes its whole subtree.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.reason",
+      "prefLabel": "WithheldEntrySchema.reason",
+      "definition": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
       "status": "candidate"
     }
   ]

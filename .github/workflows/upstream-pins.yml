@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/upstream-pin-watch.bpmn
 # Upstream pin watchdog — the detection half of `upstream-version-adoption`.
 #
 # `docs/_config.yml` used to carry `remote_theme: just-the-docs/just-the-docs`
@@ -38,6 +39,7 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Check every pinned upstream dependency
     runs-on: ubuntu-latest
     timeout-minutes: 10

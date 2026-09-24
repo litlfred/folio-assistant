@@ -118,6 +118,10 @@
  * Usage:
  *   bun run cat-harness/scripts/glossary-export.ts [--instance ROOT] [--out FILE]
  *   bun run cat-harness/scripts/glossary-export.ts --check
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-skos
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -398,7 +402,7 @@ export function buildGlossary(opts: {
         varying.push(l);
         break;
       case "dangling":
-        problems.push(`${l.file}#${l.laneId}: <folio:role ref="${b.ref}"/> names no declared role`);
+        problems.push(`${l.file}#${l.laneId}: <bootstrap.processes:role ref="${b.ref}"/> names no declared role`);
         break;
       case "contradictory":
         problems.push(`${l.file}#${l.laneId}: declares both ref="${b.ref}" and variable="true"`);

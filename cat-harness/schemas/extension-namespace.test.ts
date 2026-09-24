@@ -66,14 +66,17 @@ describe("the parser follows the namespace, not the prefix", () => {
     expect(b).toEqual(a);
   });
 
-  test("the older single address is still ours, so a diagram not yet moved reads the same", async () => {
+  test("the retired single address is no longer ours (stage 4)", async () => {
+    // It was read until 2026-09-24 so folios could move; once none bound it,
+    // it retired. A diagram still on it now loses its extensions rather than
+    // having them read, and external-schemas names it as drift.
     const older = variant("older", (x) =>
       x
         .replace(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}"`, `xmlns:folio="${FOLIO_BPMN_NS}"`)
         .replace(/(<\/?)bootstrap\.processes:/g, "$1folio:"),
     );
-    const a = await modelOf(variant("same2", (x) => x), join(tmp, "same2"));
-    expect(await modelOf(older, join(tmp, "older"))).toEqual(a);
+    expect(readFileSync(older, "utf-8")).toContain("<folio:skill");
+    expect(skillsOf(await modelOf(older, join(tmp, "older")))).toEqual([]);
   });
 
   test("folio: bound to someone else's namespace is not ours, whatever it spells", async () => {
@@ -93,13 +96,13 @@ describe("raw-XML readers follow the namespace too", () => {
   const doc = (bindings: string, body: string) => `<bpmn:definitions ${bindings}>${body}</bpmn:definitions>`;
 
   test("the prefixes bound to our namespace are found, dotted ones included", () => {
-    const xml = doc(`xmlns:bootstrap.processes="${FOLIO_BPMN_NS}" xmlns:folio="urn:other"`, "");
+    const xml = doc(`xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}" xmlns:folio="urn:other"`, "");
     expect(ownExtensionPrefixes(xml)).toEqual(["bootstrap.processes"]);
   });
 
   test("a pattern matches our element under any prefix, and never a foreign folio:", () => {
     const xml = doc(
-      `xmlns:bootstrap.processes="${FOLIO_BPMN_NS}" xmlns:folio="urn:other"`,
+      `xmlns:bootstrap.processes="${BOOTSTRAP_PROCESSES_NS}" xmlns:folio="urn:other"`,
       '<bootstrap.processes:skill ref="a"/><folio:skill ref="b"/>',
     );
     const refs = [...xml.matchAll(ownElementPattern(xml, "skill", String.raw`\s+ref="([^"]+)"`))].map((m) => m[1]);

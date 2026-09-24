@@ -264,6 +264,20 @@ describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
   });
 });
 
+/*
+ * The hoist above landed independently on main (#1258) and on this branch,
+ * within hours, with the same shape and different names -- `corpus()` there,
+ * `repoScan()` here. Main's is kept; this branch's duplicate is gone.
+ *
+ * One measurement from this side is worth keeping, because it says WHEN the
+ * cost tipped over: promoting `arxiv-2510.21603v1` added that paper's 22
+ * sections to the corpus, 4,071 -> 4,093 files, and that was the increment
+ * that took the file from passing to intermittently red. Measured against a
+ * worktree of origin/main rather than a stash, which is the only way to
+ * measure main once a branch has commits. Nothing was wrong with the scan or
+ * the promotion -- every promotion adds to this corpus, and it will tip again.
+ */
+
 describe("the workflow scan reports unknown, never zero", () => {
   test("a checkout with no .github/workflows gives null, and null is not clean", () => {
     const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));

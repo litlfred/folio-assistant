@@ -65,6 +65,33 @@ namespace is `<publication root><instance stub>/ns#` (`instanceNs` in
 The namespace is never the asset's path: moving the asset must not move the
 term (bean `lqo9`, 2026-09-21).
 
+**A term is minted by the instance that owns its source.** Owner,
+2026-09-24: *"make sure all glossary terms properly localed to ihris so [no]
+collision w/ other subgraphs. general rule/skill"*. A scheme and its terms live
+in the namespace of the instance whose root holds the SOURCE ASSET, not of the
+instance whose `glossary/` directory holds the file:
+- In a folio with sub-instances, that is the sub-instance
+  (`instanceNs(<sub-stub>)`, under the folio's own publication root). It is
+  never the root instance, even when the `glossary/` directory is declared at
+  the root. In ihris, a term drawn from `ihris-manage` is minted in
+  `ihris-manage`'s namespace, not `ihris`'s.
+- A code list extended by several packages belongs to the instance that
+  DEFINES it. Say so with the scheme's own `source` (a repository path in that
+  instance). Each term's `source` still points at the package that
+  contributed it.
+- A scheme whose terms are sourced in several instances and that names no
+  defining `source` is refused, never guessed: split it, one scheme per
+  instance. `folio-assistant-core/glossary/` holds two `platform` schemes for
+  that reason, core's and cat-harness's.
+- No two instances share a namespace, and a scheme IRI is unique across every
+  instance.
+
+`check:glossary` enforces all of this (`schemeOwner` and `collect` in
+`glossary-page.ts`, and the checks in `glossary.test.ts`). An extracted term
+follows the same rule, because `glossary-extract.ts` mints it in the namespace
+of the instance whose root holds the asset. When a check fails, fix the
+generator or split the authored scheme. Never edit the output.
+
 **One ConceptScheme per code list.** This follows `schemas/code-list.ts`
 (`codeListToSkos`): *"a code is addressable and two lists may share a code
 without sharing a concept"*. The same code in two lists gives two concepts.
@@ -92,10 +119,20 @@ dereferenced says so.
 
 ## Then
 
-`bun run glossary:page` writes `docs/glossary/index.md` (A–Z, a filter box,
-schema.org `DefinedTermSet` JSON-LD) and one SKOS JSON-LD file per scheme under
-`docs/assets/glossary/`. `bun run check:glossary` is the gate: it fails on a
-document that does not validate and on a stale page.
+`bun run glossary:page` writes the index, `docs/glossary/index.md` (the
+authored terms with A–Z and a filter box, the counts, the sources, schema.org
+`DefinedTermSet` JSON-LD, and a link to every asset type's page), one page per
+asset type at `docs/glossary/<type>/index.md` (skills, tools, bpmn-activities,
+dmn-decisions, schema-fields: that type's extracted terms, with A–Z and a
+filter box), and one SKOS JSON-LD file per scheme under
+`docs/assets/glossary/`. Each term is on exactly one page. `bun run
+check:glossary` is the gate: it fails on a document that does not validate, on
+a stale page, and on a page over its size budget (64 KB for the index, 1 MB
+for an asset type's page).
+
+**A page over budget is split further, never given a bigger budget.** The
+owner chose *"Split per asset type"* (2026-09-24) when extraction took the
+single page to 1.4 MB; the budgets are what keeps that choice true.
 
 The harness's swimlane-role terms (`swimlane-glossary`, the
 [`swimlane-glossary`](swimlane-glossary.md) skill) are one more source the page
@@ -119,9 +156,9 @@ comment. One scheme per asset type per instance (`kg-skills`, `kg-tools`,
 - To promote one, author a term in a glossary of your own with a definition
   you have checked, `status: authored`, and the same `source`.
 - BPMN lanes and roles are not extracted: the swimlane ledger carries them.
-- The page shows extracted terms apart from authored ones ("candidate,
-  extracted", and a "Show" filter), and only authored terms go into the
-  schema.org `DefinedTermSet`.
+- Extracted terms are on their asset type's page, never on the index, and
+  each carries the "candidate, extracted" badge. Only authored terms go into
+  the schema.org `DefinedTermSet`, which is on the index.
 
 ## Translation: authored terms only (bean `lqo9`, owner 2026-09-24)
 

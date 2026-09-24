@@ -361,11 +361,17 @@ perfectly typed and audited by nothing.
 **The discipline is in the skill, not here** —
 [`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
 carries why the gate half is **declared** rather than inferred
-(a grep fails in both directions), why an undeclared gate is counted so every
-"unaudited" reads as an upper bound, the three per-kind states that must not
-collapse into one zero, and the two rules building it paid for — a measurement
-must not be a term in itself, and a docblock that documents a tag necessarily
-contains the tag.
+(a grep fails in both directions), the four per-kind states that must not
+collapse into one zero — including why `typed-only` is still a **finding**,
+since typing a node is not judging it — and the rules building it paid for: a
+measurement must not be a term in itself, a docblock that documents a tag
+necessarily contains the tag, and a validator over the nodes nobody produces is
+not coverage.
+
+Every gate now declares (bean `3srh`) and every kind with files is JUDGED rather
+than merely typed (bean `h1wq`, via `check:harness-state`), so CI runs
+`audit:coverage:require-all` **and** `audit:coverage:strict` — two steps, because
+they lock different things and a reader should see which broke.
 
 ## Actors, roles and skills — a role is a swimlane
 

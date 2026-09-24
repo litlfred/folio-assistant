@@ -168,7 +168,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
             `starting a second.\n\n${describe(model, existing, roles())}`,
         );
       }
-      // The pre-execution gate, and the FIRST non-test caller `<folio:precondition>`
+      // The pre-execution gate, and the FIRST non-test caller `<bootstrap.processes:precondition>`
       // has ever had (issue #853, requirement 3). Asked here rather than in
       // `startInstance` because a precondition is what must hold BEFORE the start
       // event: `startInstance` also runs for every subprocess entered mid-flight,

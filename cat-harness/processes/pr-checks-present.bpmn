@@ -20,7 +20,6 @@
            without the gateway that separates "every head has a run" from
            "nobody could look". -->
       <cat-harness.processes:policy enforcement="strict"/>
-      <cat-harness.processes:implements workflow=".github/workflows/pr-checks-present.yml"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_PrChecksPresent">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
@@ -40,9 +39,6 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Hourly (:37),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <cat-harness.processes:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Sweep" name="Ask, per open PR, whether its&amp;#10;HEAD has a run &amp;#8212; skipping&amp;#10;heads younger than 15 min">

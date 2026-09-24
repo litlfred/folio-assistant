@@ -207,6 +207,29 @@ gate can see.
   not re-ask on a timer, and **do not let "not merged yet" become a reason to
   stop pushing.**
 
+### Two green PRs can merge into a red main, and the answer is to fix forward
+
+A PR is tested against the main it last merged, not the main it lands on.
+Two PRs that are each green can still combine into a failure that neither
+branch contained. On 2026-09-24 that happened: #1245 added a generated
+report, and main had just gained a workflow instance the report did not
+cover. Main went red at #1245's merge, and no `regen` on either branch could
+have seen it (bean `391j`).
+
+**The owner's policy is to fix forward, not to add a merge queue or an
+"up to date" requirement** (2026-09-24). So:
+
+- **Watch main's CI after every merge you make**, not only your PR's.
+  "My PR was green" does not mean main is green.
+- **A red main whose failure your diff did not cause is still yours to fix
+  when you find it.** Establish the cause from the failing run and each
+  parent's history first, then regenerate or repair in a small PR of its own,
+  and merge it as soon as it is green. #1249 and #1257 each did this within
+  minutes.
+- **Do not blame the last merge because it is the last merge.** Check whether
+  the parent was already red. In `391j` it was, and the first diagnosis ("a
+  blind spot in `regen`") was wrong for exactly that reason.
+
 ## Why — the failure modes this prevents
 
 - **Stepped-on work.** A branch that hoards uncommitted work collides

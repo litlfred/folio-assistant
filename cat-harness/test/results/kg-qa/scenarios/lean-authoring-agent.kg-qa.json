@@ -5,7 +5,7 @@
     "id": "lean-authoring-agent",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:fb7eb4658b428f890847748e2dc2e3b8998c243bd9c63ff99ac33b86c54c716b",
+  "source_hash": "sha256:125f12745fe56f55e38de3f09f9da80a611068d31fa4840565480c82415d3cff",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -20,7 +20,7 @@
       "findings": [
         {
           "where": "lean-authoring-agent",
-          "detail": "role \"lean-authoring-agent\" is bound by no lane's <folio:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
+          "detail": "role \"lean-authoring-agent\" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
         }
       ]
     },
