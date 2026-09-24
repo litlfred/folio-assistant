@@ -14,6 +14,9 @@
  * Never hand-edit `docs/assets/img/workflows/*.svg` — regenerate instead.
  *
  * @covers processes
+ *
+ * @conformsTo omg-bpmn-2.0
+ * @conformsTo omg-dd-1.0
  */
 import { chromium } from "@playwright/test";
 import { workflowFiles } from "./known-skills.js";

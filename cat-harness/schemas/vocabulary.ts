@@ -33,6 +33,8 @@
  *
  * @module schemas/vocabulary
  * @graphNode schema
+ *
+ * @conformsTo w3c-skos
  */
 
 import { BOOTSTRAP_TERMS } from "./graph.ts";
