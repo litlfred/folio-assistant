@@ -29667,6 +29667,13 @@
           "optional": true,
           "array": true,
           "doc": "Published artefacts this Tool is authoritative for. See"
+        },
+        {
+          "name": "renders",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
         }
       ],
       "extendsNames": [],
