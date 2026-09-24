@@ -24,8 +24,8 @@ The CRDM requirements process, decomposed. Each phase is a real subprocess in it
 
 | lane | role | what it does here |
 |---|---|---|
-| BA / Feature Requestor | — | The one activity in this diagram that is not a subprocess call: states the capability gap in its own words and, per its own documentation, does not need to know any of what follows is called CRDM. The six phases translate the need into that vocabulary, not the other way round. |
-| Agent | — | Holds the one gate whose "no" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own. |
+| BA / Feature Requestor | `business-analyst` | The one activity in this diagram that is not a subprocess call: states the capability gap in its own words and, per its own documentation, does not need to know any of what follows is called CRDM. The six phases translate the need into that vocabulary, not the other way round. |
+| Agent | `authoring-agent` | Holds the one gate whose "no" branch ends the entire process rather than routing into a child — GW_Feature's own documentation: a subprocess would have to re-ask the same question to route on the answer. From there it carries the BA's need through all six phases as a straight chain of subprocess calls, with no branching of its own. |
 
 ## Steps
 
@@ -45,10 +45,10 @@ Every one of the 9 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Feature?**<br>`GW_Feature` | — | **no** → Continue authoring<br>**yes** → Link the work to an issue |
+| **Feature?**<br>`GW_Feature` | Answered by crdm-detect: is this request a feature request, a change to the platform, rather than content work? `no` continues authoring; `yes` enters CRDM, starting by linking the work to an issue. | **no** → Continue authoring<br>**yes** → Link the work to an issue |
 
 {% endraw %}

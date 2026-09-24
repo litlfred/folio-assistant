@@ -73,6 +73,28 @@
  * because whether those twelve are unfinished work or should be re-parented is
  * a judgement about `5a3l`, and that belongs to its owner.
  *
+ * ## Why the leaf rule REPORTS and does not fail
+ *
+ * It was written as a third hard gate and that was wrong, which a moving store
+ * showed within the hour. Calibrated at **3 of 243** open beans it looked like
+ * the shape `beans.ts` approves of — a finding about three specific beans. Then
+ * 339 commits of `main` merged in and it fired on **five more**, none of them
+ * abandoned: each was a bean whose session had ticked its last box and had not
+ * yet closed it.
+ *
+ * **That window is a normal state, not a defect.** Ticking the final box and
+ * setting `completed` are two edits, and on a repository with several sessions
+ * running there is nearly always somebody between them. A gate that fails there
+ * reds a build for another session's in-flight turn — and the alternative,
+ * baselining each, grows a licence list that nobody ever shrinks, which is the
+ * failure mode `bean-parents-baseline.json` warns about in its own comment.
+ *
+ * It also contradicted what the rule already said about itself: *it does not
+ * say "close this bean"*. A rule that demands no work has no business failing a
+ * build. So the finding is printed on every run and contributes nothing to the
+ * exit code, and the two container rules — genuine contradictions that do not
+ * occur transiently — stay hard.
+ *
  * A rule that fires on nothing is not a rule with no value: `check-bean-parents`
  * calls that shape *locking in a property the corpus HAS rather than demanding
  * work to reach one*, and the first direction is exactly that.
@@ -136,6 +158,13 @@ export interface BeanRollupReport {
   outstanding: string[];
   /** Baseline keys nothing matched — a repair that left its licence behind. */
   stale: string[];
+  /**
+   * `open-leaf-complete-checklist` findings. **Listed, never failed on.**
+   *
+   * Separated from {@link problems} after the rule met a moving store — see
+   * the module header, §"Why the leaf rule reports and does not fail".
+   */
+  ticked: string[];
   /** Present only with `--sweep`. Never contributes to the exit code. */
   sweep: {
     inProgress: number;
@@ -361,16 +390,23 @@ export async function checkBeanRollup(
   opts: { sweep?: boolean; github?: boolean; now?: Date } = {},
 ): Promise<BeanRollupReport> {
   const beans = readBeans(root);
-  if (beans === null) return { store: null, open: 0, problems: [], outstanding: [], stale: [], sweep: null };
+  if (beans === null) return { store: null, open: 0, problems: [], outstanding: [], stale: [], ticked: [], sweep: null };
   const found = rollupFindings(beans);
   const baseline = loadBaseline(root);
   const matched = new Set(found.map((f) => f.key).filter((k) => baseline.has(k)));
   return {
     store: beanDefsDir(root),
     open: beans.filter(isOpen).length,
-    problems: found.filter((f) => !baseline.has(f.key)).map((f) => f.message),
-    outstanding: found.filter((f) => baseline.has(f.key)).map((f) => f.message),
+    // The leaf rule is REPORT-ONLY and so is held out of `problems`, which is
+    // what sets the exit code. See the module header.
+    problems: found
+      .filter((f) => f.kind !== "open-leaf-complete-checklist" && !baseline.has(f.key))
+      .map((f) => f.message),
+    outstanding: found
+      .filter((f) => f.kind !== "open-leaf-complete-checklist" && baseline.has(f.key))
+      .map((f) => f.message),
     stale: [...baseline].filter((k) => !matched.has(k)).sort(),
+    ticked: found.filter((f) => f.kind === "open-leaf-complete-checklist").map((f) => f.message),
     sweep: opts.sweep
       ? sweep(beans, opts.now ?? new Date(), opts.github ? await openPrBeanIds(beans, process.env.GH_TOKEN) : null)
       : null,
@@ -389,20 +425,22 @@ function formatReport(r: BeanRollupReport): string {
      * reader with a ticked-out leaf to "re-parent the children" it does not
      * have. A remediation line that does not fit the finding is read as noise,
      * and then so is the finding. */
-    if (r.problems.some((p) => p.includes("checklist item(s) ticked"))) {
-      out.push("  A ticked-out bean: close it ON EVIDENCE — re-derived, not taken from its own");
-      out.push("  notes — or add the box that is actually still open. `ready-to-close` is for the");
-      out.push("  case the evidence cannot be re-derived; it is not a parking space.");
-    }
-    if (r.problems.some((p) => p.includes("child(ren)"))) {
-      out.push("  A container: close it, or re-open / re-parent the children that disagree with it.");
-    }
+    out.push("  A container: close it, or re-open / re-parent the children that disagree with it.");
     out.push("  Never delete a bean — unwanted work is `scrapped`, with its reasons.");
   }
   // Listed, never failed, and never silent: hiding a baselined defect makes
   // "nobody has fixed this" and "there is nothing here" the same output.
   for (const o of r.outstanding) out.push(`  · outstanding (baselined): ${o}`);
   for (const k of r.stale) out.push(`  ✗ baseline entry \`${k}\` matches nothing — remove it from ${BASELINE_FILE}`);
+  // REPORTED, NEVER FAILED. A bean between its last tick and its close is a
+  // normal, short-lived state on a moving store, so failing on it would red a
+  // build for somebody else's in-flight turn.
+  for (const t of r.ticked) out.push(`  · ticked out, still open: ${t}`);
+  if (r.ticked.length > 0) {
+    out.push("    Close it ON EVIDENCE — re-derived, not taken from the bean's own notes — or add");
+    out.push("    the box that is actually still open. `ready-to-close` is for the case the evidence");
+    out.push("    cannot be re-derived; it is not a parking space. Reported, never failed on.");
+  }
   if (r.sweep) {
     const s = r.sweep;
     out.push("");

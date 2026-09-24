@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Deliver",
     "path": "processes/crdm-deliver.bpmn"
   },
-  "source_hash": "sha256:b916eac99d8a5439ea0c5d6a9056351675c13171861e08d3d76f89f59a5b07ff",
+  "source_hash": "sha256:be5ef93ca1209796347724df54ee2070d224e927138a348e8f1406efe678ce3f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,23 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_IncrementOK",
-          "detail": "\"Meets criteria?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_MVPReady",
-          "detail": "\"MVP ready for stakeholders?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_StakeholderOK",
-          "detail": "\"Accepted?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -110,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

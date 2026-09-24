@@ -24,11 +24,11 @@ folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of trut
 
 | lane | role | what it does here |
 |---|---|---|
-| FHIR modeller | — | Task_AuthorFsh is the single re-entry point for both failure paths in this diagram — an invalid-FHIR loop from Gateway_Valid with no record left behind, and a QC failure that arrives only after Task_QcBeans has filed it — so the lane has to be able to tell a mechanical re-run from a finding that needs to be read, and the diagram gives it no other signal than which edge fired. |
-| Work plan — beans (shared by humans and agents) | — | The only failure this diagram writes down: an invalid-FHIR loop at Gateway_Valid sends the modeller straight back with nothing recorded, but a QC finding always passes through here first, becoming a bean before Task_AuthorFsh sees it again — so a QC failure is discoverable outside the session that produced it and an invalid-FHIR one is not. |
-| Build pipeline — SUSHI · validator · IG Publisher | — | Two different jobs share this lane rather than one continuous run. Task_Sushi and Task_Validate turn FSH into validated FHIR JSON and loop straight back to the modeller lane on failure with no bean filed — re-running compile-and-validate is cheap enough that a durable finding would be noise. Task_IgPublisher is the other job, reached only once Lane_Qc has passed, and its output is what Lane_PubMgr actually publishes. |
-| QC reviewer | — | The single gate between a syntactically valid FHIR JSON and the full IG Publisher build — Task_IgPublisher runs only once this lane says clean, so a QC finding here is what keeps a compiling-but-wrong profile from ever reaching a publishable IG rather than being caught only after the whole site is built. |
-| Publication manager | — | The last lane and the only one with no path back into the loop — reaching it means Task_IgPublisher already succeeded on Lane_Qc's clean verdict. It does not itself decide whether the release is authorised: that call is draft-to-publication.bpmn's, and Task_PublishIg only executes what that separate process has already cleared. |
+| FHIR modeller | `fhir-modeller` | Task_AuthorFsh is the single re-entry point for both failure paths in this diagram — an invalid-FHIR loop from Gateway_Valid with no record left behind, and a QC failure that arrives only after Task_QcBeans has filed it — so the lane has to be able to tell a mechanical re-run from a finding that needs to be read, and the diagram gives it no other signal than which edge fired. |
+| Work plan — beans (shared by humans and agents) | `work-plan` | The only failure this diagram writes down: an invalid-FHIR loop at Gateway_Valid sends the modeller straight back with nothing recorded, but a QC finding always passes through here first, becoming a bean before Task_AuthorFsh sees it again — so a QC failure is discoverable outside the session that produced it and an invalid-FHIR one is not. |
+| Build pipeline — SUSHI · validator · IG Publisher | `build-pipeline` | Two different jobs share this lane rather than one continuous run. Task_Sushi and Task_Validate turn FSH into validated FHIR JSON and loop straight back to the modeller lane on failure with no bean filed — re-running compile-and-validate is cheap enough that a durable finding would be noise. Task_IgPublisher is the other job, reached only once Lane_Qc has passed, and its output is what Lane_PubMgr actually publishes. |
+| QC reviewer | `qc-reviewer` | The single gate between a syntactically valid FHIR JSON and the full IG Publisher build — Task_IgPublisher runs only once this lane says clean, so a QC finding here is what keeps a compiling-but-wrong profile from ever reaching a publishable IG rather than being caught only after the whole site is built. |
+| Publication manager | `publication-manager` | The last lane and the only one with no path back into the loop — reaching it means Task_IgPublisher already succeeded on Lane_Qc's clean verdict. It does not itself decide whether the release is authorised: that call is draft-to-publication.bpmn's, and Task_PublishIg only executes what that separate process has already cleared. |
 
 ## Steps
 
@@ -47,11 +47,11 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **FHIR valid?**<br>`Gateway_Valid` | — | **no** → Author FSH profiles<br>**yes** → QC gates |
-| **QC clean?**<br>`Gateway_QcPass` | — | **no** → File QC findings as beans<br>**yes** → IG Publisher build |
+| **FHIR valid?**<br>`Gateway_Valid` | Answered by validating the resources against their profiles. `no` returns to FSH authoring; `yes` goes on to the QC gates. | **no** → Author FSH profiles<br>**yes** → QC gates |
+| **QC clean?**<br>`Gateway_QcPass` | Answered by the QC gates. `no` files the findings as beans; `yes` goes on to the IG Publisher build. | **no** → File QC findings as beans<br>**yes** → IG Publisher build |
 
 {% endraw %}

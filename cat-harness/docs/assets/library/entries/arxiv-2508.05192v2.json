@@ -1,0 +1,230 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2508.05192v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "JSON Schema Creation",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-json-schema-creation.md",
+      "narrative": null,
+      "content": "1st Felix Neubauer\n, 3rd Benjamin Uekermann\nInstitute for Parallel and Distributed Systems\nUniversity of Stuttgart\nStuttgart, Germany\nFelix.Neubauer@ipvs.uni-stuttgart.de,\nBenjamin.Uekermann@ipvs.uni-stuttgart.de\n2nd J¨urgen Pleiss\nInstitute of Biochemistry and Technical Biochemistry\nUniversity of Stuttgart\nStuttgart, Germany\nJuergen.Pleiss@itb.uni-stuttgart.de\nAbstract—Model-Driven Engineering (MDE) places models\nat the core of system and data engineering processes. In the\ncontext of research data, these models are typically expressed\nas schemas that define the structure and semantics of data",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-introduction.md",
+      "narrative": null,
+      "content": "Model-Driven Engineering (MDE) emphasizes the central\nrole of models in the design, development, and operation of\nsystems [1]. In the context of research data management [2]–\n[4], models are typically expressed as schemas, which define\nthe structure and semantics of datasets. These models enable\nkey functionalities such as instance validation, transformation,\ncode generation, and visualization, and are essential for ensur-\ning data quality, interoperability, and reusability.\nDespite their importance, many scientific domains still\nlack standardized data models. In fields such as chemistry,\ndata",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Background and Related Work",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-background-and-related-work.md",
+      "narrative": null,
+      "content": "This section introduces JSON, JSON Schema and work\nrelated to schema creation, schema mapping, large language\nmodels (LLMs) and prompt engineering.\n1https://github.com/MetaConfigurator/meta-configurator\narXiv:2508.05192v2  [cs.SE]  16 Jan 2026",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "JSON and JSON Schema",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-json-and-json-schema.md",
+      "narrative": null,
+      "content": "JSON is a widespread data format for exchanging infor-\nmation with web services, storing semi-structured documents\nin NoSQL databases [9], and representing structured content\nin APIs and configuration files. Its simplicity and human-\nreadability, combined with wide support across programming\nlanguages, make it a natural fit for data interchange and\nmachine learning pipelines.\nJSON Schema, the de-facto standard for describing the\nstructure and constraints of JSON documents [10], plays a\ncrucial role in enabling validation, interoperability, and au-\ntomation. It can also be understood as a model",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Schema Matching and Mapping",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-004-schema-matching-and-mapping.md",
+      "narrative": null,
+      "content": "Integrating data from various sources and in different for-\nmats poses a significant challenge [20]–[22]. In this work,\nwe study the task of schema mapping: converting an instance\nfrom one JSON schema to another. A schema mapping can\ncontain simple property-to-property correspondences or also\nmore expressive logics. JSON to JSON transformation (Jolt)3,\nis a Java library to transform JSON documents. JSONata4,\n2https://www.liquid-technologies.com/json-schema-editor, acc. 25/06/02\n3https://github.com/bazaarvoice/jolt, acc. 25/06/02\n4https://github.com/jsonata-js/jsonata, acc. 25/06/02\nis another",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Large Language Models (LLMs) and Prompt Engineering",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-005-large-language-models-llms-and-prompt-engineerin.md",
+      "narrative": null,
+      "content": "LLMs are powerful deep learning models trained on large\ncorpora of text to perform a wide range of natural language\nprocessing tasks [27]–[29]. Prompt engineering is the task of\noptimizing the input prompt for an LLM to get the best results\nfrom it. Sahoo et al. [30] performed a systematic survey of\nprompt engineering techniques. For example, for new tasks\nwithout extensive prior training, few-shot training (providing\nthe model a few input-output examples) improves model per-\nformance on complex tasks, but requires additional tokens and\ncan lead to biases. Assigning the LLM a role or persona c",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Design and Implementation",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-design-and-implementation.md",
+      "narrative": null,
+      "content": "In this section, we describe the design and implementation\nof our AI-assisted schema creation (Section III-A) and schema\nmatching (Section III-B) approaches.\nOur system communicates with LLMs via a configurable\nendpoint that follows the OpenAI API6. Users may select\nthe desired model via the application’s settings. Prompts are\nprogrammatically constructed and transmitted to the API, and\nthe resulting textual outputs are automatically parsed and\nprocessed by our application. Access to LLMs via these APIs\nrequires an authentication key tied to a user account and billing\nconfiguration. We do not",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/figure-img-p003-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-1.png",
+      "narrative": "draft",
+      "content": "Figure 1 — a JSON Schema rendered as a class diagram, generated from the natural-language prompt quoted beside it. Four boxes: `root` holding `experiments: object[]`; an `experiments entry` with `metal_salt: metalSalt`, `ligand: ligand`, `creator`, `date`, `temperature`, `duration` and `product_purity: boolean`; and TWO separate leaf definitions, `metalSalt` and `ligand`, each carrying an identical `name`/`mass`/`inchi` triple. That duplication is the point of the figure — it is what the next prompt asks to be removed.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/figure-img-p003-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-2.png",
+      "narrative": "draft",
+      "content": "Figure 2 — the same schema after a natural-language modification request. The two identical leaf definitions of Figure 1 have collapsed into ONE `compound` class carrying `name`/`mass`/`inchi`, and both `metal_salt` and `ligand` on the `experiments entry` now refer to it. The pair Fig. 1 → Fig. 2 is the paper's demonstration that a refactor can be requested in prose and applied to a validated model.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "AI-assisted JSON Schema Creation",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-007-ai-assisted-json-schema-creation.md",
+      "narrative": null,
+      "content": "MetaConfigurator’s modular and extensible architecture en-\nables the integration of a new AI assistance view. To enable\nschema creation and modifications via natural language, we\nintroduce a conversational, chat-like interface. Our hybrid\nmethod offers several advantages over pure LLM-based so-\nlutions:\n1) Prompt construction and context management: The\ntool handles all aspects of prompt engineering. For\nschema creation, it dynamically constructs a structured\nprompt that sets the LLM’s role (e.g., ”You are a JSON\nSchema expert”), includes the user’s natural language\ndescription, and specifies",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "AI-assisted Schema Matching and Mapping",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-ai-assisted-schema-matching-and-mapping.md",
+      "narrative": null,
+      "content": "Schema mapping is performed using human-defined map-\nping rules or scripts, traditional automated approaches [23],\n[25] and recently also using LLMs [26]. We propose and im-\nplement a new approach, which transforms a JSON document\nto satisfy a given target schema by first generating schema\nmapping rules with the help of a LLM and then executing\nthese deterministically. Aside from JSON, MetaConfigurator\nsupports the data formats YAML and XML and has a function\nto import CSV documents (by conversion to JSON). Therefore,\ndata from any of these formats are supported and can be\ntransformed using th",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Application Example",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-application-example.md",
+      "narrative": null,
+      "content": "Chemists have performed chemical synthesis experiments\nand tracked their inputs and results in an Excel table. They\nwant to apply machine learning and other algorithms on their\ndata, but it is not yet in a suitable format10. MetaConfigurator\nis used to convert the excel table into a JSON document\nand automatically infer the corresponding schema. The JSON\ndocument and schema, however, are not yet of sufficient\nquality. Among other points, the product_purity values\nof yes and no have been inferred as being of type string\ninstead of boolean and the ligand and metal_salt\nproperties are all listed",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-010-conclusion.md",
+      "narrative": null,
+      "content": "We presented a hybrid approach for schema creation,\nediting, and instance transformation using large language\nmodels, integrated into the open-source tool MetaConfigu-\nrator. Our method combines modular prompt engineering,\ntargeted context scoping, human-in-the-loop refinement, and\npost-processing safeguards to enable intuitive and controlled\nschema modeling. To enable transforming also large document\ninstances to satisfy a target schema, mapping rules are gener-\nated by LLMs but then applied in a deterministic manner.\nAn example in the chemistry domain demonstrates the\napplicability of our ap",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2508.05192v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-011-references.md",
+      "narrative": null,
+      "content": "[1] Douglas\nC.\nSchmidt,\n“Guest\neditor’s\nintroduction:\nModel-driven\nengineering,” Computer, vol. 39, no. 2, pp. 25–31, 2006, doi:\n10.1109/MC.2006.58.\n[2] G. Pryor, “Managing research data,” Facet Publishing, 2012, doi:\n10.29085/9781856048910.\n[3] S. Wall, “Data management for researchers: Organize, maintain and\nshare your data for research success,” Archives and Manuscripts, vol.\n45, no. 1, pp. 53–55, 2017, doi: 10.1080/01576895.2017.1279038.\n[4] N. Hartl, E. W¨oßner, and Y. Sure-Vetter, “Nationale Forschungsdatenin-\nfrastruktur (NFDI),” Informatik Spektrum, vol. 44, no. 5, pp. 370–373,\n2021.\n[",
+      "truncated": true,
+      "provenance": "ingested"
+    }
+  ]
+}

@@ -71,13 +71,28 @@ nothing."
 
 | provenance | how to say it |
 |---|---|
-| measured this session | "measured just now: 22 of 22 seeded, 0 missed" |
+| measured this session, on this tree | "measured just now: 22 of 22 seeded, 0 missed" |
+| measured this session, on a DIFFERENT tree | "grepped 0 on `claude/x` before branching — **not re-run here**" |
 | carried from a prior session | "recorded 2026-08-24 as 43 drifted; not re-measured" |
 | asserted by a bean or a doc | "bean `qou-q7lf` says X — **unverified**" |
 
-That third row is the one that bites. A sibling's bean is not a primary source,
-and neither is a source file's `## Status` note; both go stale, and a specific,
-recent, confidently-worded bean is exactly the kind that gets believed.
+The last row is the one that bites hardest. A sibling's bean is not a primary
+source, and neither is a source file's `## Status` note; both go stale, and a
+specific, recent, confidently-worded bean is exactly the kind that gets
+believed.
+
+**The second row was added 2026-09-23, because "measured this session" had
+been reading as the safe case.** A measurement is scoped to the TREE it was
+taken on, and `git switch` invalidates every earlier one without saying so.
+That session ran `grep -c "@context"` over a writer, got `0` — correctly, on a
+branch cut before the commit that added one — then branched from fresh `main`,
+carried the `0` across without re-running it, briefed on it as current, and
+put a settled question back to the owner as new. Its next commit would have
+reverted merged work.
+
+Nothing announces this. The number is real, recent, and yours; only the tree
+underneath it moved. So say which tree, and re-run anything load-bearing after
+a branch change — the re-run costs one command and it is the same command.
 
 **3. The route and the gate.** How you plan to do it, what you will verify
 against, and **what would falsify the approach**. A plan with no failure mode is
@@ -118,6 +133,18 @@ Three places to look, in this order, and none of them is the code:
    verbatim. A `_comment` field in a `*.json` is frequently where a decision
    was recorded, because that is where it had to be obeyed.
 3. **The skill that owns the area** — and read it, rather than recalling it.
+4. **The commit history** — `git log -S "<symbol>"` over the file you are
+   about to change, and a `beans list | grep <topic>` that does **not** filter
+   to open items.
+
+   Added 2026-09-23, when a ruling landed as CODE two hours before a session
+   proposed re-deciding it. It was in none of the three places above: no
+   proposal described it, the bean recording it was already `completed` and so
+   absent from any listing of open work, and the owning skill still described
+   the defect as unfixed. **A decision that shipped is invisible to every
+   instrument that looks for pending ones** — and it is the likeliest kind to
+   have shipped recently, which is exactly when you are most confident your
+   own reading is current. One `git log -S` answers it.
 
 **Cite what you read, never what you remember.** A half-remembered line used as
 an authority is the fake-reference failure `activity-names-skill` exists to

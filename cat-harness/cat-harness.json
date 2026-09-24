@@ -449,6 +449,18 @@
       }
     },
     {
+      "id": "code-lists",
+      "path": "code-lists/",
+      "dependents": "skip",
+      "description": "Closed sets of codes, one `\"$schema\": \"folio-code-list/v1\"` file per list, each code carrying a label, a definition, a source and, where it stands for one, a value. Owner, 2026-09-23: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset\", and SKOS as the published form. Two consumers today: adjudication steps name the list their `codes` come from (`<folio:adjudication list=\"…\">`, checked when a diagram loads), and `schemas/namespaces.ts` reads every namespace this project mints from `own-namespaces.json` instead of carrying them as constants. Exported as SKOS concept schemes to `_kg/<stub>-code-lists.jsonld` by `scripts/glossary-export.ts`, beside the swimlane glossary. `dependents: skip` — a dependent INHERITS these through the dependency overlay (`codeListDirs`), and declares its own directory only when it has a list of its own.",
+      "graphKinds": [
+        "code-list"
+      ],
+      "coverage": {
+        "skill": "code-lists"
+      }
+    },
+    {
       "id": "schemas",
       "path": "schemas/",
       "dependents": "skip",
@@ -473,10 +485,10 @@
       ]
     },
     {
-      "id": "cat-harness",
+      "id": "skills",
       "path": "skills/",
       "dependents": "skip",
-      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Note the id is `kg` while the path is `skills/` — ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "graphKinds": [
         "skills"
       ],
@@ -493,9 +505,18 @@
       "id": "scenarios",
       "path": "scenarios/",
       "dependents": "skip",
-      "description": "Scenarios — the Roles an Actor takes on, in `roles.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need, the lanes it binds, and the Actor kinds that may play it. SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path. One third of what this kind is named for is NOT here yet: a Role's `useCases` are free-text strings, so a User Story cannot be pointed at or traced to the Workflow it justifies.",
+      "description": "Scenarios — the Roles an Actor takes on, in `roles.json`, and the User Stories told as them, in `stories.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need and the Actor kinds that may play it; a lane names its Role, and a story names the Role it is told as, so the Role lists neither (#1168). SPLIT OUT OF `skills/` on 2026-09-21 so that \"give me the Scenarios\" is a query on the kind rather than a match on a path.",
       "graphKinds": [
         "scenarios"
+      ]
+    },
+    {
+      "id": "policies",
+      "path": "policies/",
+      "dependents": "skip",
+      "description": "What an Actor may DO, as W3C ODRL 2.2 policies (issue #1180, owner 2026-09-23). `folio-defaults.jsonld` is the instance's odrl:Set: the permissions each actor file used to list, migrated one rule per (actor, action), plus the owner's floor for an unauthenticated reader (visualize and render only). Actions are the folio ODRL profile in `skills/permissions/permissions.json`; roles stay in `scenarios/`, and identity (which login is which actor) stays in the data store, never here. `dependents: skip` because a downstream instance writes its own policies and inherits these through ODRL's `inheritFrom`, rather than getting a copy.",
+      "graphKinds": [
+        "policies"
       ]
     },
     {
@@ -515,7 +536,7 @@
       "id": "methodologies",
       "theme": "analyst",
       "coverage": {
-        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-kg/methodologies/` and `smart-base/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
+        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-base/methodologies/` and `folio-assistant-core/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
         "visualiser": [
           {
             "ref": "cat-harness/docs/methodologies/index.md",
@@ -526,7 +547,7 @@
       },
       "path": "methodologies/",
       "dependents": "skip",
-      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies. RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "graphKinds": [
         "methodology"
       ]
@@ -641,7 +662,7 @@
       "path": "session-marks/",
       "dependents": "reproduce",
       "scope": "repository",
-      "description": "Whether anybody has LOOKED at the session listing — one file, `session-listing.json`, carrying when it was read, by which session, how many rows it carried and how many findings that run produced. Bean `rq8s`, the owner's ruling 2026-09-23. `check:session-staleness` cannot fetch its own input: probed from inside a session container, `api.anthropic.com/v1/sessions` is 401 and `claude.ai/api/code/sessions` is 403, so `list_sessions` is an MCP tool an AGENT holds and the session-start sweep asks for the listing by name. That is a rule in prose, and a session that skips it left NO TRACE — the next sweep could not tell a skip from a clean run, which is `1xhc`'s \"a gate that does not fire is indistinguishable from one that passed\" committed inside the fix for it. This is the trace, so the sweep says never-checked, stale or fresh rather than saying nothing three ways. A SIBLING of `issue-marks` rather than part of it: that graph holds marks about ISSUES, and widening it would rename a declared graph every consumer resolves against. Separate from the `session-state` kind too, which is a session's OWN context (its actor, its open instances, what it waits on) and has no directory yet by design — this is repository-wide and says nothing about any session's position. THE FINDING COUNT IS A SNAPSHOT: `rq8s` asserted a live-system reading as fact and it was false four hours later, so a consumer rendering the number as a current total has reproduced the defect. `state`, and SCOPE IS `repository` for the reason `issue-marks` and `interaction` state: without it the path resolves against the INSTANCE, and `harness:dirs` then creates an empty instance-level directory to satisfy the declaration — declared-but-absent turned into declared-and-empty, the `dh4f` false pass wearing a tidier face.",
+      "description": "Whether anybody has LOOKED at the session listing — one file, `session-listing.json`, carrying when it was read, by which session, how many rows it carried and how many findings that run produced. Bean `rq8s`, the owner's ruling 2026-09-23. `check:session-staleness` cannot fetch its own input: probed from inside a session container, `api.anthropic.com/v1/sessions` is 401 and `claude.ai/api/code/sessions` is 403, so `list_sessions` is an MCP tool an AGENT holds and the session-start sweep asks for the listing by name. That is a rule in prose, and a session that skips it left NO TRACE — the next sweep could not tell a skip from a clean run, which is `1xhc`'s \"a gate that does not fire is indistinguishable from one that passed\" committed inside the fix for it. This is the trace, so the sweep says never-checked, stale or fresh rather than saying nothing three ways. A SIBLING of `issue-marks` rather than part of it: that graph holds marks about ISSUES, and widening it would rename a declared graph every consumer resolves against. Separate from the `session-state` kind too, which is a session's OWN context and has no directory yet by design — this is repository-wide and says nothing about any session's position. THE FINDING COUNT IS A SNAPSHOT: `rq8s` asserted a live-system reading as fact and it was false four hours later, so a consumer rendering the number as a current total has reproduced the defect. `state`, and SCOPE IS `repository` for the reason `issue-marks` and `interaction` state: without it the path resolves against the INSTANCE, and `harness:dirs` then creates an empty instance-level directory to satisfy the declaration — declared-but-absent turned into declared-and-empty, the `dh4f` false pass wearing a tidier face.",
       "graphKinds": [
         "session-marks"
       ]
@@ -739,6 +760,20 @@
       }
     },
     {
+      "id": "folio-assistant-core-library",
+      "path": "folio-assistant-core/library/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The core layer's library -- `arxiv-2510.21603v1` (Doc-Researcher), and nothing else. Same staging arrangement and the same reason as `who-iris-library` and `folio-assistant-sci-library` above: the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, `ingest-document`'s own destination list -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). `ingest-document` is what proved it: with the directory declared ONLY in `folio-assistant-core.json` it refused the destination as matching none, because it reads the list from here. Declared in both, exactly as the four siblings are.",
+      "graphKinds": [
+        "library"
+      ],
+      "coverage": {
+        "skill": "library-ingestion",
+        "docs": "cat-harness/docs/document-ingestion.md"
+      }
+    },
+    {
       "id": "smart-base-library",
       "path": "smart-base/library/",
       "scope": "repository",
@@ -782,28 +817,41 @@
       "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop."
     },
     {
-      "id": "smart-kg-methodologies",
-      "theme": "analyst",
-      "path": "smart-kg/methodologies/",
-      "dependents": "skip",
-      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
-      "graphKinds": [
-        "methodology"
-      ],
-      "scope": "repository"
-    },
-    {
       "id": "smart-base-methodologies",
       "path": "smart-base/methodologies/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
       "graphKinds": [
         "methodology"
       ],
       "coverage": {
         "skill": "methodology-adoption"
       }
+    },
+    {
+      "id": "folio-assistant-core-methodologies",
+      "theme": "analyst",
+      "path": "folio-assistant-core/methodologies/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "graphKinds": [
+        "methodology"
+      ],
+      "coverage": {
+        "skill": "methodology-adoption"
+      }
+    },
+    {
+      "id": "folio-assistant-core-skills",
+      "path": "folio-assistant-core/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The core layer's skills, reached from here for the same reason its library and methodologies are: the consumers that resolve a `<folio:skill ref>` run from this root, and a skill they cannot see is a DANGLING ref reported against a diagram that is correct.",
+      "graphKinds": [
+        "skills"
+      ]
     },
     {
       "id": "smart-base-processes",
@@ -862,24 +910,6 @@
       }
     },
     {
-      "id": "kg-navigation",
-      "path": "kg-navigation/skills/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The TOOLED knowledge-graph navigation skill, lifted out of the `folio-core` package on 2026-09-20 at the owner's direction: '(kg-navigation should be similar named subgraph)'. Repository-scoped and a SIBLING of `skills/`, not a child: `skills/` is already declared as this instance's `cat-harness` graph in full, so a nested entry would be a declaration inside a declaration -- #263's own defect, where a consumer beneath the outer path cannot tell which declaration owns what it finds. The name is shared with `bootstrap/skills/kg-navigation.md`, which stays where it is and must: that one assumes NOTHING is installed, and a bootstrap reaching into another instance for its first skill would fail in the cold-start case it exists for. Two bodies under one name, each addressable -- see kg-navigation/README.md. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
-      "graphKinds": [
-        "skills"
-      ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/kg-navigation/index.html",
-            "title": "Skills — kg-navigation"
-          }
-        ]
-      }
-    },
-    {
       "id": "large-datasets-skills",
       "path": "large-datasets/skills/",
       "scope": "repository",
@@ -932,39 +962,7 @@
       }
     },
     {
-      "id": "detangle-schemas",
-      "path": "detangle/schemas/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The detangle criterion's schema node -- size, cohesion, inbound/outbound and the enforced/recorded edge authority that decides whether a boundary's direction is a fact or a filing decision. Repository-scoped, staged ahead of the split. UNDECLARED until 2026-09-20 although committed days earlier, which is the dh4f defect in reverse: graph content no declaration mentioned, so every declaration-driven consumer scanned past it -- including `check:schema-nodes`, the gate whose whole job is to stop a schema being silently absent.",
-      "graphKinds": [
-        "schemas",
-        "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
-      }
-    },
-    {
-      "id": "bootstrap-tools-schemas",
-      "path": "bootstrap-tools/schemas/",
-      "scope": "repository",
-      "dependents": "skip",
-      "description": "The Zod that bootstrap's two published JSON Schemas are GENERATED from. Declared here AND in bootstrap-tools/harness.json, for the reason the sibling detangle/kg-navigation/large-datasets entries give: a directory declared only in an instance that is not a DEPENDENCY of this one is invisible from this root, because resolution walks this declaration plus its dependencies and bootstrap-tools is composed under the repository rather than depended on. Without this entry the schema graph reads 113 modules across four instances and bootstrap-tools contributes nothing — which is exactly the state this instance was created to end, since bootstrap itself contributed 0 of 113. The duplicate goes when the composition is wired, with the others.",
-      "graphKinds": [
-        "schemas",
-        "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
-      }
-    },
-    {
-      "id": "glossary",
+      "id": "swimlane-glossary",
       "path": "glossary/",
       "dependents": "skip",
       "_visualiser_comment": "The docs-auto GLOSSARY INDEX, not `docs/glossary/index.html`. That was the declared value until 2026-09-22 and it was CIRCULAR: `docs/glossary/index.html` IS the state-visualiser's own page for this graph, so the page rendered “This graph is rendered elsewhere … the declaration names a visualiser for it: /glossary/” — pointing at the page you were reading. It was declared to make `published-graphs.md` count the graph as published, which made the count look right and the page say something false. The docs-auto index is a real rendering: 44 terms, each with the definition joined from the role registry.",
@@ -974,7 +972,7 @@
       },
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
       "graphKinds": [
-        "glossary"
+        "swimlane-glossary"
       ]
     },
     {
@@ -1024,11 +1022,35 @@
       "coverage": {
         "skill": "where-does-this-go"
       }
+    },
+    {
+      "id": "folio-assistant-core-processes",
+      "path": "folio-assistant-core/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception. Declared here as well, repository-scoped, because the consumers that scan for diagrams run from this root.",
+      "graphKinds": [
+        "processes"
+      ],
+      "coverage": {
+        "skill": "bpmn-processes"
+      }
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",
   "needs": [
     "bootstrap"
   ],
-  "_cat_bootstrap_comment": "NO `bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance — so bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, bootstrap's skills are published through `bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader."
+  "_cat_bootstrap_comment": "NO `bootstrap` DIRECTORY IS DECLARED HERE, and that is the owner's ruling of 2026-09-21 (\"neither\") on bean `pve3`, not an omission. This file used to declare `bootstrap/skills/` with `scope: \"repository\"`, which resolves against the REPOSITORY root rather than this instance — so bootstrap's skills and roles landed in folio-assistant's graph while the entry lived here. It did NOT declare `bootstrap/workflows/`, deliberately, because #432 measured bootstrap's process leaking into the root graph 88 times. The root therefore carried HALF of bootstrap, and the two symptoms were one asymmetry: a `lanes` entry on a bootstrap role minted `bindsLane -> role/<Lane>` pointing at a lane node only bootstrap's own export mints (four dangling links, measured 2026-09-21 by restoring `lanes` and watching `kg-export.test.ts` refuse it), and bootstrap's `kg-navigation` collided by name with `skills/folio-core/kg-navigation` in the published docs (bean `v3se`). `pve3` put the choice as BOTH halves or NEITHER; both would undo #432's isolation and put a process the root does not own into its published graph. Under NEITHER, bootstrap's skills are published through `bootstrap.jsonld` and its own instance page, which is where an instance's own graph belongs. The old entry's rationale is preserved in the bean rather than here, because a rationale for a declaration that no longer exists reads as a declaration to a skimming reader.",
+  "_associatedHarnesses_comment": "Issue #1146. Owner, 2026-09-23: \"i dont want to publish at /folio-assistant/ihris/; that's a platform change, certainly not a materialized publish, but we need a good mechanism for \\\"assocaiated\\\" harnesssed KGs.\" An associated harness is REFERENCED, never loaded: it is not in `needs`, nothing here builds or copies it, and it is published from its own repository at its own site. The Harnesses panel lists it under \"Associated ↗ remote\" and its ✎ goes to its own repository. Skill: associate-harness.",
+  "associatedHarnesses": [
+    {
+      "name": "ihris",
+      "title": "iHRIS Knowledge Base",
+      "url": "https://litlfred.github.io/ihris/",
+      "repository": "https://github.com/litlfred/ihris",
+      "relation": "folio-of",
+      "note": "The iHRIS folio: a knowledge base on this platform, published from its own repository."
+    }
+  ]
 }

@@ -21,7 +21,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { readBeans } from "../beans.ts";
-import { ageDays, checklist, rollupFindings, sweep } from "../check-bean-rollup.ts";
+import { ageDays, checkBeanRollup, checklist, rollupFindings, sweep } from "../check-bean-rollup.ts";
 
 const made: string[] = [];
 afterEach(() => {
@@ -109,9 +109,8 @@ describe("a status its own subtree refutes", () => {
   });
 });
 
-describe("a status its own BODY refutes — the leaf rule", () => {
-  /** A store where the bean's body, not just its front matter, is set. */
-  function bodied(beans: Array<[string, string, string, string, string]>): string {
+/** A store where the bean's body, not just its front matter, is set. */
+function bodied(beans: Array<[string, string, string, string, string]>): string {
     const r = mkdtempSync(join(tmpdir(), "beanrollup-"));
     made.push(r);
     const dir = join(r, "beans", "defs");
@@ -124,9 +123,10 @@ describe("a status its own BODY refutes — the leaf rule", () => {
           `updated_at: 2026-09-22T18:00:00Z\n---\n\n${body}\n`,
       );
     }
-    return r;
-  }
+  return r;
+}
 
+describe("a status its own BODY refutes — the leaf rule", () => {
   test("an open leaf with every box ticked is reported", () => {
     const f = rollupFindings(read(bodied([["t1", "in-progress", "task", "", "- [x] a\n- [x] b"]])));
     expect(f.map((x) => x.kind)).toEqual(["open-leaf-complete-checklist"]);
@@ -163,6 +163,32 @@ describe("a status its own BODY refutes — the leaf rule", () => {
   test("the key is the rule and the id", () => {
     const f = rollupFindings(read(bodied([["t1", "in-progress", "task", "", "- [x] a"]])));
     expect(f[0]!.key).toBe("open-leaf-complete-checklist:t1");
+  });
+
+  /* REPORT-ONLY, and this is the test that would have caught the design error.
+   * The rule shipped as a third hard gate, calibrated at 3 of 243 beans, and
+   * 339 commits of `main` made it fire on five more — every one a session
+   * between ticking its last box and closing. That window is normal, so the
+   * finding is printed and sets no exit code, while the two CONTAINER rules
+   * stay hard. */
+  test("a ticked-out leaf reaches `ticked`, never `problems`", async () => {
+    const r = await checkBeanRollup(
+      bodied([["t1", "in-progress", "task", "", "- [x] a"]]),
+    );
+    expect(r.problems).toEqual([]);
+    expect(r.ticked).toHaveLength(1);
+    expect(r.ticked[0]).toContain("all 1 checklist item(s) ticked");
+  });
+
+  test("a container contradiction DOES reach `problems` — the hard rules stay hard", async () => {
+    const r = await checkBeanRollup(
+      bodied([
+        ["ep1", "completed", "epic", "", "notes"],
+        ["t1", "todo", "task", "ep1", "- [ ] work"],
+      ]),
+    );
+    expect(r.problems).toHaveLength(1);
+    expect(r.ticked).toEqual([]);
   });
 
   test("checklist() reads the store's one shape and ignores prose that looks like it", () => {

@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Close",
     "path": "processes/crdm-close.bpmn"
   },
-  "source_hash": "sha256:dc2bb2db3946d27652fb9134a6cbad510606e9639ff287a0fd4128ba69864e41",
+  "source_hash": "sha256:8aa279c97ee2ad1e220592eae89758c9db9f3be6d9d5b06e19ac3e4b4e8ee3a1",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "n/a",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 10,
+    "pass": 12,
     "fail": 0,
     "n/a": 12,
     "unknown": 0

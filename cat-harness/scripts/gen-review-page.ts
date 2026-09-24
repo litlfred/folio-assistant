@@ -99,7 +99,7 @@
  */
 
 import { DIFF_RENDERERS } from "../schemas/diff-renderers.js";
-import { cleanRendered, renderInline, renderSideBySide, renderWordDiff } from "./review-renderers.js";
+import { cleanRendered, renderInline, renderSideBySide, renderVisual, renderWordDiff } from "./review-renderers.js";
 import { computeHeat, heatBucket, renderHeat } from "./review-heat.js";
 import { crumbFor, renderMinimap, renderOutline } from "./review-nav.js";
 import { wordDiff } from "./word-diff.js";
@@ -145,13 +145,23 @@ const STYLE = `
   .diff-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
   .diff-sbs iframe { width: 100%; height: 22rem; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; }
   @media (max-width: 40rem) { .diff-sbs { grid-template-columns: 1fr; } }
+  /* Visual diff (0rxe): pictures on a white card, since they are screenshots
+     of light pages; the mode buttons are native radios, one click each. */
+  .diff-visual img { max-width: 100%; height: auto; border: 1px solid var(--rule); border-radius: .3rem; background: #fff; display: block; }
+  .visual-modes { border: 0; padding: 0; margin: .25rem 0 .5rem; display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+  .visual-modes legend { float: left; margin-right: .5rem; font-weight: 600; }
+  .visual-modes label { cursor: pointer; }
   /* Heat map (qbfi). Blue 250/400/550 on light and 600/500/400 on dark: an
      ordinal ramp that passes the dataviz validator, each fill paired with an
      ink that clears 4.7:1 against it. */
   .heatwrap { overflow-x: auto; margin: 1rem 0; }
   table.heat { border-collapse: separate; border-spacing: 2px; font-size: .95rem; }
   table.heat caption { text-align: left; color: var(--muted); padding-bottom: .4rem; }
-  table.heat th, table.heat td { padding: .35rem .6rem; text-align: left; border-radius: .25rem; }
+  table.heat th, table.heat td { padding: .35rem .6rem; text-align: left; border-radius: .25rem; overflow-wrap: anywhere; }
+  /* Fit the width rather than scroll sideways: a keyboard user cannot reach a
+     scrolled-off column (the ojcx run clipped QA at 1000 px). The wrapper is
+     still focusable, for the narrowest screens. */
+  table.heat { width: 100%; }
   table.heat thead th { font-weight: 600; border-bottom: 1px solid var(--rule); }
   table.heat td { font-variant-numeric: tabular-nums; }
   .h1 { background: #86b6ef; color: #1b1b1b; } .h2 { background: #3987e5; color: #1b1b1b; } .h3 { background: #1c5cab; color: #ffffff; }
@@ -178,7 +188,8 @@ const SCRIPT = `
   // which is the page build-document-site writes. Kept to one safe segment.
   function docOf(at) {
     var seg = String((at && at.file) || "").split("/")[0];
-    return /^[A-Za-z0-9._-]+$/.test(seg) ? seg : null;
+    // "." and ".." match the character class, and would climb out of the site.
+    return /^[A-Za-z0-9._-]+$/.test(seg) && !/^\\.+$/.test(seg) ? seg : null;
   }
   function href(base, at, label) {
     var doc = docOf(at);
@@ -293,6 +304,7 @@ const SCRIPT = `
       var n = r.needs[i];
       if (n === "text" && !ctx.text) return "no prose on either side";
       if (n === "pages" && !ctx.before && !ctx.after) return "no page to show";
+      if (n === "screenshots" && !ctx.visual) return "no pictures on this build";
     }
     return null;
   }
@@ -309,6 +321,8 @@ const SCRIPT = `
       out = renderInline(document, base ? base.html : null, head ? head.html : null, wordDiff, cleanRendered);
     } else if (id === "side-by-side") {
       out = renderSideBySide(document, ctx.before, ctx.after);
+    } else if (id === "visual") {
+      out = renderVisual(document, ctx.visual, "../", "vis-" + panel.id);
     }
     if (typeof out === "string") panel.appendChild(el("p", out, "muted"));
     else if (out) panel.appendChild(out);
@@ -330,11 +344,15 @@ const SCRIPT = `
       sel.appendChild(o);
     });
     var panel = el("div");
+    panel.id = "panel-" + viewers.length;
     function pick(v) {
       var r = RENDERERS.filter(function (x) { return x.id === v; })[0];
       if (!r || unavailable(r, ctx)) {
-        // The chosen view cannot run here: fall back to the first one that can.
-        r = RENDERERS.filter(function (x) { return !unavailable(x, ctx); })[0];
+        // The chosen view cannot run here: fall back to the first one that
+        // can, preferring those that list this block's kind (0rxe: a table
+        // with no pictures opens side by side, not on a word diff).
+        var can = RENDERERS.filter(function (x) { return !unavailable(x, ctx); });
+        r = can.filter(function (x) { return x.defaultFor.indexOf(ctx.kind) >= 0; })[0] || can[0];
       }
       if (!r) { while (panel.firstChild) panel.removeChild(panel.firstChild); panel.appendChild(el("p", "Nothing to show for this change: it is to the manifest only.", "muted")); return; }
       sel.value = r.id;
@@ -371,7 +389,9 @@ const SCRIPT = `
       get("../blocks.json").catch(function () { return null; }),
       get("../block-qa.json").catch(function () { return null; }),
       get("../outline.json").catch(function () { return null; }),
+      get("../visual-diff.json").catch(function () { return null; }),
     ]).then(function (both) {
+      var visualFile = both[6];
       OUTLINE = both[5];
       var blocksFile = both[3];
       var qaFile = both[4];
@@ -450,6 +470,7 @@ const SCRIPT = `
           var v = viewSelector({
             kind: (c.head || c.base || {}).kind || "",
             text: txt && txt.blocks ? txt.blocks[c.label] || null : null,
+            visual: visualFile && visualFile.blocks ? visualFile.blocks[c.label] || null : null,
             before: before,
             after: after,
           });
@@ -499,7 +520,7 @@ const SCRIPT = `
           return d;
         }));
       }
-      if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only side by side is available.";
+      if (!txt && cs.changes.length) summary.textContent += " No change text on this build, so only the views of the pages" + (visualFile ? " and the pictures" : "") + " are available.";
       applyView(viewAll.value);
       // The heat map (qbfi), above the list it indexes.
       var heat = computeHeat({ changes: cs.changes, comments: rc ? rc.comments : null, blocks: blocksFile, qa: qaFile ? qaFile.blocks : null, verdicts: rc && Array.isArray(rc.verdicts) ? rc.verdicts : null });
@@ -540,7 +561,7 @@ const SCRIPT = `
       } else {
         navPane.appendChild(el("p", "No outline on this build: the folio's build did not publish outline.json. Use Next and Previous.", "muted"));
       }
-      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous, n or p for the next or previous with open comments.";
+      if (items.length) status.textContent = items.length + " item(s). Press j for the next, k for the previous, n or p for the next or previous with open comments, u for the next unreviewed.";
     });
   }).catch(function () {
     status.textContent =
@@ -576,7 +597,7 @@ export function reviewPageHtml(): string {
   <a href="../index.html">All documents</a>
 </div>
 <div class="viewrow"><label for="view">Show every change as</label> <select id="view"></select></div>
-<div id="heat" class="heatwrap"></div>
+<div id="heat" class="heatwrap" tabindex="0" role="region" aria-label="Heat map: where to look first"></div>
 <div id="changes"></div>
 </main>
 </div>
@@ -587,6 +608,7 @@ var cleanRendered = ${cleanRendered.toString()};
 var renderWordDiff = ${renderWordDiff.toString()};
 var renderInline = ${renderInline.toString()};
 var renderSideBySide = ${renderSideBySide.toString()};
+var renderVisual = ${renderVisual.toString()};
 var computeHeat = ${computeHeat.toString()};
 var heatBucket = ${heatBucket.toString()};
 var renderHeat = ${renderHeat.toString()};

@@ -14,6 +14,7 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Deliver">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ReviewIncrement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_IncrementOK</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_MVPReady</bpmn:flowNodeRef>
@@ -23,6 +24,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Deliver</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Implement</bpmn:flowNodeRef>
@@ -33,6 +35,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_TestMVP</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_StakeholderOK</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -92,9 +95,13 @@ the updated content for review.</bpmn:documentation>
 against the acceptance criteria. They do not review code — they test behaviour.</bpmn:documentation>
       <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?"/>
+    <bpmn:exclusiveGateway id="GW_IncrementOK" name="Meets criteria?">
+      <bpmn:documentation>The BA's result from testing the increment's behaviour. `no` returns to implementation; `yes` asks whether the MVP is ready for stakeholders.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="GW_MVPReady" name="MVP ready
-for stakeholders?"/>
+for stakeholders?">
+      <bpmn:documentation>Asked after an increment passes: is the whole MVP ready for stakeholders? `not yet` implements the next increment; `yes` deploys the MVP to staging.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="BA_ShareMVP" name="Share MVP with
 stakeholders">
       <bpmn:documentation>Outer loop: the BA presents the accumulated increments
@@ -106,7 +113,9 @@ in own context">
       <bpmn:documentation>Stakeholders test the delivered feature in their own
 workflow, with their own data. They report what works and what does not.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_StakeholderOK" name="Accepted?"/>
+    <bpmn:exclusiveGateway id="GW_StakeholderOK" name="Accepted?">
+      <bpmn:documentation>The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="BA_TranslateFeedback" name="Translate feedback
 into agent direction">
       <bpmn:documentation>The BA translates stakeholder findings into

@@ -24,7 +24,7 @@ Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
+| CI/CD Pipeline | `build-pipeline` | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
 
 ## Steps
 
@@ -41,11 +41,11 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **What is happening?**<br>`GW_What` | — | **deploy** → Append `rendered`<br>**takedown** → Preflight: is the preview live?<br>**full-replace deploy** → Append `restored` |
-| **Any liveness signal fired?**<br>`GW_Live` | — | **yes — refuse** → Append `retained` with the reason<br>**no** → Append `removed` with the reason |
+| **What is happening?**<br>`GW_What` | What is about to happen to the publish branch? A `deploy` appends `rendered`; a `takedown` first preflights whether the preview is live; a `full-replace deploy` appends `restored` for the previews it put back. | **deploy** → Append `rendered`<br>**takedown** → Preflight: is the preview live?<br>**full-replace deploy** → Append `restored` |
+| **Any liveness signal fired?**<br>`GW_Live` | Answered by the preflight: did any liveness signal fire for this preview? `yes — refuse` keeps it and appends `retained` with the reason; `no` removes it and appends `removed` with the reason. | **yes — refuse** → Append `retained` with the reason<br>**no** → Append `removed` with the reason |
 
 {% endraw %}

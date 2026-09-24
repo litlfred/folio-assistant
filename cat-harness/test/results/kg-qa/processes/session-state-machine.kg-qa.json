@@ -5,7 +5,7 @@
     "id": "Process_SessionStateMachine",
     "path": "processes/session-state-machine.bpmn"
   },
-  "source_hash": "sha256:4a6057aa2b7f10dce2c64b2a152a095be6a7ac008a6fb3a052bc5fb99c8f626a",
+  "source_hash": "sha256:67f5036c728ece6c416ee867f42c836eb4379af77bd589748a0a984f35429830",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_ActorKnown",
-          "detail": "\"Actor established?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 12,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

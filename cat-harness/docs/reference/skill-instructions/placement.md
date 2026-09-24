@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/placement.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/placement.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/placement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/placement.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/placement.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/placement.md){: .fa-edit-source }
 
 {% raw %}
 # Placement — decide where it goes before you write it
@@ -125,6 +125,8 @@ and is unreachable from the place that needs it.
 | the asset is | it files under |
 |---|---|
 | why a subsystem is shaped as it is — requirements, options, rulings | `<instance>/docs/architecture/`, with `parent: Architecture` in the front matter |
+| options for a decision not yet taken, with what each costs | `<instance>/docs/proposals/`, `kind: proposal`, and a row in its `index.md` |
+| what was FOUND — prior art, a survey, a measurement, a comparison — that informs a decision without proposing one | `<instance>/docs/research-and-analysis/`, `kind: research`, and a row in its `index.md` |
 | how a person does a task with it | `<instance>/docs/guides/` |
 | how to REACH a data source the content describes — endpoints, shapes, quirks | `<instance>/docs/`, beside the subject it serves |
 | what a declared thing IS, generated from source | `<instance>/docs/reference/` — **never hand-edited** |

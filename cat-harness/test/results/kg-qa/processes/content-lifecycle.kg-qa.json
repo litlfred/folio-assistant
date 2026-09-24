@@ -5,7 +5,7 @@
     "id": "Process_Lifecycle",
     "path": "processes/content-lifecycle.bpmn"
   },
-  "source_hash": "sha256:30f756812ed97028ddf0ae97e5a490fb44f1b8cb162b325ef8a144d2b74de2d0",
+  "source_hash": "sha256:1cc1aa0c67099a402d1d8a0a8eefbeba249dc268f76f7b0b9732da492c3dca02",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,15 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_NextCycle",
-          "detail": "\"More content?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -102,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

@@ -1,0 +1,614 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2607.14456v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code\nWorkflow Execution\nHarris Borman * 1 Herman Wandabwa * 1 Fusun Yu 1 Sandeepa Kannangara 1 Justin Liu 1 Anna Leontjeva 1\nRitchie Ng 1\nAbstract\nLarge Language Models (LLMs) have acceler-\nated the adoption of software development agents,\nnow widely available as Integrated Development\nEnvironment (IDE) extensions and standalone\napplications. While these agents are typically\ngeneral-purpose, it remains unclear whether spe-\ncialist agents justify their additional development\neffort. We investigate this question in the context\nof",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nforms localised reasoning, making small, context-sensitive\nadjustments within predefined steps rather than constructing\nthe full solution from first principles.\nThese systems usually require greater upfront effort because\nthe workflow must be manually designed and validated. This\nmakes them less suitable for short-lived use cases such as\ndemos or proof-of-concept experiments. However, they are\nbetter suited to repeated or large-scale deployment. By pro-\nducing more consistent outputs, they can reduce technical\ndebt and simplify debugging and i",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nWhile robust in predictable environments, they provide\nlimited support for dynamic or context-sensitive decision-\nmaking (Van Der Aalst et al., 2020). Prior work has tried to\naddress this through agent-based automation (Wooldridge\n& Jennings, 1995), adaptive workflow systems (Reichert &\nWeber, 2012), context-aware frameworks (Rosemann et al.,\n2008), and decision-centric models (Batoulis et al., 2015).\nBPMN extensions have also been proposed to support more\nadaptive workflows (Braun et al., 2014), but execution re-\nmains largely constrained by",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nto settings involving ambiguity, stochasticity, or open-ended\nhuman decision making. The results should therefore be\ninterpreted as evidence for structured, deterministic process\nsettings rather than as a claim of universal representative-\nness.\n3.2. Agentic System Design\nAlthough these workflows could be executed using a fixed\nDirected Acyclic Graph (DAG), and loops can be achieved\nvia LangGraph, we instead evaluate the ability of our system\nto construct a ReAct-based solution (Yao et al., 2023b). A\nReAct agent conventionally plans actions an",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p005-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-1.png",
+      "narrative": "draft",
+      "content": "Figure 1, the proposed system architecture. Two inputs enter on the left as document shapes: \"Business Process Modelling Notation (BPMN) XML — Multi-step workflow\" and \"API Specifications — 20+ endpoints\". Five numbered boxes follow, each split into what the LLM does (white) and what it emits (tinted). Step 1, Workflow Breakdown: the LLM agent extracts sequential steps, output \"Structured Steps with conditions\", the box giving as its example \"Step 2 ---> Step 3 / If True ---> Step 5\". Step 2, Create API Service: the LLM generates a Python wrapper class, output \"service.py — Class with methods per endpoint\". Steps 1 and 2 both feed Step 3, Tool/Context: the LLM generates async tools plus context, output \"tools.py — async functions, Tool context class\". Step 4, Agent Prompt: the LLM creates structured instructions, output \"{agent_prompt}.md — Workflow logic map, Tool usage rules\". Step 5, Execution Wrapper: the LLM adapts a FastAPI template, output \"agent.py — Rest API service\". The final box, shaded green, reads \"Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper\". The flow is strictly forward; no arrow returns to an earlier step, so the iterative refinement the text describes in step 4 of §3.3 is not drawn here.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 1. Proposed System Architecture\nwith its GraphFlow controller, failed to autonomously gen-\nerate the required files without manual agent wiring. FLOW\nproduced high-level task decompositions but not complete,\nexecutable code. As none completed even a single work-\nflow end-to-end, we excluded them from the comparative\nevaluation, focusing on Roo and Cline as the only baselines\nthat successfully completed the tasks.\n4.2. Evaluation Metrics\nWe evaluate each system across two tasks:\n1. the agent generation process, and\n2. the functional perf",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nthrough the successful generation of a complete agent,\nrecording input, output, and total token counts. Our\nsystem’s token usage was measured using Langfuse\ntracing, while Roo and Cline reported their own token\nconsumption.\n4.2.2. AGENT RUN EVALUATIONS\nEach generated agent was evaluated on the following metrics\nusing GPT-4.1 for consistency.\n1. Process Adherence: Assessed via an LLM-as-a-judge\nevaluation. The judge received (i) the workflow speci-\nfication defining the expected tool-call sequence, (ii)\nthe input request, and (iii) the agent’s",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p007-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-1.png",
+      "narrative": "draft",
+      "content": "Figure 2, agent generation metrics, in four panels. Each groups three bars — Cline (green), Custom (orange, the specialist system) and Roo (blue). (a) Total tokens per generation, per workflow, with the axis in thousands and ↓ better: the orange bar is lowest in every one of the ten workflows, the widest gaps at Weather (Custom 9.2 vs Cline 2498.0 and Roo 4662.4) and Tournament (27.7 vs 1849.1 and 4362.1). (b) Repair iterations per workflow, ↓ better: Custom reads 0.00 for all ten; Cline and Roo reach 6.00 (Deal and Weather respectively). (c) Total tokens across all workflows: Cline 1021.8k, Custom 53.8k, Roo 1468.6k. (d) Repair iterations across all workflows: Cline 1.85, Custom 0.00, Roo 2.04. NOTE, as a reading of the chart rather than a claim about the work: §4.3.1 of the text gives the aggregate repair figures as \"2.08 for Roo and 1.89 for Cline\", where panel (d) is labelled 2.04 and 1.85.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 7",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/page-007.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 2. Agent Generation Metrics: Repair Iterations, Token Usage (Input and Output) for the Specialist System(Custom), Roo, and\nCline.\nthe design principles outlined earlier in the paper: con-\nstrained execution via externally specified workflow struc-\nture, targeted context management, and modular decompo-\nsition. Together, these reduce search space and planning\noverhead, which in turn contributes to fewer tool-call errors\nand more consistent execution across runs.\n5. Conclusion\nWe presented a specialist agentic system for converting\nBPMN-d",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 8",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/page-008.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\n6. GenAI Usage Disclosure\nIn line with our experimental design, LLMs and LLM-\npowered systems were used to generate and execute the\nagentic workflows evaluated in this paper. We also used\nLLMs to enhance our text through light editing tasks such\nas grammar correction, and sentence restructuring.\nReferences\nAljohani, A. and Do, H. Promptdebt: A comprehensive\nstudy of technical debt across llm projects. In Proceed-\nings of the 29th International Conference on Evalua-\ntion and Assessment in Software Engineering, EASE\n’25, pp. 371–382, New York, N",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 9",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/page-009.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nIEEE Task Force on Process Mining. Process mining event\nlogs.\nhttps://www.tf-pm.org/resources/\nlogs, 2025. Accessed 2026-04-21.\nJain, A., Paliwal, S., Sharma, M., Vig, L., and Shroff,\nG.\nSmartflow:\nRobotic process automation using\nLLMs. arXiv preprint arXiv:2405.12842, 2024. doi:\n10.48550/arXiv.2405.12842. URL https://arxiv.\norg/abs/2405.12842.\nKhattab, O., Singhvi, A., Maheshwari, P., Zhang, Z., San-\nthanam, K., Vardhamanan, S., Haq, S., Sharma, A., Joshi,\nT. T., Moazam, H., Miller, H., Zaharia, M., and Potts, C.\nDspy: Compiling declarative l",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 10",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/page-010.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nSchick, T., Dwivedi-Yu, J., Dessi, R., Raileanu, R., Lomeli,\nM., Hambro, E., Zettlemoyer, L., Cancedda, N., and\nScialom, T. Toolformer: Language models can teach\nthemselves to use tools.\nIn Advances in Neural In-\nformation Processing Systems (NeurIPS), 2023. URL\nhttps://arxiv.org/abs/2302.04761.\nSinghal, K., Azizi, S., Tu, T., Mahdavi, S. S., Wei, J., Chung,\nH. W., Scales, N., Tanwani, A., Cole-Lewis, H., Pfohl, S.,\net al. Large language models encode clinical knowledge.\nNature, 620(7972):172–180, 2023.\nSkouradaki, M., Andrikopoulos, V., and L",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p011-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-1.png",
+      "narrative": "draft",
+      "content": "Figure 3, per-workflow agent-run evaluation, in four panels, each with ten workflow groups of three bars — Cline (green), Custom (orange) and Roo (blue). (a) Tool-Use Exactness, % of runs with zero tool errors, ↑ better. (b) Tool-call errors, mean error count, ↓ better. (c) Latency, seconds per effective step, ↓ better. (d) Process adherence, % of runs with no process deviation, ↑ better. READ OFF THE CHART, and recorded because the surrounding text does not say it: the specialist system is NOT best everywhere. In panel (a) it is lowest of the three on Cost (49.6 against Cline 76.0 and Roo 67.6) and on Tournament (46.2 against 99.4 and 94.9), and second on Weather (81.8 against Cline 90.1). In panel (b) it has the MOST errors on Cost (1.43 against 0.55 and 0.34), on Tournament (0.93 against 0.01 and 0.13) and on Weather (0.62 against 0.1 and 0.72, where it is second). In panel (d) it is lowest on Cost (57.2 against 87.1 and 76.2) and on Tournament (55.2, the other two near 90). The aggregate advantage in Figure 4 is carried disproportionately by two workflows: on Risk, panel (b) shows 0.20 errors against 13.19 and 11.94, and panel (a) 98.6% against 0.4% and 0.9%.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 11",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/page-011.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nA. Appendix\nA.1. Workflow Agent Runs\nFigure 3. Per Workflow Agent Run Evaluation Metrics: Tool-Use Exactness, Tool-Call Errors, Latency and Process Adherence for the\nSpecialist System\n11",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 12",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/page-012.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nA.2. Workflow Summary Table\nWorkflow\nBrief Overview\nNodes\nEdges\nCart\nOnline retail order fulfillment process covering cart validation, payment\nauthorisation, inventory reservation, shipping, delivery monitoring, and\nrefund/reorder handling.\n52\n60\nCost\nFraud cost optimisation workflow that evaluates rules, checks fraud flags,\npayment status, and recoverability to compute operational costs and penal-\nties.\n12\n15\nDeal\nBlack Friday deal locator that routes based on user preferences (online/in-\nstore), fetches deals, filters by relevance, and prese",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p013-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-1.png",
+      "narrative": "draft",
+      "content": "Figure 4, key metrics by approach, aggregated over all ten workflows. Three bars per panel — Cline (green), Custom (orange), Roo (blue). (a) Tool-Use Exactness, ↑ better: Cline 48.6, Custom 57.7, Roo 38.1. (b) Tool-call errors, mean count, ↓ better: Cline 3.19, Custom 1.27, Roo 3.22. (c) Latency, seconds per effective step, ↓ better: Cline 6.59, Custom 2.49, Roo 9.08. (d) Process adherence, ↑ better: Cline 51.6, Custom 54.7, Roo 42.4. The specialist system leads on all four. Figure 3 gives the per-workflow breakdown behind these, and it is not uniform.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 13",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/page-013.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nA.3. Key Metrics by Approach\nFigure 4. Key metrics by approach. Comparison of key metrics across different approaches in agent run evaluation.\n13",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 14",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/page-014.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nA.4. Base Prompt for Agent Generation\nCreate a GenAI powered ReAct agent in a new folder called\n{framework} agent experiment {num}.\nDo not create a state machine, hardcoded\nimplementation or any other implementation, your agent should be a GenAI powered\nReAct agent that uses tool calls to complete the task.\nDo not ask any questions\nabout what implementation to use -- you should make all of these decisions yourself.\nYour agent folder needs at least 3 files:\n1. agent.py -- a FastAPI service on localhost:7860 with two endpoints:\n/chat\n(accepts co",
+      "truncated": true,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p015-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../images/img-p015-1.png",
+      "narrative": "draft",
+      "content": "Figure 6, the Cart workflow — the largest in the benchmark at 52 nodes and 60 edges. From \"Start: Order recieved\" (spelt so in the diagram) it validates cart and pricing, checks the customer account, runs fraud screening and requests payment authorisation. A \"Payment authorized\" gateway branches to auth-failure handling, customer notification, order cancellation and a recorded cancellation on No. On Yes it reserves inventory and asks \"All items in stock?\"; No triggers a backorder flow, notifies the customer, offers alternatives and asks what the customer chooses, with substitution, cancellation and reorder paths. The fulfilment spine then runs pick list, picker assignment, packing and weight confirmation, carrier rate-shopping, carrier selection, shipping label, handover confirmation, shipment notification, inventory decrement, payment capture, bookkeeping entry, loyalty points, invoice PDF and the tracking email. Delivery monitoring follows, with a \"Delivered?\" gateway and a lost/delayed branch carrying carrier tickets, SLA checks, reroute attempts, escalation, a loss claim and a refund-or-reorder decision, all converging on customer feedback and \"End: End\".",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 15",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/page-015.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nA.5. BPMN Specifications for Each Workflow\nFigure 6. Online retail cart/order fulfillment workflow. The process validates the cart, authorises payment, reserves inventory, and\nroutes to either fulfillment/shipping or cancellation/backorder handling depending on payment and stock decisions. After shipping, it\nmonitors delivery and branches into delayed/lost handling, ending in either delivery confirmation, refund, or reorder.\n15",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p016-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-1.png",
+      "narrative": "draft",
+      "content": "Figure 7, the Cost workflow. It starts by getting all rules and selecting the highest-ranked rules, then descends through four decisions: \"Check for Fraud Flag\", \"Check if Payment Declined\", \"Check if Recoverable\" and \"Check if Refundable\". Six outcomes are returned rather than computed onward — \"Return No Action\", \"Return Operational Cost\" (twice, from different paths), \"Return Operational Cost + Payment Amount\", and \"Return Operational cost - Customer Experience Penalty\" on the No branch of the fraud check. All six converge on End. Every branch is a rule lookup returning a figure, which is what makes the workflow deterministic in the paper's sense.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 16",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../sections/page-016.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 7. Costing/estimation workflow. A deterministic sequence of data-gathering and calculation tasks with decision gateways that\nselect which cost components to apply, followed by aggregation into a final cost/price output.\n16",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p017-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-1.png",
+      "narrative": "draft",
+      "content": "Figure 8, the Deal workflow. From Start it receives a deal-type preference as input and reaches a \"Deal Type Preference?\" gateway with three outgoing edges: \"Online\" to Fetch Online Deals, \"In-Store\" to Fetch In-Store Deals, and a third also labelled \"In-Store\" to Fetch Both Types of Deals — two edges carrying the same label to different tasks, which as drawn does not determine a unique path. All three converge on a \"Deals Found?\" gateway; Yes filters by user preferences, ranks by discount and relevance and presents the best deals, No informs the user there are none, and both reach End.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 17",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/page-017.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 8. Deal assessment workflow. The workflow evaluates a candidate deal through staged checks and scoring steps, using decision\ngateways to route to accept/reject/escalate outcomes based on thresholds and validation checks.\n17",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p018-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../images/img-p018-1.png",
+      "narrative": "draft",
+      "content": "Figure 9, the Label workflow. From \"Start: start\" it gets details and checks eligibility, then \"Check if funded\". The Yes branch asks whether it was funded within the correct period, labelling \"Exclude\" on Yes and \"Disengaged\" on No. The No branch gets status, checks whether it is closed, and on Yes checks whether it was dropped — \"Disengaged\" on Yes, \"Exclude\" on No — while the closed check's own No also reaches \"Exclude\". Four terminal boxes for two distinct labels, reached by four distinct paths, all converging on End.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 18",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/page-018.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 9. Labelling/classification workflow. A rules/criteria-driven labelling pipeline that applies sequential checks and uses gateways to\nassign labels and/or exclude items, terminating once a label decision is reached.\n18",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p019-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../images/img-p019-1.png",
+      "narrative": "draft",
+      "content": "Figure 10, the News workflow. It receives a data_source_plan and an expanded_query_set, validates the payloads, initialises a run context with run_id and timestamps, loads provider config and API credentials, selects providers, builds base query parameters (keywords, date range, regions) and applies source-specific constraints (rate limits, page size, caps). It then sends a request to provider 1 and asks \"Response success?\". On success it parses the payload, asks whether it contains articles, extracts and normalises the article fields (title, url, source, timestamp, language), filters unsupported languages and appends to a collection buffer; \"Is there a next page token?\" and \"Can request next page?\" form the pagination loop back to the request. On failure it increments error_count and records the error. \"More providers to query?\" loops through \"Select next provider\" and \"Update metrics for provider switch\" back to the top; the No branch closes open sessions, builds the unified raw_news_articles structure, attaches run metadata, persists metrics to a monitoring API, builds a run summary and emits a summary event.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 19",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/page-019.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 10. News processing workflow. The process ingests an item, performs validation and enrichment steps, then routes through\nconditional branches (e.g., eligibility/quality thresholds) to produce a final categorisation/output or a discard/escalation outcome.\n19",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p020-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../images/img-p020-1.png",
+      "narrative": "draft",
+      "content": "Figure 11, the Risk workflow — a risk-and-opportunity classifier. It receives trend, sentiment and metrics data, validates payloads and schema, initialises a run context, loads classifier config (thresholds, weights, labels) and domain rules, preprocesses signals by normalising scales and handling missing values, builds feature vectors per entity or trend, and computes a risk score and an opportunity score. Two threshold gateways follow — \"Risk score above risk_threshold?\" tagging risk_candidate or not_risk_candidate, then \"Opportunity score above opportunity_threshold?\" tagging opportunity_candidate or not — after which a final label is derived from {risk, opportunity, mixed, neutral}. A materiality gateway assigns LOW priority or HIGH/MEDIUM, and the run builds and persists a risk_opportunity record with scores, labels and reasons. This is the workflow on which Figure 3 shows the specialist system's largest advantage.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 20",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/page-020.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 11.\nRisk & opportunity classifier workflow.\nThe workflow computes risk/opportunity signals, derives a final label\n(risk/opportunity/mixed/neutral), then routes by a decision gateway into different priority/handling paths (e.g., high/medium vs low)\nbefore completing.\n20",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p021-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../images/img-p021-1.png",
+      "narrative": "draft",
+      "content": "Figure 12, the Social workflow. It receives a data_source_plan and an expanded_query_set, validates payloads, initialises a run context, loads social provider config and credentials, selects platforms and builds base query parameters (keywords, hashtags, accounts, date range). \"Any platforms selected?\" gates the rest. On Yes it initialises metrics (request_count, post_count, error_count), expands queries into platform-specific search terms, constructs and sends the first platform request and receives a response. Four gateways follow in sequence — \"Response success?\", \"Payload contains items?\", \"Language and region allowed?\" and \"Any items remain after filters?\" — with extraction of raw social items (posts, comments, threads) and normalisation of id, text, author, timestamp, engagement and platform between them. Accepted items append to a collection buffer. Every No branch converges on \"Update metrics and diagnostics (requests, posts, errors)\", after which the buffer is aggregated into a unified raw_social_data structure and a run summary is built and persisted.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 21",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/page-021.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 12. Social media workflow. A multi-step pipeline that performs content/user/context checks and then uses decision gateways to\nchoose an action path (e.g., allow, flag, or escalate), ending once an action outcome is produced.\n21",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p022-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../images/img-p022-1.png",
+      "narrative": "draft",
+      "content": "Figure 13, captioned \"Customer promotion workflow\". From \"Start: Start - Receive CIF\" it fetches and validates the customer profile; an Invalid/Inactive edge returns 'No Deals Found'. Otherwise it retrieves order history, determines total spend and gets the loyalty points balance, then \"Check Promo Eligibility (Accepts point balance and total spent)\" splits into two symmetric branches — \"Low Value Customer (Bronze/Silver)\" to a standard discount and standard recommendations, and \"High Value Customer (Platinum/Gold)\" to a premium discount and premium recommendations. Both rejoin at \"Is promotion Urgent\", which sends either a scheduled or an immediate notification before End Process. NOTE, as an observation about the paper rather than about the diagram: the ten workflows are figured in alphabetical order (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) and this is the eighth, the position of the workflow the results call \"Spam\"; the caption calls it a customer promotion workflow and the diagram shows one. Which name is intended is not established here.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 22",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/page-022.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 13. Customer promotion workflow. The process fetches and validates customer profiles, retrieves order history and loyalty\npoints, checks promotion eligibility, segments customers into value tiers (high/low), calculates tier-appropriate discounts, generates\nrecommendations, and routes notifications based on promotion urgency.\n22",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p023-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../images/img-p023-1.png",
+      "narrative": "draft",
+      "content": "Figure 14, the Tournament workflow. From \"Start: Player login\" it gathers the player profile and asks \"Is Player Eligible?\"; No goes straight to End. Yes fetches available tournaments and asks \"Matching Tournament Found?\", with No informing the player there are none. Yes checks slot availability and asks \"Slots Available?\", with No informing the player there are none. Yes submits the registration and asks \"Registration Confirmed?\" — and the two outcomes are crossed relative to the reading one would expect: the No edge reaches \"Inform Registered\" and the Yes edge reaches \"Provide Hot line number to call and register.\" All four terminal boxes converge on End. Recorded as drawn; whether the crossing is intended is not established here. This is one of the two workflows on which Figure 3 shows the specialist system performing worst of the three.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 23",
+      "pageStart": 23,
+      "pageEnd": 23,
+      "target": "../sections/page-023.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 14. Tournament/bracket workflow. The workflow advances items/participants through staged rounds, using decision gateways to\ndetermine advancement and termination once a final winner/outcome is determined.\n23",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/figure-img-p024-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-1.png",
+      "narrative": "draft",
+      "content": "Figure 15, the Weather workflow — the smallest in the benchmark at 9 nodes and 10 edges. From \"Start: Recieve location input\" (spelt so in the diagram) it fetches weather data and asks \"Data Retrieved Successfully?\". No informs of a connection failure. Yes parses the weather conditions and asks \"[P] Is Severe Weather Expected?\", the bracketed P marking it as a predicate in the authors' notation; Yes displays a severe-weather alert and No displays the regular forecast. All three terminal boxes converge on End.",
+      "truncated": false,
+      "provenance": "ingested"
+    },
+    {
+      "id": "library/arxiv-2607.14456v1/blocks/prose-page-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 24",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/page-024.md",
+      "narrative": null,
+      "content": "Published as a workshop paper at SCALE - ICML 2026\nFigure 15. Weather workflow. A deterministic sequence of data retrieval and transformation steps with conditional branches (e.g., data\navailability/threshold checks), culminating in a final forecast/decision output.\n24",
+      "truncated": false,
+      "provenance": "ingested"
+    }
+  ]
+}

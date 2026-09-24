@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_NarrativeReview"
-                  targetNamespace="http://folio-assistant.dev/bpmn/review">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Narrative review — a SUBPROCESS, called never inherited.
@@ -33,6 +33,7 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
     <bpmn:laneSet id="LaneSet_NarrativeReview">
       <bpmn:lane id="Lane_NarrativeReviewer" name="Narrative reviewer">
         <bpmn:documentation>Turns mechanical matches into verdicts, not the other way round: `qa-checkers-voice.ts`, `qa-checkers-uses.ts` and `translation-block-qa.ts` produce candidates, and this lane is the only place a phrase-list hit becomes a wrong-register finding, an out-of-genre criterion, a stated exception, or nothing at all. House voice is adjudicated before any activated overlay is even reached, because an overlay adds to the house judgement rather than replacing it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="narrative-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ProseChanged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AdjudicateVoice</bpmn:flowNodeRef>
@@ -79,7 +80,9 @@ Placed after the base voice adjudication because a voice OVERLAYS the house voic
       <bpmn:extensionElements><folio:skill ref="uses-editorial-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?"/>
+    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?">
+      <bpmn:documentation>Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_ReviewTranslation" name="Review the translation">
       <bpmn:documentation>

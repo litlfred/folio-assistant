@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_BoardPlaceNote"
-                  targetNamespace="http://folio-assistant.dev/bpmn/board-place-note">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Placing a note on a board — folio-assistant
@@ -67,6 +67,7 @@ The rule the diagram holds is in the first activity's own wording: the note goes
     </bpmn:startEvent>
 
     <bpmn:exclusiveGateway id="GW_Exists" name="Does the note exist already?">
+      <bpmn:documentation>Is the note already in the folio? A `new sticky` is written into the folio first, with no coordinate; an `existing card, dragged` only needs its x,y recorded on this board, since position belongs to the board and not to the note.</bpmn:documentation>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_New</bpmn:outgoing>
       <bpmn:outgoing>F_Existing</bpmn:outgoing>

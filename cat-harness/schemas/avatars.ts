@@ -116,6 +116,31 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // would have taken the generic hue and reported a finding — "no avatar
   // declared" is true of an instance nobody has decided about, and this one
   // has been decided about twice.
+  // SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner,
+  // 2026-09-23: *"smart-base avatar: use who-iris route, WHO blue no logo"*,
+  // taking the route this instance's exemption had named as open and
+  // preferable rather than leaving it exempt.
+  //
+  // TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is
+  // measured from the same #0093D5 — the organisation's own blue — and these
+  // are two instances of the SAME organisation's material. A reader scanning
+  // the navbar should see them as a family; giving smart-base a near-miss hue
+  // would assert a distinction that does not exist. The registry requires
+  // distinct GLYPHS, not distinct tones, and that is the right constraint:
+  // the glyph says which instance, the tone says whose.
+  //
+  // And no emblem, which is the whole of "the who-iris route": an
+  // organisation's published colour with a neutral glyph is not inventing its
+  // identity, where cropping its logo would be.
+  "smart-base": {
+    // A broad base with three narrowing courses above it — the layer the rest
+    // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
+    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // so the glyph reads the instance's position rather than its subject.
+    glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
+    tone: 199,
+    reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
+  },
   "who-iris": {
     // An open book with a band across it — a repository of published
     // documents, which is what IRIS is. Deliberately NOT the emblem: the
@@ -149,6 +174,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M9 11a3 3 0 100-6 3 3 0 000 6zm0 0c-2.5 0-4 1.5-4 4v4h8v-4c0-2.5-1.5-4-4-4zm8-6a2.5 2.5 0 110 5M17 12c2 0 3 1.5 3 3v4h-3",
     tone: 292,
     reads: "two figures — the Actors and the Roles they take on",
+  },
+  policies: {
+    // A shield with a tick: what is permitted, and to whom. ODRL policies,
+    // issue #1180.
+    glyph: "M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zm-3.5 9l2.5 2.5 4.5-4.5",
+    tone: 304,
+    reads: "a shield with a tick — what each Actor is permitted to do",
   },
   // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
   //
@@ -291,6 +323,16 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
   },
+  // A LIST OF ENTRIES, each a short code tag beside a longer line: a code and
+  // what it means, which is the whole of a code list. Deliberately not the
+  // glossary's book — a book is looked up; a code list is CHOSEN from, closed,
+  // and every entry carries its definition. `tone: 180` is unused and sits
+  // between the reference tones and `external-schema`'s 208.
+  "code-list": {
+    glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
+    tone: 180,
+    reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
   // A CLASS BOX — a title compartment over an attribute compartment, with an
   // association line leaving it. The one glyph that says "a diagram of shapes"
   // rather than any shape in particular. `tone: 220` was unused, and sits beside
@@ -299,6 +341,13 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z",
     tone: 220,
     reads: "a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand",
+  },
+  // The harness's swimlane-role ledger, renamed from `glossary` on 2026-09-23:
+  // three lanes with a tag on one, the terms a process's swimlanes define.
+  "swimlane-glossary": {
+    glyph: "M3 6h18M3 12h18M3 18h18M15 9h5v6h-5z",
+    tone: 92,
+    reads: "three swimlanes with a tag — the roles a process's lanes define",
   },
   glossary: {
     glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",

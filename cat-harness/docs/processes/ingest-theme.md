@@ -24,7 +24,7 @@ folio-assistant — Ingestion subprocess — ingest a theme. Source of truth: th
 
 | lane | role | what it does here |
 |---|---|---|
-| Ingestion Engine (agent, runs unattended) | — | Every step in this diagram is this lane's, and each treats the source as evidence to be recorded rather than resolved: contradictions in the source are kept as data rather than silently picked, values the source is silent on are marked as a choice rather than dressed up as a measurement, and a missing layout ends in refusal rather than a theme quietly degraded to the ones that were supplied. |
+| Ingestion Engine (agent, runs unattended) | `ingestion-agent` | Every step in this diagram is this lane's, and each treats the source as evidence to be recorded rather than resolved: contradictions in the source are kept as data rather than silently picked, values the source is silent on are marked as a choice rather than dressed up as a measurement, and a missing layout ends in refusal rather than a theme quietly degraded to the ones that were supplied. |
 
 ## Steps
 
@@ -40,11 +40,11 @@ Every one of the 5 step(s) is documented.
 
 ## Decisions
 
-**1** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
 | **Served, or stated?**<br>`Gateway_Kind` | The ONE difference between the two paths. A deployed site SERVES its theme as a compiled stylesheet; a style guide STATES its rules as prose and swatches. Everything after the join is shared. | **served — a deployment** → Read the served stylesheet's declarations<br>**stated — a style guide** → Read the guide's own stated rules |
-| **Every layout present?**<br>`Gateway_Layouts` | — | **yes** → Review contrast and non-colour signal<br>**no** → Refused — incomplete |
+| **Every layout present?**<br>`Gateway_Layouts` | Is every layout the theme must cover present in the source? `yes` goes on to the contrast and non-colour review; `no` refuses the theme as incomplete rather than filling the gap by guessing. | **yes** → Review contrast and non-colour signal<br>**no** → Refused — incomplete |
 
 {% endraw %}

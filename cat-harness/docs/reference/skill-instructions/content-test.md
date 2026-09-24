@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
+> Generated from [`cat-harness/skills/content-lifecycle/content-test.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-test.md) — do not edit here. Typed contract: [schema reference](../skills/content-test.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-test.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-test.md){: .fa-edit-source }
 
 {% raw %}
 # Content Testing

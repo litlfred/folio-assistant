@@ -5,7 +5,7 @@
     "id": "Process_CriterionAdjudication",
     "path": "processes/criterion-adjudication.bpmn"
   },
-  "source_hash": "sha256:3a5184237df528914ffcc2e426b90d5d2ff8fc4f45a873f93c72e5155ddb0fd4",
+  "source_hash": "sha256:62ec62111bbcff11a017d6f9646809eb6ddfa6271823eb912330fd159844ce7b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,6 +87,14 @@
       "result": "pass",
       "findings": []
     },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
     "prose-reviewed-since-code-changed": {
       "result": "n/a",
       "findings": []
@@ -97,7 +105,7 @@
     }
   },
   "totals": {
-    "pass": 14,
+    "pass": 16,
     "fail": 0,
     "n/a": 8,
     "unknown": 0

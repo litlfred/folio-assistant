@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: board-relocate\n"
-"POT-Creation-Date: 2026-09-23T08:54:30.333Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.793Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -34,12 +34,12 @@ msgstr ""
 msgid "Confirmed by the reader?"
 msgstr ""
 
-#: processes/board-relocate.bpmn:120
+#: processes/board-relocate.bpmn:121
 #. Diagram label
 msgid "Drop its positions and sweep orphans"
 msgstr ""
 
-#: processes/board-relocate.bpmn:98
+#: processes/board-relocate.bpmn:99
 #. Diagram label
 msgid "Leave the content exactly where it is"
 msgstr ""
@@ -54,17 +54,17 @@ msgstr ""
 msgid "Name what will move, and where it lands"
 msgstr ""
 
-#: processes/board-relocate.bpmn:146
+#: processes/board-relocate.bpmn:147
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/board-relocate.bpmn:105
+#: processes/board-relocate.bpmn:106
 #. Diagram label
 msgid "Nothing moved"
 msgstr ""
 
-#: processes/board-relocate.bpmn:121
+#: processes/board-relocate.bpmn:122
 #. Diagram element documentation
 msgid "Only after the content has moved: drop its positions from the layout layer and sweep any position whose note is now gone. Sweeping first would make the board authoritative over the folio for one step."
 msgstr ""
@@ -74,27 +74,27 @@ msgstr ""
 msgid "Reader"
 msgstr ""
 
-#: processes/board-relocate.bpmn:110
+#: processes/board-relocate.bpmn:111
 #. Diagram element documentation
 msgid "Relocate the confirmed content — that one thing, not the class it belongs to — to the trashcan. The folio changes first, because the folio carries what is true."
 msgstr ""
 
-#: processes/board-relocate.bpmn:109
+#: processes/board-relocate.bpmn:110
 #. Diagram label
 msgid "Relocate the content to the trashcan"
 msgstr ""
 
-#: processes/board-relocate.bpmn:132
+#: processes/board-relocate.bpmn:133
 #. Diagram label
 msgid "Say what moved and where it went"
 msgstr ""
 
-#: processes/board-relocate.bpmn:133
+#: processes/board-relocate.bpmn:134
 #. Diagram element documentation
 msgid "Tell the reader what moved and where it went, so the content can be found in the trashcan rather than inferred missing from a card that disappeared."
 msgstr ""
 
-#: processes/board-relocate.bpmn:139
+#: processes/board-relocate.bpmn:140
 #. Diagram label
 msgid "The content lives in the trashcan"
 msgstr ""
@@ -109,12 +109,17 @@ msgstr ""
 msgid "The order of its five tasks is load-bearing: the folio move lands before the layer update, so an interruption between the two leaves the semantic content already relocated rather than the presentation layer half-updated against a folio it no longer matches. On \"no\", the only action taken is to leave everything untouched — this process, unlike board-open-close, is strict, because a step that edits the folio and has not been confirmed must be refused rather than merely discouraged."
 msgstr ""
 
-#: processes/board-relocate.bpmn:99
+#: processes/board-relocate.bpmn:100
 #. Diagram element documentation
 msgid "The reader said no: nothing moves, no position is dropped, and the board is left exactly as it was. Drawn as its own end state because a destructive action whose refusal is not drawn gets performed by accident."
 msgstr ""
 
-#: processes/board-relocate.bpmn:145
+#: processes/board-relocate.bpmn:93
+#. Diagram element documentation
+msgid "The reader's answer to A_AskConfirm, which named what will move and where it lands. `yes, move it` relocates the content to the trashcan; `no` leaves it exactly where it is. Nothing moves without the yes."
+msgstr ""
+
+#: processes/board-relocate.bpmn:146
 #. Diagram label
 msgid "yes, move it"
 msgstr ""

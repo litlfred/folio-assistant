@@ -24,7 +24,7 @@ THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `Atomic
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not. |
+| CI/CD Pipeline | `build-pipeline` | The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not. |
 
 ## Steps
 
@@ -36,10 +36,10 @@ Every one of the 1 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Did anything&#10;change?**<br>`GW_Drift` | — | **no &#8212; in sync** → Generated file in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+| **Did anything&#10;change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source. | **no &#8212; in sync** → Generated file in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
 
 {% endraw %}

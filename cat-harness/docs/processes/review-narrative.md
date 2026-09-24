@@ -24,7 +24,7 @@ Judging changed PROSE: read what the mechanical checkers flagged, decide which f
 
 | lane | role | what it does here |
 |---|---|---|
-| Narrative reviewer | — | Turns mechanical matches into verdicts, not the other way round: `qa-checkers-voice.ts`, `qa-checkers-uses.ts` and `translation-block-qa.ts` produce candidates, and this lane is the only place a phrase-list hit becomes a wrong-register finding, an out-of-genre criterion, a stated exception, or nothing at all. House voice is adjudicated before any activated overlay is even reached, because an overlay adds to the house judgement rather than replacing it. |
+| Narrative reviewer | `narrative-reviewer` | Turns mechanical matches into verdicts, not the other way round: `qa-checkers-voice.ts`, `qa-checkers-uses.ts` and `translation-block-qa.ts` produce candidates, and this lane is the only place a phrase-list hit becomes a wrong-register finding, an out-of-genre criterion, a stated exception, or nothing at all. House voice is adjudicated before any activated overlay is even reached, because an overlay adds to the house judgement rather than replacing it. |
 
 ## Steps
 
@@ -41,10 +41,10 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Translated?**<br>`GW_Translated` | — | **yes** → Review the translation<br>**no** → GW_Join |
+| **Translated?**<br>`GW_Translated` | Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join. | **yes** → Review the translation<br>**no** → GW_Join |
 
 {% endraw %}

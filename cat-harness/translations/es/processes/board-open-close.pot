@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: board-open-close\n"
-"POT-Creation-Date: 2026-09-23T08:42:27.087Z\n"
+"POT-Creation-Date: 2026-09-23T16:48:12.787Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/board-open-close.bpmn:160
+#: processes/board-open-close.bpmn:161
 #. Diagram label
 msgid "[x]"
 msgstr ""
 
-#: processes/board-open-close.bpmn:114
+#: processes/board-open-close.bpmn:115
 #. Diagram element documentation
 msgid "[x] closes the window back to its avatar. Only a person's [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader."
 msgstr ""
@@ -44,52 +44,52 @@ msgstr ""
 msgid "Board: open and close content"
 msgstr ""
 
-#: processes/board-open-close.bpmn:141
+#: processes/board-open-close.bpmn:142
 #. Diagram element documentation
 msgid "Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated."
 msgstr ""
 
-#: processes/board-open-close.bpmn:113
+#: processes/board-open-close.bpmn:114
 #. Diagram label
 msgid "Close the window back to its avatar"
 msgstr ""
 
-#: processes/board-open-close.bpmn:162
+#: processes/board-open-close.bpmn:163
 #. Diagram label
 msgid "leave"
 msgstr ""
 
-#: processes/board-open-close.bpmn:120
+#: processes/board-open-close.bpmn:121
 #. Diagram label
 msgid "Leave a reachable way back"
 msgstr ""
 
-#: processes/board-open-close.bpmn:121
+#: processes/board-open-close.bpmn:122
 #. Diagram element documentation
 msgid "Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on <body> and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi)."
 msgstr ""
 
-#: processes/board-open-close.bpmn:158
+#: processes/board-open-close.bpmn:159
 #. Diagram label
 msgid "open a card"
 msgstr ""
 
-#: processes/board-open-close.bpmn:98
+#: processes/board-open-close.bpmn:99
 #. Diagram label
 msgid "Project a window onto the board"
 msgstr ""
 
-#: processes/board-open-close.bpmn:99
+#: processes/board-open-close.bpmn:100
 #. Diagram element documentation
 msgid "Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls."
 msgstr ""
 
-#: processes/board-open-close.bpmn:106
+#: processes/board-open-close.bpmn:107
 #. Diagram element documentation
 msgid "Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write."
 msgstr ""
 
-#: processes/board-open-close.bpmn:105
+#: processes/board-open-close.bpmn:106
 #. Diagram label
 msgid "Raise the window the reader selected"
 msgstr ""
@@ -109,34 +109,39 @@ msgstr ""
 msgid "Render every card as its avatar — the starting state. Each content kind controls its own avatar; the board decides only that nothing starts open."
 msgstr ""
 
-#: processes/board-open-close.bpmn:161
+#: processes/board-open-close.bpmn:162
 #. Diagram label
 msgid "resize the board"
 msgstr ""
 
-#: processes/board-open-close.bpmn:133
+#: processes/board-open-close.bpmn:134
 #. Diagram label
 msgid "Resolve the kind's zoom threshold"
 msgstr ""
 
-#: processes/board-open-close.bpmn:134
+#: processes/board-open-close.bpmn:135
 #. Diagram element documentation
 msgid "Resolve the semantic-zoom threshold for each card's kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default."
 msgstr ""
 
-#: processes/board-open-close.bpmn:159
+#: processes/board-open-close.bpmn:160
 #. Diagram label
 msgid "select a window"
 msgstr ""
 
-#: processes/board-open-close.bpmn:140
+#: processes/board-open-close.bpmn:141
 #. Diagram label
 msgid "Swap cards below the threshold; leave open windows alone"
 msgstr ""
 
-#: processes/board-open-close.bpmn:151
+#: processes/board-open-close.bpmn:152
 #. Diagram label
 msgid "The reader leaves the board"
+msgstr ""
+
+#: processes/board-open-close.bpmn:89
+#. Diagram element documentation
+msgid "Waits on the reader's next action on the board. Opening a card projects a window; selecting a window raises it; `[x]` closes a window back to its avatar; resizing the board re-resolves each kind's zoom threshold; leaving ends. Every branch but `leave` comes back here, which is what makes open and close a toggle."
 msgstr ""
 
 #: processes/board-open-close.bpmn:38

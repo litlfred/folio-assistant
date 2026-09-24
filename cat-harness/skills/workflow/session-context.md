@@ -5,6 +5,8 @@ description: >
   instance. The six fields, why `actor` is required and the rest are not, why
   the session's view of a node is advisory, and what a sibling session reads it
   for.
+graph-kinds:
+  - session-state
 ---
 
 # Session context

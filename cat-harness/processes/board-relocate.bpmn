@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_BoardRelocate"
-                  targetNamespace="http://folio-assistant.dev/bpmn/board-relocate">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        The fishbone — relocating content into fsh-guts
@@ -90,6 +90,7 @@ The order of the two writes is the content of the diagram. The CONTENT relocates
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Confirmed" name="Confirmed by the reader?">
+      <bpmn:documentation>The reader's answer to A_AskConfirm, which named what will move and where it lands. `yes, move it` relocates the content to the trashcan; `no` leaves it exactly where it is. Nothing moves without the yes.</bpmn:documentation>
       <bpmn:incoming>F_2</bpmn:incoming>
       <bpmn:outgoing>F_Yes</bpmn:outgoing>
       <bpmn:outgoing>F_No</bpmn:outgoing>

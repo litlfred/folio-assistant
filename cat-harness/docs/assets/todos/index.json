@@ -252,7 +252,10 @@
     "Process_CriterionAdjudication": [
       "Process_Adjudication"
     ],
-    "Process_DocsSite": [],
+    "Process_DocsSite": [
+      "Process_PublishAlert",
+      "Process_PublishVerification"
+    ],
     "Process_Ingestion": [
       "Process_BuildL1Kg",
       "Process_DeriveContent",
@@ -294,6 +297,8 @@
     ],
     "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [],
+    "Process_PublishAlert": [],
+    "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
     "Process_RefreshMaterialized": [
       "Process_Adjudication"
@@ -309,6 +314,10 @@
       "Process_CodeReview",
       "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
+    ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
     ],
     "Process_SessionStateMachine": [],
     "Process_RenderLog": [],
@@ -327,9 +336,10 @@
       "Process_CriterionAdjudication"
     ],
     "Process_WireframeDesignReview": [
-      "Process_Adjudication",
+      "Process_CriterionAdjudication",
       "Process_OptionsAnalysis"
     ],
+    "Process_DeepDocumentResearch": [],
     "Process_DIIG": []
   },
   "themeArt": {

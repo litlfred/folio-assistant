@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/harness-tiles.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/harness-tiles.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/harness-tiles.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/harness-tiles.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/harness-tiles.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/harness-tiles.md){: .fa-edit-source }
 
 {% raw %}
 # A tile is the harness's, not the node's
@@ -38,6 +38,57 @@ question a reader is asking.
 Dependencies keep a group of their own rather than disappearing. Making the
 distinction a **disappearance** would answer *"where did who-iris go"* with
 silence.
+
+## "Harness" carries TWO senses, and only one of them is this rule
+
+**Measured 2026-09-23** (bean `ogit`, [#1109](https://github.com/litlfred/folio-assistant/issues/1109)), after the owner asked *"why is detangle a harness? review all things labeled are harnesses -- are they?"*
+
+`detangle` is no longer an instance at all — #1123 folded it into this harness as a directory the same day, which dissolves that particular question rather than answering it. The two senses below are why the question was worth asking anyway, and they outlive the example.
+
+The rule above is a rule about **sense 1**. The word is also used, correctly
+and by the owner, for something else:
+
+| sense | what it means | how you tell |
+|---|---|---|
+| **1 — instantiated here** | this checkout runs it | a `<name>.config.json` at the **repository** root — `ls *.config.json`, not a number quoted here |
+| **2 — a layer others instantiate** | a base a *downstream* repo stands up | nothing in this checkout. It is a statement about the layer's role in the stack |
+
+**No count is given for either sense, on purpose.** The first draft of this
+section said "5 of 19" and was stale within the hour: `smart-base` was
+instantiated by #1129 while this page sat in review, making it 6. That is the
+rule this corpus states everywhere and keeps paying for — *a count in prose is
+a claim nothing checks* — caught here only because the merge that broke it
+happened to land in the same session. Ask the filesystem.
+
+Sense 2 is not loose talk. `smart-stack-layering` says *"the DAK harness every
+smart-\* DAK repo instantiates"*; `fhir-harness`'s own description says *"what
+a non-WHO implementation guide instantiates"*; the owner's bean titles use it —
+`2yyh` **SMART-BASE HARNESS**, `wm63` **FHIR-HARNESS**.
+
+**So a thing can carry the word and not satisfy this page's rule, and be
+right.** `fhir-harness` is the clearest case: declared, not instantiated, and
+it declares no visualiser either, so by the rule above it owes no tile and gets
+none — while being exactly what a downstream IG instantiates.
+
+### Do not write a checker for this
+
+One was built and withdrawn, and the measurement is the argument. Anchored on
+declared instance names beside the word: **246 findings** first, then **31**
+after excluding names that contain "harness" — and **none of the 31 was the
+defect being hunted**. Ten came from one generator template, four from the
+retired declaration filename that `check:declaration-filename` already counts
+(not written out here — that gate flagged this very paragraph for naming it,
+which is the gate working), the rest from directory listings, hyphenated ids,
+and the check flagging its own docstring.
+
+A predicate that cannot separate its two senses is not a check. It is an
+**adjudication**, and this corpus already says what that means: if a mechanism
+could decide it, the process would not have been entered
+([`adjudication`](adjudication.md)).
+
+**What to do instead when the word is load-bearing:** say which sense, or say
+the fact. *"instantiated here"* and *"a layer downstream repos instantiate"*
+are both shorter than the ambiguity is expensive.
 
 ## A tile opens the INSTANCE, not a kind handler's view of it
 

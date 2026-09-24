@@ -5,7 +5,7 @@
     "id": "library-ingestion",
     "path": "skills/folio-core/library-ingestion.md"
   },
-  "source_hash": "8ccd5d0b0bde",
+  "source_hash": "d8f1ac5eff5c",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -16,13 +16,18 @@
       "findings": [
         {
           "where": "skills/folio-core/library-ingestion.md",
-          "detail": "389 lines; p75 of the skill corpus is 279."
+          "detail": "457 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/library-ingestion.md",
+          "detail": "457 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -38,8 +43,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 1,
+    "pass": 2,
+    "fail": 2,
     "n/a": 2,
     "unknown": 0
   }

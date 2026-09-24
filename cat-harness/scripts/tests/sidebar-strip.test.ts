@@ -17,9 +17,23 @@
  * defending the wrong design. Three of these assertions passed every
  * falsification and still had to go.
  *
- * The rendered result is NOT checked and cannot be: `remote_theme` resolves on
- * the runner, so the theme's compiled selectors are not in this checkout, and
- * the published site is refused at this environment's proxy.
+ * The rendered result is not checked HERE, but it is no longer true that it
+ * cannot be. `remote_theme` resolves on the runner, so the theme's compiled
+ * selectors are not in this checkout, and this environment's proxy refuses the
+ * published site over HTTP — but the STAGING PREVIEW IS COMMITTED TO
+ * `gh-pages`, and git reaches it:
+ *
+ *     git fetch origin gh-pages
+ *     git archive FETCH_HEAD:STAGING/<slug> | tar -x -C <dir>/<baseurl>/STAGING/<slug>
+ *
+ * Served at THAT path -- the pages address their assets under the staging
+ * baseurl, and mounting them anywhere else 404s every stylesheet while still
+ * rendering a page that a careless check calls a pass -- Playwright then drives
+ * the real CI build, theme and all. Demonstrated 2026-09-23 on bean `vfr8`:
+ * 10 stylesheets, 0 failed requests, 4 of 5 figures genuinely auto-expanded.
+ *
+ * These assertions stay a text check anyway, because a stylesheet invariant
+ * wants to fail in the fast gate set rather than behind a 90 MB extract.
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -258,5 +272,88 @@ describe("figures keep a white plate, with and without JavaScript", () => {
     // visible, not where the rule changes. A `prefers-color-scheme` guard here
     // would also miss this site, which sets its scheme explicitly.
     expect(figures).not.toContain("prefers-color-scheme");
+  });
+});
+
+/**
+ * The sidebar can always paint above `.main` — bean `vfr8`.
+ *
+ * The open nav OVERLAYS the page rather than pushing it: `.side-bar + .main`
+ * keeps `margin-left: var(--fa-nav-collapsed)` at every width, so the opened
+ * 16.5rem column sits on top of content that is still there. That only reads
+ * as a nav if the sidebar paints above `.main` — and the theme is against it,
+ * setting `.side-bar { z-index: 0 }` while `.main` is `position: relative`
+ * with `z-index: auto` and later in tree order, so `.main` wins on tie.
+ *
+ * `.side-bar:hover` answers that with `z-index: 100` and says so in a comment.
+ * What broke was a SECOND rule, added for an unrelated reason —
+ * `:root.fa-has-fullwidth .side-bar { z-index: auto }`, to let a panel escape
+ * over a full-bleed figure. At (0,3,0) against the hover rule's (0,2,0) it won
+ * the cascade in EVERY state, so on any page that auto-expands a figure the
+ * nav opened behind the page. Measured on `/document-ingestion.html`, which
+ * expands 4 of its 5 figures: `elementFromPoint` inside the opened column
+ * returned page content, not the nav.
+ *
+ * ## Why this is a text check and not a browser one
+ *
+ * The defect needs the THEME's stacking context to appear, and
+ * `remote_theme` resolves on the runner — the compiled selectors are not in
+ * this checkout, and every e2e spec here builds a fixture rather than a Jekyll
+ * site. The rendered result CAN be reached, by the gh-pages route this file's
+ * header now describes, and the fix was verified that way -- but a 90 MB
+ * extract and a browser do not belong in the fast gate set, and they check a
+ * PARTICULAR BUILD rather than the rule. What belongs here is the invariant
+ * the defect violated, over the stylesheet itself.
+ *
+ * ## What it does NOT claim
+ *
+ * Not that 100 is the right number, and not that the sidebar wins against
+ * every possible z-index in `.main` — both are rendering questions this check
+ * cannot reach. It claims one thing: no rule may leave `.side-bar` unable to
+ * rise above the page, which is what `auto` and any smaller value do.
+ */
+describe("no rule may stop the sidebar rising above `.main` (bean `vfr8`)", () => {
+  const css = read("cat-harness/docs/assets/css/docs-ui.css");
+
+  /** Declarations whose SUBJECT is `.side-bar`, not a descendant of it. */
+  const sidebarZRules = (): { selector: string; value: string }[] => {
+    const bare = css.replace(/\/\*[\s\S]*?\*\//g, "");
+    const out: { selector: string; value: string }[] = [];
+    for (const m of bare.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+      const body = m[2]!;
+      const z = /(?<![\w-])z-index\s*:\s*([^;!}]+)/.exec(body);
+      if (!z) continue;
+      for (const sel of m[1]!.split(",")) {
+        const s = sel.trim();
+        if (!s) continue;
+        // The LAST compound decides the subject: `.side-bar .fa-nav-close`
+        // styles a descendant and is none of this check's business.
+        const last = s.split(/\s+|>(?![^(]*\))/).filter(Boolean).pop() ?? "";
+        if (/\.side-bar(?![\w-])/.test(last)) out.push({ selector: s, value: z[1]!.trim() });
+      }
+    }
+    return out;
+  };
+
+  it("every `z-index` on the sidebar itself is a number at or above the open-nav value", () => {
+    const rules = sidebarZRules();
+    // A sweep that matched nothing would pass silently — the `dh4f` shape in a
+    // test. Two rules are known to exist: the hover one and the full-width one.
+    expect(rules.length).toBeGreaterThanOrEqual(2);
+
+    const open = rules.find((r) => /:hover/.test(r.selector));
+    expect(open).toBeDefined();
+    const floor = Number(open!.value);
+    expect(Number.isFinite(floor)).toBe(true);
+
+    const offenders = rules.filter((r) => !Number.isFinite(Number(r.value)) || Number(r.value) < floor);
+    expect(offenders).toEqual([]);
+  });
+
+  it("`auto` in particular is refused — it is what the defect actually was", () => {
+    // Stated separately because `Number("auto")` is NaN and would be caught
+    // above by accident. This says the thing on purpose, so a future reader
+    // sees the exact value that broke it rather than inferring it.
+    expect(sidebarZRules().filter((r) => r.value === "auto")).toEqual([]);
   });
 });

@@ -16,7 +16,9 @@
  * already emits `<a id="<label>">` before every labelled block, section and
  * chapter. Those anchors are what the review page and the ChangeSet link to.
  * It renders with `remark-html`, already a dependency, so no pandoc is
- * needed.
+ * needed, and with `remark-gfm`, so a block's Markdown table is a `<table>`
+ * rather than a paragraph of raw pipes (bean fz39, the owner's approval
+ * 2026-09-23).
  *
  * ## Output
  *
@@ -51,6 +53,7 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { remark } from "remark";
+import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
 import { folioDir } from "../schemas/cat-harness.js";
@@ -171,7 +174,7 @@ export async function buildDocumentSite(repoRoot: string, outDir: string): Promi
   for (const d of docs) {
     const built = await buildDocumentMarkdown(d.path);
     for (const i of built.issues) if (i.level === "error") result.errors.push(`${d.slug}: ${i.message}`);
-    const html = String(await remark().use(remarkHtml, { sanitize: false }).process(built.markdown));
+    const html = String(await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(built.markdown));
     const dir = join(outDir, d.slug);
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, "index.html"), page(d.slug, html));

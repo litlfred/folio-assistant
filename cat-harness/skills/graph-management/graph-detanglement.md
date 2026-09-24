@@ -44,7 +44,20 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-Same rule, two scales, two vocabularies. **Prune, merge, or factor into a
+**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+instance stack each `<instance>.json` declares in `needs`.
+
+The repository and knowledge-graph scales share ONE verdict function,
+`schemas/layer-direction.ts` (bean `j79e`). An edge is **wrong-direction**
+exactly when its target layer is not among what the source layer declares it
+may reach — `ALLOWED` for repos, `needs` plus itself for instances — and no
+reasoned permit names it. An instance with no `needs` is **undetermined**,
+reported in its own column, never read as clean. The function stops at
+direction: whether an allowed edge is a *restatement* or *essential* is the
+adjudicator's call, so those edges stay `unclassified` with the verdict as
+their basis.
+
+Same rule, three scales, two vocabularies. **Prune, merge, or factor into a
 third** are the only three moves, and "the classification is wrong" is the
 fourth possibility the block-scale version does not have because a block's
 chapter is not in doubt the way a module's layer is.
@@ -67,9 +80,10 @@ against its own directory, **so the whole graph relocates by moving one
 folder**.
 
 The worked example is in the tree and belongs to a repository that does not
-exist yet: `smart-kg/methodologies/grade.md`, declared at repository scope in
-`cat-harness/cat-harness.json`, whose own entry says *"separated so the extraction
-is literal — `smart-kg/` lifts out whole"*.
+exist yet: `smart-base/methodologies/diig.md`, declared at repository scope in
+`cat-harness/cat-harness.json` so that the directory lifts out whole with
+`smart-base`. (The example was `smart-kg/methodologies/grade.md` until
+2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.)
 
 **Declaring is cheap and extracting is expensive, which is the point.** The
 `methodology` graph kind is defined by exactly this property: *"extractable
@@ -272,6 +286,9 @@ auto-dischargeable — they rename things and ripple through every reference.
 
 ## Related
 
+- [`graph-rendering`](graph-rendering.md) — drawing the graph being
+  partitioned, with each group's detangle numbers beside it. The UML overview
+  pages show them per sub-graph.
 - `placement.md` — the sibling SOP, for where a NEW node goes. Same shape:
   numbered steps, a stop, a closing checklist.
 - `covered-is-not-reachable` — the reachability half, and the rule that
@@ -283,3 +300,5 @@ auto-dischargeable — they rename things and ripple through every reference.
   repository's own five-repo cut, including the Phase II per-repo gate.
 - `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
   of the above was recorded first.
+- `schemas/layer-direction.ts` — the one wrong-direction verdict both
+  `check:partition` and `kg:detangle` call.

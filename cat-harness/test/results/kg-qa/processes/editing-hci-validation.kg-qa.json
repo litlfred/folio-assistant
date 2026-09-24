@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:3c32b6b6715bac039e600adba19ab269a82a6e0906e811fea692f1425d175a88",
+  "source_hash": "sha256:1eda6e10c1217c4352f1628220a20b4cc012e416ab03b4216123cb4d3174e8fc",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Gateway_ReviewerKind",
-          "detail": "\"Judgement call?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "Gateway_EditorDecision",
-          "detail": "\"Accept, revise or discard?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

@@ -24,10 +24,10 @@ The author reviews the guidance already in their content, frames the question as
 
 | lane | role | what it does here |
 |---|---|---|
-| Author / guideline developer (person) | — | Brackets the machine work rather than doing it: frames the PICO before Lane_Agent fans out across evidence classes, then is the only lane that grades what comes back and decides whether it is sufficient for a recommendation — retrieval and authority-checking are delegated, but the judgement that turns evidence into a claim never leaves this lane. |
-| Evidence agent (system) | — | The appraisal in the role's own description happens elsewhere in this diagram: this lane only fans out in parallel across the three evidence classes and joins the candidates, while grading is Lane_Author's call and authority is Lane_Trusted's — so what it owns here is coverage, not judgement. |
-| Trusted registries and observatories (external) | — | Task_VerifyAuthority and its gateway sit here rather than with Lane_Agent because the decision is not this instance's call — it is a readout of what the external API returns, and the moment that answer is uncertain or absent, Lane_WorkPlan opens a bean rather than this lane inventing a verdict. |
-| Work plan — beans (shared) | — | Catches two different shortfalls at two different severities: an unverified citation is noted but the process continues into grading, while an insufficient body of evidence ends the process at its own event — so only the second is fatal, and both stay visible in the work plan rather than one being silently absorbed into the other. |
+| Author / guideline developer (person) | `author` | Brackets the machine work rather than doing it: frames the PICO before Lane_Agent fans out across evidence classes, then is the only lane that grades what comes back and decides whether it is sufficient for a recommendation — retrieval and authority-checking are delegated, but the judgement that turns evidence into a claim never leaves this lane. |
+| Evidence agent (system) | `evidence-agent` | The appraisal in the role's own description happens elsewhere in this diagram: this lane only fans out in parallel across the three evidence classes and joins the candidates, while grading is Lane_Author's call and authority is Lane_Trusted's — so what it owns here is coverage, not judgement. |
+| Trusted registries and observatories (external) | `external-registry` | Task_VerifyAuthority and its gateway sit here rather than with Lane_Agent because the decision is not this instance's call — it is a readout of what the external API returns, and the moment that answer is uncertain or absent, Lane_WorkPlan opens a bean rather than this lane inventing a verdict. |
+| Work plan — beans (shared) | `work-plan` | Catches two different shortfalls at two different severities: an unverified citation is noted but the process continues into grading, while an insufficient body of evidence ends the process at its own event — so only the second is fatal, and both stay visible in the work plan rather than one being silently absorbed into the other. |
 
 ## Steps
 
@@ -48,11 +48,11 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Authority confirmed?**<br>`Gateway_Authoritative` | — | **no** → Open a bean for the unverified citation<br>**yes** → Appraise and grade the body of evidence |
-| **Sufficient for a recommendation?**<br>`Gateway_Sufficient` | — | **no** → Record the evidence gap<br>**yes** → Attach the evidence to the recommendation |
+| **Authority confirmed?**<br>`Gateway_Authoritative` | Answered by checking the source against the observatory or registry API: is its authority confirmed? `no` opens a bean for the unverified citation; `yes` goes on to appraise and grade the evidence. | **no** → Open a bean for the unverified citation<br>**yes** → Appraise and grade the body of evidence |
+| **Sufficient for a recommendation?**<br>`Gateway_Sufficient` | Answered by the appraisal: is the graded evidence enough to support a recommendation? `no` records the evidence gap; `yes` attaches the evidence to the recommendation. | **no** → Record the evidence gap<br>**yes** → Attach the evidence to the recommendation |
 
 {% endraw %}

@@ -5,7 +5,7 @@
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
                   id="Definitions_CriterionAdjudication"
-                  targetNamespace="http://folio-assistant.dev/bpmn/adjudication">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Criterion adjudication — the QA-criterion SPECIALISATION
@@ -79,7 +79,7 @@ The role admits person and agent. `refresh-materialized` already gives the reaso
 `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:skill ref="adjudication"/>
-        <folio:adjudication codes="stands scope dispensation"/>
+        <folio:adjudication codes="stands scope dispensation" list="adjudication-criterion"/>
         <folio:fulfilment kinds="person agent" reason="the same restriction the called process states on A_Adjudicate, restated here because this is where the enum is declared and a step naming permitted answers without saying who may choose among them has restricted nobody. It cannot drift wrong: the engine refuses `system` or `external` on any step carrying `folio:adjudication`, so the only failure available is absence, and absence is refused too."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_C1</bpmn:incoming>

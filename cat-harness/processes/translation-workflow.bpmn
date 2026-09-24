@@ -4,7 +4,7 @@
              xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
              id="Definitions_Translation"
-             targetNamespace="http://folio-assistant.dev/bpmn/translation">
+             targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Translation Workflow — folio-assistant
@@ -37,12 +37,14 @@ Staleness is an END state that re-enters at the beginning, not a failure. A sour
          human decision.  ──────────────────────────────────────── -->
     <laneSet id="LaneSet_Translation">
       <lane id="Lane_Author" name="Author (source content)">
+        <extensionElements><folio:role ref="author"/></extensionElements>
         <flowNodeRef>Start_ContentAuthored</flowNodeRef>
       </lane>
       <lane id="Lane_Platform" name="Agent / platform (automated)">
         <documentation>Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence.
 
 It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead.</documentation>
+        <extensionElements><folio:role ref="authoring-agent"/></extensionElements>
         <flowNodeRef>Task_PotExtract</flowNodeRef>
         <flowNodeRef>Task_Translate</flowNodeRef>
         <flowNodeRef>Task_PoInject</flowNodeRef>
@@ -60,7 +62,9 @@ It is one lane rather than two because agentic and mechanical is a judgement rat
         <documentation>The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.
 
 Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.</documentation>
+        <extensionElements><folio:role ref="translation-adjudicator"/></extensionElements>
         <flowNodeRef>Task_Adjudicate</flowNodeRef>
+        <flowNodeRef>Task_EditTranslation</flowNodeRef>
         <flowNodeRef>Task_Signoff</flowNodeRef>
       </lane>
     </laneSet>
@@ -123,7 +127,9 @@ Tool: translation_validate MCP tool</documentation>
     </serviceTask>
 
     <!-- ── Drift gateway ──────────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?" />
+    <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?">
+      <documentation>Answered by the round-trip (back-translation) QA: did it flag drift or a terminology miss? `Drift detected` sends the passage to a human reviewer; `Clean` writes an unofficial status.json.</documentation>
+    </exclusiveGateway>
 
     <!-- ── Human adjudication ─────────────────────────────────── -->
     <callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate flagged passage&#10;(human reviewer)">
@@ -138,13 +144,38 @@ right is a human call.</documentation>
       <extensionElements>
         <folio:skill ref="translation-manager" />
         <folio:skill ref="adjudication" />
+        <folio:adjudication codes="accept edit retranslate" list="adjudication-translation-passage"/>
+        <folio:fulfilment kinds="person agent" reason="the step names its own performer — `a human SME or editor` — and this lane is the one whose actor cannot be the checker that raised the flag." />
       </extensionElements>
     </callActivity>
 
     <!-- ── Converge after QA ──────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_PostQA" name="QA passed?" />
+    <exclusiveGateway id="Gateway_PostQA" name="Which of the three?">
+      <extensionElements>
+        <folio:judgement reason="The round trip establishes that two readings differ; which is right is the reviewer's call, and no rule keying on either reading can make it without knowing what the passage is for." />
+      </extensionElements>
+      <documentation>The three this diagram's own adjudication step has always promised — *"Accept the translation as-is (false positive) / Edit the translation and re-run QA / Reject and request re-translation"* — and until 2026-09-23 it offered TWO. `edit` had no branch, so a reviewer who wanted to correct a passage had to choose between accepting a wrong one and discarding a good translation wholesale. Bean `bvuk`, found while wiring the codes.
+
+`edit` and `retranslate` re-enter at different points, which is the difference: an edit keeps the translation and re-injects, so QA re-runs over the corrected PO; a re-translation goes back to Task_Translate and produces a new one.
+
+Renamed from "QA passed?", which was the wrong question: its only incoming flow is the adjudication's, so it never read a QA result.</documentation>
+      <incoming>Flow_Adjudicated</incoming>
+      <outgoing>Flow_PostQA_Accept</outgoing>
+      <outgoing>Flow_PostQA_Edit</outgoing>
+      <outgoing>Flow_PostQA_Redo</outgoing>
+    </exclusiveGateway>
 
     <!-- ── Write status (unofficial) ──────────────────────────── -->
+    <userTask id="Task_EditTranslation" name="Edit the flagged passage&#10;and re-inject">
+      <documentation>The reviewer corrects the passage in the PO rather than sending the whole translation back. Flows to Task_PoInject, so the round-trip QA runs again over the corrected text — "edit the translation and re-run QA", which is what the adjudication step has always offered and what this process could not do.
+
+A userTask, not a service task: this is the one step here where a person edits content, and the lane's actor is the reviewer who just adjudicated.</documentation>
+      <extensionElements>
+        <folio:skill ref="translation-manager" />
+      </extensionElements>
+      <incoming>Flow_PostQA_Edit</incoming>
+      <outgoing>Flow_Edited</outgoing>
+    </userTask>
     <serviceTask id="Task_WriteUnofficial" name="Write status.json&#10;(unofficial)">
       <extensionElements>
         <folio:skill ref="translation-manager"/>
@@ -157,7 +188,9 @@ The translation is usable but carries a visible warning badge.</documentation>
     </serviceTask>
 
     <!-- ── Sign-off gateway ───────────────────────────────────── -->
-    <exclusiveGateway id="Gateway_Signoff" name="Human sign-off?" />
+    <exclusiveGateway id="Gateway_Signoff" name="Human sign-off?">
+      <documentation>Is a human sign-off happening now? `Yes` goes to the adjudicator's sign-off, which makes the translation official; `Not now` ends with the translation complete but unofficial.</documentation>
+    </exclusiveGateway>
 
     <!-- ── Official sign-off ──────────────────────────────────── -->
     <userTask id="Task_Signoff" name="Sign off translation&#10;(human adjudicator)">
@@ -209,8 +242,16 @@ differ, sets stale: true. The translation remains visible with a
     <sequenceFlow id="Flow_DriftNo" name="Clean" sourceRef="Gateway_Drift" targetRef="Task_WriteUnofficial" />
 
     <sequenceFlow id="Flow_Adjudicated" sourceRef="Task_Adjudicate" targetRef="Gateway_PostQA" />
-    <sequenceFlow id="Flow_PostQA_Redo" name="Re-translate" sourceRef="Gateway_PostQA" targetRef="Task_Translate" />
-    <sequenceFlow id="Flow_PostQA_Accept" name="Accepted" sourceRef="Gateway_PostQA" targetRef="Task_WriteUnofficial" />
+    <sequenceFlow id="Flow_PostQA_Redo" name="Reject — re-translate" sourceRef="Gateway_PostQA" targetRef="Task_Translate">
+      <extensionElements><folio:adjudication code="retranslate" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_PostQA_Accept" name="Accept as-is (false positive)" sourceRef="Gateway_PostQA" targetRef="Task_WriteUnofficial">
+      <extensionElements><folio:adjudication code="accept" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_PostQA_Edit" name="Edit and re-run QA" sourceRef="Gateway_PostQA" targetRef="Task_EditTranslation">
+      <extensionElements><folio:adjudication code="edit" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_Edited" sourceRef="Task_EditTranslation" targetRef="Task_PoInject" />
 
     <sequenceFlow id="Flow_Unofficial" sourceRef="Task_WriteUnofficial" targetRef="Gateway_Signoff" />
     <sequenceFlow id="Flow_SignoffYes" name="Yes" sourceRef="Gateway_Signoff" targetRef="Task_Signoff" />
@@ -248,6 +289,15 @@ differ, sets stale: true. The translation remains visible with a
       <bpmndi:BPMNShape id="Gateway_PostQA_di" bpmnElement="Gateway_PostQA" isMarkerVisible="true">
         <dc:Bounds x="1350" y="95" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EditTranslation_di" bpmnElement="Task_EditTranslation">
+        <dc:Bounds x="1305" y="-40" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Edit_di" bpmnElement="Flow_PostQA_Edit">
+        <di:waypoint x="1375" y="95" /><di:waypoint x="1375" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Edited_di" bpmnElement="Flow_Edited">
+        <di:waypoint x="1305" y="0" /><di:waypoint x="720" y="0" /><di:waypoint x="720" y="220" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Task_WriteUnofficial_di" bpmnElement="Task_WriteUnofficial">
         <dc:Bounds x="1460" y="220" width="140" height="80" />
       </bpmndi:BPMNShape>

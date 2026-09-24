@@ -14,10 +14,12 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Requirements">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>The one checkpoint between the agent's comparison and the stakeholders' sign-off: BA_ReviewReqs is where someone who can read the impact analysis on its own technical terms vouches for it, because Lane_Stakeholders reviews only at defined checkpoints and needs the requirement already in a form they can approve without re-deriving it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ReviewReqs</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Requirements</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_MapWorkflow</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DefineReqs</bpmn:flowNodeRef>
@@ -27,6 +29,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn's final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_ApproveReqs</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -76,7 +79,9 @@ impact analysis the agent produced.</bpmn:documentation>
 requirements">
       <bpmn:documentation>Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf.</bpmn:documentation>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?"/>
+    <bpmn:exclusiveGateway id="GW_Reqs" name="BA approves?">
+      <bpmn:documentation>The BA's answer to the requirements and impact. `revise` goes back to defining them; `yes` completes the phase.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Process_CRDM_Requirements" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Requirements_1" sourceRef="Start_Process_CRDM_Requirements" targetRef="A_MapWorkflow"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Requirements_2" sourceRef="A_MapWorkflow" targetRef="A_DefineReqs"/>

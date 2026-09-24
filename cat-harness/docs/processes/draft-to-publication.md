@@ -24,13 +24,13 @@ folio-assistant — corpus to draft publication to officially published. Source 
 
 | lane | role | what it does here |
 |---|---|---|
-| Editors + authoring agents | — | The one call activity both rejection paths loop back to — a red QA gate directly, and a review rejection only once Lane_WorkPlan has turned each finding into a bean — so a fix here never needs to know which failure sent it back. |
-| Work plan — beans (shared by humans and agents) | — | Carries the release's own state across the cycle: the release bean opened at the start says what is in the draft and who holds it, a rejected review becomes one change bean per finding before the loop back to editing, and only this lane's close marks a release actually done rather than merely built. |
-| Corpus + build pipeline (system) | — | Owns the one gate that decides whether the draft is fit to be circulated: Task_BuildDraft turns the corpus into a draft and the DMN-backed Gateway_QaGreen decides whether Task_CirculateDraft ever runs, so a red result here is caught before Lane_ReviewTeam or Lane_Sme spend time on a draft that was never fit to review. |
-| Publication manager | — | Fans the QA-gated draft out to review and SME sign-off in parallel, then — once the programme manager authorises — is the only lane that actually presses publish, so both the review verdict and the release authority pass through this one hand before anything goes live. |
-| Review team (content · QC · technical officer) | — | Owns the single approved/not-approved gateway the whole review rests on: it fires only after Lane_Sme's sign-off has also reached the join, but the call is this lane's alone, and a rejection here is what turns into the change beans Lane_WorkPlan opens next. |
-| Clinical / scientific SMEs | — | Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call. |
-| Programme manager (release authority) | — | Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one. |
+| Editors + authoring agents | `editor` | The one call activity both rejection paths loop back to — a red QA gate directly, and a review rejection only once Lane_WorkPlan has turned each finding into a bean — so a fix here never needs to know which failure sent it back. |
+| Work plan — beans (shared by humans and agents) | `work-plan` | Carries the release's own state across the cycle: the release bean opened at the start says what is in the draft and who holds it, a rejected review becomes one change bean per finding before the loop back to editing, and only this lane's close marks a release actually done rather than merely built. |
+| Corpus + build pipeline (system) | `build-pipeline` | Owns the one gate that decides whether the draft is fit to be circulated: Task_BuildDraft turns the corpus into a draft and the DMN-backed Gateway_QaGreen decides whether Task_CirculateDraft ever runs, so a red result here is caught before Lane_ReviewTeam or Lane_Sme spend time on a draft that was never fit to review. |
+| Publication manager | `publication-manager` | Fans the QA-gated draft out to review and SME sign-off in parallel, then — once the programme manager authorises — is the only lane that actually presses publish, so both the review verdict and the release authority pass through this one hand before anything goes live. |
+| Review team (content · QC · technical officer) | `reviewer` | Owns the single approved/not-approved gateway the whole review rests on: it fires only after Lane_Sme's sign-off has also reached the join, but the call is this lane's alone, and a rejection here is what turns into the change beans Lane_WorkPlan opens next. |
+| Clinical / scientific SMEs | `clinical-sme` | Runs in parallel with Lane_ReviewTeam, not after it — Gateway_ReviewJoin waits on both — but does not own the approve/reject gateway that follows: sign-off here is necessary for the join to complete and nothing more, which keeps a clinical judgement from also becoming the phase-gate call. |
+| Programme manager (release authority) | `programme-manager` | Sits between review's approval and the actual publish — a second, distinct gate on an already-approved draft, because content being right and a release being authorised to ship are two different questions, and only this lane answers the second one. |
 
 ## Steps
 
@@ -52,11 +52,11 @@ Every one of the 11 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Draft QA green?**<br>`Gateway_QaGreen` | — | **no** → Editing and HCI validation<br>**yes** → Circulate the draft |
-| **Approved?**<br>`Gateway_ReviewOutcome` | — | **no** → Open beans for the change requests<br>**yes** → Authorise the release |
+| **Draft QA green?**<br>`Gateway_QaGreen` | Answered by the publication QA gates. `no` returns to editing and HCI validation; `yes` circulates the draft. | **no** → Editing and HCI validation<br>**yes** → Circulate the draft |
+| **Approved?**<br>`Gateway_ReviewOutcome` | Asked once every reviewer has answered: is the draft approved? `no` opens beans for the change requests; `yes` goes to authorising the release. | **no** → Open beans for the change requests<br>**yes** → Authorise the release |
 
 {% endraw %}

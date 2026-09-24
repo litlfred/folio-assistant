@@ -42,6 +42,7 @@
     <bpmn:laneSet id="Process_Editing_LaneSet">
       <bpmn:lane id="Lane_Editor" name="Editor / author (person)">
         <bpmn:documentation>Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_EditRequested</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewFindings</bpmn:flowNodeRef>
@@ -52,12 +53,14 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit's course, the other its outcome.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_LogFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ResolveBean</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent (system)">
         <bpmn:documentation>Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor's lane records what was chosen, and collapsing the two would let the same party both analyse and decide.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_DraftEdit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ProposalReady</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviseEdit</bpmn:flowNodeRef>
@@ -65,18 +68,21 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="HCI validation pipeline (system)">
         <bpmn:documentation>Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="validation-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_ValidationFork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ValidationJoin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CollateFindings</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Mechanical" name="Mechanical validation (system)">
         <bpmn:documentation>Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="validation-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SchemaValidate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SyntaxSpell</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildGates</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_NonMechanical" name="Non-mechanical validation (review agent or SME)">
         <bpmn:documentation>Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_ReviewerKind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AgentReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SmeReview</bpmn:flowNodeRef>
@@ -84,6 +90,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Corpus" name="Corpus (versioned store)">
         <bpmn:documentation>Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="corpus"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Commit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_InCorpus</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -163,6 +170,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_ReviewerKind" name="Judgement call?">
+      <bpmn:documentation>Does this change need a judgement call? `no` goes to agent review; `yes` goes to a human or SME. The question is about the change, not about who is available.</bpmn:documentation>
       <bpmn:incoming>Flow_09</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
@@ -246,6 +254,7 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
       <bpmn:outgoing>Flow_21b</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_EditorDecision" name="Accept, revise or discard?">
+      <bpmn:documentation>The editor's recorded decision, with its audit note. `revise` reworks the proposed change; `discard` ends with the change dropped; `accept` commits it into the corpus.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:policy relaxable="false" />
       </bpmn:extensionElements>

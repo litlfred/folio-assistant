@@ -1,0 +1,44 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--issue-1190-bean-restates-skill",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-1190-check-bean-restates-skill",
+  "bean": "folio-assistant-8v0y",
+  "tokens": [
+    "Task_CommitAndOpenPR"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-23T21:05:00.000Z",
+      "node": "Start_Change",
+      "actor": "claude",
+      "note": "Recorded AT the first commit, not backfilled. `vlhk` is the precedent that makes that worth saying: 54 merges in one window with `beans/workflows/` holding only `.gitkeep`, a STRICT rule whose breach looked exactly like compliance."
+    },
+    {
+      "at": "2026-09-23T21:07:00.000Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Checked for a duplicate first -- `beans create` dedupes on nothing and has produced 14,688 duplicates in this corpus before. Searched the store for `restates`, `bean-restates-skill`, and titles matching restat|drift|copy-of-skill: no existing bean. Created `8v0y` and parented it on epic `1xhc` (CI RELIABILITY), a feature's parent being required to be a milestone or an epic."
+    },
+    {
+      "at": "2026-09-23T21:10:00.000Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/bean-restates-skill-gate; issue #1190 opened with the defect, the Jaccard dead end and the scope."
+    },
+    {
+      "at": "2026-09-23T21:20:00.000Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "MEASURED BEFORE BUILDING, and it changed the design twice. (1) Three of the four criterion shapes in the specification do not survive the corpus: `## Proposed phases` and `## Rules` occur ZERO times, `invariant` is ordinary prose in all 7 open hits, and a line matching `exit criterion` flags `kn0t` AFTER its repair -- it fails on its own negative fixture. (2) The conjunction is FALSIFIED: the pre-repair `kn0t` references NO skill by path, and the skill existed at that commit (git cat-file -e f8ed0c1a^: confirmed). Requiring the pointer as a condition would have reproduced the Jaccard failure exactly, so it is reported as context that changes the remedy rather than as a condition that changes the verdict. The rule built instead is a phase-contract table: a criterion column that is not an exit-CODE column, over rows enumerating named units of a plan."
+    },
+    {
+      "at": "2026-09-23T21:35:00.000Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "`bun run gates`, not a hand-picked subset -- 'a subset of the gate set is not the gate set'. The known pre-existing failure on main (`kg export > a preview says so in its type`, a 5s timeout measured at 5884ms on a clean worktree) is confirmed against main rather than assumed."
+    }
+  ]
+}

@@ -24,7 +24,7 @@ SIX INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`.
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites. |
+| CI/CD Pipeline | `build-pipeline` | Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites. |
 
 ## Steps
 
@@ -41,10 +41,10 @@ Every one of the 6 step(s) is documented.
 
 ## Decisions
 
-**1** of 1 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Any HARD&#10;gate red?**<br>`GW_Hard` | — | **no** → Mergeable<br>**yes** → Blocked |
+| **Any HARD&#10;gate red?**<br>`GW_Hard` | Asked once every parallel gate has joined: did any gate marked HARD fail? `no` is mergeable; `yes` blocks the merge. Warn-only gates do not decide this branch. | **no** → Mergeable<br>**yes** → Blocked |
 
 {% endraw %}

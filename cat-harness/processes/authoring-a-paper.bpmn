@@ -38,25 +38,30 @@
     <bpmn:laneSet id="Process_PaperAuthoring_LaneSet">
       <bpmn:lane id="Lane_Author" name="Author (person)">
         <bpmn:documentation>The plan set here — chapters, the blocks each needs, what gets formalised — is upstream of everything else in the diagram and is never revisited: Gateway_ReviewOutcome's 'iterate' branch re-enters Lane_Agent's Task_AuthorBlocks directly, not this lane, so a scoping mistake made here surfaces only as churn several lanes downstream.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_NewPaper</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Sits between Task_Plan and Task_Scaffold as the one conversion point in this diagram: the author's plan becomes beans here, which is what lets a resumed session or a different agent pick up Task_Scaffold without having sat through Task_Plan itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent (system)">
         <bpmn:documentation>Scaffolds the repo from the author's plan and then writes every block — including every revision, since Gateway_ReviewOutcome's 'iterate' branch re-enters Task_AuthorBlocks directly rather than sending the change back to Lane_Author to be re-scoped. The plan is the author's decision; executing against it, first draft through every rewrite, is this lane's.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Scaffold</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AuthorBlocks</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Lean" name="Lean toolchain (lean-mcp)">
         <bpmn:documentation>Owns its own loop: Gateway_LeanGreen's 'not yet' branch returns straight to Task_Formalize rather than out to a person, and the gateway itself is DMN-computed off the build result rather than argued, so nothing downstream can proceed on a proof that merely looks close enough. The paper does not reach Task_Validate until this lane's own gate says green.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="lean-toolchain"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Formalize</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_LeanGreen</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Build pipeline — validate · render · publish">
         <bpmn:documentation>Its three tasks bracket the human review rather than replace it: Validate and Render turn the Lean-green manuscript into the artefact Task_Review actually reads, and Publish only fires once Gateway_ReviewOutcome has said 'approved' — this lane builds what gets judged and executes what was decided, and decides nothing itself.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Render</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Publish</bpmn:flowNodeRef>
@@ -64,6 +69,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">
         <bpmn:documentation>Gateway_ReviewOutcome sits in this lane rather than a separate editor's, so in this diagram the reviewer's finding and its disposition are the same decision — iterate back to Task_AuthorBlocks or clear Task_Publish — because paper authoring has no editor lane to hold the accept/reject split modelled elsewhere in this corpus.</bpmn:documentation>
+        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ReviewOutcome</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -116,6 +122,7 @@
       <bpmn:outgoing>A06</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_LeanGreen" name="Build green, no sorries?">
+      <bpmn:documentation>Answered by the Lean build after step 5: is it green with no `sorry` left? `not yet` loops on formalisation; `green` goes on to validation. A build that passes with a `sorry` is not green.</bpmn:documentation>
       <bpmn:extensionElements>
         <folio:decision ref="decisions/lean-build-gate.dmn#Decision_LeanBuildGate" />
       </bpmn:extensionElements>
@@ -148,6 +155,7 @@
       <bpmn:outgoing>A11</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_ReviewOutcome" name="Ready to publish?">
+      <bpmn:documentation>The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish.</bpmn:documentation>
       <bpmn:incoming>A11</bpmn:incoming>
       <bpmn:outgoing>A12</bpmn:outgoing>
       <bpmn:outgoing>A13</bpmn:outgoing>

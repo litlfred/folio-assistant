@@ -5,7 +5,7 @@
     "id": "Process_UpstreamAdoption",
     "path": "processes/upstream-version-adoption.bpmn"
   },
-  "source_hash": "sha256:8897ca36408467962523447a10080a5dfd5a1f58cd8f4d601ffd22230b4b0c12",
+  "source_hash": "sha256:ec6a43479854ef84ff66652a3c4a4e80433692639a8b625dc1ace6efe3c758fa",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -80,19 +80,18 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Findings",
-          "detail": "\"Findings we can fix?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        },
-        {
-          "where": "GW_Adopt",
-          "detail": "\"Adopt?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
       "result": "pass",
       "findings": []
     },
@@ -106,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

@@ -1,13 +1,13 @@
 # Schemas visualiser — as-is intent
 
-**Covers** five declared refs that share one template:
+**Covers** three declared refs that share one template:
 - `cat-harness/docs/cat-harness/schemas/cat-harness/index.html` (`cat-harness/cat-harness.json`)
-- `cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html` (`bootstrap-tools/bootstrap-tools.json`, `cat-harness/cat-harness.json`)
-- `cat-harness/docs/cat-harness/schemas/detangle/index.html` (`detangle/detangle.json`, `cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html` (`folio-assistant-core/folio-assistant-core.json`, `cat-harness/cat-harness.json`)
 - `cat-harness/docs/cat-harness/schemas/large-datasets/index.html` (`large-datasets/large-datasets.json`, `cat-harness/cat-harness.json`)
 
-All five are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: bootstrap-tools 11 / 2 / 6, detangle 10 / 2 / 6, folio-assistant-core 60 / 11 / 31, large-datasets 11 / 2 / 1.
+All three are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: folio-assistant-core 60 / 11 / 31, large-datasets 11 / 2 / 1.
+
+A fifth, `detangle`, was dropped 2026-09-23 when that instance was folded into cat-harness (bean `byql`); its two modules now render on the `cat-harness` page. A sixth, `bootstrap-tools`, was dropped 2026-09-24 the same way: its Zod moved into `cat-harness/schemas/` on the owner's ruling (bean `319n`).
 
 **Who it is for:** the owner or a maintainer reading an instance's schemas. The owner's ask, quoted in the generator: *"browsable, so i can give overview like browsing"*. It is "a navigation requirement rather than a poster requirement".
 

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/directory-conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/directory-conventions.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/directory-conventions.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/directory-conventions.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/directory-conventions.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/directory-conventions.md){: .fa-edit-source }
 
 {% raw %}
 # Directory conventions — what an instance declares it scans
@@ -76,7 +76,10 @@ not decided does not compile.
 > **A directory `id` of `kg` is untouched.** An id is the instance's own
 > handle and must survive a rename of anything else; this repository's own
 > declaration moved to `id: "cat-harness"` because it chose to, not because
-> it had to.
+> it had to, and moved on to `id: "skills"` on 2026-09-23. A Subgraph id is
+> its name inside its Harness, and the Harness name qualifies it
+> (`cat-harness.skills`). `RENAMED_DIRECTORY_IDS` reads the old id as the new
+> one, so an older declaration still overrides the entry it meant.
 >
 > **The JSON-LD projection canonicalises.** `toJsonLd` emits the type IRI, not
 > the spelling, so reading a projection back yields `cat-harness` whatever was
@@ -103,17 +106,20 @@ decides it.
 | `cat-harness` | **harness** | the harness layer's own knowledge graph, where a directory holds MORE THAN ONE of its parts — in practice the `["schemas", "cat-harness"]` entries, where it means "a schema IS a knowledge-graph node". Renamed from `kg` on 2026-09-19; `kg` still reads, deprecated. **Not itself deprecated** by the 2026-09-21 split: an alias maps one name to one name, and this would have to become three. A downstream declaration still saying `["cat-harness"]` keeps parsing and keeps being scanned for skills; what it loses is the finer query, which it never had. | no |
 | `skills` | **harness**, and any layer | Skill packages — the authored instruction bodies an Actor performs a Task from. A Skill is a **Capability with defined inputs and outputs**, stated generically so it is portable across forges, binaries and machines. Split out of `cat-harness` on 2026-09-21. | no |
 | `processes` | **harness**, and any layer | Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth rather than illustrations of one. **Where a running instance GOT TO is not here** — that is `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. Split out of `cat-harness` on 2026-09-21. | no |
-| `scenarios` | **harness**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. Named for what it WILL hold: a Role's `useCases` are free-text strings today, so a User Story cannot be pointed at or traced to the Workflow it justifies — naming the kind now is what gives that gap somewhere to be fixed. Split out of `cat-harness` on 2026-09-21. | no |
+| `scenarios` | **harness**, and any layer | Actors, the Roles they take on, and the User Stories those Roles serve. `roles.json` and `stories.json`; a User Story points at its Role (#1168), where it was once free text on the role. Split out of `cat-harness` on 2026-09-21. | no |
+| `policies` | **harness**, and any layer | What an Actor may DO: W3C ODRL 2.2 policies (issue #1180). One rule per (assignee, action), scoped by `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints when it needs to be; actions are the profile in `skills/permissions/permissions.json`, inheriting through `includedIn`. A downstream instance inherits these with ODRL's `inheritFrom` instead of copying them. No login is ever written here: identity is the data store's. | no |
 | `schemas` | **harness** | schema definitions, self-declared in the smart-base manner | no |
 | `uml` | **harness** | UML class diagrams of every named sub-graph a harness declares (`uml/overview/<instance>/<sub-graph>.puml` and `.mmd`), written from one model by `scripts/gen-uml-overview.ts` and rendered on `docs/uml/overview/`. The groupings are the declaration entries; the classes are read from each graph kind's registered `validator`, so a kind with none is drawn as *could not determine*. `derived`: regenerated, never authored. | no |
 | `methodology` | **harness**, and any layer | judgement methodologies, one sub-graph each — a NAMED, EXTERNAL way of reaching a judgement, adopted whole. `kepner-tregoe` for a decision, `madr` for its record, `dmn` for the computable case, `grade` for certainty of evidence. They are **parallel rather than composable**: which applies is contextual, and blending them gives a house method that cites nobody. A separate kind from `cat-harness` for three properties a skill lacks — extractable (adopted work lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from `skill-is-brief`, since a faithful rendering of an external standard must not be truncated to a house limit. Any layer may declare one: the harness carries the domain-neutral methods, `smart-kg` carries GRADE. Governed by [`methodology-adoption`](methodology-adoption.md). | no |
 | `qa` | **harness** | QA verdicts and their projections under `test/results/` — **seven `$schema` families**, each named in the kind's `nodeSchemas` (see §"Node schemas, one per `$schema` family"): `kg-qa/v1`, `block-qa/v1` and `folio-test-run/v1` are Zod-validated, `qa-witness/v1`, `qa-results/v1` and `translation-qa/v1` are TypeScript shapes, and `folio-qa-index/v1` has no declared type at all. This row said "one `qa-witness/v1` document per subject" until 2026-09-23, when 591 of the 728 nodes were other families. Generated, never hand-edited. Read witnesses with the [`qa-witness`](qa-witness.md) skill. | no |
-| `code` | **harness**, and any layer | Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: roughly **85%** of this repository's `.ts` files sat in no declared directory, so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. | no |
+| `code` | **harness**, and any layer | Source code — the modules, scripts and entry points an instance holds. Registered 2026-09-22 (bean `ylj7`) after a measurement: most of this repository's `.ts` files sat in no declared directory — **re-derive it with `bun run check:code-accounting` rather than reading a number here, because it moves every round** — so the one property every checker here depends on — *an undeclared file is one no checker has a reason to look at* (`v8gh`) — did not hold for most of the code. The owner's first proposal was to move everything under `<stub>/src`; the measurement confirmed the **mechanism** and argued against the **destination**, because `schemas/` is already a declared graph, `content/pipeline/` is core's subject, and `scripts/` are entry points named **by path** in `package.json` and CI. So they are declared where they are, and `<stub>/src` is the convention for new instances. `content`: authored with an intention, re-authored rather than regenerated, and it stands on its own. **Not renderable** — `renderable` asks whether the graph is wired to the site build as pages, and the generated references are built from schemas and skills, not from this. Being declared says nothing about whether a Tool node **claims** the code; that is a second axis, and beans `d308` and `ce65` own it. `check:code-accounting` reports both and refuses to average them. | no |
 | `qa-report` | **harness** | QA reports — one `qa-report/v1` document per TOOL RUN, carrying that run's own successes, warnings and errors, the files it processed, the files it **expected** and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. A third subject beside its two neighbours, and that is the whole reason it is a separate kind: a `qa` witness judges an **artefact**, a `health` report judges the **repository**, a `qa-report` records an **execution**. Registered 2026-09-22 on evidence rather than design — every DAK pre/post script already writes exactly this document and the IG Publisher already writes `qa.json`, and nothing downstream read either. Upstream's snake_case field names are kept deliberately, so an upstream report validates byte for byte and a change upstream fails instead of being quietly re-mapped. `state`: a running process writes it. Three rules are structural rather than left to a checker — a summary may not disagree with the details it counts, `files_missing` must be a subset of `files_expected`, and `running` is never a pass. Shape in `schemas/qa-report.ts`. | no |
 | `health` | **harness** | repository health reports — one `"$schema": "health-report/v1"` document per sweep, carrying each check's three-state verdict, the thresholds it applied and the **basis** each threshold was chosen on. A separate kind from `qa` because the SUBJECT differs, not the producer: a QA verdict judges an artefact this instance produced, a health report judges the instance itself — its size, its publish branch, its work plan. Generated by `test/health/run.ts`; never hand-edited. Shape in `schemas/health-report.ts`. | no |
 | `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
 | `external-schema` | **harness** | the specifications this instance depends on (`external-schemas/`) — one record per specification, pinning the EDITION in use, with the operative terms DERIVED from the corpus rather than hand-listed. `content`, and the call goes against the obvious reading: a process DOES write these files (`external-schemas.ts --write` refreshes `terms[]`), which sounds like `state`, but the axis asks what the graph IS and the subject matter here is a DECISION — which specifications we depend on, at which edition, and what each term operatively means. `derived` would be destructive: it says "regenerate it", and regenerating a deleted record recovers neither the authored edition, nor the `usedBy` blast radius, nor a line of the `operative` prose. UNDECLARED until 2026-09-22, which is `dh4f` inverted — a held directory nothing declares, so every consumer fanning out over declared directories skipped a registry pinning four external namespaces. Governed by [`vocabulary-authority`](vocabulary-authority.md) and [`schema-management`](schema-management.md). | no |
-| `glossary` | **harness** | the swimlane glossary's retirement ledger (`glossary/`) — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. `state` but **not** work (`recordsWork: false`): a bean is something somebody is partway through, this is a record that a term exists. Only the ledger is stored — the glossary DOCUMENT is derived from the corpus each run, which is exactly why the ledger has to exist: a derived document has no memory, so without it a retired term and one that never existed look the same. Written by `scripts/glossary-export.ts`; read with the [`swimlane-glossary`](swimlane-glossary.md) skill. | no |
+| `code-list` | **harness** | closed sets of codes (`code-lists/`) — one `folio-code-list/v1` file per list, each code with a label, a definition, a source and, where it stands for one, a value; published as SKOS concept schemes. `content`, by the same argument as `external-schema`: the subject matter is a DECISION — which answers an adjudication may give, which namespaces are ours — and a person makes it. Diagrams (`<folio:adjudication list>`) and `schemas/namespaces.ts` READ these. Owner, 2026-09-23. Governed by [`code-lists`](code-lists.md). | no |
+| `glossary` | **core** (registered by `schemas/glossary-graph-kind.ts`), and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: ["glossary"]`. Core declares `glossary/` with `dependents: reproduce`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](glossary-terms.md) skill; gated by `check:glossary`. | no |
+| `swimlane-glossary` | **harness** | (renamed from `glossary` on 2026-09-23, owner: "Rename harness one") the swimlane glossary's retirement ledger (`glossary/`) — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. `state` but **not** work (`recordsWork: false`): a bean is something somebody is partway through, this is a record that a term exists. Only the ledger is stored — the glossary DOCUMENT is derived from the corpus each run, which is exactly why the ledger has to exist: a derived document has no memory, so without it a retired term and one that never existed look the same. Written by `scripts/glossary-export.ts`; read with the [`swimlane-glossary`](swimlane-glossary.md) skill. | no |
 | `models` | **bootstrap** | which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](communication-language.md) determination, never the answer. | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
@@ -346,6 +352,31 @@ agentic-harness/          folio-assistant-core/
 `agentic-harness` declares `tools/`, `kg/` and `schemas/`.
 `folio-assist-core` declares **only** `folio/` and inherits the other three.
 
+### Where a NEW instance puts its code: `<stub>/src` (bean `ylj7`)
+
+**A new instance puts its source under `<stub>/src/` and declares it as
+`code`.** One directory, one declaration, and nothing to argue about later.
+
+This is stated here as well as in the `code` row above, because the row
+answers *"what is this kind?"* and this answers *"where do I put my code?"* —
+and somebody starting an instance reads the layout, not the kind table. A rule
+that lives only where nobody looks is the `where-does-this-go` failure.
+
+**The existing instances are the exception, and deliberately.** `ylj7`'s
+measurement confirmed the mechanism and argued against retro-fitting the
+destination: `schemas/` is already a declared graph of its own kind, and
+adding `code` to it would give one directory two kinds; `content/pipeline/` is
+core's subject, not the harness's; and `scripts/` hold entry points named **by
+path** from `package.json` and the CI workflows, which `check:ci-invocations`
+and `check:command-paths` exist to guard — so moving them is a large
+invocation surface for nothing the declaration does not already buy. They are
+declared **where they are**. `<stub>/src` binds what has no history yet.
+
+**Being declared is not being reached.** Those are two questions and
+`bun run check:code-accounting` reports them apart — never averaged, because a
+rise in one can hide a fall in the other. Beans `d308` and `ce65` own the
+second.
+
 ### A sub-sub-graph — one RESERVED name inside a declared directory
 
 Owner, 2026-09-22, on where a vendor-specific override of a voice belongs:
@@ -389,7 +420,7 @@ under `vendors/` loads, a voice under any other nested directory does not.
 
 **A declared directory never sits inside another declared directory.** An
 instance's assets hang directly off its stub — `cat-harness/skills/`,
-`who-iris/library/`, `smart-kg/methodologies/` — and a package inside one of
+`who-iris/library/`, `smart-base/methodologies/` — and a package inside one of
 those is a package, not a second graph.
 
 The owner, 2026-09-22: *"dont bury sub-graph assets. same for `<stub>/skills`,
@@ -779,7 +810,7 @@ skills/                         ← this instance's `kg`
   roles/roles.json              the ROLE GRAPH — a role is a BPMN swimlane
   workflows/*.bpmn, *.dmn       the processes those roles act in
   requirements/*.json           conformance obligations pointing at the rest
-  permissions/permissions.json  what an actor may DO, in any lane
+  permissions/permissions.json  the actions an actor may be permitted (the ODRL profile; who holds them is policies/)
   <area>/kg-qa/*.kg-qa.json     audit sidecars, beside what they audit
   folio-core/*.md               skills
   <pkg>/package-manifest.json   which skills a package publishes

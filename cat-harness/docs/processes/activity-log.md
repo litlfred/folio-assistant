@@ -25,10 +25,10 @@ What an agent writes down about its own run, and what a person can do with it af
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent (this session) | — | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
-| Activity log | — | — |
-| Log operator (human) | — | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
-| Scheduled log sweep | — | — |
+| Agent (this session) | `authoring-agent` | Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined. |
+| Activity log | `log` | — |
+| Log operator (human) | `user` | The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one. |
+| Scheduled log sweep | `build-pipeline` | — |
 
 ## Steps
 
@@ -47,11 +47,11 @@ Every one of the 8 step(s) is documented.
 
 ## Decisions
 
-**2** of 2 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Capture enabled?**<br>`Gateway_Capture` | — | **on** → Persist the log to the data store<br>**off or unknown** → Report the capture state |
-| **One entry or all?**<br>`Gateway_EmptyScope` | — | **one** → Discard one entry by id<br>**all / periodic** → Discard all entries, or a whole session |
+| **Capture enabled?**<br>`Gateway_Capture` | Asked after a task ends: is log capture switched on for this session? `on` persists the entry to the data store. `off or unknown` persists nothing and reports the capture state instead, so an unknown setting is said out loud rather than read as off. | **on** → Persist the log to the data store<br>**off or unknown** → Report the capture state |
+| **One entry or all?**<br>`Gateway_EmptyScope` | Asked when a person asks to empty the log: which entries? `one` discards a single entry by id; `all / periodic` discards every entry or a whole session, the branch a scheduled clean-up also takes. | **one** → Discard one entry by id<br>**all / periodic** → Discard all entries, or a whole session |
 
 {% endraw %}

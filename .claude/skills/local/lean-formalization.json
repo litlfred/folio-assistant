@@ -10,13 +10,8 @@
   "dependsOn": [
     { "ref": "req:lean-verification", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/lean-build.sh", "runtime": "bash", "phase": "validate" }
-  ],
-  "mcpServices": ["lean-mcp"],
   "routingPatterns": ["formalize", "prove", "lean", "theorem"],
   "tags": ["math", "lean", "formalization"],
   "package": "authoring-math",
-  "lifecycleStages": ["author", "validate"],
-  "schemaRef": "schemas/skills/lean-formalization"
+  "lifecycleStages": ["author", "validate"]
 }

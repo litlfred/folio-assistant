@@ -24,9 +24,9 @@ One phase and not three, because the loops say so: an increment the BA rejects, 
 
 | lane | role | what it does here |
 |---|---|---|
-| BA / Feature Requestor | — | Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here. |
-| Agent | — | Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up. |
-| Stakeholders | — | Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane. |
+| BA / Feature Requestor | `business-analyst` | Every signal that can send the loop back to A_Implement is filtered through this lane first: BA_ReviewIncrement judges behaviour rather than code, GW_MVPReady decides whether accumulated increments are worth showing stakeholders at all, and BA_TranslateFeedback is the only step that turns S_TestMVP's raw findings into direction the agent can act on. Nothing stakeholder-facing reaches Lane_Agent without passing through here. |
+| Agent | `authoring-agent` | Every loop-back in this phase — a rejected increment, an MVP not ready, stakeholder feedback — lands on A_Implement rather than on Call_OptionsAnalysis, so this lane always reworks an approach already chosen and never re-selects one. Deciding that the APPROACH itself is wrong is not this lane's call: that belongs to the calling step in crdm-requirements.bpmn, one level up. |
+| Stakeholders | `stakeholder` | Tests in the stakeholder's own workflow and data rather than against the acceptance criteria BA_ReviewIncrement already checked — a second, independent pass rather than a repeat of the first. GW_StakeholderOK's `findings` branch does not hand the agent anything directly; it hands raw results to BA_TranslateFeedback, which is this lane's boundary: it reports what works and what does not, and translating that into direction is somebody else's lane. |
 
 ## Steps
 
@@ -47,12 +47,12 @@ Every one of the 10 step(s) is documented.
 
 ## Decisions
 
-**3** of 3 decision(s) carry no documentation — `gateway-documented` lists them.
+Every one of the 3 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Meets criteria?**<br>`GW_IncrementOK` | — | **no** → Phase 6: Implement (feature branch + PR)<br>**yes** → MVP ready for stakeholders? |
-| **MVP ready for stakeholders?**<br>`GW_MVPReady` | — | **not yet** → Phase 6: Implement (feature branch + PR)<br>**yes** → Deploy the MVP to staging |
-| **Accepted?**<br>`GW_StakeholderOK` | — | **findings** → Translate feedback into agent direction<br>**accepted** → Post-MVP theme + UI review |
+| **Meets criteria?**<br>`GW_IncrementOK` | The BA's result from testing the increment's behaviour. `no` returns to implementation; `yes` asks whether the MVP is ready for stakeholders. | **no** → Phase 6: Implement (feature branch + PR)<br>**yes** → MVP ready for stakeholders? |
+| **MVP ready for stakeholders?**<br>`GW_MVPReady` | Asked after an increment passes: is the whole MVP ready for stakeholders? `not yet` implements the next increment; `yes` deploys the MVP to staging. | **not yet** → Phase 6: Implement (feature branch + PR)<br>**yes** → Deploy the MVP to staging |
+| **Accepted?**<br>`GW_StakeholderOK` | The stakeholder's result from testing the MVP in their own context. `findings` go to the BA to translate into direction for the agent; `accepted` goes on to the post-MVP theme and UI review. | **findings** → Translate feedback into agent direction<br>**accepted** → Post-MVP theme + UI review |
 
 {% endraw %}
