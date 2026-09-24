@@ -103,7 +103,24 @@ describe("library location is read from the declaration", () => {
     const dir = libraryDirOf(PLATFORM);
     expect(dir).toBeDefined();
 
-    const entries = readdirSync(dir!).filter((f) => !f.startsWith("."));
+    // DIRECTORIES, not every name in the directory. A library ENTRY is
+    // `library/<bib-slug>/` — that is what a `libraryRef` resolves against and
+    // what `check:l1-complete` walks. A library also holds root-level sidecars
+    // that judge those entries rather than being one: `image-verdicts.json`,
+    // which `apply-image-verdicts` reads keyed by doc id.
+    //
+    // This read every name until 2026-09-23, and passed throughout, because
+    // `cat-harness/library/` was the one library with no verdict file — every
+    // other one has had one since bean `frs5` split them. So the first
+    // inspection filed here reported the sidecar as an uncited entry, which is
+    // a false finding in the direction that looks like a violation. The `1xhc`
+    // shape: the path nothing had walked.
+    //
+    // NOT a weakening. Folio content arriving in this library still arrives as
+    // an entry directory, which is exactly what is still counted.
+    const entries = readdirSync(dir!, { withFileTypes: true })
+      .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+      .map((e) => e.name);
 
     // `evidence:` lines across the methodology graph, as bib-slugs.
     const methodologies = resolve(PLATFORM, "methodologies");

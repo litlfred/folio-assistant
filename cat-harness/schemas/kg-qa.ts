@@ -778,12 +778,13 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "role is too narrow or the actor cannot take it on.",
   },
   {
-    id: "requirement-satisfied-by-resolves",
+    id: "requirement-statement-satisfied",
     applies: ["requirement"],
-    severity: "critical",
+    severity: "minor",
     summary:
-      "A statement's `satisfiedBy` names a skill or capability that does not exist, so the thing claimed to " +
-      "discharge the requirement cannot be opened.",
+      "A statement that no skill or capability claims — nothing declares `satisfies: req:<id>#<key>`, so " +
+      "nothing is recorded as discharging it. Coverage: the satisfier names the statement (#1168), so an " +
+      "unclaimed statement is visible only from here.",
   },
   {
     id: "requirement-actors-resolve",
@@ -1053,6 +1054,22 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     severity: "minor",
     summary:
       "An entry in the actor registry carries `inherits` — it is modelling a role lattice, not an actor. Migration debt.",
+  },
+  {
+    id: "satisfies-resolves",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A skill's front matter or a capability names a requirement statement in `satisfies` that is not " +
+      "declared, so the thing it claims to discharge cannot be opened.",
+  },
+  {
+    id: "skill-graph-kinds-resolve",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A skill's front matter names, under `graph-kinds:`, a graph kind the registry does not declare — it " +
+      "claims to say how to read a kind of graph that does not exist.",
   },
   {
     id: "story-role-resolves",

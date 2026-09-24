@@ -9,10 +9,6 @@
   "dependsOn": [
     { "ref": "req:lean-verification", "kind": "requirement", "conformance": "SHALL" }
   ],
-  "scripts": [
-    { "path": "scripts/verify-proofs.sh", "runtime": "bash", "phase": "validate" }
-  ],
-  "mcpServices": ["lean-mcp"],
   "routingPatterns": ["verify", "check proofs", "sorry", "proof obligations"],
   "tags": ["math", "lean", "verification", "qa"],
   "package": "authoring-math",

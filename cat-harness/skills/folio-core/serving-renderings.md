@@ -1,3 +1,8 @@
+---
+satisfies:
+  - "req:serving-a-rendering#declared-media-type"
+---
+
 # Serving a rendering — endpoints, MIME types, and what each host can enforce
 
 A **rendering** is what an instance publishes about itself. Running it produces

@@ -17,12 +17,6 @@
       "label": "Serve each rendering with its declared media type",
       "conformance": "SHALL",
       "requirement": "A server MUST set Content-Type from the declared table in RENDERING_MEDIA_TYPES, not from the filesystem's extension map.",
-      "satisfiedBy": [
-        {
-          "kind": "skill",
-          "ref": "serving-renderings"
-        }
-      ],
       "_comment": "Measured 2026-09-19: python3 `mimetypes` and `Bun.file().type` BOTH already resolve .jsonld to application/ld+json, so the common claim that a general-purpose server cannot serve a rendering is FALSE and is not stated here. The real gap is `longest-extension-first`, below."
     },
     {
