@@ -13,7 +13,7 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { census, coverage, coversIn, gateCoverage, kindUniverse, scriptsFor } from "../audit-coverage.js";
+import { asRecord, census, coverage, coversIn, gateCoverage, kindUniverse, scriptsFor } from "../audit-coverage.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS } from "../../schemas/kg-qa.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
@@ -231,6 +231,35 @@ describe("the report is a fixpoint", () => {
     writeFileSync(join(dir, "b.qa-results.json"), "{}");
     expect(census(dir, new Set()).sidecars).toBe(2);
     expect(census(dir, new Set([join(dir, "a.qa-results.json")])).sidecars).toBe(1);
+  });
+});
+
+describe("the committed record is the coverage relation, not the census", () => {
+  const { rows } = coverage(REPO);
+
+  test("a file count is never written", () => {
+    // A census moves on any commit that adds a file to any graph, so a gate
+    // keyed on it is stale by default — and people learn to regenerate a
+    // stale-by-default sidecar without reading it. Regenerating the L1 verdicts
+    // under `library/` turned this gate red once, which is a QA writer in one
+    // graph breaking another graph's coverage gate.
+    const r = asRecord(rows[0]!);
+    expect(r).not.toHaveProperty("files");
+    expect(r).not.toHaveProperty("sidecars");
+  });
+
+  test("hasFiles carries the only thing the census decides", () => {
+    // The three states turn on whether a directory holds anything at all, never
+    // on how much, so that one bit is all the record needs from the count.
+    for (const r of rows) expect(asRecord(r).hasFiles).toBe(r.files > 0);
+  });
+
+  test("everything that DEFINES coverage is written", () => {
+    const r = asRecord(rows.find((x) => x.state === "covered")!);
+    expect(r.directories).toBeDefined();
+    expect(r.criteria).toBeDefined();
+    expect(r.gates).toBeDefined();
+    expect(r.state).toBe("covered");
   });
 });
 

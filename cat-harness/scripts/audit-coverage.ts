@@ -73,6 +73,27 @@
  * prints all four counts and the states are named rather than inferred from
  * zeroes.
  *
+ * ## The committed record holds COVERAGE; the census is printed
+ *
+ * `files` and `sidecars` are printed and NOT written to the sidecar. They are a
+ * census, and a census moves on any commit that adds a file to any graph — the
+ * `docs` count changes when somebody writes a page. A gate keyed on that would
+ * have been stale on nearly every pull request, and a gate that is stale by
+ * default is a gate people learn to regenerate without reading. It went further
+ * than churn: regenerating the L1 verdicts under `library/` made this report
+ * stale, so a QA writer in one graph turned another graph's coverage gate red.
+ *
+ * What the sidecar records instead is the COVERAGE RELATION — which directories
+ * are declared, which criteria reach the kind, which gates declare it, and the
+ * resulting state. Those move when coverage moves, which is exactly when a
+ * reviewer needs to see a diff. `hasFiles` carries the only thing the census
+ * decides, since the states turn on whether a directory holds anything at all
+ * rather than on how much.
+ *
+ * And that is this bean's own lesson applied to its own design: a sidecar count
+ * is not a coverage measurement. Committing it here would have made the report
+ * depend on the signal it exists to replace.
+ *
  * ## Why `files` and not `nodes`
  *
  * Only a kind's own validator knows which of its files are nodes, and this
@@ -151,6 +172,7 @@ export interface KindCoverage {
   state: KindState;
   /** Absolute directories, repo-relative for the report. */
   directories: string[];
+  /** Printed, never committed — see the docblock. */
   files: number;
   /** `kg-audit` criteria ids reaching a subject kind that lives in this graph. */
   criteria: string[];
@@ -158,8 +180,17 @@ export interface KindCoverage {
   subjectKinds: KgSubjectKind[];
   /** Gate commands that DECLARE they cover this kind. */
   gates: string[];
-  /** QA sidecars found under its directories. */
+  /** QA sidecars found under its directories. Printed, never committed. */
   sidecars: number;
+}
+
+/** A row without its census — what the sidecar records. See the docblock. */
+export type KindCoverageRecord = Omit<KindCoverage, "files" | "sidecars"> & { hasFiles: boolean };
+
+/** Strip the volatile half. */
+export function asRecord(r: KindCoverage): KindCoverageRecord {
+  const { files, sidecars: _s, ...rest } = r;
+  return { ...rest, hasFiles: files > 0 };
 }
 
 /** What a gate declared, and how we got the declaration. */
@@ -527,7 +558,7 @@ function main(): number {
           `A declared kind whose directories hold files that no kg-audit criterion and no gate ` +
           `declaring @covers reaches. An UPPER bound while gates remain undeclared: ` +
           `${undeclared.length} of ${gates.length} gate(s) have not said what they cover.`,
-        entries: unaudited.map((r) => ({ kind: r.kind, files: r.files, directories: r.directories, sidecars: r.sidecars })),
+        entries: unaudited.map((r) => ({ kind: r.kind, directories: r.directories })),
       },
       "kinds-no-directory": {
         summary:
@@ -555,9 +586,11 @@ function main(): number {
         summary:
           `Every declared kind with its four counts and its state. Not findings: the measurement ` +
           `itself, so the committed record answers "what audits this kind" without rerunning ` +
-          `anything. ${rows.length} of ${declaredKindCount} declared kind(s), ` +
+          `anything. The file COUNTS are printed rather than recorded — a census moves on any ` +
+          `commit and a gate keyed on it is stale by default; \`hasFiles\` carries the only ` +
+          `thing it decides. ${rows.length} of ${declaredKindCount} declared kind(s), ` +
           `${gates.length} gate(s), ${KG_CRITERIA.length} criteria.`,
-        entries: rows,
+        entries: rows.map(asRecord),
       },
     },
   });

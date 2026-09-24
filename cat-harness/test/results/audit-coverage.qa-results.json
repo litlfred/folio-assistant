@@ -2,23 +2,22 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "f970e1ad674e"
+    "script_hash": "991d8f072261"
   },
   "subject": {
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T05:42:40.119Z",
+  "updated_at": "2026-09-24T05:52:14.842Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. 41 of 41 declared kind(s), 141 gate(s), 59 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 41 of 41 declared kind(s), 141 gate(s), 59 criteria.",
       "count": 41,
       "entries": [
         {
           "kind": "bean-defs",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -30,7 +29,7 @@
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
           ],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "beans",
@@ -38,7 +37,6 @@
           "directories": [
             "beans"
           ],
-          "files": 896,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -51,29 +49,27 @@
             "bun run check:ready-to-close",
             "bun run check:stale-paths"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "board-positions",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "boards",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run boards:default:check"
           ],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "cat-harness",
@@ -84,7 +80,6 @@
             "folio-assistant-core/schemas",
             "large-datasets/schemas"
           ],
-          "files": 239,
           "criteria": [
             "actor-capabilities-resolve",
             "actor-is-not-a-role",
@@ -129,7 +124,7 @@
             "bun run kg:schema:check",
             "bun run ns:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "catalogue",
@@ -137,7 +132,6 @@
           "directories": [
             "who-iris/catalogue"
           ],
-          "files": 17,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -145,7 +139,7 @@
             "bun run iris:covers:check",
             "bun run iris:pages:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "code",
@@ -159,7 +153,6 @@
             "smart-trust/scripts",
             "who-iris/scripts"
           ],
-          "files": 1100,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -172,7 +165,7 @@
             "bun run check:secret-leaks",
             "bun run deps:python:check"
           ],
-          "sidecars": 635
+          "hasFiles": true
         },
         {
           "kind": "code-list",
@@ -180,13 +173,12 @@
           "directories": [
             "cat-harness/code-lists"
           ],
-          "files": 6,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run code-lists:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "docs",
@@ -197,7 +189,6 @@
             "smart-trust/docs",
             "who-iris/docs"
           ],
-          "files": 1759,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -224,7 +215,7 @@
             "bun run readme:sync:check",
             "bun run readme:sync:root:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "external-schema",
@@ -232,14 +223,13 @@
           "directories": [
             "cat-harness/external-schemas"
           ],
-          "files": 16,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run external-schemas:check",
             "bun run external-schemas:viz:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "fhir-artifact-index",
@@ -249,14 +239,13 @@
             "smart-immunizations/fhir-artifact-index",
             "smart-trust/fhir-artifact-index"
           ],
-          "files": 986,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:artifact-index",
             "bun run smart-trust:pages:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "folio",
@@ -265,7 +254,6 @@
             "cat-harness/folio",
             "folio-assistant-core/folios"
           ],
-          "files": 6,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -275,7 +263,7 @@
             "bun run landing:data:check",
             "bun run landing:sticky:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "fsh-guts",
@@ -283,13 +271,12 @@
           "directories": [
             "fsh-guts"
           ],
-          "files": 27,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run fsh-guts:viz:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "glossary",
@@ -298,14 +285,13 @@
             "bootstrap/glossary",
             "cat-harness/glossary"
           ],
-          "files": 2,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run glossary:check",
             "bun run glossary:check:bootstrap"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "health",
@@ -313,11 +299,10 @@
           "directories": [
             "cat-harness/test/health/results"
           ],
-          "files": 1,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "interaction",
@@ -325,11 +310,10 @@
           "directories": [
             "interaction"
           ],
-          "files": 1,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "issue-marks",
@@ -337,11 +321,10 @@
           "directories": [
             "issue-marks"
           ],
-          "files": 2,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "library",
@@ -353,7 +336,6 @@
             "smart-base/library",
             "who-iris/library"
           ],
-          "files": 5007,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -363,7 +345,7 @@
             "bun run check:source-licence",
             "bun run gen:jsonld:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "memory",
@@ -371,13 +353,12 @@
           "directories": [
             "memory"
           ],
-          "files": 44,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run agent-memory:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "methodology",
@@ -387,14 +368,13 @@
             "smart-base/methodologies",
             "smart-kg/methodologies"
           ],
-          "files": 11,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:methodology-evidence",
             "bun run methodologies:viz:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "models",
@@ -402,13 +382,12 @@
           "directories": [
             "bootstrap/models"
           ],
-          "files": 1,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:model-languages"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "policies",
@@ -416,13 +395,12 @@
           "directories": [
             "cat-harness/policies"
           ],
-          "files": 1,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:qa-reviewer-permission"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "processes",
@@ -432,7 +410,6 @@
             "cat-harness/processes",
             "smart-base/methodologies/processes"
           ],
-          "files": 82,
           "criteria": [
             "activity-calls-skill-process",
             "activity-documented",
@@ -478,7 +455,7 @@
             "bun run translate-bpmn:bootstrap:check",
             "bun run translate-bpmn:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "qa",
@@ -486,7 +463,6 @@
           "directories": [
             "cat-harness/test/results"
           ],
-          "files": 185,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -495,27 +471,25 @@
             "bun run check:tabular-stubs",
             "bun run translation:block-qa:check"
           ],
-          "sidecars": 635
+          "hasFiles": true
         },
         {
           "kind": "qa-report",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "review-verdicts",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "scenarios",
@@ -524,7 +498,6 @@
             "bootstrap/scenarios",
             "cat-harness/scenarios"
           ],
-          "files": 3,
           "criteria": [
             "actor-kind-fits-role",
             "role-binds-a-lane",
@@ -547,7 +520,7 @@
             "bun run glossary:check:bootstrap",
             "bun run kg:audit:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "schemas",
@@ -560,7 +533,6 @@
             "large-datasets/schemas",
             "large-datasets/sources"
           ],
-          "files": 245,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -570,17 +542,16 @@
             "bun run gen:jsonld:check",
             "bun run kg:schema:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "session-state",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "skills",
@@ -597,7 +568,6 @@
             "who-iris/skills",
             "who-style-guide/skills"
           ],
-          "files": 376,
           "criteria": [
             "prose-claims-resolve",
             "prose-reviewed-since-code-changed",
@@ -626,7 +596,7 @@
             "bun run kg:audit:check",
             "bun run kg:detangle:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "themes",
@@ -634,33 +604,30 @@
           "directories": [
             "who-iris/themes"
           ],
-          "files": 2,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run themes:css:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "todo-feedback",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "todo-items",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         },
         {
           "kind": "todos",
@@ -668,11 +635,10 @@
           "directories": [
             "todos"
           ],
-          "files": 9,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "tools",
@@ -684,7 +650,6 @@
             "smart-base/tools",
             "tools"
           ],
-          "files": 8,
           "criteria": [
             "tool-alternative-resolves",
             "tool-args-shell-safe",
@@ -702,7 +667,7 @@
             "bun run kg:audit:check",
             "bun run tools:viz:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "translation-sources",
@@ -711,7 +676,6 @@
             "bootstrap/translations",
             "cat-harness/translations"
           ],
-          "files": 400,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -723,7 +687,7 @@
             "bun run translation:index:check",
             "bun run translation:status:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "uml",
@@ -731,13 +695,12 @@
           "directories": [
             "cat-harness/uml"
           ],
-          "files": 194,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run uml:overview:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "uploads",
@@ -747,7 +710,6 @@
             "uploads",
             "who-iris/uploads"
           ],
-          "files": 64,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -755,7 +717,7 @@
             "bun run gen:jsonld:check",
             "bun run iris:covers:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "voices",
@@ -767,7 +729,6 @@
             "smart-base/skills/voices",
             "who-style-guide/skills/voices"
           ],
-          "files": 47,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -775,7 +736,7 @@
             "bun run check:voices",
             "bun run voices:viz:check"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "waiver",
@@ -783,23 +744,21 @@
           "directories": [
             "memory"
           ],
-          "files": 44,
           "criteria": [],
           "subjectKinds": [],
           "gates": [
             "bun run check:waivers"
           ],
-          "sidecars": 0
+          "hasFiles": true
         },
         {
           "kind": "workflow-state",
           "state": "no-directory",
           "directories": [],
-          "files": 0,
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
-          "sidecars": 0
+          "hasFiles": false
         }
       ]
     },
@@ -951,35 +910,27 @@
       "entries": [
         {
           "kind": "health",
-          "files": 1,
           "directories": [
             "cat-harness/test/health/results"
-          ],
-          "sidecars": 0
+          ]
         },
         {
           "kind": "interaction",
-          "files": 1,
           "directories": [
             "interaction"
-          ],
-          "sidecars": 0
+          ]
         },
         {
           "kind": "issue-marks",
-          "files": 2,
           "directories": [
             "issue-marks"
-          ],
-          "sidecars": 0
+          ]
         },
         {
           "kind": "todos",
-          "files": 9,
           "directories": [
             "todos"
-          ],
-          "sidecars": 0
+          ]
         }
       ]
     }
