@@ -19,8 +19,8 @@
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
-import { join, resolve } from "path";
-import { siteDirFor } from "../schemas/cat-harness.ts";
+import { join, relative, resolve } from "path";
+import { repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 
 /**
@@ -52,6 +52,27 @@ const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const EDIT_GLYPH = "\u270E";
 
 const SKILLS_DIR = join(schemasRoot(INSTANCE_ROOT), "skills");
+
+/* The repo-relative prefix for this directory — bean `oe98`, the half its close
+ * did not cover.
+ *
+ * The four links below are `blob/main/<prefix>/…` and `edit/main/<prefix>/…`,
+ * which are REPOSITORY-root paths. This file spelled them `schemas/skills/…`
+ * while the directory is at `cat-harness/schemas/skills/…`, so all 88 links
+ * across 22 pages were dead. Measured on `main` at `baee10593` AFTER `oe98`
+ * was marked completed: 612 generated links, 88 non-resolving, every one of
+ * them from this generator.
+ *
+ * `gen-skill-docs.ts` was repaired with a `repoRelative()` helper and is now
+ * clean. That fix did not reach here, because `oe98`'s own measurement only
+ * ever looked at the directory the OTHER generator writes — the same blind
+ * spot, one generator over.
+ *
+ * DERIVED from `SKILLS_DIR` rather than written out, since a literal is
+ * precisely what went stale: the two roots were the same directory until the
+ * `wggr` stub inversion moved the instance into `cat-harness/`, so this read
+ * correctly for as long as it did and broke with no edit to this file. */
+const SKILLS_REPO_PREFIX = relative(repoRootFor(INSTANCE_ROOT), SKILLS_DIR);
 const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "skills");
 
 /**
@@ -239,8 +260,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(input, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/input.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/input.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/input.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
@@ -252,8 +273,8 @@ function renderSkillPage(skill: string, input: JsonSchema | null, output: JsonSc
     lines.push(renderProperties(output, 3));
     lines.push("");
     lines.push(
-      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/${skill}/output.schema.json)` +
-        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/${skill}/output.schema.json){: .fa-edit-source }`,
+      `[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json)` +
+        ` · [${EDIT_GLYPH} Edit](https://github.com/litlfred/folio-assistant/edit/main/${SKILLS_REPO_PREFIX}/${skill}/output.schema.json){: .fa-edit-source }`,
     );
     lines.push("");
   }
