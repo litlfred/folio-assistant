@@ -39,6 +39,7 @@
  * Exit codes, as `translate-bpmn`: 0 current, 1 missing/stale/orphaned,
  * 2 nothing examined (no locale, or no authored term anywhere).
  *
+ * @covers glossary, translation-sources
  * @module folio-assistant-core/scripts/glossary-pot
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
