@@ -403,6 +403,12 @@
   function currentScheme() {
     var stored = storedScheme();
     if (stored === "light" || stored === "dark") return stored;
+    // WHAT THE FIRST-PAINT SNIPPET DECIDED (`head_custom.html`), before this
+    // deferred bundle existed: stored, else the OS, else dark. Asked second,
+    // because a page that painted in a scheme must not be re-decided by a
+    // later, weaker guess — that re-decision IS a flash.
+    var painted = document.documentElement.getAttribute("data-fa-scheme");
+    if (painted === "light" || painted === "dark") return painted;
     if (window.jtd && typeof window.jtd.getTheme === "function") {
       var t = window.jtd.getTheme();
       if (t === "light" || t === "dark") return t;
@@ -419,9 +425,26 @@
     // Always explicit. Passing "default" would work today and would break the
     // day _config.yml's color_scheme changes, because "default" is a moving
     // target and "dark" is not.
-    window.jtd.setTheme(name);
+    //
+    // BUT ONLY WHEN THE SHEET IS NOT ALREADY THAT SCHEME — owner, 2026-09-24:
+    // *"when any page/foio-asst/cat-harness first loads if flashes white
+    // before goignt o dark mode."* `setTheme` swaps the theme's first
+    // stylesheet, and a swap UNLOADS the sheet painting the page until the new
+    // file arrives: the white canvas shows through. Applying a stored "dark"
+    // on this dark-configured site swapped `-default.css` for `-dark.css` —
+    // the same colours — on every load, for every reader who had ever pressed
+    // the toggle. Measured by `first-paint-scheme.e2e.ts`, which holds the
+    // new file in flight and reads the ground: `rgb(255, 255, 255)`.
+    if (!jtdShows(name)) window.jtd.setTheme(name);
     document.documentElement.setAttribute("data-fa-scheme", name);
     return true;
+  }
+
+  /** Is the theme's loaded stylesheet already `name`? "default" means the configured scheme. */
+  function jtdShows(name) {
+    if (typeof window.jtd.getTheme !== "function") return false;
+    var t = window.jtd.getTheme();
+    return t === name || (t === "default" && configuredScheme() === name);
   }
 
   /* ── ONE scheme, TWO controls that must never disagree ─────────────────
@@ -458,7 +481,11 @@
     if (schemeInitialised) return;
     schemeInitialised = true;
     var scheme = currentScheme();
-    if (storedScheme()) applyScheme(scheme);
+    // Applied whenever the theme can be switched — not only for a stored
+    // choice — because the first-paint snippet may have decided from the OS.
+    // `applyScheme` leaves a sheet that already shows the scheme alone, so
+    // this costs no swap in the common case.
+    if (window.jtd && typeof window.jtd.setTheme === "function") applyScheme(scheme);
     else document.documentElement.setAttribute("data-fa-scheme", scheme);
   }
 
@@ -1601,10 +1628,21 @@
          * worse than no control. */
         cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
         cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
-        slide.setAttribute("aria-label",
-          corner ? "Dock search back into the navbar" : "Slide search out to the corner");
+        /* SAID IN WORDS, not a chevron alone — owner, 2026-09-24: *"hiding
+         * search makes it go away compleletey, cant restore."* The way back
+         * was a lone "⌄" beside a magnifier, and a glyph whose meaning lives
+         * only in a tooltip is not a control a low-dexterity reader finds.
+         * The visible words start the accessible name (WCAG 2.5.3), so a
+         * voice user can say what they see. The reachability half of the
+         * same report — the corner was drawn UNDER the staging banner — is
+         * fixed in the stylesheet (`--fa-staging-offset`). */
+        slide.setAttribute("aria-label", corner
+          ? "Show search — dock it back into the navbar"
+          : "Hide search — slide it out to the corner");
         slide.setAttribute("title", slide.getAttribute("aria-label"));
-        slide.textContent = corner ? "⌄" : "⌃";
+        while (slide.firstChild) slide.removeChild(slide.firstChild);
+        slide.appendChild(el("span", { class: "fa-search-slide-glyph", "aria-hidden": "true" }, corner ? "⌄" : "⌃"));
+        slide.appendChild(el("span", { class: "fa-search-slide-word" }, corner ? "Show search" : "Hide search"));
       }
 
       slide.addEventListener("click", function () {
@@ -3269,18 +3307,140 @@
       });
   }
 
-  /** Paragraphs, split on blank lines. Text only -- see the header. */
-  function renderBody(text) {
+  /**
+   * Paragraphs, split on blank lines. Text only -- see the header.
+   *
+   * `{ markdown: true }` renders the note's MARKDOWN instead, and only a
+   * caller that owns its text may ask for it. Owner, 2026-09-24, on a sticky
+   * popped out onto the folio glass: *"i expected to see themed square sticky
+   * avatar faded with markdown overlayed"*. A todo's `comment` is authored
+   * markdown in the declared `todos/` graph, and showing its asterisks and
+   * hashes as text is showing the SOURCE, not the note. `fsh-guts/` keeps the
+   * plain path, for the reason in the header: a dumping ground is not
+   * interpreted.
+   *
+   * ONE body renderer with a switch, not a second one. And still no
+   * `innerHTML`: the markdown is parsed into DOM nodes whose text is set with
+   * `textContent`, and a link goes through `safeHref`, so an authored note
+   * cannot carry markup or a hostile scheme into the page.
+   */
+  function renderBody(text, opts) {
     var wrap = el("div", { class: "fa-sticky-body" });
-    var paras = String(text || "").split(/\n{2,}/);
-    for (var i = 0; i < paras.length; i++) {
-      var p = paras[i].trim();
-      if (p !== "") wrap.appendChild(el("p", null, p));
+    if (opts && opts.markdown) {
+      renderMarkdownInto(wrap, text);
+    } else {
+      var paras = String(text || "").split(/\n{2,}/);
+      for (var i = 0; i < paras.length; i++) {
+        var p = paras[i].trim();
+        if (p !== "") wrap.appendChild(el("p", null, p));
+      }
     }
     if (wrap.childNodes.length === 0) {
       wrap.appendChild(el("p", { class: "fa-sticky-empty" }, "No detail recorded."));
     }
     return wrap;
+  }
+
+  /**
+   * The block half of a note's markdown: paragraphs, headings, lists.
+   *
+   * The subset a todo actually uses — measured over `todos/`: paragraphs,
+   * `##` headings, `-` and `1.` lists, `**bold**`, `*emphasis*`, inline code
+   * and links. Anything else stays as its text, which is the safe failure: a
+   * construct this does not know is SHOWN, never dropped.
+   *
+   * A heading is a styled paragraph (`.fa-md-heading`), not an `<h2>`: a
+   * note's `##` is structure inside a card, and minting a real heading would
+   * put every sticky's sections into the PAGE's outline.
+   */
+  function renderMarkdownInto(wrap, text) {
+    var lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
+    var para = [];
+    var list = null;
+    var listTag = null;
+    function flushPara() {
+      if (!para.length) return;
+      var p = el("p");
+      appendInlineMarkdown(p, para.join(" "));
+      wrap.appendChild(p);
+      para = [];
+    }
+    function flushList() {
+      if (!list) return;
+      wrap.appendChild(list);
+      list = null;
+      listTag = null;
+    }
+    lines.forEach(function (raw) {
+      var line = raw.replace(/\s+$/, "");
+      var m;
+      if (!line.trim()) { flushPara(); flushList(); return; }
+      m = line.match(/^\s{0,3}#{1,6}\s+(.*?)\s*#*$/);
+      if (m) {
+        flushPara(); flushList();
+        var h = el("p", { class: "fa-md-heading" });
+        appendInlineMarkdown(h, m[1]);
+        wrap.appendChild(h);
+        return;
+      }
+      m = line.match(/^\s*([-*+]|\d+[.)])\s+(.*)$/);
+      if (m) {
+        flushPara();
+        var tag = /\d/.test(m[1]) ? "ol" : "ul";
+        if (!list || listTag !== tag) { flushList(); list = el(tag); listTag = tag; }
+        var li = el("li");
+        appendInlineMarkdown(li, m[2]);
+        list.appendChild(li);
+        return;
+      }
+      // An indented line under a list item continues that item.
+      if (list && /^\s{2,}\S/.test(raw)) {
+        list.lastChild.appendChild(document.createTextNode(" "));
+        appendInlineMarkdown(list.lastChild, line.trim());
+        return;
+      }
+      flushList();
+      m = line.match(/^\s*>\s?(.*)$/);
+      para.push((m ? m[1] : line).trim());
+    });
+    flushPara();
+    flushList();
+  }
+
+  /**
+   * The inline half: code, strong, emphasis, links — as nodes, never markup.
+   *
+   * `_underscore_` emphasis is deliberately NOT recognised: notes here name
+   * files and identifiers (`human_todos`, `fa_first_paint`), and reading their
+   * underscores as emphasis would silently eat characters out of a path.
+   */
+  function appendInlineMarkdown(parent, text) {
+    var re = /(`+)([\s\S]*?)\1|\*\*([^*]+?)\*\*|\*([^*\s][^*]*?)\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
+    var last = 0;
+    var m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      if (m[1]) {
+        parent.appendChild(el("code", null, m[2]));
+      } else if (m[3]) {
+        var s = el("strong");
+        appendInlineMarkdown(s, m[3]);
+        parent.appendChild(s);
+      } else if (m[4]) {
+        var em = el("em");
+        appendInlineMarkdown(em, m[4]);
+        parent.appendChild(em);
+      } else {
+        // A link a note may not carry is still its words — `pb04`: no link
+        // beats a link to nowhere, and dropping the words would lose the note.
+        var href = safeHref(m[6]);
+        var a = href ? el("a", { href: href }) : el("span");
+        appendInlineMarkdown(a, m[5]);
+        parent.appendChild(a);
+      }
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
   }
 
 
@@ -4443,8 +4603,12 @@
       // *"artefact avatar should cover sheet"*), and a landscape card would
       // show a cover's middle band. 4:3 upright, which every rendered cover
       // here is near. Rows are laid out at the tallest card's height.
+      // A STICKY IS SQUARE — owner, 2026-09-24: *"i expected to see themed
+      // square sticky avatar"*. A todo is a sticky note everywhere else on
+      // this site, and a sticky note is square; the wide 152px strip it used
+      // to pop out as read as a list row, not as the note.
       var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
-        ? Math.round(w * 4 / 3) : GLASS_CARD_H;
+        ? Math.round(w * 4 / 3) : zoomKindOf(a) === "todo" ? w : GLASS_CARD_H;
       return {
         left: (i % cols) * (w + GLASS_GAP),
         top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
@@ -4568,6 +4732,35 @@
       // The scale changes a card's RENDERED width without resizing its box,
       // so the ResizeObserver never hears of it. Asked here instead.
       Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
+      placePanel();
+    }
+
+    /* A TILE'S POP-OUT RIDES ON THE FOLIO — owner, 2026-09-24: *"dragging
+     * folio should also drag todos/other tile popouts"*.
+     *
+     * WHICH "DRAGGING FOLIO". Two things here move: a CARD, by `wireMove`,
+     * and the FOLIO — the glass the reader drags from empty space, which is
+     * this view (`panFrom`, the pinch, and the zoom controls). The sheet is
+     * labelled "Your folio" and the handle "Pull down your folio"; a folio
+     * WINDOW (`.fa-board-window`) lives on board pages, not on the glass,
+     * where the Todos pop-out is. So "dragging folio" is panning the glass,
+     * and a pop-out must move as if it sat on it.
+     *
+     * The pop-out was a sibling of the shelf, in the sheet's flow, so the
+     * view's transform — which is on the shelf alone — left it where it was
+     * while every card slid away from it. It now takes the same view, as a
+     * TRANSLATION ONLY: its corner goes where that point of the folio goes
+     * (`view + P·(s − 1)`, P its place relative to the shelf's origin), but
+     * it is never scaled — a pop-out zoomed to 25% is a list nobody can read
+     * or press, and this instance's profile is low-dexterity. Home brings it
+     * back with everything else; the keyboard reaches it exactly as before.
+     * On a phone the column stands and nothing is transformed (`c132`). */
+    function placePanel() {
+      if (!panel) return;
+      if (atOrigin() || !isSurface() || panel.hasAttribute("hidden")) { panel.style.transform = ""; return; }
+      var px = panel.offsetLeft - shelf.offsetLeft, py = panel.offsetTop - shelf.offsetTop;
+      panel.style.transform = "translate(" + Math.round(view.x + px * (view.s - 1)) + "px, " +
+        Math.round(view.y + py * (view.s - 1)) + "px)";
     }
 
     /** Zoom to `s`, keeping the point under (cx, cy) where it is. No point: the middle of the glass. */
@@ -4907,7 +5100,82 @@
         fitShelf();
         applyView();
       }, { unbounded: true });
+      if (a.kind === "todos" && key.indexOf("todo/") === 0) {
+        var todoId = key.slice("todo/".length);
+        glassTodoIndex(function (idx) {
+          var item = idx && idx.byId[todoId];
+          if (item) dressGlassSticky(card, item, idx.themeArt);
+        });
+      }
       return card;
+    }
+
+    /* ── A POPPED-OUT STICKY IS THE STICKY ──────────────────────────────────
+     *
+     * Owner, 2026-09-24, on a todo pulled onto the glass: *"i expected to see
+     * themed square sticky avatar faded with markdown overlayed when stikcy
+     * poopped out."* What popped out was a wide card with a generic yellow
+     * note in the middle and none of the note's words.
+     *
+     * THE SAME THEMED STICKY, NOT A SECOND LOOK. The card takes the todo's
+     * `data-fa-sticky-theme` and `fa-sticky--backdrop`, and its art comes
+     * from `buildBackdrop` — the attribute, class and function the board's
+     * sticky (`buildSticky`) and the landing stickies already use. So the
+     * art's crop and clipping, the SCRIM that fades it, and the theme's ink
+     * all come from `themes.css` and the backdrop rules as they are; nothing
+     * here sets a colour or restates a fade. The note's words are
+     * `renderBody(comment, { markdown: true })` — the board's body renderer,
+     * asked for markdown.
+     *
+     * The theme and the words live in the published todo index, not in the
+     * reader's folio (which keeps a title and a link), so they are read from
+     * the index when the card is drawn — once per page, cached. An index that
+     * cannot be read leaves the plain card as it was: absent is a real state,
+     * and a card with no theme stays the plain note. */
+    var glassTodoIdx;
+    var glassTodoWaiting = null;
+    function glassTodoIndex(done) {
+      if (glassTodoIdx !== undefined) return done(glassTodoIdx);
+      if (glassTodoWaiting) { glassTodoWaiting.push(done); return; }
+      glassTodoWaiting = [done];
+      function settle(v) {
+        glassTodoIdx = v;
+        var w = glassTodoWaiting;
+        glassTodoWaiting = null;
+        w.forEach(function (f) { f(v); });
+      }
+      fetch(todoIndexUrl())
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          var byId = {};
+          (doc && Array.isArray(doc.items) ? doc.items : []).forEach(function (t) { if (t && t.id) byId[t.id] = t; });
+          settle({ byId: byId, themeArt: baseurlResolved((doc && doc.themeArt) || {}) });
+        })
+        .catch(function (e) {
+          console.warn("docs-ui: the glass could not read the todo index (" + e.message +
+                       "); popped-out stickies keep their plain card.");
+          settle(null);
+        });
+    }
+
+    function dressGlassSticky(card, todo, themeArt) {
+      if (card.classList.contains("fa-glass-sticky")) return;
+      card.classList.add("fa-glass-sticky");
+      var art = todo.theme && themeArt[todo.theme];
+      if (todo.theme) card.setAttribute("data-fa-sticky-theme", todo.theme);
+      // The reader's "text only" avatar style is honoured here as everywhere
+      // on the glass: the theme's colours stay, its picture does not.
+      if (art && prefs.avatars !== "text") {
+        card.classList.add("fa-sticky--backdrop");
+        card.insertBefore(buildBackdrop(art), card.firstChild);
+        // The theme's art IS the avatar now; the generic yellow note goes.
+        var generic = card.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
+        if (generic) generic.parentNode.removeChild(generic);
+      }
+      var body = renderBody(todo.comment, { markdown: true });
+      body.classList.add("fa-glass-sticky-body");
+      var tools = card.querySelector(".fa-glass-asset-tools");
+      card.insertBefore(body, tools);
     }
 
     function renderShelf() {
@@ -5048,6 +5316,8 @@
       panel.appendChild(body);
       build(body);
       panel.removeAttribute("hidden");
+      // Opened on a folio already dragged away: open where the folio is.
+      placePanel();
       if (panelButtons[id]) panelButtons[id].setAttribute("aria-expanded", "true");
       h.focus();
     }
@@ -5236,14 +5506,25 @@
      * slides down the tab is still on screen — `l4zi`: the inverse of hiding
      * is reachable from the same control. The choice is the reader's and is
      * remembered in this browser. A hidden strip is `inert`, so the keyboard
-     * cannot land on a tile nobody can see. */
+     * cannot land on a tile nobody can see.
+     *
+     * AND IT IS INSIDE THE PANEL — owner, 2026-09-24: *"HIDE/show tiles
+     * should be inside of tiles panel."* It was a separate bordered tab on a
+     * dock that painted nothing, so to the eye it hung outside the panel with
+     * a second heavy border stacked on the strip's. Now the DOCK is the
+     * panel: it paints the surface and the edge, the toggle sits in the
+     * panel's own header row, and the strip below it is the tiles. Hidden,
+     * the panel slides down to that header row — still the panel, still
+     * holding the way back. */
     var dock = el("div", { class: "fa-glass-dock" });
+    var dockHead = el("div", { class: "fa-glass-dock-head" });
     var stripToggle = el("button", {
       type: "button",
       class: "fa-glass-strip-toggle",
       "aria-controls": "fa-glass-strip",
     });
-    dock.appendChild(stripToggle);
+    dockHead.appendChild(stripToggle);
+    dock.appendChild(dockHead);
     dock.appendChild(strip);
     sheet.appendChild(dock);
     var STRIP_HIDDEN_KEY = "fa-glass-strip-hidden";

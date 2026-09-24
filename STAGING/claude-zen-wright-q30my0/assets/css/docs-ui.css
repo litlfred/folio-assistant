@@ -3799,6 +3799,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 /* THE DOCK holds the strip and the tab that slides it away (`b8eq`). The
    dock is what is fixed to the bottom edge; hidden, it drops by the strip's
    height and leaves the tab on screen — the way back is never off-screen. */
+/* THE DOCK IS THE TILES PANEL (owner, 2026-09-24: *"HIDE/show tiles should be
+   inside of tiles panel"*). It paints the surface and the ONE accent edge; the
+   header row holds the Hide/Show control, the strip below it holds the tiles.
+   Before, the dock painted nothing and the toggle was its own bordered tab
+   sitting on the strip's border -- outside the panel, under a doubled edge. */
 .fa-glass-dock {
   position: fixed;
   left: 0;
@@ -3806,25 +3811,34 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   bottom: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  /* The dock spans the width; only its tab and strip take presses, so the
-     glass beside the tab stays usable. */
-  pointer-events: none;
+  background: var(--fa-glass-card);
+  border-top: 2px solid var(--fa-glass-accent);
+  color: var(--fa-glass-ink);
   transition: transform 0.25s ease;
   z-index: 3;
 }
-.fa-glass-dock > * { pointer-events: auto; }
-.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem)); }
+/* Hidden, the panel drops by everything but its header row, so the part left
+   on screen is the panel's own edge WITH the way back in it (`l4zi`). The
+   2px is the edge itself. */
+.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem - 2px)); }
 @media (prefers-reduced-motion: reduce) {
   .fa-glass-dock { transition: none; }
 }
+.fa-glass-dock-head {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+}
 .fa-glass-strip-toggle {
   min-height: 2.75rem;
-  margin-right: 1rem;
   padding: 0 1rem;
-  border: 2px solid var(--fa-glass-accent);
+  /* A control IN the panel, drawn like the panel's other controls: one thin
+     edge, no second accent border. */
+  border: 1px solid var(--fa-glass-edge);
+  border-top: 0;
   border-bottom: 0;
-  background: var(--fa-glass-card);
+  background: transparent;
   color: var(--fa-glass-ink);
   font: inherit;
   font-size: 0.85rem;
@@ -3839,10 +3853,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   align-self: stretch;
   display: flex;
   gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  padding: 0 1rem 0.6rem;
   overflow-x: auto;
-  background: var(--fa-glass-card);
-  border-top: 2px solid var(--fa-glass-accent);
+  /* The panel (the dock) paints the surface and the edge; the strip is the
+     row of tiles inside it, so it paints neither -- a second edge here is the
+     doubled border the owner saw. */
   color: var(--fa-glass-ink);
 }
 .fa-glass-tiles .fa-tile,
@@ -6875,7 +6890,16 @@ a.fa-harness-tab__body:focus-visible {
  * stays BELOW anything modal, of which there is currently nothing. */
 .fa-search-home[data-place="corner"] {
   position: fixed;
-  top: 0.75rem;
+  /* BELOW THE STAGING BANNER — owner, 2026-09-24: *"hiding search makes it go
+     away compleletey, cant restore."* On every preview the banner is
+     `position: sticky; top: 0; z-index: 9999`, about 36px tall, and at
+     `top: 0.75rem` this whole card -- the magnifier AND the dock-back control,
+     the only two ways back -- sat underneath it. Hit-tested on the real
+     preview off `gh-pages`, at 1280px and 390px: the point under each control
+     was the banner. The banner already publishes its measured height as
+     `--fa-staging-offset` (it moves the fixed sidebar down the same way), so
+     the corner reads that rather than guessing a number; 0 off a preview. */
+  top: calc(0.75rem + var(--fa-staging-offset, 0px));
   right: 0.75rem;
   z-index: 95;
   gap: 0.25rem;
@@ -6922,6 +6946,20 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+/* The slide control carries WORDS now ("Hide search" / "Show search"), so it
+   sizes to them rather than to a 1.75rem square — and is a little taller,
+   because it is the way back and the declared profile is low-dexterity. */
+.fa-search-slide {
+  width: auto;
+  min-height: 1.75rem;
+  height: auto;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.fa-search-slide-glyph { font-size: 0.9rem; }
 
 .fa-search-peek:hover,
 .fa-search-peek:focus-visible,
@@ -7295,6 +7333,9 @@ a.fa-harness-tab__body:focus-visible {
   /* The phone's own pinch zooms the column, so the glass's zoom stands down:
      a second zoom over the browser's would be two answers to one gesture. */
   .fa-glass-shelf { transform: none !important; touch-action: auto; min-height: 0; cursor: auto; }
+  /* The pop-out rides the folio's pan on the surface (`placePanel`); in the
+     column there is no pan, so it stands with the shelf. */
+  .fa-glass-panel { transform: none !important; }
   .fa-glass-zoom { display: none; }
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
@@ -7378,6 +7419,67 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0.35rem 0.5rem;
 }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+
+/* ── A popped-out STICKY: the themed sticky, square, its words on top ────
+ *
+ * Owner, 2026-09-24: *"i expected to see themed square sticky avatar faded
+ * with markdown overlayed when stikcy poopped out."* `dressGlassSticky` gives
+ * the card the SAME `data-fa-sticky-theme` and `fa-sticky--backdrop` the board
+ * and landing stickies carry, so the art, its clipping and the SCRIM that
+ * fades it are the rules above (`.fa-sticky--backdrop …`) and the theme's
+ * tokens are `themes.css`. These rules only seat that sticky on a glass card:
+ * the theme's surface, ink and edge instead of the glass's, and room for the
+ * words. No colour is decided here. */
+.fa-glass-asset.fa-sticky--backdrop {
+  /* The card is PLACED on the glass; the backdrop rule's `position: relative`
+     would drop it into the flow and stack every sticky at the origin. */
+  position: absolute;
+}
+.fa-glass-sticky { overflow: hidden; }
+.fa-glass-sticky .fa-glass-asset-face { flex: 0 0 auto; min-height: 0; }
+.fa-glass-sticky-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  /* Above the art and the scrim, which sit at negative z inside the card. */
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.fa-glass-sticky-body p,
+.fa-glass-sticky-body ul,
+.fa-glass-sticky-body ol { margin: 0 0 0.45em; }
+.fa-glass-sticky-body ul,
+.fa-glass-sticky-body ol { padding-left: 1.2em; }
+.fa-glass-sticky-body .fa-md-heading { font-weight: 700; margin-top: 0.6em; }
+.fa-glass-sticky-body a { color: inherit; text-decoration: underline; }
+/* An UNTHEMED sticky keeps the plain note as its cover, so its words ride a
+   strip of the card's colour exactly as the title and the tools do. */
+.fa-glass-sticky:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-sticky-body {
+  /* Sized to its words, not to the card, so the note behind still shows. */
+  flex: 0 1 auto;
+  max-height: 50%;
+  background: var(--fa-glass-card);
+  padding: 0.35rem 0.5rem;
+}
+.fa-glass-sticky[data-fa-sticky-theme] {
+  background: var(--fa-sticky-surface, var(--fa-glass-card));
+  color: var(--fa-sticky-ink, var(--fa-glass-ink));
+  border-color: var(--fa-sticky-edge, var(--fa-glass-edge));
+}
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-name,
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-tool {
+  color: inherit;
+}
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-tool {
+  background: transparent;
+  border-color: var(--fa-sticky-edge, var(--fa-glass-edge));
+}
+/* Semantic zoom: below the declared width a sticky is its faded art alone,
+   the same as every other card is its avatar alone. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-sticky-body { display: none; }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
 /* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
