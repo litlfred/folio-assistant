@@ -273,26 +273,26 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T06:24:13.762Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f3d535d662c8b56ffd34d63fcf1bebd9bf74dbb2",
-  "sourceCommitSha": "f3d535d662c8b56ffd34d63fcf1bebd9bf74dbb2",
-  "sourceCommitAt": "2026-09-24T06:21:36Z",
+  "generatedAt": "2026-09-24T17:28:35.318Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6d7d09c484b9309776d4a41f01c73d1cd2679b62",
+  "sourceCommitSha": "6d7d09c484b9309776d4a41f01c73d1cd2679b62",
+  "sourceCommitAt": "2026-09-24T17:26:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 258,
+    "Skill": 260,
     "Actor": 35,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 71,
-    "SequenceFlow": 907,
+    "SequenceFlow": 908,
     "Role": 148,
-    "ProcessNode": 859,
+    "ProcessNode": 860,
     "Tool": 83,
-    "Schema": 115,
+    "Schema": 116,
     "GraphKind": 32,
-    "Directory": 43,
+    "Directory": 42,
     "Asset": 3
   },
   "@graph": [
@@ -712,6 +712,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/toolchain-ownership"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/grade",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "grade",
+      "title": "grade",
+      "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/authoring-who-smart-guidelines"
+      ],
+      "instructionsPath": "skills/authoring-who-smart-guidelines/grade.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/grade"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "edge-kinds-and-blast-radius",
@@ -738,7 +755,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-detanglement.md",
-      "instructionLines": 304,
+      "instructionLines": 305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -755,7 +772,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/graph-rendering.md",
-      "instructionLines": 140,
+      "instructionLines": 142,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -821,9 +838,11 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 231,
+      "instructionLines": 236,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/crdm-detect/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
-      "hasIOContract": false,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect"
@@ -971,7 +990,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 261,
+      "instructionLines": 273,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1630,7 +1649,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-report-signing.md",
-      "instructionLines": 109,
+      "instructionLines": 111,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1816,7 +1835,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 457,
+      "instructionLines": 502,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2372,7 +2391,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/data-modelling.md",
-      "instructionLines": 240,
+      "instructionLines": 251,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2734,6 +2753,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/audit-coverage",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "audit-coverage",
+      "title": "Audit coverage — measured, with denominators",
+      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/audit-coverage.md",
+      "instructionLines": 191,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/audit-coverage"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/archiving-arxiv",
@@ -3355,7 +3391,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/evidence-appraisal.md",
-      "instructionLines": 92,
+      "instructionLines": 98,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4404,7 +4440,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "session-state-machine",
       "title": "Playing a state machine",
-      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
+      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/workflow"
       ],
@@ -4426,7 +4462,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 166,
+      "instructionLines": 188,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4456,7 +4492,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
       "title": "State in a running process",
-      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#package/workflow"
       ],
@@ -5907,6 +5943,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/dak-postprocessing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/dak-preprocessing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/grade",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/ig-artifact-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/ig-publication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/l2-dak-authoring",
@@ -5982,11 +6019,13 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/activity-log",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/adopt-methodology-from-source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/agent-memory",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/archiving-arxiv",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/archiving-web-pages",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/asset-extraction",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/associate-harness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/audit-coverage",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/bean-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/bib-human-review",
@@ -5998,6 +6037,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/canonical-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/chapter-complexity-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/ci-health",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/code-lists",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/code-node-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/communication-language",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/compute-integration-watcher",
@@ -6029,9 +6069,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/filing-dublin-core",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/flushable-containers",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/github-state-inspection",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/glossary-build",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/glossary-terms",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/goal-review",
@@ -6060,6 +6100,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/md-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/milnor-exposition-standard",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/narrative-asserts-code",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/one-voice-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/one-voice-integration-watcher",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/one-voice-style-guide",
@@ -6072,15 +6113,19 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/production-vs-exploratory-discipline",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/publish-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/qa-report-signing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/readability-editing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/readme-sections",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/related-work-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/render-logging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/render-order",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/retry-backoff",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/review-comments",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/review-heatmap",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/schema-management",
@@ -6089,9 +6134,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/staging-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/review-comments",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/review-heatmap",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/swarm-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/swimlane-glossary",
@@ -6106,12 +6148,14 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/turn-reporting",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/ui-accessibility",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/uml-overview",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/untainted-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/unverified-constraints",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/uploads-watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/uses-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/vocabulary-authority",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/voice-authoring-guidance",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/voice-editorial-review",
@@ -6119,13 +6163,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/where-a-proposal-goes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/where-does-this-go",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/wireframe-design-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/adopt-methodology-from-source",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/related-work-coordination",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/uml-overview",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/narrative-asserts-code",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/code-lists",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/publish-verification"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#capability/git-push",
@@ -21582,8 +21620,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
       ],
-      "nodeCount": 13,
-      "flowCount": 14,
+      "nodeCount": 14,
+      "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion"
     },
@@ -21704,9 +21742,18 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_Promote",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_Citeable",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_Citeable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i11",
@@ -21955,6 +22002,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Promote"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Prose blocks enter the summary queue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#skill/library-ingestion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_SummaryQueue"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/node/Task_Citeable",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Available to cite as an L1 source",
@@ -21970,7 +22039,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i10"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i12"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i11"
@@ -39529,6 +39598,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#schema/block-summary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "block-summary",
+      "title": "An agent's summary of a library block, kept BESIDE the block — the QA",
+      "module": "schemas/block-summary.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/block-summary"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#schema/board-positions",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "board-positions",
@@ -41803,7 +41881,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here — see smart-kg-methodologies. RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/methodologies",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodologies"
     },
@@ -41991,17 +42069,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/smart-kg-methodologies",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "smart-kg-methodologies",
-      "path": "smart-kg/methodologies/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
-      ],
-      "description": "GRADE, and the first content in smart-kg. Certainty-of-evidence grading belongs to WHO L1 guideline development rather than to an agent framework: a folio formalising mathematics has evidence and no use for GRADE. Separated so the extraction is literal — smart-kg/ lifts out whole — which is the layout #223 asks for and bootstrap/ already demonstrates, and it is why this path is repository-scoped, like the bootstrap entry, rather than instance-relative. It has a slot waiting rather than needing one built: evidence-retrieval.bpmn runs Task_AppraiseGrade against \"the grading system the folio declares\", and its own documentation calls that a STRAWPERSON. Adopting the method as a sub-graph keeps the slot pluggable instead of wiring one system into the diagram.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-kg-methodologies"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#directory/smart-base-methodologies",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "smart-base-methodologies",
@@ -42009,7 +42076,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
+      "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-methodologies"
     },
     {
@@ -42020,7 +42087,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason it is separate from `smart-kg-methodologies`: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-methodologies"
     },
     {
@@ -42220,8 +42287,8 @@
   ],
   "staging": {
     "branch": "claude/stream-3-goal3-who-iris",
-    "sha": "f05d97421cb6a1b95d8ebdf379148d75cbe4fc61",
+    "sha": "daeff8e7357b958581bfd8be3495ac6c9f1813f1",
     "pr": "1114/merge",
-    "run": "35964116486"
+    "run": "36034300974"
   }
 }

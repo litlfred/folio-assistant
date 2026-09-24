@@ -1451,7 +1451,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
+      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
       "source": "cat-harness/processes/document-ingestion.bpmn"
     },
     {
@@ -1594,7 +1594,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-stream-3-goal3-who-iris/cat-harness.jsonld#process/Process_BeanLifecycle",
       "label": "Sibling session or human (not yours to close)",
-      "scopeNote": "The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
+      "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/bean-lifecycle.bpmn"
     },
     {
