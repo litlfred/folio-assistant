@@ -61,6 +61,33 @@ function fixture(rel: string, src: string, instance = "cat-harness"): string {
   return root;
 }
 
+
+/**
+ * The real-corpus scan, computed ONCE for the whole file.
+ *
+ * `checkDeclarationFilename()` with no argument walks every TypeScript and
+ * markdown file in the repository — measured 2026-09-24 at **4.3 s** here,
+ * against **3.6 s** on `main` before this branch added 118 annotated scripts
+ * and a skill. Three tests below called it separately, so the file paid that
+ * cost three times, and under full-suite parallel load the first of them
+ * crossed bun's 5 s per-test default and failed as a TIMEOUT — with its
+ * assertion (`toEqual([])`) never reached, so a green corpus reported as a
+ * red test.
+ *
+ * Sharing is sound because the scan is PURE and read-only, and all three call
+ * sites pass no argument, so they were computing the same value. Fixing it
+ * here rather than raising the timeout is the `generalise-the-fix` Move 1.1
+ * distinction: the symptom was a budget, the defect was doing the same
+ * expensive work three times. Raising the budget would have left the next
+ * corpus growth to rediscover it.
+ *
+ * The tests that build a synthetic checkout still call it with a path of their
+ * own — those are cheap and must not share this.
+ */
+let realCorpus: ReturnType<typeof checkDeclarationFilename> | undefined;
+const corpus = (): ReturnType<typeof checkDeclarationFilename> =>
+  (realCorpus ??= checkDeclarationFilename());
+
 describe("a path to the declaration is built from the constant", () => {
   test("a whole-value string literal is a bypass", () => {
     const r = checkDeclarationFilename(fixture("src/a.ts", 'const p = join(root, "harness.json");\n'));
@@ -224,7 +251,7 @@ describe("the workflow scan reports unknown, never zero", () => {
   });
 
   test("this repository's own workflows carry no USE", () => {
-    const r = checkDeclarationFilename();
+    const r = corpus();
     expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
   });
 });
@@ -313,12 +340,12 @@ describe("the retired name is matched as a FILENAME, on both sides", () => {
 
 describe("the markdown corpus, on this repository", () => {
   test("carries no STALE PATH", () => {
-    const r = checkDeclarationFilename();
+    const r = corpus();
     expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
   });
 
   test("and was actually examined — an empty corpus is not a pass", () => {
-    const r = checkDeclarationFilename();
+    const r = corpus();
     expect(r.markdown).not.toBeNull();
     expect(r.markdown!.length).toBeGreaterThan(0);
   });
