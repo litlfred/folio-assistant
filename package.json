@@ -291,6 +291,8 @@
     "test": "bun test",
     "test:e2e": "playwright test",
     "theme:sheet": "bun run cat-harness/scripts/render-theme-sheet.ts",
+    "theme:page": "bun run cat-harness/scripts/render-theme-sheet.ts --page",
+    "theme:page:check": "bun run cat-harness/scripts/render-theme-sheet.ts --page --check",
     "themes:css": "bun run cat-harness/scripts/gen-themes-css.ts",
     "themes:css:check": "bun run cat-harness/scripts/gen-themes-css.ts --check",
     "todos": "bun run cat-harness/scripts/todos.ts",

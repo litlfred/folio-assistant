@@ -133,6 +133,10 @@ export type NodeSchemaRef =
   | { writtenBy: string; validator?: never; shape?: never; external?: never }
   | { external: string; validator?: never; shape?: never; writtenBy?: never };
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export interface GraphKindDef {
   /** The `@type` IRI this kind projects to. */
   type: string;

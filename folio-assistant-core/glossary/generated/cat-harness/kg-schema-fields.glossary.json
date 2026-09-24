@@ -3450,6 +3450,13 @@
       "status": "candidate"
     },
     {
+      "id": "document-image.documentimageschema.placements",
+      "prefLabel": "DocumentImageSchema.placements",
+      "definition": "Every place this image appears, the first one included.",
+      "source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.placements",
+      "status": "candidate"
+    },
+    {
       "id": "document-image.geometrybasisschema.coverage",
       "prefLabel": "GeometryBasisSchema.coverage",
       "definition": "Placed area over page area. The number the role was computed from.",
@@ -3503,6 +3510,34 @@
       "prefLabel": "InspectionBasisSchema.saw",
       "definition": "What was seen, in a few words. NOT the description — the reason.",
       "source": "cat-harness/schemas/document-image.ts#InspectionBasisSchema.saw",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.coverage",
+      "prefLabel": "PlacementSchema.coverage",
+      "definition": "Placed area over page area, AT THIS PLACEMENT. Sizes may differ per use.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.coverage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.imagesonpage",
+      "prefLabel": "PlacementSchema.imagesOnPage",
+      "definition": "How many images share this page.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.imagesOnPage",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.note",
+      "prefLabel": "PlacementSchema.note",
+      "definition": "What this copy serves HERE — never what the image is, which is the narrative's job. \"a recurring header for principle 8\" belongs here; \"an irregular grid of coloured squares\" belongs on the image.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-image.placementschema.page",
+      "prefLabel": "PlacementSchema.page",
+      "definition": "The page it sits on, 1-based as a reader counts.",
+      "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
       "status": "candidate"
     },
     {
