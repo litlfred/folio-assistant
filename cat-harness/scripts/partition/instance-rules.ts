@@ -256,6 +256,7 @@ export const RULES: Rule[] = [
       "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/check-process-documentation.ts", // ...and the process says what it is FOR
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      "scripts/eval-crdm-detect-blind.ts",   // a blinded packet for a second annotator, and the kappa that scores it (bean `vjbl`)
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
       // Same side as its runner, and harness by subject too: whether a request
