@@ -25983,6 +25983,44 @@
       ],
       "dcterms:source": "cat-harness/schemas/webpage.ts#WebPageNode.title",
       "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/withheld.withheldentryschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relative to the directory holding the file; a directory takes its whole subtree."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/withheld.withheldentryschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
+      "skos:note": "candidate"
     }
   ]
 }
