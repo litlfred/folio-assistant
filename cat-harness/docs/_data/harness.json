@@ -146,23 +146,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 270,
+      "count": 275,
       "unit": "beans"
-    },
-    {
-      "id": "bootstrap-tools-schemas",
-      "directory": "bootstrap-tools-schemas",
-      "title": "bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hidden": false,
-      "count": 5,
-      "unit": "modules"
     },
     {
       "id": "docs",
@@ -587,56 +572,6 @@
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
-      "name": "bootstrap-tools",
-      "title": "bootstrap-tools",
-      "label": "bootstrap-tools",
-      "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/bootstrap-tools/"
-        }
-      ],
-      "findings": [
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/bootstrap-tools/) rather than the instance's own themed root.",
-        "bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
       "navbarIcons": [
         "close",
@@ -1460,7 +1395,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 44
+          "value": 43
         },
         {
           "id": "kinds",
@@ -2106,32 +2041,6 @@
         ]
       },
       {
-        "name": "bootstrap-tools",
-        "title": "bootstrap-tools",
-        "group": "checkout",
-        "declaredIn": "bootstrap-tools/bootstrap-tools.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/bootstrap-tools.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap-tools/bootstrap-tools.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "bootstrap-tools"
-          },
-          {
-            "key": "description",
-            "summary": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap know…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "directories",
-            "summary": "1: bootstrap-tools-schemas"
-          }
-        ]
-      },
-      {
         "name": "folio-assistant-sci",
         "title": "folio-assistant-sci",
         "group": "checkout",
@@ -2561,7 +2470,7 @@
           },
           {
             "key": "directories",
-            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "43: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

@@ -213,10 +213,6 @@
           "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
-          "where": "bootstrap-tools/bootstrap-tools.json",
-          "detail": "nested instance \"bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
-        },
-        {
           "where": "bootstrap/bootstrap.json",
           "detail": "nested instance \"bootstrap\" declares its own graph, and this audit does not read it — 3 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
