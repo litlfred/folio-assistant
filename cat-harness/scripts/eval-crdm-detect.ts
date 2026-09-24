@@ -57,11 +57,15 @@ const corpus: Item[] = JSON.parse(
 );
 
 let tp = 0, fp = 0, tn = 0, fn = 0;
+// Every case, as the skill's contract names its input and output, so the run
+// can be checked against that contract (#1168, B4) rather than only counted.
+const cases: Array<{ input: { text: string }; output: ReturnType<typeof detect> }> = [];
 const misses: Item[] = [];
 const falseAlarms: Item[] = [];
 
 for (const item of corpus) {
   const v = detect(item.text);
+  cases.push({ input: { text: item.text }, output: v });
   if (item.isFeature && v.fires) tp++;
   else if (item.isFeature && !v.fires) { fn++; misses.push(item); }
   else if (!item.isFeature && v.fires) { fp++; falseAlarms.push(item); }
@@ -135,6 +139,8 @@ console.log(
 const OUT = join(root, "test/results/crdm-detect-eval.test-run.json");
 const run = buildTestRun({
   root,
+  // The run names the skill it tests; the skill names no test (#1168, B4).
+  skill: "crdm-detect",
   subject: "crdm-detect phrase signals against the issue corpus",
   dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
   processInputs: [
@@ -152,6 +158,7 @@ const run = buildTestRun({
     recall: Number(recall.toFixed(4)),
     f1: Number(f1.toFixed(4)),
   },
+  cases,
 });
 
 // Same churn guard as `writeQaResult`: an unchanged run keeps its file and its

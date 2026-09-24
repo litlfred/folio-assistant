@@ -197,6 +197,14 @@ package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>
     overallStatus [1] : pass | warnings | errors
     results [0..*] : Result[]
   }
+  class "CRDM Detect Input" as cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input <<schema: skills/crdm-detect/input.schema.json>> #e9edf3 {
+    text [1] : string
+  }
+  class "CRDM Detect Output" as cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output <<schema: skills/crdm-detect/output.schema.json>> #e9edf3 {
+    fires [1] : boolean
+    categories [0..*] : list<direct-capability | workflow-gap | platform-change | cross-cutting | review-surfaced | self-declared-genre>
+    excluded [1] : boolean
+  }
   class "InputVariable" as cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable <<schema: skills/dmn-authoring/input.schema.json>> #e9edf3 {
     name [1] : string
     type [1] : string | integer | boolean | date | codeable-concept
@@ -579,12 +587,18 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : map<object[]>
     updated_at [1] : string
   }
+  class "Case" as cat_harness_qa_folio_test_run_v1_Case <<json: TestRunSchema>> #f4e6e6 {
+    input [1] : any
+    output [1] : any
+  }
   class "folio-test-run/v1" as cat_harness_qa_folio_test_run_v1_folio_test_run_v1 <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
+    skill [1] : string
     subject [1] : string
     data [1] : object
     process [1] : object
     outcome [1] : map<any>
+    cases [0..*] : Case[]
     updated_at [1] : string
   }
   class "qa-witness/v1" as cat_harness_qa_qa_witness_v1 <<ts: QaWitness>> #f4e6e6 {
@@ -1080,6 +1094,7 @@ cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : per
 cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
 cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
 cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
 cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
 cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements

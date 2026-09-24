@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 279,
+      "count": 280,
       "unit": "beans"
     }
   },
@@ -1823,14 +1823,14 @@
     {
       "id": "folio-assistant-hj9d",
       "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T00:26:28Z",
-      "updatedAt": "2026-09-24T00:26:28Z",
+      "updatedAt": "2026-09-24T00:49:16Z",
       "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
       "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
     },
@@ -3803,6 +3803,20 @@
       "updatedAt": "2026-09-22T19:30:00Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim:\n\n> showing who-iris w/ existing materialized assets with themed harness.\n\nCreated on the owner's ruling for bean `wqht`: *\"wqht - milesotne\"*.\n\n## Epics under this milestone\n\n| epic | why |\n|---|---|\n| `kupb` | IRIS CATALOGUE — a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample i",
       "file": "beans/defs/folio-assistant-yg29--goal-3-showing-who-iris-with-its-existing-material.md"
+    },
+    {
+      "id": "folio-assistant-ygk5",
+      "title": "B4 (#1168): a test run names its skill; cases checked against the skill's contract",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T05:34:30Z",
+      "updatedAt": "2026-09-24T05:34:30Z",
+      "preview": "Part of s4sp (plan B4). TestRun.skill (required, SkillName) and optional cases[{input,output}]. crdm-detect gets input/output contracts (owner chose 'Also write a contract'); the eval records skill + all 27 cases. scripts/test-run-conformance.ts validates cases with Zod fromJSONSchema (no second schema, bean 319n). kg-audit: test-run-skill-resolves, test-run-conforms, test-run-checkable. tool-cove",
+      "file": "beans/defs/folio-assistant-ygk5--b4-1168-a-test-run-names-its-skill-cases-checked-a.md"
     },
     {
       "id": "folio-assistant-yhcq",

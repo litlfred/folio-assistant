@@ -25744,6 +25744,48 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/test-run.ts#TestCase",
+      "name": "TestCase",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/test-run.ts#TestCaseSchema",
+      "name": "TestCaseSchema",
+      "module": "cat-harness/schemas/test-run.ts",
+      "kind": "zod-object",
+      "doc": "One case the run exercised: what went in and what came out, as the skill's",
+      "fields": [
+        {
+          "name": "input",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "output",
+          "type": "z.unknown()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/test-run.ts#TestRun",
       "name": "TestRun",
       "module": "cat-harness/schemas/test-run.ts",
@@ -25767,6 +25809,13 @@
           "type": "z.literal(TEST_RUN_SCHEMA_ID)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "skill",
+          "type": "SkillNameSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The skill this run tests, by name."
         },
         {
           "name": "subject",
@@ -25797,6 +25846,13 @@
           "doc": "The measurements themselves, in whatever shape the runner records."
         },
         {
+          "name": "cases",
+          "type": "z.array(TestCaseSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The cases, when the runner records them. Absent is a real state: a run"
+        },
+        {
           "name": "updated_at",
           "type": "z.string().min(1)",
           "optional": false,
@@ -25807,7 +25863,9 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/test-run.ts#HashBasisSchema"
+        "cat-harness/schemas/test-run.ts#HashBasisSchema",
+        "cat-harness/schemas/test-run.ts#TestCaseSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -41125,6 +41183,14 @@
     },
     {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema",
+      "via": "skill",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/test-run.ts#HashBasisSchema",
       "via": "data",
       "kind": "field",
@@ -41135,6 +41201,22 @@
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
       "to": "cat-harness/schemas/test-run.ts#HashBasisSchema",
       "via": "process",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/test-run.ts#TestCaseSchema",
+      "via": "cases",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skill",
       "kind": "field",
       "optional": false,
       "array": false
