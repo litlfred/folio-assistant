@@ -134,3 +134,23 @@ property of labels two raters agree on at kappa 0.62, not of the skill alone.
 ## Summary of Changes
 
 The second annotator was produced blind (see above): a packet generator plus a kappa scorer (`eval-crdm-detect-blind.ts`, with tests) and the committed second labels. 23/27 agree, kappa 0.62. Adjudicating the four disagreements is left to the owner.
+
+## Owner adjudication, 2026-09-24: **all four are feature requests**
+
+The owner ticked #27, #187, #222 and #223. #27 was already `true`; #187, #222
+and #223 flip to `true`. Each `why` now quotes the adjudication. #187's
+supersedes the 6o1z rule, "label the action requested".
+
+`bun run eval:crdm-detect`, with the DATA hash moving `d211c42e` → `2e3ab7fa`:
+
+| | precision | recall | F1 | missed | false alarms |
+|---|---|---|---|---|---|
+| before | 86% | 100% | 93% | — | #166, #222, #223 |
+| after | 95% | 95% | 95% | #187 | #166 |
+
+**Consequence for the detector, left to the owner:** the anchor on
+`^proposal:` existed because the unanchored form "cost #187". It now costs
+nothing and would catch #187 (recall 100%). The detector is unchanged, since
+changing it to fit its own 27-item eval set is tuning to the test.
+`crdm-detect-signals.test.ts` and the skill now say so instead of carrying
+the old argument.
