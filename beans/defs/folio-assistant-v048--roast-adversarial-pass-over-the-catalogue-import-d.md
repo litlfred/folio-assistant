@@ -63,7 +63,9 @@ re-verified by a second reader before being written here.
 
 ### Not done here, on purpose
 
-No fixes. A roast that also repairs is grading its own homework. Follow-up beans
-are **not yet filed**: parenting them under `kupb` would re-open GOAL 3, which
-the owner narrowed `kupb` to make closable, so where they go is the owner's
-call.
+No fixes. A roast that also repairs is grading its own homework.
+
+**Follow-ups filed under `kupb`, the owner's choice (2026-09-24), knowing it
+keeps GOAL 3 open:** `cw35` (gates decide publication: 3 + 4), `08u4` (survival
+path by Handle, with liveness: 6 + 7) and `xlg2` (run the sample import: 5).
+The other open objections (8, 9, 10, 11, 13) stay recorded here only.
