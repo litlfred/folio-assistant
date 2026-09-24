@@ -891,6 +891,10 @@ jobs:
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
           bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
