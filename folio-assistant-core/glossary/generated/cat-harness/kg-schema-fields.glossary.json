@@ -4556,6 +4556,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.validatornotapplicable",
+      "prefLabel": "GraphKindDef.validatorNotApplicable",
+      "definition": "WHY a runtime validator does not apply to this kind — a reason, not a flag.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.closedcontenttype.own",
       "prefLabel": "ClosedContentType.own",
       "definition": "`true` when the marker is on the root itself rather than a dependency.",
@@ -6698,6 +6705,62 @@
       "status": "candidate"
     },
     {
+      "id": "site-indexes.beanindexitemschema.file",
+      "prefLabel": "BeanIndexItemSchema.file",
+      "definition": "Repository-relative path of the bean file.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.parent",
+      "prefLabel": "BeanIndexItemSchema.parent",
+      "definition": "`\"\"` when the bean has no parent.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.beanindexitemschema.preview",
+      "prefLabel": "BeanIndexItemSchema.preview",
+      "definition": "The body, trimmed to its first 400 characters.",
+      "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.preview",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.libraryindexentryschema.referencedby",
+      "prefLabel": "LibraryIndexEntrySchema.referencedBy",
+      "definition": "Absent means the reference scan did not run — a third state, not \"none\".",
+      "source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.badges",
+      "prefLabel": "QaIndexSchema.badges",
+      "definition": "Keyed `<nodeId>.<family>` or `page.<family>`; may be empty.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.badges",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.qaindexschema.page",
+      "prefLabel": "QaIndexSchema.page",
+      "definition": "The page's slug.",
+      "source": "cat-harness/schemas/site-indexes.ts#QaIndexSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.changedat",
+      "prefLabel": "TranslationStatusSchema.changedAt",
+      "definition": "`YYYY-MM-DD`: the day the counts last changed.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.changedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "site-indexes.translationstatusschema.scope",
+      "prefLabel": "TranslationStatusSchema.scope",
+      "definition": "The translations directory counted, repository-relative.",
+      "source": "cat-harness/schemas/site-indexes.ts#TranslationStatusSchema.scope",
+      "status": "candidate"
+    },
+    {
       "id": "skill-package.actordefinitionschema.permissions",
       "prefLabel": "ActorDefinitionSchema.permissions",
       "definition": "Permission ids — what it may do, regardless of lane. See `skills/permissions/`.",
@@ -7353,6 +7416,13 @@
       "prefLabel": "ThemeBackdropSchema.scrim",
       "definition": "The layer between art and ink, as a CSS colour — normally a translucent form of `surface`. Required; see module docs.",
       "source": "cat-harness/schemas/theme.ts#ThemeBackdropSchema.scrim",
+      "status": "candidate"
+    },
+    {
+      "id": "theme.themedtodofieldsschema.layout",
+      "prefLabel": "ThemedTodoFieldsSchema.layout",
+      "definition": "Which of the theme's three crops this sticky shows. ABSENT means the square `card` crop, on every screen — owner, 2026-09-24: *\"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified.\"* Absent rather than defaulted, for the same reason as `theme`: \"the author chose card\" and \"nobody chose\" stay distinguishable.",
+      "source": "cat-harness/schemas/theme.ts#ThemedTodoFieldsSchema.layout",
       "status": "candidate"
     },
     {
@@ -9516,6 +9586,20 @@
       "prefLabel": "WebPageNode.title",
       "definition": "Heading text. Free to change without breaking a link.",
       "source": "cat-harness/schemas/webpage.ts#WebPageNode.title",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.path",
+      "prefLabel": "WithheldEntrySchema.path",
+      "definition": "Relative to the directory holding the file; a directory takes its whole subtree.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "withheld.withheldentryschema.reason",
+      "prefLabel": "WithheldEntrySchema.reason",
+      "definition": "Why — which gate, which verdict. A withholding with no reason cannot be re-checked.",
+      "source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
       "status": "candidate"
     }
   ]

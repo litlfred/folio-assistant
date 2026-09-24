@@ -39,6 +39,11 @@
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
  * @module scripts/kg-export
+ *
+ * @conformsTo schema-org
+ * @conformsTo w3c-prov-o
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-xsd11-datatypes
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname, relative, resolve, sep } from "node:path";

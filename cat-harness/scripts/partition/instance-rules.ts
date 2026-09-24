@@ -287,6 +287,7 @@ export const RULES: Rule[] = [
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
+      "scripts/spec-users.ts",               // who declares each external spec — read from the users (bean `u63y`)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
       // claim is in the published tree. Harness-level for the same reason — a
@@ -597,6 +598,11 @@ export const RULES: Rule[] = [
       // `mount-instance-docs.ts`, whose pipeline it asks for the mount routes
       // rather than guessing them, and which it deliberately runs after.
       "scripts/rail-standalone-pages.ts",
+      // The Jekyll sidebar's navbar, rendered by the shared module rather
+      // than composed in Liquid (bean `sjic`). Core beside `lib/navbar.ts`,
+      // which it calls: a generator that lived elsewhere would be a second
+      // place deciding what a harness row contains, which is the defect.
+      "scripts/gen-navbar-include.ts",
       // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
@@ -885,6 +891,9 @@ export const RULES: Rule[] = [
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
+      // User authN/authZ (issue #1207): asks GitHub and the ODRL policies,
+      // the harness's own declarations, and needs no folio.
+      "src/tools/auth.ts",
       "src/tools/folio-init.ts",
       "schemas/assistant-package.ts",
       "schemas/assistant-types.ts",
@@ -939,6 +948,11 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // The four state/context graphs nothing judged (bean `h1wq`). Harness for
+      // the same reason as the two above: its subjects are the harness's own
+      // bookkeeping — the health report, the work plan, interaction preferences,
+      // issue marks — and it imports no content vocabulary.
+      "scripts/check-harness-state.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and
