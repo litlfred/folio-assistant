@@ -214,6 +214,7 @@
       "@type": "@id"
     },
     "roleName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#roleName",
+    "satisfiesStatement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfiesStatement",
     "permissionName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#permissionName",
     "io": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#io",
@@ -272,26 +273,26 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-23T23:27:07.114Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6438a2f711eeef6a5f1e95fdaf7af7375fc0716b",
-  "sourceCommitSha": "6438a2f711eeef6a5f1e95fdaf7af7375fc0716b",
-  "sourceCommitAt": "2026-09-23T23:24:58Z",
+  "generatedAt": "2026-09-24T05:20:28.440Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/99d5b859216ae289679f36cb3cef534588e383ba",
+  "sourceCommitSha": "99d5b859216ae289679f36cb3cef534588e383ba",
+  "sourceCommitAt": "2026-09-24T05:18:21Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
-    "Skill": 254,
-    "Actor": 32,
+    "Skill": 258,
+    "Actor": 35,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 15,
-    "Process": 70,
-    "SequenceFlow": 898,
-    "Role": 146,
-    "ProcessNode": 851,
-    "Tool": 77,
-    "Schema": 112,
+    "SkillPackage": 16,
+    "Process": 71,
+    "SequenceFlow": 908,
+    "Role": 148,
+    "ProcessNode": 860,
+    "Tool": 83,
+    "Schema": 115,
     "GraphKind": 32,
-    "Directory": 40,
+    "Directory": 44,
     "Asset": 3
   },
   "@graph": [
@@ -304,7 +305,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/quality-control.md",
-      "instructionLines": 65,
+      "instructionLines": 70,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/quality-control/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/quality-control/output.schema.json",
       "hasInstructions": true,
@@ -356,7 +357,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/terminology-management.md",
-      "instructionLines": 58,
+      "instructionLines": 63,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/terminology-management/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/terminology-management/output.schema.json",
       "hasInstructions": true,
@@ -375,7 +376,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 155,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -391,7 +392,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/ig-publication.md",
-      "instructionLines": 113,
+      "instructionLines": 118,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/ig-publication/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/ig-publication/output.schema.json",
       "hasInstructions": true,
@@ -425,7 +426,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/fhir-validation.md",
-      "instructionLines": 67,
+      "instructionLines": 72,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/fhir-validation/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/fhir-validation/output.schema.json",
       "hasInstructions": true,
@@ -460,7 +461,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/l2-dak-authoring.md",
-      "instructionLines": 67,
+      "instructionLines": 72,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/l2-dak-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/l2-dak-authoring/output.schema.json",
       "hasInstructions": true,
@@ -478,7 +479,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/l3-fhir-authoring.md",
-      "instructionLines": 68,
+      "instructionLines": 73,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/l3-fhir-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/l3-fhir-authoring/output.schema.json",
       "hasInstructions": true,
@@ -496,7 +497,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-who-smart-guidelines"
       ],
       "instructionsPath": "skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "instructionLines": 177,
+      "instructionLines": 182,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -512,7 +513,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-author.md",
-      "instructionLines": 46,
+      "instructionLines": 51,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-author/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-author/output.schema.json",
       "hasInstructions": true,
@@ -530,7 +531,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-validate.md",
-      "instructionLines": 28,
+      "instructionLines": 35,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-validate/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-validate/output.schema.json",
       "hasInstructions": true,
@@ -565,7 +566,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-plan.md",
-      "instructionLines": 27,
+      "instructionLines": 34,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-plan/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-plan/output.schema.json",
       "hasInstructions": true,
@@ -583,7 +584,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-feedback.md",
-      "instructionLines": 29,
+      "instructionLines": 36,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-feedback/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-feedback/output.schema.json",
       "hasInstructions": true,
@@ -601,7 +602,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-publish.md",
-      "instructionLines": 28,
+      "instructionLines": 35,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-publish/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-publish/output.schema.json",
       "hasInstructions": true,
@@ -619,7 +620,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-test.md",
-      "instructionLines": 77,
+      "instructionLines": 84,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-test/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-test/output.schema.json",
       "hasInstructions": true,
@@ -637,7 +638,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/content-lifecycle/content-review.md",
-      "instructionLines": 38,
+      "instructionLines": 45,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/content-review/output.schema.json",
       "hasInstructions": true,
@@ -687,7 +688,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-math"
       ],
       "instructionsPath": "skills/authoring-math/proof-verification.md",
-      "instructionLines": 64,
+      "instructionLines": 69,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/proof-verification/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/proof-verification/output.schema.json",
       "hasInstructions": true,
@@ -705,7 +706,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-math"
       ],
       "instructionsPath": "skills/authoring-math/lean-formalization.md",
-      "instructionLines": 72,
+      "instructionLines": 77,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/lean-formalization/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/lean-formalization/output.schema.json",
       "hasInstructions": true,
@@ -723,7 +724,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/authoring-math"
       ],
       "instructionsPath": "skills/authoring-math/latex-authoring.md",
-      "instructionLines": 59,
+      "instructionLines": 64,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/latex-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/latex-authoring/output.schema.json",
       "hasInstructions": true,
@@ -742,7 +743,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 219,
+      "instructionLines": 230,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -758,7 +759,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-authoring.md",
-      "instructionLines": 82,
+      "instructionLines": 87,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/bpmn-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/bpmn-authoring/output.schema.json",
       "hasInstructions": true,
@@ -766,6 +767,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/specification-compiled-agents",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "specification-compiled-agents",
+      "title": "Specification-compiled agents",
+      "description": "When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/specification-compiled-agents.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/bpmn-processes",
@@ -777,7 +795,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 157,
+      "instructionLines": 166,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -794,7 +812,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/session-context.md",
-      "instructionLines": 129,
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -810,7 +828,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/dmn-authoring.md",
-      "instructionLines": 65,
+      "instructionLines": 70,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/dmn-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/dmn-authoring/output.schema.json",
       "hasInstructions": true,
@@ -846,7 +864,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/workflow-state.md",
-      "instructionLines": 126,
+      "instructionLines": 128,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -863,7 +881,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
-      "instructionLines": 235,
+      "instructionLines": 278,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -879,7 +897,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-document-adapter"
       ],
       "instructionsPath": "skills/folio-document-adapter/document-authoring.md",
-      "instructionLines": 87,
+      "instructionLines": 92,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
@@ -897,7 +915,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-document-adapter"
       ],
       "instructionsPath": "skills/folio-document-adapter/normative-statements.md",
-      "instructionLines": 80,
+      "instructionLines": 85,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/normative-statements/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/normative-statements/output.schema.json",
       "hasInstructions": true,
@@ -915,7 +933,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-document-adapter"
       ],
       "instructionsPath": "skills/folio-document-adapter/document-structure.md",
-      "instructionLines": 59,
+      "instructionLines": 64,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-structure/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-structure/output.schema.json",
       "hasInstructions": true,
@@ -933,7 +951,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-document-adapter"
       ],
       "instructionsPath": "skills/folio-document-adapter/document-publishing.md",
-      "instructionLines": 77,
+      "instructionLines": 82,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -1713,7 +1731,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/data-modelling.md",
-      "instructionLines": 237,
+      "instructionLines": 240,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1730,7 +1748,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 353,
+      "instructionLines": 367,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2136,7 +2154,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1063,
+      "instructionLines": 1064,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2204,7 +2222,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 608,
+      "instructionLines": 631,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2373,7 +2391,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 494,
+      "instructionLines": 496,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2430,6 +2448,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/harness-requirements"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/glossary-terms",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "glossary-terms",
+      "title": "Glossary terms",
+      "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/glossary-terms.md",
+      "instructionLines": 71,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/bean-coordination",
@@ -2625,7 +2660,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/qa-witness.md",
-      "instructionLines": 125,
+      "instructionLines": 127,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2641,7 +2676,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deployment-auth.md",
-      "instructionLines": 173,
+      "instructionLines": 186,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2759,7 +2794,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 703,
+      "instructionLines": 705,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2827,7 +2862,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 443,
+      "instructionLines": 444,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2844,7 +2879,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 522,
+      "instructionLines": 527,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2952,6 +2987,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-engineer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/task-authorization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "task-authorization",
+      "title": "Task authorization — four questions before every task",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/task-authorization.md",
+      "instructionLines": 156,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/serving-renderings",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "serving-renderings",
@@ -2960,7 +3012,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/serving-renderings.md",
-      "instructionLines": 157,
+      "instructionLines": 162,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3028,7 +3080,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/confirmation-waiver.md",
-      "instructionLines": 131,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3162,7 +3214,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/where-does-this-go.md",
-      "instructionLines": 104,
+      "instructionLines": 106,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3432,7 +3484,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/placement.md",
-      "instructionLines": 335,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3482,7 +3534,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/swimlane-glossary.md",
-      "instructionLines": 149,
+      "instructionLines": 151,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4540,6 +4592,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "deep-document-research",
+      "title": "Deep document research",
+      "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/skills"
+      ],
+      "instructionsPath": "../folio-assistant-core/skills/deep-document-research.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/materialize-on-demand",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "materialize-on-demand",
@@ -4606,6 +4675,38 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/who-iris-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-dspace"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#actor/collaborator",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "collaborator",
+      "actorKind": "person",
+      "title": "Collaborator (gateway session)",
+      "description": "A person signed in through the auth-gateway's GitHub OAuth and listed in deploy/github-collaborators.txt. The gateway's `collaborator` tier as an actor (issue #1207): what it may do over HTTP is cat-harness/policies/http-gateway.jsonld, not a rung compared in code. Takes on no BPMN role; a person who works in a lane does so as the actor that lane's role names.",
+      "hasCapability": [],
+      "roleName": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/collaborator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#actor/owner",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "owner",
+      "actorKind": "person",
+      "title": "Owner (gateway session)",
+      "description": "The repository owner signed in through the auth-gateway's GitHub OAuth. The gateway's `owner` tier as an actor (issue #1207). Over HTTP it holds exactly what `collaborator` holds, because no route distinguishes them; `commit to main` is GitHub's branch protection, not a route. Its grants are cat-harness/policies/http-gateway.jsonld.",
+      "hasCapability": [],
+      "roleName": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/owner"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#actor/review-agent",
@@ -4795,6 +4896,25 @@
         "qa-reporting"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/ig-publisher-service"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#actor/deep-researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Actor",
+      "localId": "deep-researcher",
+      "actorKind": "agent",
+      "title": "Deep researcher",
+      "description": "Answers a question from the corpus this folio ALREADY HOLDS, and stands behind the answer's citations. `agent` rather than `person`, and the reason is the opposite of `librarian`'s: nothing in this loop decides what may be redistributed or what a source means in law — it plans, retrieves, filters and synthesises over material a person has already admitted. The role admits `person` too, and no person-shaped actor is registered for it because none has been named; inventing one would assert a party this repository does not have. WHAT THIS ACTOR MAY NOT DO is report an agent's draft figure description as what the figure shows — `schemas/narrative.ts` holds that line, and it is why an agent performing this is legitimate in the first place. ITS PERMISSION IS IN THE ODRL POLICY, not here: #1186 moved every actor's own `permissions` list into `policies/folio-defaults.jsonld` as an assignee/action rule, and `odrl.test.ts` fails any actor file that still carries one. This actor was written with a `permissions` list about two hours before that landed; the grant itself is unchanged — `content-authoring`, stated once, in the policy.",
+      "meta": {
+        "workflow": "folio-assistant-core/processes/deep-document-research.bpmn#Lane_DeepResearcher"
+      },
+      "hasCapability": [],
+      "roleName": [
+        "deep-researcher"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#actor/deep-researcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#actor/authoring-agent",
@@ -5297,6 +5417,9 @@
         "method": "command",
         "command": "java -jar ${IG_PUBLISHER_JAR:-/opt/ig-publisher/publisher.jar} --version"
       },
+      "satisfiesStatement": [
+        "req:fhir-validation#ig-publisher-qa"
+      ],
       "requiresCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#capability/java-runtime"
       ],
@@ -5461,6 +5584,9 @@
         "method": "command",
         "command": "lean --version"
       },
+      "satisfiesStatement": [
+        "req:lean-verification#lean-compiles"
+      ],
       "fallbackToCapability": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#capability/lean-mcp",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/lean-toolchain"
     },
@@ -5640,6 +5766,9 @@
         "method": "command",
         "command": "sushi --version"
       },
+      "satisfiesStatement": [
+        "req:fhir-validation#sushi-compile"
+      ],
       "requiresCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#capability/node-runtime"
       ],
@@ -5673,6 +5802,15 @@
         "python"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#convention/comment-why-not-what"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "skills",
+      "path": "../folio-assistant-core/skills",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#package/large-datasets",
@@ -5802,6 +5940,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/process-state",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/session-state-machine",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/specification-compiled-agents",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
@@ -5978,6 +6117,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/glossary-build",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/glossary-terms",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/goal-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/harness-requirements",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/harness-tiles",
@@ -6026,6 +6166,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/serving-renderings",
@@ -34305,6 +34446,310 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG/node/End_Process_DIIG"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Deep document research",
+      "enforcement": "advisory",
+      "sourcePath": "../folio-assistant-core/processes/deep-document-research.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question"
+      ],
+      "nodeCount": 9,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "held",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not held",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet, and iterations remain",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "sufficient",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "out of iterations",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Deep researcher",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/deep-researcher",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Deep%20researcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A question about held documents",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/Start_Question"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Is the corpus there to search?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Held"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not held — a question for library-ingestion",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_NotHeld"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_NotHeld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Filter the corpus, choose the granularity, decompose the question",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Held",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Retrieve for each sub-question",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Search"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Deduplicate, and keep what is actually relevant",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Refine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Enough, or out of iterations?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Again",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/GW_Sufficient"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Synthesise, cite to a location, and say what was not found",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Sufficient",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_Exhausted"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/A_Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Answered, with its citations and its gaps",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/Deep%20researcher",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#process/Process_DeepDocumentResearch/flow/F_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch/node/End_Answered"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/folio-block-qa-summary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "folio-block-qa-summary",
@@ -36990,9 +37435,422 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/content-validation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-manifest-validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/content-graph-analysis",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "content-graph-analysis",
+      "title": "Editorial content-graph analysis",
+      "description": "Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 cat-harness/content/pipeline/content-graph-analysis.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Slug",
+            "description": "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "chapter",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Slug",
+            "description": "Restrict the analysis to one chapter directory.",
+            "required": false,
+            "arg": {
+              "flag": "--chapter"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Flag",
+            "description": "Emit the whole graph as JSON on stdout and exit.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "md",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Flag",
+            "description": "Write the report to /tmp/content-graph-report.md.",
+            "required": false,
+            "arg": {
+              "flag": "--md"
+            }
+          },
+          {
+            "name": "visualise",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Flag",
+            "description": "Render the Graphviz SVGs (needs graphviz).",
+            "required": false,
+            "arg": {
+              "flag": "--visualise"
+            }
+          },
+          {
+            "name": "proposals",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Flag",
+            "description": "Write concrete reorganisation proposals to /tmp/content-graph-proposals.md.",
+            "required": false,
+            "arg": {
+              "flag": "--proposals"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Text",
+            "description": "The ranked findings, or the graph as JSON with `--json`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/content-graph"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/content-graph-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/paper-latex-build",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "paper-latex-build",
+      "title": "Paper build to LaTeX chapters",
+      "description": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/build.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paperManifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The paper's `<paper>.ts` manifest; absent, the folio's single paper.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "outDir",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the chapters; absent, `chapters/` at the content root.",
+            "required": false,
+            "arg": {
+              "flag": "--out-dir"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "chapters",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "One `.tex` per chapter under the output directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/content-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/paper-latex-build"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/pages-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "pages-index",
+      "title": "Published-paper index page",
+      "description": "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/generate-index.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "outputHtml",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write index.html.",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "paperEmbed",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The file the Paper tab embeds, typically the PDF.",
+            "required": true,
+            "arg": {
+              "positional": 1
+            }
+          },
+          {
+            "name": "pdf",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The PDF filename used in download links.",
+            "required": true,
+            "arg": {
+              "flag": "--pdf"
+            }
+          },
+          {
+            "name": "md",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A Markdown rendering to link, when there is one.",
+            "required": false,
+            "arg": {
+              "flag": "--md"
+            }
+          },
+          {
+            "name": "visualizer",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The visualizer page for the second tab.",
+            "required": false,
+            "arg": {
+              "flag": "--visualizer"
+            }
+          },
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch the build is from.",
+            "required": false,
+            "arg": {
+              "flag": "--branch"
+            }
+          },
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "owner/repo, for links back to the source.",
+            "required": false,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "sha",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/CommitSha",
+            "description": "The commit the build is from.",
+            "required": false,
+            "arg": {
+              "flag": "--sha"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The written index.html."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pages-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/proof-dependency-graph",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-dependency-graph",
+      "title": "Proof dependency graph",
+      "description": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/generate_dependency_graph.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to read.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write the SVG.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          },
+          {
+            "name": "pdfBaseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Url",
+            "description": "The published PDF, for the anchor links.",
+            "required": false,
+            "arg": {
+              "flag": "--pdf-base-url"
+            }
+          },
+          {
+            "name": "dotOnly",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Flag",
+            "description": "Write DOT source instead of rendering.",
+            "required": false,
+            "arg": {
+              "flag": "--dot-only"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The SVG, or DOT with `--dot-only`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/docs-generation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-dependency-graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/proof-objects-extract",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-objects-extract",
+      "title": "Proof-object extraction",
+      "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/extract_proof_objects.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "output",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where to write proof-objects.json.",
+            "required": false,
+            "arg": {
+              "flag": "--output"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-objects-extract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/proof-status-update",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "proof-status-update",
+      "title": "Proof status from a Lean build",
+      "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 .github/scripts/update_proof_status.py"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The proof-objects.json to update.",
+            "required": false,
+            "arg": {
+              "flag": "--manifest"
+            }
+          },
+          {
+            "name": "buildLog",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Lean build log; stdin when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--build-log"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "manifest",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/RepoPath",
+            "description": "proof-objects.json with statuses updated in place."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/proof-status-tracking"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/proof-status-update"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#tool/glossary-build",
@@ -38478,13 +39336,25 @@
             "arg": {
               "positional": 1
             }
+          },
+          {
+            "name": "actor",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Text",
+            "description": "The declared actor who would perform it; checked against the lane's role and the ODRL policies (issue #1207).",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Text",
+            "description": "The content it would act on, for the access check.",
+            "required": false
           }
         ],
         "outputs": [
           {
             "name": "verdict",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Markdown",
-            "description": "Permitted, refused with the reason, or advisory."
+            "description": "Permitted, refused with the reason, or advisory — and the task-authorization verdict."
           }
         ]
       },
@@ -38549,7 +39419,13 @@
           {
             "name": "actor",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Text",
-            "description": "Who performed the step, for the audit record.",
+            "description": "The declared actor who performed the step. Checked against the lane's role and the ODRL policies before anything is recorded (issue #1207).",
+            "required": false
+          },
+          {
+            "name": "target",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/tool-types.schema.json#/$defs/Text",
+            "description": "The content the step acted on, for the access check.",
             "required": false
           },
           {
@@ -38872,6 +39748,15 @@
       "module": "schemas/front-matter.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/front-matter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/glossary-graph-kind",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "glossary-graph-kind",
+      "title": "The `glossary` graph kind — registered by **core**, not declared by the harness.",
+      "module": "schemas/glossary-graph-kind.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-graph-kind"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/graph-kind-registry",
@@ -39408,6 +40293,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/viewer-nav-qa",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "viewer-nav-qa",
+      "title": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
+      "module": "schemas/viewer-nav-qa.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/viewer-nav-qa"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/vocabulary",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "vocabulary",
@@ -39526,6 +40420,15 @@
       "module": "../folio-assistant-core/schemas/fhir-artifact-index.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assist-core-schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/fhir-artifact-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "glossary",
+      "title": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph kind",
+      "module": "../folio-assistant-core/schemas/glossary.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assist-core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#schema/library-ref",
@@ -39710,7 +40613,7 @@
       "name": "qa",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#QaGraph",
       "renderable": false,
-      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, result roll-ups and test runs; seven `$schema` families, each named in `nodeSchemas`. Generated; never hand-edited."
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/health",
@@ -39729,10 +40632,10 @@
       "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "glossary",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#GlossaryGraph",
+      "name": "swimlane-glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SwimlaneGlossaryGraph",
       "renderable": false,
       "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
     },
@@ -40058,6 +40961,7 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/confirmation-waiver"
       ],
@@ -40359,6 +41263,22 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/library-ingestion"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/librarian"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/deep-researcher",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/deep-document-research"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/deep-researcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#role/evidence-agent",
@@ -40688,7 +41608,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/idle-backlog",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/diff",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/corpus-grep",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/process-state"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#skill/task-authorization"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator"
     },
@@ -41051,6 +41972,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-library"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-library",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-library",
+      "path": "folio-assistant-core/library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/library"
+      ],
+      "description": "The core layer's library -- `arxiv-2510.21603v1` (Doc-Researcher), and nothing else. Same staging arrangement and the same reason as `who-iris-library` and `folio-assistant-sci-library` above: the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, `ingest-document`'s own destination list -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). `ingest-document` is what proved it: with the directory declared ONLY in `folio-assistant-core.json` it refused the destination as matching none, because it reads the list from here. Declared in both, exactly as the four siblings are.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-library"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/smart-base-library",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "smart-base-library",
@@ -41106,6 +42038,28 @@
       ],
       "description": "The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Declared beside `smart-kg-methodologies` and for the same reason it is separate from it: `smart-kg` holds judgement methodologies for L1 guideline development (GRADE), and DIIG is a programme-investment method, which is a different job. `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/smart-base-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-methodologies",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-methodologies",
+      "path": "folio-assistant-core/methodologies/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
+      ],
+      "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason it is separate from `smart-kg-methodologies`: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-methodologies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-skills",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-skills",
+      "path": "folio-assistant-core/skills/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
+      ],
+      "description": "The core layer's skills, reached from here for the same reason its library and methodologies are: the consumers that resolve a `<folio:skill ref>` run from this root, and a skill they cannot see is a DANGLING ref reported against a diagram that is correct.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/smart-base-processes",
@@ -41201,16 +42155,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-tools-schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "glossary",
+      "name": "swimlane-glossary",
       "path": "glossary/",
       "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/glossary"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
       ],
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/glossary",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/glossary"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/swimlane-glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/swimlane-glossary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/cat-harness-scripts",
@@ -41261,6 +42215,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#directory/folio-assistant-core-processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-assistant-core-processes",
+      "path": "folio-assistant-core/processes/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
+      ],
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception. Declared here as well, repository-scoped, because the consumers that scan for diagrams run from this root.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-uknu/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -41294,8 +42259,8 @@
   ],
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-uknu",
-    "sha": "e04f4b1c1d495345417957ff8239f40f9c020453",
+    "sha": "9561621290db853fb72d8a68e6dda11bd1a0a5f5",
     "pr": "1227/merge",
-    "run": "35933491966"
+    "run": "35959358173"
   }
 }
