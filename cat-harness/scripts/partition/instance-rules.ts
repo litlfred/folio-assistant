@@ -925,6 +925,12 @@ export const RULES: Rule[] = [
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
       "scripts/kg-audit.ts",
+      // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
+      // for the same reason `kg-audit.ts` is: its subject is the graph-kind
+      // registry and the gate set, not the content vocabulary. Beside the audit
+      // it complements rather than duplicates — that one judges the nodes it
+      // covers, this one measures what is covered at all.
+      "scripts/audit-coverage.ts",
       // The PROV-O QA/QC report (#1180 step 5): workflow history → PROV-O,
       // re-checked with `authorizeTask`. Harness on the same terms as the
       // audit: it reads the harness's own work-plan store, role graph and
@@ -1453,6 +1459,10 @@ export const RULES: Rule[] = [
       // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
       "scripts/extract-assets.ts",          // container → extraction record, metadata by default
       "scripts/narratives.ts",              // the narrative review queue
+      // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
+      // writes `summaries.json` beside them, a folio's own material, through
+      // `schemas/block-summary.ts` and `schemas/narrative.ts` — both core.
+      "scripts/summaries.ts",               // the block-summary drain
       // Same test, same answer: it reads `library/<bib-slug>/images.json`,
       // which is a folio's own material, and imports `schemas/attribution.ts`
       // and `schemas/document-image.ts` — the latter reaching `narrative.ts`

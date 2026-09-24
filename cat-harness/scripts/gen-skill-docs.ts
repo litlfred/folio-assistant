@@ -20,6 +20,7 @@
  * Dependency-free (bun + fs only). Never hand-edit the output.
  *
  * @module scripts/gen-skill-docs
+ * @covers skills, docs
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";

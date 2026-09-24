@@ -31,6 +31,8 @@
  *   4. the census, printed rather than asserted, because the ratio of
  *      referenced to materialized is the whole point of a catalogue by
  *      reference and a number nobody looks at is a number nobody checks.
+ *
+ * @covers catalogue
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, relative, resolve } from "path";

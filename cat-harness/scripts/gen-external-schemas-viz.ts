@@ -4,6 +4,7 @@
  * depends on, at which edition, and what in it would move if one bumped.
  *
  * @module cat-harness/scripts/gen-external-schemas-viz
+ * @covers external-schema
  *
  * ## The gap this closes
  *

@@ -73,6 +73,8 @@
  * Injection writes `translations/<locale>/processes/<name>.bpmn`. Rendering it
  * is `bun run render:bpmn` territory and is deliberately a separate step: the
  * renderer drives headless Chromium, and an extract/inject run should not.
+ *
+ * @covers processes, translation-sources
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolveDirectories } from "../schemas/cat-harness.js";

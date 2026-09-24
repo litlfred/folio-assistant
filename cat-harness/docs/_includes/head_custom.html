@@ -467,6 +467,10 @@
   them: those are versioned in their own URLs already.
 -->
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="{{ '/assets/css/narrow-viewport.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that

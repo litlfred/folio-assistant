@@ -3,6 +3,8 @@
  * The swimlane glossary — the personas a corpus's diagrams put in lanes, as SKOS.
  *
  * @module scripts/glossary-export
+ * @covers glossary, swimlane-glossary, scenarios — it writes the glossary graph AND
+ *   the retirement ledger that `swimlane-glossary` holds
  *
  * Issue #596, bean `lqo9` slice 2. The owner named the source in their own
  * words: *"a bpmn diagram swimlane has title/description"*, and *"name,

@@ -40,6 +40,7 @@
  * waiver by its `$schema` tag and by nothing else.
  *
  * @module folio-assistant/scripts/check-waivers
+ * @covers waiver
  */
 
 import { readdirSync, readFileSync } from "node:fs";

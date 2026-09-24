@@ -46,6 +46,8 @@
  *
  * Usage:  bun run cat-harness/scripts/xml-comment-check.ts
  * Exits 1 and names every offending file, line and text.
+ *
+ * @covers processes
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 

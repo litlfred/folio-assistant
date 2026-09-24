@@ -167,6 +167,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/audit-coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "audit-coverage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census."
+        }
+      ],
+      "skos:notation": "audit-coverage",
+      "dcterms:source": "cat-harness/skills/folio-core/audit-coverage.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/bean-blocking",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3849,7 +3869,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `folio:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf."
+          "@value": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf."
         }
       ],
       "skos:notation": "session-state-machine",
@@ -4834,7 +4854,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<folio:bean op>` actually performs, and why an instance and a bean must be one answer rather than two."
+          "@value": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two."
         }
       ],
       "skos:notation": "workflow-state",

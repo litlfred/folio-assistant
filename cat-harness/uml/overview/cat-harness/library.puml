@@ -20,6 +20,31 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "Superseded" as cat_harness_library_folio_block_summaries_v1_Superseded <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    text [1] : string | null
+    state [1] : not-authored | draft | confirmed | rejected
+    drafted_by [0..1] : object
+    drafted_at [0..1] : string
+    confirmed_by [0..1] : object
+    confirmed_at [0..1] : string
+    rejected_by [0..1] : object
+    rejected_at [0..1] : string
+    rejection_reason [0..1] : string
+  }
+  class "Summary" as cat_harness_library_folio_block_summaries_v1_Summary <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    block [1] : string
+    source [1] : string
+    source_hash [1] : string
+    narrative [1] : object
+    superseded [0..*] : Superseded[]
+  }
+  class "folio-block-summaries/v1" as cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-block-summaries/v1'
+    entry [1] : string
+    summaries [0..*] : Summary[]
+  }
 }
 
+cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
+cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
 @enduml

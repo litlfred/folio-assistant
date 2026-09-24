@@ -47,6 +47,7 @@
  * Exit: 0 every tracked path is creatable, 1 at least one is not, 2 could not check.
  *
  * @module scripts/check-portable-paths
+ * @covers code
  */
 
 import { execFileSync } from "node:child_process";
