@@ -15,7 +15,7 @@ import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
 import { buildExport, publishedDocument } from "../kg-export.js";
-import { BootstrapGraphDocumentSchema } from "../../../bootstrap-tools/schemas/bootstrap-graph.js";
+import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
 import { isSkillMd } from "../known-skills.js";
 import {
   repoRootFor,

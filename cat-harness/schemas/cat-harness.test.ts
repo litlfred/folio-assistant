@@ -1047,7 +1047,6 @@ describe("instanceRootsIn — discovered, never listed", () => {
       ".",
       "agent-skills",
       "bootstrap",
-      "bootstrap-tools",
       "cat-harness",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and

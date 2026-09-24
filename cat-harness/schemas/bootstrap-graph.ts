@@ -1,7 +1,7 @@
 /**
  * The document bootstrap owes instead of a visualiser: its own graph, as Zod.
  *
- * @module bootstrap-tools/schemas/bootstrap-graph
+ * @module schemas/bootstrap-graph
  * @graphNode schema
  *
  * Bean `n350`. `bootstrap/bootstrap.json`'s `renderExemption.owes` names this
@@ -12,8 +12,9 @@
  * ## Why it lives here and not in `bootstrap/`
  *
  * For the reason `discussion.ts` gives: bootstrap holds no executable code and
- * "should not know zod at all" (owner, 2026-09-20), so its shapes live in
- * `bootstrap-tools`.
+ * "should not know zod at all" (owner, 2026-09-20), and Zod is an authoring
+ * tool that lives in cat-harness (owner, 2026-09-24). It was in
+ * `bootstrap-tools` until then.
  *
  * ## Which document this describes
  *
