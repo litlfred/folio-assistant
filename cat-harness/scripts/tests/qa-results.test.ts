@@ -41,6 +41,15 @@ describe("the results directory is DECLARED, not merely created", () => {
   });
 });
 
+/**
+ * `buildExport()` walks the whole instance: 2.3 s alone (2026-09-24). Bean
+ * `61n5` recorded this test failing in 2 of 4 `bun run gates` runs and never
+ * alone. Its sibling whole-repo scan in `check-declaration-filename.test.ts`
+ * was caught failing the same way at 5.56 s against bun's 5 s default, with
+ * an unchanged result. A timeout sized to the work, not to the default.
+ */
+const BUILD_EXPORT_MS = 30_000;
+
 describe("the result and the document are two renderings of ONE computation", () => {
   it("every family in the committed result matches the export's own field", async () => {
     // Two computations can disagree; two renderings of one cannot. This is the
@@ -68,7 +77,7 @@ describe("the result and the document are two renderings of ONE computation", ()
       expect(result.families[family]).toBeDefined();
       expect(result.families[family]!.entries).toEqual(field as unknown[]);
     }
-  });
+  }, BUILD_EXPORT_MS);
 
   it("`total` is the sum, and `count` is never derived on read", () => {
     // A consumer asking only "is this clean" should not have to parse entries
