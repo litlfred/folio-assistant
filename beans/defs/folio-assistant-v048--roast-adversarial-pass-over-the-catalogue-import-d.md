@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v048
 title: 'ROAST: adversarial pass over the catalogue-import design before any of it is believed'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T08:02:32Z
-updated_at: 2026-09-20T08:02:32Z
+updated_at: 2026-09-24T17:54:11Z
 parent: folio-assistant-kupb
 ---
 
