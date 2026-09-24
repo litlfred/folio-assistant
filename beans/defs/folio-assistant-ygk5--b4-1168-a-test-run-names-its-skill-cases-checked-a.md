@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ygk5
 title: 'B4 (#1168): a test run names its skill; cases checked against the skill''s contract'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-24T05:34:30Z
-updated_at: 2026-09-24T05:34:30Z
+updated_at: 2026-09-24T06:43:27Z
 parent: folio-assistant-tr05
 ---
 
