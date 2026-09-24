@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T14:53:21.976Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/49c9c47e25430371feba839eec79b85e8d4d6789",
-  "sourceCommitSha": "49c9c47e25430371feba839eec79b85e8d4d6789",
-  "sourceCommitAt": "2026-09-24T14:51:22Z",
+  "generatedAt": "2026-09-24T18:07:42.914Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9eb47163eb93191069b43d13f5954e63a89c50fa",
+  "sourceCommitSha": "9eb47163eb93191069b43d13f5954e63a89c50fa",
+  "sourceCommitAt": "2026-09-24T18:05:43Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
   "counts": {
@@ -286,11 +286,11 @@
     "Convention": 2,
     "SkillPackage": 16,
     "Process": 71,
-    "SequenceFlow": 909,
+    "SequenceFlow": 908,
     "Role": 148,
-    "ProcessNode": 861,
+    "ProcessNode": 860,
     "Tool": 83,
-    "Schema": 116,
+    "Schema": 117,
     "GraphKind": 32,
     "Directory": 42,
     "Asset": 3
@@ -805,7 +805,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 343,
+      "instructionLines": 348,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2285,13 +2285,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/theme-ui-review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "theme-ui-review",
-      "title": "Post-MVP, because there is nothing to check before there is a render",
-      "description": "Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it. Post-MVP by design: there is no role-to-theme mapping to check at build time, so what gets reviewed is the result. Measures rather than asserts, and raises findings rather than fixing them.",
+      "title": "At ingestion, and only at ingestion",
+      "description": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/theme-ui-review.md",
-      "instructionLines": 98,
+      "instructionLines": 144,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2764,7 +2764,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/audit-coverage.md",
-      "instructionLines": 191,
+      "instructionLines": 250,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -10031,9 +10031,9 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_IngestTheme/node/Task_Review",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Review contrast and non-colour signal",
+      "name": "Theme and UI review",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:ServiceTask",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_IngestTheme",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#role/Ingestion%20Engine%20(agent,%20runs%20unattended)",
       "implementedBy": [
@@ -25240,7 +25240,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
-      "name": "Post-MVP theme and UI review",
+      "name": "Theme and UI review — at ingestion",
       "enforcement": "strict",
       "sourcePath": "processes/theme-ui-review.bpmn",
       "startNode": [
@@ -25337,7 +25337,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview/node/Start_TUR",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "MVP accepted",
+      "name": "Graphical assets ingested",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25355,7 +25355,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview/node/A_Inventory",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Inventory what actually renders",
+      "name": "Inventory the ingested assets",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25443,7 +25443,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview/node/R_Judge",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Judge the rendered result",
+      "name": "Judge the assets in their design",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25484,7 +25484,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview/node/A_RaiseFindings",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Raise findings against the authoring",
+      "name": "Raise findings before the assets land",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -25506,7 +25506,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview/node/End_TUR",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Reviewed",
+      "name": "Assets reviewed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_ThemeUIReview",
@@ -29766,8 +29766,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver"
       ],
-      "nodeCount": 15,
-      "flowCount": 17,
+      "nodeCount": 14,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver"
     },
@@ -29917,18 +29917,9 @@
       "name": "accepted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/GW_StakeholderOK",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Start_Process_CRDM_Deliver",
@@ -30208,26 +30199,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/BA_TranslateFeedback"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Post-MVP theme + UI review",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#role/Agent",
-      "implementedBy": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver/node/Call_ThemeUIReview"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/node/End_Process_CRDM_Deliver",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Phase complete",
@@ -30239,7 +30210,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13b"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#process/Process_CRDM_Deliver/flow/SF_Process_CRDM_Deliver_13"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/processes",
@@ -39909,6 +39880,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#schema/interaction",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "interaction",
+      "title": "How a person wants to be asked — the `interaction` graph's one node kind.",
+      "module": "schemas/interaction.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/interaction"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#schema/jsonld",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "jsonld",
@@ -41318,7 +41298,9 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/library-ingestion",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/materialize-remote",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/paper-importer",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/proof-status-tracking"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/proof-status-tracking",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sjic-one-navbar-renderer/cat-harness.jsonld#skill/theme-ui-review"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/ingestion-agent"
     },
@@ -42314,8 +42296,8 @@
   ],
   "staging": {
     "branch": "claude/sjic-one-navbar-renderer",
-    "sha": "5f25877921870a6a7836d1c11459203f7a6793ed",
+    "sha": "a19b98f0fcdbd4015635937e3f04a636f769dc82",
     "pr": "1264/merge",
-    "run": "36015850900"
+    "run": "36038863112"
   }
 }
