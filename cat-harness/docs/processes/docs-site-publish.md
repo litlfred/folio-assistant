@@ -19,6 +19,7 @@ PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAW
 
 - **Called by:** no call activity names this process
 - **Calls:** [Alert the publication manager](publish-alert.html), [Verify the export before it is deployed](publish-verification.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

@@ -19,6 +19,7 @@ folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of trut
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — WHO SMART Implementation Guides (L3)](../content-types.html#who-smart-implementation-guides-l3), [Authoring a WHO SMART IG (L3) — The L3 pipeline](../guides/who-smart-ig.html#the-l3-pipeline)
 
 ## Lanes — who acts
 
