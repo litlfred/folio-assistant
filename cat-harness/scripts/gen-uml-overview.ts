@@ -274,14 +274,6 @@ function drawFamily(
     }
   } else if (f.state === "external") {
     acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title: f.spec, source: `ext: ${f.spec}`, kind, attrs: [] });
-  } else if (f.state === "untyped") {
-    acc.classes.push({
-      id: safeId(`${prefix}_${f.tag}`),
-      title,
-      source: `untyped: written by ${f.writtenBy}`,
-      kind,
-      attrs: [remark(`no schema declared, shape is whatever ${f.writtenBy} writes`)],
-    });
   } else {
     section.undetermined.push({ kind: `${kind} ${f.tag}`, reason: f.reason });
   }
