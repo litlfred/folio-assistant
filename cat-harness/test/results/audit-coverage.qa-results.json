@@ -8,7 +8,7 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-24T11:58:21.122Z",
+  "updated_at": "2026-09-24T13:01:38.512Z",
   "families": {
     "coverage-measured": {
       "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 42 of 42 declared kind(s), 145 gate(s), 66 criteria.",
@@ -105,6 +105,8 @@
             "graph"
           ],
           "gates": [
+            "bun run check:asset-roles",
+            "bun run check:avatar-instances",
             "bun run check:declaration-claims",
             "bun run check:declaration-filename",
             "bun run check:declared-assets",
@@ -112,6 +114,7 @@
             "bun run check:declared-paths",
             "bun run check:graph-kind-work",
             "bun run check:harness-dirs",
+            "bun run check:image-roles",
             "bun run check:instance-config",
             "bun run check:instance-graph",
             "bun run check:instance-render",
@@ -124,6 +127,7 @@
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
             "bun run check:version-bump",
+            "bun run check:wireframes",
             "bun run harness:dirs:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -164,10 +168,12 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:agents-claims",
             "bun run check:code-accounting",
             "bun run check:dependency-advisories",
             "bun run check:lockfile-pinning",
             "bun run check:module-scope-resolution",
+            "bun run check:partition",
             "bun run check:portable-paths",
             "bun run check:python-deps",
             "bun run check:secret-leaks",
@@ -214,6 +220,8 @@
             "bun run check:glossary",
             "bun run check:instance-render",
             "bun run check:viewer-backticks",
+            "bun run check:viewer-nav",
+            "bun run check:wireframes",
             "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run gen:jsonld:check",
@@ -550,6 +558,7 @@
           "gates": [
             "bun run bootstrap:schemas:check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
+            "bun run check:context-emission",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
             "bun run kg:schema:check"
@@ -795,86 +804,8 @@
     },
     "gates-undeclared": {
       "summary": "A gate CI runs whose script carries no @covers line. Reported and never failed by default (--require-all fails it): the gap is real, and hiding it would render an unmeasured corpus as clean.",
-      "count": 11,
-      "entries": [
-        {
-          "command": "bun run check:agents-claims",
-          "scripts": [
-            "cat-harness/scripts/check-agents-claims.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:context-emission",
-          "scripts": [
-            "cat-harness/scripts/check-context-emission.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:image-roles",
-          "scripts": [
-            "cat-harness/scripts/check-image-roles.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:avatar-instances",
-          "scripts": [
-            "cat-harness/scripts/check-avatar-instances.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:asset-roles",
-          "scripts": [
-            "cat-harness/scripts/check-asset-roles.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:retired-front-matter",
-          "scripts": [
-            "cat-harness/scripts/check-retired-front-matter.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:wireframes",
-          "scripts": [
-            "cat-harness/scripts/check-wireframes.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:partition",
-          "scripts": [
-            "cat-harness/scripts/repo-partition.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run avatars:css:check",
-          "scripts": [
-            "cat-harness/scripts/gen-avatars-css.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run navbar:geometry:check",
-          "scripts": [
-            "cat-harness/scripts/gen-navbar-geometry-css.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun run check:viewer-nav",
-          "scripts": [
-            "cat-harness/scripts/check-viewer-nav.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
@@ -946,7 +877,7 @@
       ]
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that no kg-audit criterion and no gate declaring @covers reaches. An UPPER bound while gates remain undeclared: 11 of 145 gate(s) have not said what they cover.",
+      "summary": "A declared kind whose directories hold files that no kg-audit criterion and no gate declaring @covers reaches. An UPPER bound while gates remain undeclared: 0 of 145 gate(s) have not said what they cover.",
       "count": 4,
       "entries": [
         {
@@ -976,5 +907,5 @@
       ]
     }
   },
-  "total": 66
+  "total": 55
 }
