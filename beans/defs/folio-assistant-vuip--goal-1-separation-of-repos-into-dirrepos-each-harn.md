@@ -63,6 +63,39 @@ the same reason `p5wm` keeps a withdrawal table. `wggr`, `b5f0` and `zmdo`
 were each re-checked against the store in the same pass and are all still
 open, so the rest of the chain stands.
 
+## Box 2 — the owner's ruling, 2026-09-25
+
+The re-measurement below left box 2 with a question the store could not answer:
+the box and `check:instance-config` disagreed about whether an instance with no
+config is a shortfall. Put to the owner as a selectable decision; the ruling,
+kept as chosen:
+
+> **Every config that exists is correct** — "the box means: any config present
+> sits at its instantiation root and is named for its instance."
+
+So the box asks about **naming and location, not coverage**, and an instance
+with no config is not outstanding work. That is exactly what the gate already
+enforces and reports green:
+
+```
+✓ every config is named after its instance, and no retired name survives
+```
+
+**Box 2 is therefore ticked**, on the gate's evidence rather than on this
+bean's say-so — re-derivable at any time by running it, which is the standard
+`bean-coordination` asks for when a box is closed.
+
+The rejected reading is recorded because it changes more than this bean: had
+the box meant *every instance must carry one*, 10 of 16 would be outstanding
+AND `check:instance-config` would have to start failing on a state it currently
+prints as legitimate. Nothing needs to change in the gate.
+
+**GOAL 1 now has two open boxes, not three**, and box 1 is still blocked on
+`zmdo`. Box 3 is NOT ticked here: the 2026-09-21 row calls it "substantially
+satisfied", which is not a measurement, and nobody has re-derived it. That is
+the next thing this milestone needs, and it is agent work rather than an owner
+decision.
+
 ## RE-MEASURED 2026-09-25 — box 2, in the filename that now exists
 
 The 2026-09-21 row below reads *"12 instances declare `harness.json`; **one**
@@ -159,7 +192,8 @@ done?" has an answer with a named blocker rather than a shrug.
 - [ ] A new, empty repository can say "bootstrap a litlfred/folio-assistant
       here" and get a working instance — `zmdo`'s acceptance test, and the
       goal's own falsifier
-- [ ] Each instantiation declares its config in one file at its own root
+- [x] Each instantiation declares its config in one file at its own root —
+      **settled by the owner 2026-09-25**, see §"Box 2 — the owner's ruling"
 - [ ] The initiation steps are skilled, tooled and tested: a skill that
       governs them, a Tool node that performs them, and a test that fails
       when they do not run
