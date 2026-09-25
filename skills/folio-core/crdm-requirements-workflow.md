@@ -71,6 +71,8 @@ For each requirement:
    `content/docs/`, existing skills, existing workflows
 
 **Post to the issue:** structured requirements with acceptance criteria.
+See [`crdm-requirements-template.md`](crdm-requirements-template.md) for the
+specification schema, conversational elicitation guide, and checklist template.
 
 ## Phase 4 — Impact analysis
 
@@ -85,6 +87,8 @@ For each requirement:
 7. **Migration plan** — steps, rollback, what breaks without it
 
 **Post to the issue:** impact assessment and migration plan.
+See [`crdm-impact-analysis.md`](crdm-impact-analysis.md) for the seven-dimension
+scan methodology, migration planning, and structured issue template.
 
 ## Phase 5 — Sign-off and bean creation
 
@@ -141,6 +145,8 @@ When a round of implementation is complete (one or more beans resolved):
 
 - [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
+- [`crdm-requirements-template.md`](crdm-requirements-template.md) — requirements definition template and guide (Phase 3)
+- [`crdm-impact-analysis.md`](crdm-impact-analysis.md) — impact analysis and migration planning skill (Phase 4)
 - [`staging-review.md`](staging-review.md) — before/after staging comparison skill
 - [`todo-manager.md`](todo-manager.md) — bean creation protocol
 - [`bean-coordination.md`](bean-coordination.md) — cross-session bean coordination

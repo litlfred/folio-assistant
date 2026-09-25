@@ -373,6 +373,12 @@ bean list parsed from `.beans/`, plus how far the default branch has moved and
 recent sibling `claude/*` branch activity). Heavy triage of new commits belongs in
 a background subagent, not the foreground.
 
+**If resuming on a feature branch**, run the branch-freshness check
+([`skills/folio-core/branch-freshness.md`](skills/folio-core/branch-freshness.md)):
+fetch main, measure drift, rebase if needed, re-analyse the workplan. This is
+especially important after long idle periods, session restarts, or when many
+commits have landed on main from sibling sessions.
+
 ## Agentic harness — interaction model
 
 The [agentic harness](https://litlfred.github.io/folio-assistant/agentic-harness.html)

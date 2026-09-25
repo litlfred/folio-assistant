@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_BeansLifecycle"
+                  targetNamespace="https://folio-assistant.dev/workflows"
+                  exporter="folio-assistant" exporterVersion="0.1.0">
+
+  <bpmn:collaboration id="Collaboration_BeansLifecycle">
+    <bpmn:participant id="Participant_BeansLifecycle" name="Beans Work-Plan Lifecycle" processRef="Process_BeansLifecycle" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_BeansLifecycle" name="Beans Work-Plan Lifecycle" isExecutable="false">
+    <bpmn:documentation>
+      Beans work-plan lifecycle in folio-assistant:
+      1. Work items are tracked as markdown files under .beans/ via the beans CLI.
+      2. beans create is NOT idempotent: mints a random ID on every call and dedupes on nothing. History: on 2026-08-04 in the qou folio, an unguarded loop produced 14,688 duplicate beans (92% of the repo), destroying signal for idle backlogs and triage. Always check existence first.
+      3. Opening brief: Before touching code, write a 4-part brief in chat (Problem, What you know with provenance, Route + Gate with falsifier, What you are NOT doing).
+      4. Beans ≠ issues: Issues represent stakeholder-facing requirements and goals; beans represent fine-grained agent session tasks. Many beans map to one issue.
+      5. Cross-session hygiene: Run beans prime at session start, claim beans before starting work, and NEVER resolve or delete a sibling agent's bean.
+    </bpmn:documentation>
+
+    <bpmn:laneSet id="LaneSet_BeansLifecycle">
+      <bpmn:lane id="Lane_Agent" name="Agent">
+        <bpmn:flowNodeRef>Start_WorkItem</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckExists</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RunBeansPrime</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckUnclaimed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_BeanExists</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ClaimMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ClaimBean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CreateBean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_PreIssueMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LinkIssue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WriteBrief</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CreateBranch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ImplementMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Implement</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_OpenPR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Iterate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ResolveBean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReportSummary</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_BeanResolved</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_BA" name="BA / Human">
+        <bpmn:flowNodeRef>Task_ReviewIncrement</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Accepted</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <!-- ═══ Flow Nodes: Agent Lane ═══ -->
+    <bpmn:startEvent id="Start_WorkItem" name="Work item identified">
+      <bpmn:documentation>
+        A task, bugfix, or feature requirement is identified during a session or requested by a human/BA.
+      </bpmn:documentation>
+      <bpmn:outgoing>Flow_Start_Check</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Start_Prime</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="Task_CheckExists" name="Check if bean exists&#10;(beans list + grep)">
+      <bpmn:documentation>
+        CRITICAL GATE: Check if bean already exists using `beans list --json --search &quot;title:\&quot;$T\&quot;&quot;` plus exact-match python/grep filtering.
+        `beans create` is NOT idempotent — it mints a fresh random ID on every call and dedupes on nothing.
+        History: An unguarded loop in the qou folio ran ~980 times and generated 14,688 duplicate beans (92% of all open beans in the repo), corrupting backlog triage and agent grep. Always check first!
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Start_Check</bpmn:incoming>
+      <bpmn:outgoing>Flow_Check_ExistsGW</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_RunBeansPrime" name="Run beans prime&#10;at session start">
+      <bpmn:documentation>
+        Cross-session coordination: Run `beans prime` at session start to emit work-plan priming for the agent context and discover active tasks.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Start_Prime</bpmn:incoming>
+      <bpmn:outgoing>Flow_Prime_Unclaimed</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_CheckUnclaimed" name="Check for&#10;unclaimed beans">
+      <bpmn:documentation>
+        Cross-session coordination: Check `.beans/` for unassigned or existing in-progress beans left by previous sessions or idle backlogs before creating new work items.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Prime_Unclaimed</bpmn:incoming>
+      <bpmn:outgoing>Flow_Unclaimed_Merge</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_BeanExists" name="Bean exists?">
+      <bpmn:documentation>
+        Does a matching bean already exist in the repository work-plan?
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Check_ExistsGW</bpmn:incoming>
+      <bpmn:outgoing>Flow_Exists_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Exists_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:exclusiveGateway id="GW_ClaimMerge" name="Merge to claim">
+      <bpmn:documentation>
+        Merge path from exact match detection and session-start unclaimed pickup.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Exists_Yes</bpmn:incoming>
+      <bpmn:incoming>Flow_Unclaimed_Merge</bpmn:incoming>
+      <bpmn:outgoing>Flow_ClaimMerge_Claim</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_ClaimBean" name="Claim existing bean&#10;(beans update&#10;--status in-progress)">
+      <bpmn:documentation>
+        Claim existing bean:
+        `beans update &lt;id&gt; --status in-progress --body-append &quot;Claimed by &lt;branch&gt;&quot;`
+        Claim before working so sibling sessions do not collide on the same item.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_ClaimMerge_Claim</bpmn:incoming>
+      <bpmn:outgoing>Flow_Claim_PreIssue</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_CreateBean" name="Create bean&#10;(beans create&#10;--type task)">
+      <bpmn:documentation>
+        Create a new work-plan item:
+        `beans create &quot;&lt;title&gt;&quot; --type task`
+        Only executed when exhaustive search confirmed 0 matches.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Exists_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Create_PreIssue</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_PreIssueMerge" name="Merge setup">
+      <bpmn:documentation>
+        Converge claimed and newly created beans into the issue linking and briefing flow.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Claim_PreIssue</bpmn:incoming>
+      <bpmn:incoming>Flow_Create_PreIssue</bpmn:incoming>
+      <bpmn:outgoing>Flow_PreIssue_Link</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_LinkIssue" name="Link to parent issue&#10;(if applicable)">
+      <bpmn:documentation>
+        Link bean to parent GitHub issue if one exists.
+        Beans ≠ issues: Issues represent stakeholder-facing requirements and milestones; beans represent granular session work-plan items. Multiple beans typically map to a single issue across iterations.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_PreIssue_Link</bpmn:incoming>
+      <bpmn:outgoing>Flow_Link_Brief</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_WriteBrief" name="Write opening brief&#10;(problem, facts,&#10;route+gate, exclusions)">
+      <bpmn:documentation>
+        Write the 4-part opening brief in chat before touching code:
+        1. Problem: Stated for someone not present, expanding all identifiers.
+        2. What you know: Numbers and assertions with explicit provenance (measured this session vs prior session vs unverified doc).
+        3. Route and gate: Planned execution path, verification gates, and what would falsify the approach.
+        4. What you are NOT doing: Explicit scope exclusions and boundaries to prevent scope creep.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Link_Brief</bpmn:incoming>
+      <bpmn:outgoing>Flow_Brief_Branch</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_CreateBranch" name="Create feature branch">
+      <bpmn:documentation>
+        Create and switch to a dedicated feature branch for the increment.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Brief_Branch</bpmn:incoming>
+      <bpmn:outgoing>Flow_Branch_ImplMerge</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_ImplementMerge" name="Implementation entry">
+      <bpmn:documentation>
+        Join point for initial implementation and revision loops.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Branch_ImplMerge</bpmn:incoming>
+      <bpmn:incoming>Flow_Iterate_Loop</bpmn:incoming>
+      <bpmn:outgoing>Flow_ImplMerge_Impl</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_Implement" name="Implement&#10;(on feature branch)">
+      <bpmn:documentation>
+        Implement changes strictly within the defined scope, running local verification gates against the opening brief criteria.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_ImplMerge_Impl</bpmn:incoming>
+      <bpmn:outgoing>Flow_Impl_OpenPR</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_OpenPR" name="Open PR + post&#10;summary to issue">
+      <bpmn:documentation>
+        Open a pull request with clear description and cross-link to the parent issue and bean ID.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Impl_OpenPR</bpmn:incoming>
+      <bpmn:outgoing>Flow_OpenPR_Review</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_Iterate" name="Iterate on feedback">
+      <bpmn:documentation>
+        Agent incorporates BA review feedback, refines code or tests, and loops back to implementation.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Accepted_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Iterate_Loop</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_ResolveBean" name="Resolve bean&#10;(beans update&#10;--status completed)">
+      <bpmn:documentation>
+        Mark the bean completed:
+        `beans update &lt;id&gt; --status completed`
+        STRICT RULE: Never resolve or delete a sibling's bean! Only resolve beans claimed and finished by this session.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Accepted_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Resolve_Summary</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_ReportSummary" name="Report bean in&#10;turn summary&#10;(what changed, next)">
+      <bpmn:documentation>
+        Report bean status in turn summary: state what changed, key evidence/gates passed, and what comes next.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Resolve_Summary</bpmn:incoming>
+      <bpmn:outgoing>Flow_Summary_End</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_BeanResolved" name="Bean resolved">
+      <bpmn:documentation>
+        Work item successfully completed, verified, reviewed, and recorded in the work-plan.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Summary_End</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- ═══ Flow Nodes: BA / Human Lane ═══ -->
+    <bpmn:task id="Task_ReviewIncrement" name="Review increment">
+      <bpmn:documentation>
+        BA / Human reviews PR diff, preview staging, test results, and verified falsification gates.
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_OpenPR_Review</bpmn:incoming>
+      <bpmn:outgoing>Flow_Review_AcceptedGW</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_Accepted" name="Accepted?">
+      <bpmn:documentation>
+        BA evaluation: Has the increment satisfied requirements and quality gates?
+      </bpmn:documentation>
+      <bpmn:incoming>Flow_Review_AcceptedGW</bpmn:incoming>
+      <bpmn:outgoing>Flow_Accepted_No</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Accepted_Yes</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <!-- ═══ Sequence Flows ═══ -->
+    <bpmn:sequenceFlow id="Flow_Start_Check" name="Identify work" sourceRef="Start_WorkItem" targetRef="Task_CheckExists" />
+    <bpmn:sequenceFlow id="Flow_Start_Prime" name="Session coordination" sourceRef="Start_WorkItem" targetRef="Task_RunBeansPrime" />
+    <bpmn:sequenceFlow id="Flow_Prime_Unclaimed" sourceRef="Task_RunBeansPrime" targetRef="Task_CheckUnclaimed" />
+    <bpmn:sequenceFlow id="Flow_Unclaimed_Merge" name="Found unclaimed" sourceRef="Task_CheckUnclaimed" targetRef="GW_ClaimMerge" />
+    <bpmn:sequenceFlow id="Flow_Check_ExistsGW" sourceRef="Task_CheckExists" targetRef="GW_BeanExists" />
+    <bpmn:sequenceFlow id="Flow_Exists_Yes" name="Yes" sourceRef="GW_BeanExists" targetRef="GW_ClaimMerge" />
+    <bpmn:sequenceFlow id="Flow_Exists_No" name="No" sourceRef="GW_BeanExists" targetRef="Task_CreateBean" />
+    <bpmn:sequenceFlow id="Flow_ClaimMerge_Claim" sourceRef="GW_ClaimMerge" targetRef="Task_ClaimBean" />
+    <bpmn:sequenceFlow id="Flow_Claim_PreIssue" sourceRef="Task_ClaimBean" targetRef="GW_PreIssueMerge" />
+    <bpmn:sequenceFlow id="Flow_Create_PreIssue" sourceRef="Task_CreateBean" targetRef="GW_PreIssueMerge" />
+    <bpmn:sequenceFlow id="Flow_PreIssue_Link" sourceRef="GW_PreIssueMerge" targetRef="Task_LinkIssue" />
+    <bpmn:sequenceFlow id="Flow_Link_Brief" sourceRef="Task_LinkIssue" targetRef="Task_WriteBrief" />
+    <bpmn:sequenceFlow id="Flow_Brief_Branch" sourceRef="Task_WriteBrief" targetRef="Task_CreateBranch" />
+    <bpmn:sequenceFlow id="Flow_Branch_ImplMerge" sourceRef="Task_CreateBranch" targetRef="GW_ImplementMerge" />
+    <bpmn:sequenceFlow id="Flow_ImplMerge_Impl" sourceRef="GW_ImplementMerge" targetRef="Task_Implement" />
+    <bpmn:sequenceFlow id="Flow_Impl_OpenPR" sourceRef="Task_Implement" targetRef="Task_OpenPR" />
+    <bpmn:sequenceFlow id="Flow_OpenPR_Review" sourceRef="Task_OpenPR" targetRef="Task_ReviewIncrement" />
+    <bpmn:sequenceFlow id="Flow_Review_AcceptedGW" sourceRef="Task_ReviewIncrement" targetRef="GW_Accepted" />
+    <bpmn:sequenceFlow id="Flow_Accepted_No" name="No (iterate)" sourceRef="GW_Accepted" targetRef="Task_Iterate" />
+    <bpmn:sequenceFlow id="Flow_Iterate_Loop" sourceRef="Task_Iterate" targetRef="GW_ImplementMerge" />
+    <bpmn:sequenceFlow id="Flow_Accepted_Yes" name="Yes (accepted)" sourceRef="GW_Accepted" targetRef="Task_ResolveBean" />
+    <bpmn:sequenceFlow id="Flow_Resolve_Summary" sourceRef="Task_ResolveBean" targetRef="Task_ReportSummary" />
+    <bpmn:sequenceFlow id="Flow_Summary_End" sourceRef="Task_ReportSummary" targetRef="End_BeanResolved" />
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_BeansLifecycle">
+    <bpmndi:BPMNPlane id="BPMNPlane_BeansLifecycle" bpmnElement="Collaboration_BeansLifecycle">
+
+      <!-- Pool / Participant -->
+      <bpmndi:BPMNShape id="Participant_BeansLifecycle_di" bpmnElement="Participant_BeansLifecycle" isHorizontal="true">
+        <dc:Bounds x="140" y="40" width="2760" height="640" />
+      </bpmndi:BPMNShape>
+
+      <!-- Lanes -->
+      <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="170" y="40" width="2730" height="440" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_BA_di" bpmnElement="Lane_BA" isHorizontal="true">
+        <dc:Bounds x="170" y="480" width="2730" height="200" />
+      </bpmndi:BPMNShape>
+
+      <!-- Agent Lane Shapes -->
+      <bpmndi:BPMNShape id="Start_WorkItem_di" bpmnElement="Start_WorkItem">
+        <dc:Bounds x="240" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="210" y="305" width="96" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_RunBeansPrime_di" bpmnElement="Task_RunBeansPrime">
+        <dc:Bounds x="360" y="100" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_CheckUnclaimed_di" bpmnElement="Task_CheckUnclaimed">
+        <dc:Bounds x="540" y="100" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_CheckExists_di" bpmnElement="Task_CheckExists">
+        <dc:Bounds x="360" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GW_BeanExists_di" bpmnElement="GW_BeanExists" isMarkerVisible="true">
+        <dc:Bounds x="565" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="557" y="231" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GW_ClaimMerge_di" bpmnElement="GW_ClaimMerge" isMarkerVisible="true">
+        <dc:Bounds x="745" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="733" y="312" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_ClaimBean_di" bpmnElement="Task_ClaimBean">
+        <dc:Bounds x="850" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_CreateBean_di" bpmnElement="Task_CreateBean">
+        <dc:Bounds x="720" y="360" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GW_PreIssueMerge_di" bpmnElement="GW_PreIssueMerge" isMarkerVisible="true">
+        <dc:Bounds x="1045" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1038" y="231" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_LinkIssue_di" bpmnElement="Task_LinkIssue">
+        <dc:Bounds x="1150" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_WriteBrief_di" bpmnElement="Task_WriteBrief">
+        <dc:Bounds x="1340" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_CreateBranch_di" bpmnElement="Task_CreateBranch">
+        <dc:Bounds x="1530" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GW_ImplementMerge_di" bpmnElement="GW_ImplementMerge" isMarkerVisible="true">
+        <dc:Bounds x="1725" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1712" y="312" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_Implement_di" bpmnElement="Task_Implement">
+        <dc:Bounds x="1830" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_OpenPR_di" bpmnElement="Task_OpenPR">
+        <dc:Bounds x="2020" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_Iterate_di" bpmnElement="Task_Iterate">
+        <dc:Bounds x="2170" y="100" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_ResolveBean_di" bpmnElement="Task_ResolveBean">
+        <dc:Bounds x="2380" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Task_ReportSummary_di" bpmnElement="Task_ReportSummary">
+        <dc:Bounds x="2570" y="240" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="End_BeanResolved_di" bpmnElement="End_BeanResolved">
+        <dc:Bounds x="2770" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2753" y="305" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- BA Lane Shapes -->
+      <bpmndi:BPMNShape id="Task_ReviewIncrement_di" bpmnElement="Task_ReviewIncrement">
+        <dc:Bounds x="2020" y="520" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="GW_Accepted_di" bpmnElement="GW_Accepted" isMarkerVisible="true">
+        <dc:Bounds x="2215" y="535" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2214" y="592" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Edges -->
+      <bpmndi:BPMNEdge id="Flow_Start_Check_di" bpmnElement="Flow_Start_Check">
+        <di:waypoint x="276" y="280" />
+        <di:waypoint x="360" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="286" y="262" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Start_Prime_di" bpmnElement="Flow_Start_Prime">
+        <di:waypoint x="258" y="262" />
+        <di:waypoint x="258" y="140" />
+        <di:waypoint x="360" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="268" y="176" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Prime_Unclaimed_di" bpmnElement="Flow_Prime_Unclaimed">
+        <di:waypoint x="500" y="140" />
+        <di:waypoint x="540" y="140" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Unclaimed_Merge_di" bpmnElement="Flow_Unclaimed_Merge">
+        <di:waypoint x="680" y="140" />
+        <di:waypoint x="770" y="140" />
+        <di:waypoint x="770" y="255" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="685" y="122" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Check_ExistsGW_di" bpmnElement="Flow_Check_ExistsGW">
+        <di:waypoint x="500" y="280" />
+        <di:waypoint x="565" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Exists_Yes_di" bpmnElement="Flow_Exists_Yes">
+        <di:waypoint x="615" y="280" />
+        <di:waypoint x="745" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="668" y="262" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Exists_No_di" bpmnElement="Flow_Exists_No">
+        <di:waypoint x="590" y="305" />
+        <di:waypoint x="590" y="400" />
+        <di:waypoint x="720" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="353" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ClaimMerge_Claim_di" bpmnElement="Flow_ClaimMerge_Claim">
+        <di:waypoint x="795" y="280" />
+        <di:waypoint x="850" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Claim_PreIssue_di" bpmnElement="Flow_Claim_PreIssue">
+        <di:waypoint x="990" y="280" />
+        <di:waypoint x="1045" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Create_PreIssue_di" bpmnElement="Flow_Create_PreIssue">
+        <di:waypoint x="860" y="400" />
+        <di:waypoint x="1070" y="400" />
+        <di:waypoint x="1070" y="305" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_PreIssue_Link_di" bpmnElement="Flow_PreIssue_Link">
+        <di:waypoint x="1095" y="280" />
+        <di:waypoint x="1150" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Link_Brief_di" bpmnElement="Flow_Link_Brief">
+        <di:waypoint x="1290" y="280" />
+        <di:waypoint x="1340" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Brief_Branch_di" bpmnElement="Flow_Brief_Branch">
+        <di:waypoint x="1480" y="280" />
+        <di:waypoint x="1530" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Branch_ImplMerge_di" bpmnElement="Flow_Branch_ImplMerge">
+        <di:waypoint x="1670" y="280" />
+        <di:waypoint x="1725" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_ImplMerge_Impl_di" bpmnElement="Flow_ImplMerge_Impl">
+        <di:waypoint x="1775" y="280" />
+        <di:waypoint x="1830" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Impl_OpenPR_di" bpmnElement="Flow_Impl_OpenPR">
+        <di:waypoint x="1970" y="280" />
+        <di:waypoint x="2020" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_OpenPR_Review_di" bpmnElement="Flow_OpenPR_Review">
+        <di:waypoint x="2090" y="320" />
+        <di:waypoint x="2090" y="520" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Review_AcceptedGW_di" bpmnElement="Flow_Review_AcceptedGW">
+        <di:waypoint x="2160" y="560" />
+        <di:waypoint x="2215" y="560" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Accepted_No_di" bpmnElement="Flow_Accepted_No">
+        <di:waypoint x="2240" y="535" />
+        <di:waypoint x="2240" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2246" y="352" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Iterate_Loop_di" bpmnElement="Flow_Iterate_Loop">
+        <di:waypoint x="2170" y="140" />
+        <di:waypoint x="2140" y="140" />
+        <di:waypoint x="2140" y="75" />
+        <di:waypoint x="1750" y="75" />
+        <di:waypoint x="1750" y="255" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Accepted_Yes_di" bpmnElement="Flow_Accepted_Yes">
+        <di:waypoint x="2265" y="560" />
+        <di:waypoint x="2330" y="560" />
+        <di:waypoint x="2330" y="280" />
+        <di:waypoint x="2380" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2333" y="413" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Resolve_Summary_di" bpmnElement="Flow_Resolve_Summary">
+        <di:waypoint x="2520" y="280" />
+        <di:waypoint x="2570" y="280" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_Summary_End_di" bpmnElement="Flow_Summary_End">
+        <di:waypoint x="2710" y="280" />
+        <di:waypoint x="2770" y="280" />
+      </bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
