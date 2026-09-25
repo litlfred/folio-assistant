@@ -43,7 +43,7 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -116,9 +116,9 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -198,7 +198,7 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
