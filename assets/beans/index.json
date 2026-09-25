@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 333,
+      "count": 338,
       "unit": "beans"
     }
   },
@@ -865,6 +865,20 @@
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
     },
     {
+      "id": "folio-assistant-6bhf",
+      "title": "SECURITY SUB-KG: an external identifier reaches join() unvalidated in three HTTP handlers, and the containment helper that fixes it already exists in one script",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:38:20Z",
+      "updatedAt": "2026-09-25T16:38:20Z",
+      "preview": "Owner, 2026-09-25, verbatim:\n\n> add lots of precautions/double checking/fails safe on rm -fr... is variable\n> there? injection hazard. that is needed on ALL I/O. bean as ceybeesquity sub\n> KG in tools. first is injection et. related skills already man y in folio and\n> smart-base. consolidate.\n\nOwner chose scope **2 + 3**: consolidate the scattered pieces **and** audit every\nI/O site. This bean is ",
+      "file": "beans/defs/folio-assistant-6bhf--security-sub-kg-an-external-identifier-reaches-joi.md"
+    },
+    {
       "id": "folio-assistant-6brk",
       "title": "FLAKE: check-declaration-filename's corpus scan runs 4.2s against a 5000ms test budget on a clean main — any corpus growth tips it",
       "status": "completed",
@@ -1653,14 +1667,14 @@
     {
       "id": "folio-assistant-bqrg",
       "title": "stripLeanComments is implemented six times — converge on lean-lexer.ts",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T22:52:21Z",
-      "updatedAt": "2026-09-18T22:52:21Z",
+      "updatedAt": "2026-09-25T16:22:38Z",
       "preview": "## Measured 2026-09-18, on `claude/festive-galileo-s7ibx0`\n\n```\ngrep -rn \"stripLeanComments\" --include=*.ts . | grep -v node_modules\n```\n\nSix independent implementations of a Lean comment stripper:\n\n| file | line | shape |\n|---|---|---|\n| `content/pipeline/lean-lexer.ts` | 23 | **canonical** — extracted this session from `lean-atlas-ingest.ts` |\n| `content/pipeline/qa-checkers-extended.ts` | 2925 ",
       "file": "beans/defs/folio-assistant-bqrg--stripleancomments-is-implemented-six-times-converg.md"
     },
@@ -2593,6 +2607,20 @@
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
     },
     {
+      "id": "folio-assistant-kfkh",
+      "title": "A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T17:44:01Z",
+      "updatedAt": "2026-09-25T17:44:01Z",
+      "preview": "Found 2026-09-25 while merging `main` into a PR branch. Distinct from `oxka`\n(completed), which is the same territory from the opposite side: that one is\nabout generated files conflicting on **nearly every merge**, and `.gitattributes`\nnow marks three of them `-diff -merge`. This is about hand-authored files\nmerging with **no conflict at all** and producing a duplicate key.\n\n`-merge` is not the re",
+      "file": "beans/defs/folio-assistant-kfkh--a-clean-merge-produces-a-duplicate-front-matter-ke.md"
+    },
+    {
       "id": "folio-assistant-kn0t",
       "title": "PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each",
       "status": "in-progress",
@@ -3053,6 +3081,20 @@
       "updatedAt": "2026-09-23T10:36:14Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/fsh-guts/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **The two surfaces disagree about the count.** The page says 19 files. The fish shows 9, which is `@graph` nodes plus any locally discarded todos. `fsh-guts-ex",
       "file": "beans/defs/folio-assistant-oi3h--fsh-guts-visualiser-7-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-omki",
+      "title": "QUIET CLAIMS, THE NETWORK HALF: the check's own basis calls its count an upper bound — supply the signal it cannot see",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:26:09Z",
+      "updatedAt": "2026-09-25T16:26:09Z",
+      "preview": "`bean-quiet-claims` reads one signal — hours since the bean's own `updated_at` —\nand its threshold `basis` says so in as many words: the count is an **UPPER\nBOUND**, because a bean it lists may carry a liveness signal the sweep cannot\nsee. `bean-coordination.md` §\"A quiet claim\" names three:\n\n> A claim is LIVE when something outside the bean says so — an open PR naming\n> it, an unmerged branch tou",
+      "file": "beans/defs/folio-assistant-omki--quiet-claims-the-network-half-the-checks-own-basis.md"
     },
     {
       "id": "folio-assistant-oqdr",
@@ -3915,6 +3957,20 @@
       "file": "beans/defs/folio-assistant-v7bg--tool-113-task-publish-publication-export-34-files.md"
     },
     {
+      "id": "folio-assistant-v9ah",
+      "title": "SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT BEANS: every finding the check produces is one no session may act on, which is thux's o5qj shape unfixed on the second axis",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T17:34:43Z",
+      "updatedAt": "2026-09-25T17:34:43Z",
+      "preview": "`bean-store`'s `bean-self-declared-done` finding names a claimed bean whose every\n`## Done when` box is ticked, and its implied action is that somebody closes it.\n`0pes` settled who may: **a bean closes on EVIDENCE, not on authorship** — with\nthree obligations, the third of which is that **mid-flight is off limits**, where\nmid-flight means a claim naming a branch, an open PR, *or a recent note*.\n\n",
+      "file": "beans/defs/folio-assistant-v9ah--self-declared-done-names-only-mid-flight-beans-eve.md"
+    },
+    {
       "id": "folio-assistant-vigi",
       "title": "JSON-LD is a CONVENTION here, not a construction: 28 deps, zero RDF/JSON-LD processors, nothing validates an @context",
       "status": "completed",
@@ -3999,6 +4055,20 @@
       "updatedAt": "2026-09-24T05:25:53Z",
       "preview": "User asked (2026-09-23) whether other open-source projects take a similar approach, then chose 'Write a prior-art doc'. Add a reader-facing comparison page under cat-harness/docs, verified against each project's repo.\n\n## Done when\n- [x] cat-harness/docs/research-and-analysis/prior-art.md exists (moved there on the owner's ask, new section), each project verified online with licence and what overl",
       "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
+    },
+    {
+      "id": "folio-assistant-vrfx",
+      "title": "stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:20:52Z",
+      "updatedAt": "2026-09-25T16:20:52Z",
+      "preview": "Found 2026-09-25 while converging the declaration splitter (`bqrg`). Not part of\nthat change, and deliberately not folded into it: this one moves a reported\nline number on almost every file in a Lean corpus, which is the corpus-wide\nre-scoring `bqrg` warns against doing on the strength of an unrelated sweep.\n\n## The defect\n\n`stripLeanComments` blanks a comment by writing a space over each of its\nc",
+      "file": "beans/defs/folio-assistant-vrfx--stripleancomments-eats-newlines-inside-block-comme.md"
     },
     {
       "id": "folio-assistant-vsv4",
