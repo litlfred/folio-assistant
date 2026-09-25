@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790359238">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790359238">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790359238">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790359238">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790359238">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790357830">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790359238">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790357830" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790359238" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -792,13 +792,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p>Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2535 terms: <strong>7 authored</strong> in 2 glossaries, on this page, and <strong>2528 extracted</strong> from knowledge-graph assets in 18 generated schemes, one page per asset type, plus the sources below.</p>
+<p>Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2538 terms: <strong>7 authored</strong> in 2 glossaries, on this page, and <strong>2531 extracted</strong> from knowledge-graph assets in 18 generated schemes, one page per asset type, plus the sources below.</p>
 
 <div class="table-wrapper"><table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2528</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2531</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table></div>
@@ -817,7 +817,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
 <tr><td>this page</td><td>authored terms, counts and sources</td><td>7</td><td>16 KB</td></tr>
-<tr><td><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/skills/">Skills</a></td><td>candidates, extracted</td><td>274</td><td>195 KB</td></tr>
+<tr><td><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/skills/">Skills</a></td><td>candidates, extracted</td><td>277</td><td>197 KB</td></tr>
 <tr><td><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/tools/">Tools</a></td><td>candidates, extracted</td><td>116</td><td>73 KB</td></tr>
 <tr><td><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/bpmn-activities/">BPMN activities</a></td><td>candidates, extracted</td><td>530</td><td>404 KB</td></tr>
 <tr><td><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/dmn-decisions/">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
@@ -982,13 +982,13 @@ task run
 <thead><tr><th>instance</th><th><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/skills/">Skills</a></th><th><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/tools/">Tools</a></th><th><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/bpmn-activities/">BPMN activities</a></th><th><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/dmn-decisions/">DMN decisions</a></th><th><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/glossary/schema-fields/">Schema fields</a></th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/bootstrap--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>16 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>256 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>101 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>501 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1419 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>259 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a></td><td>101 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-tools.skos.jsonld">SKOS</a></td><td>501 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld">SKOS</a></td><td>1419 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>6 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a></td><td>2 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/fhir-harness--kg-tools.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld">SKOS</a></td><td>4 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld">SKOS</a></td><td>4 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>162 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/large-datasets--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>18 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/smart-base--kg-tools.skos.jsonld">SKOS</a></td><td>9 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/glossary/who-iris--kg-skills.skos.jsonld">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>274</strong></td><td><strong>116</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1599</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>277</strong></td><td><strong>116</strong></td><td><strong>530</strong></td><td><strong>9</strong></td><td><strong>1599</strong></td></tr>
 </tbody></table></div></div>
 
 <script type="application/ld+json">
