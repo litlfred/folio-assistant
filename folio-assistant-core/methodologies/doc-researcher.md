@@ -8,19 +8,18 @@ origin: >
   A Unified System for Multimodal Document Parsing and Deep Research"
   (arXiv:2510.21603v1, Huawei Technologies, 24 October 2025). Open access.
 
-  THE PRIMARY IS HELD IN THIS CHECKOUT BUT NOT PROMOTED, and `evidence:` is
-  omitted rather than pointed at a staged entry. `bun run ingest` staged it as
-  `arxiv-2510.21603v1` — 22 blocks and a manifest — and its
-  `image-descriptions` requirement is unmet: the extractor placed **383**
-  images, 335 of them from page 3 alone and many byte-identical in size, which
-  are fragments of one composite architecture figure rather than 335 figures.
-  Writing 383 descriptions would be the fabrication `document-image.ts`'s
-  inspection basis exists to refuse. Recorded rather than worked around; see
-  §"What this checkout holds, and what it does not".
+  THE PRIMARY IS HELD AND PROMOTED, at `library/arxiv-2510.21603v1`, which is
+  what `evidence:` below points at. It was staged and unpromotable for a day:
+  the extractor reported **383** images, 335 of them on page 3, and its
+  `image-descriptions` requirement could not be met. It holds **fifty**. See
+  §"What this checkout holds" — the first reading of those 383 was wrong, and
+  the correction is kept there rather than tidied away.
 
   It is a SYSTEM paper reporting one implementation against a benchmark its own
   authors built, so what is adopted below is the METHOD, and §"Where this
   rendering stops" says which parts were left behind.
+evidence:
+  - library/arxiv-2510.21603v1
 applies-when: >
   **A question must be answered from documents this folio has ingested, and one
   retrieval pass will not do it.** Use it when the answer is spread across
@@ -122,16 +121,53 @@ taking.
 
 ## What this checkout holds, and what it does not
 
-The paper is staged at `arxiv-2510.21603v1` and **not promoted**, because its
-`image-descriptions` requirement is unmet and cannot be honestly met as things
-stand: 383 placed images against 7 captioned figures in the text, 335 of them
-from the single page carrying the architecture diagram.
+The paper is at `library/arxiv-2510.21603v1` and **promoted**, L1 complete: 24
+chapters read from the embedded outline, and fifty images each carrying a
+description drafted from inspection. `evidence:` points at it.
 
-That is a finding about the extractor rather than about the paper, and it is
-recorded as such rather than routed around. Until it is resolved this node
-cites an origin with no ingested source — which
-`check:methodology-evidence` will list, correctly, alongside the five others in
-that state.
+**It took a day and a correction to get there**, and the correction is the part
+worth reading.
+
+## CORRECTED 2026-09-24 — the first reading of those 383 was wrong
+
+This section said the 383 were *"fragments of one composite architecture
+figure"*, *"many byte-identical in size"*, and that writing 383 descriptions
+*"would be the fabrication `document-image.ts`'s inspection basis exists to
+refuse."* **All three claims were wrong**, and they were wrong in the way that
+matters: they were inferred from counts and file sizes rather than from looking
+at the images.
+
+Looking at them:
+
+- They are **clip-art icons** — a newspaper, a picture placeholder, and so on:
+  the icons the paper's Figure 1 uses to depict document types flowing through
+  its pipeline. Distinct, meaningful, individually describable.
+- **383 placements are 50 DISTINCT images** by content hash. Page 3's 335 are
+  **22** distinct, each placed about fifteen times.
+
+So the defect is not fragmentation of a composite. It is that the extractor
+emits one entry per **placement** rather than per distinct image. And the
+conclusion that followed from the wrong reading does not hold: describing 50
+images is ordinary work, not fabrication. This document is promotable once the
+duplicates are collapsed.
+
+Bean `j820` carries the measurement across all 29 ingested documents, including
+the same ratio in three other entries (`9789241509510-eng` 161→102,
+`9789241511766-eng` 99→44, `arxiv-2312.07755v1` 84→28). It was a general
+extractor defect with a mechanical fix, and issue #1234 shipped it:
+`pdf-images.py` now emits one entry per distinct image, keyed on the PDF's own
+`xref`, with every placement recorded in `placements[]`.
+
+**Each of the fifty was then opened and described.** Four are `logo` — the
+Word, PowerPoint, Excel and Wikipedia marks, stock glyphs rather than content
+the authors drew. Every narrative is a `draft`: only a person may confirm one,
+which is the rule this node argues for two sections above.
+
+**Why the wrong reading is left on the record rather than deleted.** It is the
+exact failure this node warns about two sections above, committed by the node
+itself: a description asserted from measurement rather than from inspection.
+Two file reads falsified it. That is worth more as a worked example than as a
+clean paragraph.
 
 ## Where this rendering stops
 

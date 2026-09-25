@@ -52,6 +52,7 @@
  * Exit: 0 every open bean is placed (or no store), 1 a real orphan, 2 could not check.
  *
  * @module scripts/check-bean-parents
+ * @covers bean-defs, beans
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";

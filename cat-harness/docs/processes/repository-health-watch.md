@@ -19,6 +19,7 @@ THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOW
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

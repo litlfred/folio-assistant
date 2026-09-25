@@ -50,6 +50,7 @@
  *       2 could not determine.
  *
  * @module scripts/check-methodology-evidence
+ * @covers methodology, library
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";

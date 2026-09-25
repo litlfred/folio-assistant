@@ -64,6 +64,7 @@
  * answering them here would be the over-claiming this gate exists to catch.
  *
  * @module scripts/check-lockfile-pinning
+ * @covers code
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";

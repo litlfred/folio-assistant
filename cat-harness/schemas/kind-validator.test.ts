@@ -186,7 +186,8 @@ describe("per-family node schemas (bean rdkm)", () => {
     expect(fams.filter((f) => f.state === "unresolvable")).toEqual([]);
     expect(fams.find((f) => f.tag === "kg-qa/v1")?.state).toBe("resolved");
     expect(fams.find((f) => f.tag === "qa-witness/v1")?.state).toBe("shape");
-    expect(fams.find((f) => f.tag === "folio-qa-index/v1")?.state).toBe("untyped");
+    // Typed since bean `dv8v` (#1168 B6b); it was the untyped example until then.
+    expect(fams.find((f) => f.tag === "folio-qa-index/v1")?.state).toBe("resolved");
   });
 
   test("a shape is read from source, fields and optionality included", async () => {

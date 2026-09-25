@@ -53,6 +53,7 @@
  * rendered as clean.
  *
  * @module scripts/check-published-instance-exports
+ * @covers cat-harness
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";

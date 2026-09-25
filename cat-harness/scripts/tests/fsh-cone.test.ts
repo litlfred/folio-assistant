@@ -61,12 +61,35 @@ beforeAll(() => {
   put("input/fsh/invariants/inv.fsh", "Invariant: inv-1\nDescription: \"has a name\"\nExpression: \"name.exists()\"\nSeverity: #error\n\nInvariant: inv-2\nDescription: \"x\"\nExpression: \"true\"\nSeverity: #warning\n");
   put("input/fsh/examples/ExPerson.fsh", "Instance: ExPerson\nInstanceOf: PersonB\nUsage: #example\n* name.given = \"Q\"\n* maritalStatus = $LOCAL#m\n");
   put("input/fsh/rulesets/CommonMeta.fsh", "RuleSet: CommonMeta\n* ^status = #active\n");
+  // A PARAMETERISED RuleSet whose body carries the canonical — the shape every
+  // PlanDefinition and Measure in smart-immunizations uses, and the one a
+  // literal read of the body cannot resolve (`{library}Logic` names nothing).
+  // `PlanDefOuter` forwards its parameter to `PlanDefInner`, so this also
+  // exercises the nested case (measured max depth 2 in the real IG).
+  put(
+    "input/fsh/rulesets/PlanDefMeta.fsh",
+    "RuleSet: PlanDefInner( library )\n* library = Canonical({library}Logic)\n\n"
+    + "RuleSet: PlanDefOuter( library, version )\n* insert PlanDefInner( {library} )\n* version = \"{version}\"\n",
+  );
+  put("input/fsh/libraries/LibXLogic.fsh", "Instance: LibXLogic\nInstanceOf: Library\n* insert CommonMeta\n");
+  put("input/cql/LibXLogic.cql", "library LibXLogic version '1.0.0'\n");
+  // Its argument list spans lines, which a line-by-line scan cannot parse.
+  put(
+    "input/fsh/plandefinitions/PlanY.fsh",
+    "Instance: PlanY\nInstanceOf: PlanDefinition\n* insert PlanDefOuter( LibX,\n  0.1.0 )\n",
+  );
   put(
     "input/fsh/plandefinitions/PlanX.fsh",
     "Instance: PlanX\nInstanceOf: PlanDefinition\n* insert CommonMeta\n* library = Canonical(LibX)\n* action[0].definitionCanonical = \"http://example.org/tank/ActivityDefinition/act-1\"\n",
   );
   put("input/fsh/activitydefinitions/Act1.fsh", "Instance: Act1\nInstanceOf: ActivityDefinition\nId: act-1\n* subjectReference = Reference(ExPerson)\n");
   put("input/fsh/libraries/LibX.fsh", "Instance: LibX\nInstanceOf: Library\nId: LibX\n* type = http://terminology.hl7.org/CodeSystem/library-type#logic-library\n");
+  // The SAME library shape with NO `Id:` line — SUSHI defaults the id to the
+  // instance NAME. This is how every Library in smart-immunizations is written
+  // (279 of 279), and it was the shape no fixture had: the edge kind was dead
+  // on real IGs while this suite stayed green (bean `f4gj`).
+  put("input/fsh/libraries/LibY.fsh", "Instance: LibY\nInstanceOf: Library\n* insert CommonMeta\n");
+  put("input/cql/LibY.cql", "library LibY version '1.0.0'\nusing FHIR version '4.0.1'\ninclude Common version '1.0.0' called C\n");
   put("input/cql/LibX.cql", "library LibX version '1.0.0'\nusing FHIR version '4.0.1'\ninclude Common version '1.0.0' called C\ninclude FHIRHelpers version '4.0.1'\n");
   put("input/cql/Common.cql", "library Common version '1.0.0'\nusing FHIR version '4.0.1'\n");
   g = buildFshGraph(ROOT);
@@ -85,13 +108,14 @@ describe("graph construction", () => {
     const names = [...g.nodes.keys()].sort();
     expect(names).toEqual(
       [
-        "Act1", "CommonMeta", "ExPerson", "GenderVS", "LibX", "LocalCS", "PersonA", "PersonB", "PlanX",
-        "cql:Common", "cql:LibX", "inv-1", "inv-2",
+        "Act1", "CommonMeta", "ExPerson", "GenderVS", "LibX", "LibXLogic", "LibY", "LocalCS", "PersonA",
+        "PersonB", "PlanDefInner", "PlanDefOuter", "PlanX", "PlanY",
+        "cql:Common", "cql:LibX", "cql:LibXLogic", "cql:LibY", "inv-1", "inv-2",
       ].sort(),
     );
     expect(g.nodes.has("cql:FHIRHelpers")).toBe(false);
-    expect(g.fshFiles).toBe(11);
-    expect(g.cqlFiles).toBe(2);
+    expect(g.fshFiles).toBe(15);
+    expect(g.cqlFiles).toBe(4);
     expect(g.canonical).toBe("http://example.org/tank");
   });
 
@@ -103,7 +127,18 @@ describe("graph construction", () => {
     expect(deps("ExPerson")).toEqual(["LocalCS", "PersonB"]); // InstanceOf, $alias#code via URL alias
     expect(deps("PlanX")).toEqual(["Act1", "CommonMeta", "LibX"]); // canonical assignment (URL), insert, Canonical()
     expect(deps("Act1")).toEqual(["ExPerson"]); // Reference()
-    expect(deps("LibX")).toEqual(["cql:LibX"]); // Library ↔ cql by name
+    expect(deps("LibX")).toEqual(["cql:LibX"]); // Library ↔ cql by name, via `Id:`
+    // The parameterised canonical, through TWO levels and a multi-line argument
+    // list: `insert PlanDefOuter(LibX, 0.1.0)` forwards `{library}` to
+    // `PlanDefInner`, whose `Canonical({library}Logic)` becomes `LibXLogic`.
+    expect(deps("PlanY")).toEqual(["LibXLogic", "PlanDefOuter"]);
+    // ...and the RuleSets themselves gain NO such edge. `{library}Logic` names
+    // nothing until a call site supplies the argument, and attributing the
+    // artefact's dependency to the template is the defect this fixes.
+    expect(deps("PlanDefInner")).toEqual([]);
+    expect(deps("PlanDefOuter")).toEqual(["PlanDefInner"]);
+    // ...and via SUSHI's name→id default, which is the case real IGs use.
+    expect(deps("LibY")).toEqual(["CommonMeta", "cql:LibY"]);
     expect(deps("cql:LibX")).toEqual(["cql:Common"]); // cql include
     expect(deps("cql:Common")).toEqual([]);
     expect(deps("LocalCS")).toEqual([]);
@@ -117,11 +152,14 @@ describe("cones", () => {
   });
 
   test("a shared CQL library is the hub: its cone crosses from CQL into FHIR artefacts", () => {
-    expect([...forwardCone(g, "cql:Common")].sort()).toEqual(["LibX", "PlanX", "cql:LibX"]);
+    expect([...forwardCone(g, "cql:Common")].sort()).toEqual(["LibX", "LibY", "PlanX", "cql:LibX", "cql:LibY"]);
   });
 
   test("a RuleSet change invalidates its users (SUSHI expands it at compile time)", () => {
-    expect([...forwardCone(g, "CommonMeta")]).toEqual(["PlanX"]);
+    // PlanY is in here only because of the expanded parameter: CommonMeta ←
+    // LibXLogic ← PlanY, and that last hop exists only once
+    // `Canonical({library}Logic)` has been resolved against the call site.
+    expect([...forwardCone(g, "CommonMeta")].sort()).toEqual(["LibXLogic", "LibY", "PlanX", "PlanY"]);
   });
 
   test("leaves have empty forward cones and the root is excluded from its own cone", () => {
@@ -191,8 +229,14 @@ describe("change impact — the incremental-build question", () => {
 describe("reports", () => {
   test("the text report carries the headline figures and the CSV has one row per node", () => {
     const r = report(g, 3);
-    // two invariants share one file, so 13 nodes live in 12 files
-    expect(r).toContain("nodes: 13 in 12 source files (11 .fsh, 2 .cql)");
+    // two invariants share one file, so 20 nodes live in 18 files
+    expect(r).toContain("nodes: 20 in 18 source files (15 .fsh, 4 .cql)");
+    // the expanded-parameter edge is tallied under its own name, never folded
+    // into plain `insert` — the two claims have different standing
+    expect(r).toContain("insert (parameter expanded)");
+    // Every Library instance reaches its CQL body — the one declaring `Id:` and
+    // the two relying on SUSHI's name→id default (bean `f4gj`).
+    expect(r).toContain("3  Library ↔ cql (by name)");
     expect(r).toContain("FORWARD cone");
     expect(r).toContain("LocalCS"); // the hub of this fixture heads the forward-cone table
     expect(r).toContain("cql include"); // and every edge form the fixture exercises is tallied
@@ -222,11 +266,11 @@ describe("reports", () => {
     expect(rows.length).toBe(1);
     expect(rows[0].sourceFiles).toBe(2);
     expect(rows[0].changed).toBe(2); // GenderVS, CommonMeta
-    // GenderVS ← PersonA ← PersonB ← ExPerson ← Act1 ← PlanX ; CommonMeta ← PlanX
-    expect(rows[0].rebuild).toBe(7);
+    // GenderVS ← PersonA ← PersonB ← ExPerson ← Act1 ← PlanX ; CommonMeta ← PlanX, LibY, LibXLogic
+    expect(rows[0].rebuild).toBe(10);
     const text = historyReport(g, rows, 3);
     expect(text).toContain("commits touching input/fsh or input/cql: 1 of 3 inspected");
-    expect(text).toContain("rebuild per commit (nodes, incl. changed): median 7");
+    expect(text).toContain("rebuild per commit (nodes, incl. changed): median 10");
     expect(text).toContain("zero-rebuild commits");
   });
 

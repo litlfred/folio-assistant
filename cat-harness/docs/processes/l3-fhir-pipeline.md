@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L3Fhir` · advisory · 8 step(s)
 
-folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/l3-fhir-pipeline.svg" alt="BPMN diagram: L3 FHIR IG pipeline" style="max-width:100%">
 
@@ -19,6 +19,7 @@ folio-assistant — the WHO SMART Guidelines L3 FHIR IG pipeline. Source of trut
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — WHO SMART Implementation Guides (L3)](../content-types.html#who-smart-implementation-guides-l3), [Authoring a WHO SMART IG (L3) — The L3 pipeline](../guides/who-smart-ig.html#the-l3-pipeline)
 
 ## Lanes — who acts
 

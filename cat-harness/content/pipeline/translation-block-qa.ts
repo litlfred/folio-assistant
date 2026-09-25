@@ -61,6 +61,7 @@
  *   bun run content/pipeline/translation-block-qa.ts --root <dir> --locales fr,es
  *
  * @module content/pipeline/translation-block-qa
+ * @covers translation-sources, qa
  */
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";

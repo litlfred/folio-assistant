@@ -19,6 +19,7 @@ Materialized content is read-only. The owner, 2026-09-21: "if we have a material
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html)
 
 ## Lanes — who acts

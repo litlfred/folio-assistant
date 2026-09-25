@@ -14,6 +14,7 @@
  *   bun run cat-harness/scripts/gen-jsonld-context.ts --check
  *
  * @module scripts/gen-jsonld-context
+ * @covers schemas
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";

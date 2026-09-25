@@ -19,6 +19,7 @@ Feature work must be linked to a GitHub issue. First find the related work (bean
 
 - **Called by:** [CRDM requirements](crdm-requirements.html)
 - **Calls:** [Related work: find, sort, summarize, ask to coordinate](related-work.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

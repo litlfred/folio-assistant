@@ -34,6 +34,7 @@
  * THROW waits for a caller, and arrives naming the module.
  *
  * @module scripts/check-module-scope-resolution
+ * @covers code
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";

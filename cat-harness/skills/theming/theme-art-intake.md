@@ -40,7 +40,7 @@ whose next maintainer cannot tell whether it still matters.
 
 | constraint | verdict | the incident |
 |---|---|---|
-| all three layouts | **refuse** | `landing-architecture` ships laptop + card and **no mobile**. `resolveThemeBackdrop` refuses an incomplete backdrop *wholesale*, so the theme renders with **no** art — not two thirds of it. |
+| all three layouts | **refuse** | `landing-architecture` shipped laptop + card and **no mobile** from 2026-09-20 to 2026-09-24. `resolveThemeBackdrop` refuses an incomplete backdrop *wholesale*, so the theme renders with **no** art — not two thirds of it. |
 | distinct content | **refuse** | commit `1b62b57` delivered three files of which **two were byte-identical** (same digest, both 1,606,269 bytes): two distinct images for three named avatars. |
 | orientation per layout | **refuse** | a portrait crop is not a landscape crop scaled down. The quiet area the sticky's text sits in moves. |
 | a declared destination | **refuse** | commit `0301fbd2` put three PNGs at the **repository root**, undeclared, with spaces and commas in the names. No gate saw them: `check-declared-assets` walks declared→disk, and the root is not an instance. |
@@ -69,10 +69,11 @@ a converted file, and not a quietly removed declaration. What looks like a
 missing crop may be a duplicate that was uploaded by mistake, and that is a
 question for the person who has the original.
 
-The same reason `check-theme-art` is **not yet a CI gate**: it refuses
-`landing-architecture` today, and a gate added in the same change as the check
-would make CI red over art that is missing rather than over a regression somebody
-just introduced. The gate goes in when the art is complete.
+`check:theme-art:check` was held back from CI for the same reason: it refused
+`landing-architecture`, and a gate added in the same change as the check would
+have made CI red over art that was missing rather than over a regression
+somebody just introduced. The portrait crop arrived on 2026-09-24 and the gate
+went in with it — a refusal now IS a regression.
 
 ## Reading the report
 

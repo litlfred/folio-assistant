@@ -19,6 +19,7 @@ How a resource gets into the graph in the first place. `document-ingestion.bpmn`
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`content-acquisition`](../reference/skill-instructions/content-acquisition.html)
 
 ## Lanes — who acts

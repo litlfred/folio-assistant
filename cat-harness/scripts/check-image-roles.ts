@@ -61,6 +61,8 @@
  * found clean must not read the same.
  *
  * @module scripts/check-image-roles
+ * @covers cat-harness — the `role` keys it grades are on the instance DECLARATIONS, and the
+ *   question is whether each is read by anything that can reach it
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -110,19 +112,12 @@ export interface RoleFinding {
  * DECISION rather than a correction — and then the entry names the decision, so
  * the list reads as a queue rather than as a dustbin.
  */
-export const PERMITTED_ORPHANS: ReadonlyMap<string, string> = new Map([
-  [
-    "cat-harness/landing-architecture",
-    "Found by this gate 2026-09-22 (bean `5yrl`, issue #859). Declared with " +
-      "laptop and card, no mobile, and named by NO theme in `themes.ts` — art " +
-      "that arrived for a theme nobody wired. Neither fix is an agent's: " +
-      "adding an `architecture` theme needs the missing mobile crop, since " +
-      "`resolveThemeBackdrop` refuses a partial backdrop wholesale; removing " +
-      "the two declarations is deleting a durable artefact, which " +
-      "`deletion-requires-confirmation` reserves to the owner. Waiting on that " +
-      "call.",
-  ],
-]);
+// Empty since 2026-09-24. Its one entry was `cat-harness/landing-architecture`,
+// permitted from 2026-09-22 (bean `5yrl`, issue #859) because the mobile crop
+// had never been supplied; the owner supplied it, the `architecture` theme now
+// names the role, and a permit for a finding that no longer exists would itself
+// be a finding.
+export const PERMITTED_ORPHANS: ReadonlyMap<string, string> = new Map<string, string>([]);
 
 /** A lookup that requires `layout`, and therefore cannot match a layout-less image. */
 const LAYOUT_KEYED = new Set(["imagesForRole", "resolveThemeBackdrop"]);
@@ -339,11 +334,14 @@ export function permitKey(f: { instance: string; role: string }): string {
 }
 
 /** The verdicts that fail the gate. `by-id` and `declined` are reported, never failed. */
-export function failing(f: readonly RoleFinding[]): RoleFinding[] {
+export function failing(
+  f: readonly RoleFinding[],
+  permits: ReadonlyMap<string, string> = PERMITTED_ORPHANS,
+): RoleFinding[] {
   return f.filter(
     (x) =>
       (x.verdict === "orphan" || x.verdict === "unreachable") &&
-      !PERMITTED_ORPHANS.has(permitKey(x)),
+      !permits.has(permitKey(x)),
   );
 }
 
@@ -354,11 +352,14 @@ export function failing(f: readonly RoleFinding[]): RoleFinding[] {
  * problem long after it was fixed. A permit is a claim about the corpus, and an
  * unchecked claim about the corpus is what this whole gate is against.
  */
-export function stalePermits(f: readonly RoleFinding[]): string[] {
+export function stalePermits(
+  f: readonly RoleFinding[],
+  permits: ReadonlyMap<string, string> = PERMITTED_ORPHANS,
+): string[] {
   const live = new Set(
     f.filter((x) => x.verdict === "orphan" || x.verdict === "unreachable").map(permitKey),
   );
-  return [...PERMITTED_ORPHANS.keys()].filter((k) => !live.has(k));
+  return [...permits.keys()].filter((k) => !live.has(k));
 }
 
 if (import.meta.main) {

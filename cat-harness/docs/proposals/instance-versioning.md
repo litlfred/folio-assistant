@@ -117,29 +117,34 @@ a no**, and §4 gives the answer it was reaching for from somewhere better.
 
 ## 3. Proposal
 
-### 3.1 Publishability is declared, and most instances are not publishable
+### 3.1 ~~Publishability is declared~~ — SUPERSEDED 2026-09-23
 
-Every instance does **not** get a version. An instance declares
-`publishable: true` in its `<name>.json`, and only then owes an `id` and a
-`version`.
+> **This section's rule was reversed by the owner and now lives in a skill:**
+> [`skills/folio-core/instance-publication.md`](../../skills/folio-core/instance-publication.md).
+> It is not restated here — a rule in two places is a rule free to drift, and
+> `kn0t` drifted from its skill in four places within a day.
 
-The reason is the measurement in §1: eleven instances, and the ones with
-external consumers are few. Minting a version for `detangle` — a directory in
-this repository that nothing outside resolves — is ceremony with no reader,
-and a version nobody consumes is a version nobody checks.
+What this section originally proposed, kept because the reversal is only
+legible against it: *"Every instance does **not** get a version"* — an instance
+declared `publishable: true` and **only then** owed an `id` and a `version`,
+which were **refused** otherwise.
 
-**Absence is a third state, not a default.** An instance that has not declared
-`publishable` is *undecided*, never *false*, and a gate reports it — the same
-rule `publication.host` already follows.
+The owner, 2026-09-23:
 
-**Implemented 2026-09-23.** `CatHarnessDeclaration.publishable`, with
-`bun run check:publishable` as the census. Every instance reports *undecided*,
-which is Q1 below still open rather than an unfinished implementation — and the
-report says in that many words that an all-undecided census is not a pass. The
-two rules a per-declaration parse structurally cannot hold are cross-instance
-and live in the gate: a duplicate `id`, and an unreadable declaration, whose
-publishability is **unknown** rather than undecided. *Undecided is a fact about
-the repository; unknown is a fact about the run.*
+> all assets get a version and are in "draft" publication. formal publication
+> process needs to be deinfed/neeeds tools/depends on instance
+
+So both are universal, and publication is a **state** rather than a boolean.
+`"published"` is refused by the schema, because the process that would back it
+does not exist.
+
+**Why the original was wrong is worth keeping**, because its reasoning was
+good and its model still could not say what was true. §3.1 argued correctly
+that "we decided this is internal" and "nobody looked" are different facts and
+a boolean defaulting to `false` erases the second. It then shipped a third
+state that could express neither: all 17 instances reported *undecided* while
+the answer was known for every one of them. **A third state that cannot say
+what is the case is a missing value, not a third state.**
 
 ### 3.2 A publishable instance declares `id` and `version`
 
@@ -306,16 +311,23 @@ and §3.3 leaves it alone.
 
 ## 6. Open questions
 
-1. **Which instances are publishable?** — **STILL OPEN, and deliberately so.**
-   The answer decides the size of everything above. `cat-harness` plainly is.
-   `who-iris` and `who-style-guide` probably are, given WHO consumers. The rest
-   are unclear and should be declared rather than inferred.
+1. ~~**Which instances are publishable?**~~ — **ANSWERED 2026-09-23.** All of
+   them carry an id and a version, and all of them are in `draft`. The question
+   was malformed rather than open: it asked which instances had crossed a line
+   that nothing was able to draw.
 
-   §3.1 shipped 2026-09-23 with **nothing declaring it**: all 19 instances
-   report *undecided*. Inferring the answer would be the thing the third state
-   exists to prevent, so `check:publishable` prints the list as a worklist and
-   `check:version-bump` reports that it has no publishable instance to score —
-   a stated nothing rather than a clean run.
+   The remaining question is **not** which instances, it is *what publishing
+   is*: the owner's *"formal publication process needs to be deinfed/neeeds
+   tools/depends on instance"*. That is design work with a per-instance answer,
+   not a field somebody fills in.
+
+   Two things this section got wrong are worth recording rather than quietly
+   fixing. It said **19 instances**; there are **17** — a count in prose,
+   falsified, which is the failure `directory-conventions` and `ylj7` have both
+   already paid for. And it named `cat-harness`, `who-iris` and
+   `who-style-guide` as *"plainly"* or *"probably"* publishable, which under
+   the ruling is not a head start: they are draft like everything else, and
+   guessing at them was the inference the third state existed to prevent.
 2. **Where do released packages live?** FHIR's answer is `packages.fhir.org`.
    This repository's nearest existing thing is GitHub Releases, which is
    tarball-shaped rather than FHIR-package-shaped. Aligning the *rules*

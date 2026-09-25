@@ -19,6 +19,7 @@ One change — a PR push or a push to main — through the incremental IG build 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Authoring a WHO SMART IG (L3) — Making the build incremental](../guides/who-smart-ig.html#making-the-build-incremental)
 
 ## Lanes — who acts
 

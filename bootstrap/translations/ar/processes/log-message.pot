@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: log-message\n"
-"POT-Creation-Date: 2026-09-23T20:28:15.311Z\n"
+"POT-Creation-Date: 2026-09-24T11:59:35.713Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: processes/log-message.bpmn:14
 #. Diagram element documentation
-msgid "A SUB-PROCESS, never an entry point. Nobody starts here; it is reached by a call activity from a task in another process, which is why bootstrap's README still says there is one process you START. It may be called OPTIONALLY from any task in any process — an actor logging what it is doing needs no permission — and a diagram may also REQUIRE it, which it says by drawing the call activity explicitly. The two are the same sub-process; the difference is whether the caller drew it. It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it. NO folio:bean, and isExecutable is false, for the same reasons as initialize-harness."
+msgid "A SUB-PROCESS, never an entry point. Nobody starts here; it is reached by a call activity from a task in another process, which is why bootstrap's README still says there is one process you START. It may be called OPTIONALLY from any task in any process — an actor logging what it is doing needs no permission — and a diagram may also REQUIRE it, which it says by drawing the call activity explicitly. The two are the same sub-process; the difference is whether the caller drew it. It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it. NO work-plan element, and isExecutable is false, for the same reasons as initialize-harness."
 msgstr ""
 
 #: processes/log-message.bpmn:22

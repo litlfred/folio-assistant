@@ -3,6 +3,7 @@
  * Derived documentation for a sub-graph — one index per (type, sub-graph).
  *
  * @module scripts/gen-docs-auto
+ * @covers docs
  *
  * Owner, 2026-09-20, bean `06e3`:
  *

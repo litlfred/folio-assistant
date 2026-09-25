@@ -410,6 +410,8 @@ const SCRIPT = `
         (byLabel[c.targetLabel] = byLabel[c.targetLabel] || []).push(c);
       });
       var main = st.mainSite ? String(st.mainSite).replace(/\\/?$/, "/") : null;
+      // Which published site is the before side: main's, or a stacked PR's base preview (5uuf).
+      var beforeName = st.beforeRef || "main";
       var s = cs.summary;
       // The head is "worktree" in CI (the checkout under review), which names
       // nothing a reader recognises; the banner's staging.json has the branch.
@@ -419,6 +421,7 @@ const SCRIPT = `
         s.added + " added, " + s.removed + " removed, " + s.changed + " changed (" +
         s.prose + " reworded, " + s.moved + " moved, " + s.renamed + " renamed, " + s.manifest + " edited), " +
         s.unchanged + " unchanged.";
+      if (main) summary.textContent += " Before side: " + beforeName + "'s published site.";
       if (!rc) summary.textContent += " No comment data on this build.";
       else summary.textContent += " " + rc.comments.length + " review comment(s).";
       if (!cs.changes.length) {
@@ -464,7 +467,7 @@ const SCRIPT = `
           var after = c.change !== "removed" ? href("../", c.head, c.label) : null;
           var before = c.change !== "added" && main ? href(main, c.base, c.from || c.label) : null;
           if (after) { var a = el("a", "view on this preview"); a.href = after; links.appendChild(a); }
-          if (before) { var b = el("a", "view on main"); b.href = before; links.appendChild(b); }
+          if (before) { var b = el("a", "view on " + beforeName); b.href = before; links.appendChild(b); }
           if (!after && !before) links.appendChild(el("span", "no page to link to", "muted"));
           li.appendChild(links);
           var v = viewSelector({

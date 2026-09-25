@@ -26,8 +26,12 @@ describe("duplicateIds", () => {
   });
 });
 
-describe("nav_footer_custom.html: one checkbox, labels in every copy", () => {
-  const src = readFileSync(join(import.meta.dir, "../../docs/_includes/nav_footer_custom.html"), "utf8");
+describe("the generated navbar include: one checkbox, labels in every copy", () => {
+  // `sjic`: this markup used to be hand-written in `nav_footer_custom.html`,
+  // which is now a single `{% include %}`. The `uknu` property it guards —
+  // one input per PAGE across the two copies just-the-docs renders — is
+  // unchanged and is now the generator's to hold.
+  const src = readFileSync(join(import.meta.dir, "../../docs/_includes/generated/navbar-footer.html"), "utf8");
   const code = src.replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, "");
 
   test("the checkbox input appears once, and only for the first rendered copy", () => {
@@ -36,6 +40,12 @@ describe("nav_footer_custom.html: one checkbox, labels in every copy", () => {
     expect(code).toMatch(/\{%-?\s*if fa_nav_copy == 1\s*-?%\}\s*<input[^>]*id="fa-nav-open"/);
   });
   test("both labels point at the one checkbox the stylesheet reads", () => {
-    expect(code.match(/for="fa-nav-open"/g)?.length).toBe(2);
+    // PER RENDERED VARIANT, not per file. The generated include carries the
+    // canonical and staging renderings behind one Liquid conditional, so the
+    // file holds four `for=` and a PAGE receives two — which is the property
+    // that matters and the one a whole-file count silently doubled.
+    const variants = code.split("{%- else -%}");
+    expect(variants.length).toBe(2);
+    for (const v of variants) expect(v.match(/for="fa-nav-open"/g)?.length).toBe(2);
   });
 });

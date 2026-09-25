@@ -39,7 +39,7 @@ so a diagram *cannot* ask for archiving today — it would fail to load.
 
 ## Coverage — the arc is drawn, and it stops one step short
 
-**25 of 38 diagrams** carry a `<folio:bean>` mark: 7 `claim`, 7 `note`,
+**25 of 38 diagrams** carry a `<cat-harness.processes:bean>` mark: 7 `claim`, 7 `note`,
 5 `resolve`.
 
 The three the owner named all reach the terminal state and stop there:
@@ -73,7 +73,7 @@ Process_UpstreamAdoption ×2  Process_VoiceReview
 
 So `bean-lifecycle.bpmn` — the one diagram that models what happens to a
 bean — **is a picture, not a subprocess.** The other processes interact with
-the work plan through per-activity `<folio:bean op>` marks, which is a
+the work plan through per-activity `<cat-harness.processes:bean op>` marks, which is a
 different mechanism entirely: the engine performs the op inline, and the
 lifecycle diagram is never entered.
 
@@ -84,7 +84,7 @@ marks that know nothing about it.
 
 ## Two smaller defects found on the way
 
-**`<folio:bean action="create"/>`** appears in `bean-lifecycle.bpmn`. The
+**`<cat-harness.processes:bean action="create"/>`** appears in `bean-lifecycle.bpmn`. The
 loader reads `.op` and nothing else, and an absent `op` is *documented* as
 meaningful — *"the step touches the plan in some way the tools do not perform
 automatically"*. So a misspelled attribute is **indistinguishable from a

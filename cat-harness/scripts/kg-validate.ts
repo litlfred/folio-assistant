@@ -113,7 +113,6 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
     if (fam.state !== "resolved") {
       const why =
         fam.state === "shape" ? "is a TypeScript shape, not a runnable schema"
-        : fam.state === "untyped" ? `has no declared type (written by ${fam.writtenBy})`
         : fam.state === "external" ? `conforms to ${fam.spec}, which nothing here runs`
         : fam.reason;
       return { path: filePath, state: "undetermined", kind, reason: `${fam.tag} ${why}` };

@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Adjudication"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -47,7 +48,7 @@ This process ENDS at the judgement. What the answer means, and what is done abou
 
 What stays shared is what must not vary: the entry condition nobody may declare their way past, the untainted dispatch, and the restriction to a person or an agent. What a legitimate outcome IS does vary, and it now varies where it is asked.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_Adjudication">
@@ -55,7 +56,7 @@ What stays shared is what must not vary: the entry condition nobody may declare 
         <bpmn:documentation>Drawn once for any number of providers — the owner's "Judgment of &gt;= 1 Feedback Provider's feedback" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.
 
 This lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="feedback-provider"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="feedback-provider"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Disagreement</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_StateFinding</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -63,7 +64,7 @@ This lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED A
         <bpmn:documentation>Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, "a human or agentic decision, never a merge rule" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.
 
 A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="adjudicator"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="adjudicator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>GW_Adjudicable</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Dispatch</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Adjudicate</bpmn:flowNodeRef>
@@ -79,12 +80,12 @@ A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than i
 
     <bpmn:task id="A_StateFinding" name="State the finding and what it read">
       <bpmn:documentation>Each provider says what it found and on what evidence. A finding that does not show what it read is an opinion, and an adjudicator cannot tell it from a finding about some other version of the block.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-feedback"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-feedback"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
 
-    <!-- Deliberately carries NEITHER `folio:decision` NOR `folio:judgement`,
+    <!-- Deliberately carries NEITHER `cat-harness.processes:decision` NOR `cat-harness.processes:judgement`,
          and the absence is the honest answer rather than an oversight. This
          branch is COMPUTABLE — `block-qa/v1` holds the entries and two of
          different kinds disagreeing is a fact about the sidecar — so marking
@@ -105,7 +106,7 @@ A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than i
 
     <bpmn:task id="A_Dispatch" name="Dispatch with adjudicator_sees — never the artefact">
       <bpmn:documentation>`UntaintedDispatch` on the criterion declares what each party is given; the caller names a subject and a criterion and does not hand-assemble a brief, because the party composing a brief by hand is the producer. `untaintedPartitionDefects` reports `overlap` when the checker and the adjudicator can read the same file — one of them is then grading its own input, and the verdict measures nothing while raising no error.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="untainted-verification"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="untainted-verification"/></bpmn:extensionElements>
       <bpmn:incoming>F_Adjudicable</bpmn:incoming>
       <bpmn:outgoing>F_3</bpmn:outgoing>
     </bpmn:task>
@@ -113,13 +114,13 @@ A_Dispatch is in this lane although the adjudicator is its SUBJECT rather than i
     <bpmn:task id="A_Adjudicate" name="Adjudicate the disagreement">
       <bpmn:documentation>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered.
 
-It declares NO `folio:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `folio:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question.
+It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question.
 
 What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="adjudication"/>
-        <folio:adjudication defers="caller"/>
-        <folio:fulfilment kinds="person agent" reason="an agent adjudicates here as legitimately as a person — `untainted-adjudicator` is a declared agent actor and `refresh-materialized` already says 'a human or agentic decision' — so drawing this as a userTask would assert a person the model does not require. Said explicitly rather than left to the abstract task's silence, because the kinds are a real constraint: a mechanical system may NOT take this step, which is the whole reason the process exists."/>
+        <bootstrap.processes:skill ref="adjudication"/>
+        <cat-harness.processes:adjudication defers="caller"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="an agent adjudicates here as legitimately as a person — `untainted-adjudicator` is a declared agent actor and `refresh-materialized` already says 'a human or agentic decision' — so drawing this as a userTask would assert a person the model does not require. Said explicitly rather than left to the abstract task's silence, because the kinds are a real constraint: a mechanical system may NOT take this step, which is the whole reason the process exists."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>

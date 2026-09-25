@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: methodology-from-source\n"
-"POT-Creation-Date: 2026-09-23T17:04:29.552Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.667Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: zh\n"
@@ -14,147 +14,147 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/methodology-from-source.bpmn:52
+#: processes/methodology-from-source.bpmn:53
 #. Diagram element documentation
 msgid "A domain-neutral method belongs to the harness and a domain method to the folio that owns the domain. If the session cannot write where it belongs, draft it where it can, say so in the file, and open a bean to move it."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:10
+#: processes/methodology-from-source.bpmn:11
 #. Diagram label
 msgid "Adopt a methodology from a source document"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:69
+#: processes/methodology-from-source.bpmn:70
 #. Diagram label
 msgid "Adopted"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:66
+#: processes/methodology-from-source.bpmn:67
 #. Diagram label
 msgid "Adopted?"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:23
+#: processes/methodology-from-source.bpmn:24
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:38
+#: processes/methodology-from-source.bpmn:39
 #. Diagram element documentation
 msgid "Authors, publication, identifier, and the licence the source itself states. No stated licence means reference only: headings, page ranges and a summary in our own words; the file stays in uploads/ (git-ignored) pinned by checksum. A method with no origin is a house process; write a skill instead."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:82
+#: processes/methodology-from-source.bpmn:83
 #. Diagram label
 msgid "changes"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:70
+#: processes/methodology-from-source.bpmn:71
 #. Diagram label
 msgid "Declined, with the reason recorded"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:24
+#: processes/methodology-from-source.bpmn:25
 #. Diagram element documentation
 msgid "Does every step between the share and the review, and records each decision it made with its reason, so the owner reviews a record rather than an impression."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:60
+#: processes/methodology-from-source.bpmn:61
 #. Diagram element documentation
 msgid "Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:37
+#: processes/methodology-from-source.bpmn:38
 #. Diagram label
 msgid "Establish origin and licence"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:59
+#: processes/methodology-from-source.bpmn:60
 #. Diagram label
 msgid "Every skill and tool used becomes a Tool"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:42
+#: processes/methodology-from-source.bpmn:43
 #. Diagram element documentation
 msgid "folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:41
+#: processes/methodology-from-source.bpmn:42
 #. Diagram label
 msgid "Ingest into library/"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:55
+#: processes/methodology-from-source.bpmn:56
 #. Diagram label
 msgid "Integrate: call existing processes"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:81
+#: processes/methodology-from-source.bpmn:82
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:15
+#: processes/methodology-from-source.bpmn:16
 #. Diagram label
 msgid "Owner"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:51
+#: processes/methodology-from-source.bpmn:52
 #. Diagram label
 msgid "Place by ownership; declare the directory"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:44
+#: processes/methodology-from-source.bpmn:45
 #. Diagram label
 msgid "Related work: find, sort, ask"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:47
+#: processes/methodology-from-source.bpmn:48
 #. Diagram label
 msgid "Render the method: adopted vs refused"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:63
+#: processes/methodology-from-source.bpmn:64
 #. Diagram label
 msgid "Review the adoption"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:45
+#: processes/methodology-from-source.bpmn:46
 #. Diagram element documentation
 msgid "Search beans, issues and open PRs for work the method touches, categorize and summarize them, and ask the owner whether and how to coordinate. CRDM calls the same sub-process."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:16
+#: processes/methodology-from-source.bpmn:17
 #. Diagram element documentation
 msgid "Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:36
+#: processes/methodology-from-source.bpmn:37
 #. Diagram label
 msgid "Source shared, with an intent"
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:13
+#: processes/methodology-from-source.bpmn:14
 #. Diagram element documentation
 msgid "The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refused, place it by ownership, integrate it into the processes that already exist by calling them rather than copying them, make every skill and tool it uses a declared Tool, relate it to existing beans and issues, and put the adoption to the owner. Written 2026-09-23 while adopting WireGen (arXiv:2312.07755) as the worked case. Operating skill: adopt-methodology-from-source; the adoption rules themselves are folio-assistant's methodology-adoption."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:56
+#: processes/methodology-from-source.bpmn:57
 #. Diagram element documentation
 msgid "The method's steps become a process whose judgement points call the processes that already exist (adjudication, options analysis, review) by calledElement. Nothing is re-implemented. A needed change to an existing process becomes a bean against its owner."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:67
+#: processes/methodology-from-source.bpmn:68
 #. Diagram element documentation
 msgid "The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to A_Render, the step that writes the adopted-against-refused table, so the agent re-runs render, placement, integration and tools and the owner reviews the result again. Only the owner accepts an adoption."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:48
+#: processes/methodology-from-source.bpmn:49
 #. Diagram element documentation
 msgid "What the source says, section by section, then a table of what this platform adopts and what it refuses, each with a reason. Extensions beyond the source (such as web plus mobile where the paper studied mobile) are stated as ours. Reported results are not imported as facts."
 msgstr ""
 
-#: processes/methodology-from-source.bpmn:80
+#: processes/methodology-from-source.bpmn:81
 #. Diagram label
 msgid "yes"
 msgstr ""

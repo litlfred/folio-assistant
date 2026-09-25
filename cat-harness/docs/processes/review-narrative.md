@@ -19,6 +19,7 @@ Judging changed PROSE: read what the mechanical checkers flagged, decide which f
 
 - **Called by:** [Review task](review-task.html)
 - **Calls:** [Criterion adjudication](criterion-adjudication.html), [Voice overlay review](voice-review.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

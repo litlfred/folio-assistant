@@ -19,6 +19,7 @@ Owner, 2026-09-23: "there is another alert needed for deployment failure. every 
 
 - **Called by:** [Publishing the docs site, and keeping the previews alive](docs-site-publish.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

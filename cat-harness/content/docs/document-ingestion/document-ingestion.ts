@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "document-ingestion",
   title: "Document ingestion",
+  documents: ["uploads", "library"],
   navOrder: 7,
   nodes: [
     {
@@ -65,6 +66,22 @@ export default webpage({
         linkStyle: "button",
       },
       block: "derive-content",
+    },
+    {
+      id: "ingest-the-theme",
+      title: "Ingest the theme",
+      level: 3,
+      asset: {
+        kind: "bpmn",
+        source: "processes/ingest-theme.bpmn",
+        rendered: "assets/img/workflows/ingest-theme.svg",
+        alt: "BPMN diagram: from a theme source in hand, an exclusive gateway asks whether the theme is served by a deployment or stated by a style guide; the served stylesheet's declarations or the guide's own rules are read, values are mapped onto the shared palette roles, contradictions in the source are recorded, and a gateway asks whether every layout is present — if not the subprocess ends refused as incomplete, if so a theme and UI review produces the Theme node.",
+        sourceLinks: [
+          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-theme.bpmn" },
+        ],
+        linkStyle: "button",
+      },
+      block: "ingest-the-theme",
     },
     {
       id: "build-the-l1-knowledge-graph",

@@ -35,6 +35,7 @@
  * reason — an exemption nobody can review is one somebody added to get green.
  *
  * @module content/pipeline/translation-drift
+ * @covers translation-sources
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";

@@ -32,6 +32,11 @@
     color: var(--iris-ink); background: var(--iris-surface);
   }
   .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  /* A long path in inline code has no break opportunity, and at a 390 px
+     viewport three of them made kg-to-portal 566 px wide (bean xwrt). These
+     pages are mounted verbatim, so the harness's narrow-viewport.css never
+     reaches them. Breaking the string beats widening the page. */
+  :not(pre) > code { overflow-wrap: anywhere; }
   a { color: var(--iris-accent); text-decoration: none; }
   a:hover, a:focus { text-decoration: underline; }
 
@@ -352,23 +357,21 @@ used; the WPRO item has two, five days apart, the second being the regional-IRIS
   </div>
 </article>
 <article class="sub">
-  <div class="sub-cover"><a href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html"><img src="9789241548960-eng-cover.png" width="300" height="450"
-        alt="Cover of WHO handbook for guideline development, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div>
+  <div class="sub-cover"><span class="nocover" title="A cover is rendered and held here. It is not published: copyright: refused, restrictions: refused.">cover<br>withheld</span></div>
   <div class="sub-body">
     <a class="sub-title" href="item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a>
     <p class="sub-by">World Health Organization (Publication Date: 2014-12-18)</p>
     <p class="sub-abs">This handbook provides comprehensive guidance on the planning, development, publication, implementation, adaptation and updating of WHO guidelines. Intended for WHO technical units, guideline developers, members of guideline development and external review groups, and other contributors, it describes the principles, methods and governance processes required to produce transparent, evidence-informed recommendations for clinical practice and public health policy that meet WHO standards.</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">via CDN</a> &middot; <code>2.04 MB</code></p>
+    <p class="sub-links"><span class="none" title="copyright: refused — The publication's copyright page (library/9789241548960-eng/sections/sec-000-who-handbook-for-guideline-development.md l.31-36): &quot;© World Health Organization 2014. All rights reserved. … Requests for permission to reproduce or translate WHO publications –whether for sale or for non-commercial distribution– should be addressed to WHO Press&quot;. No such permission has been sought.; restrictions: refused — Reproduction, for sale or non-commercial distribution alike, requires WHO Press's permission (same page, l.35-36); none has been sought.">held here, not published — copyright: refused, restrictions: refused</span></p>
   </div>
 </article>
 <article class="sub">
-  <div class="sub-cover"><a href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html"><img src="who-pub-tps-931-cover.png" width="300" height="424"
-        alt="Cover of WHO editorial style manual, rendered here from page 1 of the held PDF, with the WHO emblem masked out" loading="lazy"></a></div>
+  <div class="sub-cover"><span class="nocover" title="A cover is rendered and held here. It is not published: copyright: refused, restrictions: refused.">cover<br>withheld</span></div>
   <div class="sub-body">
     <a class="sub-title" href="item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a>
     <p class="sub-by">World Health Organization. Technical Publications Unit (WHO/PUB/TPS/93.1, Publication Date: 1993-12-31)</p>
     <p class="sub-abs none">No <code>dc.description.abstract</code> in the captured record.</p>
-    <p class="sub-links"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">WHO_PUB_TPS_93.1.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/who-pub-tps-931/WHO_PUB_TPS_93.1.pdf">via CDN</a> &middot; <code>3.14 MB</code></p>
+    <p class="sub-links"><span class="none" title="copyright: refused — The publication's copyright page (library/who-pub-tps-931/sections/page-030.md l.31-32): &quot;… protection in accordance with the provisions of Protocol 2 of the Universal Copyright Convention. All rights reserved.&quot; No permission to reproduce has been sought.; restrictions: refused — All rights reserved (same page); no permission to reproduce has been sought.">held here, not published — copyright: refused, restrictions: refused</span></p>
   </div>
 </article>
 </div>

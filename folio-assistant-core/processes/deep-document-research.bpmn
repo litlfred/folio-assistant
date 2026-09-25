@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_DeepDocumentResearch"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -38,7 +39,7 @@ It begins after `library-ingestion` has filed the sources, `ingest-*` has derive
 
 ADVISORY at the process level. The judgement it contains is which granularity fits a question and whether the evidence so far is sufficient, and neither is gateable — the whole reason the loop carries an iteration cap is that sufficiency may never arrive.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_DeepDocumentResearch">
@@ -46,7 +47,7 @@ ADVISORY at the process level. The judgement it contains is which granularity fi
         <bpmn:documentation>One lane for all four of the paper's agents, because they are one accountability: somebody stands behind the synthesis and its citations. Splitting them into four swimlanes would say that the party who chose the granularity is answerable separately from the party who reported the answer, which is not true and which no diagram here should assert.
 
 The role admits person and agent. Every step is drawn as a plain task rather than a userTask for that reason — an agent performing this is legitimate, and a userTask would assert a person the model does not require.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="deep-researcher"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="deep-researcher"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Question</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Held</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NotHeld</bpmn:flowNodeRef>
@@ -65,7 +66,7 @@ The role admits person and agent. Every step is drawn as a plain task rather tha
     </bpmn:startEvent>
 
     <bpmn:exclusiveGateway id="GW_Held" name="Is the corpus there to search?">
-      <bpmn:documentation>Computable, and deliberately carries neither `folio:decision` nor `folio:judgement`: whether the library holds entries whose L1 completeness verdict is `met` is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the "no table because nobody has written one" state bean `q0tc` counts.
+      <bpmn:documentation>Computable, and deliberately carries neither `cat-harness.processes:decision` nor `cat-harness.processes:judgement`: whether the library holds entries whose L1 completeness verdict is `met` is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the "no table because nobody has written one" state bean `q0tc` counts.
 
 Leaving here is the correct outcome, not a failure. A question about documents nobody ingested has an answer — "this corpus does not hold them" — and that answer is not produced by searching harder.</bpmn:documentation>
       <bpmn:incoming>F_1</bpmn:incoming>
@@ -85,7 +86,7 @@ CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. 
 
 Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deep-document-research"/>
+        <bootstrap.processes:skill ref="deep-document-research"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Held</bpmn:incoming>
       <bpmn:incoming>F_Again</bpmn:incoming>
@@ -95,7 +96,7 @@ Re-entered on every iteration, not only the first: the sub-questions are re-deri
     <bpmn:task id="A_Search" name="Retrieve for each sub-question">
       <bpmn:documentation>The paper's Searcher, at the granularity A_Plan chose. Which retrieval paradigm — text-only, vision-only or hybrid — is recorded in the methodology node as an open trade-off rather than settled here: the paper's comparison was measured on its own corpus and says nothing about a folio's.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deep-document-research"/>
+        <bootstrap.processes:skill ref="deep-document-research"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_2</bpmn:incoming>
       <bpmn:outgoing>F_3</bpmn:outgoing>
@@ -104,7 +105,7 @@ Re-entered on every iteration, not only the first: the sub-questions are re-deri
     <bpmn:task id="A_Refine" name="Deduplicate, and keep what is actually relevant">
       <bpmn:documentation>The paper's Refiner. Accumulates into the evidence set the report is built from — so what is dropped here is invisible downstream, which is why it is a step somebody performs rather than a filter buried in retrieval.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deep-document-research"/>
+        <bootstrap.processes:skill ref="deep-document-research"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>
@@ -112,7 +113,7 @@ Re-entered on every iteration, not only the first: the sub-questions are re-deri
 
     <bpmn:exclusiveGateway id="GW_Sufficient" name="Enough, or out of iterations?">
       <bpmn:extensionElements>
-        <folio:judgement reason="Whether the evidence accumulated so far answers the question is exactly the thing no rule settles — the paper gives sufficiency a symbol and a threshold and never says how it is computed. A table deciding it would be inventing that function and hiding it in a branch."/>
+        <cat-harness.processes:judgement reason="Whether the evidence accumulated so far answers the question is exactly the thing no rule settles — the paper gives sufficiency a symbol and a threshold and never says how it is computed. A table deciding it would be inventing that function and hiding it in a branch."/>
       </bpmn:extensionElements>
       <bpmn:documentation>TWO ways out, and both are load-bearing. Sufficiency alone never terminates on a question the corpus cannot answer, which is the ordinary case rather than the exception. The iteration cap alone stops an answerable question early and returns something indistinguishable from a complete answer.
 
@@ -134,8 +135,8 @@ AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search 
 
 A figure description an agent drafted is NOT reported as what the figure shows. `schemas/narrative.ts` holds that line and this step does not cross it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deep-document-research"/>
-        <folio:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="deep-document-research"/>
+        <cat-harness.processes:policy relaxable="false"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Sufficient</bpmn:incoming>
       <bpmn:incoming>F_Exhausted</bpmn:incoming>

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w0cr
 title: 'STREAM 3/3: GOAL 3 — who-iris through a themed harness, and PR #881 (yg29, 15 open beans)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-22T18:09:11Z
-updated_at: 2026-09-22T18:09:11Z
+updated_at: 2026-09-23T19:45:00Z
 parent: folio-assistant-yg29
 ---
 
@@ -98,10 +98,89 @@ delivery mechanism, not separate work. Coordinate; do not re-decide `o7eq` here.
 
 - [x] `yg29`'s shortest path re-verified (2026-09-22T18:15Z: step 1 entirely
       complete — `z7ev`, `lzbw`, `huiu` all closed — and `jbx2` too)
-- [ ] The correction put to the owner — `yg29` itself is repaired by its owner
-- [ ] `check:voices` green across the who-style-guide → who-iris boundary
-- [ ] #881 conflict-free and green, with `m4xy` and `cpmo` still open rather than
-      absorbed
-- [ ] `j66n`'s two themes landed
-- [ ] `hqku`, `xffc`, `d3yq` and the `Home _ folio-assistant.pdf` disposition put
-      to the owner as selectable questions
+- [x] The correction put to the owner — `yg29` repaired **by its owner**, which
+      is precisely what `k59d`'s remaining Done-when asked for. Merged in #961
+- [x] `check:voices` green across the who-style-guide → who-iris boundary —
+      exit 0, 6 voices / 58 rules, re-run in a fresh container
+- [x] #881 conflict-free and green — `dirty` → **merged**, with `m4xy` and
+      `cpmo` both still `todo`: untouched, not absorbed
+- [x] `j66n`'s two themes landed (#477), and `j66n` itself is now **closed** —
+      all four clauses, verified by running the tests rather than reading them
+- [x] `hqku`, `xffc`, `d3yq` and the `Home _ folio-assistant.pdf` disposition
+      put to the owner — `hqku` needed no question (the block was VOID, and
+      saying so IS the answer); `xffc`/`d3yq` asked and **scrapped with reasons**;
+      the PDF asked and answered, `litlfred/qou#7451` open for the owner's merge
+
+## Summary of Changes — stream 3/3 closed 2026-09-23
+
+**GOAL 3's three Done-when clauses are met**, measured by running the thing:
+`check:voices` exit 0; `check:catalogue` exit 0 (13 nodes — 0 unknown, 10
+referenced, 3 materialized, against 1,057,223 files upstream); `iris:pages:check`
+11 pages, no orphans; and the site BUILT then mounted — `who-iris/library/` →
+`/who-iris/`, rendering on `--iris-*` rather than just-the-docs chrome.
+
+### Shipped
+
+| | |
+|---|---|
+| **#881** | `dirty` → **merged**. Two conflicts; one was a real defect — a dangling `--source` this branch had propagated into a second script, the exact bug main's #920 had just fixed. Neither side of that conflict was correct alone |
+| **#961** | **merged**. `yg29` repaired by its owner; `809i` closed on evidence |
+| **#1114** | scraps, both skill bindings, `j66n` closed, `9fdi` settled, `hpax`'s block recorded |
+| **qou#7451** | open for the owner. Removes `Home _ folio-assistant.pdf` only |
+
+`kupb` went from **twelve** open children to **three** (`hfwl`, `hpax`, `v048`).
+`fgkb`'s measurement Done-when closed with all seven sha256 comparisons re-run in
+one pass rather than five quoted and two added — **7 of 7 byte-identical**.
+
+### The defect this stream kept finding
+
+**"Built but still reads open", four times, at four levels.** `yg29` advertised
+it for `z7ev`/`lzbw`/`huiu`; those were already closed. `809i` had it. `j66n` had
+it — and contained its own refutation, line 35 against line 164 in one file.
+`hqku` was carried as a live blocker for two days after it completed.
+
+`k59d` is why this stream looked: *"an agent that trusts a stale path spends its
+session on a closed box."* Both halves of its last Done-when are now satisfied —
+stream 3 repaired `yg29`, stream 2 repaired `p5wm` — and
+`stale-paths-baseline.json` reached **`[]` by every entry being repaired**, not
+suppressed.
+
+### Four owner rulings, and one I declined to apply
+
+Re-parent five out of `kupb`; human/agentic judgement at the theme gateway; keep
+the seven `qou` PDFs but remove the eighth; scrap `xffc`/`d3yq`.
+
+The fifth — re-lane `Task_Review` — was **not applied**, because two facts were
+not in front of the owner when they chose it and both were mine: no role carried
+`theme-ui-review` at all, and the diagram already recorded the opposite decision
+with a reason. Applying it would have laundered my own incomplete framing through
+their answer. The owner then settled it a different way — *"theme review to
+ingestion of graphical assets"* — which dissolved the contradiction rather than
+picking a side, and closed all six `role-carries-activity-skill` findings.
+
+### What this stream got wrong, kept rather than tidied
+
+- **Duplicated `j66n`'s gateway.** Another session wired it independently while
+  this one had the same work committed. Mine was discarded unpushed. One bean,
+  two implementations, one thrown away.
+- **Reported the who-iris pages unreachable.** `preview:site` omits the
+  `mount-instance-docs.ts` step CI runs after Jekyll. Recorded in `yg29`.
+- **Nearly claimed CI was not firing**, from `actions/runs?head_sha=`, which
+  returns 0 for every sha on this branch including one with 7 passing checks.
+  The real cause was `mergeable_state: dirty` — a `pull_request` run needs a
+  merge ref, and a conflicted PR has none. Absent checks were the symptom of the
+  conflict.
+- **Pushed without `gates --all`.** The fast set is 135 gates; `--all` is 139.
+  That gap let an e2e failure reach CI unseen, and `uml:overview:check` later
+  caught a staleness caused by this session's own roles change (`RoleGraphSchema`
+  256 → 258).
+
+### Left open on purpose
+
+`yg29` stays `in-progress`: its last clause is *"`kupb` closes"*, and `kupb` has
+three children. `fgkb` stays `todo` — its remainder is the owner's merge of
+qou#7451, which no agent does. `m4xy` and `cpmo` stay open. `9fdi` records that
+`theme-ui-review.bpmn` was NOT moved into ingestion, as a question rather than an
+omission.
+
+*Stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

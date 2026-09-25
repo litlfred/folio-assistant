@@ -3,6 +3,7 @@
  * Every harness above the floor gets a board, and it shows everything.
  *
  * @module scripts/gen-default-boards
+ * @covers boards
  *
  * The owner, 2026-09-21:
  *

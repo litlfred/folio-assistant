@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_Process_CRDM_Requirements" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM_Requirements">
@@ -14,12 +14,12 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Requirements">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>The one checkpoint between the agent's comparison and the stakeholders' sign-off: BA_ReviewReqs is where someone who can read the impact analysis on its own technical terms vouches for it, because Lane_Stakeholders reviews only at defined checkpoints and needs the requirement already in a form they can approve without re-deriving it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ReviewReqs</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Requirements</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_MapWorkflow</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_DefineReqs</bpmn:flowNodeRef>
@@ -29,7 +29,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn's final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_ApproveReqs</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -39,7 +39,7 @@ workflow (BPA)">
       <bpmn:documentation>Business-process analysis here means reading the
 existing diagrams under processes/ and drawing the gap, so the skill
 that implements this step is the BPMN one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="bpmn-authoring"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="bpmn-authoring"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_DefineReqs" name="Phases 3–4: Define
 requirements + impact">
@@ -47,8 +47,8 @@ requirements + impact">
 requirements come from the CRDM process, the impact half is a dependency
 question the content graph answers.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:skill ref="content-graph"/>
+        <bootstrap.processes:skill ref="crdm-requirements-workflow"/>
+        <bootstrap.processes:skill ref="content-graph"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_CompareOptions" name="Phase 4a: Compare
@@ -67,13 +67,13 @@ names.
 
 Skipped legitimately when the analysis yields ONE viable approach. Do not
 manufacture alternatives to fill a table.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="decision-comparison"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="decision-comparison"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_ReviewReqs" name="Review requirements
 and impact analysis">
       <bpmn:documentation>The BA reviews the formal requirements and the
 impact analysis the agent produced.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="S_ApproveReqs" name="Approve
 requirements">

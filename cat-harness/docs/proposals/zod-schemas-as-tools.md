@@ -147,7 +147,7 @@ What makes it possible is that two of the three declarations already exist:
 > So what shipped is `GraphKindDef.validator` (`module#Export`) **beside**
 > `schema`, not instead of it: two fields, because a case where they diverge
 > is already committed. The `#` form is the spelling
-> `<folio:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
+> `<cat-harness.processes:decision ref="file.dmn#Decision_Id"/>` already uses in every BPMN
 > gateway here.
 
 **That one field is the parameter**, and adding it turns "validate a node"

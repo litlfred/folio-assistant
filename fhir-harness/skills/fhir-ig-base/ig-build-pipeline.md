@@ -5,6 +5,8 @@ description: >
   branch, with no pre-processing and no post-processing. What this layer runs,
   what it emits, and the list of things it deliberately refuses to know about.
   Read before adding anything to fhir-harness.
+governs:
+  - fhir-harness/fhir-ig-tools
 ---
 
 # ig-build-pipeline

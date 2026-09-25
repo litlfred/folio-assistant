@@ -66,6 +66,7 @@
  * and this paragraph is how a reader knows.
  *
  * @module folio-assistant/scripts/check-stale-paths
+ * @covers bean-defs, beans
  */
 
 import { readFileSync } from "node:fs";

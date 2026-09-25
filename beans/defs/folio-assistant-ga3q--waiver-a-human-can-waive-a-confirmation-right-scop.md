@@ -54,7 +54,17 @@ available.
 
 ## Done when
 
-- [x] The skill exists and every gated skill points at it
+- [~] The skill exists; **five of the six gated skills point at it.**
+      `confirmation-waiver`'s own gate table lists `process-reentry` →
+      [`process-state`](../../cat-harness/skills/workflow/process-state.md),
+      and that skill carries no pointer to the waiver. Ticked as done until
+      2026-09-24, which is what stopped anybody looking. The other five —
+      `deletion-requires-confirmation`, `swarm-management`, `issue-working`,
+      `bean-coordination`, `AGENTS.md` — do point at it.
+      **Cost while it stands:** an agent that has fallen out of process reads
+      `process-state`, meets confirm-before-re-entering with no mention that
+      the owner may have waived it, and asks anyway — the round trip this
+      whole bean exists to remove.
 - [x] A schema, a graph kind and a check exist, and the check is run by CI
 - [ ] The CRDM `merge-to-main` gate names the waiver (its workflow text is a
       separate file and a separate change)

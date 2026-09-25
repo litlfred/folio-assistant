@@ -3,6 +3,7 @@
  * Every harness owes at least one MEANINGFULLY POPULATED documentation page.
  *
  * @module scripts/check-docs-populated
+ * @covers docs
  *
  * Usage: `bun run check:docs-populated [--json]`
  * Exit:  0 every harness has one · 1 one is thin · 2 could not determine

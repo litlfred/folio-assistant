@@ -36,6 +36,7 @@
  * `kg-audit`.
  *
  * @module scripts/translate-kg-viewer
+ * @covers translation-sources
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";

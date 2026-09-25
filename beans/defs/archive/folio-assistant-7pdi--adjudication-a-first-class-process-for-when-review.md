@@ -327,9 +327,36 @@ over `processes/*.bpmn` and `src/`:
 - `skills/folio-core/adjudication.md` — the discipline, with
   `untainted-verification` owning the parties rather than restating them.
 - `processes/adjudication.bpmn` — two lanes, advisory at the process level
-  because a judgement cannot be gated, with `A_RecordEntry` and
-  `A_Dispensation` marked `relaxable="false"`: the judgement is free and the
-  record is not.
+  because a judgement cannot be gated.
+
+  **This entry used to name the activities in it, and the shape it named is
+  gone.** It said the diagram carried `A_RecordEntry` and `A_Dispensation`
+  marked `relaxable="false"`. The process was **split on 2026-09-23** (bean
+  `bvuk`, [#1073](https://github.com/litlfred/folio-assistant/issues/1073)) and
+  both moved out. For where they are now and why, read the skill rather than
+  this bean:
+
+  > [`skills/folio-core/adjudication.md`](../../../cat-harness/skills/folio-core/adjudication.md)
+  > §"One judgement, six questions — and the split that followed"
+
+  Removed rather than re-synced, per `AGENTS.md`'s rule — *where a skill and a
+  copy disagree, the skill wins and the copy is wrong* — and because a
+  structure restated in two places is free to drift again.
+
+  **The drift, measured 2026-09-24 so the repair is checkable:**
+
+  | | this bean said | measured in `cat-harness/processes/` |
+  |---|---|---|
+  | `A_RecordEntry`, `A_Dispensation` | in `adjudication.bpmn` | in **`criterion-adjudication.bpmn`**, one lane, both `relaxable="false"` |
+  | `adjudication.bpmn` holds | those two | `A_StateFinding`, `A_Dispatch`, `A_Adjudicate` — and its only `relaxable="false"` is on `End_Adjudicated` |
+
+  **What the wording would have cost.** #1073's finding was that four callers
+  ran an outcome half they never asked for. This entry tells a reader the
+  non-relaxable record step is inside `Process_Adjudication`, so calling that
+  process looks like it gets you the recorded entry and the dispensation. It
+  does not — that is precisely what the split removed. *"The judgement is free
+  and the record is not"* survives as the rule and now lands on the caller
+  that records.
 - `adjudicator` and `feedback-provider` roles; `translation-adjudicator`
   re-pointed to inherit `adjudicator`.
 - `adjudication` **permission** — the split the repo already made and tested.

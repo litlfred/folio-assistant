@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ig-incremental-build\n"
-"POT-Creation-Date: 2026-09-23T20:28:09.106Z\n"
+"POT-Creation-Date: 2026-09-24T12:30:55.640Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -14,362 +14,362 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/ig-incremental-build.bpmn:284
+#: processes/ig-incremental-build.bpmn:285
 #. Diagram element documentation
 msgid "A preview never seeds the shared cache."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:101
+#: processes/ig-incremental-build.bpmn:102
 #. Diagram element documentation
 msgid "A push to a PR branch (review path) or to main / a release (publish path). Both run this process; only the publish path may seed the cache."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:197
+#: processes/ig-incremental-build.bpmn:198
 #. Diagram element documentation
 msgid "Answered by Task_Validate — the cone's resources checked against the warm validator. `yes` goes on to re-render the cone's records. `no` logs the findings on the change's bean and returns them to the author. A validator that could not start is could-not-determine, which Task_Validate's documentation says is never a pass, so it does not take `yes`; and a green cone is not a green IG, since a profile the change did not touch can still be broken by it."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:113
+#: processes/ig-incremental-build.bpmn:114
 #. Diagram element documentation
 msgid "Answered by the exit code of `ig-cache restore` (Task_Restore): 0 is a usable cache and takes `yes`, into the cone machinery. 1 (a miss) or 3 (present, but the toolchain moved) takes `no`, to the full publisher build, whose outputs become the records the next seed writes. Exit 2 (an environment error — the cache could not be read, which says nothing about whether it is usable) takes `environment error`: the run stops and the error is logged, rather than falling back to a full build that would hide a broken cache store behind a slow green run."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:278
+#: processes/ig-incremental-build.bpmn:279
 #. Diagram element documentation
 msgid "Answered by the push that started the process. `PR branch` is the review path: deploy the preview, which never seeds the shared cache. `main / release` is the publish path: deploy the site after a human has authorised the release, then seed the cache, which writes to a -test branch, verifies a restore from a clean clone, and only then promotes. Only this branch reaches the lane allowed to touch the shared cache."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:242
+#: processes/ig-incremental-build.bpmn:243
 #. Diagram label
 msgid "Assemble the site (template · Jekyll) [ig-publication]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:243
+#: processes/ig-incremental-build.bpmn:244
 #. Diagram element documentation
 msgid "Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:128
+#: processes/ig-incremental-build.bpmn:129
 #. Diagram label
 msgid "Build stopped: environment error"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:112
+#: processes/ig-incremental-build.bpmn:113
 #. Diagram label
 msgid "Cache usable?"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:225
+#: processes/ig-incremental-build.bpmn:226
 #. Diagram element documentation
 msgid "Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:171
+#: processes/ig-incremental-build.bpmn:172
 #. Diagram element documentation
 msgid "Compile the restricted checkout with SUSHI — the cone's FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:140
+#: processes/ig-incremental-build.bpmn:141
 #. Diagram label
 msgid "Compute the cone of the change (fsh-cone --changed)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:141
+#: processes/ig-incremental-build.bpmn:142
 #. Diagram element documentation
 msgid "content/pipeline/fsh-cone.ts over the changed files: the forward cone is what to rebuild, the backward cone is what to check out."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:260
+#: processes/ig-incremental-build.bpmn:261
 #. Diagram element documentation
 msgid "Decided in the reviewer's QC gate (Task_Qa, `quality-control`) over qa.json, the aggregate of per-artefact outcomes, reading the cone's rows first. `no` files each QC finding as a bean, checking for an existing one first, and returns the findings to the author. `yes` goes on to deploy."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:283
+#: processes/ig-incremental-build.bpmn:284
 #. Diagram label
 msgid "Deploy the preview site [content-publish]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:295
+#: processes/ig-incremental-build.bpmn:296
 #. Diagram label
 msgid "Deploy the site [content-publish] [ig-publication]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:296
+#: processes/ig-incremental-build.bpmn:297
 #. Diagram element documentation
 msgid "Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:323
+#: processes/ig-incremental-build.bpmn:324
 #. Diagram label
 msgid "environment error"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:133
+#: processes/ig-incremental-build.bpmn:134
 #. Diagram element documentation
 msgid "Exit 1 or 3 from restore: the whole IG is built as today. Its outputs become the records the next seed writes."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:120
+#: processes/ig-incremental-build.bpmn:121
 #. Diagram element documentation
 msgid "Exit 2 from restore: the cache store or the toolchain could not be reached. Record that on the change's bean, with the restore output, so the work plan says the build did not run and why. Check before creating — beans create is not idempotent."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:47
+#: processes/ig-incremental-build.bpmn:48
 #. Diagram label
 msgid "FHIR modeller / PR author (person + authoring agent)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:265
+#: processes/ig-incremental-build.bpmn:266
 #. Diagram label
 msgid "File QC findings as beans [todo-manager]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:211
+#: processes/ig-incremental-build.bpmn:212
 #. Diagram label
 msgid "Findings back to the author"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:132
+#: processes/ig-incremental-build.bpmn:133
 #. Diagram label
 msgid "Full publisher build [ig-publication]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:161
+#: processes/ig-incremental-build.bpmn:162
 #. Diagram element documentation
 msgid "git sparse-checkout of the cone's files plus sushi-config.yaml, ig.ini and the alias files — a median of three files, p90 eleven, on smart-immunizations."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:316
+#: processes/ig-incremental-build.bpmn:317
 #. Diagram label
 msgid "IG site published, cache seeded"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:105
+#: processes/ig-incremental-build.bpmn:106
 #. Diagram element documentation
 msgid "ig-cache restore: per-artefact records, the terminology cache, the package cache and temp/, keyed by the toolchain slug. Exit 0 usable, 1 miss, 2 environment error, 3 present but toolchain moved."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:61
+#: processes/ig-incremental-build.bpmn:62
 #. Diagram label
 msgid "Incremental build (system)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:32
+#: processes/ig-incremental-build.bpmn:33
 #. Diagram label
 msgid "Incremental IG build"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:178
+#: processes/ig-incremental-build.bpmn:179
 #. Diagram label
 msgid "Load or reuse the warm context (fhir_context_load)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:202
+#: processes/ig-incremental-build.bpmn:203
 #. Diagram label
 msgid "Log findings on the bean [todo-manager]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:119
+#: processes/ig-incremental-build.bpmn:120
 #. Diagram label
 msgid "Log the environment error on the bean [todo-manager]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:345
+#: processes/ig-incremental-build.bpmn:346
 #. Diagram label
 msgid "main / release"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:224
+#: processes/ig-incremental-build.bpmn:225
 #. Diagram label
 msgid "Merge restored and rebuilt records"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:215
+#: processes/ig-incremental-build.bpmn:216
 #. Diagram element documentation
 msgid "Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:322
+#: processes/ig-incremental-build.bpmn:323
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:129
+#: processes/ig-incremental-build.bpmn:130
 #. Diagram element documentation
 msgid "Nothing was built. The author (or whoever maintains the runner) fixes the environment and re-runs; a re-run with a readable cache takes `yes` or `no` as usual."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:33
+#: processes/ig-incremental-build.bpmn:34
 #. Diagram element documentation
 msgid "One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm validator, re-render the cone's records, rebuild the meta-index, assemble the site, gate on QA, then deploy — and, on main or a release only, seed the cache from the green build. A cache miss or a moved toolchain falls back to today's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the package that owns the content owns what adequate means."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:306
+#: processes/ig-incremental-build.bpmn:307
 #. Diagram element documentation
 msgid "Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:62
+#: processes/ig-incremental-build.bpmn:63
 #. Diagram element documentation
 msgid "Owns everything that stays inside the cone: restore the cache, compute the cone, check it out, compile and re-render only that slice, then merge and rebuild the aggregates — Task_Index never re-derives an artefact on its own, so a missing record is a miss rather than a silent rebuild. What needs the JVM's warm state, it hands to Lane_Services rather than running itself."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:150
+#: processes/ig-incremental-build.bpmn:151
 #. Diagram label
 msgid "Post the cone report on the PR"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:343
+#: processes/ig-incremental-build.bpmn:344
 #. Diagram label
 msgid "PR branch"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:277
+#: processes/ig-incremental-build.bpmn:278
 #. Diagram label
 msgid "PR branch, or main / release?"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:82
+#: processes/ig-incremental-build.bpmn:83
 #. Diagram label
 msgid "PR reviewer / QC reviewer"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:292
+#: processes/ig-incremental-build.bpmn:293
 #. Diagram label
 msgid "Preview published"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:91
+#: processes/ig-incremental-build.bpmn:92
 #. Diagram label
 msgid "Publication manager — deploy and seed"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:74
+#: processes/ig-incremental-build.bpmn:75
 #. Diagram label
 msgid "Publisher + validator services (JVM)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:251
+#: processes/ig-incremental-build.bpmn:252
 #. Diagram element documentation
 msgid "qa.json is the aggregate of per-artefact outcomes; the reviewer reads the cone's rows first."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:259
+#: processes/ig-incremental-build.bpmn:260
 #. Diagram label
 msgid "QC clean?"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:266
+#: processes/ig-incremental-build.bpmn:267
 #. Diagram element documentation
 msgid "QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:250
+#: processes/ig-incremental-build.bpmn:251
 #. Diagram label
 msgid "QC gates on the aggregate QA [quality-control]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:214
+#: processes/ig-incremental-build.bpmn:215
 #. Diagram label
 msgid "Re-render the cone's records (fhir_narrative · skip lists)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:92
+#: processes/ig-incremental-build.bpmn:93
 #. Diagram element documentation
 msgid "Reached only past Gateway_Path's main-or-release branch, never for a PR preview — which is what makes this the one lane allowed to touch the shared cache. Task_Seed does not seed on a green build alone: it writes to a -test branch and verifies a restore from a clean clone before promoting, so what licenses the shared cache is the verified restore, not the deploy that came before it."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:232
+#: processes/ig-incremental-build.bpmn:233
 #. Diagram label
 msgid "Rebuild the meta-index (ig_metaindex_rebuild)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:104
+#: processes/ig-incremental-build.bpmn:105
 #. Diagram label
 msgid "Restore derived state [ig-publication]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:160
+#: processes/ig-incremental-build.bpmn:161
 #. Diagram label
 msgid "Restricted checkout of the backward cone"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:151
+#: processes/ig-incremental-build.bpmn:152
 #. Diagram element documentation
 msgid "Review path: the reviewer sees what this change rebuilds — how many artefacts, and whether a hub (a shared RuleSet, CQL library or value set) is touched — before the build finishes. On main it is a log line."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:305
+#: processes/ig-incremental-build.bpmn:306
 #. Diagram label
 msgid "Seed the cache from the green build (ig-cache seed · verify · promote)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:83
+#: processes/ig-incremental-build.bpmn:84
 #. Diagram element documentation
 msgid "Sees the change's shape before the build finishes — Task_ConeReport names what will rebuild and whether a shared hub is touched, posted while the checkout is still running — then gates on Task_Qa by reading the cone's own rows in the aggregate first. On a PR branch it also deploys the preview itself, but never seeds the shared cache: that stays Lane_PubMgr's, reached only past Gateway_Path on main or a release."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:100
+#: processes/ig-incremental-build.bpmn:101
 #. Diagram label
 msgid "Source changed"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:170
+#: processes/ig-incremental-build.bpmn:171
 #. Diagram label
 msgid "SUSHI on the restricted tank [l3-fhir-authoring]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:179
+#: processes/ig-incremental-build.bpmn:180
 #. Diagram element documentation
 msgid "The validator's server mode holds the loaded dependency packages, snapshots and expansions in its session cache. Cold start loads the restored derived FHIR rather than regenerating it."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:233
+#: processes/ig-incremental-build.bpmn:234
 #. Diagram element documentation
 msgid "The whole-IG aggregates only — artifacts, TOC, canonicals, expansions, package, QA aggregate. Never re-derives an artefact: a missing record is a miss (exit 1), not a silent rebuild."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:75
+#: processes/ig-incremental-build.bpmn:76
 #. Diagram element documentation
 msgid "Two separate duties rather than one: Task_FullBuild is the complete fallback the diagram takes when Gateway_Restore finds the cache unusable, bypassing the cone machinery and reaching Task_Qa on its own. Task_ContextLoad and Task_Validate are the other duty — holding the loaded dependency packages and expansions warm across runs is what makes validating a handful of cone files cheap, and losing that warm state is the same cache miss that routes to the fallback instead."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:196
+#: processes/ig-incremental-build.bpmn:197
 #. Diagram label
 msgid "Valid?"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:188
+#: processes/ig-incremental-build.bpmn:189
 #. Diagram label
 msgid "Validate the cone (fhir_validate) [fhir-validation]"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:189
+#: processes/ig-incremental-build.bpmn:190
 #. Diagram element documentation
 msgid "Validate the cone's resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:203
+#: processes/ig-incremental-build.bpmn:204
 #. Diagram element documentation
 msgid "Validation failed: record the findings on the change's bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:55
+#: processes/ig-incremental-build.bpmn:56
 #. Diagram element documentation
 msgid "Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check."
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:30
+#: processes/ig-incremental-build.bpmn:31
 #. Diagram label
 msgid "WHO SMART Guidelines — incremental IG build (review and publish)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:54
+#: processes/ig-incremental-build.bpmn:55
 #. Diagram label
 msgid "Work plan — beans (shared by humans and agents)"
 msgstr ""
 
-#: processes/ig-incremental-build.bpmn:321
+#: processes/ig-incremental-build.bpmn:322
 #. Diagram label
 msgid "yes"
 msgstr ""

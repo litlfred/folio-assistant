@@ -15,6 +15,7 @@
  *     bun run check:voices
  *
  * @module scripts/check-voices
+ * @covers voices
  */
 
 import { existsSync, readdirSync } from "node:fs";

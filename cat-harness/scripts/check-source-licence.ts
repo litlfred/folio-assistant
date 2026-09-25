@@ -36,6 +36,7 @@
  *   bun run check:source-licence -- --json  # print the sidecar document
  *
  * @module scripts/check-source-licence
+ * @covers library, uploads
  */
 import { readFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";

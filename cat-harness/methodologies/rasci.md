@@ -103,11 +103,11 @@ A process opts in:
 ```xml
 <bpmn:process id="Process_X">
   <bpmn:extensionElements>
-    <folio:involvement vocabulary="rasci"/>
+    <cat-harness.processes:involvement vocabulary="rasci"/>
   </bpmn:extensionElements>
 ```
 
-and may then declare `<folio:raci ref="<role>" involvement="supportive"/>`. In
+and may then declare `<cat-harness.processes:raci ref="<role>" involvement="supportive"/>`. In
 a process that has not opted in, a `supportive` is a **reported breach** —
 neither coerced to a neighbouring letter nor silently dropped. That refusal is
 what makes this a choice rather than a spelling rule; `check:raci` and the

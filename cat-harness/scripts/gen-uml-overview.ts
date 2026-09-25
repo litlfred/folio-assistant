@@ -44,6 +44,7 @@
  *   bun run cat-harness/scripts/gen-uml-overview.ts --check   # stale or orphaned?
  *
  * @module scripts/gen-uml-overview
+ * @covers uml
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -273,14 +274,6 @@ function drawFamily(
     }
   } else if (f.state === "external") {
     acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title: f.spec, source: `ext: ${f.spec}`, kind, attrs: [] });
-  } else if (f.state === "untyped") {
-    acc.classes.push({
-      id: safeId(`${prefix}_${f.tag}`),
-      title,
-      source: `untyped: written by ${f.writtenBy}`,
-      kind,
-      attrs: [remark(`no schema declared, shape is whatever ${f.writtenBy} writes`)],
-    });
   } else {
     section.undetermined.push({ kind: `${kind} ${f.tag}`, reason: f.reason });
   }
@@ -747,8 +740,7 @@ async function main(): Promise<void> {
   const jobs = jobsFor(pumls);
   const svgs = new Set(jobs.map((j) => j.svg));
   const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT), ...walk(SVG_ROOT)];
-  // Only this generator's own kinds of output count as orphans.
-  const orphans = existing.filter((p) => !files.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
+  const orphans = umlOrphans(existing, files, svgs);
 
   if (check) {
     const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
@@ -775,6 +767,16 @@ async function main(): Promise<void> {
     }
     console.log(`rendered ${r.rendered} SVG(s) under ${relative(REPO, SVG_ROOT)}`);
   }
+}
+
+/**
+ * Files under the generator's roots that this run does not write: the pages
+ * and diagrams of an instance or section that no longer exists (bean `ghgn`).
+ * Only this generator's own kinds of output count, so a file a person put
+ * there is never an orphan.
+ */
+export function umlOrphans(existing: readonly string[], written: ReadonlyMap<string, string> | ReadonlySet<string>, svgs: ReadonlySet<string>): string[] {
+  return existing.filter((p) => !written.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
 }
 
 if (import.meta.main) await main();

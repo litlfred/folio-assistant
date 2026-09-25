@@ -36,6 +36,8 @@
  * Usage:
  *   bun run content/pipeline/gen-site-jsonld.ts            # write
  *   bun run content/pipeline/gen-site-jsonld.ts --check    # CI gate
+ *
+ * @covers docs
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "node:fs";

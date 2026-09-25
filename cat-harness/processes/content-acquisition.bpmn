@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_ContentAcquisition" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_ContentAcquisition">
@@ -19,13 +20,13 @@
              up carrying five aliases because five diagrams each named the same
              lane differently. "Contributor" is what this lane IS in this
              process; `user` is the declared role performing it. -->
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>P_Respond</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>P_Upload</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>This lane is not unattended, unlike the same role elsewhere: A_Ask and A_Route both wait on Lane_Person, for minutes or days, because there is no material yet to make a gate decidable from — that only becomes true once a file or description exists. Acquisition ends at the moment something lands in the queue; everything past that boundary is document-ingestion.bpmn's actually-unattended run, not this one.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Acquire</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Offered</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Ask</bpmn:flowNodeRef>
@@ -41,33 +42,33 @@
     </bpmn:exclusiveGateway>
     <bpmn:task id="A_Ask" name="Say what is needed, and ask&#10;for a link OR a description">
       <bpmn:documentation>Both forms, named together. A person who cannot find the file often knows exactly what it is, and a description in their own words is an acquired resource rather than a consolation prize. Asking for the upload first demands the one thing they may not have, before the cheaper answers have been offered. Say what happens if they do nothing.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-acquisition"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-acquisition"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="P_Respond" name="Give a link,&#10;a description, or neither">
       <bpmn:documentation>"Or neither" is a real outcome, not a failure. The ask says what happens if nothing comes, and then that happens — the work proceeds without the resource and says so.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A person answering a question. The skill governs how the agent ASKS, which is A_Ask; there is nothing here for a skill to instruct."/>
+        <cat-harness.processes:no-skill reason="A person answering a question. The skill governs how the agent ASKS, which is A_Ask; there is nothing here for a skill to instruct."/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_PointToUpload" name="Point at the upload target&#10;[scripts/upload-url.ts]">
       <bpmn:documentation>Composed from the declaration, never written by hand. The queue is declared with INSTANCE scope, so its declared path is missing the segment a repository-relative forge URL needs: /upload/main/uploads is a 404 and /upload/main/cat-harness/uploads is not, verified against GitHub 2026-09-20. Every failure is named — no origin remote, a non-GitHub forge, a declared-but-absent queue — because a URL is believed, and somebody sent to a wrong one cannot tell it from an empty directory. On failure, fall back to the conversation.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-acquisition"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-acquisition"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="P_Upload" name="Drop the file&#10;in the queue">
       <bpmn:documentation>Through the forge's upload form, a commit, or any other route that lands the file in the declared queue. The agent watches rather than chases: an arrival may be minutes or days away.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A person dropping a file. The agent's half is pointing at the right target (A_PointToUpload) and noticing the arrival (A_Route), and both carry skills."/>
+        <cat-harness.processes:no-skill reason="A person dropping a file. The agent's half is pointing at the right target (A_PointToUpload) and noticing the arrival (A_Route), and both carry skills."/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Accept" name="Accept it, and record&#10;where it came from">
       <bpmn:documentation>Both branches land here. An unprompted offer is accepted as it stands — do not make somebody follow a process to hand over what they already have. Provenance is recorded whichever channel it arrived through: a description given in chat has a source and can be wrong, exactly as a PDF does.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-acquisition"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-acquisition"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Route" name="Route it, and watch&#10;the queue">
       <bpmn:documentation>A file goes to ingestion; a link or a description goes to whatever will resolve it. Acquisition stops here — the moment a file is in the queue, library-ingestion owns it, and keeping that seam sharp is what lets a resource acquired through a channel that does not exist yet reach ingestion unchanged. An arrival may be minutes or days away, so it is watched rather than chased.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="uploads-watch"/>
-        <folio:skill ref="library-ingestion"/>
+        <bootstrap.processes:skill ref="uploads-watch"/>
+        <bootstrap.processes:skill ref="library-ingestion"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Acquired" name="In the queue, or&#10;recorded in the conversation"/>

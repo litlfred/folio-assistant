@@ -62,12 +62,11 @@ export interface DependsOnRecord {
  *
  * | reason | what happened | remedy |
  * |---|---|---|
- * | `undecided` | the dependency has not declared `publishable` | the owner declares it (§6 Q1) |
- * | `internal` | it declared `publishable: false` | none — this is a correct, settled state |
+ * | `no-uri` | it has an id and a version but no `canonicalUrl`, so FHIR's `uri` role cannot be filled | declare a `canonicalUrl` |
  * | `unresolved` | the name matches no instance in this checkout | it is external, or the name is misspelled |
  * | `unreadable` | its declaration did not parse | fix the declaration |
  */
-export type DependsOnGapReason = "undecided" | "internal" | "unresolved" | "unreadable";
+export type DependsOnGapReason = "no-uri" | "unresolved" | "unreadable";
 
 export interface DependsOnGap {
   /** The dependency's declared name, which is all an unresolved edge has. */
@@ -92,13 +91,11 @@ export interface DependsOnExport {
 }
 
 const GAP_DETAIL: Record<DependsOnGapReason, string> = {
-  undecided:
-    "has not declared `publishable`, so it has no id or version to depend on — undecided, never false (instance-versioning.md §3.1)",
-  internal:
-    "declared `publishable: false`; nothing outside this repository may depend on it, so no record can name it",
+  "no-uri":
+    "has an id and a version, but no `canonicalUrl` — §3.4's record is `{packageId, version, uri}` and `canonicalUrl` is what plays `uri`, so the record cannot be expressed. Not a publishability question any more: every instance carries an id and a version (`skills/folio-core/instance-publication.md`)",
   unresolved:
     "matches no instance in this checkout — it is external to it, or the name is misspelled, and those are not the same",
-  unreadable: "its declaration did not parse, so its publishability is unknown rather than undecided",
+  unreadable: "its declaration did not parse, so nothing about it is known — which is not the same as it having no record",
 };
 
 /**
@@ -133,18 +130,23 @@ export function dependsOnFor(instanceRoot: string): DependsOnExport {
     return { records: [], gaps: [], unavailable: "no declaration found at this instance root" };
   }
 
-  // §3.4 is "per publishable instance". An undecided instance emitting a
-  // dependency block would be asserting a published dependency set for
-  // something nobody has said is published — the ceremony §3.1 is written
-  // against. So the block is withheld, and WHY is stated.
-  if (self.publishable !== true) {
+  // §3.4 USED TO BE withheld from any instance that had not declared
+  // `publishable: true`. That gate is gone: the owner's ruling of 2026-09-23
+  // gives every instance an id and a version, and puts them all in `draft`
+  // (`skills/folio-core/instance-publication.md`).
+  //
+  // What remains is a DIFFERENT obligation, and it is the one §3.4 actually
+  // has: the record is `{packageId, version, uri}`, and `canonicalUrl` plays
+  // `uri`. An instance without one cannot be EXPRESSED as a dependency, no
+  // matter what state it is in. So the block is still withheld sometimes, and
+  // the reason is now a fact about the record rather than about permission.
+  if (self.canonicalUrl === undefined) {
     return {
       records: [],
       gaps: [],
       unavailable:
-        self.publishable === false
-          ? "this instance declared `publishable: false`; a dependsOn record is for consumers outside this repository, and it has none"
-          : "this instance has not declared `publishable`, so §3.4's record is withheld rather than asserted — undecided, never false (§3.1, §6 Q1)",
+        "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — " +
+        "`canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
     };
   }
 
@@ -187,12 +189,8 @@ export function dependsOnFor(instanceRoot: string): DependsOnExport {
       gaps.push({ name, reason: "unreadable", detail: GAP_DETAIL.unreadable });
       continue;
     }
-    if (dep.publishable !== true) {
-      gaps.push({
-        name,
-        reason: dep.publishable === false ? "internal" : "undecided",
-        detail: dep.publishable === false ? GAP_DETAIL.internal : GAP_DETAIL.undecided,
-      });
+    if (dep.canonicalUrl === undefined) {
+      gaps.push({ name, reason: "no-uri", detail: GAP_DETAIL["no-uri"] });
       continue;
     }
     // The schema refuses `publishable: true` without all three, so reaching

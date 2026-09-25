@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "beans-and-todos",
   title: "Beans and todos",
+  documents: ["beans", "todos"],
   navOrder: 6,
   nodes: [
     { id: "overview", block: "overview" },

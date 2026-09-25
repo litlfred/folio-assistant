@@ -3,6 +3,7 @@
  * Every declared directory exists, or says why it does not.
  *
  * @module scripts/check-declared-dirs
+ * @covers cat-harness
  *
  * ## The gap, and why no existing check could have found it
  *

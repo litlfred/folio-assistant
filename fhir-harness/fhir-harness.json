@@ -1,6 +1,7 @@
 {
   "_comment": "THE BARE FHIR IG LAYER, staged as a top-level directory on the path who-iris, smart-trust, smart-immunizations and smart-base are already on. Created 2026-09-22 on the owner's stack ruling: `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`, no smart-guidelines. It is bean `nsbb`'s 'base', now named: run the FHIR IG Publisher with NO pre-processing and NO post-processing and publish the result, which is how SMART Guidelines were built BEFORE the DAK phases were added -- a shape that demonstrably worked rather than one being invented. IT MUST STAY WHO-FREE. The package here may be referenced BY `authoring-who-smart-guidelines` and may never reference it; a violation fails nothing, the layer simply stops being usable by the non-WHO IG it exists for, which is why `ig-build-pipeline` states the refusal as a checkable list rather than as an intention. DECLARES ONLY `skills/`, because that is all that exists: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.",
   "name": "fhir-harness",
+  "version": "0.1.0",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs (bean `t3n8`). `name` stays the machine identifier that filenames and `needs` edges resolve against.",
   "title": "FHIR IG Harness",
   "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
@@ -9,13 +10,10 @@
       "id": "fhir-ig-skills",
       "path": "skills/",
       "dependents": "reproduce",
-      "description": "The `fhir-ig-base` package. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for an agent taking a local experimental fork, and says why a publisher-only fork cannot satisfy its central criterion: the Library/PlanDefinition/Measure edges are produced in `org.hl7.fhir.core`, not in the publisher.",
+      "description": "Two packages. `fhir-client` is SMART on FHIR app launch (`smart-launch`) and FHIR resource operations (`fhir-client-operations`) through the SMARTerFHIR library, authored here against a pinned upstream commit because that repository ships no skill files (issue #556, bean `wlqd`). `fhir-ig-base` is the IG pipeline. `ig-build-pipeline` states what the layer runs and the list of things it refuses to know about, including the deploy phase's assignment. `ig-render-jekyll` states the three render contracts -- JSON only, navigation derived from `sushi-config.yaml`'s own ordered `pages:` and `menu:` maps rather than authored, and the LHS rail with the IG theme captured rather than discarded. `ig-publisher-reduction` is the five-phase transition to an AST-only Publisher, each phase carrying an exit criterion that is a measurement or a diff rather than an impression. `ig-publisher-fork` is the brief for an agent taking a local experimental fork, and says why a publisher-only fork cannot satisfy its central criterion: the Library/PlanDefinition/Measure edges are produced in `org.hl7.fhir.core`, not in the publisher.",
       "graphKinds": [
         "skills"
-      ],
-      "coverage": {
-        "skill": "smart-stack-layering"
-      }
+      ]
     },
     {
       "id": "fhir-ig-tools",
@@ -24,10 +22,7 @@
       "description": "The two `Library` strippers, moved down from the WHO build's \"DAK Postprocessing\" phase because neither is DAK-shaped -- any IG depending on `hl7.fhir.uv.cql` produces oversized `Library` resources. Declared here rather than only described in a skill: a layer boundary that exists in prose is one no consumer can act on, and these were described as belonging here for a whole round while being declared nowhere.",
       "graphKinds": [
         "tools"
-      ],
-      "coverage": {
-        "skill": "ig-build-pipeline"
-      }
+      ]
     }
   ],
   "assets": [

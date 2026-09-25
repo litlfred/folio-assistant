@@ -64,6 +64,7 @@
  * Exit: 0 clean, 1 a mismatched or ambiguous name, 2 could not check.
  *
  * @module folio-assistant/scripts/check-anchor-names
+ * @covers docs
  */
 
 import { readdirSync, readFileSync, statSync } from "node:fs";

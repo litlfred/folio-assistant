@@ -34,6 +34,8 @@
  *
  * Absent that flag, "declared and unimported" would be ambiguous, and an
  * ambiguous finding gets suppressed rather than fixed.
+ *
+ * @covers code
  */
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";

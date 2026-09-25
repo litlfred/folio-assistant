@@ -19,6 +19,7 @@ Owner, 2026-09-20: "also need to know about refreshing amterialed remote content
 
 - **Called by:** [Sample import into a structured data store](sample-import.html)
 - **Calls:** [Adjudication](adjudication.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

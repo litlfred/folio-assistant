@@ -5,6 +5,8 @@ description: >
   register it will be reviewed against. The authoring half of the voice overlay;
   `voice-overlay-review` is the half that runs after.
 allowed-tools: Read Edit Bash Grep Glob
+graph-kinds:
+  - voices
 ---
 
 # Voice authoring guidance

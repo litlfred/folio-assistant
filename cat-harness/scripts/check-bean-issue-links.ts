@@ -31,6 +31,7 @@
  * Exit: 0 clean or nothing to check, 1 a tracked issue no bean names, 2 unknown.
  *
  * @module folio-assistant/scripts/check-bean-issue-links
+ * @covers bean-defs, beans
  */
 
 import { spawnSync } from "node:child_process";

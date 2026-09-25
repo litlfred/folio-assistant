@@ -19,6 +19,7 @@ The machine half of translation, end to end: extract the translatable strings, i
 
 - **Called by:** no call activity names this process
 - **Calls:** [Adjudication](adjudication.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

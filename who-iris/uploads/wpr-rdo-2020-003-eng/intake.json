@@ -1,54 +1,45 @@
 {
   "$schema": "folio-intake/v1",
   "doc_id": "wpr-rdo-2020-003-eng",
-  "title": "Publication and information products style guide",
+  "item": "item/18892cf3-5a4f-42a4-923c-a93f4a594dec",
   "_comment": "The IRIS capture for the worked example. FOUR files, and they are three DIFFERENT KINDS of thing that a single `uploads/` entry has never had to tell apart before. Keeping the saved-page filenames verbatim is deliberate: the .html references `./Publication and information products style guide_files/...` relative to itself, so renaming either half breaks the pairing that makes it a reproducible capture rather than a loose file.",
   "source": {
-    "system": "DSpace",
-    "instance": "WHO IRIS",
-    "itemUrl": "https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec",
+    "upstream": "https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec",
     "capturedAt": "2026-09-20T07:44:32Z",
     "capturedBy": "owner, uploaded in 549fb04 and 9a60f6f"
   },
   "files": [
     {
       "path": "iris-capture/Publication and information products style guide.html",
-      "kind": "item-page",
+      "type": "item-page",
       "role": "webpage-theme-source",
       "note": "The saved DSpace item page. Its first line declares `saved from url=(0063)https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`, which is the provenance — not an inference from the filename."
     },
     {
       "path": "iris-capture/Publication and information products style guide_files.zip",
-      "kind": "item-page-assets",
+      "type": "item-page-assets",
       "role": "webpage-theme-source",
       "note": "The page's sidecar assets. Carries `client-theme.css` (571 KB), `styles.e55b0c9926626404.css` (36 KB) and three SVG logos (`who_logo`, `who_logo_white`, `iris_logo`). These ARE the IRIS web theme; the rest of the zip is Angular bundles and is not theme material."
     },
     {
       "path": "iris-capture/Publication and information products style guide-info.pdf",
-      "kind": "full-item-record",
+      "type": "full-item-record",
       "role": "metadata-source",
       "note": "DSpace's 'Simple item page' / full record, in qualified Dublin Core. The authoritative metadata for this item and the worked example for `schemas/dublin-core.ts`."
     },
     {
       "path": "iris-capture/Publication and information products style guide.pdf",
-      "kind": "item-page-print",
+      "type": "item-page-print",
       "role": "none",
       "note": "The ITEM PAGE printed to PDF, 201 KB — NOT the publication. The publication itself is 2.68 MB and is `WPR-RDO-2020-003-eng.pdf`, listed below in this same intake since bean `yl5w` moved it here from `cat-harness/uploads/`; it is ingested as `library/wpr-rdo-2020-003-eng`. Recorded with role `none` rather than dropped: 'we looked at it and it is not what it appears to be' is a different fact from 'nobody looked'."
     },
     {
       "path": "WPR-RDO-2020-003-eng.pdf",
-      "kind": "publication",
-      "role": "original-bitstream",
-      "note": "The PUBLICATION ITSELF — 2.68 MB, not to be confused with the 201 KB `…style guide.pdf` above, which is the item PAGE printed to PDF. The bytes `library/wpr-rdo-2020-003-eng` was derived from (its `structure.json` records this same sha256). Relocated here 2026-09-21 from `cat-harness/uploads/` (bean `yl5w`, issue #663): #477 moved `library/` into `who-iris/` and left the sources behind, so the catalogue's `localPath` claimed bytes that were one instance over. Recorded in this intake rather than only in the catalogue, because this file describes what is IN this directory.",
       "bytes": 2810648,
-      "sha256": "5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842"
+      "sha256": "5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842",
+      "type": "publication",
+      "role": "original-bitstream",
+      "note": "The PUBLICATION ITSELF — 2.68 MB, not to be confused with the 201 KB `…style guide.pdf` above, which is the item PAGE printed to PDF. The bytes `library/wpr-rdo-2020-003-eng` was derived from (its `structure.json` records this same sha256). Relocated here 2026-09-21 from `cat-harness/uploads/` (bean `yl5w`, issue #663): #477 moved `library/` into `who-iris/` and left the sources behind, so the catalogue's `localPath` claimed bytes that were one instance over. Recorded in this intake rather than only in the catalogue, because this file describes what is IN this directory."
     }
-  ],
-  "materialization": {
-    "state": "materialized",
-    "provenance": {
-      "upstream": "https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec"
-    },
-    "note": "One item of a catalogue whose whole is 361.55 GB. See bean folio-assistant-hpax — the three states (referenced / materialized / unknown) are declared per node, never defaulted."
-  }
+  ]
 }

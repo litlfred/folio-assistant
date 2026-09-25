@@ -3,6 +3,7 @@
  * Does each directory's `readOnly` declaration agree with what its nodes say?
  *
  * @module cat-harness/scripts/check-read-only-graphs
+ * @covers cat-harness
  *
  * ## Why a gate and not a derivation
  *

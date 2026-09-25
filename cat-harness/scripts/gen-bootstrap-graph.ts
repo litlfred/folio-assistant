@@ -78,6 +78,8 @@
  * ({@link COLLECTOR_SCOPE}), so a reader can tell *"bootstrap has no tools"*
  * from *"tools were never looked for"*. An empty section rendered as a clean
  * one is the `dh4f` defect.
+ *
+ * @conformsTo w3c-prov-o
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

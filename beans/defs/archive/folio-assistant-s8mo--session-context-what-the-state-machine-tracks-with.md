@@ -50,7 +50,13 @@ resolving it themselves gets a different answer if the node moved in between.
 
 ## Summary of Changes
 
-- `schemas/session-context.ts` — zod, authoritative. Six fields.
+- `schemas/session-context.ts` — zod, authoritative. Six fields **when this
+  was written; eight on 2026-09-24** (`$schema`, `id`, `actor`, `startedAt`,
+  `updatedAt`, `open`, `claimed`, `waitingOn`). The count is not re-synced
+  here because it should never have been written down: read the schema.
+  `session-context.md` carried the same "six" and drifted with it, so bean and
+  skill agreed and both were wrong — which no comparison between the two can
+  detect.
   `parseSessionContext()` parses at the boundary, and that is the general rule
   this record is the first case of: **where a machine may be PLAYED rather
   than executed, the schema is the contract and the parse is where it is

@@ -19,6 +19,7 @@ The human half of translation: a coordinator assigns a locale to a qualified tra
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

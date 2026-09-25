@@ -39,6 +39,13 @@ function hrefSites(source: string): Array<{ line: number; text: string }> {
     .filter(({ text }) => !/^\s*(\*|\/\/)/.test(text));
 }
 
+/**
+ * `// href-safe: <reason>` at the end of a line — the exemption with a reason.
+ * For a URL the page mints itself (a `blob:` URL over its own bytes), which is
+ * never data from a document and which `safeHref`'s allow-list would refuse.
+ */
+const EXEMPT = /\/\/\s*href-safe:\s*\S.{8,}$/;
+
 describe("every href in the client goes through the check", () => {
   const source = readFileSync(CLIENT, "utf-8");
 
@@ -57,6 +64,9 @@ describe("every href in the client goes through the check", () => {
     );
     const offenders = hrefSites(source).filter(({ text }) => {
       if (text.includes("safeHref") || text.includes("ALLOWED_URL_SCHEMES")) return false;
+      // The exemption the header promises, made real: a line that says WHY it
+      // is safe by composition. A bare marker with no reason is not one.
+      if (EXEMPT.test(text)) return false;
       const value = /\bhref\s*:\s*([A-Za-z_$][\w$]*)\b/.exec(text);
       return !(value && boundFromCheck.has(value[1]!));
     });
@@ -64,6 +74,13 @@ describe("every href in the client goes through the check", () => {
       offenders.map((o) => `${o.line}: ${o.text.trim()}`),
       "a new href must go through `safeHref` — see `schemas/safe-url.ts`",
     ).toEqual([]);
+  });
+
+  test("every exemption is listed here, so adding one is a visible change", () => {
+    // An exemption is a claim a reviewer should read. Pinning the list makes
+    // a new one fail this test until someone adds it on purpose.
+    const exempt = hrefSites(source).filter(({ text }) => EXEMPT.test(text)).map(({ text }) => text.trim().split("//")[0]!.trim());
+    expect(exempt).toEqual(['var a = el("a", { href: url, download: name });']);
   });
 
   test("the client's allow-list is the same list as the model's", () => {

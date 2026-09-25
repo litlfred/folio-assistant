@@ -4,6 +4,8 @@ description: >
   A skill states a capability generically; a Tool node carries the concrete
   mechanism. Read before writing or editing any skill, and whenever a skill is
   about to name a vendor, a CLI, a binary or an API endpoint.
+governs:
+  - cat-harness/tools
 ---
 
 # Skills and Tools — the skill says what, the Tool says how

@@ -3,6 +3,8 @@
  * Every INSTANTIATED harness has an avatar of its own — the instance axis.
  *
  * @module scripts/check-avatar-instances
+ * @covers cat-harness — the instance axis: it enumerates the instances each declaration names
+ *   and asks which has no avatar of its own
  *
  * ## Why this exists, and what it cost not to
  *

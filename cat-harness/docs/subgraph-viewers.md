@@ -3,6 +3,11 @@ layout: default
 title: Subgraph viewers
 nav_order: 14
 lang: en
+documents:
+  - library
+  - schemas
+  - uploads
+  - voices
 ---
 
 # Subgraph viewers

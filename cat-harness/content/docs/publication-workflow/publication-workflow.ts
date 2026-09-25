@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "publication-workflow",
   title: "Publication workflow",
+  documents: ["processes"],
   navOrder: 6,
   nodes: [
     {

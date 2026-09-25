@@ -37,6 +37,7 @@
  * markers. They render nothing and cost nothing where Lean is absent.
  *
  * @module content/pipeline/readme-sections
+ * @covers docs
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";

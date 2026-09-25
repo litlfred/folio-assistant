@@ -20,7 +20,7 @@
  *     `calledElement`, `bpmnElement`, `flowNodeRef`). Translating an id
  *     silently disconnects the graph — `workflow_next` would report a flow
  *     pointing at a node that no longer exists.
- *   - `<folio:skill ref>`, `<folio:bean op>`, `<folio:policy>`. A translated
+ *   - `<bootstrap.processes:skill ref>`, `<cat-harness.processes:bean op>`, `<cat-harness.processes:policy>`. A translated
  *     skill ref resolves to nothing, which is the exact defect
  *     `check:workflow-refs` exists to catch — a translation pass must not
  *     manufacture the thing another gate is there to prevent.

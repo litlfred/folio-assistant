@@ -60,10 +60,14 @@ describe("a lane declaring <folio:role variable=\"true\"/>", () => {
   });
 
   test("only the exact string \"true\" counts", async () => {
-    const xml = readFileSync(LOG_MESSAGE, "utf-8").replace(
-      '<folio:role variable="true"/>',
-      '<folio:role variable="yes"/>',
+    const original = readFileSync(LOG_MESSAGE, "utf-8");
+    const xml = original.replace(
+      '<bootstrap.processes:role variable="true"/>',
+      '<bootstrap.processes:role variable="yes"/>',
     );
+    // The edit must happen: a search string the diagram no longer carries
+    // (it said `folio:role` until bean 12s9 stage 2) would test nothing.
+    expect(xml).not.toBe(original);
     const m = await modelOf(xml);
     // Reading a typo as a declaration is how a defect quietly becomes an
     // exemption. "yes" is not the attribute value, so the lane is unbound and
@@ -72,10 +76,12 @@ describe("a lane declaring <folio:role variable=\"true\"/>", () => {
   });
 
   test("a lane with neither ref nor the flag stays unflagged", async () => {
-    const xml = readFileSync(LOG_MESSAGE, "utf-8").replace(
-      '<bpmn:extensionElements><folio:role variable="true"/></bpmn:extensionElements>\n        ',
+    const original = readFileSync(LOG_MESSAGE, "utf-8");
+    const xml = original.replace(
+      '<bpmn:extensionElements><bootstrap.processes:role variable="true"/></bpmn:extensionElements>\n        ',
       "",
     );
+    expect(xml).not.toBe(original);
     const m = await modelOf(xml);
     const actor = m.lanes.find((l) => l.id === "Lane_Actor");
     expect(actor!.performerVaries).toBe(false);

@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/pr-checks-present.bpmn
 # Which open pull requests have NO CI run on their head?
 #
 # Bean `3pqn`. A pull request showing zero checks is indistinguishable from one
@@ -46,6 +47,7 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Open PRs whose head has no run
     runs-on: ubuntu-latest
     timeout-minutes: 10

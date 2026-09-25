@@ -6,6 +6,9 @@ description: >
   rule lives in `directory-conventions`; the entity question lives in
   `data-modelling`; this is the work in between.
 consulted: true
+graph-kinds:
+  - external-schema
+  - schemas
 ---
 
 # Managing a schema — the graph, the viewer, and the three answers that are not "fine"

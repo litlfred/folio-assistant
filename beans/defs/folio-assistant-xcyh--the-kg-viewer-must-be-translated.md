@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xcyh
 title: The KG viewer must be translated
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:23:01Z
-updated_at: 2026-09-19T06:03:09Z
+updated_at: 2026-09-23T20:57:53Z
 parent: folio-assistant-bzyu
 ---
 
@@ -112,3 +112,13 @@ right-to-left render in both colour schemes); `tsc`, `eslint`,
 `translate-kg-viewer --check`, `gen-skill-docs --check` all 0. `bun test` has
 one unrelated failure: `folio-root.test.ts` asserts the checkout path ends in
 `folio-assistant`, and this ran in a worktree under `.claude/worktrees/`.
+
+## Summary of Changes
+
+Closed 2026-09-23. While going through the beans, the owner chose **"Close on mechanism"**. This bean asked for the kg-viewer to be translatable, and the mechanism is on `main`:
+
+- `scripts/kg-viewer-strings.ts`, with its drift test.
+- `translate-kg-viewer.ts`.
+- `translate-kg-viewer:check` in CI (`code-quality-gates.yml`).
+
+The five `kg-viewer.po` catalogues are stubs, with 41 of 41 strings empty. That follows the owner's earlier "english only, let translators fill them". Filling them is translators' work, not this bean's. The `.po` sync gap is tracked in `a98i`.

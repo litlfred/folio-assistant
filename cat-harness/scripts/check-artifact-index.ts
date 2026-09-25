@@ -3,6 +3,7 @@
  * Validate every committed FHIR IG artefact index against its schema.
  *
  * @module scripts/check-artifact-index
+ * @covers fhir-artifact-index
  *
  * ## Why this exists beside `ingest:ig:check`
  *

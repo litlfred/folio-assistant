@@ -19,6 +19,7 @@ WireGen (methodologies/wiregen) made executable: a written design intent, at lea
 
 - **Called by:** no call activity names this process
 - **Calls:** [Criterion adjudication](criterion-adjudication.html), [Options analysis](options-analysis.html)
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html)
 
 ## Lanes — who acts

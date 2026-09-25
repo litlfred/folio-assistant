@@ -19,6 +19,7 @@ Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`deep-document-research`](../reference/skill-instructions/deep-document-research.html)
 
 ## Lanes — who acts
@@ -44,7 +45,7 @@ Every one of the 2 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Is the corpus there to search?**<br>`GW_Held` | Computable, and deliberately carries neither `folio:decision` nor `folio:judgement`: whether the library holds entries whose L1 completeness verdict is `met` is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the "no table because nobody has written one" state bean `q0tc` counts. Leaving here is the correct outcome, not a failure. A question about documents nobody ingested has an answer — "this corpus does not hold them" — and that answer is not produced by searching harder. | **held** → Filter the corpus, choose the granularity, decompose the question<br>**not held** → Not held — a question for library-ingestion |
+| **Is the corpus there to search?**<br>`GW_Held` | Computable, and deliberately carries neither `cat-harness.processes:decision` nor `cat-harness.processes:judgement`: whether the library holds entries whose L1 completeness verdict is `met` is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the "no table because nobody has written one" state bean `q0tc` counts. Leaving here is the correct outcome, not a failure. A question about documents nobody ingested has an answer — "this corpus does not hold them" — and that answer is not produced by searching harder. | **held** → Filter the corpus, choose the granularity, decompose the question<br>**not held** → Not held — a question for library-ingestion |
 | **Enough, or out of iterations?**<br>`GW_Sufficient` | TWO ways out, and both are load-bearing. Sufficiency alone never terminates on a question the corpus cannot answer, which is the ordinary case rather than the exception. The iteration cap alone stops an answerable question early and returns something indistinguishable from a complete answer. A loop carrying one of them is a different method with a failure mode this one does not have. WHICH ONE FIRED IS CARRIED TO THE REPORT. An answer that hit the cap is an answer with known gaps; one that reached sufficiency is not. A report that does not distinguish them hands the reader a confidence nobody established. | **not yet, and iterations remain** → Filter the corpus, choose the granularity, decompose the question<br>**sufficient** → Synthesise, cite to a location, and say what was not found<br>**out of iterations** → Synthesise, cite to a location, and say what was not found |
 
 {% endraw %}

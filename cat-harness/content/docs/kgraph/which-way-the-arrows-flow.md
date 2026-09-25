@@ -8,9 +8,9 @@ be followed mechanically rather than inferred:
 | Role | `skills` | Skill |
 | Voice | `activeIn.roles` | Role |
 | User Story | `role` | Role |
-| Workflow activity | `<folio:skill ref>` | Skill |
-| Workflow lane | `<folio:role ref>` | Role |
-| Workflow activity | `<folio:bean op>` | a work-plan operation |
+| Workflow activity | `<bootstrap.processes:skill ref>` | Skill |
+| Workflow lane | `<bootstrap.processes:role ref>` | Role |
+| Workflow activity | `<cat-harness.processes:bean op>` | a work-plan operation |
 | Tool | `satisfies` | Skill |
 | Skill, Capability | `satisfies` | Requirement statement |
 | Skill | `graph-kinds` | Graph kind |

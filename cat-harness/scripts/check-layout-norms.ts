@@ -71,6 +71,7 @@
  *       2 could not determine.
  *
  * @module scripts/check-layout-norms
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";

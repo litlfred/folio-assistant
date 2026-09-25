@@ -3,8 +3,8 @@
  *
  * The workflow diagrams under `processes/` are already the normative
  * picture of how a change reaches the corpus, and every activity already names
- * the skill that implements it (`<folio:skill ref="…"/>`) and whether it
- * touches the work plan (`<folio:bean/>`). Until now nothing read them at
+ * the skill that implements it (`<bootstrap.processes:skill ref="…"/>`) and whether it
+ * touches the work plan (`<cat-harness.processes:bean/>`). Until now nothing read them at
  * runtime: they were documentation an agent was trusted to have absorbed.
  *
  * This turns the same file into a model. `bpmn-moddle` — the parser bpmn.io
@@ -27,6 +27,8 @@
  * gate that passes by not looking is worse than no gate.
  *
  * @module folio-assistant/workflow/process-model
+ *
+ * @conformsTo omg-bpmn-2.0
  */
 
 import { BpmnModdle } from "bpmn-moddle";
@@ -124,17 +126,17 @@ export interface ProcessNode {
   /** Id of that lane, so a finding can name the element rather than a string. */
   laneId?: string;
   /**
-   * `<folio:role ref="…"/>` on the lane, when the diagram binds explicitly.
+   * `<bootstrap.processes:role ref="…"/>` on the lane, when the diagram binds explicitly.
    *
    * A lane NAME is free text and sixty of them spell two dozen positions
    * (`schemas/role-graph.ts`); an explicit ref is the join that does not
    * depend on spelling, and it wins over name matching when present.
    */
   roleRef?: string;
-  /** `<folio:skill ref="…"/>`, possibly several. */
+  /** `<bootstrap.processes:skill ref="…"/>`, possibly several. */
   skills: string[];
   /**
-   * `<folio:raci ref="<role>" involvement="accountable|consulted|informed"/>`.
+   * `<cat-harness.processes:raci ref="<role>" involvement="accountable|consulted|informed"/>`.
    *
    * **R is NOT here, and that is the point.** A BPMN lane already says who
    * performs an activity — that IS Responsible — so declaring it again
@@ -171,7 +173,7 @@ export interface ProcessNode {
   /**
    * The conventions in force HERE — process ∪ lane ∪ activity, in that order.
    *
-   * `<folio:convention ref="…"/>`, mirroring `folio:skill` rather than
+   * `<cat-harness.processes:convention ref="…"/>`, mirroring `folio:skill` rather than
    * inventing a second binding syntax. Bean `3190`: a convention is context
    * attached to a process, so an agent implementing under CRDM has them and
    * one adjudicating a translation does not.
@@ -183,7 +185,7 @@ export interface ProcessNode {
    */
   conventions: Array<{ ref: string; scope: ConventionScope }>;
   /**
-   * `<folio:no-skill reason="…"/>` — this activity names no skill ON PURPOSE,
+   * `<cat-harness.processes:no-skill reason="…"/>` — this activity names no skill ON PURPOSE,
    * and this is why.
    *
    * A person describing the change they want, in their own words, is not an
@@ -200,7 +202,7 @@ export interface ProcessNode {
    */
   noSkillReason?: string;
   /**
-   * `<folio:no-call reason="…"/>` — this step names a skill that owns a
+   * `<cat-harness.processes:no-call reason="…"/>` — this step names a skill that owns a
    * same-named process, and is deliberately NOT a call activity of it.
    *
    * A call activity runs the called process from its first start event to its
@@ -212,7 +214,7 @@ export interface ProcessNode {
    */
   noCallReason?: string;
   /**
-   * `<folio:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
+   * `<cat-harness.processes:judgement reason="…"/>` — this gateway's branch is a JUDGEMENT
    * call, on purpose, and this is why.
    *
    * ## The third state the vocabulary was missing
@@ -242,7 +244,7 @@ export interface ProcessNode {
    */
   judgementReason?: string;
   /**
-   * `<folio:fulfilment kinds="person agent" reason="…"/>` — which actor kinds
+   * `<cat-harness.processes:fulfilment kinds="person agent" reason="…"/>` — which actor kinds
    * may perform this activity, said explicitly.
    *
    * Almost no activity needs one. The BPMN type already answers the question
@@ -260,7 +262,7 @@ export interface ProcessNode {
    */
   fulfilment?: { kinds: ActorKind[]; reason: string };
   /**
-   * `<folio:adjudication codes="…"/>` — the activity is a judgement, and these
+   * `<cat-harness.processes:adjudication codes="…"/>` — the activity is a judgement, and these
    * are the answers it may give.
    *
    * The declared enum a recorded outcome is validated against. Its document
@@ -269,7 +271,7 @@ export interface ProcessNode {
    */
   adjudication?: { codes: string[]; list?: string };
   /**
-   * `<folio:adjudication accepts="…"/>` — on a CALL ACTIVITY: the answers this
+   * `<cat-harness.processes:adjudication accepts="…"/>` — on a CALL ACTIVITY: the answers this
    * caller can act on, checked against the adjudicator inside the process it calls.
    *
    * A different claim from {@link adjudication}, on a different element, which
@@ -281,7 +283,7 @@ export interface ProcessNode {
    */
   adjudicationAccepts?: string[];
   /**
-   * `<folio:adjudication defers="caller"/>` — this step IS an adjudication and
+   * `<cat-harness.processes:adjudication defers="caller"/>` — this step IS an adjudication and
    * its permitted answers are the CALLER's to declare.
    *
    * Declared rather than inferred from a missing `codes`, because in this
@@ -292,22 +294,22 @@ export interface ProcessNode {
    * `check:workflow-refs` could not report the callers that still owe an enum.
    */
   adjudicationDefers?: boolean;
-  /** True when `<folio:bean/>` marks this step as touching the work plan. */
+  /** True when `<cat-harness.processes:bean/>` marks this step as touching the work plan. */
   touchesWorkPlan: boolean;
   /**
-   * `op` on `<folio:bean/>`: what this step does to the bean — `claim`, `note`
+   * `op` on `<cat-harness.processes:bean/>`: what this step does to the bean — `claim`, `note`
    * or `resolve`. Absent means the step touches the plan in some way the tools
    * do not perform automatically.
    */
   workPlanOp?: WorkPlanOp;
   /**
-   * `<folio:policy relaxable="false"/>` — a content package may not declare a
+   * `<cat-harness.processes:policy relaxable="false"/>` — a content package may not declare a
    * relaxation for this step. These are the gate itself; if they were
    * negotiable, "strict base" would mean nothing.
    */
   relaxable: boolean;
   /**
-   * `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` on an exclusive
+   * `<cat-harness.processes:decision ref="decisions/x.dmn#Decision_Id"/>` on an exclusive
    * gateway: its outcome is **computed** from a DMN table rather than chosen.
    * Relative to the directory holding the `.bpmn`.
    */
@@ -327,7 +329,7 @@ export interface ProcessFlow {
   from: string;
   to: string;
   /**
-   * `<folio:adjudication code="…"/>` — on a branch out of an adjudicated
+   * `<cat-harness.processes:adjudication code="…"/>` — on a branch out of an adjudicated
    * judgement's gateway, WHICH declared answer selects this branch.
    *
    * The flow's `name` is prose for a reader ("the finding stands"); this is
@@ -353,10 +355,10 @@ export interface LaneDef {
   name?: string;
   /** `<bpmn:documentation>` on the lane — what the role does IN this diagram. */
   documentation?: string;
-  /** `<folio:role ref="…"/>` on the lane, when declared. */
+  /** `<bootstrap.processes:role ref="…"/>` on the lane, when declared. */
   roleRef?: string;
   /**
-   * `<folio:role variable="true"/>` — this lane's PERFORMER VARIES, declared.
+   * `<bootstrap.processes:role variable="true"/>` — this lane's PERFORMER VARIES, declared.
    *
    * Bean `ug4r`. A lane binding no role is normally a defect, and
    * `lane-binds-role` says so at severity `major`. But `log-message.bpmn`'s
@@ -404,7 +406,7 @@ export type PreconditionCheck =
   /** `ref` names a path, relative to the repository root, that must exist. */
   | "file-exists";
 
-/** One `<folio:precondition>` on a process. */
+/** One `<bootstrap.processes:precondition>` on a process. */
 export interface Precondition {
   /** Stable id, so a report names WHICH one could not be determined. */
   id: string;
@@ -437,7 +439,7 @@ export interface ProcessModel {
   nodes: Map<string, ProcessNode>;
   flows: Map<string, ProcessFlow>;
   /**
-   * `<folio:policy enforcement="…"/>` on the process.
+   * `<cat-harness.processes:policy enforcement="…"/>` on the process.
    *
    * `strict` — the content-agnostic base. A capability tool guarded by this
    * process refuses when the step is not enabled.
@@ -446,7 +448,7 @@ export interface ProcessModel {
    */
   enforcement: "strict" | "advisory";
   /**
-   * `<folio:involvement vocabulary="…"/>` — which involvement methodology's
+   * `<cat-harness.processes:involvement vocabulary="…"/>` — which involvement methodology's
    * letters this diagram is written in. Absent in the diagram means `raci`.
    *
    * Exposed so a consumer can say WHICH vocabulary a finding is against:
@@ -456,7 +458,7 @@ export interface ProcessModel {
    */
   involvementVocabulary: InvolvementVocabulary;
   /**
-   * `<folio:precondition>` elements on the process — what must hold BEFORE the
+   * `<bootstrap.processes:precondition>` elements on the process — what must hold BEFORE the
    * start event, bean `lv3j`.
    *
    * Empty for every diagram that declares none, which is most of them: a
@@ -467,7 +469,7 @@ export interface ProcessModel {
    */
   preconditions: Precondition[];
   /**
-   * `<folio:log capture="on|off"/>` on the process — whether running THIS
+   * `<cat-harness.processes:log capture="on|off"/>` on the process — whether running THIS
    * workflow writes activity-log entries to the data store.
    *
    * Three-valued, and the third value is the point: `undefined` means the
@@ -540,7 +542,7 @@ function readWorkPlanOp(
   //
   // The gap between them has a measured cost recorded in
   // `processes/bean-lifecycle.bpmn`: a diagram carried
-  // `<folio:bean action="create"/>`, the engine reads `op` and never looked at
+  // `<cat-harness.processes:bean action="create"/>`, the engine reads `op` and never looked at
   // `action`, and "the step silently did nothing for weeks". Nothing could
   // have caught it, because an absent `op` is DOCUMENTED as meaningful —
   // {@link ProcessNode.workPlanOp} says it means the step "touches the plan in
@@ -549,7 +551,7 @@ function readWorkPlanOp(
   // reading is the one a reader would reach for.
   //
   // Both readings stay available; what is removed is the ambiguity between
-  // them. A bare `<folio:bean/>` is still legal and still means abstention.
+  // them. A bare `<cat-harness.processes:bean/>` is still legal and still means abstention.
   //
   // moddle carries an unregistered attribute through as an own enumerable
   // string property beside `$type` — the same behaviour `folio:role variable`
@@ -558,7 +560,7 @@ function readWorkPlanOp(
   const unknown = Object.keys(bean).filter((k) => !k.startsWith("$") && k !== "op");
   if (unknown.length > 0) {
     throw new UnsupportedBpmn(
-      `${nodeId}: folio:bean carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
+      `${nodeId}: cat-harness.processes:bean carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
         `which the engine does not read. The attribute is \`op\` — and an absent op ` +
         `MEANS something ("touches the plan in some way the tools do not perform ` +
         `automatically"), so a misspelling here is indistinguishable from a deliberate ` +
@@ -571,7 +573,7 @@ function readWorkPlanOp(
   if (op === undefined) return undefined;
   if (!WORK_PLAN_OPS.has(op)) {
     throw new UnsupportedBpmn(
-      `${nodeId}: folio:bean op="${op}" is not implemented. ` +
+      `${nodeId}: cat-harness.processes:bean op="${op}" is not implemented. ` +
         `Supported: ${[...WORK_PLAN_OPS].join(", ")}.`,
     );
   }
@@ -579,7 +581,7 @@ function readWorkPlanOp(
 }
 
 /**
- * `<folio:no-skill reason="…"/>`, with the reason enforced at LOAD time.
+ * `<cat-harness.processes:no-skill reason="…"/>`, with the reason enforced at LOAD time.
  *
  * Throwing here rather than recording a finding is deliberate: a declaration
  * that silences a check is exactly the thing that must not be able to arrive
@@ -595,21 +597,21 @@ function noSkillReasonOf(
   const reason = decl.reason?.trim();
   if (!reason) {
     throw new Error(
-      `${id}: <folio:no-skill/> carries no reason. An exemption with no stated ` +
+      `${id}: <cat-harness.processes:no-skill/> carries no reason. An exemption with no stated ` +
         `justification cannot be reviewed — say why this step has no implementing skill.`,
     );
   }
   return reason;
 }
 
-/** `<folio:no-call reason="…"/>` — same load-time rule as {@link noSkillReasonOf}. */
+/** `<cat-harness.processes:no-call reason="…"/>` — same load-time rule as {@link noSkillReasonOf}. */
 function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): string | undefined {
   const decl = ext.find((v) => v.$type === "folio:no-call");
   if (!decl) return undefined;
   const reason = decl.reason?.trim();
   if (!reason) {
     throw new Error(
-      `${id}: <folio:no-call/> carries no reason. Say why this step uses the skill's know-how ` +
+      `${id}: <cat-harness.processes:no-call/> carries no reason. Say why this step uses the skill's know-how ` +
         `rather than calling its process.`,
     );
   }
@@ -617,7 +619,7 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
 }
 
 /**
- * `<folio:judgement reason="…"/>`, with the reason enforced at LOAD time.
+ * `<cat-harness.processes:judgement reason="…"/>`, with the reason enforced at LOAD time.
  *
  * Refused at load rather than recorded as a finding, for the reason
  * {@link noSkillReasonOf} gives: a declaration that silences a question must
@@ -630,7 +632,7 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
  * a preference.
  */
 /**
- * `<folio:adjudication codes="a b c"/>` — this activity IS a judgement, and
+ * `<cat-harness.processes:adjudication codes="a b c"/>` — this activity IS a judgement, and
  * these are the answers it may give.
  *
  * Bean `5vo9`, the owner's *"formalized adjudication process so there is 'use
@@ -649,7 +651,7 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
  *     stamp inherit a decision's authority.
  *  2. **A mechanical or external actor may not adjudicate.** The owner: *"ONLY
  *     agentic human actor."* `adjudication.bpmn`'s adjudicator step already declares
- *     `<folio:fulfilment kinds="person agent"/>` and says why — *"a mechanical
+ *     `<cat-harness.processes:fulfilment kinds="person agent"/>` and says why — *"a mechanical
  *     system may NOT take this step, which is the whole reason the process
  *     exists"* — but nothing tied the two together, so a NEW adjudication step
  *     could omit the fulfilment entirely and no gate would notice. This makes
@@ -660,7 +662,7 @@ function noCallReasonOf(ext: { $type: string; reason?: string }[], id: string): 
  * let a caller hand-answer.
  */
 /**
- * The three attributes `<folio:adjudication/>` carries, by where it sits.
+ * The three attributes `<cat-harness.processes:adjudication/>` carries, by where it sits.
  *
  * `codes` on the adjudicating activity, `code` on a branch out of its gateway,
  * `accepts` on a call activity. They are deliberately three names rather than
@@ -680,7 +682,7 @@ const ADJUDICATION_ATTRS = {
 } as const;
 
 /**
- * Read `<folio:adjudication/>` off an element, REFUSING an attribute the
+ * Read `<cat-harness.processes:adjudication/>` off an element, REFUSING an attribute the
  * engine does not read.
  *
  * The same guard `folio:bean` carries, and for the same measured reason: that
@@ -711,13 +713,13 @@ function adjudicationDeclOf(
   if (!decl) return undefined;
   // Checked PER POSITION, not against the union. `code` is a real attribute
   // on a flow and meaningless on an activity, so a union guard would let
-  // `<folio:adjudication code="a b"/>` sit on an adjudicator and be ignored — which
+  // `<cat-harness.processes:adjudication code="a b"/>` sit on an adjudicator and be ignored — which
   // is precisely the shape the guard exists to refuse, one element over.
   const allowed = ADJUDICATION_ATTRS[where] as readonly string[];
   const unknown = Object.keys(decl).filter((k) => !k.startsWith("$") && !allowed.includes(k));
   if (unknown.length > 0) {
     throw new UnsupportedBpmn(
-      `${elId}: <folio:adjudication/> carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
+      `${elId}: <cat-harness.processes:adjudication/> carries ${unknown.map((k) => `"${k}"`).join(", ")}, ` +
         `which the engine does not read on a ${where}. Here the attribute(s) are ` +
         `${allowed.map((a) => `\`${a}\``).join(", ")} — and each one's ABSENCE ` +
         `means something, so a misspelling reads as a deliberate abstention.`,
@@ -727,13 +729,13 @@ function adjudicationDeclOf(
     // `list` names where the codes are DEFINED; it is only meaningful beside
     // the codes it defines. On `accepts` the callee's list already governs.
     throw new Error(
-      `${elId}: <folio:adjudication list="${decl.list}"/> without \`codes\`. A code list ` +
+      `${elId}: <cat-harness.processes:adjudication list="${decl.list}"/> without \`codes\`. A code list ` +
         `defines the answers a judgement declares; with no \`codes\` there is nothing it defines.`,
     );
   }
   if (decl.codes !== undefined && decl.accepts !== undefined) {
     throw new Error(
-      `${elId}: <folio:adjudication/> declares both \`codes\` and \`accepts\`. ` +
+      `${elId}: <cat-harness.processes:adjudication/> declares both \`codes\` and \`accepts\`. ` +
         `A step either MAKES a judgement or CALLS one; declaring both says it is ` +
         `its own caller, and nothing could check that against anything.`,
     );
@@ -746,12 +748,12 @@ function codeList(raw: string | undefined, elId: string, attr: string, why: stri
   const codes = (raw ?? "").trim().split(/\s+/).filter(Boolean);
   if (codes.length < 2) {
     throw new Error(
-      `${elId}: <folio:adjudication ${attr}="…"/> names ${codes.length} code(s). ${why}`,
+      `${elId}: <cat-harness.processes:adjudication ${attr}="…"/> names ${codes.length} code(s). ${why}`,
     );
   }
   if (new Set(codes).size !== codes.length) {
     throw new Error(
-      `${elId}: <folio:adjudication ${attr}="…"/> repeats a code. ` +
+      `${elId}: <cat-harness.processes:adjudication ${attr}="…"/> repeats a code. ` +
         `The outcome could not say which was chosen.`,
     );
   }
@@ -796,7 +798,7 @@ async function checkCodeLists(nodes: Map<string, ProcessNode>, bpmnPath: string)
 }
 
 /**
- * `<folio:adjudication accepts="a b c"/>` on a call activity — the answers
+ * `<cat-harness.processes:adjudication accepts="a b c"/>` on a call activity — the answers
  * this caller can act on.
  *
  * Bean `bvuk`, and the measurement that produced it is worth carrying here
@@ -816,7 +818,7 @@ async function checkCodeLists(nodes: Map<string, ProcessNode>, bpmnPath: string)
  * the called process — see there for what it refuses and what it leaves alone.
  */
 /**
- * `<folio:adjudication defers="caller"/>` — an adjudication whose enum the
+ * `<cat-harness.processes:adjudication defers="caller"/>` — an adjudication whose enum the
  * caller declares. Bean `bvuk`.
  *
  * Carries the same actor restriction as a `codes` adjudication, because it is
@@ -831,14 +833,14 @@ function adjudicationDefersOf(
   if (!decl || decl.defers === undefined) return false;
   if (decl.defers !== "caller") {
     throw new Error(
-      `${el.id}: <folio:adjudication defers="${decl.defers}"/>. The only value is ` +
+      `${el.id}: <cat-harness.processes:adjudication defers="${decl.defers}"/>. The only value is ` +
         `\`caller\` — an enum can be deferred to whoever asked, and there is nowhere ` +
         `else for it to come from.`,
     );
   }
   if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
     throw new Error(
-      `${el.id}: <folio:adjudication defers="caller"/> is only meaningful on an activity — ` +
+      `${el.id}: <cat-harness.processes:adjudication defers="caller"/> is only meaningful on an activity — ` +
         `somebody performs an adjudication, and ${el.$type} is not performed.`,
     );
   }
@@ -854,7 +856,7 @@ function adjudicationAcceptsOf(
   if (!decl || decl.accepts === undefined) return undefined;
   if (el.$type !== "bpmn:CallActivity") {
     throw new Error(
-      `${el.id}: <folio:adjudication accepts="…"/> is only meaningful on a call activity — ` +
+      `${el.id}: <cat-harness.processes:adjudication accepts="…"/> is only meaningful on a call activity — ` +
         `it states what a CALLER can act on, and ${el.$type} calls nothing. ` +
         `A step that makes the judgement itself declares \`codes\`.`,
     );
@@ -877,7 +879,7 @@ function adjudicationOf(
   if (!decl || decl.codes === undefined) return undefined;
   if (!(ACTIVITY_TYPES as readonly string[]).includes(el.$type)) {
     throw new Error(
-      `${el.id}: <folio:adjudication/> is only meaningful on an activity — ` +
+      `${el.id}: <cat-harness.processes:adjudication/> is only meaningful on an activity — ` +
         `somebody performs a judgement, and ${el.$type} is not performed.`,
     );
   }
@@ -906,17 +908,17 @@ function requireAdjudicatorKinds(
 ): void {
   if (fulfilment === undefined) {
     throw new Error(
-      `${elId}: <folio:adjudication/> with no <folio:fulfilment kinds="…"/>. ` +
+      `${elId}: <cat-harness.processes:adjudication/> with no <cat-harness.processes:fulfilment kinds="…"/>. ` +
         `Say who may adjudicate — an adjudication open to a mechanical actor is a rule, ` +
-        `and a rule belongs in a DMN table behind <folio:decision/>.`,
+        `and a rule belongs in a DMN table behind <cat-harness.processes:decision/>.`,
     );
   }
   const forbidden = fulfilment.kinds.filter((k) => k !== "person" && k !== "agent");
   if (forbidden.length > 0) {
     throw new Error(
-      `${elId}: <folio:adjudication/> on a step fulfillable by ${forbidden.join(", ")}. ` +
+      `${elId}: <cat-harness.processes:adjudication/> on a step fulfillable by ${forbidden.join(", ")}. ` +
         `Only \`person\` and \`agent\` may adjudicate. If a mechanical actor can decide it, ` +
-        `it is computable — use <folio:decision/> and a DMN table.`,
+        `it is computable — use <cat-harness.processes:decision/> and a DMN table.`,
     );
   }
 }
@@ -929,13 +931,13 @@ function judgementReasonOf(
   if (!decl) return undefined;
   if (el.$type !== "bpmn:ExclusiveGateway") {
     throw new Error(
-      `${el.id}: <folio:judgement/> is only meaningful on an exclusive gateway — ` +
+      `${el.id}: <cat-harness.processes:judgement/> is only meaningful on an exclusive gateway — ` +
         `it says who chooses the branch, and ${el.$type} has no branch to choose.`,
     );
   }
   if (ext.some((v) => v.$type === "folio:decision")) {
     throw new Error(
-      `${el.id}: carries both <folio:decision/> and <folio:judgement/>. A gateway ` +
+      `${el.id}: carries both <cat-harness.processes:decision/> and <cat-harness.processes:judgement/>. A gateway ` +
         `is computed or it is somebody's call; declaring both leaves a reader ` +
         `unable to tell which the author meant.`,
     );
@@ -943,7 +945,7 @@ function judgementReasonOf(
   const reason = decl.reason?.trim();
   if (!reason) {
     throw new Error(
-      `${el.id}: <folio:judgement/> carries no reason. Say WHOSE call this is and ` +
+      `${el.id}: <cat-harness.processes:judgement/> carries no reason. Say WHOSE call this is and ` +
         `why no table can make it — an exemption nobody can review is one ` +
         `somebody added to get to green.`,
     );
@@ -952,7 +954,7 @@ function judgementReasonOf(
 }
 
 /**
- * `<folio:fulfilment kinds="…" reason="…"/>`, validated at LOAD time.
+ * `<cat-harness.processes:fulfilment kinds="…" reason="…"/>`, validated at LOAD time.
  *
  * Three ways to get it wrong, all refused here rather than recorded as a
  * finding, because each produces a declaration that reads as an answer and is
@@ -969,21 +971,21 @@ function fulfilmentOf(
   const kinds = (decl.kinds ?? "").trim().split(/\s+/).filter(Boolean);
   if (kinds.length === 0) {
     throw new Error(
-      `${id}: <folio:fulfilment/> names no kinds. Say which of ` +
+      `${id}: <cat-harness.processes:fulfilment/> names no kinds. Say which of ` +
         `${ACTOR_KINDS.join(", ")} may perform this step.`,
     );
   }
   const unknown = kinds.filter((k) => !(ACTOR_KINDS as readonly string[]).includes(k));
   if (unknown.length) {
     throw new Error(
-      `${id}: <folio:fulfilment/> names unknown actor kind(s) ${unknown.join(", ")}. ` +
+      `${id}: <cat-harness.processes:fulfilment/> names unknown actor kind(s) ${unknown.join(", ")}. ` +
         `One or more of: ${ACTOR_KINDS.join(", ")}.`,
     );
   }
   const reason = decl.reason?.trim();
   if (!reason) {
     throw new Error(
-      `${id}: <folio:fulfilment/> carries no reason. It overrides what the BPMN task ` +
+      `${id}: <cat-harness.processes:fulfilment/> carries no reason. It overrides what the BPMN task ` +
         `type already says about this step, so say why the derived answer is wrong.`,
     );
   }
@@ -1013,18 +1015,18 @@ interface ModdleElement {
       enforcement?: string;
       capture?: string;
       involvement?: string;
-      /** `<folio:involvement vocabulary="…"/>` on the process. */
+      /** `<cat-harness.processes:involvement vocabulary="…"/>` on the process. */
       vocabulary?: string;
-      /** `<folio:adjudication codes="…"/>` on an activity. */
+      /** `<cat-harness.processes:adjudication codes="…"/>` on an activity. */
       codes?: string;
-      /** `<folio:adjudication code="…"/>` on a branch out of its gateway. */
+      /** `<cat-harness.processes:adjudication code="…"/>` on a branch out of its gateway. */
       code?: string;
-      /** `<folio:adjudication accepts="…"/>` on a call activity. */
+      /** `<cat-harness.processes:adjudication accepts="…"/>` on a call activity. */
       accepts?: string;
-      /** `<folio:adjudication defers="caller"/>` on an adjudicating activity. */
+      /** `<cat-harness.processes:adjudication defers="caller"/>` on an adjudicating activity. */
       defers?: string;
       relaxable?: string;
-      /** `<folio:precondition>` — bean `lv3j`. */
+      /** `<bootstrap.processes:precondition>` — bean `lv3j`. */
       id?: string;
       kind?: string;
       text?: string;
@@ -1235,7 +1237,7 @@ export async function loadProcessModel(
     .filter((v) => v.$type === CONVENTION_EXT && v.ref)
     .map((v) => v.ref!);
 
-  // `<folio:involvement vocabulary="raci|rasci"/>` on the process — which
+  // `<cat-harness.processes:involvement vocabulary="raci|rasci"/>` on the process — which
   // methodology's letters this diagram is written in.
   //
   // THROWS on a name no vocabulary defines, the same way `folio:policy` and
@@ -1251,7 +1253,7 @@ export async function loadProcessModel(
   )?.vocabulary;
   if (declaredVocabulary !== undefined && !(declaredVocabulary in INVOLVEMENT_VOCABULARIES)) {
     throw new UnsupportedBpmn(
-      `${basename(bpmnPath)}: folio:involvement vocabulary="${declaredVocabulary}" is not a ` +
+      `${basename(bpmnPath)}: cat-harness.processes:involvement vocabulary="${declaredVocabulary}" is not a ` +
         `declared vocabulary. Use one of: ${Object.keys(INVOLVEMENT_VOCABULARIES).join(", ")}.`,
     );
   }
@@ -1337,7 +1339,7 @@ export async function loadProcessModel(
   const declared = procExt.find((v) => v.$type === "folio:policy")?.enforcement;
   if (declared !== undefined && declared !== "strict" && declared !== "advisory") {
     throw new UnsupportedBpmn(
-      `${basename(bpmnPath)}: folio:policy enforcement="${declared}" is not a policy. ` +
+      `${basename(bpmnPath)}: cat-harness.processes:policy enforcement="${declared}" is not a policy. ` +
         `Use "strict" or "advisory".`,
     );
   }
@@ -1346,7 +1348,7 @@ export async function loadProcessModel(
   // turns the gate off.
   const enforcement: "strict" | "advisory" = declared === "advisory" ? "advisory" : "strict";
 
-  // `<folio:log capture="…"/>`, THROWING on a value that is not implemented,
+  // `<cat-harness.processes:log capture="…"/>`, THROWING on a value that is not implemented,
   // exactly as `folio:bean op` does. A diagram that asks for a capture mode
   // the engine does not have must not load and quietly log nothing — that is
   // the two-records divergence in a different costume, and it is worse here
@@ -1359,13 +1361,13 @@ export async function loadProcessModel(
   const captureDeclared = procExt.find((v) => v.$type === "folio:log")?.capture;
   if (captureDeclared !== undefined && captureDeclared !== "on" && captureDeclared !== "off") {
     throw new UnsupportedBpmn(
-      `${basename(bpmnPath)}: folio:log capture="${captureDeclared}" is not implemented. ` +
+      `${basename(bpmnPath)}: cat-harness.processes:log capture="${captureDeclared}" is not implemented. ` +
         `Use "on" or "off"; omit the element to leave it undetermined.`,
     );
   }
   const logCapture = captureDeclared as "on" | "off" | undefined;
 
-  // `<folio:precondition>` — what must hold BEFORE the start event (`lv3j`).
+  // `<bootstrap.processes:precondition>` — what must hold BEFORE the start event (`lv3j`).
   //
   // Every refusal below exists because the alternative is a precondition that
   // READS as verified and is not. That is worse than the documentation prose
@@ -1383,13 +1385,13 @@ export async function loadProcessModel(
 
     if (!id) {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: a folio:precondition has no id. A report that cannot NAME ` +
+        `${basename(bpmnPath)}: a bootstrap.processes:precondition has no id. A report that cannot NAME ` +
           `which precondition it could not determine is not a report.`,
       );
     }
     if (!text) {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: folio:precondition ${id} has no text. The statement is the ` +
+        `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} has no text. The statement is the ` +
           `part a person reads; an id alone says a condition exists and not what it is.`,
       );
     }
@@ -1398,14 +1400,14 @@ export async function loadProcessModel(
     // worse. The author decides, every time.
     if (kind !== "checkable" && kind !== "stated") {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: folio:precondition ${id} has kind="${kind ?? ""}". ` +
+        `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} has kind="${kind ?? ""}". ` +
           `Use "checkable" (a claim about the world this engine can evaluate) or "stated" ` +
           `(a claim about the actor, which nothing here can observe). There is no default.`,
       );
     }
     if (kind === "stated" && (check || ref)) {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: folio:precondition ${id} is kind="stated" but carries a ` +
+        `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} is kind="stated" but carries a ` +
           `check. A stated precondition is one nothing can verify — attaching a check to it ` +
           `is either a mislabelled checkable one or a check that does not answer the claim.`,
       );
@@ -1413,14 +1415,14 @@ export async function loadProcessModel(
     if (kind === "checkable") {
       if (check !== "file-exists") {
         throw new UnsupportedBpmn(
-          `${basename(bpmnPath)}: folio:precondition ${id} has check="${check ?? ""}", which ` +
+          `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} has check="${check ?? ""}", which ` +
             `is not implemented. Use "file-exists", or declare it kind="stated" and say so ` +
             `honestly. A checkable precondition with no check is the thing this refuses.`,
         );
       }
       if (!ref) {
         throw new UnsupportedBpmn(
-          `${basename(bpmnPath)}: folio:precondition ${id} has check="file-exists" and no ` +
+          `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} has check="file-exists" and no ` +
             `ref. The check needs to know WHAT must exist.`,
         );
       }
@@ -1436,7 +1438,7 @@ export async function loadProcessModel(
   for (const p of preconditions) {
     if (seenIds.has(p.id)) {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: two folio:precondition elements share id "${p.id}". ` +
+        `${basename(bpmnPath)}: two bootstrap.processes:precondition elements share id "${p.id}". ` +
           `A verdict that names an id must name exactly one condition.`,
       );
     }
@@ -1460,7 +1462,7 @@ export async function loadProcessModel(
   // nothing asserts they are the same three: two statements of one fact, free
   // to drift, which is the failure this repository keeps paying for.
   //
-  // The comparison is against `<folio:adjudication code="…"/>` on each branch
+  // The comparison is against `<cat-harness.processes:adjudication code="…"/>` on each branch
   // rather than against the flow's NAME. A label is prose a reader may improve
   // ("the finding stands"); the code is the token a recorded outcome carries,
   // and a code that moved when somebody reworded a label would silently
@@ -1492,7 +1494,7 @@ export async function loadProcessModel(
     const unlabelled = next.outgoing.filter((f) => flows.get(f)?.adjudicationCode === undefined);
     if (unlabelled.length > 0) {
       throw new Error(
-        `${next.id}: branch(es) ${unlabelled.join(", ")} carry no <folio:adjudication code="…"/> ` +
+        `${next.id}: branch(es) ${unlabelled.join(", ")} carry no <cat-harness.processes:adjudication code="…"/> ` +
           `while their siblings do. A partly-coded gateway reads as complete — either every branch ` +
           `names the answer that selects it, or none does.`,
       );
@@ -1594,14 +1596,14 @@ function checkAcceptedCodes(
       throw new Error(
         `${basename(bpmnPath)}: ${node.id} declares \`accepts\`, but ${child.id}'s ` +
           `${deferring.map((d) => d.id).join(", ")} defers its enum to the caller. ` +
-          `There is nothing to accept — declare <folio:adjudication codes="…"/> here ` +
+          `There is nothing to accept — declare <cat-harness.processes:adjudication codes="…"/> here ` +
           `instead, and code the branches out of this step's gateway.`,
       );
     }
     throw new Error(
-      `${basename(bpmnPath)}: ${node.id} declares <folio:adjudication accepts="…"/> but ` +
+      `${basename(bpmnPath)}: ${node.id} declares <cat-harness.processes:adjudication accepts="…"/> but ` +
         `${child.id} contains no judgement. Either the called process lost its ` +
-        `<folio:adjudication codes="…"/>, or this caller is not calling an adjudication.`,
+        `<cat-harness.processes:adjudication codes="…"/>, or this caller is not calling an adjudication.`,
     );
   }
   if (adjudicators.length > 1) {
@@ -1643,14 +1645,14 @@ async function loadDecisions(
     if (!node.decisionRef) continue;
     if (node.kind !== "exclusive") {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: ${node.id} carries folio:decision but is a ` +
+        `${basename(bpmnPath)}: ${node.id} carries cat-harness.processes:decision but is a ` +
           `${node.type}. Only an exclusive gateway routes on a decision.`,
       );
     }
     const [file, decisionId] = node.decisionRef.split("#");
     if (!file || !decisionId) {
       throw new UnsupportedBpmn(
-        `${basename(bpmnPath)}: ${node.id} has folio:decision ref="${node.decisionRef}", ` +
+        `${basename(bpmnPath)}: ${node.id} has cat-harness.processes:decision ref="${node.decisionRef}", ` +
           `which is not \`path.dmn#DecisionId\``,
       );
     }

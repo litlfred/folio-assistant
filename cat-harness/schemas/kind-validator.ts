@@ -286,14 +286,14 @@ export interface ShapeField {
 }
 
 /**
- * One `$schema` family of a kind, resolved. Four states, and the two in the
- * middle are the point: a TypeScript shape is READABLE but not RUNNABLE, and
- * an untyped family is a fact about the corpus rather than a load failure.
+ * One `$schema` family of a kind, resolved. A TypeScript shape is READABLE
+ * but not RUNNABLE, and an external one is somebody else's; neither is a load
+ * failure. (An `untyped` state existed until #1168 B6b removed the registry
+ * form that produced it.)
  */
 export type NodeSchemaResolution =
   | { tag: string; state: "resolved"; ref: ValidatorRef; schema: z.ZodTypeAny }
   | { tag: string; state: "shape"; ref: ValidatorRef; fields: ShapeField[] }
-  | { tag: string; state: "untyped"; writtenBy: string }
   | { tag: string; state: "external"; spec: string }
   | { tag: string; state: "unresolvable"; reason: string };
 
@@ -361,15 +361,6 @@ export async function resolveNodeSchemas(
       out.push(typeof r === "string" ? { tag, state: "unresolvable", reason: r } : { tag, state: "shape", ...r });
     } else if (ref.external) {
       out.push({ tag, state: "external", spec: ref.external });
-    } else if (ref.writtenBy) {
-      const q = /^([a-z][a-z0-9-]*):(.+)$/.exec(ref.writtenBy);
-      const base = rootOf(q?.[1], instanceRoot);
-      const at = base === undefined ? undefined : resolve(join(base, q ? q[2] : ref.writtenBy));
-      out.push(
-        at !== undefined && existsSync(at)
-          ? { tag, state: "untyped", writtenBy: ref.writtenBy }
-          : { tag, state: "unresolvable", reason: `${ref.writtenBy} does not resolve from ${instanceRoot}` },
-      );
     }
   }
   return out;

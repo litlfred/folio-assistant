@@ -3,6 +3,7 @@
  * A task's containing swimlane must DEFINE itself — `name` is not a definition.
  *
  * @module scripts/check-lane-documentation
+ * @covers processes, scenarios
  *
  * ## Why this exists, and why it is a glossary problem
  *

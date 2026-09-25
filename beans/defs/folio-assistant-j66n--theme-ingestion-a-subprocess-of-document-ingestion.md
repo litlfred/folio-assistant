@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j66n
 title: 'THEME INGESTION: a subprocess of document ingestion, and one Theme node with kind sticky|webpage|publication'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T08:02:10Z
-updated_at: 2026-09-23T03:55:00Z
+updated_at: 2026-09-23T12:00:00Z
 parent: folio-assistant-kupb
 ---
 
@@ -166,3 +166,60 @@ Reduced to one; nothing else about that task changed.
 The two themes themselves — `iris-web` (source already on disk in the IRIS
 capture) and `who-wpro-publication` (source is the style guide's own rules).
 This entry wires the process; it does not ingest them.
+
+## Summary of Changes — all four clauses met; closed 2026-09-23 on evidence
+
+**The "Still open on this bean" section above is wrong, and this bean already
+contained its own refutation.** It says the two themes are outstanding. Thirteen
+lines earlier the same body says:
+
+> | Two worked themes, each citing where every value came from | **done** — see below |
+
+Line 35 against line 164, in one file. The later section was written by the
+session that wired the call activity, from the true premise *"this entry wires
+the process; it does not ingest them"* — which says what that COMMIT did, not
+what the BEAN still needs. Correct about itself, wrong about the bean.
+
+Appended rather than edited out, on this repository's own precedent: the section
+is another session's, an append cannot collide, and a reader who finds the
+contradiction should be able to see how it was resolved rather than find one side
+silently deleted.
+
+### Re-measured on `main`, by running it
+
+| clause | state | evidence |
+|---|---|---|
+| `kind` on `ThemeSchema`, existing sticky themes unchanged and still valid | **done** | landed in #477 |
+| Two worked themes, `iris-web` and `who-wpro-publication`, each citing where every value came from | **done** | both ids present in `who-iris/themes/themes.ts`; `bun test who-iris/themes/themes.test.ts` → **25 pass, 0 fail**, which matches the count this bean recorded when they were built |
+| Every layout still required; a missing layout stays INVALID, never degraded | **done** | three tests, in the same file |
+| `ingest-theme.bpmn`, called from `document-ingestion.bpmn` | **done** | `CallActivity_IngestTheme` behind `Gateway_ThemeSource` (`b4fe919d`) |
+
+The tests are not a copy of the constants — `client-theme.css` is re-read out of
+the committed capture zip at test time and the style guide's values out of its
+ingested page text, so 25 passing is also a freshness check on the sources.
+
+### The fourth clause's open question is answered, and by the owner
+
+This bean recorded the wiring as *"a question rather than an omission"*: which
+artefacts are theme sources is a judgement nobody had made. Two rulings closed it:
+
+- **2026-09-22** — human/agentic judgement at the gateway, not a formal predicate.
+- **2026-09-23** — *"theme review to ingestion of graphical assets in context of
+  website or app design and determining graphical assets/UI"*, which settled
+  `9fdi` and bound `theme-ui-review` to `ingestion-agent`.
+
+`role-carries-activity-skill` now **passes** on both `ingest-theme.bpmn` and
+`document-ingestion.bpmn`.
+
+### What is NOT closed by this
+
+The two contradictions found in the style guide stay carried as data in
+`RECORDED_CONTRADICTIONS`, and `who-wpro-publication.palette.edge` stays flagged
+as the one value that is a CHOICE rather than a measurement. Neither was tidied
+away — a closed bean is not permission to drop the caveats it was careful about.
+
+`ingest-theme.kg-qa.json` still fails `gateway-documented` on `Gateway_Layouts`.
+Pre-existing, nothing to do with themes, tracked by `t3ad` in PR #1111 as one of
+70. Named so this close is not read as a clean sidecar.
+
+*Closed by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

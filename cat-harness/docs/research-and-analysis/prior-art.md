@@ -80,7 +80,7 @@ body when a task matches (*progressive disclosure*).
 **Difference.** folio-assistant's skills are **knowledge-graph content**
 declared by an instance's `<instance>.json`, inherited from dependencies, and
 served through `skill_list` / `skill_fetch`. Skills are also *bound* to BPMN
-activities (`<folio:skill ref>`), so a process step names the skill to run.
+activities (`<bootstrap.processes:skill ref>`), so a process step names the skill to run.
 
 ### Superpowers
 

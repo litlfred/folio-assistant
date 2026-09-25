@@ -7,6 +7,8 @@ description: >
   else's.
 adapters: [document, paper, dak]
 profiles: [document, paper]
+graph-kinds:
+  - issue-marks
 ---
 
 # Working an issue — announce, then re-check

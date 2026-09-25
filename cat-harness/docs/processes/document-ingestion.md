@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Ingestion` · advisory · 10 step(s)
 
-folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/document-ingestion.svg" alt="BPMN diagram: Document ingestion — uploads/ to the L1 source knowledge graph" style="max-width:100%">
 
@@ -19,6 +19,7 @@ folio-assistant — Document ingestion — uploads/ to the L1 source knowledge g
 
 - **Called by:** [Adopt a methodology from a source document](methodology-from-source.html)
 - **Calls:** [Ingestion subprocess — build the L1 knowledge graph](ingest-build-l1-kg.html), [Ingestion subprocess — derive content from the assets](ingest-derive-content.html), [Ingestion subprocess — extract structure](ingest-extract-structure.html), [Ingestion subprocess — ingest a theme](ingest-theme.html), [Ingestion subprocess — the L1 completeness gate](ingest-l1-completeness-gate.html)
+- **Presented on:** [Document ingestion — The pipeline](../document-ingestion.html#the-pipeline)
 
 ## Lanes — who acts
 

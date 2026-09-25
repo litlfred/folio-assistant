@@ -1,0 +1,440 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2510.21603v1",
+ "source": {
+  "file": "dong-2025-doc-researcher.pdf",
+  "sha256": "edc03be2ad64077b4e84aa6c64e07ce7c6e2ea20e7a89412073d358245e9f9d3",
+  "bytes": 8782358,
+  "pages": 13,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-23T20:18:32Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2510.21603",
+   "version": "1",
+   "primary_class": "cs.IR",
+   "stamp_date": "24 Oct 2025"
+  },
+  "doi": null,
+  "title": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research",
+  "authors_raw": "Kuicai Dong\u2217, Shurui Huang\u2217, Fangda Ye\u2217, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang",
+  "title_lines": [
+   "Doc-Researcher: A Unified System for Multimodal Document",
+   "Parsing and Deep Research"
+  ],
+  "abstract": "Deep Research systems have revolutionized how LLMs solve com- plex questions through iterative reasoning and evidence gathering. However, current systems remain fundamentally constrained to textual web data, overlooking the vast knowledge embedded in mul- timodal documents: scientific papers, technical reports, and finan- cial documents where critical information exists in figures, tables, charts, and equations. Processing such documents demands sophis- ticated parsing to preserve visual semantics, intelligent chunking to maintain structural coherence, and adaptive retrieval across modal- ities, which are capabilities absent in existing systems. In response, we present Doc-Researcher, a unified system that bridges this gap through three integrated components: (i) deep multimodal parsing that preserves layout structure and visual semantics while creating multi-granular representations from chunk to document level, (ii) systematic retrieval architecture supporting text-only, vision-only, and hybrid paradigms with dynamic granularity selec- tion, and (iii) iterative multi-agent workflows that decompose complex queries, progressively accumulate evidence, and synthesize comprehensive answers across documents and modalities. To enable rigorous evaluation, we introduce M4DocBench, the first bench- mark for Multi-modal, Multi-hop, Multi-document, and Multi-turn deep research. Featuring 158 expert-annotated questions with com- plete evidence chains across 304 documents, M4DocBench tests capabilities that existing benchmarks cannot assess. Experiments demonstrate that Doc-Researcher achieves 50.6% accuracy, 3.4\u00d7 better than state-of-the-art baselines, validating that effective docu- ment research requires not just better retrieval, but fundamentally deep parsing that preserve multimodal integrity and support itera- tive research. Our work establishes a new paradigm for conducting deep research on multimodal document collections. CCS Concepts \u2022 Information systems \u2192Multimodal ",
+  "docinfo": {
+   "Title": "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research",
+   "Author": "Kuicai Dong; Shurui Huang; Fangda Ye; Wei Han; Zhi Zhang; Dexun Li; Wenjun Li; Qu Yang; Gang Wang; Yichao Wang; Chen Zhang; Yong Liu",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:e76afa9)",
+   "CreationDate": "D:20251027011023+00'00'"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 1,
+   "title": "Method: Doc-Researcher",
+   "page": 3,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 2,
+   "title": "Deep Multimodal Document Parsing",
+   "page": 3,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 2,
+   "title": "Multimodal Retrieval Architecture",
+   "page": 3,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 2,
+   "title": "Multimodal Deep Research",
+   "page": 4,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 1,
+   "title": "M4DocBench Benchmark",
+   "page": 4,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 2,
+   "title": "Motivation of M4DocBench",
+   "page": 4,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 2,
+   "title": "Domain and Document Collection",
+   "page": 5,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 2,
+   "title": "Annotation Process",
+   "page": 5,
+   "source": "outline",
+   "number": "4.3"
+  },
+  {
+   "level": 2,
+   "title": "Benchmark Statistics",
+   "page": 5,
+   "source": "outline",
+   "number": "4.4"
+  },
+  {
+   "level": 1,
+   "title": "Experiment",
+   "page": 5,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 2,
+   "title": "Evaluation Metrics and Benchmarks",
+   "page": 5,
+   "source": "outline",
+   "number": "5.1"
+  },
+  {
+   "level": 2,
+   "title": "System Setting and Baselines",
+   "page": 6,
+   "source": "outline",
+   "number": "5.2"
+  },
+  {
+   "level": 2,
+   "title": "Multimodal Retrieval System Results",
+   "page": 7,
+   "source": "outline",
+   "number": "5.3"
+  },
+  {
+   "level": 2,
+   "title": "Main Results: Multimodal Deep Research",
+   "page": 7,
+   "source": "outline",
+   "number": "5.4"
+  },
+  {
+   "level": 2,
+   "title": "Ablation Study",
+   "page": 8,
+   "source": "outline",
+   "number": "5.5"
+  },
+  {
+   "level": 2,
+   "title": "Parsing and Deep Research Efficiency",
+   "page": 8,
+   "source": "outline",
+   "number": "5.6"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 8,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "A M4DocBench: Supplementary Materials",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "B Implementation Details",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "C Extended Experimental Results",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 326,
+   "n_words": 47
+  },
+  {
+   "id": "sec-000-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 3173,
+   "n_words": 426
+  },
+  {
+   "id": "sec-001-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 7250,
+   "n_words": 966
+  },
+  {
+   "id": "sec-002-2-related-work",
+   "number": "2",
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2721,
+   "n_words": 366
+  },
+  {
+   "id": "sec-003-33-multimodal-deep-research",
+   "number": "3.3",
+   "title": "Multimodal Deep Research",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 812,
+   "n_words": 102
+  },
+  {
+   "id": "sec-004-3-method-doc-researcher",
+   "number": "3",
+   "title": "Method: Doc-Researcher",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 379,
+   "n_words": 52
+  },
+  {
+   "id": "sec-005-31-deep-multimodal-document-parsing",
+   "number": "3.1",
+   "title": "Deep Multimodal Document Parsing",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1654,
+   "n_words": 229
+  },
+  {
+   "id": "sec-006-32-multimodal-retrieval-architecture",
+   "number": "3.2",
+   "title": "Multimodal Retrieval Architecture",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 5335,
+   "n_words": 813
+  },
+  {
+   "id": "sec-007-4-m4docbench-benchmark",
+   "number": "4",
+   "title": "M4DocBench Benchmark",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-008-41-motivation-of-m4docbench",
+   "number": "4.1",
+   "title": "Motivation of M4DocBench",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 1954,
+   "n_words": 236
+  },
+  {
+   "id": "sec-009-42-domain-and-document-collection",
+   "number": "4.2",
+   "title": "Domain and Document Collection",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1205,
+   "n_words": 165
+  },
+  {
+   "id": "sec-010-43-annotation-process",
+   "number": "4.3",
+   "title": "Annotation Process",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1966,
+   "n_words": 249
+  },
+  {
+   "id": "sec-011-44-benchmark-statistics",
+   "number": "4.4",
+   "title": "Benchmark Statistics",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1022,
+   "n_words": 132
+  },
+  {
+   "id": "sec-012-5-experiment",
+   "number": "5",
+   "title": "Experiment",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-013-51-evaluation-metrics-and-benchmarks",
+   "number": "5.1",
+   "title": "Evaluation Metrics and Benchmarks",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 5720,
+   "n_words": 1034
+  },
+  {
+   "id": "sec-014-52-system-setting-and-baselines",
+   "number": "5.2",
+   "title": "System Setting and Baselines",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 5553,
+   "n_words": 903
+  },
+  {
+   "id": "sec-015-53-multimodal-retrieval-system-results",
+   "number": "5.3",
+   "title": "Multimodal Retrieval System Results",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1735,
+   "n_words": 202
+  },
+  {
+   "id": "sec-016-54-main-results-multimodal-deep-research",
+   "number": "5.4",
+   "title": "Main Results: Multimodal Deep Research",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 2019,
+   "n_words": 291
+  },
+  {
+   "id": "sec-017-55-ablation-study",
+   "number": "5.5",
+   "title": "Ablation Study",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2143,
+   "n_words": 293
+  },
+  {
+   "id": "sec-018-56-parsing-and-deep-research-efficiency",
+   "number": "5.6",
+   "title": "Parsing and Deep Research Efficiency",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2058,
+   "n_words": 282
+  },
+  {
+   "id": "sec-019-6-conclusion",
+   "number": "6",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 1509,
+   "n_words": 187
+  },
+  {
+   "id": "sec-020-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 13,
+   "n_chars": 30024,
+   "n_words": 4564
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 24,
+  "toc_inferred_entries": 0,
+  "sections": 22,
+  "chars_total": 78564
+ }
+}

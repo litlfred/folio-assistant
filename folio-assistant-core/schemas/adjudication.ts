@@ -19,7 +19,7 @@
  *
  * So the two layers **meet at the data, not at the code**. This module says
  * what a request and an outcome ARE, as documents. The harness reads
- * `<folio:adjudication/>` off a diagram and validates the code against what
+ * `<cat-harness.processes:adjudication/>` off a diagram and validates the code against what
  * that diagram declares, the same way `INVOLVEMENT_VOCABULARIES` handles RACI
  * versus RASCI — a vocabulary read from a declaration, never imported from a
  * layer above.
@@ -58,7 +58,7 @@ export const ADJUDICATION_SCHEMA_TAG = "folio-adjudication/v1";
  * that is `person` and `agent`; `system` is the mechanical kind and `external`
  * a participant outside the instance. Both are excluded, and
  * `adjudication.bpmn`'s adjudicator step already says so in the same words —
- * `<folio:fulfilment kinds="person agent"/>`, whose reason reads *"a
+ * `<cat-harness.processes:fulfilment kinds="person agent"/>`, whose reason reads *"a
  * mechanical system may NOT take this step, which is the whole reason the
  * process exists."*
  *

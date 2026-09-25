@@ -76,6 +76,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Archiving a web page](archiving-web-pages.html) | `archiving-web-pages` | — | **A URL is not an archive.** It is a request you hope somebody else keeps |
 | [Asset extraction](asset-extraction.html) | `asset-extraction` | — | A container arrives in `uploads/`: a zip of a saved web page, a PDF, a |
 | [Associate a harness](associate-harness.html) | `associate-harness` | — | The owner, 2026-09-23, on the ihris folio: |
+| [Audit coverage](audit-coverage.html) | `audit-coverage` | — | **A sidecar count is a fine measurement of sidecars and says nothing about |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [bib-human-review](bib-human-review.html) | `bib-human-review` | — | Status sidecar: `content/schema/references.review.json`. |
@@ -132,6 +133,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [Incremental render](incremental-render.html) | `incremental-render` | — | Owner, 2026-09-20, bean `9c34`: |
 | [Instance kinds](instance-kinds.html) | `instance-kinds` | — | Two different things are called a "kind" here, and a reader who conflates them |
+| [instance-publication](instance-publication.html) | `instance-publication` | — | > Skill id: `instance-publication` · Package: `folio-core` · Instance: |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
@@ -157,6 +159,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
+| [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
@@ -193,7 +196,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [Post-MVP, because there is nothing to check before there is a render](theme-ui-review.html) | `theme-ui-review` | — | The owner, 2026-09-20: theme choice is *"authoring (human/agentic) |
+| [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
@@ -286,6 +289,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
 
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
 ## Knowledge-graph navigation (tooled)
 
 | Skill | Id | Schema | Summary |
@@ -298,15 +307,17 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [RACI](raci.html) | `raci` | — | **The method is not in this file.** It is the `raci` node in the `methodology` |
 
-## Declared but not implemented here (stubs)
+## Synced from claude-scientific-skills (pinned, read-only)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [fhir-client-operations](fhir-client-operations.html) | `fhir-client-operations` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [hypothesis-generation](hypothesis-generation.html) | `hypothesis-generation` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-critical-thinking](scientific-critical-thinking.html) | `scientific-critical-thinking` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-visualization](scientific-visualization.html) | `scientific-visualization` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [smart-launch](smart-launch.html) | `smart-launch` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
 
 ## Theming (theming)
 

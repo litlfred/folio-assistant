@@ -29,6 +29,8 @@
  * Usage:
  *   bun run subgraphs            # the tree and the entanglement report
  *   bun run check:subgraphs      # same, non-zero only if something is unreadable
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";

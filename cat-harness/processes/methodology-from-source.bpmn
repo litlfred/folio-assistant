@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_MethodologyFromSource" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_MethodologyFromSource">
@@ -14,7 +15,7 @@
     <bpmn:laneSet id="LaneSet_Process_MethodologyFromSource">
       <bpmn:lane id="Lane_Owner" name="Owner">
         <bpmn:documentation>Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_MFS</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>O_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Decision</bpmn:flowNodeRef>
@@ -22,7 +23,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Does every step between the share and the review, and records each decision it made with its reason, so the owner reviews a record rather than an impression.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Origin</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_Ingest</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_RelatedWork</bpmn:flowNodeRef>
@@ -36,7 +37,7 @@
     <bpmn:startEvent id="Start_MFS" name="Source shared, with an intent"/>
     <bpmn:task id="A_Origin" name="Establish origin and licence">
       <bpmn:documentation>Authors, publication, identifier, and the licence the source itself states. No stated licence means reference only: headings, page ranges and a summary in our own words; the file stays in uploads/ (git-ignored) pinned by checksum. A method with no origin is a house process; write a skill instead.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:callActivity id="Call_Ingest" name="Ingest into library/" calledElement="Process_Ingestion">
       <bpmn:documentation>folio-assistant's document ingestion, choosing the rung mechanically (embedded outline, pages, OCR). Section text is written only when the licence allows it.</bpmn:documentation>
@@ -46,22 +47,22 @@
     </bpmn:callActivity>
     <bpmn:task id="A_Render" name="Render the method: adopted vs refused">
       <bpmn:documentation>What the source says, section by section, then a table of what this platform adopts and what it refuses, each with a reason. Extensions beyond the source (such as web plus mobile where the paper studied mobile) are stated as ours. Reported results are not imported as facts.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Place" name="Place by ownership; declare the directory">
       <bpmn:documentation>A domain-neutral method belongs to the harness and a domain method to the folio that owns the domain. If the session cannot write where it belongs, draft it where it can, say so in the file, and open a bean to move it.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Integrate" name="Integrate: call existing processes">
       <bpmn:documentation>The method's steps become a process whose judgement points call the processes that already exist (adjudication, options analysis, review) by calledElement. Nothing is re-implemented. A needed change to an existing process becomes a bean against its owner.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Tools" name="Every skill and tool used becomes a Tool">
       <bpmn:documentation>Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="adopt-methodology-from-source"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="O_Review" name="Review the adoption">
-      <bpmn:extensionElements><folio:no-skill reason="The owner's judgement over the rendered method, its refusals and its placement."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="The owner's judgement over the rendered method, its refusals and its placement."/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Decision" name="Adopted?">
       <bpmn:documentation>The reviewer's decision on the adoption. `yes` adopts it; `no` declines with the reason recorded; `changes` goes back to A_Render, the step that writes the adopted-against-refused table, so the agent re-runs render, placement, integration and tools and the owner reviews the result again. Only the owner accepts an adoption.</bpmn:documentation>

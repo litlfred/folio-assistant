@@ -19,6 +19,7 @@ THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records t
 
 - **Called by:** no call activity names this process
 - **Calls:** [Adopting an upstream version bump](upstream-version-adoption.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

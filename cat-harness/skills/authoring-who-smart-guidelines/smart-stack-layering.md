@@ -5,6 +5,9 @@ description: >
   and the one question that settles it. Read before adding anything to
   fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a
   per-IG harness, and before moving a pre/post-processing step.
+governs:
+  - fhir-harness/fhir-ig-skills
+  - smart-base/tools
 ---
 
 # smart-stack-layering

@@ -29,6 +29,7 @@ import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../../schemas/cat-harness.js";
 import { docsLayers } from "../compose-docs.js";
+import { docsPages, documentingPages } from "../docs-declarations.js";
 import { page, pageRelPath, skillIds, toolRows } from "../gen-tools-viz.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
@@ -52,6 +53,19 @@ const decl = JSON.parse(readFileSync(declarationPathIn(join(REPO, "cat-harness")
 };
 const entryFor = (kind: string) => (decl.directories ?? []).find((e) => (e.graphKinds ?? []).includes(kind));
 
+// Since #1168 B7c the PAGE declares what it documents (`documents:`), so the
+// tools graph's page is found by asking the pages, not the directory entry.
+const docsPagesFor = (kind: string): string[] => {
+  const e = entryFor(kind)!;
+  const tracked = Bun.spawnSync(["git", "ls-files", "*.md", "*.html"], { cwd: REPO }).stdout.toString().split("\n").filter(Boolean);
+  return documentingPages(
+    { instance: "cat-harness", id: e.id ?? "", graphKinds: e.graphKinds ?? [] },
+    docsPages(REPO, tracked),
+    REPO,
+    [join(REPO, "cat-harness")],
+  );
+};
+
 const { tools } = (await import("../../tools/index.js")) as { tools: () => unknown[] };
 const rows = toolRows(tools());
 
@@ -62,7 +76,7 @@ describe("the tools graph is not documented by the skills page", () => {
   });
 
   it("declares a docs page", () => {
-    expect(entryFor("tools")?.coverage?.docs).toBeDefined();
+    expect(docsPagesFor("tools")).toHaveLength(1);
   });
 
   /**
@@ -93,7 +107,7 @@ describe("the tools graph is not documented by the skills page", () => {
    */
 
   it("and it resolves", () => {
-    const d = entryFor("tools")!.coverage!.docs!;
+    const d = docsPagesFor("tools")[0]!;
     expect(existsSync(join(REPO, d))).toBe(true);
   });
 
@@ -102,7 +116,7 @@ describe("the tools graph is not documented by the skills page", () => {
     // checkable: the page uses the graph's own vocabulary. A page that never
     // says `defineTool` or `satisfies` is not documentation of this graph
     // whatever its title claims, which is the property that failed before.
-    const d = entryFor("tools")!.coverage!.docs!;
+    const d = docsPagesFor("tools")[0]!;
     const text = readFileSync(join(REPO, d), "utf-8");
     expect(text).toContain("defineTool");
     expect(text).toContain("satisfies");
@@ -113,7 +127,7 @@ describe("the tools graph is not documented by the skills page", () => {
     // Guards the fix from being undone by editing skills.md instead: even if
     // somebody added a tools section there, the declaration must still name a
     // page of its own.
-    expect(entryFor("tools")?.coverage?.docs).not.toContain("skills.md");
+    expect(docsPagesFor("tools").some((p) => p.endsWith("skills.md"))).toBe(false);
   });
 });
 

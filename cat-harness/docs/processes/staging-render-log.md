@@ -19,6 +19,7 @@ Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

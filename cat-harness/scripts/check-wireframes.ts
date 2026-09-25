@@ -33,6 +33,8 @@
  *   bun run check:wireframes -- --json  # print the sidecar document
  *
  * @module scripts/check-wireframes
+ * @covers cat-harness, docs — the declarations supply the visualiser list through
+ *   `visualisationsOf`, and the wireframes it requires of them live in the docs tree
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";

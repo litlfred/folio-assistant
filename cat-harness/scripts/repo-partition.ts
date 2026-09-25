@@ -40,6 +40,8 @@
  *   bun run cat-harness/scripts/repo-partition.ts --strict        # exit 1 if cross-edges
  *
  * @module scripts/repo-partition
+ * @covers code — every module and every edge between them; a module it cannot classify is
+ *   `unassigned` and a finding
  */
 
 import { SPEC, REPOS } from "./partition/instance-rules.js";

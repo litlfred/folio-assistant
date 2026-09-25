@@ -255,8 +255,8 @@ too low — an `export {}` block the grep pattern missed, which `tsc` caught."*
 
 And the same failure once more, from a sibling session two days later, stated
 in its most compact form yet: *"describing a mechanism from its name and its
-position in a diagram, then reasoning about what it needs. `--payload
-<file.json>` settled in one line what three proposals had guessed at. A name
+position in a diagram, then reasoning about what it needs. `--payload <file.json>`
+settled in one line what three proposals had guessed at. A name
 says what something is for; an argument list says what it does."*
 
 That is move 9 and move 12 with the cost attached. Three proposals were made

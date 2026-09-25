@@ -19,6 +19,7 @@ The general process an agent follows when someone shares a paper, book or standa
 
 - **Called by:** no call activity names this process
 - **Calls:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html), [Related work: find, sort, summarize, ask to coordinate](related-work.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

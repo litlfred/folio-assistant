@@ -77,6 +77,8 @@
  * refactor, so they are **counted and not failed**. Silently excluding them
  * would be the `dh4f` shape: a consumer reporting a clean run over something
  * it never examined.
+ *
+ * @covers cat-harness
  */
 
 import { readdirSync, readFileSync } from "node:fs";

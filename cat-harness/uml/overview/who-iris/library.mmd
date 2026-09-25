@@ -14,6 +14,20 @@ classDiagram
       inspected_at [1] string
       verdicts [1] Record~string, Record~string, Verdict~~
     }
+    class who_iris_library_folio_withheld_v1_Path["Path"] {
+      <<json: WithheldSchema>>
+      path [1] string
+      reason [1] string
+    }
+    class who_iris_library_folio_withheld_v1_folio_withheld_v1["folio-withheld/v1"] {
+      <<json: WithheldSchema>>
+      $schema [1] 'folio-withheld/v1'
+      _comment [0..1] string
+      paths [0..*] Path[]
+    }
   }
+  who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
+  cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library

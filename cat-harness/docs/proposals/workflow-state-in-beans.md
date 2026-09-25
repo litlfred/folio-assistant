@@ -67,7 +67,7 @@ from the subject rather than random, so re-running a step for the same block
 finds the instance that exists instead of minting a second one.
 
 `src/workflow/bean-link.ts` is the join. Eleven activities across the diagrams
-carry `<folio:bean op="claim|note|resolve"/>`, and completing such a step **is**
+carry `<cat-harness.processes:bean op="claim|note|resolve"/>`, and completing such a step **is**
 the work-plan operation rather than a note about it. `resolve` is the careful
 one: a bean completes only when the instance it tracks has itself completed,
 because `AGENTS.md` is explicit that whether work is done is a judgement and not
@@ -103,7 +103,7 @@ consequence of a file people are invited to edit.
 
 ### Option A — two stores, one link *(built)*
 
-Instance JSON for position; a bean for the work; `folio:bean` operations to keep
+Instance JSON for position; a bean for the work; `cat-harness.processes:bean` operations to keep
 them agreeing at the eleven points where it matters.
 
 **Costs:** two places to look. A human has to be told the second exists.
@@ -148,7 +148,7 @@ which is what CRDM's six phases are. Worst fit for the short mechanical ones.
 
 ### Option D — beans as an event log, state as a fold
 
-Nothing stores a marking. Each `folio:bean op="note"` appends a structured line
+Nothing stores a marking. Each `cat-harness.processes:bean op="note"` appends a structured line
 to the bean body; the current position is recomputed by replaying the notes
 through the process model.
 

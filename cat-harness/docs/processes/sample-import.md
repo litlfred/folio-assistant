@@ -19,6 +19,7 @@ The SDLC for testing an import of a SAMPLE of a remote source into a knowledge g
 
 - **Called by:** no call activity names this process
 - **Calls:** [Materialize remote content — the shared subprocess](materialize-remote.html), [Refresh materialized remote content](refresh-materialized.html)
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`sample-import`](../reference/skill-instructions/sample-import.html)
 
 ## Lanes — who acts

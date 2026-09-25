@@ -78,6 +78,7 @@ missing rule is where it goes wrong.
 | the theme renders as a flat surface with no art | `theme-generation` — **run `bun run themes:css`** |
 | text on art is hard to read, or you need a scrim ratio | `theme-contrast` |
 | it is right everywhere except on one surface | `theme-artefacts` |
+| a page flashes white (or light) before going dark on load | `theme-artefacts` §"The page ground: the first paint is DARK" |
 
 ## Why this directory exists at all
 

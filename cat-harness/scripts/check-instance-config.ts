@@ -33,6 +33,7 @@
  * anything (bean `xom7`).
  *
  * @module scripts/check-instance-config
+ * @covers cat-harness
  */
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";

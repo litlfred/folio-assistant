@@ -19,6 +19,7 @@
  * means to exercise the API route and wants to be told it never will.
  *
  * @module folio-assistant/scripts/check-actor-reach
+ * @covers scenarios
  */
 
 import { join } from "node:path";

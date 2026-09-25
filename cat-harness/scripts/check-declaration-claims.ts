@@ -9,6 +9,7 @@
  * Usage: bun run check:declaration-claims [--json]
  *
  * @module folio-assistant/scripts/check-declaration-claims
+ * @covers cat-harness
  */
 
 import { readdirSync, readFileSync, statSync } from "node:fs";

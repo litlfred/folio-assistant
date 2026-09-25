@@ -19,6 +19,7 @@ folio-assistant — authoring a document end to end (no Lean, no required TeX). 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — Documents & policy guidance](../content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../guides/writing-a-document.html#what-a-document-folio-is)
 
 ## Lanes — who acts
 

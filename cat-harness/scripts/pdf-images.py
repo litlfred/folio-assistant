@@ -151,6 +151,25 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
     capture = is_capture_print(producer, creator)
 
     images: list[dict] = []
+    # ONE ENTRY PER DISTINCT IMAGE, not per placement -- bean `j820`, issue
+    # #1234. An image used many times was becoming many images: 383 placements
+    # of arXiv:2510.21603v1 are 51 image objects, and its page 3's 335 are 22,
+    # each placed about fifteen times. Measured 2026-09-24 across every
+    # `images.json` in the tree; `9789241509510-eng` is 162 -> 103,
+    # `9789241511766-eng` 99 -> 44, `arxiv-2312.07755v1` 84 -> 28.
+    #
+    # THE KEY IS THE PDF'S OWN `xref`, not a hash of the pixels. Two placements
+    # of one image object ARE one image by the document's own account, and a
+    # hash would be this script's opinion about that rather than the file's.
+    # Checked against a content hash before choosing: on the five affected
+    # documents the two agree, except that arXiv:2510.21603v1 holds 51 objects
+    # whose decoded bytes are 37 distinct -- so hashing would merge images the
+    # PDF itself keeps apart, which is a claim this script has no business
+    # making.
+    #
+    # Ordered by first placement, so ids stay `img-p003-5` and a reader who
+    # knew the old layout still recognises them.
+    by_xref: dict[int, dict] = {}
     for index in range(doc.page_count):
         page = doc[index]
         page_area = abs(page.rect.width * page.rect.height)
@@ -177,6 +196,18 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                 placed.append((xref, abs(rect.width * rect.height) / page_area))
 
         for ordinal, (xref, coverage) in enumerate(placed, start=1):
+            placement = {
+                "page": index + 1,
+                "coverage": round(coverage, 6),
+                "imagesOnPage": len(placed),
+            }
+            # SECOND AND LATER PLACEMENTS append and stop. Everything below --
+            # the id, the role, the basis, the written pixels -- describes the
+            # FIRST placement, which is what `basis` has always meant and what
+            # `PlacementSchema`'s refinement now holds it to.
+            if xref in by_xref:
+                by_xref[xref]["placements"].append(placement)
+                continue
             image_id = f"img-p{index + 1:03d}-{ordinal}"
             rel = f"images/{image_id}.png"
             # In a capture rung EVERY image carries the capture basis, not just
@@ -215,6 +246,8 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
             # that is the measurement, enforced in the schema and applied here.
             if entry["role"] == "figure":
                 entry["narrative"] = {"text": None, "state": "not-authored"}
+            entry["placements"] = [placement]
+            by_xref[xref] = entry
             images.append(entry)
 
             # Only a FIGURE gets its pixels written. `chrome` earns none for the
@@ -256,6 +289,15 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                     # lose a figure the document demonstrably contains.
                     print(f"  ! {image_id}: could not write {rel}: {exc}", file=sys.stderr)
 
+    # A SINGLY-PLACED IMAGE CARRIES NO `placements`. The array exists to say
+    # "this appears in more than one place"; writing a one-element copy of
+    # `basis` on every entry would add a field to ~90% of the corpus that
+    # states what `basis` already states, and `PlacementSchema` says absent is
+    # the normal case.
+    for entry in images:
+        if len(entry.get("placements", [])) < 2:
+            entry.pop("placements", None)
+
     return {"$schema": SCHEMA, "doc_id": doc_id, "images": images}
 
 
@@ -269,7 +311,13 @@ def summarise(sidecar: dict) -> str:
     for i in images:
         counts[i["role"]] = counts.get(i["role"], 0) + 1
     parts = ", ".join(f"{n} {role}" for role, n in sorted(counts.items()))
-    return f"{len(images)} placed image(s): {parts}"
+    # DISTINCT images and total PLACEMENTS are two numbers and this prints
+    # both, because the gap between them is the finding (bean `j820`): it read
+    # "383 placed image(s)" for a document holding 51. An entry with no
+    # `placements` is placed once.
+    placements = sum(len(i.get("placements", [None])) for i in images)
+    extra = f", {placements} placement(s)" if placements != len(images) else ""
+    return f"{len(images)} distinct image(s){extra}: {parts}"
 
 
 def main() -> int:

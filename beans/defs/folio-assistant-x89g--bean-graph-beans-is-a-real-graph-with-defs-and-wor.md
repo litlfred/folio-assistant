@@ -1,10 +1,11 @@
 ---
 # folio-assistant-x89g
 title: 'BEAN GRAPH: beans/ is a real graph with defs and workflows nodes; paths leave harness config'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T17:56:09Z
-updated_at: 2026-09-18T17:56:09Z
+updated_at: 2026-09-23T19:25:46Z
 parent: folio-assistant-zzmr
 ---
 
@@ -80,3 +81,9 @@ If a consumer reads the bean path in a way that cannot be redirected. The
 third-party binary is the known one and is handled by `.beans.yml`. If a
 second such consumer turns up, the "single declaration" claim is wrong and
 the design needs revisiting rather than forcing.
+
+## Summary of Changes
+
+Closed 2026-09-23 **on evidence, not authorship**, in the owner's "go through remaining beans" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:
+
+`beans/beans.json` declares the `defs` and `workflows` nodes, and its schema is `cat-harness/schemas/bean-graph.ts`. `.beans.yml` has `path: beans/defs`. `workflow/store.ts` has `WORKFLOW_DIR = join("beans","workflows")`. `bun run check:harness-dirs` reports `✓ consistent`.

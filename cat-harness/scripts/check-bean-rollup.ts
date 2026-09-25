@@ -85,6 +85,8 @@
  * a release — and `check:bean-blocks` (#951) owns that form. Nothing here
  * changes a status, and nothing here deletes a bean: unwanted work is
  * `scrapped`, with its reasons.
+ *
+ * @covers bean-defs, beans
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";

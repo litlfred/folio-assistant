@@ -19,6 +19,7 @@ Situation analysis over two axes — internal/external and helpful/harmful — p
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`swot-analysis`](../reference/skill-instructions/swot-analysis.html)
 
 ## Lanes — who acts

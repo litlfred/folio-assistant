@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_ExtractStructure"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,16 +29,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-  that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
   work plan in beans/.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_ExtractStructure_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Two provenance paths converge on the same Task_Sections output — an embedded text layer extracted directly, or OCR that leaves the fuller text in ocr/ with only a stub in sections/ — and which branch this lane took is invisible downstream except to a grep that knows to check the fourth tier. Task_Candidates is the last step and it stays a proposal: theorems and definitions extracted here are never adjudicated verdicts, so nothing downstream may treat this lane's output as settled.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Binary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_HasText</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ExtractText</bpmn:flowNodeRef>
@@ -61,7 +62,7 @@ text layer?">
     <bpmn:serviceTask id="Task_ExtractText" name="Extract the text layer">
       <bpmn:documentation>The document has a text layer: extract it with pdf-extract (pdfminer.six, then a zero-dependency content-stream reader). Exit 2 means no text layer — a scan — and routes to OCR; it is not an empty document.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e2</bpmn:incoming>
       <bpmn:outgoing>Flow_e4</bpmn:outgoing>
@@ -69,7 +70,7 @@ text layer?">
     <bpmn:serviceTask id="Task_Ocr" name="OCR to ocr/page-*.txt">
       <bpmn:documentation>A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e3</bpmn:incoming>
       <bpmn:outgoing>Flow_e5</bpmn:outgoing>
@@ -78,7 +79,7 @@ text layer?">
 with doc_brief front-matter">
       <bpmn:documentation>Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e4</bpmn:incoming>
       <bpmn:incoming>Flow_e5</bpmn:incoming>
@@ -88,7 +89,7 @@ with doc_brief front-matter">
 (TOC, page ranges, metadata)">
       <bpmn:documentation>Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e6</bpmn:incoming>
       <bpmn:outgoing>Flow_e7</bpmn:outgoing>
@@ -96,7 +97,7 @@ with doc_brief front-matter">
     <bpmn:serviceTask id="Task_Candidates" name="Extract claim candidates">
       <bpmn:documentation>candidates.json holds extracted theorems and definitions. Proposals only -- never adjudicated verdicts.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_e7</bpmn:incoming>
       <bpmn:outgoing>Flow_e8</bpmn:outgoing>

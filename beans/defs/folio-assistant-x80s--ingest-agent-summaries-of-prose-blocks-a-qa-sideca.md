@@ -4,7 +4,7 @@ title: 'INGEST: agent summaries of prose blocks, a QA sidecar drained slowly dur
 status: in-progress
 type: task
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-09-24T05:54:04Z
+updated_at: 2026-09-24T14:00:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -38,3 +38,7 @@ Measured 2026-09-24: 1335 prose blocks, 10 with empty text, so 1325 to summarise
 - [x] first drain: arxiv-2312.07755v1, 22 drafts
 - [ ] drain the rest a few blocks at a time during ingestion work
 - [ ] a person reviews the drafts (`bun run narratives`)
+
+## Owner decision, 2026-09-24
+
+**Library summaries for `agent-skills` entries → "No, keep held back".** The drain does not draft summaries for the entries in `agent-skills/library/`. No code change.

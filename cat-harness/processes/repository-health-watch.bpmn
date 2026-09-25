@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_RepoHealth" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_RepoHealth">
@@ -18,13 +19,12 @@
            `deletion-requires-confirmation` being followed rather than an
            omission. Advisory would make the shape of the process negotiable
            at exactly the point the skill says it is not. -->
-      <folio:policy enforcement="strict"/>
-      <folio:implements workflow=".github/workflows/health-check.yml"/>
+      <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_RepoHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
         <bpmn:documentation>The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while "could not tell" is the only outcome that turns the job RED and leaves that issue deliberately untouched.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
@@ -38,15 +38,12 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Daily (06:41 UTC),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <folio:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run the health checks,&amp;#10;keeping the report either way">
       <bpmn:documentation>Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
@@ -63,7 +60,7 @@
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
       <bpmn:documentation>Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
@@ -77,7 +74,7 @@
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
       <bpmn:documentation>Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -88,7 +85,7 @@
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
       <bpmn:documentation>Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>

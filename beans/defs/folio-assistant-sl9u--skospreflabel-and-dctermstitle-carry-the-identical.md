@@ -1,10 +1,11 @@
 ---
 # folio-assistant-sl9u
 title: skos:prefLabel and dcterms:title carry the identical string on the glossary scheme node, with nothing saying which is authoritative
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-22T11:48:29Z
-updated_at: 2026-09-22T11:48:29Z
+updated_at: 2026-09-23T21:33:41Z
 parent: folio-assistant-1swy
 ---
 
@@ -41,3 +42,12 @@ Not picking one from the implementation side: emitting is what created the ambig
 - [ ] Decide: derived copy, or single predicate
 - [ ] If derived — it is emitted FROM `prefLabel`, never assigned separately, and a test asserts they cannot diverge
 - [ ] `glossary-export.test.ts` covers whichever is chosen, so the next edit cannot silently reintroduce two independent assignments
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner chose **"Keep both, one source"**, adding: *"this is going to be common pattern... need Tools for this type of ETL procedure depending on source / target content type and other metadata"*.
+
+- `glossary-export.ts` now computes the scheme's label once (`schemeLabel`) and writes it to both `prefLabel` (`skos:prefLabel`) and `title` (`dcterms:title`).
+- A new test in `glossary-export.test.ts` asserts `title === prefLabel`.
+- Both `glossary:check` runs are current, so the output did not change.
+- The general pattern is filed as bean `k74z`: ETL Tools that map a value between metadata vocabularies by source and target content type.

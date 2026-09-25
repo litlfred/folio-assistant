@@ -3,6 +3,7 @@
  * The handler namespace's own index — `<site>/<handler>/index.html`.
  *
  * @module scripts/gen-handler-index
+ * @covers docs
  * @graphNode none — a generator over the tiles model, not a schema itself
  *
  * ## Why this page exists, and what it replaced

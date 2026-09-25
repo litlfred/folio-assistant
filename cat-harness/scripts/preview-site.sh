@@ -85,6 +85,21 @@ if [ -z "$jekyll" ]; then
 fi
 echo "preview-site: using $jekyll ($("$jekyll" --version 2>/dev/null))"
 
+# THE LAYOUT GITHUB PAGES GIVES A PAGE THAT NAMES NONE.
+#
+# CI builds with the `github-pages` gem, which always enables
+# `jekyll-default-layout`: a page with no `layout:` gets `page`. That gem is not
+# installed here, so without this a page that names no layout (all 75 process
+# pages among them) builds as BARE HTML: no theme, no stylesheet, and none of
+# the theme's `table_wrappers` layout, which is what gives a table its own
+# scrolling box. Measured 2026-09-24 (bean `2r2n`): 60 of the 105 pages that
+# looked like they scrolled sideways at 390 px were this and nothing else.
+# Front-matter defaults apply only where a page sets no layout, which is the
+# same scope as the plugin's.
+default_layout() {
+  printf 'defaults:\n  - scope: { path: "" }\n    values: { layout: page }\n'
+}
+
 # A config with the remote theme stripped and the local gem used instead —
 # see (2). Written to a temp file so the committed `_config.yml`, which is what
 # CI reads, is never touched.
@@ -92,6 +107,7 @@ cfg="$(mktemp /tmp/preview-config-XXXXXX.yml)"
 grep -v '^remote_theme:' "$docs/_config.yml" \
   | sed 's/^\(\s*\)- jekyll-remote-theme$/\1- jekyll-seo-tag/' > "$cfg"
 echo "theme: just-the-docs" >> "$cfg"
+default_layout >> "$cfg"
 
 # THE COMPOSED TREE, because that is what CI builds FROM.
 #
@@ -113,6 +129,7 @@ if bun run "$here/compose-docs.ts" --out "$composed" >/dev/null 2>&1 && [ -f "$c
   grep -v '^remote_theme:' "$composed/_config.yml" \
     | sed 's/^\(\s*\)- jekyll-remote-theme$/\1- jekyll-seo-tag/' > "$cfg"
   echo "theme: just-the-docs" >> "$cfg"
+  default_layout >> "$cfg"
   echo "preview-site: composed the docs layers -> $composed"
 else
   # A compose failure is REPORTED, not swallowed: the build still works off the

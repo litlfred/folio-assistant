@@ -37,6 +37,7 @@ import {
   checkEscapedMarkup,
   escapedTagsIn,
   htmlPages,
+  leakedTablesIn,
 } from "../check-escaped-markup.js";
 
 /** The exact opening tag the broken build published, welded attributes and all. */
@@ -174,6 +175,51 @@ describe("htmlPages", () => {
       writeFileSync(join(dir, "a", "page.htm"), "<p>x</p>");
       writeFileSync(join(dir, "a", "styles.css"), "p{}");
       expect(htmlPages(dir).length).toBe(2);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("a markdown table printed as text — bean `7w1a`", () => {
+  /** The head of the methodologies page exactly as the broken build published it. */
+  const SHIPPED_TABLE =
+    "<p>| methodology | applies when | origin held? | declared by |\n" +
+    "|—|—|—|—|\n" +
+    '| <strong><a href="#diig">DIIG</a></strong><br /><code>diig</code> | Planning | x | y |</p>';
+
+  test("finds the table that shipped, and names it by its header row", () => {
+    const found = leakedTablesIn("methodologies/index.html", SHIPPED_TABLE);
+    expect(found).toEqual([
+      { page: "methodologies/index.html", excerpt: "| methodology | applies when | origin held? | declared by |" },
+    ]);
+  });
+
+  test("accepts the other spellings a converter may emit", () => {
+    for (const row of ["|---|---|", "| :---: | --- |", "|&mdash;|&mdash;|"]) {
+      expect(leakedTablesIn("p.html", `<p>| a | b |\n${row}\n| 1 | 2 |</p>`).length).toBe(1);
+    }
+  });
+
+  test("a table that RENDERED is not a finding", () => {
+    const ok = "<table><thead><tr><th>a</th><th>b</th></tr></thead><tbody><tr><td>1</td><td>2</td></tr></tbody></table>";
+    expect(leakedTablesIn("p.html", ok)).toEqual([]);
+  });
+
+  test("a table's SOURCE shown in a code block is documentation, not a leak", () => {
+    const shown = "<pre><code>| a | b |\n|---|---|\n| 1 | 2 |\n</code></pre>";
+    expect(leakedTablesIn("p.html", shown)).toEqual([]);
+  });
+
+  test("a single dash rule or a prose pipe is not a delimiter row", () => {
+    expect(leakedTablesIn("p.html", "<p>a | b</p>\n<p>|—|</p>\n<hr />")).toEqual([]);
+  });
+
+  test("the tree scan reports it", () => {
+    const dir = mkdtempSync(join(tmpdir(), "leaked-table-"));
+    try {
+      writeFileSync(join(dir, "index.html"), SHIPPED_TABLE);
+      expect(checkEscapedMarkup(dir).leakedTables.length).toBe(1);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

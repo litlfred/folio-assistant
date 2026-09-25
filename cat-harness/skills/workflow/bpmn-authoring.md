@@ -42,17 +42,17 @@ done.
 / `workflow_complete` run them, and `workflow_complete` **refuses a step that
 is not enabled**. That has consequences for how you author:
 
-- **Every activity carries `<folio:skill ref="…"/>`** naming the skill that
-  implements it, and `<folio:bean store="beans/"/>` where it touches the work
+- **Every activity carries `<bootstrap.processes:skill ref="…"/>`** naming the skill that
+  implements it, and `<cat-harness.processes:bean store="beans/"/>` where it touches the work
   plan. `bun run check:workflow-refs` fails on a ref that resolves to nothing,
   and `bun run kg:audit` additionally fails when the named skill exists but no
   package can **serve** it.
-- **Every lane is a role.** Bind it with `<folio:role ref="…"/>` against
+- **Every lane is a role.** Bind it with `<bootstrap.processes:role ref="…"/>` against
   `scenarios/roles.json`. Lane names are free text and sixty of them once
   spelled two dozen positions; an explicit ref is the join that does not depend
   on spelling.
 - **A gateway may be computed rather than chosen** — see `dmn-authoring`.
-- **Policy is declared on the process.** `<folio:policy enforcement="strict"/>`
+- **Policy is declared on the process.** `<cat-harness.processes:policy enforcement="strict"/>`
   means `workflow_gate` refuses a step that is not enabled; absent policy means
   strict. Steps marked `relaxable="false"` may never be relaxed by any package.
 

@@ -93,3 +93,8 @@ crashes on first search*, which is worse because it fails at the reader. What
 scales is indexing **only what is materialized**, with a separate
 **prefix-sharded identifier lookup** for everything else — ~50 KB in memory at a
 time regardless of corpus size.
+
+That lookup is built: [`id-lookup/`](id-lookup/) holds the client and the
+generated who-iris index, `bun run id-lookup` writes it and `id-lookup:check`
+gates it. It is measured at full IRIS scale in bean `4pm8` (a reader downloads
+one shard of about 14 KB per lookup).

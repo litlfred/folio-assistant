@@ -3,6 +3,7 @@
  * A voice skill's instruction body must not RESTATE its own rules.
  *
  * @module scripts/check-voice-skills
+ * @covers voices, skills
  * @graphNode none — a checker over the voices graph
  *
  * ## The promise this makes good on

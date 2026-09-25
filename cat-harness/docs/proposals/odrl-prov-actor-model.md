@@ -236,6 +236,10 @@ Each step is its own PR with its own QA, and missing QA is a failure:
    an undeclared actor (`claude`, `litlfred`). The history records who, not
    which declared actor, so the log is only as good as the name written into
    it.*
+   *2026-09-24, owner: "Declare both". `claude` is now declared (an agent,
+   roles `authoring-agent` and `code-reviewer`). `litlfred` is not: it is a
+   GitHub login, and an actor file never carries one. Bean `jwoc` records why
+   and what the owner can choose; `prov:hadRole` stays required.*
 6. **ihris**:
    - the 2009 use-case actors (A-PT1 HR Manager, …) become Roles;
    - "Assigned To" and "Source" become opaque `prov:Person` actors

@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_PaperAuthoring"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,40 +29,40 @@
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
-      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_PaperAuthoring_LaneSet">
       <bpmn:lane id="Lane_Author" name="Author (person)">
         <bpmn:documentation>The plan set here — chapters, the blocks each needs, what gets formalised — is upstream of everything else in the diagram and is never revisited: Gateway_ReviewOutcome's 'iterate' branch re-enters Lane_Agent's Task_AuthorBlocks directly, not this lane, so a scoping mistake made here surfaces only as churn several lanes downstream.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="author"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_NewPaper</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Sits between Task_Plan and Task_Scaffold as the one conversion point in this diagram: the author's plan becomes beans here, which is what lets a resumed session or a different agent pick up Task_Scaffold without having sat through Task_Plan itself.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Authoring agent (system)">
         <bpmn:documentation>Scaffolds the repo from the author's plan and then writes every block — including every revision, since Gateway_ReviewOutcome's 'iterate' branch re-enters Task_AuthorBlocks directly rather than sending the change back to Lane_Author to be re-scoped. The plan is the author's decision; executing against it, first draft through every rewrite, is this lane's.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Scaffold</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AuthorBlocks</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Lean" name="Lean toolchain (lean-mcp)">
         <bpmn:documentation>Owns its own loop: Gateway_LeanGreen's 'not yet' branch returns straight to Task_Formalize rather than out to a person, and the gateway itself is DMN-computed off the build result rather than argued, so nothing downstream can proceed on a proof that merely looks close enough. The paper does not reach Task_Validate until this lane's own gate says green.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="lean-toolchain"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="lean-toolchain"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Formalize</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_LeanGreen</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Build pipeline — validate · render · publish">
         <bpmn:documentation>Its three tasks bracket the human review rather than replace it: Validate and Render turn the Lean-green manuscript into the artefact Task_Review actually reads, and Publish only fires once Gateway_ReviewOutcome has said 'approved' — this lane builds what gets judged and executes what was decided, and decides nothing itself.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Render</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Publish</bpmn:flowNodeRef>
@@ -69,7 +70,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">
         <bpmn:documentation>Gateway_ReviewOutcome sits in this lane rather than a separate editor's, so in this diagram the reviewer's finding and its disposition are the same decision — iterate back to Task_AuthorBlocks or clear Task_Publish — because paper authoring has no editor lane to hold the accept/reject split modelled elsewhere in this corpus.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ReviewOutcome</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -80,7 +81,7 @@
     <bpmn:userTask id="Task_Plan" name="1 · Plan the paper&#10;[content-plan]">
       <bpmn:documentation>Scope the paper: chapters, the blocks each needs, what gets formalised.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-plan" />
+        <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>
       <bpmn:incoming>A01</bpmn:incoming>
       <bpmn:outgoing>A02</bpmn:outgoing>
@@ -88,8 +89,8 @@
     <bpmn:task id="Task_SeedPlan" name="2 · Seed the work plan&#10;[todo-manager]">
       <bpmn:documentation>The plan becomes beans, so a resumed session or a sibling agent can pick it up.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>A02</bpmn:incoming>
       <bpmn:outgoing>A03</bpmn:outgoing>
@@ -97,7 +98,7 @@
     <bpmn:serviceTask id="Task_Scaffold" name="3 · Scaffold the folio repo&#10;[content-plan]">
       <bpmn:documentation>Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-plan" />
+        <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>
       <bpmn:incoming>A03</bpmn:incoming>
       <bpmn:outgoing>A04</bpmn:outgoing>
@@ -105,7 +106,7 @@
     <bpmn:serviceTask id="Task_AuthorBlocks" name="4 · Author blocks&#10;[content-author]">
       <bpmn:documentation>Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-author" />
+        <bootstrap.processes:skill ref="content-author" />
       </bpmn:extensionElements>
       <bpmn:incoming>A04</bpmn:incoming>
       <bpmn:incoming>A12</bpmn:incoming>
@@ -114,8 +115,8 @@
     <bpmn:serviceTask id="Task_Formalize" name="5 · Formalise in Lean&#10;[lean-formalization]">
       <bpmn:documentation>Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="lean-formalization" />
-        <folio:skill ref="proof-verification" />
+        <bootstrap.processes:skill ref="lean-formalization" />
+        <bootstrap.processes:skill ref="proof-verification" />
       </bpmn:extensionElements>
       <bpmn:incoming>A05</bpmn:incoming>
       <bpmn:incoming>A07</bpmn:incoming>
@@ -124,7 +125,7 @@
     <bpmn:exclusiveGateway id="Gateway_LeanGreen" name="Build green, no sorries?">
       <bpmn:documentation>Answered by the Lean build after step 5: is it green with no `sorry` left? `not yet` loops on formalisation; `green` goes on to validation. A build that passes with a `sorry` is not green.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/lean-build-gate.dmn#Decision_LeanBuildGate" />
+        <cat-harness.processes:decision ref="decisions/lean-build-gate.dmn#Decision_LeanBuildGate" />
       </bpmn:extensionElements>
       <bpmn:incoming>A06</bpmn:incoming>
       <bpmn:outgoing>A07</bpmn:outgoing>
@@ -133,7 +134,7 @@
     <bpmn:serviceTask id="Task_Validate" name="6 · Validate&#10;[content-validate]">
       <bpmn:documentation>Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-validate" />
       </bpmn:extensionElements>
       <bpmn:incoming>A08</bpmn:incoming>
       <bpmn:outgoing>A09</bpmn:outgoing>
@@ -141,7 +142,7 @@
     <bpmn:serviceTask id="Task_Render" name="7 · Render PDF / HTML&#10;[latex-authoring]">
       <bpmn:documentation>Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="latex-authoring" />
+        <bootstrap.processes:skill ref="latex-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>A09</bpmn:incoming>
       <bpmn:outgoing>A10</bpmn:outgoing>
@@ -149,7 +150,7 @@
     <bpmn:userTask id="Task_Review" name="8 · Review and feedback&#10;[content-review]">
       <bpmn:documentation>Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>A10</bpmn:incoming>
       <bpmn:outgoing>A11</bpmn:outgoing>
@@ -163,7 +164,7 @@
     <bpmn:serviceTask id="Task_Publish" name="9 · Publish&#10;[content-publish]">
       <bpmn:documentation>See draft-to-publication.bpmn for the review and release path this expands into.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>A13</bpmn:incoming>
       <bpmn:outgoing>A14</bpmn:outgoing>

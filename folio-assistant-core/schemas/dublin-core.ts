@@ -52,6 +52,8 @@
  * which identifier is authoritative belongs to the `iris-dspace` skill, which
  * can say WHY; a schema that deduplicated would make that judgement invisibly
  * and permanently.
+ *
+ * @conformsTo dcmi-terms
  */
 import { z } from "zod";
 

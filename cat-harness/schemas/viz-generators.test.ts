@@ -29,6 +29,28 @@ import { directoriesForGraph, repoRootFor, siteDirFor } from "./cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
 
+/**
+ * THE GRAPHS ARE READ ONCE, HERE — not inside the tests that assert on them.
+ *
+ * Bean `vxho`. Both readers walk the REAL repository, and `bun test` applies
+ * its 5000ms timeout PER TEST. Read inside a test, that filesystem work sits
+ * inside the budget: measured at ~150ms warm in a quiet process, and **5683ms**
+ * under the full suite, where hundreds of files contend for the same disk. So
+ * the gate's colour depended on what else the machine was doing — the red that
+ * clears on re-run and teaches everybody to re-run.
+ *
+ * At module scope the same work happens once per FILE, before any test starts,
+ * and no test's budget contains it. That is not a trick to get under the
+ * number: these graphs are a FIXTURE — every test here asserts about the same
+ * repository, and reading it four times was four answers to one question that
+ * were only ever equal by luck.
+ *
+ * `readLibraryGraph` was called twice and `readSchemaGraph` twice; now each is
+ * read once.
+ */
+const SCHEMA_GRAPH = readSchemaGraph(ROOT);
+const LIBRARY_GRAPH = readLibraryGraph([ROOT, repoRootFor(ROOT)]);
+
 /** The href a page two levels down uses — what `viewerPlacement` computes. */
 const DATA = "../../assets/schemas/index.json";
 
@@ -100,7 +122,7 @@ describe("the readers agree with what the generators publish", () => {
     // `directoryForGraph` throws when several directories declare a graph —
     // the `wggr` guard — and four instances declare `schemas` here. Asking for
     // one was the bug; this locks in the plural answer.
-    const g = readSchemaGraph(ROOT);
+    const g = SCHEMA_GRAPH;
     expect(g).not.toBeNull();
     expect(g!.roots.length).toBeGreaterThan(1);
     expect(new Set(g!.modules.map((m) => m.instance)).size).toBeGreaterThan(1);
@@ -109,7 +131,7 @@ describe("the readers agree with what the generators publish", () => {
   test("a queue's declared intake is ONE unit, not one per file it carries", () => {
     // An `intake.json` declares the capture's files. Counting them
     // individually made a four-file capture read as four documents waiting.
-    const g = readLibraryGraph([ROOT, repoRootFor(ROOT)]);
+    const g = LIBRARY_GRAPH;
     expect(g).not.toBeNull();
     const intakes = g!.uploads.filter((u) => u.kind === "intake");
     for (const i of intakes) {
@@ -120,7 +142,7 @@ describe("the readers agree with what the generators publish", () => {
   });
 
   test("every queue's uningested count is total minus ingested, and never negative", () => {
-    const g = readLibraryGraph([ROOT, repoRootFor(ROOT)])!;
+    const g = LIBRARY_GRAPH!;
     for (const q of g.queues) {
       expect(q.uningested).toBe(q.total - q.ingested);
       expect(q.uningested).toBeGreaterThanOrEqual(0);
@@ -157,7 +179,7 @@ describe("the projection is stable under edits that do not change the graph", ()
   test("the reader still knows the line, so a consumer that wants one can have it", () => {
     // Dropped from the PROJECTION, kept on the reader. The two are different
     // artefacts and conflating them would remove the information entirely.
-    const g = readSchemaGraph(ROOT)!;
+    const g = SCHEMA_GRAPH!;
     expect(g.decls.every((d) => typeof d.line === "number" && d.line > 0)).toBe(true);
   });
 });

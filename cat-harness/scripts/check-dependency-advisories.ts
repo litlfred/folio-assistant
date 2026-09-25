@@ -51,6 +51,7 @@
  * about the database, not about the code.
  *
  * @module folio-assistant/scripts/check-dependency-advisories
+ * @covers code
  */
 
 /** One advisory, reduced to what a reader needs to act. */

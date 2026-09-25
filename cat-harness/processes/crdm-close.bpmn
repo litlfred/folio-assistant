@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_CRDM_Close" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM_Close">
@@ -14,18 +15,18 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Close">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>Stands between stakeholder sign-off and the agent's close as an independent check against defined criteria — decision-audit, not a re-ask of the same yes/no the stakeholders already gave — and A_Close's own documentation says it is reachable ONLY through this confirmation, so the agent has no path to closing that bypasses it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_Confirm</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Holds no judgement in this diagram: both prior lanes already decided — sign-off, then confirmation against criteria — so this lane's only accountability is executing the close exactly when authorised and never before, on an issue that is the stakeholder's record rather than the agent's to close on its own reading of the thread.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="authoring-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Close</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Process_CRDM_Close</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>The first of three sequential checks this diagram exists to enforce in order — sign off, confirm, close, never any other sequence — and what is being signed off here is the delivered FEATURE on the issue, not the requirement model that crdm-requirements-definition.bpmn's Lane_Stakeholders approved earlier in the process.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="stakeholder"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Close</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>S_FeatureSignoff</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -38,7 +39,7 @@ on issue">
     <bpmn:task id="BA_Confirm" name="Confirm all criteria
 met">
       <bpmn:documentation>The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="decision-audit"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="decision-audit"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Close" name="Close issue ONLY on
 BA authorisation">
@@ -47,8 +48,8 @@ saying every criterion is met. An agent must never close an issue without
 that explicit authorisation — the gate is the preceding task, and this name
 says so rather than leaving a reader to trace the flow for it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:bean op="resolve"/>
+        <bootstrap.processes:skill ref="crdm-requirements-workflow"/>
+        <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Process_CRDM_Close" name="Phase complete"/>

@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_NarrativeCodeReview"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
@@ -37,13 +38,13 @@ The mechanical half is already on the subject's kg-qa sidecar: prose-reviewed-si
 
 Three outcomes, each leaving a record: the prose holds (attested, with a reason), the two really disagree (a finding against the side that is wrong), or the reviewer disagrees with a checker's verdict (adjudication, which keeps the checker's entry beneath the judgement). A proof and its Lean are the one pair kind a proof assistant can settle; that specialisation is proof-narrative-lean-equivalence, not this diagram.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_NarrativeCodeReview">
       <bpmn:lane id="Lane_PairReviewer" name="Reviewer">
         <bpmn:documentation>The generic reviewer, taking this lane for the call path only: it reads what the pair checks left open and settles each item one of three ways. It can attest and raise findings but cannot overrule a checker on its own say-so — that is what the call into adjudication is for.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_PairChanged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ReadPairFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Open</bpmn:flowNodeRef>
@@ -63,12 +64,12 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
 
     <bpmn:task id="A_ReadPairFindings" name="Read the pair checks' findings">
       <bpmn:documentation>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
 
-    <!-- Computable from the sidecar, so it carries no folio:judgement. No
+    <!-- Computable from the sidecar, so it carries no cat-harness.processes:judgement. No
          DMN table decides it yet; that is the q0tc column, not this one. -->
     <bpmn:exclusiveGateway id="GW_Open" name="Anything left open?">
       <bpmn:documentation>Whether the sidecar holds anything the machine could not settle: a stale pair, or a claim that is false or undetermined. Computable from the two criteria's results, not a judgement. Nothing open means the pair review has nothing to add.</bpmn:documentation>
@@ -83,7 +84,7 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
 
     <bpmn:task id="A_ReRead" name="Re-read the prose against the code">
       <bpmn:documentation>For each open item, read the prose claim beside the code it describes and decide what is true. For a stale pair, read what changed in the code and whether the prose still describes it. For an undetermined claim, say whether it points at something real outside this repository. For a false claim, check the checker's reading before trusting it.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
       <bpmn:incoming>F_Open</bpmn:incoming>
       <bpmn:outgoing>F_3</bpmn:outgoing>
     </bpmn:task>
@@ -91,7 +92,7 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
     <bpmn:exclusiveGateway id="GW_Verdict" name="What did the re-read find?">
       <bpmn:documentation>The reviewer's reading, one of three: the prose still holds; the prose and the code really disagree; or the reviewer disagrees with a checker's own verdict. The third is never resolved in this lane, because a reviewer overruling a checker quietly loses the disagreement, which is information.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:judgement reason="Reading prose against code is exactly what the stage A checks could not do — the open items are, by construction, the claims no rule resolved. A table here would have to decide the undetermined cases the machine already declined to decide."/>
+        <cat-harness.processes:judgement reason="Reading prose against code is exactly what the stage A checks could not do — the open items are, by construction, the claims no rule resolved. A table here would have to decide the undetermined cases the machine already declined to decide."/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_3</bpmn:incoming>
       <bpmn:outgoing>F_Holds</bpmn:outgoing>
@@ -101,21 +102,21 @@ Three outcomes, each leaving a record: the prose holds (attested, with a reason)
 
     <bpmn:task id="A_Attest" name="Attest the pair, with a reason">
       <bpmn:documentation>The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason "…"`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="narrative-asserts-code"/></bpmn:extensionElements>
       <bpmn:incoming>F_Holds</bpmn:incoming>
       <bpmn:outgoing>F_4</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_RaiseFinding" name="Raise a finding against the wrong side">
       <bpmn:documentation>The prose and the code really disagree: raise a finding that names which side is wrong and why. Usually the prose, because the code is what runs — but a skill can state intended behaviour correctly while the code has regressed, and then the finding is against the code.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-feedback"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-feedback"/></bpmn:extensionElements>
       <bpmn:incoming>F_Mismatch</bpmn:incoming>
       <bpmn:outgoing>F_5</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:callActivity id="Call_Adjudication" name="Adjudicate against the checker" calledElement="Process_CriterionAdjudication">
       <bpmn:documentation>The reviewer and a checker read the same claim differently — a disagreement about ONE kg-qa criterion (prose-claims-resolve). Descend into Process_CriterionAdjudication, which runs the shared adjudication and then one of its three outcomes: the checker's finding stands, the criterion is scoped, or a dispensation is granted with its reason. The checker's entry is kept beneath the verdict rather than overwritten (requirement R4 of issue #1042).</bpmn:documentation>
-      <bpmn:extensionElements><folio:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
       <bpmn:incoming>F_Disagree</bpmn:incoming>
       <bpmn:outgoing>F_6</bpmn:outgoing>
     </bpmn:callActivity>

@@ -89,16 +89,14 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
    * What is allowed, and why. Anything else that matches LEAKS fails.
    * - The publication address and the source repository: bootstrap's own
    *   location, not a reference to another Harness.
-   * - The `folio:` BPMN extension prefix and `folio-*` schema identifiers:
-   *   structural names shared with the platform, waiting on the owner's
-   *   ruling (bean iwtn), listed so they cannot grow unnoticed.
+   * - The `folio-*` schema identifiers: structural names shared with the
+   *   platform, renamed in a later stage of bean 12s9. The `folio:` diagram
+   *   prefix is GONE from bootstrap (stage 2): its diagrams write
+   *   `bootstrap.processes:`, so it is no longer allowed here.
    */
   const ALLOW = [
     /https:\/\/litlfred\.github\.io\/folio-assistant\//g,
     /https:\/\/github\.com\/litlfred\/folio-assistant\//g,
-    /\bxmlns:folio="[^"]*"/g,
-    /<\/?folio:[a-z-]+/g,
-    /folio:(skill|decision|precondition|role|bean|no-skill)\b/g,
     /"folio-[a-z-]+\/v1"/g,
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */

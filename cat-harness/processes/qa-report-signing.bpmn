@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
@@ -65,11 +66,11 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
            The step agents would skip under time pressure is resolving the
            reach — it is easier to assume the API works — and skipping it is
            exactly how an unsigned report acquires the appearance of one. -->
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
       <!-- Capture ON. An attestation's value is that a third party can ask
            what was signed, by whom, and on what evidence. A signing process
            whose own execution is unlogged answers none of those. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_QaReportSigning">
@@ -80,7 +81,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
              diagrams each spelled the lane differently. A fourth spelling
              binds nothing and reports as an unbound lane. -->
         <bpmn:extensionElements>
-          <folio:role ref="validation-pipeline" />
+          <bootstrap.processes:role ref="validation-pipeline" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ReportReady</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildRun</bpmn:flowNodeRef>
@@ -93,7 +94,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
       <bpmn:lane id="Lane_Api" name="Attestation service (API)">
         <bpmn:documentation>Reached only from the DMN table's one row where both egress and a configured endpoint are true — everything else in Gateway_SigningRoute's table routes around this lane entirely, so its presence in a trace is itself already the answer to whether egress existed. It carries exactly one task and no branch of its own, because the routing decision was already made before this lane was entered.</bpmn:documentation>
         <bpmn:extensionElements>
-          <folio:role ref="attestation-service" />
+          <bootstrap.processes:role ref="attestation-service" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ApiSign</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -105,7 +106,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
              exists, and role-model.md's rule is that nothing IS a signer;
              somebody ACTS AS one for the duration of a lane. -->
         <bpmn:extensionElements>
-          <folio:role ref="publication-manager" />
+          <bootstrap.processes:role ref="publication-manager" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_HumanSign</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -118,8 +119,8 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:serviceTask id="Task_BuildRun" name="Build the test run&#10;[folio-test-run/v1]">
       <bpmn:documentation>Assemble the run record the signature will cover: the data hash and the process hash, each all-or-nothing. An UNKNOWN_HASH never reproduces another unknown, so a run that could not be hashed is signable only as what it is — unverifiable.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="qa-report-signing" />
-        <folio:skill ref="content-test" />
+        <bootstrap.processes:skill ref="qa-report-signing" />
+        <bootstrap.processes:skill ref="content-test" />
       </bpmn:extensionElements>
       <bpmn:incoming>S01</bpmn:incoming>
       <bpmn:outgoing>S02</bpmn:outgoing>
@@ -128,7 +129,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:serviceTask id="Task_ResolveReach" name="Resolve the performer's reach&#10;[effectiveReach + signing-api probe]">
       <bpmn:documentation>Compute the two facts the gateway reads: effectiveReach(deployment, actor) from schemas/actor-reach.ts, and whether the signing-api capability is configured. Undeclared reach resolves to "unknown" rather than to the deployment's value — an aggregate does not determine a member.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="qa-report-signing" />
+        <bootstrap.processes:skill ref="qa-report-signing" />
       </bpmn:extensionElements>
       <bpmn:incoming>S02</bpmn:incoming>
       <bpmn:outgoing>S03</bpmn:outgoing>
@@ -137,7 +138,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:exclusiveGateway id="Gateway_SigningRoute" name="Which signing route?">
       <bpmn:documentation>Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/signing-route.dmn#Decision_SigningRoute" />
+        <cat-harness.processes:decision ref="decisions/signing-route.dmn#Decision_SigningRoute" />
       </bpmn:extensionElements>
       <bpmn:incoming>S03</bpmn:incoming>
       <bpmn:outgoing>S04</bpmn:outgoing>
@@ -147,7 +148,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:serviceTask id="Task_ApiSign" name="Sign over the API">
       <bpmn:documentation>The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="qa-report-signing" />
+        <bootstrap.processes:skill ref="qa-report-signing" />
       </bpmn:extensionElements>
       <bpmn:incoming>S04</bpmn:incoming>
       <bpmn:outgoing>S06</bpmn:outgoing>
@@ -156,7 +157,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:userTask id="Task_HumanSign" name="Sign as release authority">
       <bpmn:documentation>A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="qa-report-signing" />
+        <bootstrap.processes:skill ref="qa-report-signing" />
       </bpmn:extensionElements>
       <bpmn:incoming>S05</bpmn:incoming>
       <bpmn:outgoing>S07</bpmn:outgoing>
@@ -171,8 +172,8 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:serviceTask id="Task_RecordAttestation" name="Record which route signed it">
       <bpmn:documentation>The attestation records the route, not only the signature. A reader who cannot tell an API signature from a human one cannot tell which trust assumption they are relying on.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="qa-report-signing" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="qa-report-signing" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>S08</bpmn:incoming>
       <bpmn:outgoing>S09</bpmn:outgoing>

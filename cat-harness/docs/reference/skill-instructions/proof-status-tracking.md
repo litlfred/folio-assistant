@@ -82,12 +82,20 @@ Multiple reviewers (human + agentic) contribute reviews.  Consensus rules:
 
 ### GitHub Actions Integration (CI-only)
 
-The `lean-build.yml` workflow runs the full pipeline automatically:
-1. Runs `extract_proof_objects.py`
-2. Runs `generate_lean_stubs.py`
+The `lean-build.yml` workflow runs the pipeline, once per Lean package
+(`folio/<paper>/lean/` with a lakefile). It is not a workflow of the
+platform's: `folio_init` writes it into a **paper** folio's
+`.github/workflows/`, with the `.github/scripts/` it calls, from
+`cat-harness/templates/paper/` (bean `52dz`). Per package it:
+1. Builds the paper to LaTeX with the platform's `build.ts`
+2. Runs `extract_proof_objects.py`
 3. Runs `lake build`
 4. Runs `update_proof_status.py`
-5. Commits updated `proof-objects.json` (automated commit by `github-actions[bot]`)
+5. Commits the updated `build-logs/<paper>/proof-objects.json`
+   (automated commit by `github-actions[bot]`)
+
+`generate_lean_stubs.py` is **not** in the template: its chapter-to-file
+map was one folio's, written by hand, so there was nothing generic to ship.
 
 **This pipeline is CI-only.** Locally, agents must not replicate it.
 Local `lake build` is compile-only — no generation scripts before it.

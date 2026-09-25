@@ -3,6 +3,7 @@
  * Render the `fsh-guts` graph — the trashcan that is kept.
  *
  * @module cat-harness/scripts/gen-fsh-guts-viz
+ * @covers fsh-guts
  *
  * ## Why this exists, and why the page is not published
  *

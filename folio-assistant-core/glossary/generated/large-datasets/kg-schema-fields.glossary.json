@@ -41,6 +41,48 @@
       "status": "candidate"
     },
     {
+      "id": "id-lookup.identry.id",
+      "prefLabel": "IdEntry.id",
+      "definition": "`kind/local`, lower-case, as the catalogue names the node.",
+      "source": "large-datasets/schemas/id-lookup.ts#IdEntry.id",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.identry.url",
+      "prefLabel": "IdEntry.url",
+      "definition": "Where the node is held: the source's own page for it.",
+      "source": "large-datasets/schemas/id-lookup.ts#IdEntry.url",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.selection",
+      "prefLabel": "IdLookupManifestSchema.selection",
+      "definition": "Which nodes, and from where. A count with no statement of what was counted cannot be checked.",
+      "source": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.idlookupmanifestschema.source",
+      "prefLabel": "IdLookupManifestSchema.source",
+      "definition": "The corpus this indexes, by its instance name.",
+      "source": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.namespaceindexschema.shards",
+      "prefLabel": "NamespaceIndexSchema.shards",
+      "definition": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so.",
+      "source": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema.shards",
+      "status": "candidate"
+    },
+    {
+      "id": "id-lookup.shardschema.entries",
+      "prefLabel": "ShardSchema.entries",
+      "definition": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes.",
+      "source": "large-datasets/schemas/id-lookup.ts#ShardSchema.entries",
+      "status": "candidate"
+    },
+    {
       "id": "source-descriptor.identifiersystemschema.authoritative",
       "prefLabel": "IdentifierSystemSchema.authoritative",
       "definition": "Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away.",

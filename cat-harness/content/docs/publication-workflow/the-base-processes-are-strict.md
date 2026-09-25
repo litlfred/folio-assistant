@@ -1,5 +1,5 @@
 The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
-carry `<folio:policy enforcement="strict"/>`. `workflow_gate` refuses a step
+carry `<cat-harness.processes:policy enforcement="strict"/>`. `workflow_gate` refuses a step
 they have not reached. The three per-content-type diagrams are `advisory`,
 because what counts as adequate review of a Lean proof and of a FHIR profile are
 different questions, and the package that knows the domain should answer them.

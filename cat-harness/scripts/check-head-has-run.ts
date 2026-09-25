@@ -44,13 +44,40 @@
  *
  * | state | means | exit |
  * |---|---|---|
- * | has a run | at least one workflow run names this exact `head_sha` | 0 |
+ * | has the owed runs | every workflow OWED for the event ran | 0 |
+ * | **missing a required run** | it has runs, but not the ones owed | 1 |
  * | **no run** | GitHub answered, and nothing names it | 1 |
  * | could not ask | no remote, no network, rate limited, HTTP error | 2 |
  *
  * **Could-not-ask is never reported as "has a run"**, and never as "no run"
  * either: telling somebody their commit is unverified when you simply could
  * not look would train them to ignore it, which costs more than the gap.
+ *
+ * ## "Has a run" was the wrong question — bean `9x9r`
+ *
+ * Until 2026-09-24 the first row read *"at least one workflow run names this
+ * exact `head_sha`"*, and the script decided on `runs.length > 0`. Any run.
+ * Any workflow, any event. The header was honest about what it measured; the
+ * QUESTION was wrong, because the operator running this is asking whether
+ * **their PR's gates** fired.
+ *
+ * Two live cases, both measured that day:
+ *
+ * | head | its runs | old verdict |
+ * |---|---|---|
+ * | PR #1309 | `JSON-LD drift` twice — one `push`, one `pull_request` | ✓ |
+ * | PR #1222 `28f929a` | `Code-quality gates` via **`workflow_dispatch`** only | ✓ |
+ *
+ * The second is the worse one and it indicts the fix as much as the defect: a
+ * dispatch resolves `refs/heads/<branch>` rather than the merge ref, so that
+ * green was about a different tree (`yv4z`, `sddf`) — and this script endorsed
+ * it. `3pqn` reported as clean, by the file written to detect `3pqn`.
+ *
+ * The owner ruled the stronger of two fixes on 2026-09-24: **derive the owed
+ * workflows from `.github/workflows/`** rather than match per-event, so a gate
+ * workflow that is renamed or deleted is caught too. The required set is read
+ * by {@link scanTriggers}; the reasoning, and why a path-filtered workflow is
+ * `conditional` rather than required, is in `src/core/workflow-events.ts`.
  *
  * ## "No run" is not one situation — bean `sddf`
  *
@@ -102,6 +129,7 @@ import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 
 import { classifyResponse, withBackoff, type BackoffOptions } from "../src/core/retry.js";
+import { scanTriggers, type TriggerScan, type WorkflowTrigger } from "../src/core/workflow-events.js";
 import { detectRepoUrl, ownerRepo } from "../src/core/git-refs.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
@@ -367,6 +395,93 @@ export function noRunAdvice(merge: MergeState): string {
   );
 }
 
+/**
+ * Did the workflows that were OWED for this event actually run?
+ *
+ * Bean `9x9r`. {@link runsForHead} answers "is there a run", which is a
+ * strictly weaker question than "did the gates fire" — and the gap is not
+ * hypothetical here: `jsonld-gen-check` and `atomic-mass-gen-check` declare
+ * both `push` and `pull_request`, so a push run satisfies the weaker question
+ * on a commit whose `pull_request` event was dropped. PR #1309's head carried
+ * two runs of `.jsonld siblings in sync with .ts manifests`, one per event.
+ *
+ * The required set is READ FROM `.github/workflows/`, never listed here, for
+ * the reason `gates.ts` derives its list from `code-quality-gates.yml`: a list
+ * maintained by hand is a list free to drift from what CI runs, and a gate
+ * workflow that is renamed or deleted is exactly what option 2 of this bean
+ * could not have caught.
+ */
+export interface WorkflowCoverage {
+  /** Owed unconditionally. A `false` here is the finding. */
+  required: { name: string; file: string; ran: boolean }[];
+  /**
+   * Declared behind `paths`/`types`/`branches`. **Not judged** — whether a run
+   * was owed depends on the diff or the ref, and a sha carries neither. Printed
+   * rather than dropped, because a silent omission reads as a pass.
+   */
+  conditional: { name: string; file: string; ran: boolean; filters: string[] }[];
+  /** Workflow files that could not be read; while any exist, `required` is incomplete. */
+  unreadable: TriggerScan["unreadable"];
+}
+
+/** Match on BOTH name and event: a `push` run of a workflow is not its `pull_request` run. */
+function ranAs(runs: RunRow[], t: WorkflowTrigger, event: string): boolean {
+  return runs.some((r) => r.name === t.name && r.event === event);
+}
+
+export function coverageFor(runs: RunRow[], scan: TriggerScan, event: string): WorkflowCoverage {
+  return {
+    required: scan.triggers
+      .filter((t) => t.requirement === "required")
+      .map((t) => ({ name: t.name, file: t.file, ran: ranAs(runs, t, event) })),
+    conditional: scan.triggers
+      .filter((t) => t.requirement === "conditional")
+      .map((t) => ({ name: t.name, file: t.file, ran: ranAs(runs, t, event), filters: t.filters })),
+    unreadable: scan.unreadable,
+  };
+}
+
+/**
+ * What to tell somebody whose head has runs but is MISSING a required one.
+ *
+ * A separate message from {@link noRunAdvice} on purpose: "nothing ran" and
+ * "the gates did not run but other things did" put the operator in different
+ * positions, and the second is the more dangerous of the two precisely because
+ * it renders as activity.
+ */
+export function missingRequiredAdvice(missing: string[], merge: MergeState): string {
+  const head =
+    `\n  Its head has runs, but ${missing.length} workflow(s) owed for this event\n` +
+    `  did NOT run: ${missing.join(", ")}.\n` +
+    "\n  A run from a DIFFERENT workflow is not evidence about this one. Reading\n" +
+    "  \"some checks exist\" as \"the gates passed\" is what bean `9x9r` measured:\n" +
+    "  this script itself reported a ✓ in exactly this state.";
+  if (merge === "conflicted") {
+    return (
+      head +
+      "\n\n  Its pull request is UNMERGEABLE, so no `refs/pull/N/merge` exists and\n" +
+      "  this head will never get a `pull_request` run until that is resolved.\n" +
+      "  MERGE THE BASE BRANCH IN and push. Do NOT dispatch — a dispatch resolves\n" +
+      "  `refs/heads/<branch>`, testing a tree that will never exist.\n" +
+      "  Beans `yv4z`, `sddf`; `prepare-merge` §Guardrails step 0."
+    );
+  }
+  if (merge === "mergeable") {
+    return (
+      head +
+      "\n\n  Its PR is mergeable, so those runs were owed and their absence is\n" +
+      "  unexplained (bean `3pqn`). Dispatching against this ref is safe HERE,\n" +
+      "  because while the PR is mergeable the branch and the merge result agree."
+    );
+  }
+  return (
+    head +
+    "\n\n  Mergeability is not established, so check `mergeable_state` by hand\n" +
+    "  before dispatching anything: on a conflicted PR a dispatch tests a tree\n" +
+    "  that will never exist."
+  );
+}
+
 if (import.meta.main) {
   const asked = process.argv[2] ?? "HEAD";
   const sha = resolveCommit(REPO, asked);
@@ -405,9 +520,68 @@ if (import.meta.main) {
     console.error(noRunAdvice(mergeStateForHead(REPO, sha)));
     process.exit(1);
   }
-  console.log(`✓ ${sha.slice(0, 10)} — ${verdict.runs.length} run(s):`);
+  console.log(`  ${sha.slice(0, 10)} — ${verdict.runs.length} run(s):`);
   for (const r of verdict.runs) {
-    console.log(`    ${r.name.padEnd(32)} ${r.event.padEnd(16)} ${r.conclusion ?? r.status}`);
+    console.log(`    ${r.name.padEnd(36)} ${r.event.padEnd(16)} ${r.conclusion ?? r.status}`);
   }
+
+  // Bean `9x9r`. Having runs is not having the RIGHT runs, and the old script
+  // stopped here with a ✓. The event is only known when the sha is a PR head,
+  // so that is the only case judged — which is also the only case `3pqn` is
+  // about.
+  const merge = mergeStateForHead(REPO, sha);
+  if (merge === "not-a-pr-head") {
+    console.log(
+      "\n? No open pull request has this sha as its head, so no event is owed for it\n" +
+        "  and WHICH workflows should have run cannot be determined. The runs above\n" +
+        "  are reported; nothing about them has been judged.",
+    );
+    process.exit(0);
+  }
+
+  const event = "pull_request";
+  const cov = coverageFor(verdict.runs, scanTriggers(REPO, event), event);
+
+  if (cov.unreadable.length > 0) {
+    console.error(`\n? ${cov.unreadable.length} workflow file(s) could not be read:`);
+    for (const u of cov.unreadable) console.error(`    ${u.file}: ${u.problem}`);
+    console.error(
+      "  The required set is therefore INCOMPLETE, so this run cannot say the owed\n" +
+        "  workflows ran. Could-not-ask is not a pass.",
+    );
+    process.exit(2);
+  }
+  if (cov.required.length === 0) {
+    console.error(
+      `\n? No workflow declares \`${event}\` without filters, so nothing is owed\n` +
+        "  unconditionally and there was nothing to require. That is a finding about\n" +
+        "  the workflows rather than about this commit — and it is NOT a pass.",
+    );
+    process.exit(2);
+  }
+
+  console.log(`\n  owed for \`${event}\`, read from .github/workflows/:`);
+  for (const w of cov.required) console.log(`    ${w.ran ? "✓" : "✗"} ${w.name.padEnd(36)} required`);
+  for (const w of cov.conditional) {
+    console.log(
+      `    ${w.ran ? "✓" : "?"} ${w.name.padEnd(36)} conditional (${w.filters.join(", ")}) — not judged`,
+    );
+  }
+  if (cov.conditional.length > 0) {
+    console.log(
+      "\n  A conditional workflow that did not run is NOT a finding: its filters\n" +
+        "  depend on the diff or the ref, and a commit id carries neither. It is not\n" +
+        "  a pass either, which is why it is printed rather than dropped.",
+    );
+  }
+
+  const missing = cov.required.filter((w) => !w.ran).map((w) => w.name);
+  if (missing.length > 0) {
+    console.error(`\n✗ ${sha.slice(0, 10)} is MISSING a required workflow run.`);
+    console.error(missingRequiredAdvice(missing, merge));
+    process.exit(1);
+  }
+
+  console.log(`\n✓ ${sha.slice(0, 10)} — all ${cov.required.length} workflow(s) owed for \`${event}\` ran.`);
   process.exit(0);
 }

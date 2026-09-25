@@ -19,6 +19,7 @@ Moving open content to the trashcan from the board, with the reader's confirmati
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

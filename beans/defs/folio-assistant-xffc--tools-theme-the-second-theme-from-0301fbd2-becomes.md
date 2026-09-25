@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xffc
 title: 'TOOLS THEME: the second theme from 0301fbd2 becomes a KG node, and tools in the KG use it'
-status: todo
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-09-20T06:05:13Z
-updated_at: 2026-09-20T07:53:16Z
+updated_at: 2026-09-23T10:30:00Z
 parent: folio-assistant-o3xy
 ---
 
@@ -171,3 +171,44 @@ tools theme get measured FROM?** Candidate answers, none chosen:
   source rather than the constant.
 - Any value that is a CHOICE rather than a measurement is flagged as one, as
   `who-wpro-publication.palette.edge` is.
+
+## Reasons for Scrapping — owner's ruling, 2026-09-23
+
+**Scrapped, not deleted, and not left in limbo.** `bean-coordination` is explicit
+that unwanted work is `scrapped` **with its reasons**, because a scrapped bean
+stops the next agent re-entering a dead end while a deleted one leaves a sibling
+unable to tell abandonment from accident.
+
+### The premise was withdrawn by the owner three days before this
+
+> *"no formal role/theme mapping per se. that is authoring (human/agentic)
+> decision/judgement."* — owner, 2026-09-20
+
+Both beans existed to populate a **formal mapping from role to theme**. With that
+mapping withdrawn there is nothing left for either to be the second half of.
+
+### Why "RE-SCOPED, not scrapped" was not a resting state
+
+They were marked re-scoped on 2026-09-20 and then sat `todo` for three days with
+**no new scope ever stated**. That is the failure mode `bean-blocking` names from
+the other side: a bean whose premise is gone reads to the next agent as live work,
+and a bean whose re-scope was never written reads as work somebody is mid-way
+through. Either way it costs a read and returns nothing.
+
+Put to the owner by stream 3/3 of the #956 consolidation as a selectable question
+with four options — scrap both, keep both as plain theme requests, keep one, or
+leave them exactly as they were — and the alternatives were priced rather than
+listed. The owner chose **scrap both, with reasons.**
+
+### What is NOT scrapped with them
+
+The `Theme` node, its `kind` discriminator and the two worked themes (`iris-web`,
+`who-wpro-publication`) are `j66n`'s and are unaffected — they were never derived
+from a role mapping, but read off a served stylesheet and off a style guide's own
+stated rules. Nothing here withdraws a theme; it withdraws the **mapping** that
+would have said which role gets which one.
+
+If somebody later wants a tools theme or an engineering testing theme as ordinary
+authoring work, that is a new bean with a real premise, not a revival of this one.
+
+*Scrapped by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

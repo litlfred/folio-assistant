@@ -1,0 +1,187 @@
+# Lean Build & Proof Status — for every Lean package in this paper folio.
+#
+# Written by `folio_init` for PAPER folios, from the platform's template
+# (cat-harness/templates/paper/github/workflows/lean-build.yml).
+#
+# Names no paper. A `discover` job finds every `{{folio}}/<paper>/lean/`
+# holding a lakefile, and the build runs once per package as a matrix. A
+# folio with no Lean package fails at discovery, loudly, rather than
+# reporting a green run over nothing.
+#
+# Per package:
+#   1. build the paper's content objects to LaTeX with the platform's
+#      build.ts (into build/<paper>/, which is ignored);
+#   2. extract its proof objects from that LaTeX
+#      (build-logs/<paper>/proof-objects.json, which is committed);
+#   3. `lake build` the package, logging to build-logs/<paper>.log;
+#   4. update each proof object's status from the build log;
+#   5. count `sorry` in the package's own sources;
+#   6. commit the updated manifest back to the branch.
+#
+# Triggers: `workflow_dispatch` only as written.
+
+name: Lean Build & Proof Status
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: >
+          Branch, tag, or commit SHA to build from.
+          Leave blank to use the ref selected in the GitHub UI's
+          "Use workflow from" dropdown.
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  packages: read          # required to pull the paper-assistant container image
+
+jobs:
+  discover:
+    name: Discover Lean packages
+    runs-on: ubuntu-latest
+    outputs:
+      papers: ${{ steps.find.outputs.papers }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Find every Lake package under the content root
+        id: find
+        run: |
+          papers=()
+          for d in "{{folio}}"/*/lean; do
+            if [ -f "$d/lakefile.toml" ] || [ -f "$d/lakefile.lean" ]; then
+              papers+=("$(basename "$(dirname "$d")")")
+            fi
+          done
+          if [ ${#papers[@]} -eq 0 ]; then
+            echo "::error::no {{folio}}/<paper>/lean/ Lake package (lakefile.toml or lakefile.lean) found — nothing to build."
+            exit 1
+          fi
+          echo "papers=$(printf '%s\n' "${papers[@]}" | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+          echo "lean packages: ${papers[*]}"
+
+  extract-and-build:
+    name: Build ${{ matrix.paper }}
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        paper: ${{ fromJSON(needs.discover.outputs.papers) }}
+    # The platform's paper-assistant image: TeX Live (full), Lean 4, Bun,
+    # pandoc, ripgrep, Python.
+    container:
+      image: ghcr.io/{{platform_repo}}/paper-assistant:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      PAPER: ${{ matrix.paper }}
+      FOLIO_PAPER: ${{ matrix.paper }}
+      FOLIO_BUILD_DIR: build/${{ matrix.paper }}
+      FOLIO_MANIFEST: build-logs/${{ matrix.paper }}/proof-objects.json
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Verify Lean installation
+        run: |
+          echo "lean $(lean --version 2>&1 | head -1)"
+          echo "lake $(lake --version 2>&1 | head -1)"
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/.github/scripts" >> "$GITHUB_ENV"
+
+      - name: Install the platform's dependencies
+        run: |
+          cd "{{assistant}}"
+          bun install --frozen-lockfile
+
+      # ── Step 1: Build content objects → LaTeX chapters ─────────────
+      - name: Build content objects to LaTeX chapters
+        continue-on-error: true
+        run: |
+          bun run "{{assistant}}/cat-harness/content/pipeline/build.ts" \
+            "{{folio}}/$PAPER/$PAPER.ts" \
+            --out-dir "$FOLIO_BUILD_DIR/chapters" \
+            --generate-main \
+            --main-out "$FOLIO_BUILD_DIR/main.tex"
+          echo "Generated chapters:"
+          ls -la "$FOLIO_BUILD_DIR"/chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      # ── Step 2: Extract proof objects from LaTeX ───────────────────
+      - name: Extract proof objects from LaTeX
+        continue-on-error: true
+        run: python3 .github/scripts/extract_proof_objects.py
+
+      - name: Cache Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: "{{folio}}/${{ matrix.paper }}/lean/.lake"
+          key: lean-ci-${{ runner.os }}-${{ matrix.paper }}-${{ hashFiles(format('{{folio}}/{0}/lean/lean-toolchain', matrix.paper), format('{{folio}}/{0}/lean/lakefile.*', matrix.paper), format('{{folio}}/{0}/lean/lake-manifest.json', matrix.paper)) }}
+          restore-keys: |
+            lean-ci-${{ runner.os }}-${{ matrix.paper }}-
+
+      # ── Step 3: Build Lean project ─────────────────────────────────
+      - name: Build Lean project
+        working-directory: "{{folio}}/${{ matrix.paper }}/lean"
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/build-logs"
+          lake update
+          lake build 2>&1 | tee "$GITHUB_WORKSPACE/build-logs/$PAPER.log"
+        continue-on-error: true
+
+      # ── Step 4: Update proof status from build log ─────────────────
+      - name: Update proof status
+        run: python3 .github/scripts/update_proof_status.py --build-log "build-logs/$PAPER.log"
+
+      # ── Step 5: on a failed build, surface the type errors ─────────
+      - name: Consistency check (on build failure)
+        if: failure()
+        run: |
+          echo "⚠️  Build failed — checking the log for type mismatches"
+          grep -i "type mismatch\|universe\|expected.*got" "build-logs/$PAPER.log" || echo "No type mismatches found"
+
+      # ── Step 6: Check for sorry and flag for review ────────────────
+      - name: Check sorry status
+        run: |
+          SORRY_COUNT=$(find "{{folio}}/$PAPER/lean" -name '*.lean' -not -path '*/.lake/*' -print0 \
+            | xargs -0 -r grep -ho '\bsorry\b' | wc -l)
+          echo "Total sorry occurrences in $PAPER: ${SORRY_COUNT}"
+          if [ "${SORRY_COUNT}" -gt 0 ]; then
+            echo "⚠️  ${SORRY_COUNT} sorry markers remain — Formalizer review recommended"
+          fi
+          echo "SORRY_COUNT=${SORRY_COUNT}" >> "$GITHUB_ENV"
+
+      # ── Step 7: Commit the updated manifest ────────────────────────
+      # One package per job, so each commits only its own manifest, and
+      # rebases onto whatever a sibling job pushed first.
+      - name: Commit updated manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          [ -f "$FOLIO_MANIFEST" ] || { echo "No manifest written — nothing to commit."; exit 0; }
+          git add -- "$FOLIO_MANIFEST"
+          if git diff --staged --quiet; then
+            echo "Manifest unchanged — nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: update $PAPER proof-objects.json from Lean build" -- "$FOLIO_MANIFEST"
+          git pull --rebase --autostash origin "$GITHUB_REF_NAME" || true
+          git push origin "HEAD:$GITHUB_REF_NAME" || echo "::warning::manifest push failed (branch moved during build)"

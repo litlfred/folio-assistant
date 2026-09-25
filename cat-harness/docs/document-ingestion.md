@@ -2,6 +2,9 @@
 layout: default
 title: Document ingestion
 nav_order: 7
+documents:
+  - uploads
+  - library
 lang: en
 available_locales: ["en"]
 ---
@@ -141,6 +144,47 @@ generated description is **a claim by someone**, not a property of the file.
 Recording whether a human or an agent wrote it — and for an agent, which model
 version — is what lets a reader weigh it, and what makes a superseded model's
 descriptions findable as a set later. It is unrecoverable once lost.
+
+### Ingest the theme
+{: #ingest-the-theme data-fa-label="sec:document-ingestion-ingest-the-theme" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-theme.bpmn){: .fa-node-edit title="Edit processes/ingest-theme.bpmn" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="ingest-the-theme.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/ingest-the-theme.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+
+<div class="bpmn-figure" id="figure-ingest-the-theme">
+  <img src="assets/img/workflows/ingest-theme.svg"
+       alt="BPMN diagram: from a theme source in hand, an exclusive gateway asks whether the theme is served by a deployment or stated by a style guide; the served stylesheet's declarations or the guide's own rules are read, values are mapped onto the shared palette roles, contradictions in the source are recorded, and a gateway asks whether every layout is present — if not the subprocess ends refused as incomplete, if so a theme and UI review produces the Theme node.">
+</div>
+
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-theme.bpmn){: .btn .btn-outline }
+
+**Only some sources are themes, and a person decides which.** After content is
+derived, the gateway *A theme source?* asks whoever is ingesting whether this
+document also carries a theme: a deployed site that serves one, or a style
+guide that states one. There is deliberately no rule that computes the answer.
+Whether a branded document is a theme source is an authoring judgement, and
+the owner ruled it so for bean `j66n`. A source that is not a theme skips
+straight to building the knowledge graph.
+
+The decision sits at a gateway, not inside the subprocess, because "this is
+not a theme" and "this theme is malformed" are different outcomes. The first
+is the normal case. The second is a defect, and the subprocess reports it by
+refusing.
+
+Inside, the two kinds of source differ in one step only: a deployment's
+**served** stylesheet is read for its declarations, while a guide's **stated**
+rules are read as it writes them. After that the paths join:
+
+- values are mapped onto the shared palette **roles**;
+- contradictions **in the source** are recorded as data, never silently resolved
+  by picking one;
+- a value the source is silent on is marked as a choice, not presented as a
+  measurement;
+- if a layout is missing, the subprocess **refuses** as incomplete rather than
+  producing a theme quietly degraded to the layouts it was given.
+
+A complete theme goes to the theme and UI review, and the result is one Theme
+node. It is one node kind, not three, because the palette vocabulary is shared
+and only the geometry varies between a sticky, a webpage and a publication.
 
 ### Build the L1 knowledge graph
 {: #build-the-l1-knowledge-graph data-fa-label="sec:document-ingestion-build-the-l1-knowledge-graph" }

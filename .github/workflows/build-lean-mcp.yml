@@ -3,8 +3,9 @@
 # This is the UNIFIED image used by:
 #   - Folio deployment (folio.litlfred.org) — MCP server + viewer
 #   - publish.yml — PDF build, HTML generation, PR previews
-#   - lean-build.yml — content pipeline + Lean proof status
-#   - blueprint.yml — LeanBlueprint + doc-gen4
+#   - lean-build.yml — content pipeline + Lean proof status (a paper-folio
+#     template `folio_init` writes, in cat-harness/templates/paper/)
+#   - blueprint.yml — LeanBlueprint + doc-gen4 (likewise a paper-folio template)
 #   - Local hooks — render-on-change.sh, render-pre-commit.sh (Docker fallback)
 #
 # Triggers on:

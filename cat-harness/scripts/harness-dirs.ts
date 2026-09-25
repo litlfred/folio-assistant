@@ -19,6 +19,7 @@
  *     bun run harness:dirs --check    # report only; exit 1 if anything is missing
  *
  * @module scripts/harness-dirs
+ * @covers cat-harness
  */
 
 import { resolve } from "node:path";

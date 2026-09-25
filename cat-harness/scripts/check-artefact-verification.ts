@@ -49,6 +49,7 @@
  * **undeclared is the finding**: "nobody has said" is not "nothing to check".
  *
  * @module scripts/check-artefact-verification
+ * @covers qa
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";

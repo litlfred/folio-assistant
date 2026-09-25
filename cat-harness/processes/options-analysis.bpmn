@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_OptionsAnalysis" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_OptionsAnalysis">
@@ -20,7 +21,7 @@ WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-of
     <bpmn:laneSet id="LaneSet_Process_OptionsAnalysis">
       <bpmn:lane id="Lane_BusinessAnalyst" name="Business analyst">
         <bpmn:documentation>This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell "not needed" from "we chose X" cannot audit either one.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="business-analyst"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_OptionsAnalysis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Frame</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Trigger</bpmn:flowNodeRef>
@@ -36,7 +37,7 @@ WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-of
     <bpmn:task id="A_Frame" name="Frame the decision
 and check the trigger">
       <bpmn:documentation>One sentence naming the KIND of thing being chosen, not the options — "which cache strategy", never "A or B". Then the trigger: is this irreversible, or would the answer surprise someone? If neither, say so and stop; the calling step decides without this subprocess. Stopping here is a correct outcome, not a skipped step.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="opening-brief"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="opening-brief"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Trigger" name="Irreversible&#10;or surprising?">
       <bpmn:documentation>`A_Frame` has always ENDED with this question — "is this irreversible, or would the answer surprise someone? If neither, say so and stop; the calling step decides without this subprocess. Stopping here is a correct outcome, not a skipped step." Until this gateway existed, the diagram gave it NO WAY TO STOP: `A_Frame`'s only outgoing edge went to `A_Select`, so the prose promised a branch the model did not have.
@@ -50,7 +51,7 @@ by context">
       <bpmn:documentation>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit.
 
 The declared set is the contents of the `methodology` graph. Ask for it; do not remember it.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_CheckEvidence" name="Check the selected&#10;methodology&apos;s evidence base">
       <bpmn:documentation>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else&apos;s named, external work; this step checks that the `origin` it cites resolves to a source in a declared library, and reads the `methodology-evidence` QA sidecar for it.
@@ -61,7 +62,7 @@ WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, a
 
 The third state is the one that matters. &quot;Source ingested&quot;, &quot;source located but unreachable from here&quot; and &quot;no source found&quot; are three different facts, and `literature-search` exists largely to stop the middle one being reported as the last.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="literature-search"/>
+        <bootstrap.processes:skill ref="literature-search"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Apply" name="Apply it, and state
@@ -69,7 +70,7 @@ each option's trade-offs">
       <bpmn:documentation>Follow the selected methodology as written — adopted whole, not blended with another. At least two real options: one option is not a choice, and a straw option is worse than a short list because it makes the analysis look thorough while narrowing it.
 
 Never quantify the comparison to make it look measured. Where a method scores and sums, this platform takes the structure and refuses the arithmetic: the weights are invented and a total reads as a measurement.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="methodology-adoption"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="methodology-adoption"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Record" name="Record the recommendation
 AND the rejected options">
@@ -77,8 +78,8 @@ AND the rejected options">
 
 In a bean context the form is MADR's. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="decision-audit"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Process_OptionsAnalysis" name="Options and recommendation recorded"/>

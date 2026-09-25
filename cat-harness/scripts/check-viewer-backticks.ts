@@ -2,6 +2,7 @@
  * A stray backtick inside a viewer's page template, named as what it is.
  *
  * @module scripts/check-viewer-backticks
+ * @covers docs
  * @graphNode none — a gate, not a schema
  *
  * ## Why a check rather than a fifth warning

@@ -36,6 +36,7 @@
  * Exit: 0 consistent (or not configured), 1 a real disagreement, 2 could not check.
  *
  * @module scripts/check-harness-dirs
+ * @covers cat-harness, beans
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";

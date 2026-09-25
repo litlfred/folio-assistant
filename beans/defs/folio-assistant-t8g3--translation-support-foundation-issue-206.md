@@ -145,3 +145,37 @@ Not implementation. Someone should walk #206's requirement list against the
 table above and decide whether anything the owner meant is still missing —
 **the issue is still open, and only its author can close it.** This is a
 verification, not a verdict.
+
+### 2026-09-24: block-kind audit (the owner asked for one)
+
+Full audit, with file:line evidence and measured extractor output:
+[`cat-harness/docs/proposals/translation-block-audit.md`](../../cat-harness/docs/proposals/translation-block-audit.md).
+Nothing in the code was changed.
+
+**Verdicts.** No kind is supported end to end, because nothing renders a
+translated block: the Markdown and LaTeX renders read the source `.md`, and
+translated pages under `docs/<locale>/` are whole pages.
+
+- **Partial:** `prose`; `definition`, `theorem`, `lemma`, `proposition`,
+  `corollary`, `conjecture`, `proof`, `example`, `remark`, `algorithm`,
+  `simulator`; `table`. Their bodies are extracted, but math inside the msgid
+  is corrupted by the `_…_` and `*…*` strippers.
+- **Unsupported:** `equation`, which should be excluded because it is all
+  math. `diagram` and `figure`, whose caption and narrative live in the `.ts`,
+  which nothing extracts; injecting into a figure also deletes the image.
+
+**Top gaps:**
+
+- G1: no math protection.
+- G2: `po-inject.ts:433` deletes every blank line and merges paragraphs.
+- G3: inline code, links and images are stripped and never restored.
+- G4: `extractFromManifest` has no caller, so titles and captions are never
+  extracted.
+- G5: there is no translated render path.
+
+**Storage.** The per-locale `.po` files match the owner's model ("source =
+pot, translations in the .pot file per locale"). The `.pot` does not: it is
+copied into every target-locale directory, 363 templates against 19
+catalogues, and the copies differ only in their headers. `translation_extract`
+writes to `translations/en/`, a directory that `docs-ui.js:107` says will
+never exist. This is reported, not changed.

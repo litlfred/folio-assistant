@@ -67,6 +67,7 @@
  *   bun run kg:audit                 # the same rule, written to sidecars
  *
  * @module scripts/raci-chart
+ * @covers processes, scenarios
  */
 import { resolve } from "node:path";
 
@@ -227,7 +228,7 @@ export function raciBreaches(rows: readonly RaciRow[], roles: ReadonlySet<string
           `vocabulary does not admit (${INVOLVEMENT_VOCABULARIES[r.vocabulary].join(", ")}). ` +
           `It was NOT coerced to a neighbouring letter and NOT silently dropped. ` +
           (u.involvement === "supportive"
-            ? "`supportive` is RASCI's fifth letter — declare `<folio:involvement vocabulary=\"rasci\"/>` on the process to use it."
+            ? "`supportive` is RASCI's fifth letter — declare `<cat-harness.processes:involvement vocabulary=\"rasci\"/>` on the process to use it."
             : "Fix the spelling, or drop the annotation until it can be made truthfully."),
       });
     }

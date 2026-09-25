@@ -58,6 +58,19 @@ need an agent's judgement are not run by the sweep. Each block is one of:
 - **passing**: every latest verdict is fresh and none failed;
 - **unaudited**: no verdict at all.
 
+**"Passing" says what was judged** (bean `9791`). Each block also carries
+`needsAgent`: its applicable criteria declared `automated: false` that have
+no fresh verdict. Which criteria count comes from each criterion's own
+declaration, gated as the sweep gates it (`applies_to`, the folio's active
+voices). The column then reads either:
+- **"N passing on scripts only (M criteria need an agent)"**; or
+- **"passing, every applicable criterion judged"**.
+
+A summary published before this field existed reads "passing (this build does
+not say whether agent-judged criteria were run)", never "all judged". A
+verdict never given is not a pass, the same rule as stale-versus-passing one
+level up.
+
 Freshness is the QA sweep's own rule, including the `uses`-graph hash that
 graph-scoped criteria depend on. Leaving that hash out made every
 detangler criterion read stale straight after a sweep.

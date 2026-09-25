@@ -192,8 +192,8 @@ notifications arrive on their own. Pick 120 s because the user asked for
 ### 3c. Nudging a silent agent
 
 If an agent shows `(no progress block yet)` for > 3 min, or its step
-counter hasn't advanced across two heartbeats, `SendMessage(to:
-<agentId>, ...)` with a one-line nudge: *"Emit a fresh ⟦PROGRESS⟧ block
+counter hasn't advanced across two heartbeats,
+`SendMessage(to: <agentId>, ...)` with a one-line nudge: *"Emit a fresh ⟦PROGRESS⟧ block
 with the live tail of whatever is running."* An agent that has genuinely
 hung (evicted oleans, ENOSPC) will surface it as a BLOCKER once nudged.
 

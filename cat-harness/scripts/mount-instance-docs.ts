@@ -102,6 +102,8 @@
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
+
+import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
@@ -902,6 +904,10 @@ function mountable(): Mountable[] {
  * asserted without a filesystem: a routing rule tested only through `cpSync`
  * is a rule whose failing case nobody writes down.
  */
+// What a mounted directory must not publish — one reader, shared with the
+// library viewer, so the two surfaces cannot disagree (bean `cw35`).
+export { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
+
 export function resolve_<T extends { route: string }>(
   candidates: T[],
 ): { mounts: T[]; refused: (T & { ownedBy: string })[] } {
@@ -971,7 +977,11 @@ function main(): number {
   const { mounts, refused } = resolve_(candidates);
 
   for (const m of mounts) {
-    cpSync(m.dir, join(siteAbs, m.route), { recursive: true });
+    const withheld = withheldPaths(m.dir);
+    cpSync(m.dir, join(siteAbs, m.route), { recursive: true, filter: withheldFilter(m.dir, withheld) });
+    if (withheld.length) {
+      console.log(`  /${m.route}/: withheld ${withheld.length} path(s) named by its ${WITHHELD_FILE}: ${withheld.join(", ")}`);
+    }
   }
 
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
@@ -1025,7 +1035,14 @@ function main(): number {
   // fixture could not see it because a fixture is always finished.
 
   for (const m of mounts) {
-    console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
+    // SOURCE count, said as such: since bean `cw35` a mount may withhold paths,
+    // and printing the source total beside the route read as "this many were
+    // published" (1,377 printed for a /who-iris/ that received 131).
+    const w = withheldPaths(m.dir).length;
+    console.log(
+      `  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s) in source` +
+        `${w ? `, ${w} withheld path(s) not copied` : ""})`,
+    );
   }
 
   if (refused.length) {

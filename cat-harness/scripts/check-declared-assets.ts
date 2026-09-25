@@ -3,6 +3,7 @@
  * Every declared asset exists, and its links resolve.
  *
  * @module scripts/check-declared-assets
+ * @covers cat-harness
  *
  * ## Why this is not "a link checker for AGENTS.md"
  *

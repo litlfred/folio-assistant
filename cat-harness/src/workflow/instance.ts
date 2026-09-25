@@ -34,6 +34,8 @@ import { evaluate } from "./decision-table.js";
 import { roleForLane, resolveRoleSkills, type RoleGraph } from "../../schemas/role-graph.js";
 import type { ConventionScope } from "../../schemas/convention.js";
 import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "./authorize.js";
+import { provActivityFor } from "./prov-record.js";
+import type { ProvActivity } from "../../schemas/prov.js";
 import type { AccessContext, Principal } from "../core/access.js";
 
 export interface HistoryEntry {
@@ -51,6 +53,14 @@ export interface HistoryEntry {
    * existed, and on a call activity released by its subprocess finishing.
    */
   authz?: TaskAuthVerdict;
+  /**
+   * The `prov:Activity` the engine wrote as it recorded this step (bean
+   * `n2l9`): the authenticated agent, the lane's role, the plan and every
+   * policy in force. Absent when the step ran without an authorization
+   * context, or when an activity would have to be invented (no actor, no lane
+   * role). The PROV-O after-check reads it in preference to deriving one.
+   */
+  prov?: ProvActivity;
 }
 
 /**
@@ -592,14 +602,28 @@ export function complete(
   }
 
   state.tokens = state.tokens.filter((t) => t !== nodeId);
+  const at = now();
+  const prov =
+    authz && opts.authz
+      ? provActivityFor({
+          id: `${state.id}#${state.history.length}`,
+          at,
+          source: state.source,
+          node: nodeId,
+          verdict: authz,
+          policies: [...opts.authz.ctx.policies.keys()],
+          target: opts.authz.target,
+        })
+      : undefined;
   state.history.push({
-    at: now(),
+    at,
     node: nodeId,
     outcome: chosen ? model.flows.get(chosen)!.name : undefined,
     actor: opts.actor,
     // The rule that fired is the audit trail: "which table said so, and why".
     note: [opts.note, computedNote].filter(Boolean).join(" · ") || undefined,
     authz,
+    prov,
   });
 
   const flowIds = chosen ? [chosen] : node.outgoing;

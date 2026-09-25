@@ -3,6 +3,8 @@
  * A dashboard per declared STATE graph, at the path this instance uses for it.
  *
  * @module scripts/state-visualizer
+ * @covers none — it RENDERS every declared state graph rather than judging one; a stale
+ *   dashboard is a currency finding about the render, not a verdict on the graph
  *
  * Owner, 2026-09-20, settling the route after two earlier attempts:
  *

@@ -20,6 +20,7 @@ A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fall
 - **Called by:** [Watching a pinned upstream dependency](upstream-pin-watch.html)
 - **Calls:** [Options analysis](options-analysis.html)
 - **Names the `upstream-version-adoption` skill without calling this process:** [Watching a pinned upstream dependency](upstream-pin-watch.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html)
 
 ## Lanes — who acts

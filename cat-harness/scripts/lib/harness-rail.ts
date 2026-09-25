@@ -84,7 +84,7 @@ export interface RailOptions {
  * It is the one item whose href this file composes, because `toRoot` is the
  * only piece of routing a mounted page knows about itself.
  */
-export function railModel(o: RailOptions): NavbarModel {
+export function railModel(o: RailOptions): NavbarModel & { graphs: NavGroup } {
   const harnesses: NavGroup | undefined =
     o.harnesses === undefined
       ? undefined

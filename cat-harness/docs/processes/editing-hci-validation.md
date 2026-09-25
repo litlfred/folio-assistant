@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_Editing` · strict · 17 step(s)
 
-folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/editing-hci-validation.svg" alt="BPMN diagram: Editing and HCI validation" style="max-width:100%">
 
@@ -19,6 +19,7 @@ folio-assistant — editing a content block and its HCI validation gate. Source 
 
 - **Called by:** [Content lifecycle](content-lifecycle.html), [Draft, review and publish](draft-to-publication.html)
 - **Calls:** [Evidence for a recommendation](evidence-retrieval.html), [Options analysis](options-analysis.html)
+- **Presented on:** [Publication workflow — Editing and the HCI validation gate](../publication-workflow.html#editing-and-the-hci-validation-gate)
 
 ## Lanes — who acts
 

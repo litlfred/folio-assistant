@@ -20,6 +20,7 @@ THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, own
 - **Called by:** no call activity names this process
 - **Calls:** none
 - **Names the `feature-staging` skill without calling this process:** [Content Change and Review](content-change-review.html), [CRDM Phase 6 — implement, MVP, acceptance](crdm-deliver.html), [Publishing the docs site, and keeping the previews alive](docs-site-publish.html), [Adopting an upstream version bump](upstream-version-adoption.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`feature-staging`](../reference/skill-instructions/feature-staging.html)
 
 ## Lanes — who acts

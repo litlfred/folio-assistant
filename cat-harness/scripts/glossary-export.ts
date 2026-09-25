@@ -3,6 +3,8 @@
  * The swimlane glossary — the personas a corpus's diagrams put in lanes, as SKOS.
  *
  * @module scripts/glossary-export
+ * @covers glossary, swimlane-glossary, scenarios — it writes the glossary graph AND
+ *   the retirement ledger that `swimlane-glossary` holds
  *
  * Issue #596, bean `lqo9` slice 2. The owner named the source in their own
  * words: *"a bpmn diagram swimlane has title/description"*, and *"name,
@@ -116,6 +118,10 @@
  * Usage:
  *   bun run cat-harness/scripts/glossary-export.ts [--instance ROOT] [--out FILE]
  *   bun run cat-harness/scripts/glossary-export.ts --check
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-skos
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -396,7 +402,7 @@ export function buildGlossary(opts: {
         varying.push(l);
         break;
       case "dangling":
-        problems.push(`${l.file}#${l.laneId}: <folio:role ref="${b.ref}"/> names no declared role`);
+        problems.push(`${l.file}#${l.laneId}: <bootstrap.processes:role ref="${b.ref}"/> names no declared role`);
         break;
       case "contradictory":
         problems.push(`${l.file}#${l.laneId}: declares both ref="${b.ref}" and variable="true"`);
@@ -548,6 +554,7 @@ export function buildGlossary(opts: {
     if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
 
+  const schemeLabel = `${id.stub} swimlane glossary`;
   const doc = {
     "@context": {
       skos: SKOS,
@@ -578,8 +585,15 @@ export function buildGlossary(opts: {
     // would name a set that already has a name and would not dereference
     // (`blv9`).
     "@type": "skos:ConceptScheme",
-    prefLabel: `${id.stub} swimlane glossary`,
-    title: `${id.stub} swimlane glossary`,
+    // ONE SOURCE, TWO VOCABULARIES (bean `sl9u`, owner 2026-09-23: keep
+    // both). `skos:prefLabel` is what a SKOS reader looks for and
+    // `dcterms:title` what a catalogue reader does; both are kept, and
+    // `title` is COPIED from the label so they cannot drift. The owner named
+    // the general shape — one value mapped into several target vocabularies
+    // by content type — as a family of ETL Tools still to build (bean
+    // `k74z`); this line is one hand-written instance of it.
+    prefLabel: schemeLabel,
+    title: schemeLabel,
     definition:
       "Every persona this instance's BPMN diagrams place in a swimlane, one concept each. " +
       "Labels come from the lanes, definitions from the role registry, and scope notes " +

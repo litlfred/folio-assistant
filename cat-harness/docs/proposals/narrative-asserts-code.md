@@ -28,7 +28,7 @@ the two reviews run separately, and **nothing compares the prose with the code
 it describes**. That is the gap.
 
 The pairings are already declared, so nothing has to guess what describes what:
-`<folio:implements workflow="…">` on 9 diagrams, 23 skill `.md` files beside a
+`<cat-harness.processes:implements workflow="…">` on 9 diagrams, 23 skill `.md` files beside a
 same-stem `.ts`, and a paper block's `lean.ref`.
 
 ## Requirements (agreed)

@@ -51,7 +51,7 @@ export const CONVENTION_SCOPES = ["process", "lane", "activity"] as const;
 export type ConventionScope = (typeof CONVENTION_SCOPES)[number];
 
 export const ConventionSchema = z.object({
-  /** Stable id, referenced by `<folio:convention ref="…"/>`. */
+  /** Stable id, referenced by `<cat-harness.processes:convention ref="…"/>`. */
   id: z.string().min(1),
   /**
    * What the convention actually requires, in one line a reader can act on.

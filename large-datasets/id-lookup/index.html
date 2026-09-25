@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identifier lookup</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; }
+  input { font: inherit; width: 100%; box-sizing: border-box; padding: .4rem; }
+  #out { margin-top: 1rem; }
+</style>
+</head>
+<body>
+<h1>Identifier lookup</h1>
+<p>Finds a node this site <em>references</em> but does not hold, by its identifier.
+Each lookup downloads one small shard of the index, never the whole of it.
+Materialised content is found by the site's own search instead.</p>
+<form id="f">
+  <label for="q">Identifier (for example <code>community/5bff2c18-6c2b-4658-9087-93811d2399c0</code>)</label>
+  <input id="q" name="q" autocomplete="off" spellcheck="false">
+</form>
+<div id="out" role="status" aria-live="polite"></div>
+<script type="module">
+  import { openIndex } from "./lookup.js";
+  const params = new URLSearchParams(location.search);
+  const name = params.get("index") || "who-iris";
+  const out = document.getElementById("out");
+  const q = document.getElementById("q");
+  let index;
+  try {
+    index = await openIndex(new URL(encodeURIComponent(name) + "/", location.href).href);
+  } catch (e) {
+    out.textContent = "The index could not be read: " + e.message + ". Lookup is unavailable, which is not the same as no results.";
+  }
+  async function run(value) {
+    if (!index || !value.trim()) return;
+    const r = await index.lookup(value);
+    out.replaceChildren();
+    if (r.state === "found") {
+      const a = document.createElement("a");
+      a.href = r.entry.url;
+      a.textContent = r.entry.title;
+      out.append(a, " (" + r.entry.id + ", referenced: held at the source, not here)");
+    } else if (r.state === "too-short") {
+      out.textContent = "Type at least " + r.need + " characters after the namespace.";
+    } else {
+      out.textContent = "Not in this index.";
+    }
+  }
+  document.getElementById("f").addEventListener("submit", (e) => { e.preventDefault(); run(q.value); });
+  window.__idLookup = (v) => index.lookup(v);
+  if (params.get("q")) { q.value = params.get("q"); run(q.value); }
+</script>
+</body>
+</html>

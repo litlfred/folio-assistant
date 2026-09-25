@@ -12,7 +12,7 @@ allowed-tools: Read Write Edit Bash Grep Glob Agent WebFetch
 # Document Intake
 
 > **Bib human-review integration.** Track per-upload ingestion
-> status in `uploads/intake.json` (identified passage, formalised?, matched?) and
+> status beside the upload's records in `uploads/<document-id>/` (identified passage, formalised?, matched?) and
 > link each upload to the `references.ts` entry it sources. An upload that
 > supplies a cited source moves that ref to `source-in-repo` (agent-identified
 > passage; no human photo) and then through the
@@ -48,7 +48,8 @@ final content-object generation step.
 ```
 uploads/
   <document-id>/
-    intake.json                  ← processing state + metadata
+    intake.json                  ← what arrived and where from (folio-intake/v1)
+    <document-id>.dc.json        ← what it is: title, type, subject (folio-dublin-core/v1)
     original.pdf                 ← raw upload (PDF, scan, etc.)
     original.tex                 ← or LaTeX source
     extracted-text.md            ← OCR or parser output (intermediate)
@@ -57,35 +58,44 @@ uploads/
     README.md                    ← human notes about the document
 ```
 
-### intake.json schema
+### The two records an upload writes
+
+Rebuilt from schemas this repository already had (#1168 B6b-2, bean `d4lb`).
+The description is a Dublin Core record; the intake records the capture and
+points at it. Both are validated by the registry (`check:kind-validators`).
+
+`intake.json` — `folio-intake/v1`, `cat-harness/schemas/intake.ts`:
 
 ```json
 {
-  "id": "example-doc-2016",
-  "title": "Title of the Document",
+  "$schema": "folio-intake/v1",
+  "doc_id": "example-doc-2016",
+  "record": "example-doc-2016.dc.json",
   "source": {
-    "type": "pdf",
-    "url": "https://...",
-    "fetchedAt": "2026-03-25T..."
+    "upstream": "https://...",
+    "capturedAt": "2026-03-25T10:00:00Z",
+    "capturedBy": "folio-assistant document adapter: the upload form"
   },
-  "format": "pdf|latex|scan|html|docx",
-  "pipeline": {
-    "stage": "uploaded|extracted|structured|mapped|generated",
-    "extractedAt": null,
-    "structuredAt": null,
-    "generatedAt": null,
-    "errors": []
-  },
-  "classification": {
-    "type": "guideline|paper|report|standard",
-    "domain": "health|physics|math|...",
-    "normativeLevel": "L1|L2|L3|null"
-  },
-  "chapters": [],
-  "blockCount": 0,
-  "targetPaper": "content/<paper-id>/"
+  "files": [
+    { "path": "original.pdf", "bytes": 123456, "sha256": "…", "type": "upload", "role": "original-bitstream" }
+  ]
 }
 ```
+
+An intake names what it is a capture OF: a catalogue `item` (a
+`folio-catalogue-node/v1` id), a Dublin Core `record`, or — only when
+neither exists — its own `title`. `source` is `ProvenanceSchema` (`upstream`
+for a URL, absent for a direct upload) plus the capture moment.
+
+`<document-id>.dc.json` — `folio-dublin-core/v1`:
+
+| upload field | Dublin Core |
+|---|---|
+| title | `dc.title` |
+| type (`guideline`, `paper`, `report`, `standard`) | `dc.type` |
+| domain | `dc.subject` |
+| normative level | `dc.type` qualified `normativeLevel` |
+| detected format (`pdf`, `latex`, `scan`, `docx`) | `dc.format` |
 
 ## Pipeline Stages
 
@@ -245,7 +255,8 @@ When a document distinguishes *normative levels* (e.g. L1 = what to do,
 L2 = how to do it), map the normative statement to a `definition` block
 and the implementation guidance to a `prose` block tagged with the level
 (e.g. `["implementation", "L2"]`). The exact level taxonomy is
-domain-specific; record it in `intake.json.classification.normativeLevel`.
+domain-specific; record it in the upload's Dublin Core record as `dc.type`
+qualified `normativeLevel`.
 
 > Domain-specific guideline handling (e.g. a particular standards body's
 > recommendation grammar) belongs in a domain adapter bundle, not the
@@ -393,13 +404,18 @@ export default definition({
 
 ## Resuming Partial Processing
 
-The `intake.json` pipeline stage tracks where processing stopped.
-To resume:
+Where processing stopped is read from what EXISTS, not from a status field.
+The old `intake.json` carried `pipeline.stage`, which the adapter wrote once
+as `uploaded` and nothing ever advanced — a status nobody maintains reads as
+authoritative and is wrong. To resume:
 
-1. Read `intake.json` → check `pipeline.stage`
-2. Skip completed stages
-3. Continue from the current stage
-4. Update `intake.json` after each stage
+1. `uploaded` — `intake.json` is there
+2. `extracted` — `extracted-text.md` (or an extraction record) is there
+3. `structured` — `extracted-blocks.json` is there
+4. `mapped` — `mapping.json` is there
+5. `generated` — blocks tagged `source:<document-id>` exist in the content
+
+Start from the first stage whose artefact is missing.
 
 This allows multi-session processing of large documents.
 
@@ -408,7 +424,7 @@ This allows multi-session processing of large documents.
 Before marking intake complete:
 
 - [ ] Raw files committed to `uploads/<document-id>/`
-- [ ] `intake.json` has complete metadata
+- [ ] `intake.json` and `<document-id>.dc.json` validate (`check:kind-validators`)
 - [ ] `extracted-text.md` reviewed for OCR errors
 - [ ] `extracted-blocks.json` reviewed and confirmed by user
 - [ ] `tables.json` written, `status` checked (not silently `n/a`), and any
@@ -417,6 +433,5 @@ Before marking intake complete:
 - [ ] Blocks tagged with `["imported", "source:<document-id>"]`
 - [ ] Chapter/section structure matches document
 - [ ] Cross-references mapped to `uses[]`
-- [ ] `intake.json` stage set to `generated`
 - [ ] Content validation passes (`content_validate`)
 ```

@@ -2,6 +2,8 @@
 layout: default
 title: Translation support
 nav_order: 12
+documents:
+  - translation-sources
 ---
 
 # Translation support

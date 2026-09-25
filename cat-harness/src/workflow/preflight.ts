@@ -5,7 +5,7 @@
  *
  * ## Why this module exists at all
  *
- * `<folio:precondition>` (bean `lv3j`) has been parsed, three-valued and
+ * `<bootstrap.processes:precondition>` (bean `lv3j`) has been parsed, three-valued and
  * tested since it landed. It has also, until now, had **zero non-test
  * callers**: `workflow_start` created the instance without ever asking. So the
  * repository carried a declaration that reads as a control and enforced

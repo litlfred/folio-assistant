@@ -8,6 +8,8 @@ description: >
 adapters: [document, paper, dak]
 profiles: [document, paper]
 consulted: true
+graph-kinds:
+  - processes
 ---
 
 # Processes are BPMN, and the diagrams are executable
@@ -26,14 +28,37 @@ Author it as **BPMN**, not as a diagram-in-a-fence. Fenced diagrams stay for the
 things that are *not* processes — component maps, an inheritance lattice, a
 navigation graph.
 
-Every activity carries **`<folio:skill ref="…">`** naming the skill that
-implements it, and **`<folio:bean …>`** where it touches the work plan. Add both
+Every activity carries **`<bootstrap.processes:skill ref="…">`** naming the skill that
+implements it, and **`<cat-harness.processes:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
 [`role-model`](../folio-core/role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
 the duration. [`role-model`](../folio-core/role-model.md) carries that model.
+
+### Binding the extension namespaces
+
+**An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,
+bean `12s9`). A diagram binds one address per vocabulary it uses:
+
+```xml
+xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+```
+
+- `bootstrap.processes:` for `skill`, `role` and `precondition`, which bootstrap
+  declares in `bootstrap/processes/ns.jsonld`.
+- `cat-harness.processes:` for every other element (`bean`, `policy`,
+  `adjudication`, `raci`, …), declared in `cat-harness/processes/ns.jsonld`.
+
+Readers match **the address, never the prefix text**, so a diagram that binds a
+different prefix to the same address reads identically, and `folio:` bound to
+anyone else's address is not ours. The older single address,
+`…/folio-assistant/bpmn`, is **retired** (2026-09-24). An element under it is
+no longer read, and `external-schemas` reports a diagram that still binds it
+as drift. A test fails if an element is written under an address whose
+vocabulary does not define it.
 
 ## Edge routing: rectilinear, and never over a task
 
@@ -93,7 +118,7 @@ tracker: a second answer to *where are we* is free to disagree with the first.
 
 ## Strict by default, and what a package may never relax
 
-Base processes carry **`<folio:policy enforcement="strict"/>`** — the gate
+Base processes carry **`<cat-harness.processes:policy enforcement="strict"/>`** — the gate
 refuses a step that is not enabled. Per-content-type processes are **advisory**:
 their package owns what *adequate* means in that domain. **Absent policy means
 strict.**
@@ -122,7 +147,7 @@ mode exists for gradual adoption.
 
 ## Some gateways are computed, not chosen
 
-A gateway carrying **`<folio:decision/>`** is backed by a decision table. Pass
+A gateway carrying **`<cat-harness.processes:decision/>`** is backed by a decision table. Pass
 the facts — the counts a QA sweep already produced — and the table returns the
 branch.
 

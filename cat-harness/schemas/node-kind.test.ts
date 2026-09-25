@@ -55,7 +55,7 @@ describe("the todo declares its parents", () => {
     expect(TodoNodeKind.order).toEqual(["carried-note", "themed", "folio-todo/v1"]);
     expect(Object.keys(TodoNodeSchema.shape)).toEqual([
       "id", "summary", "comment", "createdAt", "updatedAt", "targetLabel", "anchor", "alsoAbout", "tags",
-      "theme", "status", "priority", "origin", "$schema",
+      "theme", "layout", "status", "priority", "origin", "$schema",
     ]);
   });
 

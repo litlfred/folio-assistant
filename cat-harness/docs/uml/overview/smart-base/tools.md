@@ -61,6 +61,7 @@ classDiagram
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
+      renders [0..*] string[]
     }
   }
   smart_base_tools_ToolDefinition *-- "0..*" smart_base_tools_Maintain : maintains

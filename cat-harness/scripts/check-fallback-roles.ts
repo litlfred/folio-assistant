@@ -51,6 +51,7 @@
  *   bun run check:fallback-roles -- --explain   # print each derivation
  *
  * @module scripts/check-fallback-roles
+ * @covers scenarios
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";

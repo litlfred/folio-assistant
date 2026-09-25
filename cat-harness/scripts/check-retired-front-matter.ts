@@ -28,6 +28,9 @@
  * a record to point at — see {@link RETIRED}.
  *
  * @module scripts/check-retired-front-matter
+ * @covers computed — its scan set is `kgRoots(instance)` — whichever kg graphs each instance
+ *   declares — plus the `.claude/skills/` convention, which is not a declared graph at all. A
+ *   literal list is what `known-skills.ts` was extracted to remove
  */
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, relative, join } from "node:path";

@@ -34,6 +34,7 @@ const SERVER_TOOL_GROUPS: readonly ToolGroupDeclaration[] = [
   { id: "beans", module: "src/tools/beans-prime.ts", registrar: "registerBeansTools", layer: "harness" },
   { id: "workflow", module: "src/tools/workflow.ts", registrar: "registerWorkflowTools", layer: "harness" },
   { id: "stakeholder", module: "src/tools/stakeholder-map.ts", registrar: "registerStakeholderTools", layer: "harness" },
+  { id: "auth", module: "src/tools/auth.ts", registrar: "registerAuthTools", layer: "harness" },
   { id: "translation", module: "src/tools/translation.ts", registrar: "registerTranslationTools", layer: "core" },
 ];
 

@@ -115,3 +115,7 @@ what THIS bean says its arm will write, and one proving a directory probe
 actually fires (`existsSync` is not file-only). A probe is a claim about
 another arm's output and has to be read from that arm's own statement, not
 from the shape a sidecar usually takes.
+
+## 2026-09-23 — the backend is now a choice among declared Tools
+
+`r279` closed on the owner's ruling. The backend options are Tool nodes (`transcribe-whisper-cpp`, `transcribe-faster-whisper`, `transcribe-vosk`), declared but not installed. When the first recording arrives, this bean's first step is to pick one by its `selection` record, install it, declare it in `schemas/python-deps.ts` if it is Python, and re-measure the CI install cost. Until then there is still nothing to transcribe.

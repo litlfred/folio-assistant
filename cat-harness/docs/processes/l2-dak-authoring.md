@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_L2Dak` · advisory · 10 step(s)
 
-folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/l2-dak-authoring.svg" alt="BPMN diagram: L2 DAK authoring" style="max-width:100%">
 
@@ -19,6 +19,7 @@ folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit. 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — WHO SMART Guidelines DAKs (L2)](../content-types.html#who-smart-guidelines-daks-l2), [Authoring a WHO SMART DAK (L2) — The L2 artifacts](../guides/who-smart-dak.html#the-l2-artifacts)
 - **Skill:** [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html)
 
 ## Lanes — who acts

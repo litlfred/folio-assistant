@@ -16,8 +16,10 @@ import {
   worstSeverity,
   type KgQaReport,
   KG_QA_RESULTS_DIR,
+  KG_SUBJECT_GRAPH_KINDS,
+  KG_SUBJECT_KINDS,
 } from "./kg-qa";
-import { repoRootFor } from "./cat-harness.js";
+import { defaultGraphKinds, repoRootFor } from "./cat-harness.js";
 
 describe("the criteria registry", () => {
   test("ids are unique", () => {
@@ -257,5 +259,35 @@ describe("requirements are the fifth node kind and only point", () => {
     const { existsSync } = await import("node:fs");
     const { join } = await import("node:path");
     expect(existsSync(join(import.meta.dir, "..", "skills", "requirements", "agent-workflow.json"))).toBe(true);
+  });
+});
+
+describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () => {
+  test("every subject kind says which graph it inhabits", () => {
+    // `Record<KgSubjectKind, string>` makes this a type error rather than a
+    // test failure, which is the point; this asserts it at run time too,
+    // because a cast or a JSON round trip can defeat the type.
+    for (const k of KG_SUBJECT_KINDS) expect(KG_SUBJECT_GRAPH_KINDS[k]).toBeTruthy();
+  });
+
+  test("every named graph is one the registry knows", () => {
+    // Without this the map is free to name a graph that does not exist, and
+    // `audit-coverage` would emit a row about a kind nothing declares — a
+    // coverage claim over an empty set, which reads exactly like coverage.
+    const registered = new Set(defaultGraphKinds.names());
+    for (const [subject, graph] of Object.entries(KG_SUBJECT_GRAPH_KINDS)) {
+      expect(registered.has(graph), `${subject} names graph kind "${graph}", which is not registered`).toBe(true);
+    }
+  });
+
+  test("every criterion's subject kinds resolve to a graph", () => {
+    // `audit-coverage` counts criteria per GRAPH, by looking each criterion's
+    // `applies` up in this map. A subject kind missing from it would drop that
+    // criterion from every row silently — an under-count that reads as a gap.
+    for (const c of KG_CRITERIA) {
+      for (const s of c.applies) {
+        expect(KG_SUBJECT_GRAPH_KINDS[s], `criterion ${c.id} applies to "${s}", which names no graph`).toBeTruthy();
+      }
+    }
   });
 });

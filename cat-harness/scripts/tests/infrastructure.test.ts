@@ -12,6 +12,21 @@ import { execSync } from "child_process";
 import { INSTANCE_ROOT, FOLIO_ROOT, hasFolio, REPO_ROOT } from "./helpers";
 import { maskComments } from "../../content/pipeline/uses-field";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { folioTemplates } from "../init-folio";
+
+/**
+ * The workflows that run in the paper-assistant container: the platform's
+ * own `publish.yml`, and the Lean templates `folio_init` writes into a paper
+ * folio (`lean-build.yml`, `blueprint.yml`), which left `.github/workflows/`
+ * under bean `52dz` and are read from the templates directory instead.
+ */
+function containerisedWorkflows(): string[] {
+  const lean = folioTemplates("paper")
+    .filter((t) => ["lean-build.yml", "blueprint.yml"].some((n) => t.target.endsWith(`/${n}`)))
+    .map((t) => t.source);
+  expect(lean.length).toBe(2);
+  return [join(REPO_ROOT, ".github/workflows/publish.yml"), ...lean];
+}
 
 /** Skip folio-side assertions when no content repo is attached. */
 const folio = hasFolio();
@@ -140,8 +155,8 @@ describe("Unified paper-assistant image", () => {
   test("no CI workflow regressed to a pre-unification image", () => {
     // The point of this test is preventing a slide back to the old
     // `texlive/texlive` / `latex-ci` images. That applies to every workflow.
-    for (const wf of ["publish.yml", "lean-build.yml", "blueprint.yml"]) {
-      const content = readFileSync(join(REPO_ROOT, `.github/workflows/${wf}`), "utf-8");
+    for (const wf of containerisedWorkflows()) {
+      const content = readFileSync(wf, "utf-8");
       expect(content).not.toContain("texlive/texlive");
       expect(content).not.toContain("latex-ci");
     }
@@ -157,8 +172,8 @@ describe("Unified paper-assistant image", () => {
     // `ghcr.io/litlfred/qou-paper-builder:latest` in four container jobs,
     // and the platform carried that image's Dockerfile — labelled with qou's
     // CC-BY-4.0 licence inside an MIT repo.
-    for (const wf of ["publish.yml", "lean-build.yml", "blueprint.yml"]) {
-      const content = readFileSync(join(REPO_ROOT, `.github/workflows/${wf}`), "utf-8");
+    for (const wf of containerisedWorkflows()) {
+      const content = readFileSync(wf, "utf-8");
       if (!/^\s*container:/m.test(content)) continue;
       const images = [...content.matchAll(/^\s*image:\s*(\S+)/gm)].map((m) => m[1]);
       for (const img of images) {

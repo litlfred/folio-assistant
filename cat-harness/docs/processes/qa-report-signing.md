@@ -19,6 +19,7 @@ Attesting a QA report: build the test run, work out what the performer can actua
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html)
 
 ## Lanes — who acts

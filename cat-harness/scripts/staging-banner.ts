@@ -114,8 +114,17 @@ export interface StagingFacts {
   issue: string | null;
   issueUrl: string | null;
   runUrl: string;
-  /** Root of the PUBLISHED site, for the compare link. */
+  /**
+   * Root of the PUBLISHED site this preview is compared with: `main`'s, or for
+   * a stacked PR its base branch's preview (bean `5uuf`).
+   */
   mainSite: string;
+  /**
+   * Which branch `mainSite` is the published site of, so a page can say which
+   * "before" it used. `null` when the caller did not say: read as `main`, the
+   * only before side there was until `5uuf`.
+   */
+  beforeRef?: string | null;
   /**
    * Whether the publish ref could be read at all. `false` collapses the
    * compare link to the site root, worded neutrally — "could not tell" must
@@ -210,13 +219,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \\u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \\u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \\u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \\u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \\u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \\u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
@@ -396,6 +405,7 @@ if (import.meta.main) {
     issueUrl: issue ? `${required("issues-url").replace(/\/+$/, "")}/${issue}` : null,
     runUrl: required("run-url"),
     mainSite,
+    beforeRef: flag("before-ref") || null,
     mainPagesKnown,
     newPages,
   };

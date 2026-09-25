@@ -13,12 +13,12 @@
  * What does exist, and what this reads instead:
  *
  *   1. BPMN LANES name the actor accountable for each activity, and an
- *      activity names the skill that implements it (`<folio:skill ref>`). So
+ *      activity names the skill that implements it (`<bootstrap.processes:skill ref>`). So
  *      a changed skill reaches a set of lanes across the process corpus —
  *      "editors and authoring agents", "publication manager", "clinical SMEs".
  *   2. Each reached lane RESOLVES to a declared role, through
  *      `roleForLane` against `scenarios/roles.json` — the lane's own
- *      `<folio:role ref>` where it has one, the lane-name table otherwise.
+ *      `<bootstrap.processes:role ref>` where it has one, the lane-name table otherwise.
  *
  * ## The source this used to read, and why it went
  *
@@ -63,7 +63,7 @@ export interface SkillImpact { name: string; path: string }
 export interface LaneImpact {
   process: string;
   lane: string;
-  /** The lane's own `<folio:role ref>`: how it binds a role (#1168). */
+  /** The lane's own `<bootstrap.processes:role ref>`: how it binds a role (#1168). */
   roleRef?: string;
   activities: string[];
   viaSkills: string[];

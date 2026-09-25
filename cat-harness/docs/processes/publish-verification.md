@@ -20,6 +20,7 @@ Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the
 - **Called by:** [Publishing the docs site, and keeping the previews alive](docs-site-publish.html)
 - **Calls:** none
 - **Names the `publish-verification` skill without calling this process:** [Alert the publication manager](publish-alert.html) — `activity-calls-skill-process` asks whether each should be a call activity.
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`publish-verification`](../reference/skill-instructions/publish-verification.html)
 
 ## Lanes — who acts

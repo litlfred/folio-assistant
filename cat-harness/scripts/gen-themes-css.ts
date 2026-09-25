@@ -3,6 +3,7 @@
  * Generate `themes.css` from the theme nodes.
  *
  * @module scripts/gen-themes-css
+ * @covers themes
  *
  * **The knowledge graph is the source; the stylesheet is a rendering of it.**
  * That is the whole of the owner's *"named css assets in KG rather than

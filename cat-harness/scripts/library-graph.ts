@@ -82,6 +82,7 @@ import { createHash } from "node:crypto";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
+import { withheldReason } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 
@@ -164,6 +165,19 @@ export interface LibraryEntry {
    * rather than a broken image saying "a picture failed".
    */
   avatar?: LibraryAvatar;
+  /**
+   * Why this entry is WITHHELD from publication, or absent when it is not —
+   * the reason its library root's `withheld.json` gives (bean `cw35`).
+   *
+   * A withheld entry is still listed: its title, id and counts are metadata,
+   * and hiding it would make "not ours to publish" look like "not ingested".
+   * What goes is everything that reproduces the work — no avatar (its cover or
+   * a figure), and no verbatim text in its block excerpts
+   * ({@link readEntryBlocks} with `verbatim: false`). Our own writing about it
+   * — figure descriptions and block summaries — stays (owner, 2026-09-24:
+   * "Fix, keep summaries").
+   */
+  withheld?: string;
   /**
    * The block-summary drain's counts for this entry — owner, 2026-09-24.
    *
@@ -516,7 +530,11 @@ export interface BlockSummaryView {
  */
 const PROSE_EXCERPT = 600;
 
-export function readEntryBlocks(dir: string): LibraryBlock[] {
+export function readEntryBlocks(dir: string, opts: { verbatim?: boolean } = {}): LibraryBlock[] {
+  // `verbatim: false` — the entry is WITHHELD (bean `cw35`): a prose block's
+  // excerpt IS the source's words, so it goes; a figure's narrative and every
+  // summary are ours, so they stay.
+  const verbatim = opts.verbatim ?? true;
   const blocksDir = join(dir, "blocks");
   const files = filesIn(blocksDir).filter((f) => f.endsWith(".jsonld"));
 
@@ -542,7 +560,7 @@ export function readEntryBlocks(dir: string): LibraryBlock[] {
     // block's is the section file, excerpted. See `content` on the interface.
     let content: string | null = typeof nar?.text === "string" ? (nar.text as string) : null;
     let truncated = false;
-    if (content === null && typeof d.text === "string") {
+    if (content === null && verbatim && typeof d.text === "string") {
       const md = readText(join(blocksDir, d.text as string));
       if (md !== null) {
         const body = proseBody(md);
@@ -586,6 +604,39 @@ export function readEntryBlocks(dir: string): LibraryBlock[] {
   return [...byId.values()].sort(
     (a, b) => (a.pageStart ?? Infinity) - (b.pageStart ?? Infinity) || a.id.localeCompare(b.id),
   );
+}
+
+/**
+ * What an intake is a capture OF, as a title (bean `d4lb`).
+ *
+ * `folio-intake/v1` no longer repeats what another record says: it names a
+ * catalogue `item`, or a Dublin Core `record`, and carries its own `title`
+ * only when neither exists. So the title is looked up in that order — the
+ * intake's own, then the catalogue node (in the instance's declared
+ * `catalogue` graph), then the record's `dc.title` — and is `""` when none
+ * answers, which the uploads view already renders as untitled.
+ */
+function intakeTitle(intake: { title?: string; item?: string; record?: string }, dir: string): string {
+  if (intake.title) return intake.title;
+  if (intake.item) {
+    const instanceRoot = dirname(dirname(dir));
+    for (const cat of directoriesForGraph(instanceRoot, "catalogue")) {
+      const nodes = join(cat, "nodes");
+      if (!existsSync(nodes)) continue;
+      for (const f of readdirSync(nodes).filter((n) => n.endsWith(".json"))) {
+        const node = readJson<{ id?: string; title?: string }>(join(nodes, f));
+        if (node?.id === intake.item && node.title) return node.title;
+      }
+    }
+  }
+  if (intake.record) {
+    const rec = readJson<{ fields?: { element?: string; qualifier?: string; values?: { value?: string }[] }[] }>(
+      join(dir, intake.record),
+    );
+    const t = rec?.fields?.find((f) => f.element === "title" && !f.qualifier)?.values?.[0]?.value;
+    if (t) return t;
+  }
+  return "";
 }
 
 export function readLibraryGraph(roots: string[]): LibraryGraph | null {
@@ -692,6 +743,8 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         upload: sourceFile ? "absent" : "unknown",
         uploadInstance: "",
         ...(() => {
+          const withheld = withheldReason(dir);
+          if (withheld) return { withheld };
           const avatar = avatarOf(libDir, instance, slug, images, repoRoot);
           return avatar ? { avatar } : {};
         })(),
@@ -715,6 +768,8 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       const intake = readJson<{
         doc_id?: string;
         title?: string;
+        item?: string;
+        record?: string;
         files?: unknown[];
       }>(join(sub, "intake.json"));
       // A subdirectory with no intake is not a queued unit and not an error
@@ -733,7 +788,7 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         ext: "",
         ingestedBy: hit,
         docId,
-        title: intake.title ?? "",
+        title: intakeTitle(intake, sub),
         declaredFiles: intake.files?.length ?? 0,
       });
       const e = byId.get(docId);

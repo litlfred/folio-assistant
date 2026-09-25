@@ -31,6 +31,7 @@ import { basename, join, resolve } from "node:path";
 
 import { docsLayers } from "../compose-docs.js";
 import { page, pageRelPath, processRows, skillToProcesses } from "../gen-processes-viz.js";
+import { ownElementPattern } from "../../schemas/namespaces.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 /** The base docs layer — asked, never spelled; `site-dir-single-answer` refuses a literal. */
@@ -109,7 +110,7 @@ describe("the joins are the point", () => {
     const parsed = rows.reduce((a, r) => a + r.beanOps.length, 0);
     const naive = rows.reduce((a, r) => {
       const text = readFileSync(join(REPO, r.file), "utf-8");
-      return a + new Set([...text.matchAll(/<folio:bean\s+op="([^"]*)"/g)].map((m) => m[1]!)).size;
+      return a + new Set([...text.matchAll(ownElementPattern(text, "bean", String.raw`\s+op="([^"]*)"`))].map((m) => m[1]!)).size;
     }, 0);
     expect(parsed).toBeGreaterThanOrEqual(naive);
   });
@@ -194,7 +195,8 @@ describe("declared and defaulted are different facts", () => {
 
   it("a process whose file declares an enforcement VALUE is marked declared", () => {
     for (const r of rows) {
-      const declares = /<folio:policy[^>]*\benforcement\s*=/.test(readFileSync(join(REPO, r.file), "utf-8"));
+      const xml = readFileSync(join(REPO, r.file), "utf-8");
+      const declares = ownElementPattern(xml, "policy", String.raw`[^>]*\benforcement\s*=`, "").test(xml);
       expect(r.enforcementDeclared, `${r.file}`).toBe(declares);
     }
   });
@@ -205,7 +207,10 @@ describe("declared and defaulted are different facts", () => {
   // The two oracles are not interchangeable, so the relation between them is
   // asserted rather than left to whichever sentence a reader meets first.
   it("declaring a value implies carrying an element, but not the reverse", () => {
-    const element = (f: string) => /<folio:policy\b/.test(readFileSync(join(REPO, f), "utf-8"));
+    const element = (f: string) => {
+      const xml = readFileSync(join(REPO, f), "utf-8");
+      return ownElementPattern(xml, "policy", "", "").test(xml);
+    };
 
     // Subset: every file the page calls `declared` has a policy element.
     for (const r of rows.filter((x) => x.enforcementDeclared)) {

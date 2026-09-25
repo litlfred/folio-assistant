@@ -33,12 +33,11 @@
  * @module scripts/init-folio
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "fs";
 import { instanceConfigFilename } from "../schemas/harness-config";
-import { instanceDeclarationFilename } from "../schemas/cat-harness";
+import { instanceDeclarationFilename, resolveDirectories } from "../schemas/cat-harness";
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
-import {  } from "../schemas/cat-harness";
-import { relative, dirname, join, resolve } from "path";
+import { relative, dirname, join, resolve, sep } from "path";
 import { spawnSync } from "child_process";
 
 /** The upstream this folio pins its platform to. */
@@ -413,7 +412,9 @@ content hash, so one that is older than its block reads as stale, never as
 passing.
 
 The staging preview sweeps each pull request as well (\`.github/workflows/staging.yml\`),
-so the review page's QA column reports that build. Criteria that need an
+so the review page's QA column reports that build. \`.github/workflows/qa-sweep.yml\`
+runs the full sweep in CI, and \`qa-sweep-nightly.yml\` refreshes stale verdicts;
+both are dispatch-only until you enable their triggers. Criteria that need an
 agent's judgement (voice, exposition, adversarial review) are not run by the
 sweep; they stay unaudited until an agent records them.
 
@@ -500,7 +501,7 @@ bib-qa.json
 # Editor / OS
 .DS_Store
 *.swp
-${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n" : ""}`;
+${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n\n# Raw Lean build logs — the JSON sidecars beside them are committed\nbuild-logs/*.log\nbuild-logs/*.tsv\n" : ""}`;
 }
 
 /**
@@ -534,13 +535,20 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
   // `issue_comment` refreshes the preview's review comments when a reviewer
   // writes one (bean 423d, the `review-comments` skill). The reusable
   // workflow's `comments` job runs only on it, and checks out no PR code.
+  // `push` to main publishes main's site at the gh-pages root, which is the
+  // "before" side every preview is compared with (bean 5uuf). Without it the
+  // before pictures are all missing and "view on main" 404s.
   const trigger = on
     ? `  pull_request:
     types: [opened, synchronize, reopened]
   issue_comment:
     types: [created, edited]
+  push:
+    branches: [main]
   workflow_dispatch:`
     : `  workflow_dispatch:
+  # push:
+  #   branches: [main]
   # pull_request:
   #   types: [opened, synchronize, reopened]
   # issue_comment:
@@ -549,7 +557,8 @@ function stagingWorkflow(assistant: string, contentType: InitFolioOptions["conte
 
 # A before/after preview of this folio for every pull request, published to
 # STAGING/<branch>/ on gh-pages, with the ChangeSet (what changed, block by
-# block) beside it. The mechanics live in the platform's reusable workflow.
+# block) beside it. A push to main publishes main's site at the gh-pages root:
+# the "before" side. The mechanics live in the platform's reusable workflow.
 #
 ${header}
 
@@ -572,6 +581,142 @@ jobs:
       folio_dir: folio
       platform_dir: ${assistant}
 `;
+}
+
+// ── Workflow templates, read from disk ───────────────────────────
+
+/**
+ * The declared id of the directory holding the files a folio is given.
+ *
+ * Bean `52dz`, owner 2026-09-24: *"Move them to a templates folder; folio_init
+ * writes them into a new folio's .github/workflows. They stop running (and
+ * failing) here."* — and, for the Lean ones, *"have folio_init write them for
+ * paper folios only. The .github scripts/actions they need get shipped too."*
+ *
+ * They are real files rather than strings in this module (as
+ * `stagingWorkflow` above still is) so that they can be read, diffed and
+ * parsed as what they are. Looked up by the declaration's `id`, never by its
+ * path: `directoryForGraph("code")` is ambiguous here by design, and a by-id
+ * lookup through `resolveDirectories` is what that function's own
+ * documentation says to use when you want one particular directory.
+ */
+export const TEMPLATES_ID = "folio-templates";
+
+/**
+ * Which template profiles a content type receives, in order.
+ *
+ * Profiles NEST, as they do in `content-profiles`: a paper is a document plus
+ * the formal kinds, so a paper folio gets everything a document folio gets
+ * and then the Lean workflows. A document folio has no Lean toolchain to run
+ * them against, so it never gets them.
+ */
+export const TEMPLATE_PROFILES: Record<InitFolioOptions["contentType"], readonly string[]> = {
+  document: ["document"],
+  paper: ["document", "paper"],
+};
+
+/**
+ * Template path segments that land DOT-PREFIXED in the folio.
+ *
+ * The templates cannot sit under a literal `.github/`: the dot-prefix guard
+ * in `directory-conventions` refuses a hidden segment anywhere in a declared
+ * tree, for the reason it gives — a dot-prefixed directory is invisible to a
+ * plain `ls` and to a forge's web tree. So the template says `github/` and
+ * the writer adds the dot, in this one place.
+ */
+const DOT_SEGMENTS: Readonly<Record<string, string>> = { github: ".github" };
+
+/** The placeholders a template may use. Anything else is refused. */
+export const TEMPLATE_PLACEHOLDERS = ["assistant", "folio", "platform_git", "platform_repo"] as const;
+export type TemplatePlaceholder = (typeof TEMPLATE_PLACEHOLDERS)[number];
+
+/**
+ * `{{name}}`, NOT preceded by `$`. `${{ … }}` is a GitHub Actions expression
+ * and must reach the folio untouched; confusing the two would either corrupt
+ * every workflow or leave a placeholder behind, and the second is silent.
+ */
+export const TEMPLATE_PLACEHOLDER_RE = /(?<!\$)\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}/g;
+
+/** Where the templates are, from THIS platform checkout's own declaration. */
+export function templatesDir(): string {
+  // The instance root this script belongs to — the platform checkout that is
+  // running `folio_init`, which is also the one the new folio will link.
+  const instanceRoot = resolve(import.meta.dir, "..");
+  const dir = resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).find(
+    (d) => d.id === TEMPLATES_ID,
+  );
+  if (!dir || !existsSync(dir.absPath)) {
+    // Refuse rather than write a folio without its workflows and report
+    // success: that is the `dh4f` shape, a clean run over nothing.
+    throw new Error(
+      `init-folio: the platform declares no '${TEMPLATES_ID}' directory under ${instanceRoot}, ` +
+        `so there are no workflow templates to write.`,
+    );
+  }
+  return dir.absPath;
+}
+
+export interface TemplateFile {
+  /** Absolute path of the template in the platform checkout. */
+  source: string;
+  /** Path the file is written to, relative to the folio root. */
+  target: string;
+}
+
+function walkFiles(dir: string): string[] {
+  return readdirSync(dir)
+    .sort()
+    .flatMap((name) => {
+      // Build debris (a `__pycache__`, an editor's dotfile) is never a template.
+      if (name.startsWith(".") || name === "__pycache__") return [];
+      const p = join(dir, name);
+      return statSync(p).isDirectory() ? walkFiles(p) : [p];
+    });
+}
+
+/** Every template a folio of this content type receives, profile by profile. */
+export function folioTemplates(
+  contentType: InitFolioOptions["contentType"],
+  dir: string = templatesDir(),
+): TemplateFile[] {
+  const out: TemplateFile[] = [];
+  for (const profile of TEMPLATE_PROFILES[contentType]) {
+    const base = join(dir, profile);
+    if (!existsSync(base)) {
+      throw new Error(`init-folio: template profile '${profile}' is missing from ${dir}`);
+    }
+    for (const source of walkFiles(base)) {
+      const target = relative(base, source)
+        .split(sep)
+        .map((seg) => DOT_SEGMENTS[seg] ?? seg)
+        .join("/");
+      out.push({ source, target });
+    }
+  }
+  return out;
+}
+
+/**
+ * Substitute every placeholder, and refuse one that is not known.
+ *
+ * Refusing is the point: an unknown `{{name}}` left in a workflow is text
+ * GitHub will run as a path, and it fails at run time in the folio, long
+ * after the scaffold reported success.
+ */
+export function renderTemplate(text: string, values: Record<TemplatePlaceholder, string>): string {
+  return text.replace(TEMPLATE_PLACEHOLDER_RE, (whole, name: string) => {
+    if (!(TEMPLATE_PLACEHOLDERS as readonly string[]).includes(name)) {
+      throw new Error(`init-folio: unknown template placeholder ${whole}`);
+    }
+    return values[name as TemplatePlaceholder];
+  });
+}
+
+/** `https://github.com/owner/repo.git` → `owner/repo`. */
+function repoSlug(url: string): string {
+  const m = /github\.com[:/](.+?)(?:\.git)?$/.exec(url);
+  if (!m) throw new Error(`init-folio: cannot read owner/repo from ${url}`);
+  return m[1]!;
 }
 
 /**
@@ -702,6 +847,25 @@ platform's \`document-intake\` skill.
 
 // ── Writer ───────────────────────────────────────────────────────
 
+/**
+ * The root of a git repository that ENCLOSES `root` without being it, or
+ * `null`. Bean `zdfa`: a folio scaffolded into a subfolder of an existing
+ * repository got its workflow at `<sub>/.github/workflows/`, which GitHub
+ * never reads, and a nested `git init`.
+ */
+export function enclosingRepoRoot(root: string): string | null {
+  let probe = resolve(root);
+  while (!existsSync(probe)) {
+    const up = dirname(probe);
+    if (up === probe) return null;
+    probe = up;
+  }
+  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: probe, stdio: "pipe" });
+  if (r.status !== 0) return null;
+  const top = realpathSync(r.stdout.toString().trim());
+  return top === realpathSync(probe) && probe === resolve(root) ? null : top;
+}
+
 function defaultAssistantPath(link: LinkMode): string {
   return link === "submodule" ? "folio-assistant" : "../folio-assistant";
 }
@@ -750,6 +914,9 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
     result.created.push(relPath);
   };
 
+  // Checked before anything is written: whether this folio is the root of
+  // its repository decides where its workflow can go (bean `zdfa`).
+  const enclosing = enclosingRepoRoot(root);
   if (!o.dryRun) mkdirSync(root, { recursive: true });
 
   // 1. Configuration and the platform link.
@@ -765,13 +932,46 @@ export function initFolio(options: InitFolioOptions): InitFolioResult {
   write(".claude/settings.json", claudeSettings(assistant));
   write(".gitignore", gitignore(o));
   write(".beans.yml", beansYml(o.slug));
-  write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
-  if (o.contentType !== "document") {
+  if (enclosing) {
+    // GitHub reads workflows only at the repository root, and the reusable
+    // workflow builds from the repository root. A caller written here would
+    // never run, and one written at the root would build the wrong directory,
+    // so neither is written, and the author is told.
+    result.notes.push(
+      `This folio is in a subfolder of the repository at '${enclosing}'. GitHub reads workflows only from ` +
+        `that repository's root .github/workflows/, and the platform's folio-staging.yml builds from the ` +
+        `repository root, so it cannot stage a folio below it yet. No staging workflow was written, so this ` +
+        `folio gets no preview. Scaffold it at a repository root to have one.`,
+    );
+  } else {
+    write(".github/workflows/staging.yml", stagingWorkflow(assistant, o.contentType));
+  }
+  if (!enclosing && o.contentType !== "document") {
     result.notes.push(
       "Staging previews are wired but OFF: set build_command in .github/workflows/staging.yml " +
         "and uncomment its pull_request trigger. Until then there is no STAGING build to review.",
     );
   }
+  // The QA workflows every folio gets, and for a paper the Lean workflows
+  // with the scripts and composite action they call. Read from the platform's
+  // declared templates directory and written with their placeholders filled.
+  const templateValues: Record<TemplatePlaceholder, string> = {
+    assistant,
+    // declared-path-literal: THE BASE CASE, the same literal
+    // `instanceDeclaration` writes as this folio's content root — there is
+    // no declaration to read in a repository that does not exist yet.
+    folio: "folio",
+    platform_git: FOLIO_ASSISTANT_REPO,
+    platform_repo: repoSlug(FOLIO_ASSISTANT_REPO),
+  };
+  for (const t of folioTemplates(o.contentType)) {
+    write(t.target, renderTemplate(readFileSync(t.source, "utf-8"), templateValues));
+  }
+  result.notes.push(
+    "QA workflows (qa-sweep, qa-sweep-nightly, section-title-audit)" +
+      (o.contentType === "paper" ? " and Lean workflows (blueprint, lean-build, lean-build-sidecar, lean_ci)" : "") +
+      " are written dispatch-only: enable their triggers in .github/workflows/ when you want them to run.",
+  );
   // declared-path-literal: the scaffolder CREATES the layout. There is no
   // declaration to read in a repo that does not exist yet — this is the
   // write that makes one possible.
@@ -879,7 +1079,11 @@ function linkPlatform(
   result: InitFolioResult,
 ): void {
   const isRepo = existsSync(join(root, ".git"));
-  if (!isRepo) {
+  const enclosing = enclosingRepoRoot(root);
+  if (enclosing) {
+    // Never a repository nested inside another by accident (bean `zdfa`).
+    result.notes.push(`Inside the repository at '${enclosing}', so no git init: the folio is part of that repository.`);
+  } else if (!isRepo) {
     const init = spawnSync("git", ["init"], { cwd: root, stdio: "pipe" });
     if (init.status === 0) result.notes.push("Initialized a git repository.");
     else {
@@ -891,7 +1095,8 @@ function linkPlatform(
   if (o.link === "sibling") {
     result.notes.push(
       `Linked as a sibling checkout at '${assistant}' — nothing to add to version control. ` +
-      `Note that a fresh clone of this folio will not have it.`,
+      `Note that a fresh clone of this folio will not have it; the staging workflow checks the platform ` +
+      `out in CI and links it at that path.`,
     );
     return;
   }

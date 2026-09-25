@@ -2,6 +2,8 @@
 title: "The tool graph"
 nav_order: 41
 description: "What a Tool is, how it differs from a skill, and how the two are joined without being conflated."
+documents:
+  - cat-harness/tools
 ---
 
 # The tool graph

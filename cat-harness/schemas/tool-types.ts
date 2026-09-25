@@ -106,7 +106,7 @@ export const ChangeProposalNumberSchema = z
 export const MarkdownSchema = z.string().describe("Markdown text. Not admissible as a command-line argument — see INJECTION_SAFE.");
 
 /**
- * The name of a skill, as an activity's `<folio:skill ref>` writes it.
+ * The name of a skill, as an activity's `<bootstrap.processes:skill ref>` writes it.
  *
  * Same shape as a file stem under `skills/<package>/`, because that is what it
  * resolves to — `knownSkills()` in `scripts/known-skills.ts` builds its set by
@@ -128,6 +128,8 @@ export const PackageNameSchema = z
 /**
  * A BPMN process id — the stem of a `.bpmn` under a declared workflow
  * directory, e.g. `crdm-requirements`.
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
 export const ProcessIdSchema = z
   .string()

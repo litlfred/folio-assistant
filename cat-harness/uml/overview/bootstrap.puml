@@ -9,7 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/skills" as pkg_bootstrap_skills <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_bootstrap_skills_skills
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_bootstrap_skills_skills
 }
 package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "KnownRepository" as bootstrap_schemas_discussion_input_schema_json_KnownRepository <<schema: discussion.input.schema.json>> #e9edf3 {
@@ -74,6 +74,31 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
     $schema [1] : 'folio-model-registry/v1'
     models [0..*] : Model[]
+  }
+  class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {
+    key [1] : string
+    label [1] : string
+    conformance [1] : SHALL | SHOULD | MAY | SHALL NOT
+    requirement [1] : string
+    kind [0..1] : functional | non-functional
+    activity [0..1] : string
+    capability [0..1] : string
+    benefit [0..1] : string
+    category [0..1] : string
+    actors [0..*] : string[]
+    dependsOn [0..*] : string[]
+  }
+  class "Requirement" as bootstrap_schemas_requirement_schema_json_Requirement <<schema: requirement.schema.json>> #e9edf3 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    status [0..1] : proposed | in-force | superseded | retired
+    derivedFrom [0..*] : string[]
+    actors [0..*] : string[]
+    statements [1..*] : Statement[]
+    tags [0..*] : string[]
+    proposedIn [0..1] : string
+    supersededBy [0..1] : string
   }
 }
 package "bootstrap/scenarios" as pkg_bootstrap_scenarios <<scenarios>> {
@@ -165,6 +190,7 @@ bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" boo
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
 bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
+bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schemas_requirement_schema_json_Statement : statements
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models

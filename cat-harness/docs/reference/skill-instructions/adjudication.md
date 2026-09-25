@@ -87,16 +87,16 @@ So the split is **at the judgement**:
 
 ### What that means when you call it
 
-`A_Adjudicate` declares `<folio:adjudication defers="caller"/>` — it IS an
+`A_Adjudicate` declares `<cat-harness.processes:adjudication defers="caller"/>` — it IS an
 adjudication and the permitted answers are yours. Declared rather than left as
 a missing `codes`, so a marker lost by accident and a deferral on purpose do
 not parse the same.
 
 - **Asking the QA-criterion question?** Call `Process_CriterionAdjudication`
-  and declare `<folio:adjudication accepts="stands scope dispensation"/>`. The
+  and declare `<cat-harness.processes:adjudication accepts="stands scope dispensation"/>`. The
   engine compares your list with what that process actually offers.
 - **Asking something else?** Call `Process_Adjudication` and declare
-  `<folio:adjudication codes="…"/>` on your own call activity, with your own
+  `<cat-harness.processes:adjudication codes="…"/>` on your own call activity, with your own
   gateway coding the same set. The engine refuses a mismatch between the two,
   and refuses a partly-coded gateway, which reads as complete.
 - **Declaring nothing** is legal and **reported** by `check:workflow-refs` —
@@ -195,10 +195,13 @@ re-granted. So a dispensation never becomes precedent, and there is nothing to
 overturn later — the source moving overturns it.
 
 A dispensation with no `notes` is not a dispensation. It is an override
-somebody applied to get to green, and nobody can review it afterwards. This is
-the one step `adjudication.bpmn` marks `relaxable="false"`: **the judgement is
-free and the record is not**, because a judgement nobody wrote down is
-indistinguishable from a checker that was never run.
+somebody applied to get to green, and nobody can review it afterwards. So
+`A_Dispensation` is marked `relaxable="false"` — in
+**`criterion-adjudication.bpmn`**, with `A_RecordEntry`, since the 2026-09-23
+split; this paragraph said `adjudication.bpmn` until 2026-09-24, four sections
+after §"One judgement, six questions" had already recorded the move. **The
+judgement is free and the record is not**, because a judgement nobody wrote
+down is indistinguishable from a checker that was never run.
 
 ## Who adjudicates — a skill that spreads, an entitlement that does not
 

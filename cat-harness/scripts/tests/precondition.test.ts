@@ -1,5 +1,5 @@
 /**
- * `<folio:precondition>` — what must hold before a process starts.
+ * `<bootstrap.processes:precondition>` — what must hold before a process starts.
  *
  * @module scripts/tests/precondition
  * @graphNode none — a test
@@ -34,7 +34,7 @@ function fixture(ext: string): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:extensionElements>${ext}</bpmn:extensionElements>
@@ -112,17 +112,17 @@ describe("a stated precondition can never read as satisfied", () => {
 
 describe("refusals — every way of writing a precondition that lies", () => {
   test("no kind: there is deliberately no default", async () => {
-    await refuses('<folio:precondition id="a" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" text="t"/>');
   });
 
   test("a kind that is neither", async () => {
-    await refuses('<folio:precondition id="a" kind="probably" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="probably" text="t"/>');
   });
 
   test("checkable with no check — the central case", async () => {
     // This is the failure the element exists for: a condition that LOOKS
     // verified and verifies nothing.
-    await refuses('<folio:precondition id="a" kind="checkable" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="checkable" text="t"/>');
   });
 
   test("checkable with a check nobody implemented", async () => {
@@ -131,32 +131,32 @@ describe("refusals — every way of writing a precondition that lies", () => {
     // test passed with that branch disabled, which is how this was found.
     // A refusal test has to leave exactly one reason to refuse.
     await refuses(
-      '<folio:precondition id="a" kind="checkable" check="agent-understood" ref="x" text="t"/>',
+      '<bootstrap.processes:precondition id="a" kind="checkable" check="agent-understood" ref="x" text="t"/>',
     );
   });
 
   test("checkable with no ref — a check that does not know what to check", async () => {
-    await refuses('<folio:precondition id="a" kind="checkable" check="file-exists" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" text="t"/>');
   });
 
   test("stated WITH a check — mislabelled either way", async () => {
     await refuses(
-      '<folio:precondition id="a" kind="stated" check="file-exists" ref="x" text="t"/>',
+      '<bootstrap.processes:precondition id="a" kind="stated" check="file-exists" ref="x" text="t"/>',
     );
   });
 
   test("no id — a verdict that cannot name its subject", async () => {
-    await refuses('<folio:precondition kind="stated" text="t"/>');
+    await refuses('<bootstrap.processes:precondition kind="stated" text="t"/>');
   });
 
   test("no text — an id says a condition exists, not what it is", async () => {
-    await refuses('<folio:precondition id="a" kind="stated"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="stated"/>');
   });
 
   test("two sharing an id", async () => {
     await refuses(
-      '<folio:precondition id="a" kind="stated" text="one"/>' +
-        '<folio:precondition id="a" kind="stated" text="two"/>',
+      '<bootstrap.processes:precondition id="a" kind="stated" text="one"/>' +
+        '<bootstrap.processes:precondition id="a" kind="stated" text="two"/>',
     );
   });
 });
@@ -165,7 +165,7 @@ describe("a process that declares none", () => {
   test("gets an empty list, not undefined — most processes are this", async () => {
     // A process running inside a harness has had its actor established
     // already. The empty case must be ordinary rather than exceptional.
-    const m = await loadProcessModel(fixture('<folio:policy enforcement="advisory"/>'));
+    const m = await loadProcessModel(fixture('<cat-harness.processes:policy enforcement="advisory"/>'));
     expect(m.preconditions).toEqual([]);
     expect(evaluatePreconditions(m, ROOT)).toEqual([]);
   });

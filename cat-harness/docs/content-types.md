@@ -2,6 +2,8 @@
 layout: default
 title: Content types
 nav_order: 4
+documents:
+  - folio
 lang: en
 available_locales: ["en"]
 ---

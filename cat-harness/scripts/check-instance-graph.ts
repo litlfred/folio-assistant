@@ -12,6 +12,8 @@
  *
  * A cycle already throws at runtime (`orderedDependencies`); it is reported
  * here as well, so one run names every broken instance rather than the first.
+ *
+ * @covers cat-harness
  */
 import { relative } from "node:path";
 

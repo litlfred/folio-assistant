@@ -126,29 +126,35 @@ describe("what counts as a mention", () => {
 });
 
 describe("the permit list is itself checked", () => {
+  // A FIXTURE permit list, not the real one: the real list is empty since the
+  // architecture crop arrived (2026-09-24), and a test that took its first
+  // entry would then test nothing. The mechanism is what is under test here.
+  const PERMITS: ReadonlyMap<string, string> = new Map([
+    ["cat-harness/some-role", "fixture permit, waiting on a decision since 2026-01-01"],
+  ]);
+
   test("a permitted orphan does not fail the gate", () => {
-    const [key] = [...PERMITTED_ORPHANS.keys()];
-    expect(key).toBeDefined();
-    const [instance, role] = [key!.slice(0, key!.indexOf("/")), key!.slice(key!.indexOf("/") + 1)];
-    const f: RoleFinding = { ...finding(role, "orphan"), instance };
-    expect(permitKey(f)).toBe(key);
-    expect(failing([f])).toEqual([]);
+    const f: RoleFinding = { ...finding("some-role", "orphan"), instance: "cat-harness" };
+    expect(permitKey(f)).toBe("cat-harness/some-role");
+    expect(failing([f], PERMITS)).toEqual([]);
+    // ...and the same finding with no permit DOES fail it.
+    expect(failing([f], new Map())).toEqual([f]);
   });
 
   test("a permit whose finding is GONE is itself a finding", () => {
     // Without this the list only grows, and every entry reads as a live
     // problem long after it was fixed. A permit is a claim about the corpus,
     // and an unchecked claim about the corpus is what this gate is against.
-    expect(stalePermits([])).toEqual([...PERMITTED_ORPHANS.keys()]);
+    expect(stalePermits([], PERMITS)).toEqual(["cat-harness/some-role"]);
   });
 
   test("...and is NOT stale while its finding stands", () => {
-    const [key] = [...PERMITTED_ORPHANS.keys()];
-    const f: RoleFinding = {
-      ...finding(key!.slice(key!.indexOf("/") + 1), "orphan"),
-      instance: key!.slice(0, key!.indexOf("/")),
-    };
-    expect(stalePermits([f])).toEqual([]);
+    const f: RoleFinding = { ...finding("some-role", "orphan"), instance: "cat-harness" };
+    expect(stalePermits([f], PERMITS)).toEqual([]);
+  });
+
+  test("the real list has no stale permit today", () => {
+    expect(stalePermits([])).toEqual([]);
   });
 
   test("every permit carries a REASON, not just a name", () => {

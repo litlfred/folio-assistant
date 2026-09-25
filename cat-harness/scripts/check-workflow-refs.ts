@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 /**
- * Every `<folio:skill ref="…"/>` in a BPMN names a skill that exists, and
+ * Every `<bootstrap.processes:skill ref="…"/>` in a BPMN names a skill that exists, and
  * every activity says which skill implements it.
  *
- * AGENTS.md: "Each activity carries a `<folio:skill ref="…"/>` extension
+ * AGENTS.md: "Each activity carries a `<bootstrap.processes:skill ref="…"/>` extension
  * naming the skill that implements it". Nothing checked either half, and both
  * had drifted by the time this was written (2026-09-18):
  *
@@ -28,6 +28,8 @@
  *
  * Usage:  bun run check:workflow-refs  [--strict]
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
+ *
+ * @covers processes, skills
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
@@ -45,7 +47,7 @@ const strict = process.argv.includes("--strict");
  * Every instance whose diagrams this repository is responsible for.
  *
  * Root-only until 2026-09-19, and the comment below is the argument for the
- * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
+ * change: *"a dangling `<bootstrap.processes:skill ref>` in a diagram this checker never
  * opens is a broken reference reported as clean."* `bootstrap/` is a separate
  * instance with its own declaration and its own two skills, so
  * `bootstrap/processes/bootstrap.bpmn` was in exactly that state from the day
@@ -117,7 +119,7 @@ let rootFiles: string[] = [];
 for (const root of INSTANCES) {
 const skills = knownSkills(root);
 knownCount += skills.size;
-// Absolute paths from every declared directory. A dangling `<folio:skill
+// Absolute paths from every declared directory. A dangling `<bootstrap.processes:skill
 // ref>` in a diagram this checker never opens is a broken reference reported
 // as clean, which is the exact failure this script exists to prevent.
 const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
@@ -225,7 +227,7 @@ if (adjTotal > 0) {
       `\n${adjudicationCalls.undeclared.length} caller(s) run an adjudication without naming the\n` +
         `answers it may give. Not an error — what each should ask is the open question in\n` +
         `bean \`bvuk\`, and guessing would make an undecided thing look checked. Declare\n` +
-        `<folio:adjudication codes="…"/> here, with this step's gateway coding the same\n` +
+        `<cat-harness.processes:adjudication codes="…"/> here, with this step's gateway coding the same\n` +
         `set, once the answer is decided — or \`accepts\` where the callee fixes its own.`,
     );
   }

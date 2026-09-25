@@ -26,6 +26,7 @@
  * Usage:  bun run check:schema-nodes
  *
  * @module scripts/check-schema-nodes
+ * @covers schemas
  * @graphNode none — a gate over the declarations, not a schema itself
  */
 import { resolve } from "node:path";

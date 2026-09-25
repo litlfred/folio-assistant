@@ -5,7 +5,7 @@
     "id": "Process_ThemeUIReview",
     "path": "processes/theme-ui-review.bpmn"
   },
-  "source_hash": "sha256:eeed553ff36f485b813be35b739b1de79be59db0291eb4767a0ae271d9fc4584",
+  "source_hash": "sha256:5f54300442a3cb85a41cda529061e70632894f29bc7d46ad5e4ab4890e7177ef",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,29 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Inventory",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Accessibility",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Branding",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Locales",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_RaiseFindings",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -126,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 13,
-    "fail": 1,
+    "pass": 14,
+    "fail": 0,
     "n/a": 10,
     "unknown": 0
   }
