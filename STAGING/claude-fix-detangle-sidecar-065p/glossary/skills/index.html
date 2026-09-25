@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/docs-ui.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/docs-ui.css?v=1790355092">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/narrow-viewport.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/narrow-viewport.css?v=1790355092">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/work-plan.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/work-plan.css?v=1790355092">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/themes.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/themes.css?v=1790355092">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/uml.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/uml.css?v=1790355092">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/avatars.css?v=1790354694">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/css/avatars.css?v=1790355092">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/js/docs-ui.js?v=1790354694" defer></script>
+<script src="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/js/docs-ui.js?v=1790355092" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -808,13 +808,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p>Candidate terms extracted from every skill’s front matter: <code class="language-plaintext highlighter-rouge">name</code> as the label, <code class="language-plaintext highlighter-rouge">description</code> as the definition. Each is the asset’s own text, verbatim and not curated, and carries the badge “candidate, extracted”. A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/glossary/">glossary index</a>.</p>
 
-<p>From: bootstrap 7 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/bootstrap--kg-skills.skos.jsonld">SKOS</a>) · cat-harness 255 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a>) · fhir-harness 6 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a>) · folio-assistant-core 1 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld">SKOS</a>) · large-datasets 3 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/large-datasets--kg-skills.skos.jsonld">SKOS</a>) · who-iris 1 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/who-iris--kg-skills.skos.jsonld">SKOS</a>).</p>
+<p>From: bootstrap 7 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/bootstrap--kg-skills.skos.jsonld">SKOS</a>) · cat-harness 256 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/cat-harness--kg-skills.skos.jsonld">SKOS</a>) · fhir-harness 6 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/fhir-harness--kg-skills.skos.jsonld">SKOS</a>) · folio-assistant-core 1 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld">SKOS</a>) · large-datasets 3 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/large-datasets--kg-skills.skos.jsonld">SKOS</a>) · who-iris 1 (<a href="/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/assets/glossary/who-iris--kg-skills.skos.jsonld">SKOS</a>).</p>
 
-<p><strong>Size:</strong> this page holds 273 terms and is 194 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
+<p><strong>Size:</strong> this page holds 274 terms and is 195 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
 
 <p><label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem" /></p>
-<p aria-live="polite"><span id="fa-gloss-n">273</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">274</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 <h2 id="letter-A">
@@ -1317,6 +1317,13 @@ decision-comparison <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-comparison.md"><code>cat-harness/skills/folio-core/decision-comparison.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--decision-methodology-selector" data-fa-state="extracted" data-fa-gloss="">
+decision-methodology-selector <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-methodology-selector.md"><code>cat-harness/skills/folio-core/decision-methodology-selector.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--deep-document-research" data-fa-state="extracted" data-fa-gloss="">
 deep-document-research <span class="fa-gloss-status">candidate, extracted</span>
