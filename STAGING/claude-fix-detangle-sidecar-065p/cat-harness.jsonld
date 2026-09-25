@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-25T19:27:40.709Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f92f58ce18e63ab6b4ce7c39b740d076a1d868ba",
-  "sourceCommitSha": "f92f58ce18e63ab6b4ce7c39b740d076a1d868ba",
-  "sourceCommitAt": "2026-09-25T19:18:44Z",
+  "generatedAt": "2026-09-25T19:42:21.491Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6eda984505ff4b81ae3cfec46183bf22d1402024",
+  "sourceCommitSha": "6eda984505ff4b81ae3cfec46183bf22d1402024",
+  "sourceCommitAt": "2026-09-25T19:33:05Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -292,7 +292,7 @@
     "Tool": 101,
     "Schema": 123,
     "GraphKind": 34,
-    "Directory": 43,
+    "Directory": 44,
     "Asset": 3
   },
   "@graph": [
@@ -43310,6 +43310,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/cat-harness.jsonld#directory/cat-harness-deploy",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-deploy",
+      "path": "deploy/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "How a folio-assistant host is stood up and kept current: `provision.sh`, `deploy.sh`, `self-update.sh`, `docker-compose.yml`, `Caddyfile.template` and `GOOGLE_OAUTH_SETUP.md`. Reached from outside the graph today -- the `deploy-access` capability detects on `cat-harness/deploy/.env` -- which is exactly the shape of a directory no declaration-walking consumer could see. Its governing skill is `deployment-auth`, whose architecture diagram is of these files.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/cat-harness.jsonld#directory/cat-harness-deploy",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-deploy"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -43343,8 +43355,8 @@
   ],
   "staging": {
     "branch": "claude/fix-detangle-sidecar-065p",
-    "sha": "dba6b4b191048704786db6955e705afbebcf7c59",
+    "sha": "7a972950a315e9ecd054726fea017fd2056d9053",
     "pr": "1348/merge",
-    "run": "36179614296"
+    "run": "36181119180"
   }
 }
