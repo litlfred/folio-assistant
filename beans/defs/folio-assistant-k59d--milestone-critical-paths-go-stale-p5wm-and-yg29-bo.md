@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-25T16:06:46Z
+updated_at: 2026-09-25T16:46:42Z
 parent: folio-assistant-ahvw
 ---
 
