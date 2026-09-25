@@ -77,6 +77,61 @@ Three options, cheapest first, and none should be built without the owner:
 3. **Divide the axes.** Six axes, several sessions: one takes the work plan,
    one the proposals, one CI, and they exchange conclusions.
 
+## The cost, measured the same day — it turned `main` red and nobody saw
+
+Four gates are failing on `main` as of 2026-09-25T16:00Z, reproduced on a
+pristine `origin/main` worktree rather than inferred:
+
+```
+every open bean belongs to an epic > the real corpus passes
+skill coverage > every skill in a `skills/` package has a published reference page
+a module that resolves a declared directory can resolve one > IMPORTING one writes nothing
+skill package manifests cover the package > every skill file is listed in its package manifest
+```
+
+The first one's cause is a single bean with no `parent:` — `7e59`,
+*"INGEST: decision-making methodologies"*. Its commit:
+
+```
+2026-09-25T17:38:10+02:00  ad772240549  beans: create 7e59 — decision-making methodology selector skill
+```
+
+**15:38:10 UTC — inside the 15:38–15:39Z minute in which the session listing
+above showed all eight sessions RUNNING and surveying.** One of the surveying
+sessions created a bean without a parent, turning `main` red, and the other
+seven did not notice, because all seven were reading the same 2435 commits.
+
+## And the breakage is invisible twice over
+
+**Once at the gate.** `check:ci-health` reports `Code-quality gates` on `main`
+as `⏳ green (newest run has not reported — verdict may predate HEAD)`. Every
+recent run of that workflow on `main` is still `in_progress`: commits land
+faster than the gate completes, so the newest COMPLETED verdict is always for
+an older tree. The check is honest; a reader who drops the parenthesis reads a
+stale pass as a current one. That is `1xhc`'s subject with a variant it does
+not yet cover — not a gate that did not fire, but **a gate that has not
+finished**.
+
+**Once at every open PR.** The eight PRs a sweep called "green and clean" have
+TypeScript gates that completed at:
+
+| PR | gate completed (UTC) |
+|---|---|
+| #1317 | 2026-09-25 04:59 |
+| #1338 | 2026-09-25 04:59 |
+| #1251 | 2026-09-24 06:11 |
+| #1034 | 2026-09-23 09:26 |
+
+All of them **hours to days before 15:38**, when `main` broke. Their green is
+real about the tree it was measured on and says nothing about today's. A PR's
+checks run on the merge ref, so none of these has ever been evaluated against
+the current `main` — and "merge the 8 green ones" would merge work whose gate
+has not seen the base it is landing on.
+
+So the duplicated survey is not only wasted effort. It is wasted effort
+happening in exactly the window where the thing being surveyed broke, measured
+by instruments whose answers were already stale when read.
+
 ## Done when
 
 - [ ] The owner picks a shape (or rules that duplicated surveys are acceptable).
