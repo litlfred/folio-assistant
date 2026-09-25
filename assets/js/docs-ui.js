@@ -352,9 +352,13 @@
     // and a function that eats everything downstream of it is a trap for the
     // next one.
     //
-    // `null` is a VALID second argument -- it appends -- so the fallback is
-    // the correct placement rather than a bail-out.
-    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = null;
+    // Fallback chain: badges container → first child (not `null` which
+    // appends at the end — the landing page's h1 is outside mainContent,
+    // so `null` put the bar at y=5519).
+    if (insertTarget && insertTarget.parentNode !== mainContent) {
+      var badges = mainContent.querySelector(".fa-translation-badges");
+      insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
+    }
     mainContent.insertBefore(container, insertTarget);
   }
 
