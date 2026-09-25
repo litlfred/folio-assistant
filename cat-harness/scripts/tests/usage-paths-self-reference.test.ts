@@ -66,38 +66,48 @@ describe("namesSelf — the suffix rule, not a basename rule", () => {
   });
 });
 
-describe("subjectFiles", () => {
-  test("skips vendored and generated directories", () => {
-    const root = fixture();
-    mkdirSync(join(root, "node_modules"), { recursive: true });
-    mkdirSync(join(root, "build"), { recursive: true });
-    mkdirSync(join(root, "src"), { recursive: true });
-    writeFileSync(join(root, "node_modules", "a.ts"), "");
-    writeFileSync(join(root, "build", "b.ts"), "");
-    writeFileSync(join(root, "src", "c.ts"), "");
-    expect(subjectFiles(root)).toEqual(["src/c.ts"]);
+describe("subjectFiles — the subject set comes from git", () => {
+  /**
+   * Bean `xd1g`: eleven scans here walk from a root with no gitignore awareness,
+   * and `ramz` is the one that swept 145 ignored documents as content. This
+   * module's first draft had the same defect under the name `SKIP_DIRS`, so the
+   * lister is injected and these tests pin the filtering rather than a walk.
+   */
+  const fake = (...paths: string[]) => (): string[] => paths;
+
+  test("only subject extensions survive", () => {
+    expect(subjectFiles("/anywhere", fake("a.ts", "b.sh", "c.py", "d.md", "e.json"))).toEqual([
+      "a.ts",
+      "b.sh",
+      "c.py",
+    ]);
+  });
+
+  test("tests are dropped, by suffix and by directory", () => {
+    expect(
+      subjectFiles("/anywhere", fake("scripts/a.test.ts", "scripts/tests/b.ts", "scripts/c.ts")),
+    ).toEqual(["scripts/c.ts"]);
   });
 
   /**
-   * `scripts/tests/workflow-paths-resolve.test.ts` names
-   * `scripts/does-not-exist.ts` as a FIXTURE. Reporting a deliberate one
-   * trains a reader to skim the output, which is worse than no check.
+   * The point of asking git: a gitignored directory is not in `ls-files`, so it
+   * cannot be scanned however it is named. A denylist has to enumerate the
+   * names, and misses whatever a working container accumulated.
    */
-  test("drops tests, both by suffix and by directory", () => {
-    const root = fixture();
-    mkdirSync(join(root, "scripts", "tests"), { recursive: true });
-    writeFileSync(join(root, "scripts", "a.test.ts"), "");
-    writeFileSync(join(root, "scripts", "tests", "b.ts"), "");
-    writeFileSync(join(root, "scripts", "c.ts"), "");
-    expect(subjectFiles(root)).toEqual(["scripts/c.ts"]);
+  test("an ignored path is absent because git never offered it", () => {
+    expect(subjectFiles("/anywhere", fake("src/c.ts"))).toEqual(["src/c.ts"]);
+    expect(subjectFiles("/anywhere", fake())).toEqual([]);
   });
 
-  test("takes .sh and .py as well as .ts", () => {
-    const root = fixture();
-    writeFileSync(join(root, "a.sh"), "");
-    writeFileSync(join(root, "b.py"), "");
-    writeFileSync(join(root, "c.md"), "");
-    expect(subjectFiles(root)).toEqual(["a.sh", "b.py"]);
+  test("the real checkout yields a substantial set — a floor, not a count", () => {
+    expect(subjectFiles(REPO).length).toBeGreaterThan(100);
+  });
+
+  test("and it contains no gitignored directory this container carries", () => {
+    const files = subjectFiles(REPO);
+    for (const stray of ["_kg/", "schemas/", "scripts/__pycache__/"]) {
+      expect(files.filter((f) => f.startsWith(stray))).toEqual([]);
+    }
   });
 });
 
@@ -275,7 +285,10 @@ describe("the corpus invariant", () => {
     mkdirSync(join(root, "cat-harness", "content", "pipeline"), { recursive: true });
     const rel = "cat-harness/content/pipeline/build.ts";
     writeFileSync(join(root, rel), " * bun run pipeline/build.ts <paper>\n");
-    const bad = auditAll(root).filter((r) => r.verdict === Verdict.Misnames);
+    // The lister is injected because the fixture is not a checkout — `git
+    // ls-files` would return nothing there, and the assertion below would then
+    // pass over an empty set, which is the vacuity this test exists to rule out.
+    const bad = auditAll(root, () => [rel]).filter((r) => r.verdict === Verdict.Misnames);
     expect(bad).toHaveLength(1);
     expect(bad[0].spelled).toBe("pipeline/build.ts");
     expect(bad[0].expected).toBe(rel);

@@ -134,24 +134,36 @@
  *
  * @module scripts/check-usage-paths
  */
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { trackedPaths } from "./check-portable-paths.js";
 
 const ROOT = repoRootFor(resolve(import.meta.dir, ".."));
 
-/** Directories never walked: vendored, generated, or another repository's. */
-export const SKIP_DIRS = new Set([
-  "node_modules",
-  ".git",
-  "fsh-guts",
-  "build",
-  "dist",
-  ".venv",
-  "__pycache__",
-]);
-
+/**
+ * The subject set comes from **git**, not from a filesystem walk.
+ *
+ * Bean `xd1g` — *"11 root-rooted scans have no gitignore awareness"* — and its
+ * parent `ramz`, where `check-context-emission` *"walked the filesystem behind a
+ * hand-written denylist and swept 145 gitignored documents as repository
+ * content."* That is the defect this module would have shipped: its first draft
+ * carried a `SKIP_DIRS` denylist (`node_modules`, `build`, `dist`, `.venv`, …),
+ * which is the same construction under a different name.
+ *
+ * A denylist is wrong in a way that hides itself. It passes on CI, where a
+ * checkout holds nothing ignored, and misbehaves only in a working container
+ * that has accumulated generated directories — so the failure arrives for
+ * whoever is mid-work and never for the gate's author. Measured here: a
+ * container carrying untracked `_kg/`, `schemas/` and `scripts/` made two
+ * SIBLING gates disagree with CI, which is how this was noticed at all.
+ *
+ * `trackedPaths` is reused rather than re-implemented, and it carries the
+ * reason for `-z` on itself: a filename may contain a newline, and a line split
+ * would mangle the very paths a path check reads.
+ *
+ */
 /** Extensions whose header comments carry usage strings. */
 const SUBJECT = /\.(ts|tsx|sh|py)$/;
 
@@ -232,37 +244,12 @@ export function namesSelf(rel: string, spelled: string): boolean {
  * reintroduce them by forgetting — see the module header on why a deliberate
  * fixture must not be reported.
  */
-export function subjectFiles(root: string): string[] {
-  const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries: string[];
-    try {
-      entries = readdirSync(dir);
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (SKIP_DIRS.has(e)) continue;
-      const p = join(dir, e);
-      let isDir: boolean;
-      try {
-        isDir = statSync(p).isDirectory();
-      } catch {
-        continue;
-      }
-      if (isDir) {
-        walk(p);
-        continue;
-      }
-      if (!SUBJECT.test(e)) continue;
-      const rel = relative(root, p);
-      if (/\.test\.(ts|tsx)$/.test(rel)) continue;
-      if (rel.split("/").includes("tests")) continue;
-      out.push(rel);
-    }
-  };
-  walk(root);
-  return out.sort();
+export function subjectFiles(root: string, list: (r: string) => string[] = trackedPaths): string[] {
+  return list(root)
+    .filter((rel) => SUBJECT.test(rel))
+    .filter((rel) => !/\.test\.(ts|tsx)$/.test(rel))
+    .filter((rel) => !rel.split("/").includes("tests"))
+    .sort();
 }
 
 /**
@@ -339,9 +326,9 @@ export function selfReferences(
 }
 
 /** Every self-reference in the repository. */
-export function auditAll(root: string): SelfReference[] {
+export function auditAll(root: string, list?: (r: string) => string[]): SelfReference[] {
   const scripts = rootScripts(root);
-  return subjectFiles(root).flatMap((rel) => selfReferences(root, rel, scripts));
+  return subjectFiles(root, list).flatMap((rel) => selfReferences(root, rel, scripts));
 }
 
 /**
@@ -464,6 +451,16 @@ if (import.meta.main) {
     for (const f of touched) console.log(`fixed ${f}`);
     console.log(`\n${touched.length} file(s) rewritten. Re-run without --fix to verify.`);
     process.exit(0);
+  }
+
+  // An empty subject set is could-not-determine, never a pass. `trackedPaths`
+  // returns nothing outside a checkout, and "no file misnames itself" over zero
+  // files is the vacuity this repository has paid for repeatedly.
+  if (refs.length === 0) {
+    console.error("? no self-referencing usage string was found in any tracked file.");
+    console.error("  Either `git ls-files` returned nothing — not a checkout — or the");
+    console.error("  subject filter matched none of it. This is NOT a pass. Exit 2.");
+    process.exit(2);
   }
 
   for (const line of report(refs, list)) console.log(line);
