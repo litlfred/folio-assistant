@@ -163,11 +163,15 @@
     return btn;
   }
 
+  // Sidebar globe removed — it fought with the search bar and disappeared
+  // off-screen. The per-page bar (mountPageLanguageBar) is now the sole
+  // language UI, with global locale switching built in.
+
   /**
    * Per-page language bar — always visible inline in the main content area.
    * Shows all 6 UN languages as horizontal tabs. Available translations are
    * clickable links; unavailable are greyed-out disabled spans.
-   * Does NOT change the global locale (that's the sidebar globe's job).
+   * Also sets the global locale preference (localStorage) on click.
    */
   function mountPageLanguageBar() {
     var meta = getTranslationMeta();
@@ -220,10 +224,11 @@
       }, loc.toUpperCase());
 
       if (isAvailable && !isCurrent) {
-        (function (link) {
+        (function (locale, link) {
+          link.addEventListener("click", function () { setGlobalLocale(locale); });
           link.addEventListener("mouseenter", function () { link.style.background = "rgba(59,130,246,0.1)"; });
           link.addEventListener("mouseleave", function () { link.style.background = ""; });
-        })(tab);
+        })(loc, tab);
       }
       container.appendChild(tab);
     }
@@ -403,7 +408,7 @@
     // the language switch, then the scheme switch, then the code. Inserted
     // before `toggle` rather than appended, so they stay left of it.
     mountThemeToggle(host, toggle);
-    mountLanguageSwitcher(host, toggle);
+    // mountLanguageSwitcher removed — language UI moved to per-page bar
 
     var panel = el("button", {
       type: "button",
@@ -836,7 +841,7 @@
     }, "\uD83C\uDF10 " + availLangs + "/" + (totalLangs - 1) + " languages");
     container.appendChild(langBadge);
 
-    // QA badge — only on translated pages (has QA data)
+    // QA badge — only on translated pages (has QA data). Clickable to expand.
     var qa = meta.qa || {};
     if (qa.total > 0) {
       var qaBg, qaBorder, qaIcon, qaLabel;
@@ -855,16 +860,40 @@
         class: "fa-qa-badge",
         style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
                "background:" + qaBg + ";border:1px solid " + qaBorder + ";" +
-               "border-radius:4px;font-size:0.75rem;color:#fef3c7;cursor:default;",
-        title: "Round-trip semantic verification: " + qa.pass + "/" + qa.total +
-               " pass, " + qa.warn + " warn, " + qa.fail + " fail. Coverage: " + qa.coveragePct + "%"
+               "border-radius:4px;font-size:0.75rem;color:#fef3c7;cursor:pointer;",
+        title: "Click to expand QA details"
       });
       qaBadge.textContent = qaIcon + " " + qaLabel;
       var qaDetail = el("span", {
         style: "opacity:0.7;font-size:0.7rem;"
       }, "(" + qa.pass + "/" + qa.total + ")");
       qaBadge.appendChild(qaDetail);
+
+      // Expandable detail panel
+      var qaPanel = el("div", {
+        class: "fa-qa-detail",
+        style: "display:none;margin:0.4em 0;padding:8px 12px;" +
+               "background:" + qaBg + ";border:1px solid " + qaBorder + ";" +
+               "border-radius:6px;font-size:0.8rem;color:#fef3c7;" +
+               "line-height:1.5;"
+      });
+      qaPanel.innerHTML =
+        "<strong>Round-trip semantic QA</strong><br>" +
+        "\u2705 Pass: " + qa.pass + "<br>" +
+        "\u26A0\uFE0F Warn: " + qa.warn + "<br>" +
+        "\u274C Drift: " + qa.fail + "<br>" +
+        "Total: " + qa.total + " &middot; Coverage: " + qa.coveragePct + "%<br>" +
+        "<em style='opacity:0.7;font-size:0.75rem;'>Run <code>translation_validate</code> to re-check</em>";
+
+      qaBadge.addEventListener("click", function () {
+        var shown = qaPanel.style.display !== "none";
+        qaPanel.style.display = shown ? "none" : "block";
+      });
+
       container.appendChild(qaBadge);
+      // Panel goes after the badge container, not inside it
+      var panelPlaced = false;
+      (function () { panelPlaced = true; })(); // flag for later placement
     }
 
     // QA sweep completeness badge — indicates whether sidecars have been run
@@ -897,35 +926,52 @@
     }, sweepIcon + " " + sweepLabel);
     container.appendChild(sweepBadge);
 
-    // Unverified translation warning — auto-injected on translated pages
+    // Unverified translation indicator — small icon, expands on click.
+    // Replaces the previous big glaring banner.
     if (meta.translationStatus === "unverified" && !document.querySelector(".fa-translation-warning")) {
-      var warning = el("div", {
+      var warnIcon = el("span", {
+        class: "fa-translation-warning-icon",
+        style: "display:inline-flex;align-items:center;gap:4px;padding:2px 8px;" +
+               "background:#78350f;border:1px solid #d97706;border-radius:4px;" +
+               "font-size:0.75rem;color:#fef3c7;cursor:pointer;margin-left:6px;",
+        title: "Click for details — unverified translation"
+      }, "\u26A0\uFE0F Unverified");
+      container.appendChild(warnIcon);
+
+      var warnPanel = el("div", {
         class: "fa-translation-warning",
-        style: "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
-               "padding:12px 16px;margin:1em 0;color:#fef3c7;font-size:0.9rem;",
+        style: "display:none;margin:0.4em 0;padding:8px 12px;" +
+               "background:#78350f;border:1px solid #d97706;border-radius:6px;" +
+               "color:#fef3c7;font-size:0.8rem;line-height:1.5;",
         role: "alert"
       });
-      warning.innerHTML =
+      warnPanel.innerHTML =
         "\u26A0\uFE0F <strong>Unverified translation</strong> \u2014 " +
-        "This page has been translated automatically and has <strong>not been reviewed</strong> by a subject-matter expert." +
+        "Translated automatically, <strong>not reviewed</strong> by SME." +
         (meta.translationSource
-          ? "<br><strong>Source:</strong> " + meta.translationSource + " (English)"
+          ? "<br>Source: " + meta.translationSource + " (English)"
           : "") +
-        "<br><strong>How to verify:</strong> Run <code>translation_signoff</code> after SME review, " +
-        "or use <code>translation_validate</code> to check for staleness and coverage.";
-      var mainContent = document.querySelector(".main-content, #main-content");
-      if (mainContent && mainContent.firstChild) {
-        mainContent.insertBefore(warning, mainContent.firstChild);
-      }
+        "<br><em style='opacity:0.7;font-size:0.75rem;'>Run <code>translation_signoff</code> after review</em>";
+      warnIcon.addEventListener("click", function () {
+        var shown = warnPanel.style.display !== "none";
+        warnPanel.style.display = shown ? "none" : "block";
+      });
     }
 
-    // Place badges AFTER the h1, not inside it. Inside the h1 they were
-    // invisible because kramdown's {: .fs-9 } makes the heading enormous
-    // and the tiny badges got lost in it.
+    // Place badges AFTER the h1, not inside it.
     if (title.nextSibling) {
       title.parentNode.insertBefore(container, title.nextSibling);
     } else {
       title.parentNode.appendChild(container);
+    }
+
+    // Place expandable panels after the badge container
+    if (typeof qaPanel !== "undefined" && qaPanel) {
+      container.parentNode.insertBefore(qaPanel, container.nextSibling);
+    }
+    if (typeof warnPanel !== "undefined" && warnPanel) {
+      var afterEl = (typeof qaPanel !== "undefined" && qaPanel) ? qaPanel : container;
+      afterEl.parentNode.insertBefore(warnPanel, afterEl.nextSibling);
     }
   }
 
