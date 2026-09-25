@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-21T11:03:00Z
+updated_at: 2026-09-25T16:46:42Z
 parent: folio-assistant-ahvw
 ---
 
@@ -233,3 +233,135 @@ Entered as an append, on this bean's own stated precedent: it is another
 session's, and an append cannot collide.
 
 *Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
+
+## Round 2 — re-measured 2026-09-25, and the class is NOT what the first pass implied
+
+Third sweep of the same three milestones (2026-09-21 found it, 2026-09-22
+repaired `p5wm` and `yg29`, this is 2026-09-25). What the window since shows:
+
+| milestone | drifted in 3 days? | what changed |
+|---|---|---|
+| `p5wm` (GOAL 2) | **no** | `b5f0 → 603s → 6lb8 → supn` — all four still open, nothing withdrawn |
+| `vuip` (GOAL 1) | **yes, mildly** | `zkgs` closed and stayed in the chain; box 2's measurement is written in `harness.json`, a filename the tree no longer has |
+| `yg29` (GOAL 3) | **yes, substantially** | `kupb` went from 13 open children to **3**; `j66n`, recorded as owner-blocked with a clause left, is `completed` |
+
+### The rate is not uniform, and that changes what the fix should be
+
+The first pass read as "milestone bodies rot". Three days of evidence say
+something narrower: **a body rots at the rate its subject moves.** `p5wm`
+needed no correction at all; `yg29` needed a substantial one. A periodic hand
+pass therefore spends most of its effort confirming things that did not move,
+and still misses the one that did — which is the argument for the mechanical
+check this bean asks for, and against scheduling another manual round.
+
+### A measurement trap, reproduced deliberately
+
+A crude sweep counting bean ids named in a milestone body against their status
+reports GOAL 3 at 19-of-29 "already closed" and GOAL 2 at 18-of-36. **Both
+numbers are near-meaningless as defect counts.** A repaired milestone names
+closed beans *on purpose* — withdrawal tables, "what this unblocks", "the
+ruling that settled this" — so correct prose about finished work is
+indistinguishable from a stale blocker to anything matching ids alone. This
+bean already said the figure was an upper bound; it is recorded again here
+because a session acting on it this window nearly rewrote a milestone that was
+correct.
+
+The discriminator a real check needs is therefore **not** "does this body name
+a closed bean" but "does it name one in a position that asserts it is still to
+come" — a route arrow, a numbered path step, an open Done-when clause.
+
+### What was changed, and what was left alone
+
+- `vuip`: `zkgs` withdrawn from the chain with its reason; box 2 re-measured by
+  running `check:instance-config` rather than counting files — 16 declared, 6
+  configs written, 10 absent **and legitimate by the gate's own verdict**, so
+  the box's premise needs an owner decision rather than more work.
+- `yg29`: `kupb`'s children re-derived (9 closed, 4 open); the stale `j66n`
+  line corrected in place rather than deleted.
+- `p5wm`: confirmation recorded. A confirmation is a measurement.
+- **Nobody else's bean was closed.** `j66n`, `zkgs` and the nine closed
+  children were closed by the sessions that did the work.
+
+Falsified both ways: after the edits, every id still asserted as a live
+blocker across the three milestones resolves to `todo` or `in-progress`
+(11 of 11), and the same check rejects `zkgs`, `j66n` and `54rk` — the ids
+just withdrawn — so it is not passing over an empty set.
+
+### The measurement went stale DURING the turn that made it
+
+`4pm8` was `todo` when `yg29`'s table above was written and `completed` about
+twenty minutes later, inside the 23 commits `main` advanced while the edit was
+being composed. The corrected count is 3 open, not 4.
+
+It was caught only because the falsification was re-run **after** merging
+`origin/main` rather than before. Had the merge come last, a commit whose
+subject is "this milestone's numbers are stale" would have landed carrying a
+stale number.
+
+That is the whole case for the mechanical check, stated at the smallest scale
+it can be stated at: the drift here is not weeks, or the five days between
+sweeps — it is **shorter than one edit**. No cadence of hand passes is fast
+enough, which is why round 3 must not be another one.
+
+## The check exists — and I nearly rebuilt it
+
+`check:stale-paths` was already written by a sibling session, citing this bean,
+wired into `code-quality-gates.yml`, with **both** false-positive classes
+already measured and closed: an id must be an *operand* of an arrow (not merely
+on a line containing one), and a bean quoting another's chain is attributed to
+its owner — the trap this bean itself sets, since it quotes `p5wm` verbatim.
+
+Checked before writing anything, because the same session had already
+re-implemented an already-merged fix (`r1vw`) once that day. Nothing was
+rebuilt.
+
+## What was missing: the THIRD shape a milestone states its remainder in
+
+Two rules existed — chain and numbered step. The docblock said so explicitly
+and invited the rest: *"draw the line where it can be drawn, and report the
+rest as could not determine."* The line **can** be drawn for one more shape: an
+**unchecked `- [ ]` Done-when clause** is structurally a claim about what
+remains, unlike free prose, so it is readable.
+
+Added as `done-when`, narrowed to a **precondition position** — "once `x` is
+settled", "until `x` lands", "`x` fixed" — not a mere mention.
+
+| measured over the store | count |
+|---|---|
+| unchecked clauses naming a closed bean | 16 |
+| ...asserting it as a **precondition** (reported) | **3** |
+| ...acting ON a finished bean (correct prose, not reported) | 13 |
+
+The 13 read like *"`1hvo` and `7u3g` are re-read under that distinction"* — an
+instruction to go and read two finished beans, which is not a stale blocker by
+any reading.
+
+### The three findings, baselined rather than edited
+
+`b5f0` twice and `x4a6` once, both other sessions' beans — same ground as the
+original entries. **`b5f0` is the one worth attention: it waits on "`7u3g`
+fixed", and `7u3g` is `scrapped`.** A box that can never tick, which is exactly
+the abandoned-work shape `bean-blocking` describes.
+
+### Three false positives of my own, each caught before shipping
+
+1. **A fixed three-line window** let a clause borrow the NEXT box's "once",
+   reporting `zkgs` and `q2wn` against clauses naming no precondition. Fixed by
+   ending a clause at the next box, a blank line, a heading or a dedent.
+2. **The literal phrase "Done-when"** — which *every* bean carries — supplied
+   `when` to the precondition list and `done` to the completion list through
+   its hyphen. Two plausible-looking findings, neither real.
+3. **The rule was unreachable.** `if (!underPathHeading(...)) continue` sat
+   above it, so it ran on no line at all and the check printed **✓** over a
+   store holding three findings. Caught only because the rule had been measured
+   independently in a scratch script first and was expected to report 3 — a
+   green check that never executed is indistinguishable from one that did.
+
+Falsified both ways: un-baselining `b5f0` exits 1, restoring it exits 0; and
+nine unit tests pin each guard against the shape that produced it.
+
+**This bean stays open.** The mechanism it asked for now exists for all three
+shapes, but the three findings are real and belong to their owners, and
+`k59d`'s own second Done-when asks that what cannot be drawn is reported as
+*could not determine* rather than guessed — which is still the standing state
+for free prose.
