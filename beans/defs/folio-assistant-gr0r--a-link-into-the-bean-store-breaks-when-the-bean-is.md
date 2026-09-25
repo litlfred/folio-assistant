@@ -4,7 +4,7 @@ title: A link into the bean store breaks when the bean is ARCHIVED — the path 
 status: todo
 type: task
 created_at: 2026-09-25T16:21:47Z
-updated_at: 2026-09-25T16:22:33Z
+updated_at: 2026-09-25T17:47:29Z
 parent: folio-assistant-ahvw
 ---
 
@@ -41,3 +41,24 @@ archived one leaves a reader unable to tell "finished" from "gone".
 One broken link, on a page nobody has complained about. What makes it worth
 filing is that the breakage is CAUSED BY COMPLETING WORK, so it accumulates
 exactly in proportion to how much gets done.
+
+## Sized by `e8m3`, which measured the same move from the other side
+
+A sibling session opened
+[`folio-assistant-e8m3`](folio-assistant-e8m3--archiving-is-a-third-terminal-path-and-it-bypasses.md)
+in the same window, asking whether **archiving** is a terminal path that
+bypasses the scrapped-with-reasons rule. Different question — that one is about
+a bean's lifecycle, this one about references to its file — and its measurement
+is the number this bean was missing:
+
+> **131 beans left the top level in five days**, all 131 into `archive/`, none
+> deleted. `archive/` is now 631 files against 327 active.
+
+So *"rots in proportion to how much work gets done"* is not a figure of speech:
+every one of those 131 moves broke any link written to the bean while it was
+open. Neither bean is a duplicate of the other, and neither should be scrapped
+for the other — but a fix for this one is worth more after `e8m3` settles what
+archiving MEANS, since an id-addressable bean has to resolve to something, and
+`e8m3` is where "what does an archived bean now claim about itself" gets
+decided.
+
