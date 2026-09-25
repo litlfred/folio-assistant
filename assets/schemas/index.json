@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 169,
+      "count": 170,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -947,6 +947,14 @@
       "name": "render-targets",
       "graphNode": "schema",
       "summary": "Which render target a content profile validates against — declared as data,",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/requirement.ts",
+      "instance": "cat-harness",
+      "name": "requirement",
+      "graphNode": "schema",
+      "summary": "A REQUIREMENT — what a harness, or something built with one, must do, said so it",
       "isTest": false
     },
     {
@@ -14595,6 +14603,13 @@
           "optional": true,
           "array": false,
           "doc": "The NESTED DECLARATION a directory of this kind carries, by filename."
+        },
+        {
+          "name": "within",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The kind this one is a SUB-GRAPH of, when it is one."
         }
       ],
       "extendsNames": [],
@@ -22183,6 +22198,366 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/requirement.ts#Requirement",
+      "name": "Requirement",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "name": "RequirementFields",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-object",
+      "doc": "The requirement's FIELDS, before its refinement — for a harness to extend.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().regex(/^req:[a-z0-9][a-z0-9-]*$/, \"a requirement id is `req:<lowercase-slug>`\")",
+          "optional": false,
+          "array": false,
+          "doc": "`req:<slug>`."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "RequirementStatusSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "derivedFrom",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Broader requirements this one specialises, by id."
+        },
+        {
+          "name": "actors",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "statements",
+          "type": "z.array(RequirementStatementSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "tags",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "proposedIn",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it"
+        },
+        {
+          "name": "supersededBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When `superseded`: what replaced it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+        "cat-harness/schemas/requirement.ts#RequirementStatusSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementLevel",
+      "name": "RequirementLevel",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "name": "RequirementLevelSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-enum",
+      "doc": "How strongly a statement binds.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "SHALL",
+        "SHOULD",
+        "MAY",
+        "SHALL NOT"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementRef",
+      "name": "RequirementRef",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementRefSchema",
+      "name": "RequirementRefSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-scalar",
+      "doc": "The address of a requirement or one of its statements: `req:<slug>` or",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementSchema",
+      "name": "RequirementSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "RequirementFields"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementFields"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementStatement",
+      "name": "RequirementStatement",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "name": "RequirementStatementFields",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-object",
+      "doc": "The statement's FIELDS, before the kind-consistency refinement — exported so",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Unique within its requirement; with the requirement's id it is the statement's address."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "conformance",
+          "type": "RequirementLevelSchema",
+          "optional": false,
+          "array": false,
+          "doc": "How strongly it binds. Named `conformance` — the word the harness's"
+        },
+        {
+          "name": "requirement",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The statement itself, as one sentence a reviewer can say yes or no to."
+        },
+        {
+          "name": "kind",
+          "type": "StatementKindSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "activity",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FUNCTIONAL — the activity the statement is part of."
+        },
+        {
+          "name": "capability",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\")."
+        },
+        {
+          "name": "benefit",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "FUNCTIONAL — why (\"so that …\")."
+        },
+        {
+          "name": "category",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "NON-FUNCTIONAL — which quality it constrains."
+        },
+        {
+          "name": "actors",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The roles it is about, by id in the harness's own role registry."
+        },
+        {
+          "name": "dependsOn",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Other statements this one presupposes, by {@link requirementRef}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+        "cat-harness/schemas/requirement.ts#StatementKindSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+      "name": "RequirementStatementSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "RequirementStatementFields"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementStatementFields"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementStatus",
+      "name": "RequirementStatus",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#RequirementStatusSchema",
+      "name": "RequirementStatusSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-enum",
+      "doc": "Where a feature's requirement is in its life. A proposal is `proposed`; a",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "proposed",
+        "in-force",
+        "superseded",
+        "retired"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#StatementKind",
+      "name": "StatementKind",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/requirement.ts#StatementKindSchema",
+      "name": "StatementKindSchema",
+      "module": "cat-harness/schemas/requirement.ts",
+      "kind": "zod-enum",
+      "doc": "What a statement is about: something someone can do, or how well it is done.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "functional",
+        "non-functional"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#ActorDef",
       "name": "ActorDef",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -24258,7 +24633,7 @@
       "name": "Conformance",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "type-alias",
-      "doc": "FHIR R5 conformance verbs for requirement statements.",
+      "doc": "How strongly a requirement statement binds.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -24271,16 +24646,16 @@
       "id": "cat-harness/schemas/skill-package.ts#ConformanceSchema",
       "name": "ConformanceSchema",
       "module": "cat-harness/schemas/skill-package.ts",
-      "kind": "zod-enum",
+      "kind": "zod-object",
+      "doc": "The requirement level — the bootstrap base's, so a harness cannot drift from it.",
       "fields": [],
-      "extendsNames": [],
-      "values": [
-        "SHALL",
-        "SHOULD",
-        "MAY",
-        "SHALL NOT"
+      "extendsNames": [
+        "RequirementLevelSchema"
       ],
-      "refs": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementLevelSchema"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -24661,6 +25036,71 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/skill-package.ts#RemoteSkillRecordSchema",
+      "name": "RemoteSkillRecordSchema",
+      "module": "cat-harness/schemas/skill-package.ts",
+      "kind": "zod-object",
+      "doc": "The record `sync-remote-skills.ts` writes beside a synced skill",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(\"folio-remote-skill/v1\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skill",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "package",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repo",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"a synced skill is pinned to a full commit SHA\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "wrapper",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z.array(z.object({ id: z.string().min(1), name: z.string().min(1), materialization: z.object({ state: z.literal(\"materi…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/skill-package.ts#RemoteSyncConfig",
       "name": "RemoteSyncConfig",
       "module": "cat-harness/schemas/skill-package.ts",
@@ -24679,7 +25119,7 @@
       "name": "RemoteSyncConfigSchema",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
-      "doc": "How a remote package WOULD be brought in. **Declared intent; nothing performs",
+      "doc": "How a remote package's skills are brought in — PERFORMED since 2026-09-24",
       "fields": [
         {
           "name": "strategy",
@@ -24747,7 +25187,7 @@
       "name": "Requirement",
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "type-alias",
-      "doc": "Models workflow rules agents must follow.",
+      "doc": "Models workflow rules agents must follow — the bootstrap `Requirement`, narrowed.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -24763,51 +25203,18 @@
       "kind": "zod-object",
       "fields": [
         {
-          "name": "id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "title",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "description",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "derivedFrom",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "actors",
-          "type": "z.array(z.string())",
-          "optional": false,
-          "array": true
-        },
-        {
           "name": "statements",
-          "type": "z.array(RequirementStatementSchema)",
+          "type": "z.array(RequirementStatementSchema).min(1)",
           "optional": false,
-          "array": true
-        },
-        {
-          "name": "tags",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
           "array": true
         }
       ],
-      "extendsNames": [],
+      "extendsNames": [
+        "RequirementFields"
+      ],
       "values": [],
       "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementFields",
         "cat-harness/schemas/skill-package.ts#RequirementStatementSchema"
       ],
       "unresolved": [],
@@ -24862,53 +25269,16 @@
       "module": "cat-harness/schemas/skill-package.ts",
       "kind": "zod-object",
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
-      "fields": [
-        {
-          "name": "key",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "label",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "conformance",
-          "type": "ConformanceSchema",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "requirement",
-          "type": "z.string()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "actors",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        },
-        {
-          "name": "dependsOn",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true
-        }
+      "fields": [],
+      "extendsNames": [
+        "RequirementStatementFields"
       ],
-      "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-package.ts#ConformanceSchema"
+        "cat-harness/schemas/requirement.ts#RequirementStatementFields"
       ],
       "unresolved": [],
-      "external": [
-        "z"
-      ],
+      "external": [],
       "exported": true
     },
     {
@@ -27015,6 +27385,13 @@
           "doc": "The cases, when the runner records them. Absent is a real state: a run"
         },
         {
+          "name": "requirements",
+          "type": "z.array(RequirementRefSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164):"
+        },
+        {
           "name": "updated_at",
           "type": "z.string().min(1)",
           "optional": false,
@@ -27025,6 +27402,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/requirement.ts#RequirementRefSchema",
         "cat-harness/schemas/test-run.ts#HashBasisSchema",
         "cat-harness/schemas/test-run.ts#TestCaseSchema",
         "cat-harness/schemas/tool-types.ts#SkillNameSchema"
@@ -42173,6 +42551,54 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "to": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+      "via": "statements",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "to": "cat-harness/schemas/requirement.ts#RequirementStatusSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/requirement.ts#RequirementSchema",
+      "to": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "to": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "via": "conformance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "to": "cat-harness/schemas/requirement.ts#StatementKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+      "to": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/role-graph.ts#ActorDef",
       "to": "cat-harness/schemas/skill-package.ts#ActorKind",
       "via": "kind",
@@ -42621,6 +43047,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/skill-package.ts#ConformanceSchema",
+      "to": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema",
       "to": "cat-harness/schemas/skill-package.ts#DockerRequirementsSchema",
       "via": "wrapper",
@@ -42654,6 +43088,14 @@
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#RequirementSchema",
+      "to": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#RequirementSchema",
       "to": "cat-harness/schemas/skill-package.ts#RequirementStatementSchema",
       "via": "statements",
       "kind": "field",
@@ -42662,9 +43104,9 @@
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#RequirementStatementSchema",
-      "to": "cat-harness/schemas/skill-package.ts#ConformanceSchema",
-      "via": "conformance",
-      "kind": "field",
+      "to": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "via": "",
+      "kind": "extends",
       "optional": false,
       "array": false
     },
@@ -42946,6 +43388,14 @@
       "via": "sheets",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
+      "to": "cat-harness/schemas/requirement.ts#RequirementRefSchema",
+      "via": "requirements",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {

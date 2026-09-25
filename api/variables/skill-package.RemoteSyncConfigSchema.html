@@ -12,37 +12,28 @@
 <li><a href="" aria-current="page">RemoteSyncConfigSchema</a></li></ul>
 <h1>Variable RemoteSyncConfigSchema<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">RemoteSyncConfigSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodObject</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">autoUpdate</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodBoolean</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">frequency</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>            <span class="tsd-signature-symbol">{</span><br/>                <span class="tsd-kind-property">daily</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;daily&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">manual</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;manual&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">monthly</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;monthly&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">weekly</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;weekly&quot;</span><span class="tsd-signature-symbol">;</span><br/>            <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">strategy</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>            <span class="tsd-signature-symbol">{</span><br/>                <span class="tsd-kind-property">&quot;shallow-clone&quot;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;shallow-clone&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">&quot;sparse-checkout&quot;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;sparse-checkout&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">subtree</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;subtree&quot;</span><span class="tsd-signature-symbol">;</span><br/>            <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">$strip</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>How a remote package WOULD be brought in. <strong>Declared intent; nothing performs
-it.</strong></p>
-<p>Measured 2026-09-19 (bean <code>wlqd</code>): <code>shallow-clone</code> appears only as a value in
-<a href="skill-package.RemoteSyncStrategySchema.html" class="tsd-kind-variable">RemoteSyncStrategySchema</a>; <code>src/tools/skill-fetch.ts</code> and
-<code>scripts/generate-registry.ts</code> contain no mention of <code>skills/remote-packages/</code>
-at all; and the directory's only substantive reader,
-<code>scripts/generate-docs.ts</code>, reads it for the Docker requirements this type's
-own doc comment names. So <code>frequency</code> and <code>autoUpdate</code> are fields no code
-consults.</p>
-<p><strong>Stronger since 2026-09-20</strong>: that &quot;only substantive reader&quot; was itself
-never invoked — no package.json entry and no workflow, in any commit since
-the root commit — and is retired to <code>fsh-guts/scripts/</code> (bean
-<code>folio-assistant-3w0i</code>). The directory now has no substantive reader at
-all, which does not change the conclusion below; it removes the last
-reason to soften it.</p>
-<p>It is documented rather than deleted because the intent is real information
-about two real external dependencies — a maintainer chose <code>shallow-clone</code> over
-<code>subtree</code> — and losing that costs the next reader the same decision. What was
-costly was stating it as fact: the generated docs page said &quot;Agents can sync
-and update these automatically based on the sync configuration&quot;, which a reader
-of the published site cannot check against the code.</p>
-<p><strong>If you implement it, two things are decisions and not details.</strong> Both
-wrappers currently pin <code>ref: &quot;main&quot;</code> with <code>autoUpdate: true</code>, which would
-auto-ingest whatever the upstream pushes — prefer a pinned commit. And
-<code>manifest-skill-exists</code> deliberately stops treating a remote declaration as
-resolution (bean <code>nup0</code>); that allowance should come back, and
-<code>scripts/tests/manifest-remote-resolution.test.ts</code> records the argument for
-closing it so it is revisited rather than rediscovered.</p>
+<div class="tsd-comment tsd-typography"><p>How a remote package's skills are brought in — PERFORMED since 2026-09-24
+(issue #556, bean <code>wlqd</code>) by <code>scripts/sync-remote-skills.ts</code>
+(<code>bun run sync:remote-skills</code>).</p>
+<p>Until then this was declared intent that nothing performed: <code>shallow-clone</code>
+appeared only as a value in <a href="skill-package.RemoteSyncStrategySchema.html" class="tsd-kind-variable">RemoteSyncStrategySchema</a>, and both
+wrappers pinned <code>ref: &quot;main&quot;</code> with <code>autoUpdate: true</code>. The owner chose to
+implement it, <strong>committed, pinned and read-only</strong>:</p>
+<ul>
+<li>the sync copies each declared skill at the wrapper's <code>ref</code> into its own
+package under the instance's skills directory, with a sha256 fixity record
+per file, so <code>check:materialized-fixity</code> fails an edit in place;</li>
+<li>a wrapper that declares <code>sync</code> must pin a full commit SHA and may not
+<code>autoUpdate</code> — a skill body is a prompt an agent follows, so an unpinned
+one is an unreviewed prompt. <a href="skill-package.RemotePackageRefSchema.html" class="tsd-kind-variable">RemotePackageRefSchema</a> refuses both;</li>
+<li><code>bun run check:remote-skills</code> fails, offline, when a declared skill is
+not materialized at its wrapper's pin.</li>
+</ul>
+<p>The synced skills resolve as LOCAL skills, so <code>manifest-skill-exists</code> needs
+no remote allowance (bean <code>nup0</code>) — it sees them as it sees any other.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/3ece3699d5a088a3bcc623b7ff642a4da4466b99/cat-harness/schemas/skill-package.ts#L404">work/folio-assistant/folio-assistant/cat-harness/schemas/skill-package.ts:404</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/72e50efba0eb3a4da7233f7d860a519133993047/cat-harness/schemas/skill-package.ts#L395">work/folio-assistant/folio-assistant/cat-harness/schemas/skill-package.ts:395</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

@@ -932,6 +932,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/package-release-manual",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Package release by hand"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure."
+        }
+      ],
+      "skos:notation": "package-release-manual",
+      "dcterms:source": "cat-harness/tools/index.ts#package-release-manual",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/pages-index",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1189,6 +1209,26 @@
       ],
       "skos:notation": "readme-sync",
       "dcterms:source": "cat-harness/tools/mcp.ts#readme-sync",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/release-please",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-please (declared, not configured here)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`)."
+        }
+      ],
+      "skos:notation": "release-please",
+      "dcterms:source": "cat-harness/tools/index.ts#release-please",
       "skos:note": "candidate"
     },
     {
@@ -1549,6 +1589,66 @@
       ],
       "skos:notation": "tools-viewer",
       "dcterms:source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-faster-whisper",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — faster-whisper (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository."
+        }
+      ],
+      "skos:notation": "transcribe-faster-whisper",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-faster-whisper",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-vosk",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — vosk (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository."
+        }
+      ],
+      "skos:notation": "transcribe-vosk",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-vosk",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-whisper-cpp",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — whisper.cpp (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`)."
+        }
+      ],
+      "skos:notation": "transcribe-whisper-cpp",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-whisper-cpp",
       "skos:note": "candidate"
     },
     {

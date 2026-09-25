@@ -3500,6 +3500,84 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
+/* THE GLASS IS JEWELLED — owner, 2026-09-24: *"I like purple, but maybe
+ * slightly/abstractly jewelled? stained glass? modern … align options to
+ * themes"*, then **"Mix, per theme"** from five previewed options.
+ *
+ * Each glass theme carries a PATTERN as well as a tint, painted on `::before`
+ * at the reader's opacity (scaled, so 20% still reads as glass and not as
+ * nothing). A sticky theme belongs to ONE sticky while the glass is shared, so
+ * the pairing is carried by the glass themes the Settings tile offers:
+ *
+ *   Glass  → amethyst facets  (default; pairs with Analyst, Operations)
+ *   Paper  → iris haze        (Pale sage, Dusty Carolina blue)
+ *   Night  → opal night       (Night, Operations)
+ *   Rose window → cathedral rose, leaded (Library, Grumpy cat)
+ *   Leaded grid → modernist panes, one amber jewel (Architecture, Engineer)
+ *
+ * HIGH CONTRAST HAS NO PATTERN, deliberately: it is the usability theme, and
+ * nothing decorative may sit behind it. The cards stay solid on every theme,
+ * so no pattern ever sits behind text. Pure CSS: no image to fetch or drift. */
+.fa-sticky-layer {
+  --fa-glass-pattern:
+    conic-gradient(from 210deg at 30% 38%, rgba(255,255,255,.18) 0 12%, transparent 12% 30%, rgba(255,255,255,.08) 30% 41%, transparent 41% 62%, rgba(0,0,0,.18) 62% 78%, transparent 78%),
+    conic-gradient(from 40deg at 72% 64%, rgba(0,0,0,.2) 0 14%, transparent 14% 36%, rgba(255,255,255,.12) 36% 48%, transparent 48% 70%, rgba(255,255,255,.06) 70% 84%, transparent 84%),
+    linear-gradient(135deg, #3b1d6e 0%, #6a3fc4 45%, #8c74f0 70%, #4a2690 100%);
+}
+:root[data-fa-scheme="light"] .fa-sticky-layer,
+.fa-sticky-layer[data-fa-glass-theme="paper"] {
+  --fa-glass-pattern:
+    linear-gradient(115deg, transparent 0 58%, rgba(255,210,240,.55) 60%, rgba(200,230,255,.5) 63%, rgba(220,255,230,.45) 66%, transparent 69%),
+    radial-gradient(120% 90% at 15% 10%, #efe8ff 0%, transparent 60%),
+    linear-gradient(160deg, #d9ccfb 0%, #b7a3ef 50%, #9d8ae0 100%);
+}
+.fa-sticky-layer[data-fa-glass-theme="night"] {
+  --fa-glass-pattern:
+    radial-gradient(3px 3px at 18% 24%, rgba(190,160,255,.9), transparent),
+    radial-gradient(2px 2px at 64% 18%, rgba(140,220,255,.8), transparent),
+    radial-gradient(2px 2px at 82% 66%, rgba(255,170,220,.8), transparent),
+    radial-gradient(3px 3px at 36% 78%, rgba(165,146,255,.85), transparent),
+    radial-gradient(40% 50% at 70% 70%, rgba(120,70,220,.35), transparent 70%),
+    radial-gradient(45% 55% at 25% 30%, rgba(70,110,210,.28), transparent 70%),
+    linear-gradient(150deg, #141019 0%, #1f1830 55%, #120e18 100%);
+}
+.fa-sticky-layer[data-fa-glass-theme="rose"] {
+  --fa-glass-tint: 28, 20, 38;
+  --fa-glass-card: #e8e8e0;
+  --fa-glass-ink: #1c2630;
+  --fa-glass-muted: #4a5663;
+  --fa-glass-edge: #c2ccd4;
+  --fa-glass-accent: #5b2fb0;
+  --fa-glass-pattern:
+    radial-gradient(circle at 50% 50%, transparent 0 17%, #1c1426 17% 18.2%, transparent 18.2% 33%, #1c1426 33% 34.2%, transparent 34.2%),
+    repeating-conic-gradient(from 0deg at 50% 50%, #1c1426 0 1.2deg, transparent 1.2deg 30deg),
+    conic-gradient(from 0deg at 50% 50%, #5b2fb0 0 30deg, #7a4ad8 30deg 60deg, #9b2d5c 60deg 90deg, #5b2fb0 90deg 120deg, #2f4fa8 120deg 150deg, #7a4ad8 150deg 180deg, #5b2fb0 180deg 210deg, #9b2d5c 210deg 240deg, #7a4ad8 240deg 270deg, #2f4fa8 270deg 300deg, #5b2fb0 300deg 330deg, #7a4ad8 330deg 360deg);
+}
+.fa-sticky-layer[data-fa-glass-theme="leaded"] {
+  --fa-glass-tint: 34, 26, 46;
+  --fa-glass-card: #fdfbf0;
+  --fa-glass-ink: #1a372d;
+  --fa-glass-muted: #45574e;
+  --fa-glass-edge: #a6aea8;
+  --fa-glass-accent: #4d2e9e;
+  --fa-glass-pattern:
+    linear-gradient(90deg, transparent 0 22%, #221a2e 22% 22.8%, transparent 22.8% 61%, #221a2e 61% 61.8%, transparent 61.8%),
+    linear-gradient(0deg, transparent 0 34%, #221a2e 34% 35.2%, transparent 35.2% 72%, #221a2e 72% 73.2%, transparent 73.2%),
+    linear-gradient(90deg, #6b4bc9 0 22%, #8e76e6 22% 61%, #4d2e9e 61%) top / 100% 34% no-repeat,
+    linear-gradient(90deg, #b9a8f2 0 22%, #6b4bc9 22% 61%, #c6a54a 61%) 0 55.74% / 100% 39% no-repeat,
+    linear-gradient(90deg, #4d2e9e 0 22%, #a38ef0 22% 61%, #6b4bc9 61%) bottom / 100% 27% no-repeat;
+}
+.fa-sticky-layer[data-fa-glass-theme="contrast"] { --fa-glass-pattern: none; }
+.fa-sticky-layer[data-fa-glass="open"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--fa-glass-pattern);
+  /* 20% (the default) reads as 36% here: enough to see the facets, still glass. */
+  opacity: min(1, calc(var(--fa-glass-opacity, 0.2) * 1.8));
+}
 .fa-sticky-layer[data-fa-glass="open"][data-fa-glass-blur="off"] {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
@@ -3533,8 +3611,24 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   min-height: 50vh;
   touch-action: none;
   cursor: grab;
+  /* ITS OWN STACKING CONTEXT, so the cards' raise order stays INSIDE it.
+     Every press raises a card (`z-index` 2, 3, 4…), and at home — where the
+     shelf carries no transform — those numbers used to compete with the rest
+     of the glass: a card pressed four times climbed over the tile strip
+     (z 3), and one dropped near the bottom covered the Todos tile. Owner,
+     2026-09-24: *"drag drop avatar and cant … inteact w/ todos"*. Now the
+     whole shelf is one layer at 0, and the cards order among themselves. */
+  z-index: 0;
 }
 .fa-glass-shelf[data-fa-pinching] { cursor: grabbing; }
+/* What the reader OPENS sits above the cards: a panned or zoomed shelf can
+   slide under the notes and the panel, and a Todos panel a card covered would
+   be the same defect as the strip above. */
+.fa-glass-notes,
+.fa-glass-panel {
+  position: relative;
+  z-index: 1;
+}
 
 /* ── Zoom, pan and Home — bean `b8eq` ─────────────────────────────────────
    Sticky to the top of the glass so it stays in reach however far the glass
@@ -3544,6 +3638,7 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   top: 0;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
   width: max-content;
@@ -3567,6 +3662,27 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   cursor: pointer;
 }
 .fa-glass-home { font-size: 0.9rem; }
+/* THE MOVE BAR — what ✜ is for, said on screen (owner, 2026-09-24:
+   *"exploding icon outlines the avatar but appears to do nothing else"*). A
+   second row of the sticky zoom bar, so it stays in reach and at full size
+   however the glass is scrolled or zoomed. Shown only while a card moves. */
+.fa-glass-move-bar {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--fa-glass-edge);
+}
+.fa-glass-move-bar[hidden] { display: none; }
+.fa-glass-move-say {
+  flex: 1 1 100%;
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.fa-glass-move-done { font-size: 0.9rem; }
 .fa-sticky-layer[data-fa-glass-home="false"] .fa-glass-home {
   border-color: var(--fa-glass-accent);
   box-shadow: inset 0 0 0 2px var(--fa-glass-accent);
@@ -3683,6 +3799,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 /* THE DOCK holds the strip and the tab that slides it away (`b8eq`). The
    dock is what is fixed to the bottom edge; hidden, it drops by the strip's
    height and leaves the tab on screen — the way back is never off-screen. */
+/* THE DOCK IS THE TILES PANEL (owner, 2026-09-24: *"HIDE/show tiles should be
+   inside of tiles panel"*). It paints the surface and the ONE accent edge; the
+   header row holds the Hide/Show control, the strip below it holds the tiles.
+   Before, the dock painted nothing and the toggle was its own bordered tab
+   sitting on the strip's border -- outside the panel, under a doubled edge. */
 .fa-glass-dock {
   position: fixed;
   left: 0;
@@ -3690,25 +3811,34 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   bottom: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  /* The dock spans the width; only its tab and strip take presses, so the
-     glass beside the tab stays usable. */
-  pointer-events: none;
+  background: var(--fa-glass-card);
+  border-top: 2px solid var(--fa-glass-accent);
+  color: var(--fa-glass-ink);
   transition: transform 0.25s ease;
   z-index: 3;
 }
-.fa-glass-dock > * { pointer-events: auto; }
-.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem)); }
+/* Hidden, the panel drops by everything but its header row, so the part left
+   on screen is the panel's own edge WITH the way back in it (`l4zi`). The
+   2px is the edge itself. */
+.fa-glass-dock[data-fa-strip="hidden"] { transform: translateY(calc(100% - 2.75rem - 2px)); }
 @media (prefers-reduced-motion: reduce) {
   .fa-glass-dock { transition: none; }
 }
+.fa-glass-dock-head {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+}
 .fa-glass-strip-toggle {
   min-height: 2.75rem;
-  margin-right: 1rem;
   padding: 0 1rem;
-  border: 2px solid var(--fa-glass-accent);
+  /* A control IN the panel, drawn like the panel's other controls: one thin
+     edge, no second accent border. */
+  border: 1px solid var(--fa-glass-edge);
+  border-top: 0;
   border-bottom: 0;
-  background: var(--fa-glass-card);
+  background: transparent;
   color: var(--fa-glass-ink);
   font: inherit;
   font-size: 0.85rem;
@@ -3723,10 +3853,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   align-self: stretch;
   display: flex;
   gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  padding: 0 1rem 0.6rem;
   overflow-x: auto;
-  background: var(--fa-glass-card);
-  border-top: 2px solid var(--fa-glass-accent);
+  /* The panel (the dock) paints the surface and the edge; the strip is the
+     row of tiles inside it, so it paints neither -- a second edge here is the
+     doubled border the owner saw. */
   color: var(--fa-glass-ink);
 }
 .fa-glass-tiles .fa-tile,
@@ -6759,7 +6890,16 @@ a.fa-harness-tab__body:focus-visible {
  * stays BELOW anything modal, of which there is currently nothing. */
 .fa-search-home[data-place="corner"] {
   position: fixed;
-  top: 0.75rem;
+  /* BELOW THE STAGING BANNER — owner, 2026-09-24: *"hiding search makes it go
+     away compleletey, cant restore."* On every preview the banner is
+     `position: sticky; top: 0; z-index: 9999`, about 36px tall, and at
+     `top: 0.75rem` this whole card -- the magnifier AND the dock-back control,
+     the only two ways back -- sat underneath it. Hit-tested on the real
+     preview off `gh-pages`, at 1280px and 390px: the point under each control
+     was the banner. The banner already publishes its measured height as
+     `--fa-staging-offset` (it moves the fixed sidebar down the same way), so
+     the corner reads that rather than guessing a number; 0 off a preview. */
+  top: calc(0.75rem + var(--fa-staging-offset, 0px));
   right: 0.75rem;
   z-index: 95;
   gap: 0.25rem;
@@ -6806,6 +6946,20 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+/* The slide control carries WORDS now ("Hide search" / "Show search"), so it
+   sizes to them rather than to a 1.75rem square — and is a little taller,
+   because it is the way back and the declared profile is low-dexterity. */
+.fa-search-slide {
+  width: auto;
+  min-height: 1.75rem;
+  height: auto;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.fa-search-slide-glyph { font-size: 0.9rem; }
 
 .fa-search-peek:hover,
 .fa-search-peek:focus-visible,
@@ -7179,6 +7333,9 @@ a.fa-harness-tab__body:focus-visible {
   /* The phone's own pinch zooms the column, so the glass's zoom stands down:
      a second zoom over the browser's would be two answers to one gesture. */
   .fa-glass-shelf { transform: none !important; touch-action: auto; min-height: 0; cursor: auto; }
+  /* The pop-out rides the folio's pan on the surface (`placePanel`); in the
+     column there is no pan, so it stands with the shelf. */
+  .fa-glass-panel { transform: none !important; }
   .fa-glass-zoom { display: none; }
   /* A position means nothing in a column, so the controls that set one go.
      Close and Return stay: they are about WHERE IT LIVES, not where it sits. */
@@ -7262,6 +7419,67 @@ a.fa-harness-tab__body:focus-visible {
   padding: 0.35rem 0.5rem;
 }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-tools { margin: 0 -0.5rem -0.5rem; }
+
+/* ── A popped-out STICKY: the themed sticky, square, its words on top ────
+ *
+ * Owner, 2026-09-24: *"i expected to see themed square sticky avatar faded
+ * with markdown overlayed when stikcy poopped out."* `dressGlassSticky` gives
+ * the card the SAME `data-fa-sticky-theme` and `fa-sticky--backdrop` the board
+ * and landing stickies carry, so the art, its clipping and the SCRIM that
+ * fades it are the rules above (`.fa-sticky--backdrop …`) and the theme's
+ * tokens are `themes.css`. These rules only seat that sticky on a glass card:
+ * the theme's surface, ink and edge instead of the glass's, and room for the
+ * words. No colour is decided here. */
+.fa-glass-asset.fa-sticky--backdrop {
+  /* The card is PLACED on the glass; the backdrop rule's `position: relative`
+     would drop it into the flow and stack every sticky at the origin. */
+  position: absolute;
+}
+.fa-glass-sticky { overflow: hidden; }
+.fa-glass-sticky .fa-glass-asset-face { flex: 0 0 auto; min-height: 0; }
+.fa-glass-sticky-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  /* Above the art and the scrim, which sit at negative z inside the card. */
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.fa-glass-sticky-body p,
+.fa-glass-sticky-body ul,
+.fa-glass-sticky-body ol { margin: 0 0 0.45em; }
+.fa-glass-sticky-body ul,
+.fa-glass-sticky-body ol { padding-left: 1.2em; }
+.fa-glass-sticky-body .fa-md-heading { font-weight: 700; margin-top: 0.6em; }
+.fa-glass-sticky-body a { color: inherit; text-decoration: underline; }
+/* An UNTHEMED sticky keeps the plain note as its cover, so its words ride a
+   strip of the card's colour exactly as the title and the tools do. */
+.fa-glass-sticky:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-sticky-body {
+  /* Sized to its words, not to the card, so the note behind still shows. */
+  flex: 0 1 auto;
+  max-height: 50%;
+  background: var(--fa-glass-card);
+  padding: 0.35rem 0.5rem;
+}
+.fa-glass-sticky[data-fa-sticky-theme] {
+  background: var(--fa-sticky-surface, var(--fa-glass-card));
+  color: var(--fa-sticky-ink, var(--fa-glass-ink));
+  border-color: var(--fa-sticky-edge, var(--fa-glass-edge));
+}
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-name,
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-tool {
+  color: inherit;
+}
+.fa-glass-sticky[data-fa-sticky-theme] .fa-glass-asset-tool {
+  background: transparent;
+  border-color: var(--fa-sticky-edge, var(--fa-glass-edge));
+}
+/* Semantic zoom: below the declared width a sticky is its faded art alone,
+   the same as every other card is its avatar alone. */
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-sticky-body { display: none; }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
 /* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
@@ -7486,3 +7704,14 @@ a.fa-harness-tab__body:focus-visible {
   outline: 3px dashed var(--fa-glass-accent);
   outline-offset: -3px;
 }
+
+/* ── A sub-graph's row, folded under its parent (issue #1164) ─────────── */
+.fa-nav-folders__sub { margin: 0.1rem 0 0.2rem 0.75rem; }
+.fa-nav-folders__sub-heading {
+  cursor: pointer;
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.8em;
+}
+.fa-nav-folders__list--sub { margin: 0; padding-left: 0.5rem; }

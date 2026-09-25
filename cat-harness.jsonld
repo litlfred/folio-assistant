@@ -269,26 +269,26 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-24T21:25:32.682Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3ece3699d5a088a3bcc623b7ff642a4da4466b99",
-  "sourceCommitSha": "3ece3699d5a088a3bcc623b7ff642a4da4466b99",
-  "sourceCommitAt": "2026-09-24T23:22:58+02:00",
-  "sourceTreeDirty": false,
+  "generatedAt": "2026-09-25T04:47:33.107Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/72e50efba0eb3a4da7233f7d860a519133993047",
+  "sourceCommitSha": "72e50efba0eb3a4da7233f7d860a519133993047",
+  "sourceCommitAt": "2026-09-25T06:44:45+02:00",
+  "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 261,
+    "Skill": 260,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 16,
+    "SkillPackage": 18,
     "Process": 71,
     "SequenceFlow": 908,
     "Role": 148,
     "ProcessNode": 860,
-    "Tool": 96,
-    "Schema": 121,
-    "GraphKind": 32,
-    "Directory": 42,
+    "Tool": 101,
+    "Schema": 122,
+    "GraphKind": 34,
+    "Directory": 43,
     "Asset": 3
   },
   "@graph": [
@@ -401,7 +401,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming"
       ],
       "instructionsPath": "skills/theming/theming.md",
-      "instructionLines": 100,
+      "instructionLines": 101,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -449,7 +449,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/theming"
       ],
       "instructionsPath": "skills/theming/theme-artefacts.md",
-      "instructionLines": 179,
+      "instructionLines": 228,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -772,7 +772,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 348,
+      "instructionLines": 419,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -803,11 +803,27 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 236,
+      "instructionLines": 241,
       "inputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/hypothesis-generation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "hypothesis-generation",
+      "title": "Scientific Hypothesis Generation",
+      "description": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/hypothesis-generation"
+      ],
+      "instructionsPath": "skills/hypothesis-generation/hypothesis-generation.md",
+      "instructionLines": 282,
+      "hasInstructions": true,
+      "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -915,6 +931,22 @@
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
       "instructionLines": 705,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "package-release",
+      "title": "Cutting a package release",
+      "description": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/package-release.md",
+      "instructionLines": 96,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2726,7 +2758,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1064,
+      "instructionLines": 1066,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2901,7 +2933,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/rendered-verification.md",
-      "instructionLines": 317,
+      "instructionLines": 326,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3162,6 +3194,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-critical-thinking",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "scientific-critical-thinking",
+      "title": "Scientific Critical Thinking",
+      "description": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-critical-thinking"
+      ],
+      "instructionsPath": "skills/scientific-critical-thinking/scientific-critical-thinking.md",
+      "instructionLines": 198,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "content-test",
@@ -3321,86 +3369,6 @@
       ],
       "instructionsPath": "skills/content-lifecycle/content-retire.md",
       "instructionLines": 28,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fhir-client-operations",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "fhir-client-operations",
-      "title": "fhir-client-operations — a stub, and it is not working",
-      "description": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs"
-      ],
-      "instructionsPath": "skills/remote-stubs/fhir-client-operations.md",
-      "instructionLines": 57,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/hypothesis-generation",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "hypothesis-generation",
-      "title": "hypothesis-generation — a stub, and it is not working",
-      "description": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs"
-      ],
-      "instructionsPath": "skills/remote-stubs/hypothesis-generation.md",
-      "instructionLines": 57,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "scientific-visualization",
-      "title": "scientific-visualization — a stub, and it is not working",
-      "description": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs"
-      ],
-      "instructionsPath": "skills/remote-stubs/scientific-visualization.md",
-      "instructionLines": 57,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/smart-launch",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "smart-launch",
-      "title": "smart-launch — a stub, and it is not working",
-      "description": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs"
-      ],
-      "instructionsPath": "skills/remote-stubs/smart-launch.md",
-      "instructionLines": 57,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-critical-thinking",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "scientific-critical-thinking",
-      "title": "scientific-critical-thinking — a stub, and it is not working",
-      "description": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs"
-      ],
-      "instructionsPath": "skills/remote-stubs/scientific-critical-thinking.md",
-      "instructionLines": 57,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3989,7 +3957,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/proof-status-tracking.md",
-      "instructionLines": 209,
+      "instructionLines": 217,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4381,6 +4349,22 @@
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "scientific-visualization",
+      "title": "Scientific Visualization",
+      "description": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-visualization"
+      ],
+      "instructionsPath": "skills/scientific-visualization/scientific-visualization.md",
+      "instructionLines": 303,
+      "hasInstructions": true,
+      "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -5703,6 +5687,21 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/hypothesis-generation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "hypothesis-generation",
+      "version": "0.0.0",
+      "description": "Materialized from claude-scientific-skills (https://github.com/K-Dense-AI/claude-scientific-skills) at 49c6e97775eaa18ba791bebe23162a70ae601c18. Read-only: see materialization.json.",
+      "path": "skills/hypothesis-generation",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/hypothesis-generation"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "folio-core",
@@ -5858,13 +5857,29 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/watch",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-a-proposal-goes",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/where-does-this-go",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/python3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/node-runtime"
       ],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-critical-thinking",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "scientific-critical-thinking",
+      "version": "0.0.0",
+      "description": "Materialized from claude-scientific-skills (https://github.com/K-Dense-AI/claude-scientific-skills) at 49c6e97775eaa18ba791bebe23162a70ae601c18. Read-only: see materialization.json.",
+      "path": "skills/scientific-critical-thinking",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-critical-thinking"
+      ],
+      "providesCapability": [],
       "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -5893,25 +5908,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/python3",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/node-runtime"
       ],
-      "requiresCapability": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/remote-stubs",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "remote-stubs",
-      "version": "0.1.0",
-      "description": "Stub bodies for skills that remote packages DECLARE and this instance does not vendor. A stub exists so the graph traverses and skill_fetch answers instead of failing mid-task; every one is reported by kg:audit under skill-is-a-stub so filling the gap does not hide it. This package is deliberately separate from the packages that hold real skills: a stub in folio-core would read as ours, and the remedy for each of these is upstream. Its docker block declares an empty aptPackages list on purpose: a stub needs nothing installed, and stating that explicitly keeps \"nothing required\" distinguishable from \"nobody filled this in\" — the same reason install.none exists on a Tool node.",
-      "path": "skills/remote-stubs",
-      "hasManifest": true,
-      "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/fhir-client-operations",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/hypothesis-generation",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-critical-thinking",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/smart-launch"
-      ],
-      "providesCapability": [],
       "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -6045,6 +6041,21 @@
       "requiresCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push"
       ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/scientific-visualization",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "scientific-visualization",
+      "version": "0.0.0",
+      "description": "Materialized from claude-scientific-skills (https://github.com/K-Dense-AI/claude-scientific-skills) at 49c6e97775eaa18ba791bebe23162a70ae601c18. Read-only: see materialization.json.",
+      "path": "skills/scientific-visualization",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
@@ -37738,6 +37749,241 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/release-please",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "release-please",
+      "title": "release-please (declared, not configured here)",
+      "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      "install": {
+        "cli": "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)"
+      },
+      "invoke": {
+        "shell": "release-please release-pr"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoFullName",
+            "description": "owner/name of the repository whose packages are released.",
+            "required": true,
+            "arg": {
+              "flag": "--repo-url"
+            }
+          },
+          {
+            "name": "config",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The release config. Must exist: a missing one falls back to defaults that find nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--config-file"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "releasePr",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Url",
+            "description": "The release PR it opened or updated. Merging it is the approval."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "node",
+          "release-please"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "package-release-manual",
+      "title": "Package release by hand",
+      "description": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "package",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/PackageName",
+            "description": "The package being released.",
+            "required": true
+          }
+        ],
+        "outputs": [
+          {
+            "name": "tag",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The tag created, `<package>-v<version>`."
+          }
+        ]
+      },
+      "requirements": {},
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/transcribe-whisper-cpp",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "transcribe-whisper-cpp",
+      "title": "Transcribe audio — whisper.cpp (option, not installed)",
+      "description": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      "install": {
+        "cli": "build whisper.cpp from source and download a ggml model (tiny ≈ 75 MB, base ≈ 142 MB)"
+      },
+      "invoke": {
+        "shell": "whisper-cli"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The recording, under the declared `uploads` graph.",
+            "required": true,
+            "arg": {
+              "flag": "-f"
+            }
+          },
+          {
+            "name": "language",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Locale",
+            "required": false,
+            "arg": {
+              "flag": "-l"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "transcript",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Timed transcript under the entry's `transcript/`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "whisper-cli"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/transcribe-faster-whisper",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "transcribe-faster-whisper",
+      "title": "Transcribe audio — faster-whisper (option, not installed)",
+      "description": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      "install": {
+        "cli": "pip install faster-whisper (model weights download on first use)"
+      },
+      "invoke": {
+        "shell": "python3 -m faster_whisper"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "language",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Locale",
+            "required": false,
+            "arg": {
+              "flag": "--language"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "transcript",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "faster-whisper"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/transcribe-vosk",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "transcribe-vosk",
+      "title": "Transcribe audio — vosk (option, not installed)",
+      "description": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      "install": {
+        "cli": "pip install vosk, plus a per-language model (small ≈ 40–50 MB)"
+      },
+      "invoke": {
+        "shell": "vosk-transcriber"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "required": true,
+            "arg": {
+              "flag": "-i"
+            }
+          },
+          {
+            "name": "language",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Locale",
+            "required": false,
+            "arg": {
+              "flag": "-l"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "transcript",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Written where `-o` names."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "python3",
+          "vosk"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/library-ingestion"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/actor-reach",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "actor-reach",
@@ -38299,6 +38545,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/requirement",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "requirement",
+      "title": "A REQUIREMENT — what a harness, or something built with one, must do, said so it",
+      "module": "schemas/requirement.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/role-graph",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "role-graph",
@@ -38789,6 +39043,22 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#DocsGraph",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/proposals",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "proposals",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProposalsGraph",
+      "renderable": false,
+      "summary": "Proposals for the harness's own features — initial analysis, MVP, options — argued before anything is agreed. A sub-graph of `docs`. When the feature ships, its proposal is MOVED to `requirements` and filed against the `Requirement` schema."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/requirements",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "requirements",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#RequirementsGraph",
+      "renderable": false,
+      "summary": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/external-schema",
@@ -40321,6 +40591,17 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-templates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "folio-templates",
+      "path": "templates/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files so they can be read, diffed and parsed rather than living as strings inside `scripts/init-folio.ts`. One subdirectory per content profile, mirroring the folio's own layout under it: `document/` is written into every folio and `paper/` additionally into a paper folio (profiles nest, as `content-profiles` says), and a `github/` segment lands as the folio's `.github/`, because a dot-prefixed directory is the one place this repository's own conventions refuse. Bean `52dz`, owner 2026-09-24: the generic QA workflows (`qa-sweep`, `qa-sweep-nightly`, `section-title-audit`) and the Lean workflows (`blueprint`, `lean-build`, `lean-build-sidecar`, `lean_ci`) moved here from `.github/workflows/`, where they could never run and counted as workflows that do not. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time; `${{ … }}` is GitHub's and is left alone. Declared `code` rather than a kind of its own: these are executable sources whose target is another repository, and nothing here reads them as graph nodes. `dependents: skip` -- a dependent inherits them through `folio_init`, not by owning a copy.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-templates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-processes",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "folio-assistant-core-processes",
@@ -40361,8 +40642,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "3ece3699d5a088a3bcc623b7ff642a4da4466b99",
+    "sha": "72e50efba0eb3a4da7233f7d860a519133993047",
     "pr": "main",
-    "run": "36061117218"
+    "run": "36095681762"
   }
 }
