@@ -94,7 +94,7 @@ describe("the branch signal names the bean it is about", () => {
       "feature-x": ["folio-assistant-bbbb--x.md"],
       "feature-y": ["folio-assistant-cccc--y.md"],
     });
-    const changes = refsChangingBeans(root, "origin/main");
+    const changes = refsChangingBeans(root, "origin/main", "beans/defs");
     const x = changes.find((c) => c.ref.endsWith("feature-x"));
     const y = changes.find((c) => c.ref.endsWith("feature-y"));
     expect(x?.files).toEqual(["beans/defs/folio-assistant-bbbb--x.md"]);
@@ -120,7 +120,7 @@ describe("the branch signal names the bean it is about", () => {
     git(origin, ["checkout", "-q", "main"]);
     git(root, ["fetch", "-q", "origin"]);
 
-    const changes = refsChangingBeans(root, "origin/main");
+    const changes = refsChangingBeans(root, "origin/main", "beans/defs");
     const x = changes.find((c) => c.ref.endsWith("feature-x"));
     expect(x?.files).toEqual(["beans/defs/folio-assistant-bbbb--x.md"]);
     cleanup();
@@ -131,14 +131,14 @@ describe("the branch signal names the bean it is about", () => {
     const origin = resolve(root, "..", "origin");
     git(origin, ["merge", "-q", "--no-edit", "feature-x"]);
     git(root, ["fetch", "-q", "origin"]);
-    const changes = refsChangingBeans(root, "origin/main");
+    const changes = refsChangingBeans(root, "origin/main", "beans/defs");
     expect(changes.map((c) => c.ref)).not.toContain("origin/feature-x");
     cleanup();
   });
 
   it("carries the ref's tip age, so an abandoned branch is visible rather than counted blind", () => {
     const { root, cleanup } = repo({ "feature-x": ["folio-assistant-bbbb--x.md"] });
-    const changes = refsChangingBeans(root, "origin/main");
+    const changes = refsChangingBeans(root, "origin/main", "beans/defs");
     expect(changes[0]?.tipAgeHours).toBeGreaterThanOrEqual(0);
     cleanup();
   });
@@ -148,7 +148,7 @@ describe("a bulk ref is excluded from the signal and REPORTED", () => {
   it(`a ref changing more than ${BULK_BEAN_CHANGES} bean files is bulk`, () => {
     const many = Array.from({ length: BULK_BEAN_CHANGES + 1 }, (_, i) => `folio-assistant-b${i}--f.md`);
     const { root, cleanup } = repo({ sweep: many });
-    const changes = refsChangingBeans(root, "origin/main");
+    const changes = refsChangingBeans(root, "origin/main", "beans/defs");
     const s = changes.find((c) => c.ref.endsWith("sweep"));
     expect(s?.files.length).toBeGreaterThan(BULK_BEAN_CHANGES);
     cleanup();

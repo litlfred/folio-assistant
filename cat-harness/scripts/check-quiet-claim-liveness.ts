@@ -42,7 +42,7 @@
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 
-import { probeBeans } from "../test/health/probes";
+import { probeBeans, beanDefsDirRelative } from "../test/health/probes";
 import { claimPopulations } from "../test/health/checks";
 
 export const SIGNALS = ["open-pr", "unmerged-branch"] as const;
@@ -270,7 +270,7 @@ export interface RefChange {
  * A merge-base diff asks the question the signal is actually about: what does
  * this branch change that the default branch does not have?
  */
-export function refsChangingBeans(root: string, base: string): RefChange[] {
+export function refsChangingBeans(root: string, base: string, beansDir: string): RefChange[] {
   let listing: string;
   try {
     listing = git(root, [
@@ -301,7 +301,7 @@ export function refsChangingBeans(root: string, base: string): RefChange[] {
     }
     let diff: string;
     try {
-      diff = git(root, ["diff", "--name-only", mb, ref, "--", "beans/defs"]);
+      diff = git(root, ["diff", "--name-only", mb, ref, "--", beansDir]);
     } catch {
       continue;
     }
@@ -337,6 +337,7 @@ export async function sweep(
         claimed: 0,
         parenting: 0,
         refsSeen: 0,
+        bulkRefs: [],
       };
     }
   }
@@ -392,7 +393,25 @@ export async function sweep(
   // Built ONCE, not per bean: 55 quiet claims against 408 refs is the same
   // question asked from the other side, and asking it per bean cost 55 walks of
   // every ref.
-  const changes = refsChangingBeans(root, base);
+  // The pathspec comes from the DECLARATION, not from a literal: the store has
+  // already moved once (`.beans/` to `beans/`, 2026-09-18), and a hardcoded
+  // pathspec would then match nothing and report every claim quiet — a silent
+  // false finding rather than an error. `check:declared-paths` is the ratchet
+  // that asked for this.
+  const beansDir = beanDefsDirRelative(root);
+  if (beansDir === undefined) {
+    return {
+      verdict: "undetermined",
+      reason: "could not read the bean-graph declaration, so the branch signal has no path to ask git about.",
+      live: [],
+      quiet: [],
+      claimed: 0,
+      parenting: 0,
+      refsSeen: 0,
+      bulkRefs: [],
+    };
+  }
+  const changes = refsChangingBeans(root, base, beansDir);
   const bulk = changes.filter((c) => c.files.length > BULK_BEAN_CHANGES);
   const byBean = new Map<string, string[]>();
   for (const c of changes) {
