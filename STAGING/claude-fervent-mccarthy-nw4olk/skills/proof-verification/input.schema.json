@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/skills/proof-verification/input.schema.json",
+  "title": "Proof Verification Input",
+  "description": "Input schema for the proof-verification skill. Verifies Lean proofs and tracks sorry obligations.",
+  "type": "object",
+  "required": [
+    "projectRoot"
+  ],
+  "properties": {
+    "projectRoot": {
+      "type": "string",
+      "description": "Path to the Lean project root (containing lakefile.lean)."
+    },
+    "targetFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific files to verify (empty = entire project)."
+    },
+    "trackSorries": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track and report sorry placeholders."
+    }
+  },
+  "staging": {
+    "branch": "claude/fervent-mccarthy-nw4olk",
+    "sha": "9f297b0aa7068599d468ba6175bc9030a70a1c8d",
+    "pr": "1346/merge",
+    "run": "36160722236"
+  }
+}
