@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/skills/l3-fhir-authoring/output.schema.json",
+  "title": "L3 FHIR Authoring Output",
+  "description": "Output schema for L3 FHIR IG authoring.",
+  "type": "object",
+  "required": [
+    "fshFiles",
+    "sushiResult"
+  ],
+  "properties": {
+    "fshFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "warnings",
+            "errors"
+          ]
+        },
+        "resourceCount": {
+          "type": "integer"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "generatedResources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/fix-detangle-sidecar-065p",
+    "sha": "712209e37eed8716596600ef7590b4166a673fea",
+    "pr": "1348/merge",
+    "run": "36160368569"
+  }
+}

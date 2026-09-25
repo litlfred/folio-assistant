@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/skills/dmn-authoring/input.schema.json",
+  "title": "DMN Authoring Input",
+  "description": "Input schema for DMN (Decision Model and Notation) decision table authoring.",
+  "type": "object",
+  "required": [
+    "decisionName",
+    "inputVariables"
+  ],
+  "properties": {
+    "decisionName": {
+      "type": "string",
+      "description": "Name of the decision to model."
+    },
+    "inputVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "boolean",
+              "date",
+              "codeable-concept"
+            ]
+          }
+        }
+      }
+    },
+    "sourceLogic": {
+      "type": "string",
+      "description": "Reference to the clinical decision logic being modeled."
+    }
+  },
+  "staging": {
+    "branch": "claude/fix-detangle-sidecar-065p",
+    "sha": "712209e37eed8716596600ef7590b4166a673fea",
+    "pr": "1348/merge",
+    "run": "36160368569"
+  }
+}

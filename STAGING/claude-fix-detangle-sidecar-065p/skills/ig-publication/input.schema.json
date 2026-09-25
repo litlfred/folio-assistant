@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/skills/ig-publication/input.schema.json",
+  "title": "IG Publication Input",
+  "description": "Input schema for FHIR Implementation Guide publication.",
+  "type": "object",
+  "required": [
+    "igRoot",
+    "versionIncrement"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Semantic version increment type."
+    },
+    "releaseNotes": {
+      "type": "string",
+      "description": "Release notes for this publication."
+    },
+    "publicationTarget": {
+      "type": "string",
+      "enum": [
+        "github-pages",
+        "smart-who-int",
+        "both"
+      ],
+      "default": "github-pages"
+    }
+  },
+  "staging": {
+    "branch": "claude/fix-detangle-sidecar-065p",
+    "sha": "712209e37eed8716596600ef7590b4166a673fea",
+    "pr": "1348/merge",
+    "run": "36160368569"
+  }
+}

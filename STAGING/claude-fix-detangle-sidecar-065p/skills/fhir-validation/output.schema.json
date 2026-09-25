@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fix-detangle-sidecar-065p/skills/fhir-validation/output.schema.json",
+  "title": "FHIR Validation Output",
+  "description": "Output schema for FHIR validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        }
+      }
+    },
+    "publisherResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "qaHtmlPath": {
+          "type": "string"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        },
+        "infoCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "conformanceResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "conformant",
+              "non-conformant"
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/fix-detangle-sidecar-065p",
+    "sha": "712209e37eed8716596600ef7590b4166a673fea",
+    "pr": "1348/merge",
+    "run": "36160368569"
+  }
+}
