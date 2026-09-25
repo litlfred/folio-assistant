@@ -226,11 +226,12 @@
                 "jurisdiction-endpoint",
                 "none"
               ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
             }
-          },
-          "required": [
-            "host"
-          ]
+          }
         },
         "topology": {
           "type": "object",
@@ -379,14 +380,6 @@
                         }
                       }
                     ]
-                  },
-                  "docs": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "skill": {
-                    "type": "string",
-                    "minLength": 1
                   },
                   "serialisations": {
                     "type": "string",
@@ -700,9 +693,6 @@
             "minLength": 1
           }
         },
-        "publishable": {
-          "type": "boolean"
-        },
         "id": {
           "type": "string",
           "minLength": 1
@@ -723,8 +713,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld",
   "staging": {
     "branch": "claude/cool-fermi-htir5p",
-    "sha": "70a60ea5e4d007496be61f91f21a16c629b3c295",
+    "sha": "cbb7500c31dedb2d628dfbe1fb6f00468807bcd5",
     "pr": "1317/merge",
-    "run": "36048213272"
+    "run": "36096360893"
   }
 }
