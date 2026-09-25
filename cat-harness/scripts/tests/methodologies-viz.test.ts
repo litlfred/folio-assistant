@@ -39,6 +39,7 @@ import {
   methodologyRows,
   page,
   pageRelPath,
+  short,
   type MethodologyRow,
 } from "../gen-methodologies-viz.js";
 import {
@@ -171,7 +172,7 @@ describe("which instance declared it — `instanceOf`", () => {
     // nine rows, because it split the path instead of resolving it. Caught by
     // reading the page, so it is pinned here rather than trusted to review.
     expect(instanceOf("../smart-base/methodologies/diig.md", INSTANCE, REPO)).toBe("smart-base");
-    expect(instanceOf("../smart-kg/methodologies/grade.md", INSTANCE, REPO)).toBe("smart-kg");
+    expect(instanceOf("../folio-assistant-core/methodologies/doc-researcher.md", INSTANCE, REPO)).toBe("folio-assistant-core");
   });
 });
 
@@ -222,6 +223,38 @@ describe("the page a reader gets — over the REAL corpus", () => {
         columns: want,
       });
     }
+  });
+
+  it("no row leaves a code span open — the defect that printed the table as text", () => {
+    // Bean `7w1a`, owner 2026-09-24. The column check above counts pipes and
+    // IGNORES code spans, so it passed while a truncated `applies-when` cut a
+    // span open on the `madr` row: the stray backtick paired with one in a
+    // later cell, the pipes between stopped being cell boundaries, and kramdown
+    // rendered the whole table as a paragraph. Checked over the REAL page, in
+    // both the rendered string and the committed file.
+    const committed = readFileSync(join(INSTANCE, siteDirFor(INSTANCE), pageRelPath(REPO)!), "utf-8");
+    for (const text of [page(rows, r), committed]) {
+      const lines = text.split("\n");
+      const header = lines.findIndex((l) => l.startsWith("| methodology |"));
+      expect(header).toBeGreaterThan(-1);
+      const tableRows = lines.slice(header + 2).filter((l, i, all) => all.slice(0, i + 1).every((x) => x.startsWith("|")));
+      expect(tableRows.length).toBe(rows.length);
+      for (const line of tableRows) {
+        const ticks = (line.match(/`/g) ?? []).length;
+        expect({ line: line.slice(0, 60), even: ticks % 2 === 0 }).toEqual({ line: line.slice(0, 60), even: true });
+      }
+    }
+  });
+
+  it("a cut that lands inside a code span or a bold run backs out of it", () => {
+    const long = "x".repeat(130) + " (see `kepner-tregoe` for the method) and more words here";
+    const cut = short(long, 140);
+    expect((cut.match(/`/g) ?? []).length % 2).toBe(0);
+    expect(cut.endsWith("…")).toBe(true);
+    const bold = "y".repeat(130) + " **a bold phrase that runs past the limit** tail";
+    expect((short(bold, 140).match(/\*\*/g) ?? []).length % 2).toBe(0);
+    // ...and a cut that lands OUTSIDE any span is left exactly where it was.
+    expect(short("z".repeat(200), 150)).toBe("z".repeat(149) + "…");
   });
 
   it("the page is DECLARED, not composed — and under the docs tree", () => {

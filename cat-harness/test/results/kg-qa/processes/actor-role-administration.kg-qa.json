@@ -5,7 +5,7 @@
     "id": "Process_ActorRoleAdministration",
     "path": "processes/actor-role-administration.bpmn"
   },
-  "source_hash": "sha256:fb5873d4cde1f7a11b8a6f34791d355eb055c8a8767067b4044ae90a6ae640c1",
+  "source_hash": "sha256:427d44f8c92000fb6cf806832fa5f18a43d16f1239b471dc641edc5722ea5b34",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -91,12 +91,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 15,
     "fail": 1,
-    "n/a": 6,
+    "n/a": 8,
     "unknown": 0
   }
 }

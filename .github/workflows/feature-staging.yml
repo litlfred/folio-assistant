@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
 # Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
@@ -105,6 +106,7 @@ concurrency:
 jobs:
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
+    # bpmn-node: Start_PR
     # A cleanup dispatch is not a staging request. `github.event.action` is
     # empty on `workflow_dispatch`, so without the second clause a run asked to
     # REMOVE a preview would deploy one as well.
@@ -253,6 +255,12 @@ jobs:
           ref=yes; api=yes; why="no pull request — carrying everything"
           if [ -n "$PR" ]; then
             if files="$(gh pr view "$PR" --json files --jq '.files[].path' 2>/dev/null)" && [ -n "$files" ]; then
+              # Written out for `compose-docs.ts --changed-files`, so the
+              # composed-instance cut (bean `ga8a`) asks the API once rather
+              # than twice. ONE lookup means ONE fall-through: if this step
+              # could not read the list, neither cut fires, and a preview that
+              # carries too much is the failure direction both of them choose.
+              printf '%s\n' "$files" > "$RUNNER_TEMP/pr-files.txt"
               ref=no; api=no; why="nothing under review touches them"
               # `reference/` is built from the schema and skill corpora and by
               # three generators; `api/` is TypeDoc over the schema entry
@@ -462,8 +470,43 @@ jobs:
       # are reconciled. Drop the flag and the preview simply loses the page —
       # visible to whoever is looking at the preview, which is the recoverable
       # direction and the reason the default sits the other way round.
+      # `--changed-files` is the composed-instance half of the cut, bean `ga8a`.
+      #
+      # `smart-trust/smart-trust.json` declares `docs/` with `composed: true` —
+      # the only directory in the checkout that does — so `compose-docs.ts`
+      # copies its 681 markdown pages into the Jekyll source and Jekyll builds
+      # them with the full theme. MEASURED on `origin/gh-pages` 2026-09-23:
+      # 3.2 MB of markdown in, **111.6 MB of HTML out** across 681 pages at
+      # ~164 KiB each, and **776.6 MB summed over the 13 live previews — 37 %
+      # of a 2.10 GB `STAGING/` tree** against a 1 GB Pages limit the main site
+      # shares. That is larger than the `reference/` lever `tebu` already
+      # pulled (464.7 MB), and nothing conditioned it: a branch that never
+      # mentions the instance still published a full themed copy of the IG.
+      #
+      # It does not deduplicate either. The `smart-trust` tree hash is DISTINCT
+      # in all 13 previews, because the banner injects the slug into every page
+      # (see the deploy step below, which says so where it does it) — so unlike
+      # the dedup argument `tebu` rightly rejected for a published-size
+      # threshold, this one weighs on the repository budget too.
+      #
+      # ABSENT IS THE SAFE DIRECTION, and the flag is passed only when the step
+      # above actually read the pull request's files. No file, no cut: the
+      # canonical publisher never passes it, and neither does a
+      # `workflow_dispatch` preview or a failed API call. The predicate is the
+      # INSTANCE ROOT rather than its composed directory, because
+      # `smart-trust/docs/` is generated from `fhir-artifact-index/` by
+      # `scripts/` — a branch that changes the generator must still get the
+      # rebuilt pages. `carriedInstances` in `compose-docs.ts` carries both
+      # rules and the tests that hold them.
       - name: Compose the docs layers
-        run: bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
+        run: |
+          if [ -s "$RUNNER_TEMP/pr-files.txt" ]; then
+            bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging \
+              --changed-files "$RUNNER_TEMP/pr-files.txt"
+          else
+            echo "no readable pull-request file list — composing every instance"
+            bun run cat-harness/scripts/compose-docs.ts --out ./_docs --staging
+          fi
 
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1
@@ -516,6 +559,14 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
+      # No built page may carry the same `id` twice (bean `uknu`). Only a BUILD
+      # shows this class: `nav_footer_custom.html` declared its checkbox once,
+      # just-the-docs rendered the include twice, and 429 of 1,283 pages carried
+      # `id="fa-nav-open"` twice while `gates` stayed green. Placed after the
+      # mount so instance-rendered pages are checked too.
+      - name: No page carries a duplicate id
+        run: bun run check:duplicate-ids ./_site
 
       # A PREVIEW MUST NOT CLAIM TO BE CANONICAL.
       #
@@ -833,6 +884,30 @@ jobs:
           bun run cat-harness/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir ./_site
           bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
+          # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
+          # LAST, and it never overwrites the graph's `.json` copy above.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+
+          # The harness rail on every standalone page — bean `oi1y`. LAST, after
+          # every generator that writes one, for the reason stated at the same
+          # step in `docs-site.yml`: a call placed earlier walks the site before
+          # bootstrap's pages exist and misses ten of them silently.
+          #
+          # Here as well as in the deploy because `check:invocation-parity`
+          # requires it, and rightly: a preview that rails nothing is a preview
+          # that cannot show whether the railing worked, which is exactly how
+          # this defect was found in the first place.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -872,6 +947,13 @@ jobs:
       # A test asserts both workflows carry this step.
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+
+      # The same pre-deploy verification the deploy runs (bean `vigi`,
+      # `processes/publish-verification.bpmn`), so a preview is never greener
+      # than the release it previews. A failure fails THIS PR's check; it does
+      # not alert the publication manager, because a preview is not a release.
+      - name: Verify the export before deploying the preview
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
@@ -1119,6 +1201,7 @@ jobs:
   # label still guards is the case where nobody decided anything — a PR closed
   # without merging.
   cleanup:
+    # bpmn-node: Start_Closed
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     # NO shared group, for the reason above: a queued job is cancelled by the
@@ -1376,6 +1459,7 @@ jobs:
 
   # ── Remove ONE preview, on an explicit human dispatch ─────────
   cleanup-dispatch:
+    # bpmn-node: Start_Dispatch
     # THE REMEDY A PERSON CAN ACTUALLY INVOKE — bean `w2g5`, second half.
     #
     # `cleanup` above is the only mechanism that removes a preview and it is

@@ -4,6 +4,15 @@
  *
  * @module scripts/check-bean-blocks
  * @graphNode none — a checker over the `bean-defs` graph
+ * @covers bean-defs
+ *
+ * The `@covers` line is required by bean `3srh`, which landed on `main` after
+ * this branch forked: every gate in the CI set declares which graph kind it
+ * audits, or declares `none`. Without it `audit:coverage:require-all` counts
+ * this gate as "has NOT said", and every kind it actually audits reads as
+ * uncovered — so the report's "unaudited" figure becomes an upper bound rather
+ * than a verdict. `bean-defs` is what it reads: `readBeans` and
+ * `resolveBeanDefs`, per the imports below.
  *
  * ## What was already here, and what was missing
  *

@@ -32,12 +32,35 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-paper-adapter/category-theory.ts",
+          "detail": "cat-harness/skills/folio-paper-adapter/category-theory.ts changed since cat-harness/skills/folio-paper-adapter/category-theory.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 2,
-    "fail": 2,
-    "n/a": 0,
+    "fail": 3,
+    "n/a": 1,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/category-theory.md",
+      "code": "cat-harness/skills/folio-paper-adapter/category-theory.ts",
+      "prose_hash": "e99b2b700054",
+      "code_hash": "d01c26714513",
+      "by": "baseline"
+    }
+  ]
 }

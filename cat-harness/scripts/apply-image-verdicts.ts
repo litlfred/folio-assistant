@@ -29,11 +29,49 @@
  * cannot produce a `confirmed` narrative even if asked; `scripts/narratives.ts`
  * is where a person does that, and it refuses to run non-interactively.
  *
+ * ## Applying to a STAGED entry — bean `8suc`
+ *
+ * Until 2026-09-23 this resolved every target through
+ * `directoriesForGraph(root, "library")`, and so did `scripts/narratives.ts`.
+ * Those are the ONLY two writers of a narrative into an `images.json`, and
+ * `ingest --promote` refuses to file an entry whose `image-descriptions`
+ * requirement is unmet. So a document with describable images could not be
+ * promoted until it had descriptions, and could not be given descriptions
+ * until it was promoted. A cycle, not a sequence.
+ *
+ * It went unnoticed because every entry carrying applied verdicts today was
+ * in its library BEFORE that gate existed, so this always found it. The path
+ * that fails is the one nothing had walked — the `1xhc` shape.
+ *
+ * `--staging <entry-dir> --library <lib-dir>` breaks it. The judgement keeps
+ * ONE home: the verdicts are still read from `<lib-dir>/image-verdicts.json`,
+ * keyed by the doc id, which is the same id before and after promotion. Only
+ * the write target moves.
+ *
+ * **`--library` is required with `--staging`, and is not guessed.** A staging
+ * directory does not say which library the document is being promoted into —
+ * the same rule `ingest` enforces for its own `--library`, and the one bean
+ * `v1hw` measured: a queue does not determine a library.
+ *
+ * ## In staging mode an absent verdict is NORMAL
+ *
+ * The whole-corpus mode below exits 1 when it finds no verdict file anywhere,
+ * because there it means a completed pass over no work. In staging mode the
+ * opposite holds: the FIRST ingest necessarily runs before anybody has looked
+ * at the images, so "no verdicts for this document yet" is the expected state
+ * and exits 0. The `image-descriptions` requirement is what refuses the
+ * promotion — this script never needs to.
+ *
+ * An ORPHANED verdict still fails, in either mode. A verdict naming an image
+ * the sidecar does not have is a wrong verdict file, not a missing judgement.
+ *
  *   bun run cat-harness/scripts/apply-image-verdicts.ts            # apply
  *   bun run cat-harness/scripts/apply-image-verdicts.ts --check    # report only
+ *   bun run cat-harness/scripts/apply-image-verdicts.ts \
+ *     --staging ingest-staging/<doc-id> --library ../agent-skills/library
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { AttributionSchema } from "../schemas/attribution.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
@@ -150,8 +188,78 @@ export function applyTo(
   };
 }
 
+/** The value after `--flag`, or `undefined`. */
+function flag(name: string): string | undefined {
+  const i = process.argv.indexOf(name);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
+
+/**
+ * Apply one document's verdicts to its STAGED sidecar — bean `8suc`.
+ *
+ * Deliberately NOT a special case inside {@link run}: that one walks every
+ * declared library and every document in each, and its "no verdicts anywhere"
+ * and "unjudged image" rules are both wrong here (see the header). Two callers
+ * with opposite error semantics sharing one body is how one of them ends up
+ * with the other's exit code.
+ *
+ * The transformation itself is {@link applyTo}, unchanged and shared, so a
+ * staged sidecar and a promoted one cannot be written differently.
+ */
+export function runStaging(entryDir: string, libDir: string, check: boolean): number {
+  const docId = basename(entryDir);
+  const sidecar = join(entryDir, "images.json");
+  if (!existsSync(sidecar)) {
+    // Not the absent-verdicts case: the sidecar is written by `pdf-images.py`
+    // before this ever runs, so its absence means an arm did not run at all.
+    console.error(`✗ ${docId}: no images.json at ${sidecar} — run scripts/pdf-images.py first`);
+    return 1;
+  }
+  const vf = join(libDir, "image-verdicts.json");
+  if (!existsSync(vf)) {
+    console.log(`· no image-verdicts.json in ${libDir} yet — nothing to apply for ${docId}`);
+    return 0;
+  }
+  const verdicts = JSON.parse(readFileSync(vf, "utf-8")) as VerdictFile;
+  const docVerdicts = verdicts.verdicts[docId];
+  if (!docVerdicts) {
+    console.log(`· no verdicts for ${docId} yet — nothing to apply`);
+    return 0;
+  }
+  const { text, result } = applyTo(
+    readFileSync(sidecar, "utf-8"),
+    docVerdicts,
+    verdicts.inspected_by,
+    verdicts.inspected_at,
+  );
+  if (result.orphaned.length > 0) {
+    console.error(`✗ ${docId}: ${result.orphaned.length} verdict(s) name an image the sidecar does not have:`);
+    for (const id of result.orphaned) console.error(`      ${id}`);
+    return 1;
+  }
+  if (!check) writeFileSync(sidecar, text, "utf-8");
+  const rest = result.unjudged.length
+    ? `, ${result.unjudged.length} image(s) still unjudged`
+    : "";
+  console.log(`  ${result.applied} verdict(s) applied to ${relative(process.cwd(), sidecar)}${rest}`);
+  // Unjudged is NOT an error here — `image-descriptions` is the gate, and it
+  // reports them with the detail a promotion refusal needs.
+  return 0;
+}
+
 function run(): number {
   const check = process.argv.includes("--check");
+  const staging = flag("--staging");
+  if (staging !== undefined) {
+    const lib = flag("--library");
+    if (lib === undefined) {
+      console.error("✗ --staging requires --library: a staging directory does not say which");
+      console.error("  library the document is being promoted into, and guessing one would read");
+      console.error("  a judgement that belongs to a different corpus (bean `v1hw`).");
+      return 1;
+    }
+    return runStaging(staging, lib, check);
+  }
   // The verdict file sits BESIDE the documents, so with several libraries
   // there may be several — each judging its own. Every one is applied; a
   // missing one in a library that has no verdicts yet is not an error, but

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/rendered-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/rendered-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/rendered-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/rendered-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/rendered-verification.md){: .fa-edit-source }
 
 {% raw %}
 # /rendered-verification — look at it, then send the picture
@@ -120,6 +120,118 @@ one step from reporting a contrast failure that did not exist — the real
 toggle is `jtd.setTheme(name)`. *A test that silently does nothing reports
 the old state as the new one.* Assert the switch landed (here: the sidebar
 background changed) before reading anything off it.
+
+And know what that toggle DOES: `setTheme` swaps the theme's first stylesheet,
+so for the moment the new file is in flight the page has no ground but the
+browser's white canvas. That was the owner's *"flashes white before goignt o
+dark mode"* (2026-09-24). A scheme check that only reads the SETTLED page
+cannot see it — hold the new sheet in flight with `page.route` and read the
+ground then, as `first-paint-scheme.e2e.ts` does. The rule itself lives in
+[`theme-artefacts`](../theming/theme-artefacts.md) §"The page ground: the
+first paint is DARK".
+
+## The REAL build is reachable — take it off `gh-pages`
+
+The section above says to read a theme-chrome question off the staging
+preview rather than off `preview:site`. Until 2026-09-23 that was advice with
+no method: this environment's proxy refuses `litlfred.github.io`, so the
+preview could be named and not opened.
+
+**It is committed.** `feature-staging.yml` deploys each preview into
+`STAGING/<slug>/` on the `gh-pages` branch, and git reaches what HTTP cannot:
+
+```sh
+git fetch origin gh-pages
+S=claude-my-branch-slug              # the deploy comment names it
+mkdir -p "/tmp/rv/folio-assistant/STAGING/$S"
+git archive "FETCH_HEAD:STAGING/$S" | tar -x -C "/tmp/rv/folio-assistant/STAGING/$S"
+cd /tmp/rv && nohup python3 -m http.server 8091 >/dev/null 2>&1 &
+# → http://127.0.0.1:8091/folio-assistant/STAGING/$S/<page>.html
+```
+
+That is the pinned `remote_theme`, the composed tree, the mounted instances
+and the post-Jekyll steps — the thing CI publishes, not an approximation of
+it. A whole preview is ~90 MB; `git archive FETCH_HEAD:STAGING/$S page.html
+assets` takes just what a page needs.
+
+**Mount it at the STAGING path, not at the site root.** This is the baseurl
+trap one level deeper, and it is worth restating because knowing the rule did
+not stop it happening: a staged page requests
+`/folio-assistant/STAGING/<slug>/assets/…`, so serving the extract at
+`/folio-assistant/` 404s **every** stylesheet.
+
+## Assert the CONDITIONS, or the check passes over nothing
+
+An unstyled page still renders. It still answers `elementFromPoint`. It still
+returns PASS.
+
+Measured 2026-09-23: a first run mounted at the wrong path reported **both
+pages passing** — over a page with **zero stylesheets loaded**. The verdict
+was green and meaningless. What gave it away was not the verdict but the
+numbers beside it: `fullwidth=false` where the page auto-expands 4 of 5
+figures, `z-index: auto` where the rule says 100, a 1164px sidebar where the
+open width is 264.
+
+So every rendered check reports, beside its verdict:
+
+- `document.styleSheets.length` — zero or one means the page is bare;
+- a count of responses with `status >= 400`, collected from `page.on("response")`;
+- **the precondition the defect needs** — the class, the state, the element
+  count. If the bug only appears when `fa-has-fullwidth` is set, a run where
+  it is unset has not tested anything.
+
+A check that cannot tell a styled page from a bare one is not a check. This
+is `dh4f` in a browser: could-not-determine rendered as a pass.
+
+## Visible is not usable — hit-test the control's CENTRE
+
+The usability half of this skill, and the one a computed-style read cannot
+reach. A control can have the right size, the right colour and the right
+label, and still be un-clickable because something is painted over it.
+
+```js
+const b = el.getBoundingClientRect();
+const hit = document.elementFromPoint(
+  Math.round(b.x + b.width / 2), Math.round(b.y + b.height / 2));
+const usable = hit && (hit === el || el.contains(hit) || hit.contains(el));
+```
+
+Found this way on 2026-09-23 (bean `tcq2`): the search field had the right
+width, the right height and the right colours, and a hit test at its centre
+returned `P.fa-search-notice`. `.search` computed to **height 0** — its only
+child is `position: absolute` — so a flow sibling painted across the field.
+Nothing in the stylesheet says that, and no screenshot at a glance says it
+either.
+
+**Two ways this test lies, both met the same day:**
+
+- **It resolves INSIDE the control.** `elementFromPoint` returns the deepest
+  element, often an `<svg>` or `<span>` within a button. `hit === el` alone
+  reports a working control as covered — which is what the `contains` pair
+  above is for. A `covered` verdict was traced to this, not to the page.
+- **It reports a preview-only overlay.** The same run found the corner
+  magnifier covered by a `<div>` with no class, `z-index: 9999`, a child of
+  `<body>` — the staging banner, which exists only on previews. Identify the
+  coverer (`document.elementsFromPoint(x, y).slice(0, 3)`) before calling it
+  a defect: *what* is on top decides whether it ships.
+
+And the reason this is a usability check rather than a nicety: where the
+covered control is the ONLY route back to a state — the magnifier that
+reopens a collapsed search — being un-clickable is `l4zi`, an action whose
+inverse is not reachable.
+
+## Two environment facts that cost cycles rather than correctness
+
+- **Never `pkill -f "http.server"` from the shell running one.** The pattern
+  matches your own process group and kills the command issuing it — exit 144,
+  no output, looks like the tool failed. Start each server on a fresh port in
+  its own invocation instead. (Done twice in one session, the second time
+  immediately after noticing the first.)
+- **Probe scripts belong outside the repository root.** `check:undeclared-files`
+  fails the gate set on a stray `probe.mjs`, and the failure arrives long after
+  the probe stopped being interesting. Playwright needs the script where
+  `playwright` resolves, so write it to the repo root, run it, and delete it in
+  the same command.
 
 ## What to send
 

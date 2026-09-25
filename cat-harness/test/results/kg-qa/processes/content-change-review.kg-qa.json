@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:4bba24cfe06c71bcc0a3684cf4048377fddcbf2926481e5d84814b6639eec611",
+  "source_hash": "sha256:3f00e9142ea6883541a20addd0d89759e7e973794b9b8d6d9b4fcce8863e6b1b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -32,7 +32,7 @@
       "findings": []
     },
     "decision-ref-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "role-ref-resolves": {
@@ -52,15 +52,28 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_ReviewSlices",
+          "detail": "needs skill \"review-comments\", but its lane's role \"reviewer\" does not carry it."
+        },
+        {
+          "where": "Task_WithdrawComment",
+          "detail": "needs skill \"review-comments\", but its lane's role \"reviewer\" does not carry it."
+        },
+        {
+          "where": "Task_Merge",
+          "detail": "needs skill \"prepare-merge\", but its lane's role \"reviewer\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "call-activity-resolves": {
@@ -78,11 +91,35 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 0,
+    "pass": 16,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }

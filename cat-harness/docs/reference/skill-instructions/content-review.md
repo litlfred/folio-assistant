@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/content-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-review.md) — do not edit here. Typed contract: [schema reference](../skills/content-review.html).
+> Generated from [`cat-harness/skills/content-lifecycle/content-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-review.md) — do not edit here. Typed contract: [schema reference](../skills/content-review.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-review.md){: .fa-edit-source }
 
 {% raw %}
 # Content Review
@@ -55,7 +55,7 @@ Findings and a decision — two things, not one. See
 |---|---|
 | [Authoring a document](../../processes/authoring-a-document.html) | 8 · Review and feedback |
 | [Authoring a paper](../../processes/authoring-a-paper.html) | 8 · Review and feedback |
-| [Content Change and Review](../../processes/content-change-review.html) | Review impact assessment; Request changes |
+| [Content Change and Review](../../processes/content-change-review.html) | Review each slice (calls a sub-process); Review impact assessment; Request changes |
 | [Content lifecycle](../../processes/content-lifecycle.html) | Editing and HCI validation (calls a sub-process); Draft, review and publish (calls a sub-process) |
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Circulate the draft; Review the draft publication; Clinical / scientific sign-off |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Agent review of the change; Human / SME review |

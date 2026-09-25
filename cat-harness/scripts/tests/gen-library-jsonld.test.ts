@@ -202,7 +202,7 @@ describe("which ingest rung an entry is on — bean `p67i`", () => {
   });
 
   test("the CSVW record puts it there too, for when eief's extractors land", () => {
-    expect(ingestRungOf(has("tabular.csvw.jsonld"))).toBe("tabular");
+    expect(ingestRungOf(has("tabular.csvw.json"))).toBe("tabular");
   });
 
   test("neither input is a DETERMINED `none`, not an unreadable one", () => {

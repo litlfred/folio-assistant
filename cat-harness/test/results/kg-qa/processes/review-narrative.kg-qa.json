@@ -5,7 +5,7 @@
     "id": "Process_NarrativeReview",
     "path": "processes/review-narrative.bpmn"
   },
-  "source_hash": "sha256:e6cc24aeb09ac75187a492b7d9f3b63947a3a5bc6bdb70df222105a436141921",
+  "source_hash": "sha256:853fd6c10db38654a322905f256949e41f6eaac6dc65a7249aa88440e9ec0859",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 15,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

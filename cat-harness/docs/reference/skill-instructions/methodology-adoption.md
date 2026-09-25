@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/methodology-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/methodology-adoption.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/methodology-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/methodology-adoption.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/methodology-adoption.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/methodology-adoption.md){: .fa-edit-source }
 
 {% raw %}
 # Adopting a methodology, and choosing between them
@@ -85,7 +85,7 @@ two copies free to drift.
 Three worked cases, each a different answer:
 
 - **`raci`** — both. The four letters and the one-Accountable rule are the
-  method (node); reading R from the BPMN lane, the `folio:raci` element and
+  method (node); reading R from the BPMN lane, the `cat-harness.processes:raci` element and
   `check:raci` are this platform's application (skill).
 - **`crdm`** — skill only, and correctly so. It is a house method with no
   external origin, and §"Adopting a new one" step 1 says such a thing is a
@@ -207,6 +207,7 @@ while resting on nothing, which is the failure this whole section is about.
 
 | process | step(s) that name it |
 |---|---|
+| [Adopt a methodology from a source document](../../processes/methodology-from-source.html) | Render the method: adopted vs refused; Place by ownership; declare the directory |
 | [Options analysis](../../processes/options-analysis.html) | Select the methodology by context; Apply it, and state each option's trade-offs |
 | [SWOT situation analysis](../../processes/swot-analysis.html) | Hand the candidates to a decision methodology |
 | [DIIG — from a health system bottleneck to a costed implementation plan](../../processes/diig-investment-path.html) | Form the team and establish goals; Map the current state and confirm bottlenecks; Prioritize, and map to health system challenges; Determine appropriate digital health interventions; Plan the implementation; Link to the enterprise architecture; Develop a budget; Monitor, and use data effectively; Make the value proposition and set next steps |

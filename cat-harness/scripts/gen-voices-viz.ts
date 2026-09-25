@@ -3,6 +3,7 @@
  * Publish the voices graph as a projection, and a viewer over it.
  *
  * @module scripts/gen-voices-viz
+ * @covers voices
  * @graphNode none — a generator over the voices graph, not a schema itself
  *
  * Sibling of `gen-library-viz.ts` and `gen-schema-viz.ts`, deliberately the
@@ -43,8 +44,8 @@
  *   bun run voices:viz          # write
  *   bun run voices:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { rmSync } from "node:fs";
+import { basename, join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "./voices-graph.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
@@ -55,6 +56,7 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.ts";
 import { tileCounts } from "../schemas/tile-count.js";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -368,18 +370,16 @@ document.getElementById("expand").addEventListener("click", function () {
 }
 
 let stale = 0;
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
+
+/**
+ * The shared viewer `emit` — the navbar comes with the write.
+ *
+ * `nav` is supplied per call rather than here, because a subject page lists
+ * the SUBJECT's graphs and the index page lists this instance's. Both are
+ * facts this generator already holds; neither is inferred from a path.
+ */
+const emit = makeEmit({ check, onStale: () => { stale++; } });
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
@@ -418,7 +418,8 @@ if (import.meta.main) {
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+  const nav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
 
   // One page per SUBJECT — the instances whose voices this handler renders.
   // Read from the VOICES rather than from the directory list, so the instance
@@ -428,7 +429,11 @@ if (import.meta.main) {
   const subjects = [...new Set(g.voices.map((v) => v.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    // The SUBJECT's graphs, not this handler's: the reader is looking at
+    // who-style-guide's voices and the rail should offer who-style-guide's
+    // library and docs. The generator holds the subject; nothing is parsed
+    // back out of the path it just composed.
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
 
   // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────

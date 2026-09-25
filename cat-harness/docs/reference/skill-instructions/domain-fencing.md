@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/graph-management/domain-fencing.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/graph-management/domain-fencing.md) — do not edit here.
+> Generated from [`cat-harness/skills/graph-management/domain-fencing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/domain-fencing.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/graph-management/domain-fencing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/domain-fencing.md){: .fa-edit-source }
 
 {% raw %}
 # Domain fencing — keeping one folio's rules out of everybody's platform
@@ -82,8 +82,8 @@ this was written, and finding out why was worth more than the fence.
 `folioOptionalAxes()` resolves its config through `findContentRepoRoot()`,
 which stopped at the nearest declared folio directory — `cat-harness/folio/` —
 while the config sat one level up. So it read no config at all here, and
-neither did `readDeclaredFolioProfile()`: it returned `"undetermined (no
-<name>.config.json)"` from the resolved root and `"document"` from the actual
+neither did `readDeclaredFolioProfile()`: it returned
+`"undetermined (no <name>.config.json)"` from the resolved root and `"document"` from the actual
 repository root.
 
 > **Re-measured 2026-09-21, and the resolution half no longer reproduces.**

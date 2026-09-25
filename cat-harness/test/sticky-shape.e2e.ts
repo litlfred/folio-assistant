@@ -138,3 +138,79 @@ test.describe("on the glass a sticky is shaped to its CONTENT", () => {
     expect(computed).not.toBe("auto");
   });
 });
+
+/* ── The backdrop scrolls WITH the words — owner, 2026-09-23 ─────────────
+ *
+ * Offered four readings of *"background will scrll accoringing"*, the owner
+ * chose **"scrolls with text"**: picture and words are one surface; the
+ * picture stays whole; text past its end continues on the theme colour. */
+const PNG_1x1 =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+const withArt = (words: string) => `
+<div class="fa-sticky-cell" style="width:300px">
+<article class="fa-sticky fa-landing-sticky fa-sticky--backdrop fa-landing-sticky--fixed" data-fa-shape="card"
+         style="--fa-aspect-card:1;--fa-tx-card:.1;--fa-ty-card:.1;--fa-tw-card:.8;--fa-th-card:.5;">
+  <picture><img class="fa-sticky-art" src="${PNG_1x1}" alt=""></picture>
+  <div class="fa-landing-sticky__text"><div class="fa-landing-sticky__body">${words}</div></div>
+</article></div>`;
+const LONG = Array.from({ length: 30 }, (_, i) => `<p>Line ${i + 1} of a note far longer than its square.</p>`).join("");
+const card = ".fa-landing-sticky";
+
+test.describe("an overrunning sticky scrolls as ONE surface — art and words together", () => {
+  test("the CARD scrolls; the text box does not scroll on its own", async ({ page }) => {
+    await serve(page, withArt(LONG));
+    const m = await page.locator(card).evaluate((c) => {
+      const t = c.querySelector(".fa-landing-sticky__text") as HTMLElement;
+      return { cardScroll: c.scrollHeight - c.clientHeight, textScroll: t.scrollHeight - t.clientHeight };
+    });
+    expect(m.cardScroll).toBeGreaterThan(100);
+    expect(m.textScroll).toBeLessThanOrEqual(1);
+    // Still square in the dock: the scroll is INSIDE the square.
+    expect(Math.abs((await ratio(page, card)) - 1)).toBeLessThan(SQUARE_TOLERANCE);
+  });
+
+  test("scrolling moves the picture and the words by the SAME amount", async ({ page }) => {
+    await serve(page, withArt(LONG));
+    const before = await page.locator(card).evaluate((c) => ({
+      art: c.querySelector("picture")!.getBoundingClientRect().top,
+      words: c.querySelector(".fa-landing-sticky__text")!.getBoundingClientRect().top,
+    }));
+    await page.locator(card).evaluate((c) => { c.scrollTop = 120; });
+    const after = await page.locator(card).evaluate((c) => ({
+      art: c.querySelector("picture")!.getBoundingClientRect().top,
+      words: c.querySelector(".fa-landing-sticky__text")!.getBoundingClientRect().top,
+    }));
+    expect(Math.round(before.art - after.art)).toBe(120);
+    expect(Math.round(before.words - after.words)).toBe(120);
+  });
+
+  test("the picture stays whole — one square, not stretched to the text", async ({ page }) => {
+    await serve(page, withArt(LONG));
+    const m = await page.locator(card).evaluate((c) => ({
+      art: c.querySelector("picture")!.getBoundingClientRect().height,
+      square: c.clientHeight,
+      fit: getComputedStyle(c.querySelector(".fa-sticky-art")!).objectFit,
+    }));
+    expect(Math.abs(m.art - m.square)).toBeLessThanOrEqual(1);
+    expect(m.fit).toBe("contain");
+  });
+
+  test("a SHORT note does not scroll at all, and still sits in its cloud", async ({ page }) => {
+    await serve(page, withArt("<p>Short.</p>"));
+    const m = await page.locator(card).evaluate((c) => {
+      const t = c.querySelector(".fa-landing-sticky__text") as HTMLElement;
+      return { cardScroll: c.scrollHeight - c.clientHeight, textTop: t.offsetTop, h: c.clientHeight };
+    });
+    expect(m.cardScroll).toBeLessThanOrEqual(1);
+    // --fa-ty-card .1: the words start a tenth of the way down, where the art put the cloud.
+    expect(Math.abs(m.textTop - m.h * 0.1)).toBeLessThanOrEqual(2);
+  });
+
+  test("on the GLASS the rule does not apply — a floating sticky is shaped to its content", async ({ page }) => {
+    await serve(page, withArt(LONG).replace("fa-landing-sticky--fixed\"", "fa-landing-sticky--fixed fa-sticky-floating\""));
+    const ov = await page.locator(card).evaluate((c) => getComputedStyle(c).overflowY);
+    expect(ov).toBe("auto");   // `.fa-sticky-floating`'s own rule, not this one's
+    const minH = await page.locator(".fa-landing-sticky__text").evaluate((t) => getComputedStyle(t).minHeight);
+    expect(minH === "0px" || minH === "auto").toBe(true);
+  });
+});

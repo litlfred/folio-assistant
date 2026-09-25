@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p004-2",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p004-2.png",
+  "pageStart": 4,
+  "pageEnd": 4,
+  "narrative": {
+    "text": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files — text files, scripts, data — loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/sections/page-004",
+  "sourceDocument": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/manifest",
+  "provenance": "ingested"
+}

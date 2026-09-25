@@ -52,6 +52,15 @@
  *
  * @module schemas/jsonld
  * @graphNode schema
+ *
+ * @conformsTo hl7-fhir
+ * @conformsTo spar-doco-deo-cito
+ * @conformsTo w3c-csvw
+ * @conformsTo w3c-web-annotation
+ * @conformsTo who-smart-base
+ * @conformsTo w3c-prov-o
+ * @conformsTo w3c-skos
+ * @conformsTo w3c-xsd11-datatypes
  */
 
 import {
@@ -72,7 +81,7 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
-import { CORE_NS } from "./namespaces";
+import { CORE_NS, FOLIO_BASE } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -122,7 +131,7 @@ export const CONTENT_CONTEXT_URL =
  * Base every minted `@id` is relative to. Declared in the context rather
  * than baked into emitted files — see the module docstring.
  */
-export const FOLIO_BASE = "https://litlfred.github.io/folio/";
+export { FOLIO_BASE };
 
 // ── Block kind → RDF types ───────────────────────────────────────
 
@@ -577,12 +586,77 @@ export const CONTENT_CONTEXT = {
   leanRef: "folio-assistant-core:leanRef",
   sorryFree: "folio-assistant-core:sorryFree",
 
-  // Companions, as links rather than inlined content. Inlining prose would
+  // Companions, by PATH rather than inlined content. Inlining prose would
   // duplicate the corpus and make every prose edit a two-file diff.
-  text: { "@id": "folio-assistant-core:text", "@type": "@id" },
-  leanSource: { "@id": "folio-assistant-core:leanSource", "@type": "@id" },
+  //
+  // LITERALS, not `@id` — bean `589f`, the owner's choice (2026-09-23) for the
+  // least drift. The values are paths relative to the DOCUMENT
+  // (`../sections/sec-001-intro.md`, `thm-foo.md`). Coerced to `@id`, a
+  // JSON-LD processor resolves them against the context's `@base` instead, and
+  // `../sections/x.md` became `https://litlfred.github.io/sections/x.md` —
+  // a well-formed link to nowhere, on all 1,323 committed prose blocks.
+  //
+  // A literal has ONE reading: a path, resolved by our tools against the file
+  // that carries it, exactly as they already did. Nothing is regenerated and no
+  // reader changes.
+  //
+  // THE UPGRADE RULE, so this does not become the next thing nobody revisits:
+  // these become links — `@type: @id` with ABSOLUTE IRIs minted by the one
+  // function that mints block IRIs — when, and only when, the files they name
+  // are SERVED at a URL an instance declares. Until then any link would be a
+  // promise nothing keeps. `check:context-emission` fails if a path is put
+  // back under an `@id` term (`checkPathsAreNotLinks`).
+  text: { "@id": "folio-assistant-core:text" },
+  leanSource: { "@id": "folio-assistant-core:leanSource" },
 
   meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
+
+  // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
+  //
+  // `tabular.jsonld` (folio-tabular-records/v1) and `contents.jsonld`
+  // (folio-archive-contents/v1) were named `.jsonld` and carried an `@id`, but
+  // no `@context`, so a JSON-LD processor dropped every key. And the
+  // `narrative` object on 392 committed figure blocks used keys this context
+  // did not declare, so every agent-drafted figure narrative was dropped too.
+  // Owner's choice, 2026-09-23: make them real JSON-LD, not rename them.
+  //
+  // THE SPLIT, and why. A fact a consumer queries across documents gets a
+  // real term: what the record conforms to, its format, its counts, its
+  // header vocabulary. A structure that is OURS and nested — a narrative with
+  // its attribution, a sheet's shape, an archive's entry list, a file's
+  // technical metadata — is `@json`: kept verbatim, NULLS INCLUDED. That is
+  // not a shortcut. The three-state rule lives in those nulls — `text: null`
+  // means "nobody has written one", `rows: null` means "could not be counted"
+  // — and JSON-LD DROPS a null in any other position, which would make
+  // "determined absent" and "never recorded" the same fact. The same reason
+  // bean `792y` kept the CSVW record as plain JSON.
+  //
+  // Datatypes are written as full IRIs rather than through an `xsd` prefix: a
+  // prefix spoken only inside this context is one `check:context-emission`
+  // correctly reports as bound-and-never-emitted.
+  $schema: { "@id": "dcterms:conformsTo" },
+  format: { "@id": "dcterms:format" },
+  narrative: { "@id": "folio-assistant-core:narrative", "@type": "@json" },
+  source: { "@id": "folio-assistant-core:sourceTechnicalMetadata", "@type": "@json" },
+  archive: { "@id": "folio-assistant-core:archiveTechnicalMetadata", "@type": "@json" },
+  sheets: { "@id": "folio-assistant-core:sheets", "@type": "@json" },
+  entries: { "@id": "folio-assistant-core:archiveEntries", "@type": "@json" },
+  n_sheets: { "@id": "folio-assistant-core:sheetCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_entries: { "@id": "folio-assistant-core:entryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_files: { "@id": "folio-assistant-core:fileCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_directories: { "@id": "folio-assistant-core:directoryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  uncompressed_bytes: { "@id": "folio-assistant-core:uncompressedBytes", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  // The findable surface — `p67i`: "a grep for a column header finds the
+  // dataset that has it". A SET on the record (deduplicated, sorted); an
+  // ordered LIST on a table block, where column order is a fact.
+  header_vocabulary: { "@id": "folio-assistant-core:headerVocabulary", "@container": "@set" },
+  headers: { "@id": "folio-assistant-core:headers", "@container": "@list" },
+  // A figure block's image, as a path RELATIVE TO THE BLOCK (`../images/…`).
+  // A LITERAL, deliberately — `kg-export`'s rule for a path. Coerced to `@id`
+  // it would resolve against `@base` rather than against the block, and name
+  // `https://litlfred.github.io/images/…`, which is not where the image is. That
+  // is what `text` above does today (bean filed with `yh6u`); it is not copied.
+  file: { "@id": "folio-assistant-core:file" },
 
   // Ingest side. Declared in the shared context precisely so that an
   // ingested node and an authored block are the same kind of thing.

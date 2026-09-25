@@ -218,7 +218,9 @@
     "Process_CodeQualityGates": [],
     "Process_ContentAcquisition": [],
     "Process_ContentChangeReview": [
-      "Process_OptionsAnalysis"
+      "Process_Adjudication",
+      "Process_OptionsAnalysis",
+      "Process_Review"
     ],
     "Process_Lifecycle": [
       "Process_Editing",
@@ -229,10 +231,11 @@
     "Process_CRDM_DataModel": [],
     "Process_CRDM_Deliver": [
       "Process_OptionsAnalysis",
-      "Process_Review",
-      "Process_ThemeUIReview"
+      "Process_Review"
     ],
-    "Process_CRDM_Issue": [],
+    "Process_CRDM_Issue": [
+      "Process_RelatedWork"
+    ],
     "Process_CRDM_Needs": [],
     "Process_CRDM_Requirements": [],
     "Process_CRDM": [
@@ -245,7 +248,13 @@
       "Process_CRDM_Signoff"
     ],
     "Process_CRDM_Signoff": [],
-    "Process_DocsSite": [],
+    "Process_CriterionAdjudication": [
+      "Process_Adjudication"
+    ],
+    "Process_DocsSite": [
+      "Process_PublishAlert",
+      "Process_PublishVerification"
+    ],
     "Process_Ingestion": [
       "Process_BuildL1Kg",
       "Process_DeriveContent",
@@ -272,27 +281,44 @@
     "Process_L1Gate": [
       "Process_Adjudication"
     ],
-    "Process_IngestTheme": [],
+    "Process_IngestTheme": [
+      "Process_ThemeUIReview"
+    ],
     "Process_JsonLdDrift": [],
     "Process_KgToPortal": [],
     "Process_L2Dak": [],
     "Process_L3Fhir": [],
     "Process_MaterializeRemote": [],
+    "Process_MethodologyFromSource": [
+      "Process_Ingestion",
+      "Process_RelatedWork"
+    ],
+    "Process_NarrativeCodeReview": [
+      "Process_CriterionAdjudication"
+    ],
     "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [],
+    "Process_PublishAlert": [],
+    "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
     "Process_RefreshMaterialized": [
       "Process_Adjudication"
     ],
+    "Process_RelatedWork": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
     "Process_NarrativeReview": [
-      "Process_Adjudication",
+      "Process_CriterionAdjudication",
       "Process_VoiceReview"
     ],
     "Process_Review": [
       "Process_CodeReview",
+      "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
+    ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
     ],
     "Process_SessionStateMachine": [],
     "Process_RenderLog": [],
@@ -308,8 +334,13 @@
       "Process_OptionsAnalysis"
     ],
     "Process_VoiceReview": [
-      "Process_Adjudication"
+      "Process_CriterionAdjudication"
     ],
+    "Process_WireframeDesignReview": [
+      "Process_CriterionAdjudication",
+      "Process_OptionsAnalysis"
+    ],
+    "Process_DeepDocumentResearch": [],
     "Process_DIIG": []
   },
   "themeArt": {

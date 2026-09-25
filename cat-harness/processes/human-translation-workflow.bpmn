@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   id="Definitions_HumanTranslation"
-                  targetNamespace="http://folio-assistant.dev/bpmn/human-translation">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Human Translation Workflow — folio-assistant
@@ -33,6 +33,7 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
     <bpmn:laneSet id="LaneSet_Main">
       <bpmn:lane id="Lane_Coordinator" name="Translation Coordinator">
         <bpmn:documentation>Owns the completeness gate, Gateway_Complete, a different question from the accuracy Lane_Reviewer judges later: this lane can send work back to the translator for missing or fuzzy strings before a single sentence has been checked for meaning.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="translation-coordinator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_TranslationNeeded</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_IdentifyContent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AssignTranslator</bpmn:flowNodeRef>
@@ -42,12 +43,14 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
       </bpmn:lane>
       <bpmn:lane id="Lane_Translator" name="Human Translator">
         <bpmn:documentation>Task_TranslateInTool is where both loops in this process land — an incompleteness request from the coordinator and a correction from the reviewer — so nothing in the task itself says which one sent the work back; only the annotations that travel with each loop carry that distinction.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="translator"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ReceiveAssignment</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TranslateInTool</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_SubmitPO</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Subject-Matter Expert / Reviewer">
         <bpmn:documentation>The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SMEReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReturnForCorrection</bpmn:flowNodeRef>
@@ -55,12 +58,12 @@ What makes a translation OFFICIAL is the reviewer's sign-off, never the file bei
         <bpmn:flowNodeRef>End_OfficialTranslation</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Automated Pipeline">
-        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — but Gateway_Drift sends both outcomes to Task_SMEReview, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
+        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ExtractPOT</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_PrepareGlossary</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_InjectPO</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RoundTripQA</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_Drift</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AppendDisclaimer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_WriteStatus</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -75,7 +78,7 @@ nodes that require human translation into a target locale.</bpmn:documentation>
 
     <bpmn:userTask id="Task_IdentifyContent" name="Identify content&#10;and target locale">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>The coordinator selects:
@@ -86,7 +89,7 @@ nodes that require human translation into a target locale.</bpmn:documentation>
 
     <bpmn:userTask id="Task_AssignTranslator" name="Assign to qualified&#10;human translator">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>The coordinator assigns the translation to a qualified
@@ -102,7 +105,7 @@ The assignment includes:
 
     <bpmn:userTask id="Task_CheckCompleteness" name="Check translation&#10;completeness">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Verify that all msgid entries have msgstr translations.
@@ -113,11 +116,13 @@ flagged for follow-up. The coordinator checks:
 - Missing critical sections</bpmn:documentation>
     </bpmn:userTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?" />
+    <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?">
+      <bpmn:documentation>Answered by the completeness check on the submitted PO file: are enough strings translated? `Incomplete` asks the translator to finish the rest; `Complete` injects the PO into translated Markdown.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:userTask id="Task_RequestMoreWork" name="Request completion&#10;of remaining strings">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Return to the translator with a list of untranslated
@@ -135,9 +140,9 @@ or fuzzy strings that need attention.</bpmn:documentation>
 
 Tools: Poedit, Weblate, Crowdin, or direct .po editing.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
       </bpmn:extensionElements>
     </bpmn:userTask>
 
@@ -149,7 +154,7 @@ msgstr translations. They:
 - Mark uncertain translations as #fuzzy
 - Note any source ambiguities for the coordinator</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
       </bpmn:extensionElements>
     </bpmn:userTask>
 
@@ -160,9 +165,9 @@ to the pipeline. This may happen via:
 - Weblate/Crowdin sync
 - File upload to the coordinator</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
       </bpmn:extensionElements>
     </bpmn:userTask>
 
@@ -180,17 +185,19 @@ For WHO content: the SME verifies that normative statements
 ("SHALL", "SHOULD", "MAY") are translated with the correct
 force in the target language.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
-        <folio:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
       </bpmn:extensionElements>
     </bpmn:userTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?" />
+    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?">
+      <bpmn:documentation>The SME's result. `Needs correction` returns the translation with annotations; `Accurate` goes on to the WHO disclaimer, sign-off and status.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:userTask id="Task_ReturnForCorrection" name="Return for correction&#10;with annotations">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>The reviewer annotates specific passages that need
@@ -203,7 +210,7 @@ Each annotation includes:
 
     <bpmn:userTask id="Task_Signoff" name="Sign off translation&#10;as official">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>The reviewer signs off the translation, making it
@@ -222,7 +229,7 @@ Tool: translation_signoff MCP tool</bpmn:documentation>
 
     <bpmn:serviceTask id="Task_ExtractPOT" name="Extract POT&#10;(translatable strings)">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Pre-processes source markdown:
@@ -236,7 +243,7 @@ Tool: translation_extract MCP tool</bpmn:documentation>
 
     <bpmn:serviceTask id="Task_PrepareGlossary" name="Prepare domain&#10;glossary">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Generates or retrieves the domain glossary for the
@@ -249,7 +256,7 @@ target locale. Sources:
 
     <bpmn:serviceTask id="Task_InjectPO" name="Inject PO →&#10;translated Markdown">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Post-processes the completed .po file:
@@ -263,20 +270,25 @@ Tool: translation_inject MCP tool</bpmn:documentation>
 
     <bpmn:serviceTask id="Task_RoundTripQA" name="Round-trip&#10;translation QA">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Bean: folio-assistant-ktt2
 Back-translates target-language .md to source language and compares
 meaning. Distinguishes semantic drift from terminology misses.
-Tool: translation_validate MCP tool</bpmn:documentation>
+Tool: translation_validate MCP tool
+
+No gateway follows: drift or clean, the translation goes to Task_SMEReview
+with the findings attached. Which of two readings is right is a human call
+(translation-manager, "route drift to a human reviewer"), and every
+translation in this workflow is reviewed and signed off anyway, so a clean
+result is evidence for the reviewer and never a way around them.</bpmn:documentation>
     </bpmn:serviceTask>
 
-    <bpmn:exclusiveGateway id="Gateway_Drift" name="Drift detected?" />
 
     <bpmn:serviceTask id="Task_AppendDisclaimer" name="Append WHO&#10;disclaimer (if DAK)">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>For WHO SMART Guidelines content, automatically appends
@@ -290,7 +302,7 @@ Only applies when folio contentType includes WHO/DAK content.</bpmn:documentatio
 
     <bpmn:serviceTask id="Task_WriteStatus" name="Write status.json&#10;(official)">
       <bpmn:extensionElements>
-        <folio:skill ref="translation-manager"/>
+        <bootstrap.processes:skill ref="translation-manager"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>Writes translations/&lt;locale&gt;/status.json with the
@@ -323,9 +335,7 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
 
     <!-- Pipeline: inject + QA -->
     <bpmn:sequenceFlow id="F13" sourceRef="Task_InjectPO" targetRef="Task_RoundTripQA" />
-    <bpmn:sequenceFlow id="F14" sourceRef="Task_RoundTripQA" targetRef="Gateway_Drift" />
-    <bpmn:sequenceFlow id="F15" name="Drift found" sourceRef="Gateway_Drift" targetRef="Task_SMEReview" />
-    <bpmn:sequenceFlow id="F16" name="Clean" sourceRef="Gateway_Drift" targetRef="Task_SMEReview" />
+    <bpmn:sequenceFlow id="F14" name="findings attached" sourceRef="Task_RoundTripQA" targetRef="Task_SMEReview" />
 
     <!-- Reviewer -->
     <bpmn:sequenceFlow id="F17" sourceRef="Task_SMEReview" targetRef="Gateway_Accurate" />
@@ -431,12 +441,6 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
       <bpmndi:BPMNShape id="Task_RoundTripQA_di" bpmnElement="Task_RoundTripQA">
         <dc:Bounds x="2380" y="650" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Drift_di" bpmnElement="Gateway_Drift" isMarkerVisible="true">
-        <dc:Bounds x="2580" y="665" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2540" y="720" width="130" height="30" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_AppendDisclaimer_di" bpmnElement="Task_AppendDisclaimer">
         <dc:Bounds x="3180" y="650" width="140" height="80" />
       </bpmndi:BPMNShape>
@@ -510,18 +514,12 @@ official sign-off metadata and source hash for staleness detection.</bpmn:docume
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
         <di:waypoint x="2520" y="690" />
-        <di:waypoint x="2580" y="690" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
-        <di:waypoint x="2605" y="665" />
-        <di:waypoint x="2605" y="490" />
-        <di:waypoint x="2700" y="490" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16">
-        <di:waypoint x="2630" y="690" />
-        <di:waypoint x="2665" y="690" />
-        <di:waypoint x="2665" y="530" />
-        <di:waypoint x="2700" y="530" />
+        <di:waypoint x="2610" y="690" />
+        <di:waypoint x="2610" y="510" />
+        <di:waypoint x="2700" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2616" y="595" width="80" height="28" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
         <di:waypoint x="2840" y="510" />

@@ -41,7 +41,9 @@
  * Exit: 0 complete (or nothing to check), 1 a requirement unmet, 2 could not check.
  *
  * @module scripts/check-l1-complete
+ * @covers library
  */
+import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
@@ -52,6 +54,7 @@ import {
 } from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
 import { NarrativeSchema } from "../schemas/narrative.ts";
+import { PdfStructureSchema } from "../schemas/pdf-structure.ts";
 import {
   TABULAR_RECORDS_SCHEMA_ID,
   TabularRecordsSchema,
@@ -59,6 +62,8 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
+import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
+import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -125,6 +130,53 @@ export interface EntryReport {
 export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
 
 /** Which sidecar identifies which shape. One place, so a fourth rung adds one line. */
+/**
+ * WHAT AN ENTRY MAY CONTAIN — a closed set, and `3psh` is why it is closed.
+ *
+ * ## The defect
+ *
+ * `pdf-images.py` once derived the doc id differently from `pdf-structure.py`
+ * and wrote `images.json` into a SIBLING of the entry it belonged to. That is
+ * fixed, but the SHAPE arrives from any arm handed `-o <library-root>` with a
+ * doc id the entry does not have — and this session reproduced it by hand,
+ * following `ingest`'s own printed next-step (#1035).
+ *
+ * Measured 2026-09-23, on a real complete entry:
+ *
+ * | the entry | verdict |
+ * |---|---|
+ * | clean | passes |
+ * | + a nested orphan directory holding an `images.json` with the WRONG `doc_id` | **passes** |
+ * | + a wholly unexpected loose file | **passes** |
+ *
+ * Because no requirement said what an entry may NOT contain. Both duplicates
+ * in the original incident were byte-identical to the entry's own
+ * `images.json` apart from `doc_id`, and both were committed unnoticed.
+ *
+ * ## An allowlist, and why that is not the denylist `3psh` rejects
+ *
+ * The orphan was named `260725032v1` — a perfectly plausible doc id. Nothing
+ * about the NAME was wrong; it was wrong that it was there at all. A denylist
+ * would have to predict the next arm's spelling, which is the drift this
+ * cluster of defects is made of. A closed set predicts nothing: it is what
+ * the pipeline produces, and an arm that starts writing something new must
+ * say so here, once.
+ *
+ * ## Where each name comes from, so the list is auditable rather than assumed
+ *
+ * Directories are the arms' outputs — `sections/` and `blocks/` from the rung
+ * and `l1-blocks.ts`, `images/` from `pdf-images.py`, `ocr/` from
+ * `pdf-ocr.py`. Sidecars are {@link KIND_SIDECAR}'s three, plus the two every
+ * paged entry carries. Verified against the corpus the same day: 21 entries,
+ * every child accounted for — `sections`, `structure.json`, `manifest.jsonld`,
+ * `blocks` and `images.json` on all 21, `images/` on 13, `ocr/` on 2, and
+ * **nothing else anywhere**.
+ */
+export const ENTRY_DIRECTORIES: readonly string[] = ["sections", "blocks", "images", "ocr"];
+
+/** Sidecars an entry may carry beyond {@link KIND_SIDECAR}'s kind markers. */
+export const ENTRY_SIDECARS: readonly string[] = ["images.json", "manifest.jsonld", SUMMARIES_FILE];
+
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["paged", "structure.json"],
   ["tabular", "tabular.jsonld"],
@@ -273,6 +325,7 @@ export const PAGED_ONLY: readonly string[] = [
   "blocks",
   "narrative-provenance",
   "image-descriptions",
+  "block-summaries",
 ];
 
 /**
@@ -320,6 +373,50 @@ function derivableRequirements(dir: string): Requirement[] {
   const out: Requirement[] = [];
   const has = (p: string) => existsSync(join(dir, p));
 
+  // ── contents — `3psh`. WHAT AN ENTRY MAY NOT CONTAIN ────────────────────
+  //
+  // Every other requirement here asks whether something is PRESENT. None
+  // asked what else is, so an entry passed with an orphan directory inside
+  // it — measured 2026-09-23 on a real complete entry, which passed clean,
+  // passed again with a nested orphan holding an `images.json` under the
+  // WRONG `doc_id`, and passed a third time with a wholly unexpected loose
+  // file. See {@link ENTRY_DIRECTORIES} for the incident this comes from.
+  //
+  // REPORTED, NEVER REMOVED. `deletion-requires-confirmation`: an agent does
+  // not delete a durable artefact on its own initiative, and an orphan is
+  // evidence of which arm misfiled it. Naming it is the whole job.
+  //
+  // `unmet` rather than a third state, and deliberately: unlike a vector
+  // figure no arm can read, this is a file somebody can move or delete. It
+  // is actionable, so it blocks.
+  {
+    const allowed = new Set([...ENTRY_DIRECTORIES, ...ENTRY_SIDECARS, ...KIND_SIDECAR.map(([, f]) => f)]);
+    let children: string[];
+    try {
+      children = readdirSync(dir);
+    } catch {
+      // Unreadable is not empty. A directory this cannot list has not been
+      // shown to be clean, and saying "contents: met" over it would be the
+      // pass-by-default every other check here refuses.
+      children = [];
+      out.push({ name: "contents", state: "unmet", detail: `could not list ${dir}` });
+    }
+    const stray = children.filter((c) => !allowed.has(c) && !c.startsWith("."));
+    if (stray.length > 0) {
+      out.push({
+        name: "contents",
+        state: "unmet",
+        detail:
+          `${stray.length} unexpected child(ren): ${stray.sort().join(", ")}. ` +
+          `An entry holds only ${[...allowed].sort().join(", ")} — an arm handed ` +
+          `-o with a doc id this entry does not have writes here (bean 3psh). ` +
+          `Reported, not removed.`,
+      });
+    } else if (children.length > 0) {
+      out.push({ name: "contents", state: "met", detail: `${children.length} child(ren), all declared` });
+    }
+  }
+
   const structPath = join(dir, "structure.json");
   if (!has("structure.json")) {
     out.push({ name: "structure", state: "unmet", detail: "no structure.json" });
@@ -336,10 +433,20 @@ function derivableRequirements(dir: string): Requirement[] {
     }
     if (s) {
       const secs = Array.isArray(s.sections) ? s.sections.length : 0;
+      // Conformance to pdf-structure/v1 (issue #1112). A file that parses but
+      // does not conform is not "met": every consumer of library/ reads this
+      // one shape, and a second spelling of a field is how gen-library-jsonld
+      // crashed on `section_id`.
+      const conform = PdfStructureSchema.safeParse(s);
+      const issues = conform.success
+        ? ""
+        : conform.error.issues.slice(0, 3).map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`).join("; ");
       out.push({
         name: "structure",
-        state: secs > 0 ? "met" : "unmet",
-        detail: `${s._schema ?? "no $schema"}, toc_source=${s.toc_source}, ${secs} sections`,
+        state: secs > 0 && conform.success ? "met" : "unmet",
+        detail: conform.success
+          ? `${s._schema ?? "no $schema"}, toc_source=${s.toc_source}, ${secs} sections`
+          : `does not conform to pdf-structure/v1: ${issues}`,
       });
       // `structure_note` is where a rung says what it did NOT claim -- notably
       // that no chapter tree was inferred (bean 6xaz). Its absence is not a
@@ -427,6 +534,37 @@ function derivableRequirements(dir: string): Requirement[] {
           ? "no narrative in any bearing file"
           : tally,
     });
+  }
+
+  // Block summaries — the agent-summary QA sidecar (owner, 2026-09-24).
+  //
+  // ADVISORY, like `narrative-review`: the backlog is reported and never
+  // failed on. An entry is not incomplete because nobody has summarised its
+  // sections yet — the owner's word was "slowly drain", and a gate that
+  // failed on a backlog of 1325 would be a gate everybody learned to ignore.
+  //
+  // What IS unmet is a sidecar that does not mean what it says: one that will
+  // not parse, names another entry, or records a summary of a block that is
+  // not there or of a text the block no longer points at. The schema cannot
+  // see any of those; this is the semantic half of its QA.
+  {
+    const defects = sidecarDefects(dir);
+    if (defects.length) {
+      out.push({ name: "block-summaries", state: "unmet", detail: defects.slice(0, 2).join("; ") });
+    } else {
+      const t = tally(entryItems(dir));
+      out.push({
+        name: "block-summaries",
+        state: "met",
+        detail:
+          t.prose === 0
+            // A determined zero, said as one.
+            ? "no prose block with text to summarise"
+            : `${t.summarised} of ${t.prose} prose block(s) summarised ` +
+              `(${t.draft} draft, ${t.confirmed} confirmed); backlog ${t.backlog} ` +
+              `(${t.stale} stale, ${t.rejected} rejected) — advisory`,
+      });
+    }
   }
 
   // Tabular records (bean `p67i`).
@@ -933,8 +1071,10 @@ export function checkAll(root: string): EntryReport[] | undefined {
   // for the same reason, and this does not delegate to it: a gate that relies
   // on a DIFFERENT tool having run is a gate with a hole in it.
   const seen = new Map<string, string>();
-  for (const lib of libs) {
-    if (!existsSync(lib)) continue;
+  // Declared-but-absent is REPORTED, not dropped (bean `95ir`).
+  const presence = splitDeclared(libs);
+  noteAbsent(presence.absent, "a library");
+  for (const lib of presence.present) {
     for (const d of readdirSync(lib).sort()) {
       if (!statSync(join(lib, d)).isDirectory()) continue;
       const prior = seen.get(d);
@@ -1113,7 +1253,9 @@ if (import.meta.main) {
     // Across EVERY declared library: an exception that has expired in the
     // second one is a gate lying about its coverage just as much as one that
     // expired in the first. Bean `a02m`.
-    const libs = libRoot ? directoriesForGraph(libRoot, "library").filter((d) => existsSync(d)) : [];
+    const declaredLibs = libRoot ? splitDeclared(directoriesForGraph(libRoot, "library")) : { present: [], absent: [] };
+    noteAbsent(declaredLibs.absent, "a library");
+    const libs = declaredLibs.present;
     if (libs.length > 0) {
       const dirs = libs.flatMap((lib) =>
         readdirSync(lib)
@@ -1153,5 +1295,21 @@ if (import.meta.main) {
     for (const r of reports) console.log(`wrote ${sidecarFor(writeRoot, r)}`);
   }
   console.log(argv.includes("--json") ? JSON.stringify(reports, null, 2) : format(reports));
+  if (!target && !argv.includes("--json")) {
+    // The drain's backlog, corpus-wide. Reported, never gated — see
+    // `block-summaries` above and `scripts/summaries.ts`.
+    const root = instanceRootFor(resolve(".")) ?? resolve(".");
+    const t = tally(entryDirs(root).flatMap((d) => {
+      try {
+        return entryItems(d);
+      } catch {
+        return []; // that entry's `block-summaries` already says why
+      }
+    }));
+    console.log(
+      `\n  · block summaries: ${t.backlog} of ${t.prose} prose block(s) in the backlog ` +
+        `(${t.stale} stale), ${t.draft} draft(s) awaiting a person. Advisory — bun run summaries`,
+    );
+  }
   process.exit(reports.some((r) => r.requirements.some((q) => q.state === "unmet")) ? 1 : 0);
 }

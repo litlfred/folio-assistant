@@ -15,8 +15,23 @@ import { mkdtempSync, rmSync, existsSync, readFileSync, writeFileSync, symlinkSy
 import { join, resolve } from "path";
 import { tmpdir } from "os";
 
-import { initFolio, isValidSlug, slugify, type InitFolioOptions } from "../init-folio";
+import { spawnSync } from "child_process";
+
+import { parse as parseYaml } from "yaml";
+
+import {
+  enclosingRepoRoot,
+  folioTemplates,
+  initFolio,
+  isValidSlug,
+  renderTemplate,
+  slugify,
+  templatesDir,
+  TEMPLATE_PLACEHOLDER_RE,
+  type InitFolioOptions,
+} from "../init-folio";
 import { instanceConfigFilename } from "../../schemas/harness-config.js";
+import { nodeOfKind, parseTodoGraph } from "../../schemas/todo-graph.js";
 
 /**
  * The scaffold names its config after the folio's SLUG, not after the temp
@@ -121,8 +136,40 @@ describe("what gets written", () => {
     // A reviewer's tagged comment refreshes the preview's review comments (423d).
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
     expect(wf).toContain("issues: read");
+    // A push to main publishes main's site: the before side of every preview (5uuf).
+    expect(wf).toMatch(/^\s*push:\n\s*branches: \[main\]$/m);
     expect(r.notes.join(" ")).not.toContain("wired but OFF");
     expect(readFileSync(join(d, ".gitignore"), "utf-8")).toContain("_site/");
+  });
+
+  test("a new folio declares a todos graph with a feedback directory, so a review decision has somewhere to go (423d)", () => {
+    const d = tmp();
+    initFolio(opts(d, { contentType: "document" }));
+    const g = parseTodoGraph(JSON.parse(readFileSync(join(d, "todos", "todos.json"), "utf-8")));
+    const fb = nodeOfKind(g, "todo-feedback");
+    expect(fb?.path).toBe("feedback");
+    // Declared AND present: a declared-but-absent directory is the dh4f defect.
+    for (const n of g.directories) expect(existsSync(join(d, "todos", n.path))).toBe(true);
+  });
+
+  test("a folio in a SUBFOLDER of a repository gets no workflow GitHub would never read, and is told why (zdfa)", () => {
+    const repo = tmp();
+    expect(spawnSync("git", ["init", "-q"], { cwd: repo }).status).toBe(0);
+    const sub = join(repo, "guides", "handbook");
+    expect(enclosingRepoRoot(sub)).not.toBeNull();
+    const r = initFolio(opts(sub, { contentType: "document", skipVcs: false, link: "sibling" }));
+    expect(existsSync(join(sub, ".github/workflows/staging.yml"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("cannot stage a folio below it");
+    // Never a repository nested inside another by accident.
+    expect(existsSync(join(sub, ".git"))).toBe(false);
+    expect(r.notes.join(" ")).toContain("no git init");
+  });
+
+  test("a folio at its repository's root is not enclosed (zdfa)", () => {
+    const d = tmp();
+    expect(enclosingRepoRoot(d)).toBeNull();
+    expect(spawnSync("git", ["init", "-q"], { cwd: d }).status).toBe(0);
+    expect(enclosingRepoRoot(d)).toBeNull();
   });
 
   test("a PAPER folio's staging caller is OFF: dispatch-only, and its build refuses until set (ojcx)", () => {
@@ -131,6 +178,7 @@ describe("what gets written", () => {
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(false);
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(false);
+    expect(wf.split("\n").some((l) => /^\s*push:/.test(l))).toBe(false);
     expect(wf).toContain("exit 1");
     expect(r.notes.join(" ")).toContain("Staging previews are wired but OFF");
   });
@@ -213,6 +261,124 @@ describe("what gets written", () => {
     const doc = tmp();
     initFolio(opts(doc));
     expect(readFileSync(join(doc, ".gitignore"), "utf-8")).not.toContain(".lake/");
+  });
+});
+
+/**
+ * Bean `52dz`. Seven workflows sat in the platform's `.github/workflows/`
+ * where they could never run — each needed a folio — and the owner ruled they
+ * become templates `folio_init` writes: the three QA ones for every folio,
+ * the four Lean ones (and what they call) for a paper folio only.
+ */
+describe("workflow templates (52dz)", () => {
+  const GENERIC = ["qa-sweep.yml", "qa-sweep-nightly.yml", "section-title-audit.yml"];
+  const LEAN = ["blueprint.yml", "lean-build.yml", "lean-build-sidecar.yml", "lean_ci.yml"];
+  const LEAN_SUPPORT = [
+    ".github/actions/lake-cache-restore/action.yml",
+    ".github/scripts/axiom_report.py",
+    ".github/scripts/extract_proof_objects.py",
+    ".github/scripts/update_proof_status.py",
+    ".github/scripts/generate_dependency_graph.py",
+    ".github/scripts/folio_lean/config.py",
+  ];
+
+  /** Every file the scaffold wrote under `.github/`. */
+  function githubFiles(r: { created: string[] }): string[] {
+    return r.created.filter((f) => f.startsWith(".github/"));
+  }
+
+  test("a DOCUMENT folio gets the three generic workflows and none of the Lean ones", () => {
+    const d = tmp();
+    const r = initFolio(opts(d));
+    for (const wf of GENERIC) {
+      expect(r.created).toContain(`.github/workflows/${wf}`);
+      expect(existsSync(join(d, ".github/workflows", wf))).toBe(true);
+    }
+    for (const wf of LEAN) expect(existsSync(join(d, ".github/workflows", wf))).toBe(false);
+    // Nor the scripts and action only the Lean workflows call.
+    for (const f of LEAN_SUPPORT) expect(existsSync(join(d, f))).toBe(false);
+  });
+
+  test("a PAPER folio gets the generic workflows AND the Lean ones, with what they call", () => {
+    const d = tmp();
+    const r = initFolio(opts(d, { contentType: "paper" }));
+    for (const wf of [...GENERIC, ...LEAN]) {
+      expect(r.created).toContain(`.github/workflows/${wf}`);
+      expect(existsSync(join(d, ".github/workflows", wf))).toBe(true);
+    }
+    for (const f of LEAN_SUPPORT) {
+      expect(r.created).toContain(f);
+      expect(existsSync(join(d, f))).toBe(true);
+    }
+  });
+
+  test("the Lean workflows' local action and scripts are ones the scaffold wrote", () => {
+    // `uses: ./.github/actions/<x>` and `python3 .github/scripts/<y>` resolve in
+    // the FOLIO, so each must be something this scaffold put there.
+    const d = tmp();
+    initFolio(opts(d, { contentType: "paper" }));
+    for (const wf of LEAN) {
+      const body = readFileSync(join(d, ".github/workflows", wf), "utf-8");
+      for (const m of body.matchAll(/uses:\s*\.\/(\.github\/actions\/[\w-]+)/g)) {
+        expect(existsSync(join(d, m[1]!, "action.yml")), `${wf} uses ${m[1]}`).toBe(true);
+      }
+      for (const m of body.matchAll(/python3\s+(\.github\/scripts\/[\w-]+\.py)/g)) {
+        expect(existsSync(join(d, m[1]!)), `${wf} runs ${m[1]}`).toBe(true);
+      }
+    }
+  });
+
+  test("nothing written names one folio's papers, and no placeholder is left", () => {
+    for (const contentType of ["document", "paper"] as const) {
+      const d = tmp();
+      // A non-default platform path, so a placeholder that was never
+      // substituted cannot pass by coinciding with the default.
+      const r = initFolio(opts(d, { contentType, assistantPath: "vendor/fa" }));
+      const written = githubFiles(r);
+      expect(written.length).toBeGreaterThan(0);
+      for (const f of written) {
+        const body = readFileSync(join(d, f), "utf-8");
+        expect(body.toLowerCase(), `${f} names qou`).not.toContain("qou");
+        expect([...body.matchAll(TEMPLATE_PLACEHOLDER_RE)].map((m) => m[0]), `${f} placeholders`).toEqual([]);
+      }
+      // ...and the substitution happened: the platform path the caller chose
+      // is the one the QA sweep runs from.
+      expect(readFileSync(join(d, ".github/workflows/qa-sweep.yml"), "utf-8")).toContain(
+        "vendor/fa/cat-harness/content/pipeline/qa-sweep.ts",
+      );
+      // GitHub's own `${{ … }}` expressions survive substitution untouched.
+      expect(readFileSync(join(d, ".github/workflows/qa-sweep-nightly.yml"), "utf-8")).toContain(
+        "${{ github.run_id }}",
+      );
+    }
+  });
+
+  test("an unknown placeholder is refused, not written through", () => {
+    const values = { assistant: "a", folio: "f", platform_git: "g", platform_repo: "r" };
+    expect(renderTemplate("run: {{assistant}}/x ${{ github.ref }}", values)).toBe("run: a/x ${{ github.ref }}");
+    expect(() => renderTemplate("run: {{nope}}", values)).toThrow(/unknown template placeholder/);
+  });
+
+  test("every template parses as YAML, before and after substitution", () => {
+    const values = { assistant: "folio-assistant", folio: "folio", platform_git: "g", platform_repo: "o/r" };
+    const ymls = folioTemplates("paper").filter((t) => t.target.endsWith(".yml"));
+    // Guard against a green run over nothing if the directory moves.
+    expect(ymls.length).toBeGreaterThanOrEqual(GENERIC.length + LEAN.length + 1);
+    for (const t of ymls) {
+      const raw = readFileSync(t.source, "utf-8");
+      expect(() => parseYaml(raw), t.source).not.toThrow();
+      const doc = parseYaml(renderTemplate(raw, values)) as Record<string, unknown>;
+      expect(typeof doc.name, `${t.source} has a name`).toBe("string");
+    }
+  });
+
+  test("the templates come from the declared directory, not a path written in code", () => {
+    // `folio-templates` is looked up by id; the directory it names must hold
+    // both profiles the content types ask for.
+    const dir = templatesDir();
+    expect(existsSync(join(dir, "document"))).toBe(true);
+    expect(existsSync(join(dir, "paper"))).toBe(true);
+    expect(folioTemplates("document").every((t) => !t.target.includes("lean"))).toBe(true);
   });
 });
 

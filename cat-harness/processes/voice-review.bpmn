@@ -3,9 +3,10 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_VoiceReview"
-                  targetNamespace="http://folio-assistant.dev/bpmn/review">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Voice overlay review — a SUBPROCESS of Process_NarrativeReview.
@@ -41,6 +42,7 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
     <bpmn:laneSet id="LaneSet_VoiceReview">
       <bpmn:lane id="Lane_NarrativeReviewer" name="Narrative reviewer">
         <bpmn:documentation>Runs every active voice to completion rather than stopping at the first, because rules from separate voices are UNIONED rather than merged — two voices can both flag capitalisation and both findings must stand, so folding voice N+1's pass into voice N's would lose which voice raised what. At each citation, this lane also has to route the defect to the right place: a rule its own citation does not support goes to Task_RuleIsWrong as a finding against the VOICE, never into Task_Adjudicate, which only ever judges the block.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="narrative-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_BaseVoiceDone</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_AnyActive</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_NoVoice</bpmn:flowNodeRef>
@@ -58,7 +60,9 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
 
     <bpmn:startEvent id="Start_BaseVoiceDone" name="Base voice&#10;adjudicated"/>
 
-    <bpmn:exclusiveGateway id="GW_AnyActive" name="Any voice&#10;activated?"/>
+    <bpmn:exclusiveGateway id="GW_AnyActive" name="Any voice&#10;activated?">
+      <bpmn:documentation>Is any voice activated for this block, beyond the base voice already adjudicated? `none` ends with nothing to review; `one or more` loads the active voices.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:endEvent id="End_NoVoice" name="No voice —&#10;nothing to review">
       <bpmn:documentation>A pass, not a gap. An empty `voices.active` is the default and a legitimate answer: this instance ships four voices and activates none.</bpmn:documentation>
@@ -66,39 +70,43 @@ Three outcomes, all legitimate, and the third is the one that needs recording: a
 
     <bpmn:task id="Task_LoadActive" name="Load the active voices">
       <bpmn:documentation>The activated set only, never everything shipped. An id naming no shipped voice is an error rather than a skip — a folio that believes it is applying a voice and is applying nothing has the cleanest-looking output of the three.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_MechanicalHalf" name="Run the rule's mechanical half">
       <bpmn:documentation>Whatever `patterns` and `terminology` the rule carries. A `judgementOnly` rule has no mechanical half by declaration, which is different from nobody having written one yet.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_OpenCitation" name="Open the rule's citation">
       <bpmn:documentation>Every rule resolves to a real `library/` section or a KG node, and carries the quote it was read from. Opening it is what lets a reviewer say WHY the rule applies — and it is the only way to catch a rule that misread its own source.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_QuoteSupports" name="Does the quote&#10;support the rule?"/>
+    <bpmn:exclusiveGateway id="GW_QuoteSupports" name="Does the quote&#10;support the rule?">
+      <bpmn:documentation>Answered by opening the rule's citation: does the quoted source support the rule? `no` means the rule itself is the defect and is beaned; `yes` goes to adjudicating the prose, the rule's scope or an exception.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_RuleIsWrong" name="The RULE is the defect — bean it">
       <bpmn:documentation>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags "clearly", and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="voice-overlay-review"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="voice-overlay-review"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate: prose, scope, or exception">
+    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_CriterionAdjudication" name="Adjudicate: prose, scope, or exception">
       <bpmn:documentation>The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why).</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/><bootstrap.processes:skill ref="adjudication"/><cat-harness.processes:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
 
-    <bpmn:exclusiveGateway id="GW_MoreVoices" name="Another active&#10;voice?"/>
+    <bpmn:exclusiveGateway id="GW_MoreVoices" name="Another active&#10;voice?">
+      <bpmn:documentation>Is another active voice left to review? `yes` runs that voice's mechanical half; `no` records the results on the block's QA sidecar.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_RecordOnSidecar" name="Record on the block's QA sidecar">
       <bpmn:documentation>Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_VoiceReviewed" name="Voices&#10;adjudicated"/>

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/evidence-appraisal.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/evidence-appraisal.md) — do not edit here.
+> Generated from [`cat-harness/skills/content-lifecycle/evidence-appraisal.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/evidence-appraisal.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/evidence-appraisal.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/evidence-appraisal.md){: .fa-edit-source }
 
 {% raw %}
 # Evidence Appraisal
@@ -29,6 +29,12 @@ work around the platform rather than with it.
 So: the folio declares the system. This skill covers what appraisal *is*, what
 it attaches to, and what has to survive as a record afterwards — the parts that
 are the same whichever system you have declared.
+
+One system is written down here to declare: [`grade`](../authoring-who-smart-guidelines/grade.md),
+for a WHO guideline folio, with its certainty levels, rating reasons, EtD
+criteria and recommendation direction and strength as code lists. It is
+available, not a default — a folio that declares nothing still gets the
+refusal above.
 
 ## Responsibilities
 

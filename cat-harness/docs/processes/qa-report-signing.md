@@ -19,6 +19,7 @@ Attesting a QA report: build the test run, work out what the performer can actua
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html)
 
 ## Lanes — who acts
@@ -40,5 +41,13 @@ Every one of the 5 step(s) is documented.
 | **Sign over the API**<br>`Task_ApiSign` | Attestation service (API) | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | The attestation service signs the run hashes. Reached only from the one table row that has both egress and a configured endpoint. |
 | **Sign as release authority**<br>`Task_HumanSign` | Human signer | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route. |
 | **Record which route signed it**<br>`Task_RecordAttestation` | Validation and QA (mechanical + agents) | [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | The attestation records the route, not only the signature. A reader who cannot tell an API signature from a human one cannot tell which trust assumption they are relying on. |
+
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which signing route?**<br>`Gateway_SigningRoute` | Answered by the performer's resolved reach (effectiveReach plus the signing-api probe). `api` signs over the API; `human` has a release authority sign. | **api** → Sign over the API<br>**human** → Sign as release authority |
 
 {% endraw %}

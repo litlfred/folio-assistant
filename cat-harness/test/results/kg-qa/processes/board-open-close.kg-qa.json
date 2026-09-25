@@ -5,7 +5,7 @@
     "id": "Process_BoardOpenClose",
     "path": "processes/board-open-close.bpmn"
   },
-  "source_hash": "sha256:2c682445ba75902112c90a6a9dbf5b02cc915553b6cdc2d1dacdd06a7d7e6497",
+  "source_hash": "sha256:fe3b41b208a3a5b1f3e8b46333cb327a8f247db793a5b707d9df235ef2780ca2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,47 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_RenderAvatars",
-          "detail": "\"Render every card as its avatar\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Open",
-          "detail": "\"Project a window onto the board\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Raise",
-          "detail": "\"Raise the window the reader selected\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_Close",
-          "detail": "\"Close the window back to its avatar\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_OfferWayBack",
-          "detail": "\"Leave a reachable way back\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_ResolveThreshold",
-          "detail": "\"Resolve the kind's zoom threshold\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_SwapToAvatar",
-          "detail": "\"Swap cards below the threshold; leave open windows alone\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 14,
+    "fail": 0,
+    "n/a": 10,
     "unknown": 0
   }
 }

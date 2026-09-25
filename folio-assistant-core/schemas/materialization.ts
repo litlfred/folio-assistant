@@ -111,8 +111,16 @@ export const MATERIALIZATION_SCHEMA_TAG = "folio-materialization/v1";
  * `both` is a real state and not a hedge: the same PDF can be the archival
  * master AND the input a derivation was run over. It carries archival's
  * obligations (fixity required, no expiry expected).
+ *
+ * `compiled` is the third kind (bean `gpdo`, owner's pick 2026-09-23, "Third
+ * purpose"): a Lean `.olean`, or the AST sushi builds from FSH. It is DERIVED,
+ * so it is not archival (the source is what you would rebuild from); it is
+ * EXPENSIVE, so it is not merely working (regenerating costs minutes or hours);
+ * and it is INVALIDATED BY ITS INPUTS, which neither other purpose models. So
+ * it carries {@link CompiledInputsSchema} instead of a lifetime, and its
+ * validity is asked of {@link compiledValidity} BEFORE use, never on a schedule.
  */
-export const MATERIALIZATION_PURPOSES = ["working", "archival", "both"] as const;
+export const MATERIALIZATION_PURPOSES = ["working", "archival", "both", "compiled"] as const;
 export type MaterializationPurpose = (typeof MATERIALIZATION_PURPOSES)[number];
 
 /**
@@ -132,6 +140,32 @@ export const FixitySchema = z
   })
   .strict();
 export type Fixity = z.infer<typeof FixitySchema>;
+
+/**
+ * What a COMPILED copy was built from. Its validity is a statement about
+ * these, not about its own bytes.
+ *
+ * The fixity question inverts here. For an archive it asks "are these the
+ * bytes we stored"; for a compiled artefact it asks "was this built from the
+ * inputs we have NOW". A cache that passes a self-digest and was built from
+ * stale inputs is exactly the failure, and it passes every byte check.
+ *
+ * `toolchain` and `sourceRevision` are required: without them nothing can be
+ * compared. `inputDigest` is optional because not every builder exposes one
+ * whole-input hash. Lake keeps per-module `.trace` files instead, and a
+ * revision match is then the coarser test (see `lean-cache-restore`).
+ */
+export const CompiledInputsSchema = z
+  .object({
+    /** The compiler and its version: `leanprover/lean4:v4.24.0`, `sushi 3.12.0`. */
+    toolchain: z.string().min(1),
+    /** The revision of the source the artefact was built from, e.g. a commit sha. */
+    sourceRevision: z.string().min(1),
+    /** A sha256 over the build inputs, where the builder can produce one. */
+    inputDigest: z.string().regex(/^[0-9a-f]{64}$/, "a sha256 digest is 64 lowercase hex characters").optional(),
+  })
+  .strict();
+export type CompiledInputs = z.infer<typeof CompiledInputsSchema>;
 
 /**
  * A digital signature over the materialized bytes.
@@ -335,6 +369,8 @@ export const MaterializationSchema = z
     purpose: z.enum(MATERIALIZATION_PURPOSES).optional(),
     /** Required when `purpose` is `archival` or `both`. */
     fixity: FixitySchema.optional(),
+    /** Required when `purpose` is `compiled`, and only allowed then. See {@link CompiledInputsSchema}. */
+    inputs: CompiledInputsSchema.optional(),
     /** When the local copy was taken, and against what upstream version. */
     materializedAt: z.string().min(1).optional(),
     upstreamVersion: z.string().min(1).optional(),
@@ -393,12 +429,21 @@ export const MaterializationSchema = z
             "would be re-fetched from is what it exists to survive",
         });
       }
-      if (m.purpose === "working" && m.gates?.sourceLoss.verdict === "permitted") {
+      if ((m.purpose === "working" || m.purpose === "compiled") && m.gates?.sourceLoss.verdict === "permitted") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message:
-            "a `working` materialization cannot discharge `sourceLoss`: the derived content is " +
+            `a \`${m.purpose}\` materialization cannot discharge \`sourceLoss\`: the derived content is ` +
             "not the source. Only an archival copy of the original bytes answers that gate",
+        });
+      }
+      if (m.purpose === "compiled" && !m.inputs) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "a `compiled` copy requires `inputs` (toolchain and sourceRevision at least). Its validity " +
+            "is a statement about what it was built from, and with no inputs recorded nothing can " +
+            "tell a current build from a stale one",
         });
       }
       if (!m.gates) {
@@ -410,7 +455,16 @@ export const MaterializationSchema = z
             "schema exists to make unrepresentable",
         });
       }
-    } else if (m.gates) {
+    }
+    if (m.inputs && m.purpose !== "compiled") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "`inputs` belongs to a `compiled` copy only. On any other purpose it would claim a " +
+          "build-validity rule that nothing applies",
+      });
+    }
+    if (m.state !== "materialized" && m.gates) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message:
@@ -433,6 +487,8 @@ export type FreshnessVerdict =
   | "expired"
   | "no-expiry"
   | "permanent"
+  /** A `compiled` copy: its lifetime is its inputs, not a date. Ask {@link compiledValidity} before use. */
+  | "input-bound"
   | "not-materialized";
 
 /**
@@ -444,10 +500,47 @@ export type FreshnessVerdict =
  */
 export function freshness(m: Materialization, now: Date = new Date()): FreshnessVerdict {
   if (m.state !== "materialized") return "not-materialized";
+  if (m.purpose === "compiled" && !m.expiresAt) return "input-bound";
   if (!m.expiresAt) {
     return m.purpose === "archival" || m.purpose === "both" ? "permanent" : "no-expiry";
   }
   return new Date(m.expiresAt).getTime() > now.getTime() ? "fresh" : "expired";
+}
+
+/**
+ * Is a COMPILED copy still valid for the inputs we have now? Call it BEFORE
+ * use; a scheduled check would let a stale build be used between two runs.
+ *
+ * Three answers, not a boolean:
+ * - `valid`: every input that both sides state matches.
+ * - `stale-inputs`: at least one differs, and `differs` names which, so the
+ *   caller rebuilds for a reason it can report.
+ * - `cannot-tell`: the record is not a compiled copy, or `current` does not
+ *   state an input the record needs compared (toolchain and sourceRevision
+ *   always; inputDigest when the record has one). Treating that as valid is
+ *   the failure this function exists to prevent.
+ *
+ * An `inputDigest` on the record but not in `current` is `cannot-tell`, not a
+ * pass on the revision alone: the record promised a finer check than the
+ * caller can make.
+ */
+export type CompiledValidity =
+  | { verdict: "valid" }
+  | { verdict: "stale-inputs"; differs: Array<keyof CompiledInputs> }
+  | { verdict: "cannot-tell"; why: string };
+
+export function compiledValidity(m: Materialization, current: Partial<CompiledInputs>): CompiledValidity {
+  if (m.state !== "materialized" || m.purpose !== "compiled" || !m.inputs) {
+    return { verdict: "cannot-tell", why: "not a materialized `compiled` copy with recorded inputs" };
+  }
+  const want: Array<keyof CompiledInputs> = ["toolchain", "sourceRevision"];
+  if (m.inputs.inputDigest) want.push("inputDigest");
+  const missing = want.filter((k) => current[k] === undefined);
+  if (missing.length) {
+    return { verdict: "cannot-tell", why: `the current inputs do not state: ${missing.join(", ")}` };
+  }
+  const differs = want.filter((k) => current[k] !== m.inputs![k]);
+  return differs.length ? { verdict: "stale-inputs", differs } : { verdict: "valid" };
 }
 
 /**
@@ -460,6 +553,22 @@ export function freshness(m: Materialization, now: Date = new Date()): Freshness
  */
 export function unansweredGates(g: Gates): Array<keyof Gates> {
   return (Object.keys(g) as Array<keyof Gates>).filter((k) => g[k].verdict === "unknown");
+}
+
+/**
+ * The gates that stop a held copy being PUBLISHED — linked from a page or served
+ * from a CDN — as distinct from being held. Bean `cw35`, from the `v048` roast:
+ * every held IRIS PDF carried `copyright: unknown` and was redistributed anyway,
+ * because nothing turned a verdict into a decision.
+ *
+ * Only `copyright` and `restrictions` decide publication; the other three are
+ * about keeping a copy, not showing it. Anything short of `permitted` blocks,
+ * `unknown` included: an unanswered licence is not a licence. No gates at all
+ * blocks on both, for the same reason.
+ */
+export const PUBLICATION_GATES = ["copyright", "restrictions"] as const;
+export function publicationBlockers(g: Gates | undefined): Array<(typeof PUBLICATION_GATES)[number]> {
+  return PUBLICATION_GATES.filter((k) => g?.[k]?.verdict !== "permitted");
 }
 
 /** Gates that came back `refused`. A non-empty result means the copy must not exist. */

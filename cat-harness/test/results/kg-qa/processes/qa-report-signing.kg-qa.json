@@ -5,7 +5,7 @@
     "id": "Process_QaReportSigning",
     "path": "processes/qa-report-signing.bpmn"
   },
-  "source_hash": "sha256:93ef1ef8436bb0f66a2dab658ae34bd62d9036c818d664854b77333233a06cb0",
+  "source_hash": "sha256:60b40d90b5f7515220b4c472f39dfccd614222acfdb995fdb8bcbca7ce73608d",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -91,12 +91,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 15,
     "fail": 1,
-    "n/a": 6,
+    "n/a": 8,
     "unknown": 0
   }
 }

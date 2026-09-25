@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:6e74bfe0c3da83987081cdc888260bae80f84a745d2a5e9ddb7f2a71ee4d1544",
+  "source_hash": "sha256:0ab519e08abe25172abac1ec8224fba4483c1303ede7cb48f92754bf767948cd",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -89,35 +89,52 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Check",
-          "detail": "\"Run check:ci-health,&#10;WRITING the report file\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Label",
-          "detail": "\"Ensure the tracking&#10;label exists\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Close",
-          "detail": "\"Close the&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Track",
-          "detail": "\"Open or EDIT the one&#10;tracking issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/ci-health-watch.bpmn",
+      "code": ".github/workflows/ci-health.yml",
+      "prose_hash": "0ab519e08abe",
+      "code_hash": "13257f52fe55",
+      "by": "baseline"
+    }
+  ]
 }

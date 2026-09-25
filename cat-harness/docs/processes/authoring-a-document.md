@@ -19,16 +19,17 @@ folio-assistant — authoring a document end to end (no Lean, no required TeX). 
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Content types — Documents & policy guidance](../content-types.html#documents-policy-guidance), [Writing a document — What a document folio is](../guides/writing-a-document.html#what-a-document-folio-is)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Author (person) | — | The only place a person acts before the process becomes agent- and pipeline-driven: Task_Plan sets the chapters, the blocks each needs and which statements are normative, once, before Lane_WorkPlan seeds a bean and Lane_Agent takes over every later edit, including every iteration the review and profile-check loops send back. |
-| Work plan — beans (shared by humans and agents) | — | Touched exactly once in this process — Task_SeedPlan turns the plan into a bean right after Task_Plan, so a resumed session or a sibling agent can pick the authoring loop up without re-deriving what was decided at the top. |
-| Authoring agent (system) | — | Task_AuthorBlocks is where every loop in this process lands — a profile violation from Lane_Build and an iterate from Lane_Reviewer both come back here — so this lane, not either gate, is what actually turns a rejection into a fixed block; Task_Scaffold runs once, before either loop exists. |
-| Build pipeline — validate · render · publish | — | Owns the one gate this process has that the paper process does not — the profile check — so nothing with a math kind, a lean field or a .lean sibling reaches Task_Validate or Task_Render pretending to be document content; everything downstream of Gateway_ProfileClean assumes that profile. |
-| Reviewer / subject-matter expert | — | Owns the one gate that decides publish or iterate, and is deliberately unspecialised: this process relaxes the paper process's clinical-SME lane into whichever reviewer a given document actually binds, because no single expertise fits every document the way it does a guideline. |
+| Author (person) | `author` | The only place a person acts before the process becomes agent- and pipeline-driven: Task_Plan sets the chapters, the blocks each needs and which statements are normative, once, before Lane_WorkPlan seeds a bean and Lane_Agent takes over every later edit, including every iteration the review and profile-check loops send back. |
+| Work plan — beans (shared by humans and agents) | `work-plan` | Touched exactly once in this process — Task_SeedPlan turns the plan into a bean right after Task_Plan, so a resumed session or a sibling agent can pick the authoring loop up without re-deriving what was decided at the top. |
+| Authoring agent (system) | `authoring-agent` | Task_AuthorBlocks is where every loop in this process lands — a profile violation from Lane_Build and an iterate from Lane_Reviewer both come back here — so this lane, not either gate, is what actually turns a rejection into a fixed block; Task_Scaffold runs once, before either loop exists. |
+| Build pipeline — validate · render · publish | `build-pipeline` | Owns the one gate this process has that the paper process does not — the profile check — so nothing with a math kind, a lean field or a .lean sibling reaches Task_Validate or Task_Render pretending to be document content; everything downstream of Gateway_ProfileClean assumes that profile. |
+| Reviewer / subject-matter expert | `reviewer` | Owns the one gate that decides publish or iterate, and is deliberately unspecialised: this process relaxes the paper process's clinical-SME lane into whichever reviewer a given document actually binds, because no single expertise fits every document the way it does a guideline. |
 
 ## Steps
 
@@ -45,5 +46,14 @@ Every one of the 9 step(s) is documented.
 | **7 · Render MD / HTML / PDF**<br>`Task_Render` | Build pipeline — validate · render · publish | [`document-publishing`](../reference/skill-instructions/document-publishing.html) | Assemble to Markdown, then pandoc. The PDF goes through an HTML engine — never latexmk. |
 | **8 · Review and feedback**<br>`Task_Review` | Reviewer / subject-matter expert | [`content-review`](../reference/skill-instructions/content-review.html) | The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document. |
 | **9 · Publish**<br>`Task_Publish` | Build pipeline — validate · render · publish | [`content-publish`](../reference/skill-instructions/content-publish.html) | See draft-to-publication.bpmn for the review and release path this expands into. Release authorisation is not relaxable. |
+
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Within the declared profile?**<br>`Gateway_ProfileClean` | Answered by the profile check (step 5): does every block stay within the folio's declared content profile? `violations` sends the author back to step 4 to fix the blocks; `clean` goes on to validation. | **violations** → 4 · Author blocks<br>**clean** → 6 · Validate |
+| **Ready to publish?**<br>`Gateway_ReviewOutcome` | The reviewer's call after step 8. `iterate` returns to authoring with the feedback; `approved` goes to publish. | **iterate** → 4 · Author blocks<br>**approved** → 9 · Publish |
 
 {% endraw %}

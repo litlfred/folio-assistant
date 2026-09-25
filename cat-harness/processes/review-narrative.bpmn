@@ -3,9 +3,10 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_NarrativeReview"
-                  targetNamespace="http://folio-assistant.dev/bpmn/review">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Narrative review — a SUBPROCESS, called never inherited.
@@ -33,6 +34,7 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
     <bpmn:laneSet id="LaneSet_NarrativeReview">
       <bpmn:lane id="Lane_NarrativeReviewer" name="Narrative reviewer">
         <bpmn:documentation>Turns mechanical matches into verdicts, not the other way round: `qa-checkers-voice.ts`, `qa-checkers-uses.ts` and `translation-block-qa.ts` produce candidates, and this lane is the only place a phrase-list hit becomes a wrong-register finding, an out-of-genre criterion, a stated exception, or nothing at all. House voice is adjudicated before any activated overlay is even reached, because an overlay adds to the house judgement rather than replacing it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="narrative-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ProseChanged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AdjudicateVoice</bpmn:flowNodeRef>
@@ -53,33 +55,35 @@ Everything this lane produces is ADVICE. The reviewer records findings; acceptin
         Open the block's `.qa.json`, not just the evidence line: register is a
         property of the passage, and the sidecar quotes one line of it.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_Adjudication" name="Adjudicate the voice findings">
+    <bpmn:callActivity id="Task_AdjudicateVoice" calledElement="Process_CriterionAdjudication" name="Adjudicate the voice findings">
       <bpmn:documentation>
         Three outcomes, all legitimate: the register is wrong for this genre;
         the criterion does not belong in this genre and should carry `profiles`;
         or the block is a stated exception and a reviewer entry records why.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-editorial-review"/><folio:skill ref="adjudication"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-editorial-review"/><bootstrap.processes:skill ref="adjudication"/><cat-harness.processes:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
     </bpmn:callActivity>
 
     <bpmn:callActivity id="Call_VoiceOverlay" name="Voice overlay review" calledElement="Process_VoiceReview">
       <bpmn:documentation>Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register.
 
 Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance's case and the default everywhere.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
     </bpmn:callActivity>
     <bpmn:task id="Task_ReviewUses" name="Review the editorial dependencies">
       <bpmn:documentation>
         `uses[]` is what a READER must have read to follow the block — never
         populated from the formal dependency graph.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="uses-editorial-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="uses-editorial-review"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?"/>
+    <bpmn:exclusiveGateway id="GW_Translated" name="Translated?">
+      <bpmn:documentation>Does this block have translations? `yes` reviews the translation too; `no` skips straight to the join.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:task id="Task_ReviewTranslation" name="Review the translation">
       <bpmn:documentation>
@@ -87,7 +91,7 @@ Placed after the base voice adjudication because a voice OVERLAYS the house voic
         trip needs a back-translator that has not seen the original; where none
         has run, the criterion carries no verdict and that is the honest state.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="translation-manager"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="translation-manager"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Join"/>
@@ -97,7 +101,7 @@ Placed after the base voice adjudication because a voice OVERLAYS the house voic
         A reviewer cannot accept a change — that is the editor's lane — so the
         output is findings on the sidecar, not a commit.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-feedback"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-feedback"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_NarrativeReviewed" name="Narrative&#10;reviewed"/>

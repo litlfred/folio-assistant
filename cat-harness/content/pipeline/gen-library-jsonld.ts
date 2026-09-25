@@ -29,7 +29,7 @@
  *
  * ```
  * library/<doc-id>/
- *   tabular.jsonld          (input — or tabular.csvw.jsonld, once eief lands)
+ *   tabular.jsonld          (input — or tabular.csvw.json, once eief lands)
  *   manifest.jsonld         ← contains → sheets, OR → blocks for a CSV
  *   sheets/<key>.jsonld     ← grouping node, workbook only
  *   blocks/table-NNN.jsonld ← one per sheet, carrying the header vocabulary
@@ -64,6 +64,7 @@
  *   bun run content/pipeline/gen-library-jsonld.ts --doc <doc-id>
  *
  * @module content/pipeline/gen-library-jsonld
+ * @covers library, uploads
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
@@ -74,6 +75,7 @@ import { findContentRepoRoot } from "./repo-root";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
+import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 
 interface StructureSection {
   id: string;
@@ -366,7 +368,7 @@ export type IngestRung = "paged" | "tabular" | "none";
  */
 export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
   ["paged", ["structure.json"]],
-  ["tabular", ["tabular.jsonld", "tabular.csvw.jsonld"]],
+  ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
 ];
 
 /**
@@ -513,7 +515,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
   if (rung === "tabular") {
     const record =
       readJson<Record<string, unknown>>(join(dir, "tabular.jsonld")) ??
-      readJson<Record<string, unknown>>(join(dir, "tabular.csvw.jsonld"));
+      readJson<Record<string, unknown>>(join(dir, TABULAR_CSVW_FILENAME));
     const shape = record ? tabularShapeOf(record) : undefined;
     // The record is there and we could not read it. Reporting an empty
     // document here would assert the dataset has no sheets, which is a claim

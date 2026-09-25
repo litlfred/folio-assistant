@@ -5,7 +5,7 @@
     "id": "Process_Adjudication",
     "path": "processes/adjudication.bpmn"
   },
-  "source_hash": "sha256:efdee5db632519165174901c5f8021e2d6c56d8aa086cfd03760b3d33cc98f3f",
+  "source_hash": "sha256:1a58c751083a50e8d87cce83271ea222946615f1fc6332d4ff112998535c73e7",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 15,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "content-types",
   title: "Content types",
+  documents: ["folio"],
   navOrder: 4,
   nodes: [
     {

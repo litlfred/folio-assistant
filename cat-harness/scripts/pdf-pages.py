@@ -126,7 +126,10 @@ def outline_state(pdf: Path) -> str:
 
 
 def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str]:
-    """Page text, and where it came from. Never silently empty — see pdf-extract.py."""
+    """Page text, and where it came from: `"embedded"` (the PDF's own text layer) or
+    `"ocr"`, the vocabulary `pdf-structure.py` writes to `source.text_source`
+    (issue #1121; this rung used to say `"text-layer"`). Never silently empty —
+    see pdf-extract.py."""
     if from_ocr:
         # The shared helper, not `outroot / slug(stem) / "ocr"` spelled again —
         # it takes the PDF because the cache is keyed on the DOCUMENT.
@@ -149,7 +152,7 @@ def page_texts(pdf: Path, from_ocr: bool, outroot: Path) -> tuple[list[str], str
             f"{pdf.name}: zero extractable characters on {doc.page_count} pages "
             f"— this is a scan. Run scripts/pdf-ocr.py, then pass --from-ocr."
         )
-    return texts, "text-layer"
+    return texts, "embedded"
 
 
 def main() -> int:
@@ -247,12 +250,19 @@ def main() -> int:
         # `extractor` it used — and overwriting that with a subset would lose
         # provenance to fix an absence.
         existing.setdefault("source", tech_meta(str(pdf)))
+        # Where the section text came from, in ONE field with ONE vocabulary
+        # (issue #1121): `source.text_source`, `embedded | ocr`, as
+        # `pdf-structure.py` writes it. Set, not setdefault: these page sections
+        # are made from THIS rung's text, so its answer is the true one even
+        # where `pdf-structure` wrote `source` first. The old top-level
+        # `text_source` (`text-layer | ocr`) is removed, not kept beside it.
+        existing["source"]["text_source"] = source
+        existing.pop("text_source", None)
         existing.update({
             "_schema": existing.get("_schema", "pdf-structure/v1"),
             "doc_id": doc_id,
             "toc_source": outline_state(pdf),
             "granularity": "page",
-            "text_source": source,
             # EXACTLY the section shape `pdf-structure.py` writes, field for
             # field. `content/pipeline/gen-library-jsonld.ts` reads `sec.id`,
             # `page_start` and `page_end`, and an invented `section_id` crashed

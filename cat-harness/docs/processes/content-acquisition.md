@@ -19,6 +19,7 @@ How a resource gets into the graph in the first place. `document-ingestion.bpmn`
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`content-acquisition`](../reference/skill-instructions/content-acquisition.html)
 
 ## Lanes — who acts
@@ -40,5 +41,13 @@ Every one of the 6 step(s) is documented.
 | **Drop the file in the queue**<br>`P_Upload` | Contributor | — | Through the forge's upload form, a commit, or any other route that lands the file in the declared queue. The agent watches rather than chases: an arrival may be minutes or days away. |
 | **Accept it, and record where it came from**<br>`A_Accept` | Agent | [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | Both branches land here. An unprompted offer is accepted as it stands — do not make somebody follow a process to hand over what they already have. Provenance is recorded whichever channel it arrived through: a description given in chat has a source and can be wrong, exactly as a PDF does. |
 | **Route it, and watch the queue**<br>`A_Route` | Agent | [`uploads-watch`](../reference/skill-instructions/uploads-watch.html)<br>[`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | A file goes to ingestion; a link or a description goes to whatever will resolve it. Acquisition stops here — the moment a file is in the queue, library-ingestion owns it, and keeping that seam sharp is what lets a resource acquired through a channel that does not exist yet reach ingestion unchanged. An arrival may be minutes or days away, so it is watched rather than chased. |
+
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Offered already?**<br>`GW_Offered` | Did the resource arrive with the request? `no`: say what is needed and ask for a link or a description. `yes`: accept it and record where it came from. | **no** → Say what is needed, and ask for a link OR a description<br>**yes** → Accept it, and record where it came from |
 
 {% endraw %}

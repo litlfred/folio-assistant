@@ -25,9 +25,9 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>9</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>3</b><span>with the source held here</span></div>
-<div class="mv-stat"><b>6</b><span>cited, not ingested</span></div>
+<div class="mv-stat"><b>11</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>6</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
 
@@ -41,13 +41,15 @@ agent picks by resemblance, which is why the schema requires the field.
 |---|---|---|---|
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
-| **[GRADE — Grading of Recommendations, Assessment, Development and Evaluation](#grade)**<br>`grade` | Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions —… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-kg` |
+| **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
-| **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see `kepner-tregoe… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 
 ## Where each one came from
 
@@ -88,19 +90,19 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### GRADE — Grading of Recommendations, Assessment, Development and Evaluation
+### Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold
 
-<a id="grade"></a>
+<a id="doc-researcher"></a>
 
-`grade` — declared by `smart-kg` — <span class="mv-tag mv-cited">cited, not ingested</span>
+`doc-researcher` — declared by `folio-assistant-core` — <span class="mv-tag mv-ingested">source held</span>
 
-**Applies when.** Certainty of evidence for a HEALTH RECOMMENDATION, over a body of evidence answering one PICO question. Not for platform or architecture decisions — those are `kepner-tregoe`, recorded per `madr`.
+**Applies when.** **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread across several documents, or across text and figures within one, or when the asker will follow up. It answers *how to search a corpus you already hold*, never *what to hold* — `library-ingestion` and the L1 completeness gate answer that, and this method assumes their output. Do NOT reach for it for a single lookup in a known document. The loop below costs iterations, and a method whose cheapest path is more expensive than reading the page is the wrong method.
 
-**Origin.** The GRADE Working Group (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et al., BMJ 2016. WHO applies it through the *WHO Handbook for Guideline Development*.
+**Origin.** Kuicai Dong, Shurui Huang, Fangda Ye, Wei Han, Zhi Zhang, Dexun Li, Wenjun Li, Qu Yang, Gang Wang, Yichao Wang, Chen Zhang and Yong Liu, "Doc-Researcher: A Unified System for Multimodal Document Parsing and Deep Research" (arXiv:2510.21603v1, Huawei Technologies, 24 October 2025). Open access. THE PRIMARY IS HELD AND PROMOTED, at `library/arxiv-2510.21603v1`, which is what `evidence:` below points at. It was staged and unpromotable for a day: the extractor reported **383** images, 335 of them on page 3, and its `image-descriptions` requirement could not be met. It holds **fifty**. See §"What this checkout holds" — the first reading of those 383 was wrong, and the correction is kept there rather than tidied away. It is a SYSTEM paper reporting one implementation against a benchmark its own authors built, so what is adopted below is the METHOD, and §"Where this rendering stops" says which parts were left behind.
 
-**No ingested source.** The origin above names one; nothing in this
-checkout holds it. `literature-search` is the skill that closes one of
-these.
+**Ingested sources:**
+
+- `library/arxiv-2510.21603v1`
 
 ### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
 
@@ -172,6 +174,20 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
+### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
+
+<a id="specification-compiled-agents"></a>
+
+`specification-compiled-agents` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN process, a DMN table, a pipeline someone drew — and the question is how an LLM should act inside it. It answers *where the plan comes from*, never *what the plan should be*: authoring the diagram is `bpmn-authoring`, deciding a branch from a table is `dmn`, and choosing between options is `kepner-tregoe`. Its companion is `hybrid-llm-deterministic`, and the two are the same shape at different grains: that one has the model emit a RULE that machinery validates and runs; this one has the model act inside a CONTROL GRAPH that machinery derived from a specification. Reach for this one when the artefact that constrains the model already exists as a diagram. Do NOT reach for it where no specification exists, or where the process is genuinely open-ended. The paper's own evaluation is scoped to deterministic workflows and says so; a setting with ambiguity, stochasticity or open-ended human decision-making is outside what it measured, and outside what this node claims.
+
+**Origin.** Harris Borman, Herman Wandabwa, Fusun Yu, Sandeepa Kannangara, Justin Liu, Anna Leontjeva and Ritchie Ng, "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution", Commonwealth Bank of Australia. Published as a workshop paper at SCALE, ICML 2026 (PMLR 306); arXiv:2607.14456v1 [cs.SE], 16 July 2026. Open access, ingested whole and read before this node was written. It is a SYSTEM paper reporting one implementation against a benchmark its own authors built, so what is adopted below is the METHOD, and §"Where this rendering stops" says which parts were left behind. §"What the figures say that the prose does not" carries a reading of the paper's own charts that changes how its headline numbers should be used, and it is the reason this node quotes almost none of them.
+
+**Ingested sources:**
+
+- `library/arxiv-2607.14456v1`
+
 ### SWOT — situation analysis over internal and external factors
 
 <a id="swot"></a>
@@ -186,6 +202,20 @@ these.
 
 - `library/gurel-tat-2017-swot-analysis`
 - `library/sammut-bonnici-galea-2015-swot-analysis`
+
+### WireGen: wireframing from a written design intent
+
+<a id="wiregen"></a>
+
+`wiregen` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be reviewed and, when reviewers disagree, adjudicated. It is a design-generation and design-evaluation method. It does not choose between non-UI options (use the decision-analysis methodology) or grade evidence. It does not by itself settle a disagreement: that is `adjudication`.
+
+**Origin.** Sidong Feng, Mingyue Yuan, Jieshan Chen, Zhenchang Xing and Chunyang Chen, "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models", arXiv:2312.07755v1 [cs.HC], 12 Dec 2023. Ingested in full at `cat-harness/library/arxiv-2312.07755v1/`. The source states no licence, and its licence could not be established (see `check:source-licence`). Section numbers below are the paper's.
+
+**Ingested sources:**
+
+- `library/arxiv-2312.07755v1`
 
 ## Files in the graph that are not methodology nodes
 

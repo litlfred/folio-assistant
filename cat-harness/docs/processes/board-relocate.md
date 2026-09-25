@@ -19,6 +19,7 @@ Moving open content to the trashcan from the board, with the reader's confirmati
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
@@ -29,14 +30,22 @@ Moving open content to the trashcan from the board, with the reader's confirmati
 
 ## Steps
 
-**5** of 5 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 5 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Name what will move, and where it lands**<br>`A_AskConfirm` | Board renderer | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | — |
-| **Leave the content exactly where it is**<br>`A_Cancel` | Board renderer | [`board-windows`](../reference/skill-instructions/board-windows.html) | — |
-| **Relocate the content to the trashcan**<br>`A_MoveContent` | Board renderer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | — |
-| **Drop its positions and sweep orphans**<br>`A_UpdateLayer` | Board renderer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | — |
-| **Say what moved and where it went**<br>`A_ReportMove` | Board renderer | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | — |
+| **Name what will move, and where it lands**<br>`A_AskConfirm` | Board renderer | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Before anything moves, name the content that would move — what it is, with its size and age — and where it lands. The confirmation sits in front of the move: an agent never relocates a durable artefact on its own initiative. |
+| **Leave the content exactly where it is**<br>`A_Cancel` | Board renderer | [`board-windows`](../reference/skill-instructions/board-windows.html) | The reader said no: nothing moves, no position is dropped, and the board is left exactly as it was. Drawn as its own end state because a destructive action whose refusal is not drawn gets performed by accident. |
+| **Relocate the content to the trashcan**<br>`A_MoveContent` | Board renderer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | Relocate the confirmed content — that one thing, not the class it belongs to — to the trashcan. The folio changes first, because the folio carries what is true. |
+| **Drop its positions and sweep orphans**<br>`A_UpdateLayer` | Board renderer | [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | Only after the content has moved: drop its positions from the layout layer and sweep any position whose note is now gone. Sweeping first would make the board authoritative over the folio for one step. |
+| **Say what moved and where it went**<br>`A_ReportMove` | Board renderer | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Tell the reader what moved and where it went, so the content can be found in the trashcan rather than inferred missing from a card that disappeared. |
+
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Confirmed by the reader?**<br>`GW_Confirmed` | The reader's answer to A_AskConfirm, which named what will move and where it lands. `yes, move it` relocates the content to the trashcan; `no` leaves it exactly where it is. Nothing moves without the yes. | **yes, move it** → Relocate the content to the trashcan<br>**no** → Leave the content exactly where it is |
 
 {% endraw %}

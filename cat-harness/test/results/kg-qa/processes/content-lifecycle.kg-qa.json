@@ -5,7 +5,7 @@
     "id": "Process_Lifecycle",
     "path": "processes/content-lifecycle.bpmn"
   },
-  "source_hash": "sha256:c5e0f3371ac86909634bc1c483e22f9e33fc1993a1add833c5ce38e755eb35ce",
+  "source_hash": "sha256:865d49cbd534ac99269a33b9bd6a4ef4154c6975e12294a0c547da72f127a883",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,23 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Retire",
-          "detail": "\"Retire or archive\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
-    "n/a": 6,
+    "pass": 16,
+    "fail": 0,
+    "n/a": 8,
     "unknown": 0
   }
 }

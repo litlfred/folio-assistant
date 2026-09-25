@@ -5,7 +5,7 @@
     "id": "Process_ContentAcquisition",
     "path": "processes/content-acquisition.bpmn"
   },
-  "source_hash": "sha256:9fd89d9c76a2bd42466d5d044e39ead895839a1035be8f28825828058730343d",
+  "source_hash": "sha256:920392e310df39bd386b5ced2f18cb5d35b857baddbe1e33cea20bdb0fede8e0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -95,12 +95,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 13,
     "fail": 1,
-    "n/a": 8,
+    "n/a": 10,
     "unknown": 0
   }
 }

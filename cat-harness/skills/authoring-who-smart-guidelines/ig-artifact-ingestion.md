@@ -1,3 +1,10 @@
+---
+graph-kinds:
+  - fhir-artifact-index
+governs:
+  - smart-trust/smart-trust-docs
+---
+
 # ig-artifact-ingestion
 
 > Skill id: `ig-artifact-ingestion` · Package: `authoring-who-smart-guidelines` ·
@@ -52,6 +59,90 @@ So every field in the resulting graph was **assembled**, and the index records
 in `provenance` which published file each part came out of. That is required,
 not optional: a reader who cannot tell which file a row came from cannot tell a
 transcription from an inference.
+
+## THREE DOCUMENT FAMILIES IN ONE DIRECTORY — because there are three SOURCES
+
+`fhir-artifact-index/` holds three kinds of document, and the reason is not
+convenience. **Each comes from a different source, so each carries its own
+provenance block.** An IG does not publish one thing about itself; it publishes
+one thing, keeps a second in its source config, and inherits a third from
+packages it merely depends on.
+
+| document | schema | source | what its provenance names |
+|---|---|---|---|
+| `index.json` | `folio-fhir-artifact-index/v1` | the IG's published **output** (a gh-pages tree) | `{kind: "gh-pages", of, readAt}` |
+| `menu.json` | `folio-ig-menu/v1` | the IG's own **`sushi-config.yaml`** | repository + **commit** + path |
+| `chrome.json` | `folio-ig-chrome/v1` | the **`fhir.template` chain** its `ig.ini` names | one block **per layer**, each with its own commit |
+
+**Folding any two together would give one file two answers to "where did this
+come from".** That is the whole argument, and it is `0818`'s (the menu) and
+`ajx9`'s (the chrome) in one sentence.
+
+### The menu is the IG's own ordering of itself
+
+`sushi-config.yaml`'s `menu:` is a nested **map**, and order is the file's
+order — alphabetising it would silently re-navigate somebody else's IG. It was
+NOT transcribed from a screenshot, and `schemas/ig-menu.ts` records why: a
+picture carries no hrefs, and a closed dropdown is indistinguishable from an
+empty one. Measured 2026-09-23: the twelve labels visible in that screenshot
+matched **0 of 674** artefact titles — the harvest kept the IG's artefacts and
+dropped both its navigation and the narrative pages it points at.
+
+### The chrome comes from a CHAIN, and only part of it is the IG's own
+
+An IG declares its appearance in **no file it owns**. Measured 2026-09-23 for
+smart-trust:
+
+```
+local-template  →  who.template.root 0.5.0  →  fhir.base.template 1.0.0
+```
+
+So `chrome.json` carries `layers` base-first, and every token records which
+package **won** it and what it **overrode**. That is not bookkeeping: it is the
+only way to answer *whose value is this?* Of the three things a reader
+recognises as "the WHO IG", **only two are WHO's** — `who.css` styles no
+`#publish-box` at all, so the yellow box is HL7's, inherited unchanged. The
+token comes out `from: "fhir.base.template"` with `overrides: []`, which is
+what proves it rather than asserting it.
+
+**An overlay is not a merge.** `--toc-box-border` is `1px solid navy` in HL7
+and `navy` in WHO — each right in its own layer, and together they make HL7's
+rule resolve to `border: navy`, which is invalid. Every individual layer
+parses, so a naive merge ships a broken rule **silently**.
+
+### Upstream defects are RECORDED, never corrected
+
+A mirror that silently fixes its subject is not a mirror. Two kinds, both found
+2026-09-23 and both carried verbatim into our copy:
+
+- **`shape`** — one token name carrying two different KINDS of value across
+  layers, as above.
+- **`malformed`** — a value that is not valid CSS on its own terms.
+  `--breadcrumb-text-color: ##555555` at `project.css:82`, a doubled `#` in
+  HL7's source.
+
+The second is in the skill because of how it presents downstream: it appears in
+our generated page as `##555555`, **looking exactly like a bug in the ingest
+that copied it**. It cost the author of that ingest about thirty seconds of
+believing they had written it, with the source open in the next terminal. A
+reader without the source open cannot tell at all. So the mirror carries the
+value and the record says whose defect it is.
+
+The detector is deliberately **narrow** — one pattern. A false positive accuses
+somebody else's published stylesheet of a fault it does not have.
+
+### CI cannot obtain any of these inputs, and the checks say so
+
+All three ingests read something outside this checkout, and the chrome needs
+**three** upstream checkouts rather than one. `worldhealthorganization.github.io`
+and `litlfred.github.io` both answer 403 CONNECT from this environment.
+
+So `ingest:ig-menu:check` and `ingest:ig-chrome:check` exit **2** with no
+source — `could not determine`, never the 0 a silent skip would give — and both
+are registered in `gates.ts` as `report` rather than as gates. What IS gated on
+every run, without the network: `smart-trust:pages:check` regenerates all 681
+pages from the committed data and compares byte for byte, and
+`check:kind-validators` parses each file against its schema.
 
 ## Four partial views, and none of them is sufficient
 

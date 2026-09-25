@@ -33,9 +33,10 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from "fs";
 import { join, resolve, extname } from "path";
 import { execSync, spawnSync } from "child_process";
-import { randomBytes } from "crypto";
+import { createHash, randomBytes } from "crypto";
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { recordFileName, uploadRecords } from "./intake-records.js";
 import { registerDocumentRenderTools } from "./tools/render.js";
 import { registerValidateTools } from "./tools/validate.js";
 import { registerQaTools } from "./tools/qa.js";
@@ -72,7 +73,7 @@ import type { FeedbackItem } from "../../schemas/types.js";
 import type { GitHelper } from "../../src/core/git.js";
 import { FeedbackStore } from "../../src/core/feedback.js";
 import { log } from "../../src/core/logging.js";
-import { hasRole, forbidden } from "../../src/core/rbac.js";
+import { allows, forbidden } from "../../src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
 import { getAnthropic } from "../../src/routes/chat.js";
 import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
@@ -91,6 +92,20 @@ import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
  */
 function uploadsRoot(repoRoot: string): string {
   return directoryForGraph(repoRoot, "uploads") ?? join(repoRoot, "uploads");
+}
+
+/** An upload's Dublin Core record, read for its title; undefined when absent or unreadable. */
+function readRecord(path: string): { title?: string; fields: unknown[] } | undefined {
+  if (!existsSync(path)) return undefined;
+  try {
+    const rec = JSON.parse(readFileSync(path, "utf-8")) as {
+      fields?: { element?: string; qualifier?: string; values?: { value?: string }[] }[];
+    };
+    const fields = rec.fields ?? [];
+    return { title: fields.find((f) => f.element === "title" && !f.qualifier)?.values?.[0]?.value, fields };
+  } catch {
+    return undefined;
+  }
 }
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
@@ -795,15 +810,18 @@ End every response with suggested follow-ups:
             if (existsSync(intakePath)) {
               try { intake = JSON.parse(readFileSync(intakePath, "utf-8")); } catch { /* skip */ }
             }
+            // The title is the intake's own, else its Dublin Core record's
+            // `dc.title` (bean `d4lb`); the pipeline stage, classification and
+            // block count the old shape carried were never updated after the
+            // upload, so they are no longer reported as if they were state.
+            const rec = typeof intake?.record === "string" ? readRecord(join(uploadsDir, d.name, intake.record)) : undefined;
             return {
               id: d.name,
-              title: intake?.title ?? d.name,
-              // `intake` is parsed JSON, so `pipeline` is `unknown`; read the
-              // one field this needs rather than reopening the whole object.
-              stage: (intake?.pipeline as { stage?: unknown } | undefined)?.stage ?? "unknown",
-              classification: intake?.classification ?? null,
-              blockCount: intake?.blockCount ?? 0,
-              files: readdirSync(join(uploadsDir, d.name)).filter((f) => f !== "intake.json"),
+              title: (intake?.title as string | undefined) ?? rec?.title ?? d.name,
+              record: rec?.fields ?? null,
+              files: readdirSync(join(uploadsDir, d.name)).filter(
+                (f) => f !== "intake.json" && f !== intake?.record,
+              ),
             };
           });
         return Response.json({ uploads: dirs }, { headers: CORS });
@@ -992,7 +1010,7 @@ End every response with suggested follow-ups:
 
     // Save block
     if (path === "/api/block/save") {
-      if (!hasRole(req, "collaborator")) return forbidden("editing content", "collaborator");
+      if (!allows(req, "content-authoring")) return forbidden("editing content", "content-authoring");
       try {
         const body = (await req.json()) as { paperId: string; rootName: string; md: string };
         const mdPath = await this.saveBlock(body.paperId, body.rootName, body.md);
@@ -1004,7 +1022,7 @@ End every response with suggested follow-ups:
 
     // Upload document
     if (path === "/api/upload") {
-      if (!hasRole(req, "collaborator")) return forbidden("uploading documents", "collaborator");
+      if (!allows(req, "content-authoring")) return forbidden("uploading documents", "content-authoring");
       try {
         const contentType = req.headers.get("content-type") || "";
 
@@ -1043,29 +1061,23 @@ End every response with suggested follow-ups:
             : savedFiles.some((f) => f.match(/\.(png|jpg|jpeg|tiff?)$/i)) ? "scan"
             : "unknown";
 
-          // Create intake.json
-          const intake = {
-            id: docId,
+          // The intake and the Dublin Core record (bean `d4lb`): what arrived
+          // and where from, and what it is — two records, each with its schema.
+          const { intake, record } = uploadRecords({
+            docId,
             title,
-            source: { type: "upload", fetchedAt: new Date().toISOString() },
+            type: docType,
+            domain,
+            normativeLevel,
             format,
-            pipeline: {
-              stage: "uploaded",
-              extractedAt: null,
-              structuredAt: null,
-              generatedAt: null,
-              errors: [],
-            },
-            classification: {
-              type: docType,
-              domain: domain || null,
-              normativeLevel: normativeLevel || null,
-            },
-            chapters: [],
-            blockCount: 0,
-            targetPaper: null,
-          };
+            capturedAt: new Date().toISOString(),
+            files: savedFiles.map((f) => {
+              const bytes = readFileSync(join(uploadsDir, f));
+              return { path: f, bytes: bytes.length, sha256: createHash("sha256").update(bytes).digest("hex") };
+            }),
+          });
           writeFileSync(join(uploadsDir, "intake.json"), JSON.stringify(intake, null, 2));
+          writeFileSync(join(uploadsDir, recordFileName(docId)), JSON.stringify(record, null, 2));
 
           return Response.json({
             ok: true,
@@ -1085,28 +1097,18 @@ End every response with suggested follow-ups:
         const uploadsDir = join(uploadsRoot(this.repoRoot), docId);
         if (!existsSync(uploadsDir)) mkdirSync(uploadsDir, { recursive: true });
 
-        const intake = {
-          id: docId,
+        const { intake, record } = uploadRecords({
+          docId,
           title: body.title || docId,
-          source: { type: "url", url: body.url, fetchedAt: new Date().toISOString() },
-          format: "pending",
-          pipeline: {
-            stage: "uploaded",
-            extractedAt: null,
-            structuredAt: null,
-            generatedAt: null,
-            errors: [],
-          },
-          classification: {
-            type: body.type || "paper",
-            domain: body.domain || null,
-            normativeLevel: body.normativeLevel || null,
-          },
-          chapters: [],
-          blockCount: 0,
-          targetPaper: null,
-        };
+          type: body.type || "paper",
+          domain: body.domain,
+          normativeLevel: body.normativeLevel,
+          upstream: body.url,
+          capturedAt: new Date().toISOString(),
+          files: [],
+        });
         writeFileSync(join(uploadsDir, "intake.json"), JSON.stringify(intake, null, 2));
+        writeFileSync(join(uploadsDir, recordFileName(docId)), JSON.stringify(record, null, 2));
 
         return Response.json({
           ok: true,

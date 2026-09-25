@@ -3,6 +3,7 @@
  * Report on this instance's theme art — the intake check, run over what shipped.
  *
  * @module scripts/check-theme-art
+ * @covers themes
  *
  * The owner, 2026-09-20: *"make skills for avatar theme ingestion (need 3
  * meeting certain formatting constraints), return sucches or explnation of

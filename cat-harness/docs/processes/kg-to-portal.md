@@ -19,6 +19,7 @@ folio-assistant — KG to public portal. Six stages: select, serialize, package,
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html)
 
 ## Lanes — who acts
@@ -48,5 +49,15 @@ Every one of the 10 step(s) is documented.
 | **Record the decision as still open**<br>`D_Undetermined` | Deployment owner | [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | An undetermined decision is DATA, not silence. It is recorded with what it waits on and what would settle it, so the next session can tell "nobody has chosen" from "somebody chose and did not write it down" — the same third state bean-blocking keeps for a block with no expiry. |
 | **Publish to the origin (a cache may front it)**<br>`A_Distribute` | Publish target | [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html) | Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught. |
 | **Verify what arrived against what was signed**<br>`P_Verify` | Portal (external consumer) | [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html) | Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked. |
+
+## Decisions
+
+Every one of the 3 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Within the stated budget?**<br>`GW_Budget` | Measured against D_Constraints' numbers, not against a feeling. The gate is here rather than before packaging because the package's own size is the quantity being judged, and estimating it from the graph's node count is the guess this gate exists to replace. | **within budget** → Sign the package and/or each asset<br>**over budget** → Refused — over budget |
+| **Which transport? (UNDETERMINED)**<br>`GW_Transport` | THIS GATEWAY HAS NO DEFAULT BRANCH, AND THAT IS THE POINT. Owner, 2026-09-20: "ingestion method not determined." Pull from the portal, push to an object store, a git fetch, a signed tarball on a schedule — they differ in cost, in who initiates, in what must be reachable from where, and in what happens when a publication is missed. The deployment answers using D_Constraints' numbers; until it does, the diagram reaches here and stops. Drawing one branch as the obvious one would record a decision nobody made. | **a transport was chosen** → Publish to the origin (a cache may front it)<br>**still undetermined** → Record the decision as still open |
+| **Verifies?**<br>`GW_Verified` | Answered by verifying what arrived against what was signed. `signature and digests match` serves the bytes; `mismatch` rejects them and keeps serving the previous version. | **signature and digests match** → Readers have the bytes<br>**mismatch** → Rejected — serve the previous version |
 
 {% endraw %}

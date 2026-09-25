@@ -38,9 +38,12 @@ flowchart TD
    typed [input/output contract](reference/skills/).
 2. **Skill package** — a group of related skills that also declares its
    Docker/runtime dependencies (`package-manifest.json`).
-3. **Role (actor)** — *who* the agent is acting as. The current user maps to a
-   role via `role-assignments.json`; the role's **capabilities** bound what the
-   agent may do (RBAC, `src/core/rbac.ts`).
+3. **Role (actor)** — *who* the agent is acting as. An **actor** takes on a
+   **role** because of the BPMN lane it acts in. What the actor may **do** is a
+   W3C ODRL policy in `policies/`, not a property of the role. Before every task
+   the executor checks authentication, role assignment, policy and content
+   access ([`task-authorization`](reference/skill-instructions/task-authorization.html));
+   the HTTP routes ask the same policies through `src/core/rbac.ts`.
 4. **Capability** — a concrete environment ability (e.g. `latex-compiler`,
    `lean-toolchain`). Skills require capabilities; `check_dependencies` probes
    them.

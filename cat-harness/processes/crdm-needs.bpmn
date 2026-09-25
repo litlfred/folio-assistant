@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_Process_CRDM_Needs" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM_Needs">
@@ -14,10 +14,12 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Needs">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>The single review here is what GW_Needs is literally named for — "BA approves?" — even though Lane_Stakeholders' confirmation sits between this task and that gateway in the flow; the phase's own documentation makes clear the loop needs both, so reading the gate label alone would miss half of what it takes to exit it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_ReviewNeeds</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Drafts the needs statement but never decides it is right — A_Synthesise is the sole target when GW_Needs loops back — and this process's own documentation calls an unconfirmed synthesis "an agent's summary, not a requirement," which is exactly what this lane alone produces before the two lanes below it look at it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Needs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Stakeholders</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Synthesise</bpmn:flowNodeRef>
@@ -26,6 +28,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Stakeholders" name="Stakeholders">
         <bpmn:documentation>The task itself carries no documentation of its own, so this lane's entry is the only place recording what "confirm" means in Phase 1: recognising the synthesised needs statement as actually theirs, immediately before the loop gate — not, as in the later data-model phase, judging a cardinality, because there is no model yet to have one.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="stakeholder"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_ConfirmNeeds</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -34,21 +37,26 @@
 stakeholders">
       <bpmn:documentation>The agent asks the BA who is affected by this change.
 The BA knows the domain — the agent does not guess.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_Synthesise" name="Phase 1: Synthesise
 needs from sources">
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:documentation>From the chat, issue, uploads and library sources, write a clear, jargon-free statement of what is needed and why, tied to a concrete workflow. Post it on the GitHub issue, not in chat, and ask the requester and stakeholders to review it.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_ReviewNeeds" name="Review synthesised
 needs statement">
       <bpmn:documentation>The BA reviews what the agent synthesised and
 checks it against what they actually need.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="S_ConfirmNeeds" name="Confirm needs
-statement"/>
-    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?"/>
+statement">
+      <bpmn:documentation>Stakeholders confirm, on the issue, that the needs statement says what they need — or say what to change. A stakeholder's judgement; an agent does not record it for them.</bpmn:documentation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Needs" name="BA approves?">
+      <bpmn:documentation>The BA's answer to the needs statement. `revise` goes back to synthesising needs from the sources; `yes` completes the phase.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:endEvent id="End_Process_CRDM_Needs" name="Phase complete"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_1" sourceRef="Start_Process_CRDM_Needs" targetRef="A_Stakeholders"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Needs_2" sourceRef="A_Stakeholders" targetRef="A_Synthesise"/>

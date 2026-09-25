@@ -38,6 +38,9 @@ name: Folio Staging (reusable)
 # the CALLING FOLIO's: its own workflow fires on them and calls this one. A
 # caller that also lists `issue_comment` gets the `comments` job below, which
 # refreshes a preview's review comments when somebody comments (bean `423d`).
+# A caller that also lists `push` to its default branch gets the
+# `publish-main` job, which publishes that branch's site at the publish root:
+# the "before" side every preview is compared with (bean `5uuf`).
 #
 # ## Review comments, and why the `comments` job checks out no PR code
 #
@@ -82,7 +85,9 @@ on:
         description: >
           Where the folio links the platform (a submodule, or a sibling
           checkout). If absent after checkout, the platform is checked out
-          there at `platform_ref`.
+          there at `platform_ref`. A path outside the workspace (a sibling
+          link such as `../folio-assistant`) is checked out inside it and
+          linked to that path (bean `zdfa`).
         required: false
         default: folio-assistant
         type: string
@@ -100,10 +105,25 @@ on:
         default: main
         type: string
       base_ref:
-        description: The branch the preview is compared against, and the ChangeSet's base.
+        description: >
+          The branch the preview is compared against, and the ChangeSet's base.
+          Empty (the default) means the pull request's own base branch, else
+          the repository's default branch, so a stacked PR is compared with
+          the branch it is stacked on (bean `5uuf`).
         required: false
-        default: main
+        default: ''
         type: string
+      qa_sweep:
+        description: >
+          Run the platform's QA sweep over the folio before publishing its
+          QA summary, so the preview's heat map reports THIS build rather than
+          whatever was last committed (bean `tw61`). The script-checkable
+          criteria run; criteria that need an agent's judgement are left
+          unaudited. A critical failure is reported in the preview, and does
+          not stop it.
+        required: false
+        default: true
+        type: boolean
       publish_branch:
         description: The branch GitHub Pages serves from.
         required: false
@@ -127,7 +147,7 @@ concurrency:
 
 jobs:
   stage:
-    if: github.event_name != 'issue_comment' && github.event.action != 'closed'
+    if: github.event_name != 'issue_comment' && github.event_name != 'push' && github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -137,10 +157,21 @@ jobs:
           submodules: recursive
 
       - name: Locate the platform
+        # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
+        # path outside the checkout, where `actions/checkout` cannot write. So
+        # the platform is checked out INSIDE the workspace and linked to the
+        # path the folio names. The folio's builder shim and build command
+        # then resolve the same way in CI as on the author's machine.
         id: platform
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
         run: |
+          ABS=$(realpath -m "$PLATFORM_DIR")
+          case "$ABS/" in
+            "$GITHUB_WORKSPACE"/*) echo "checkout=$PLATFORM_DIR" >> "$GITHUB_OUTPUT"; echo "outside=false" >> "$GITHUB_OUTPUT" ;;
+            *) echo "checkout=.folio-platform" >> "$GITHUB_OUTPUT"; echo "outside=true" >> "$GITHUB_OUTPUT" ;;
+          esac
+          echo "abs=$ABS" >> "$GITHUB_OUTPUT"
           if [ -f "$PLATFORM_DIR/folio-assistant-core/schemas/changeset.ts" ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
@@ -154,7 +185,21 @@ jobs:
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
-          path: ${{ inputs.platform_dir }}
+          path: ${{ steps.platform.outputs.checkout }}
+
+      - name: Link the platform where the folio names it
+        if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
+        env:
+          ABS: ${{ steps.platform.outputs.abs }}
+        run: |
+          set -eu
+          if [ -e "$ABS" ]; then
+            echo "::error::$ABS exists but holds no platform; refusing to replace it"
+            exit 1
+          fi
+          mkdir -p "$(dirname "$ABS")"
+          ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
+          echo "linked $ABS -> the platform checked out in the workspace"
 
       - uses: oven-sh/setup-bun@v2
 
@@ -195,6 +240,22 @@ jobs:
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve the base
+        # The ChangeSet and the pictures must use the SAME base (bean `5uuf`):
+        # before, the ChangeSet read `base_ref` and the pictures read main's
+        # site, so a stacked PR was diffed against one branch and pictured
+        # against another.
+        id: base
+        env:
+          INPUT_BASE: ${{ inputs.base_ref }}
+          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          BASE="${INPUT_BASE:-${PR_BASE:-${DEFAULT_BRANCH:-main}}}"
+          echo "ref=$BASE" >> "$GITHUB_OUTPUT"
+          echo "default=${DEFAULT_BRANCH:-main}" >> "$GITHUB_OUTPUT"
+          echo "comparing with $BASE"
+
       - name: Build the folio's site
         env:
           BUILD_COMMAND: ${{ inputs.build_command }}
@@ -211,7 +272,7 @@ jobs:
         env:
           PLATFORM_DIR: ${{ inputs.platform_dir }}
           FOLIO_DIR: ${{ inputs.folio_dir }}
-          BASE_REF: ${{ inputs.base_ref }}
+          BASE_REF: ${{ steps.base.outputs.ref }}
           SITE_DIR: ${{ inputs.site_dir }}
         run: |
           set -eu
@@ -222,7 +283,79 @@ jobs:
           mkdir -p "$SITE_DIR"
           bun run "$PLATFORM_DIR/folio-assistant-core/schemas/changeset.ts" \
             --folio "$FOLIO_DIR" --base "origin/$BASE_REF" --head worktree \
-            --out "$SITE_DIR/changeset.json"
+            --out "$SITE_DIR/changeset.json" --text-out "$SITE_DIR/changeset-text.json"
+
+      - name: Sweep the folio's QA
+        # The owner's ask: "setup proper QA on init" (bean `tw61`). Without it a
+        # new folio's preview read "unaudited" on every block, because nothing
+        # had ever swept it. No `--ci`: a critical failure belongs on the heat
+        # map where a reviewer sees it, not in a preview that never publishes.
+        if: inputs.qa_sweep
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          FOLIO_DIR: ${{ inputs.folio_dir }}
+        run: |
+          set -eu
+          bun run "$PLATFORM_DIR/cat-harness/content/pipeline/qa-sweep.ts" "$FOLIO_DIR"
+
+      - name: Publish the folio's block QA summary
+        # What the QA sweep recorded, per block: failing, stale, passing or
+        # unaudited. The review page's heat map reads it (bean `qbfi`). The
+        # step above sweeps this build first (`tw61`). With `qa_sweep: false`,
+        # this reports the verdicts the folio committed, and a folio never
+        # swept publishes "unaudited", not a failure.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          FOLIO_DIR: ${{ inputs.folio_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+        run: |
+          set -eu
+          bun run "$PLATFORM_DIR/cat-harness/scripts/publish-block-qa.ts" \
+            --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
+
+      - name: Check out the publish branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.publish_branch }}
+          path: pages
+          persist-credentials: true
+
+      - name: Choose the before side
+        # The published site a reviewer compares with (bean `5uuf`): main's
+        # site at the publish root, written by the `publish-main` job below;
+        # or, for a PR stacked on another branch, that branch's preview. If
+        # the base branch has no preview, main's site is used and the page
+        # SAYS so, rather than silently comparing with a different branch.
+        id: before
+        env:
+          BASE_REF: ${{ steps.base.outputs.ref }}
+          DEFAULT_BRANCH: ${{ steps.base.outputs.default }}
+          OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          set -eu
+          SITE="https://${OWNER}.github.io/${REPO_NAME}"
+          DIR=pages
+          URL="$SITE"
+          LABEL="$DEFAULT_BRANCH"
+          if [ "$BASE_REF" != "$DEFAULT_BRANCH" ]; then
+            BASE_SLUG=$(echo "$BASE_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+            case "$BASE_SLUG" in ""|.|..) BASE_SLUG="" ;; esac
+            if [ -n "$BASE_SLUG" ] && [ -d "pages/STAGING/$BASE_SLUG" ]; then
+              DIR="pages/STAGING/$BASE_SLUG"
+              URL="$SITE/STAGING/$BASE_SLUG"
+              LABEL="$BASE_REF"
+            else
+              LABEL="$DEFAULT_BRANCH (the base, $BASE_REF, has no preview)"
+              echo "::warning::the base branch $BASE_REF has no preview; pictures compare with $DEFAULT_BRANCH's site"
+            fi
+          fi
+          if [ "$DIR" = pages ] && [ ! -f pages/_main-site.json ]; then
+            echo "::warning::$DEFAULT_BRANCH's site has never been published (no _main-site.json), so there are no before pictures. The publish-main job publishes it on the next push to $DEFAULT_BRANCH."
+          fi
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "label=$LABEL" >> "$GITHUB_OUTPUT"
 
       - name: Inject staging banner
         env:
@@ -230,8 +363,8 @@ jobs:
           SITE_DIR: ${{ inputs.site_dir }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           PR: ${{ github.event.pull_request.number || 'n/a' }}
-          OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.event.repository.name }}
+          BEFORE_URL: ${{ steps.before.outputs.url }}
+          BEFORE_LABEL: ${{ steps.before.outputs.label }}
         run: |
           bun run "$PLATFORM_DIR/cat-harness/scripts/staging-banner.ts" \
             --site "$SITE_DIR" \
@@ -243,14 +376,29 @@ jobs:
             --branch-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${STAGING_BRANCH}" \
             --issues-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues" \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
-            --main-site "https://${OWNER}.github.io/${REPO_NAME}"
+            --main-site "$BEFORE_URL" \
+            --before-ref "$BEFORE_LABEL"
 
-      - name: Check out the publish branch
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.publish_branch }}
-          path: pages
-          persist-credentials: true
+      - name: Picture changed figures, diagrams and tables
+        # The `folio-block-screenshots` Tool (bean `0rxe`, skill `visual-diff`):
+        # each changed visual block, pictured on the before side chosen above
+        # (main's site, or a stacked PR's base preview) and on this build, and
+        # compared pixel by pixel in Chromium. The review page shows them.
+        # Chromium is installed only when there is something to picture.
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          BEFORE_DIR: ${{ steps.before.outputs.dir }}
+        run: |
+          set -eu
+          N=$(bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" --changeset "$SITE_DIR/changeset.json" --count)
+          if [ "$N" = "0" ]; then
+            echo "no figure, diagram, table, equation or simulator changed: no pictures to take"
+            exit 0
+          fi
+          (cd "$PLATFORM_DIR" && npx --yes playwright install --with-deps chromium)
+          bun run "$PLATFORM_DIR/cat-harness/scripts/block-screenshots.ts" \
+            --changeset "$SITE_DIR/changeset.json" --base "$BEFORE_DIR" --head "$SITE_DIR" --out "$SITE_DIR"
 
       - name: Ingest review comments
         # Tagged PR comments → `folio-review-comment/v1` todos, kept across
@@ -301,8 +449,9 @@ jobs:
           # build that exited 0 having written nothing would otherwise replace a
           # working preview with an empty one, which 404s exactly like a page
           # the author meant to delete. The data files the steps above write
-          # (changeset, blocks, review comments) are not a site on their own.
-          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|blocks\.json|review-comments\.json' || true)" ]; then
+          # (changeset and its text, blocks, block QA, review comments, the
+          # visual diff and its pictures) are not a site on their own.
+          if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
             echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
@@ -346,6 +495,8 @@ jobs:
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
           SITE_DIR: ${{ inputs.site_dir }}
+          BEFORE_URL: ${{ steps.before.outputs.url }}
+          BEFORE_LABEL: ${{ steps.before.outputs.label }}
         with:
           script: |
             const fs = require("fs");
@@ -364,10 +515,11 @@ jobs:
             const body = `## 🔍 Folio staging preview deployed
 
             **URL:** ${url}
+            **Review page:** ${url}review/ (every changed block, before and after, with the heat map, outline and open comments)
             **Commit:** \`${sha}\`
             **Branch:** \`${process.env.BRANCH}\`
             ${summary}
-            > Compare with [main site](https://${owner}.github.io/${repo}/) to review changes.`;
+            > Compare with [${process.env.BEFORE_LABEL}'s site](${process.env.BEFORE_URL}/) to review changes.`;
             const comments = await github.rest.issues.listComments({ owner, repo, issue_number: context.issue.number });
             const existing = comments.data.find(
               (c) => c.user.login === "github-actions[bot]" && c.body.includes("Folio staging preview deployed"),
@@ -377,6 +529,143 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body });
             }
+
+  publish-main:
+    # The BEFORE side (bean `5uuf`). On a push to the default branch, build
+    # the folio's site and publish it at the publish branch's root, where the
+    # visual diff pictures "before" and the review page links "view on main".
+    # Until this job nothing published a folio's main, so every before
+    # picture was missing. `publish-main-site.ts` deletes only files its own
+    # manifest names: `STAGING/`, `_render-log/` and anything a person put at
+    # the root are never touched.
+    if: github.event_name == 'push' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    concurrency:
+      # One main publish at a time, and never cancelled half-way: the newest
+      # waits, then publishes the newest main.
+      group: folio-publish-main-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Locate the platform
+        # A SIBLING link (`platform_dir: ../platform`, bean `zdfa`) names a
+        # path outside the checkout, where `actions/checkout` cannot write. So
+        # the platform is checked out INSIDE the workspace and linked to the
+        # path the folio names. The folio's builder shim and build command
+        # then resolve the same way in CI as on the author's machine.
+        id: platform
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: |
+          ABS=$(realpath -m "$PLATFORM_DIR")
+          case "$ABS/" in
+            "$GITHUB_WORKSPACE"/*) echo "checkout=$PLATFORM_DIR" >> "$GITHUB_OUTPUT"; echo "outside=false" >> "$GITHUB_OUTPUT" ;;
+            *) echo "checkout=.folio-platform" >> "$GITHUB_OUTPUT"; echo "outside=true" >> "$GITHUB_OUTPUT" ;;
+          esac
+          echo "abs=$ABS" >> "$GITHUB_OUTPUT"
+          if [ -f "$PLATFORM_DIR/cat-harness/scripts/publish-main-site.ts" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "The folio does not carry the platform at $PLATFORM_DIR; checking it out."
+          fi
+
+      - name: Check out the platform
+        if: steps.platform.outputs.present == 'false'
+        uses: actions/checkout@v4
+        with:
+          repository: litlfred/folio-assistant
+          ref: ${{ inputs.platform_ref }}
+          path: ${{ steps.platform.outputs.checkout }}
+
+      - name: Link the platform where the folio names it
+        if: steps.platform.outputs.present == 'false' && steps.platform.outputs.outside == 'true'
+        env:
+          ABS: ${{ steps.platform.outputs.abs }}
+        run: |
+          set -eu
+          if [ -e "$ABS" ]; then
+            echo "::error::$ABS exists but holds no platform; refusing to replace it"
+            exit 1
+          fi
+          mkdir -p "$(dirname "$ABS")"
+          ln -s "$GITHUB_WORKSPACE/.folio-platform" "$ABS"
+          echo "linked $ABS -> the platform checked out in the workspace"
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install the platform's dependencies
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+        run: |
+          set -eu
+          cd "$PLATFORM_DIR"
+          if [ ! -f bun.lock ]; then
+            echo "::error::no bun.lock in the platform checkout; refusing an unpinned install"
+            exit 1
+          fi
+          bun install --frozen-lockfile
+
+      - name: Build the folio's site
+        env:
+          BUILD_COMMAND: ${{ inputs.build_command }}
+        run: bash -c "$BUILD_COMMAND"
+
+      - name: Check out the publish branch, or start it
+        # The first publish of a new folio finds no publish branch, so it
+        # starts one as an orphan rather than failing.
+        env:
+          PUBLISH_BRANCH: ${{ inputs.publish_branch }}
+        run: |
+          set -eu
+          if git ls-remote --exit-code --heads origin "$PUBLISH_BRANCH" >/dev/null; then
+            git fetch --depth 1 origin "$PUBLISH_BRANCH"
+            git worktree add -B "$PUBLISH_BRANCH" pages "origin/$PUBLISH_BRANCH"
+          else
+            echo "no $PUBLISH_BRANCH branch yet; starting one"
+            git worktree add --orphan -b "$PUBLISH_BRANCH" pages
+          fi
+
+      - name: Publish main's site and log the render, in one commit
+        env:
+          PLATFORM_DIR: ${{ inputs.platform_dir }}
+          SITE_DIR: ${{ inputs.site_dir }}
+          PUBLISH_BRANCH: ${{ inputs.publish_branch }}
+          BRANCH: ${{ github.ref_name }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          bun run "$PLATFORM_DIR/cat-harness/scripts/publish-main-site.ts" \
+            --site "$SITE_DIR" --pages pages --commit "$GITHUB_SHA"
+          PROSE=$(jq -n --arg s "$BRANCH's site published at the root" '{summary:$s}')
+          bun run "$PLATFORM_DIR/cat-harness/scripts/render-log.ts" --dir pages \
+            --event rendered --kind main-site \
+            --path "." --slug "$BRANCH" \
+            --branch "$BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
+          git -C pages config user.name 'github-actions[bot]'
+          git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages add -A .
+          git -C pages commit \
+            -m "main-site: from $GITHUB_SHA" \
+            -m "render-log: rendered the root from $BRANCH" \
+            -m "$RUN_URL" || exit 0
+          for attempt in 1 2 3; do
+            if git -C pages push origin "HEAD:$PUBLISH_BRANCH"; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::could not publish main's site after 3 attempts"
+              exit 1
+            fi
+            echo "push rejected; rebasing and retrying"
+            bash "$PLATFORM_DIR/cat-harness/scripts/render-log-union-attr.sh" pages
+            git -C pages pull --rebase origin "$PUBLISH_BRANCH"
+            bun run "$PLATFORM_DIR/cat-harness/scripts/backoff-sleep.ts" --attempt "$attempt"
+          done
 
   comments:
     # A new or edited PR comment that carries a `block:` tag: refresh that

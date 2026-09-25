@@ -1,0 +1,136 @@
+# QA sweep CI — runs the automated checkers for every integration-watcher
+# axis (voice, proof, canonical, compute, detangler, bibliography) against
+# this folio's blocks.
+#
+# Written by `folio_init` from the platform's template
+# (cat-harness/templates/document/github/workflows/qa-sweep.yml). The
+# scripts it runs are the PLATFORM's, from the checkout at `{{assistant}}/`;
+# the blocks it sweeps are this folio's, under `{{folio}}/`.
+#
+# Triggers
+# ────────
+#   workflow_dispatch — manual run, and the only trigger as written.
+#   To sweep every pull request, uncomment the `pull_request` trigger below.
+#   It is off by default because a scaffolded folio should not start
+#   spending Actions minutes before its author has chosen to.
+#
+# Behaviour
+# ─────────
+#   - Refuses to start when `{{folio}}/` holds no `<paper>/<paper>.ts`
+#     manifest: a sweep that finds nothing to sweep would report green.
+#   - Runs the platform's qa-sweep over the whole content root. Warn-only
+#     (`continue-on-error: true`) until the folio's critical baseline is
+#     zero; then remove it so the workflow gates merges.
+#   - Runs qa-staleness to surface blocks with stale or missing sidecars.
+#   - HARD-gates the shape of every committed `.qa.json` sidecar.
+
+name: QA sweep (all integration watchers)
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  qa-sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # PREFLIGHT. Passing by finding nothing is the failure mode this whole
+      # workflow exists to catch, so refuse to start instead.
+      - name: Preflight — the folio must hold a document
+        run: |
+          papers=$(find "{{folio}}" -mindepth 2 -maxdepth 2 -name '*.ts' \
+            -exec sh -c 'd=$(dirname "$1"); [ "$(basename "$1" .ts)" = "$(basename "$d")" ] && echo "$d"' _ {} \; | sort -u)
+          if [ -z "$papers" ]; then
+            echo "::error::{{folio}}/ has no <paper>/<paper>.ts manifest — nothing to sweep."
+            exit 1
+          fi
+          echo "documents: $(echo "$papers" | tr '\n' ' ')"
+
+      # The folio links the platform as a submodule (checked out above) or a
+      # sibling checkout (cloned here). Either way it ends up at the path the
+      # folio's own config names.
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install the platform's dependencies
+        run: |
+          cd "{{assistant}}"
+          bun install --frozen-lockfile
+
+      - name: QA sweep (warn-only on baseline criticals)
+        continue-on-error: true
+        run: |
+          bun run "{{assistant}}/cat-harness/content/pipeline/qa-sweep.ts" "{{folio}}" --ci 2>&1 | tee /tmp/qa-sweep.log
+          echo ""
+          echo "Sweep exit code: ${PIPESTATUS[0]}"
+
+      # Per-axis summary — one block per integration watcher, so a
+      # reviewer can scan the workflow run page and see which axis
+      # is driving the critical count.
+      - name: Per-axis fail summary
+        continue-on-error: true
+        run: |
+          for axis in one-voice proof canonical compute detangler bibliography; do
+            echo ""
+            echo "── axis: $axis ─────────────────────────────────"
+            bun run "{{assistant}}/cat-harness/content/pipeline/qa-sweep.ts" "{{folio}}" \
+              --axis "$axis" --json 2>/dev/null \
+              | python3 "{{assistant}}/cat-harness/scripts/ci/qa-axis-summary.py" \
+                2>&1 | tee "/tmp/qa-axis-$axis.log"
+          done
+
+      - name: QA staleness map
+        continue-on-error: true
+        run: |
+          bun run "{{assistant}}/cat-harness/content/pipeline/qa-staleness.ts" "{{folio}}" --ci 2>&1 | tee /tmp/qa-staleness.log
+
+      # Schema sanity — every committed .qa.json must declare the v1
+      # schema marker. Strict (fails the workflow on shape drift).
+      - name: Schema sanity (.qa.json files)
+        run: |
+          bad=0
+          seen=0
+          while IFS= read -r f; do
+            seen=$((seen+1))
+            if ! grep -q '"\$schema": "block-qa/v1"' "$f"; then
+              echo "::error file=$f::missing or wrong \$schema marker"
+              bad=$((bad+1))
+            fi
+          done < <(find "{{folio}}" test/results -name '*.qa.json' -type f 2>/dev/null)
+          # A loop over zero files leaves bad=0 and used to print that every
+          # sidecar passes — a green check for a corpus that was never read.
+          if [ "$seen" -eq 0 ]; then
+            echo "::error::found NO .qa.json sidecars — refusing to report success"
+            exit 1
+          fi
+          if [ "$bad" -gt 0 ]; then
+            echo "::error::$bad of $seen sidecar(s) failed schema sanity"
+            exit 1
+          fi
+          echo "schema sanity: all $seen .qa.json file(s) pass"
+
+      - name: Upload sweep + staleness logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-sweep-logs
+          path: |
+            /tmp/qa-sweep.log
+            /tmp/qa-staleness.log
+            /tmp/qa-axis-*.log
+          retention-days: 14

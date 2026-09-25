@@ -5,7 +5,7 @@
     "id": "Process_ExtractStructure",
     "path": "processes/ingest-extract-structure.bpmn"
   },
-  "source_hash": "sha256:bf098843c9812d8358b2abd0725469c207700c2d4233e2036b7bc464d3f05be1",
+  "source_hash": "sha256:4f761fe2176053fc62cbebb17968704f8594a13042c6c619aa30d71e8f517ba9",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,27 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_ExtractText",
-          "detail": "\"Extract the text layer\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Structure",
-          "detail": "\"Write structure.json (TOC, page ranges, metadata)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
-    "n/a": 7,
+    "pass": 15,
+    "fail": 0,
+    "n/a": 9,
     "unknown": 0
   }
 }

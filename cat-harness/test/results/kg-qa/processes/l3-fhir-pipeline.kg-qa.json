@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "processes/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:a0995037341722653d4de7c8b2f37a9120daf6914554b093eb36561d119b0f49",
+  "source_hash": "sha256:8209188ca1f8b9a1a17a38ed3d2229699d6e9f491bcf1a97b67f3628fd6a6017",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,39 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_AuthorFsh",
-          "detail": "\"Author FSH profiles\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Sushi",
-          "detail": "\"SUSHI compile → FHIR JSON\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Validate",
-          "detail": "\"Validate against profiles\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_QcGates",
-          "detail": "\"QC gates\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_IgPublisher",
-          "detail": "\"IG Publisher build\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 10,
-    "fail": 1,
-    "n/a": 7,
+    "pass": 15,
+    "fail": 0,
+    "n/a": 9,
     "unknown": 0
   }
 }

@@ -5,7 +5,7 @@
     "id": "Process_RenderLog",
     "path": "processes/staging-render-log.bpmn"
   },
-  "source_hash": "sha256:d6a897a1d12b17ba2c4b0f8442dd9121f14545677081876c03ce83b96df51190",
+  "source_hash": "sha256:ce5d780fb6adff79c9225a73776c896330780efe63f48b5967477c05c9563b9c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -103,12 +103,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 13,
     "fail": 1,
-    "n/a": 8,
+    "n/a": 10,
     "unknown": 0
   }
 }

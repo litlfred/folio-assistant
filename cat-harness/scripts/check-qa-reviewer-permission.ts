@@ -46,8 +46,10 @@
  * exemption cannot be claimed by asserting it.
  *
  * @module scripts/check-qa-reviewer-permission
+ * @covers policies, scenarios
  */
 
+import { readPolicyGrants } from "../schemas/odrl.js";
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
@@ -56,6 +58,9 @@ import { isCheckerWitness, isCouldNotDispatch } from "../content/pipeline/untain
 
 const ROOT = join(import.meta.dir, "..", "..");
 const ACTOR_DIR = join(ROOT, ".claude", "skills", "actors");
+// declared-path-literal: the convention home of cat-harness's ODRL policies
+// (issue #1180), beside the actor registry this gate already reads by path.
+const POLICY_DIR = join(ROOT, "cat-harness", "policies");
 const RESULTS = join(ROOT, "cat-harness", "test", "results");
 const BASELINE = join(import.meta.dir, "qa-reviewer-permission-baseline.json");
 const PERMISSION = "qa-reporting";
@@ -63,7 +68,10 @@ const PERMISSION = "qa-reporting";
 export type Outcome = "permitted" | "forbidden" | "unresolved";
 
 /** Every declared actor's permission set, keyed by id. */
-export function readActors(dir: string = ACTOR_DIR): Map<string, Set<string>> {
+export function readActors(
+  dir: string = ACTOR_DIR,
+  grants: ReadonlyMap<string, readonly string[]> = readPolicyGrants(POLICY_DIR),
+): Map<string, Set<string>> {
   const out = new Map<string, Set<string>>();
   if (!existsSync(dir)) return out;
   for (const f of readdirSync(dir)) {
@@ -73,7 +81,9 @@ export function readActors(dir: string = ACTOR_DIR): Map<string, Set<string>> {
         id?: string;
         permissions?: string[];
       };
-      if (d.id) out.set(d.id, new Set(d.permissions ?? []));
+      // The ODRL policies hold what an actor may do (issue #1180); a file that
+      // still lists its own `permissions` is an unmigrated registry, and wins.
+      if (d.id) out.set(d.id, new Set(d.permissions ?? grants.get(d.id) ?? []));
     } catch {
       // A malformed actor file is not this gate's finding to make — the role
       // audit owns it. Skipping here would be wrong if it hid a defect, but an

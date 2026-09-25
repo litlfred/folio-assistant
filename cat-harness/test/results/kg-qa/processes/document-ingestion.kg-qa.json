@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:f7b81f4e009160b7c13166284cfc3f7848d47d94230b2d2b93c75516ea833259",
+  "source_hash": "sha256:18cc60fbd4f4348af1f120493814d7ceafd80112fe7247486432d6c6e793bb98",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,13 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "CallActivity_IngestTheme",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -83,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
-    "n/a": 6,
+    "pass": 16,
+    "fail": 0,
+    "n/a": 8,
     "unknown": 0
   }
 }

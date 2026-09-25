@@ -27,6 +27,13 @@ describe("review page", () => {
     expect(html).toContain("No block changed.");
   });
 
+  test("says which published site is the before side, main's or a stacked PR's base (5uuf)", () => {
+    expect(html).toContain("st.beforeRef");
+    expect(html).toContain('" Before side: " + beforeName');
+    expect(html).toContain('"view on " + beforeName');
+    expect(html).not.toContain('"view on main"');
+  });
+
   test("one key or one click: j/k and their visible button twins, and a live status", () => {
     expect(html).toContain('id="next"');
     expect(html).toContain('id="prev"');
@@ -49,5 +56,21 @@ describe("review page", () => {
     expect(html).toContain("Orphaned: the block these were made on is gone");
     expect(html).toContain("Comments whose tag could not be read");
     expect(html).toContain('"block: " + c.label');
+  });
+
+  test("embeds the tested renderers and the registry, not copies of them (d903)", () => {
+    expect(html).toContain('get("../changeset-text.json")');
+    expect(html).toContain("var wordDiff = ");
+    expect(html).toContain("var renderInline = ");
+    for (const id of ["word", "inline", "side-by-side"]) expect(html).toContain(`"id":"${id}"`);
+    expect(html).toContain('<select id="view">');
+  });
+
+  test("the viewer's choice is stored only through guarded calls", () => {
+    // localStorage throws in a private window; every use sits in a try.
+    const uses = html.match(/localStorage\.[a-zA-Z]+\(/g) ?? [];
+    expect(uses.length).toBe(2);
+    expect(html).toMatch(/try \{ return window\.localStorage\.getItem/);
+    expect(html).toMatch(/try \{ window\.localStorage\.setItem/);
   });
 });

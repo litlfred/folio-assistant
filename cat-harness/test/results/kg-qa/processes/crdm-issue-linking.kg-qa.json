@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Issue",
     "path": "processes/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:7fba27fdedf090b17607acb6bcc8c421613f0d03a2593763179da6199577f122",
+  "source_hash": "sha256:f2f19975e210b7ac03ac60321b4ca386967adcf1b6e1bb4962868cccdd6ea21b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -72,27 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_ScanIssues",
-          "detail": "\"Scan open issues for match\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_LinkIssue",
-          "detail": "\"Link to existing issue\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 15,
+    "fail": 0,
+    "n/a": 9,
     "unknown": 0
   }
 }

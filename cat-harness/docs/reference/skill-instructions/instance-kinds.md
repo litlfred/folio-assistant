@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/instance-kinds.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/instance-kinds.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/instance-kinds.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/instance-kinds.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/instance-kinds.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/instance-kinds.md){: .fa-edit-source }
 
 {% raw %}
 # Instance kinds — naming one, and what a new kind must declare
@@ -47,7 +47,7 @@ Measured 2026-09-21, the question does not arise:
 
 - **`coverage.visualiser` is a rendered PATH, not a kind.** Every value in the
   corpus has the shape `cat-harness/docs/cat-harness/<graph>/<instance>/index.html`.
-  It names an artefact, the way `coverage.docs` names a page.
+  It names an artefact, the way `coverage.docs` named a page until #1168 B7c.
 - **The owner's own placement rule says Tool.** `v1hw`: *"the visualiser lives
   as a tool in the harness that DEFINES the schema, declared in
   `skills`/`tools`."* Not beside the data, and not in whichever layer happens
@@ -85,7 +85,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap`, `bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
@@ -219,7 +219,7 @@ currently tells a new owner which.
 
 ### `bootstrap/README.md` is the first one
 
-It is the page an Initiator reads before it knows anything — *"you have been
+It is the page a Bootstrapping Agent reads before it knows anything — *"you have been
 pointed at a repository, you know nothing about it"* — and it is written for
 **this** repository. Measured 2026-09-21: it resolves **13 links into
 `../cat-harness/`**, across **6 distinct files**:

@@ -3,18 +3,20 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_Process_CRDM_Issue" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM_Issue">
     <bpmn:participant id="Participant_Process_CRDM_Issue" name="CRDM — link the work to an issue" processRef="Process_CRDM_Issue"/>
   </bpmn:collaboration>
   <bpmn:process id="Process_CRDM_Issue" name="CRDM — link the work to an issue" isExecutable="false">
-    <bpmn:documentation>Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>
+    <bpmn:documentation>Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_CRDM_Issue">
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Issue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_RelatedWork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ScanIssues</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Issue</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_AskCreate</bpmn:flowNodeRef>
@@ -23,22 +25,30 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Process_CRDM_Issue" name="Phase begins"/>
+    <bpmn:callActivity id="Call_RelatedWork" name="Related work:&#10;find, sort, ask" calledElement="Process_RelatedWork">
+      <bpmn:documentation>When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023).</bpmn:documentation>
+    </bpmn:callActivity>
     <bpmn:task id="A_ScanIssues" name="Scan open issues
 for match">
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:documentation>Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?"/>
+    <bpmn:exclusiveGateway id="GW_Issue" name="Issue found?">
+      <bpmn:documentation>Answered by the scan of open issues: does one already cover this work? `yes` links to it; `no` asks the BA to create or name one. The agent does not create an issue on its own.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:task id="A_AskCreate" name="Ask BA to create
 or link issue">
       <bpmn:documentation>Ask — never create. Creating an issue without the
 BA's permission is the thing this step exists to prevent.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_LinkIssue" name="Link to existing issue">
-      <bpmn:extensionElements><folio:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
+      <bpmn:documentation>A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="crdm-requirements-workflow"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Process_CRDM_Issue" name="Phase complete"/>
-    <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_1" sourceRef="Start_Process_CRDM_Issue" targetRef="A_ScanIssues"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_1" sourceRef="Start_Process_CRDM_Issue" targetRef="Call_RelatedWork"/>
+    <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_7" sourceRef="Call_RelatedWork" targetRef="A_ScanIssues"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_2" sourceRef="A_ScanIssues" targetRef="GW_Issue"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_3" name="no" sourceRef="GW_Issue" targetRef="A_AskCreate"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Issue_4" name="yes" sourceRef="GW_Issue" targetRef="A_LinkIssue"/>
@@ -55,6 +65,9 @@ BA's permission is the thing this step exists to prevent.</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Process_CRDM_Issue" bpmnElement="Start_Process_CRDM_Issue">
         <dc:Bounds x="310" y="147" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_RelatedWork" bpmnElement="Call_RelatedWork">
+        <dc:Bounds x="380" y="125" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ScanIssues" bpmnElement="A_ScanIssues">
         <dc:Bounds x="510" y="125" width="140" height="80" />
@@ -73,6 +86,10 @@ BA's permission is the thing this step exists to prevent.</bpmn:documentation>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Issue_1" bpmnElement="SF_Process_CRDM_Issue_1">
         <di:waypoint x="346" y="165" />
+        <di:waypoint x="380" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Issue_7" bpmnElement="SF_Process_CRDM_Issue_7">
+        <di:waypoint x="480" y="165" />
         <di:waypoint x="510" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_Process_CRDM_Issue_2" bpmnElement="SF_Process_CRDM_Issue_2">

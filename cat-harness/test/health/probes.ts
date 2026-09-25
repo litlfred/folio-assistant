@@ -29,7 +29,7 @@
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import {
   BEAN_GRAPH_FILE,
@@ -602,6 +602,18 @@ const OPTIONS_HEADING = /^##\s+(?:considered\s+)?options\b/i;
 const OPTION_ITEM = /^(?:[-*]|\d+\.)\s+\S/;
 
 /**
+ * An option written as its own subheading — `### A — …`, `### Option B:`.
+ *
+ * A SINGLE capital letter is required after the optional `Option`, so an
+ * ordinary subheading inside the section does not match: `### Tier 1 — a person
+ * types these` fails because `T` is followed by `ier`, not by a separator.
+ */
+const OPTION_SUBHEADING = /^###\s+(?:Option\s+)?[A-Z](?:[.):]|\s)/;
+
+/** An option written as a bold enumerated paragraph — `**A. Generate them.**` */
+const OPTION_ENUMERATED = /^\*\*[A-Z][.)]\s/;
+
+/**
  * How many options a bean's options section lists, or `undefined` when it has
  * none — the third state, which the check must not read as zero.
  *
@@ -714,12 +726,62 @@ export function countConsideredOptions(text: string): number | undefined {
   const lines = text.split("\n");
   const at = lines.findIndex((l) => OPTIONS_HEADING.test(l));
   if (at < 0) return undefined;
-  let n = 0;
+  // THREE FORMS, AND THE MOST STRUCTURED ONE WINS — bean `vq8g`.
+  //
+  // Counting top-level list items alone was wrong in BOTH directions on the
+  // real store, measured 2026-09-23 over the 12 beans that have an options
+  // heading:
+  //
+  //   · `j6t3` and `xgd8` write their options as bold enumerated paragraphs
+  //     (`**A. …**`) and were counted as ZERO. Both carry FIVE options against
+  //     the store's typical three, so the two most developed analyses in the
+  //     corpus were the two reported empty — and the finding's action says to
+  //     "drop the section", which would have destroyed them.
+  //   · `dhvf` writes four options as `### A —` subheadings with Pro/Con/Cost
+  //     bullets beneath each, and was counted as TEN.
+  //
+  // MADR is the authority here and it is FORMAT-AGNOSTIC: `madr.md` asks for
+  // "at least two, every one real" and never for a markdown list. The list
+  // requirement was the detector's invention, so the detector is what changes.
+  //
+  // The forms are NOT SUMMED. A section enumerates its options one way, and the
+  // other matches are sub-points of those options — summing `dhvf` would give
+  // 14 for a bean with 4. So the most structured form present wins: an option
+  // subheading is an option, a bold enumeration is an option, and bare list
+  // items are options only when neither appears.
+  const counts = { subheading: 0, enumerated: 0, item: 0 };
   for (let i = at + 1; i < lines.length; i++) {
     if (/^#{1,2}\s/.test(lines[i]!)) break;
-    if (OPTION_ITEM.test(lines[i]!)) n++;
+    if (OPTION_SUBHEADING.test(lines[i]!)) counts.subheading++;
+    else if (OPTION_ENUMERATED.test(lines[i]!)) counts.enumerated++;
+    else if (OPTION_ITEM.test(lines[i]!)) counts.item++;
   }
-  return n;
+  return counts.subheading > 0 ? counts.subheading : counts.enumerated > 0 ? counts.enumerated : counts.item;
+}
+
+/**
+ * The bean-defs directory, RELATIVE to the repository root, from the
+ * declaration — or `undefined` when it cannot be read.
+ *
+ * Exported for `scripts/check-quiet-claim-liveness.ts`, which needs the path as
+ * a **git pathspec** rather than as a directory to read. `check:declared-paths`
+ * is what asked for it: that script had `"beans/defs"` as a literal, and the
+ * ratchet's remedy is "read the declaration, or mark the site with a reason".
+ * Reading it is the better half of that choice — a marked literal still goes
+ * stale silently when `beans/beans.json` moves the store, which it already did
+ * once (`.beans/` to `beans/`, 2026-09-18).
+ */
+export function beanDefsDirRelative(repoRoot: string): string | undefined {
+  const found = declaredDir(
+    repoRoot,
+    DEFAULT_BEAN_GRAPH_ROOT,
+    BEAN_GRAPH_FILE,
+    (raw) => parseBeanGraph(raw),
+    (g) => beanNodeOfKind(g as never, "bean-defs"),
+    DEFAULT_BEAN_GRAPH,
+  );
+  if ("reason" in found) return undefined;
+  return relative(repoRoot, found.dir) || ".";
 }
 
 export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
@@ -764,6 +826,7 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       consideredOptions: countConsideredOptions(text),
       doneWhen: doneWhenState(text),
       renderedDecision: hasRenderedDecision(text),
+      parent: frontMatterValue(fm, "parent"),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a

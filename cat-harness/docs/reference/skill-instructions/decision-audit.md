@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/decision-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/decision-audit.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/decision-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/decision-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/decision-audit.md){: .fa-edit-source }
 
 {% raw %}
 # A decision is not a finding, and neither is a substitute for the other
@@ -91,7 +91,7 @@ are good.
 
 | process | step(s) that name it |
 |---|---|
-| [Content Change and Review](../../processes/content-change-review.html) | Approve and merge |
+| [Content Change and Review](../../processes/content-change-review.html) | Approve |
 | [CRDM close-out](../../processes/crdm-close.html) | Confirm all criteria met |
 | [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Sign off on requirements |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Review the findings; Record the decision and its audit note |

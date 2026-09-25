@@ -5,7 +5,7 @@
     "id": "Process_DeriveContent",
     "path": "processes/ingest-derive-content.bpmn"
   },
-  "source_hash": "sha256:3dacf48d13e76b8cefa7de81391dc1754263751d6837f872f763a90899d232bf",
+  "source_hash": "sha256:a8a08cb4e0a321b968787ac6e8625f93c01d4901f83171ac97102a3df95429c4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "n/a",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "n/a",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
+    "pass": 13,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 11,
     "unknown": 0
   }
 }

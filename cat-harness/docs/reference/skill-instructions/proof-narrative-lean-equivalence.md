@@ -5,12 +5,19 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/proof-narrative-lean-equivalence.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/proof-narrative-lean-equivalence.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/proof-narrative-lean-equivalence.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/proof-narrative-lean-equivalence.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/proof-narrative-lean-equivalence.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/proof-narrative-lean-equivalence.md){: .fa-edit-source }
 
 {% raw %}
 # Proof Narrative ↔ Lean Equivalence Audit
+
+> **Specialises [`narrative-asserts-code`](../folio-core/narrative-asserts-code.md)**
+> (issue #1042, stage C). That skill asks, for every declared prose ↔ code
+> pair, whether the prose still says what the code does. This one answers it
+> for the one pair kind a proof assistant can settle mechanically: a block's
+> narrative and its `lean.ref`. Everything Lean-specific lives here, and
+> nothing Lean-specific lives there.
 
 ## Purpose
 

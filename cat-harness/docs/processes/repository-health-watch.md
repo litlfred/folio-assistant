@@ -19,22 +19,32 @@ THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOW
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Scheduled log sweep | — | The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while "could not tell" is the only outcome that turns the job RED and leaves that issue deliberately untouched. |
+| Scheduled log sweep | `build-pipeline` | The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while "could not tell" is the only outcome that turns the job RED and leaves that issue deliberately untouched. |
 
 ## Steps
 
-**4** of 4 step(s) carry no documentation — `activity-documented` lists them.
+Every one of the 4 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Run the health checks,&#10;keeping the report either way**<br>`Task_Check` | Scheduled log sweep | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | — |
-| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
-| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | — |
+| **Run the health checks,&#10;keeping the report either way**<br>`Task_Check` | Scheduled log sweep | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does. |
+| **Ensure the tracking&#10;label exists**<br>`Task_Label` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict. |
+| **Close the&#10;tracking issue**<br>`Task_Close` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. |
+| **Open or EDIT the one&#10;tracking issue**<br>`Task_Track` | Scheduled log sweep | [`ci-health`](../reference/skill-instructions/ci-health.html) | Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on. |
+
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Could we&#10;tell?**<br>`GW_Determined` | Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one. | **no** → Unknown &#8212; job RED,&#10;issue UNTOUCHED<br>**yes** → Ensure the tracking&#10;label exists |
+| **Any&#10;findings?**<br>`GW_Finding` | Asked of the same `verdict`. `clean` is verdict == 'clean': the `repo-health` tracking issue is closed. `not clean` is verdict == 'findings': the one tracking issue is opened or edited in place with the report. A finding does not fail the job; only `unknown` does. | **clean** → Close the&#10;tracking issue<br>**not clean** → Open or EDIT the one&#10;tracking issue |
 
 {% endraw %}

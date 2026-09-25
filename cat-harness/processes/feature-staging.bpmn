@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_FeatureStaging" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_FeatureStaging">
@@ -11,12 +12,10 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_FeatureStaging" name="Staging a feature branch preview, and taking it down" isExecutable="false">
     <bpmn:documentation>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, owner: &quot;make sure all workflows documented as bpmn&quot;. This is the first `.github/workflows/*.yml` documented here, and it was chosen because its shape was the least visible: three jobs, eight `if:` branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment.&#10;&#10;Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean `w2g5`: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing.&#10;&#10;TWO GATEWAYS, and both are three-state rather than yes/no. `Removal confirmed?` reads a merge as confirmation in its own right (bean `1feu`) while still requiring a label for a close without a merge. `Still in use?` refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission.&#10;&#10;EVERY PATH THAT CHANGES `STAGING/` WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean `plj1` left the publish branch in for months.&#10;&#10;The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes `build-pipeline` the right lane rather than a convenient one.</bpmn:documentation>
-    <bpmn:extensionElements>
-      <folio:implements workflow=".github/workflows/feature-staging.yml"/>
-    </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_FeatureStaging">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_PR</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Deploy</bpmn:flowNodeRef>
@@ -41,18 +40,17 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Human" name="Human actor">
         <bpmn:documentation>The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>H_Confirm</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_PR" name="Pull request opened,&#10;synchronised or reopened">
-      <bpmn:extensionElements>
-        <folio:job name="stage"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Build" name="Build the docs site&#10;Jekyll · TypeDoc · KG export">
+      <bpmn:documentation>Build the preview from the PR's head: regenerate the generated docs, trim what this preview does not need, render the BPMN diagrams, then Jekyll, TypeDoc and the knowledge-graph export, with the staging banner and SEO identity claims stripped.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
@@ -60,7 +58,7 @@
     <bpmn:serviceTask id="Task_Deploy" name="Publish to&#10;STAGING/&amp;lt;slug&amp;gt;">
       <bpmn:documentation>`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one&#x27;s concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -68,14 +66,15 @@
     <bpmn:serviceTask id="Task_LogRendered" name="Append `rendered`&#10;to the render log">
       <bpmn:documentation>Its OWN commit, not part of the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/&lt;slug&gt;/_render-log/` — inside the directory a cleanup removes, which is the one place a record of the removal must not be. `continue-on-error`: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="render-logging"/>
+        <bootstrap.processes:skill ref="render-logging"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Comment" name="Comment the preview&#10;URL on the PR">
+      <bpmn:documentation>Post, or update in place, one comment on the PR giving the preview URL (STAGING/&lt;slug&gt;/) and the commit it was built from. Pull-request events only.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="staging-review"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
@@ -84,14 +83,12 @@
       <bpmn:incoming>Flow_4</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Closed" name="Pull request&#10;closed">
-      <bpmn:extensionElements>
-        <folio:job name="cleanup"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Slug" name="Derive the slug&#10;from the head ref">
+      <bpmn:documentation>Derive the slug from the PR's head ref: every character outside [a-zA-Z0-9._-] becomes '-', runs of '-' collapse, and leading or trailing '-' is trimmed. It must be one safe path segment, checked by value.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -105,7 +102,7 @@
     <bpmn:serviceTask id="Task_Remove" name="Remove the preview AND&#10;append `removed` — one commit">
       <bpmn:documentation>ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean `plj1` left the branch in. `render-log.ts` refuses a `removed` entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
@@ -116,14 +113,15 @@
     <bpmn:serviceTask id="Task_LogRetained" name="Append `retained`,&#10;with why it stays">
       <bpmn:documentation>The event that makes the log worth reading. A removal was CONSIDERED and refused; without an entry that leaves no trace on the branch at all, and the next person asking *&quot;why is this preview still up&quot;* has only a comment on a pull request that may itself be closed.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="render-logging"/>
+        <bootstrap.processes:skill ref="render-logging"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_9</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Notice" name="Post the retention&#10;notice on the PR">
+      <bpmn:documentation>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="staging-review"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
@@ -132,16 +130,13 @@
       <bpmn:incoming>Flow_11</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:startEvent id="Start_Dispatch" name="Dispatched with&#10;cleanup_slug">
-      <bpmn:extensionElements>
-        <folio:job name="cleanup-dispatch"/>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:serviceTask id="Task_Validate" name="Check the slug&#x27;s SHAPE and&#10;that the confirmation repeats it">
       <bpmn:documentation>Guarded three ways because a dispatch input is a DELETION TRIGGER. `workflow_dispatch` is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with `.` and `..` refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12</bpmn:incoming>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>
@@ -149,7 +144,7 @@
     <bpmn:serviceTask id="Task_Preflight" name="Re-evaluate liveness&#10;AT REMOVAL TIME">
       <bpmn:documentation>Re-evaluated AT REMOVAL TIME, through the same `previewLiveness` the health sweep uses rather than a second implementation of it. The sweep runs daily and proposes; this acts. Between them a branch can come back to life — bean `w2g5` documents exactly that, a session reusing one branch across five successive pull requests.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_13</bpmn:incoming>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
@@ -161,8 +156,9 @@
       <bpmn:outgoing>Flow_17</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_RemoveDisp" name="Remove it AND append&#10;`removed` — one commit">
+      <bpmn:documentation>Say what is going — size and file count — then remove STAGING/&lt;slug&gt;/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_15</bpmn:incoming>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
@@ -176,7 +172,7 @@
     <bpmn:serviceTask id="H_Confirm" name="Repeat the slug,&#10;exactly, to confirm">
       <bpmn:documentation>The one step in this process that is a person&#x27;s. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation"/>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_18</bpmn:outgoing>
     </bpmn:serviceTask>

@@ -1,4 +1,72 @@
 <!--
+  The configured colour scheme, published for docs/assets/js/docs-ui.js.
+
+  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
+  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
+  returns the string "default" on a fresh load, never "dark". The scheme
+  toggle needs to know what "default" MEANS here, and reading it from the
+  config is the one way that does not go stale when the config changes.
+
+  FIRST in this file since 2026-09-24, because the first-paint snippet below
+  reads it too, and a script can only read what the parser has already seen.
+-->
+<script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
+<!--
+  THE FIRST PAINT IS DARK — owner, 2026-09-24: *"when any
+  page/foio-asst/cat-harness first loads if flashes white before goignt o
+  dark mode. instead it should deafult dark mode then turn to light mode to
+  prevent light flash in dark."*
+
+  WHY IT FLASHED. The site is configured dark, so the theme's first
+  stylesheet already paints dark. But `docs-ui.js` is deferred, and on load
+  it applied a STORED choice with `jtd.setTheme(name)`, which swaps that
+  stylesheet's href -- to the dark file, when the default file already was
+  dark. The swap unloads the sheet that was painting the ground, and until
+  the new one arrives the browser's WHITE canvas shows. Every reader who had
+  ever pressed the light/dark control got that on every page. And nothing
+  painted `html` at all, so any moment without the theme's sheet was white.
+
+  So, FIRST THING in this include, before every stylesheet it emits:
+
+  1. decide the scheme -- the reader's stored choice (`fa-color-scheme`, the
+     key `docs-ui.js` writes), else the OS, else DARK -- and put it on
+     `<html data-fa-scheme>` before the body is parsed, so no rule keyed on
+     it ever paints the wrong way first;
+  2. if that is not the configured scheme, switch the theme's sheet NOW,
+     while the parser is still in the head. The link is parser-created, so
+     the browser holds first paint for its new file: a light reader is light
+     from the first frame, with no dark flash either;
+  3. paint `html` itself, dark unless the scheme is light, so a sheet in
+     flight shows the page's ground rather than white.
+
+  The theme's own stylesheet link is ABOVE this include (just-the-docs emits
+  `head_custom.html` last in its head), which is why step 2 exists: there is
+  no hook before it, and none is needed -- nothing paints until the head is
+  parsed, and this runs while it is being parsed.
+
+  INLINE, which the rest of this file avoids so that no `script-src`
+  relaxation is ever needed. This is the one exception, and it is the only
+  way to run before first paint: a `src` script here is a network round-trip
+  on the critical path of every page. It interpolates nothing into markup,
+  and a CSP added later needs this block's hash.
+
+  NO LIQUID between the markers. `first-paint-scheme.e2e.ts` lifts these
+  exact bytes into a replica page, so the spec tests what ships.
+
+  The generated dashboards that write their OWN head (`state-visualizer.ts`,
+  `gen-translation-status.ts`) do not carry this. They switch nothing with
+  script, so they cannot flash: their first CSS paints dark, and the same spec
+  holds them to that. Giving them this snippet would switch ON their
+  `data-fa-scheme="light"` rules for the first time -- and those were never
+  finished (axe, 2026-09-24: 3 to 6 contrast failures per dashboard in light,
+  dark-scheme tag colours on a light ground). A light palette for them is its
+  own piece of work, not a side effect of this one.
+-->
+<!-- fa-first-paint:begin -->
+<script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script>
+<style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style>
+<!-- fa-first-paint:end -->
+<!--
   The browser-tab icon, from the same declared mark the sidebar title
   (`title.html`) renders — reused rather than looked up by its own
   `browser-icon` role. There WAS a second role for exactly that, on
@@ -112,16 +180,6 @@
   encoder's stringToBytes is single-byte and a non-ASCII character in a URL
   silently encodes to mojibake.
 -->
-<!--
-  The configured colour scheme, published for docs/assets/js/docs-ui.js.
-
-  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
-  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
-  returns the string "default" on a fresh load, never "dark". The scheme
-  toggle needs to know what "default" MEANS here, and reading it from the
-  config is the one way that does not go stale when the config changes.
--->
-<script type="application/json" id="fa-site-scheme">{"scheme": "{{ site.color_scheme | default: 'light' }}"}</script>
 <!--
   The TRANSLATION INDEX — which source page has a translation in which locale.
 
@@ -467,6 +525,10 @@
   them: those are versioned in their own URLs already.
 -->
 <link rel="stylesheet" href="{{ '/assets/css/docs-ui.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="{{ '/assets/css/narrow-viewport.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
@@ -480,6 +542,9 @@
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
 <link rel="stylesheet" href="{{ '/assets/css/themes.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
+     that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
+<link rel="stylesheet" href="{{ '/assets/css/uml.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,

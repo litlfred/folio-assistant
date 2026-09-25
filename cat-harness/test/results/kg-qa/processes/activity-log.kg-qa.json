@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "processes/activity-log.bpmn"
   },
-  "source_hash": "sha256:a8d86554c03408f38ee398f89d468baeac0fda4bc5eecef6777776aebb99876b",
+  "source_hash": "sha256:aa18026f1520927ea6e5057273d29a2f84349ce0c7ba1a14de951dd0d382e1a9",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,51 +101,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_LogStart",
-          "detail": "\"Log task-start\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_DoWork",
-          "detail": "\"Do the work\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_LogMessage",
-          "detail": "\"Log a message or an error\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_LogEnd",
-          "detail": "\"Log task-end\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_PersistLog",
-          "detail": "\"Persist the log to the data store\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_ReportCaptureState",
-          "detail": "\"Report the capture state\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_EmptyOne",
-          "detail": "\"Discard one entry by id\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "A_EmptyAll",
-          "detail": "\"Discard all entries, or a whole session\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
-    "n/a": 8,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 10,
     "unknown": 0
   }
 }

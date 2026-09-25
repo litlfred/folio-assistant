@@ -5,7 +5,7 @@
     "id": "qa-report-signing",
     "path": "skills/folio-core/qa-report-signing.md"
   },
-  "source_hash": "e361be25ad23",
+  "source_hash": "7c557e42793d",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -22,12 +22,30 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
+    "pass": 5,
     "fail": 0,
-    "n/a": 0,
+    "n/a": 1,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-core/qa-report-signing.md",
+      "code": "cat-harness/skills/folio-core/qa-report-signing.ts",
+      "prose_hash": "7c557e42793d",
+      "code_hash": "44587545ea22",
+      "by": "baseline"
+    }
+  ]
 }

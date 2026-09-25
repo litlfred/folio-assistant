@@ -5,7 +5,7 @@
     "id": "Process_RefreshMaterialized",
     "path": "processes/refresh-materialized.bpmn"
   },
-  "source_hash": "sha256:a60cf7229491784ae2b586b692189927f6f878390a1b3dad56fe9ad3926916d3",
+  "source_hash": "sha256:10a97f626f10efcae4741f92422adf0e55d9d45cfb780b7df00d46c6cb69ba3c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 12,
+    "pass": 16,
     "fail": 0,
-    "n/a": 6,
+    "n/a": 8,
     "unknown": 0
   }
 }

@@ -1,0 +1,96 @@
+{
+  "inspected_by": {
+    "kind": "agent",
+    "id": "claude",
+    "model": "claude-opus-5"
+  },
+  "inspected_at": "2026-09-23",
+  "verdicts": {
+    "arxiv-2602.12670v4": {
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the Claude Code mark beside its label in the harness list",
+        "draft": "Claude Code's logo: a white many-pointed starburst on a rounded terracotta square. It sits beside the \"Claude Code\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-2": {
+        "role": "logo",
+        "saw": "the Gemini CLI mark beside its label in the harness list",
+        "draft": "Gemini CLI's logo: a blue-to-magenta gradient chevron on a rounded near-black square with a matching gradient border. It sits beside the \"Gemini CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-3": {
+        "role": "logo",
+        "saw": "the Codex CLI mark beside its label in the harness list",
+        "draft": "Codex CLI's logo: a white `>_` terminal prompt on a violet-to-blue gradient, in a scalloped cloud outline. It sits beside the \"Codex CLI\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p003-4": {
+        "role": "logo",
+        "saw": "the OpenHands mark beside its label in the harness list",
+        "draft": "OpenHands' logo: two raised yellow hands with short motion lines above them, on a white rounded square. It sits beside the \"OpenHands\" label in the page-3 figure listing the agent harnesses compared."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one \u2014 the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "the \"Pass Rate\" colour scale for the page's heatmap, 1.0 blue at top to 0.0 red at bottom",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Pass Rate\" and running from 1.0 at the top to 0.0 at the bottom. Dark blue at 1.0 fades through mid and pale blue to near-white and pale green around 0.6, pale yellow near 0.5, then yellow, orange, red and dark crimson at 0.0. Blue therefore marks a HIGH pass rate and red a LOW one \u2014 the scale is inverted relative to the common convention that red is high, so reading it the usual way reverses every cell."
+      },
+      "img-p027-1": {
+        "role": "figure",
+        "saw": "the \"Delta Pass Rate\" diverging scale, +0.6 blue to -0.6 red about a white zero \u2014 a DIFFERENT scale from pp. 25-26",
+        "draft": "Vertical colour scale for the heatmap on this page, titled \"Delta Pass Rate\" and diverging about zero: +0.6 dark blue at the top, through mid and pale blue to WHITE at 0.0 in the centre, then pale red, red and dark crimson to -0.6 at the bottom. Blue marks a positive change in pass rate and red a negative one. This is NOT the same scale as the \"Pass Rate\" bars on the two preceding pages: it is signed, centred on zero, and carries no yellow band."
+      }
+    },
+    "skill-authoring-best-practices---claude-platform-docs": {
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram \u2014 YAML frontmatter above, Markdown body below",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "the bundling diagram \u2014 SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at \u2014 pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p024-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram \u2014 forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    },
+    "equipping-agents-for-the-real-world-with-agent-skills-anthro": {
+      "img-p002-1": {
+        "role": "figure",
+        "saw": "the architecture diagram \u2014 agent configuration on the left, its virtual machine on the right",
+        "draft": "Diagram titled \"Agent + Skills + Virtual Machine\", in two panels. Left, \"Agent configuration\": a core system prompt, a row of equipped Skills (bigquery, docx, nda-review, pdf, pptx, xlsx and others), and three equipped MCP servers which arrow down to remote MCP servers elsewhere on the internet. Right, \"Agent virtual machine\": Bash, Python and Nodejs above a file system holding one directory per skill \u2014 skills/bigquery/ with SKILL.md, datasources.md and rules.md; skills/docx/ with SKILL.md and an ooxml/ subtree; skills/nda-review/; skills/pdf/ with SKILL.md, forms.md, reference.md and extract_fields.py. A labelled arrow between the panels reads \"use computer\", and a note explains that the contents of Skill directories live in the agent computer's file system."
+      },
+      "img-p003-1": {
+        "role": "figure",
+        "saw": "the SKILL.md anatomy diagram \u2014 same figure as the platform docs, name: pdf",
+        "draft": "Diagram titled \"A simple SKILL.md file\". A single file, pdf/SKILL.md, split into two bands: a YAML frontmatter block carrying `name` and a one-line `description` of the PDF toolkit, and a Markdown body below it with an ## Overview paragraph and a ## Quick Start section showing python code that imports PdfReader from pypdf, opens a document and extracts its text page by page. The point of the figure is the split: metadata above, instructions below, in one file."
+      },
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "the bundling diagram \u2014 SKILL.md linking out to reference.md and forms.md",
+        "draft": "Diagram titled \"Bundling additional content\". pdf/SKILL.md on the left, as in the previous figure; on the right, two further files it points at \u2014 pdf/reference.md (advanced PDF features and libraries not in the main instructions) and pdf/forms.md (how to tell a fillable PDF form from a non-fillable one). Two arrows run from highlighted relative links in the SKILL.md body, `./reference.md` and `./forms.md`, to the file each names. The point is that a skill references sibling files by relative path rather than inlining them."
+      },
+      "img-p004-2": {
+        "role": "figure",
+        "saw": "a TABLE rendered as an image \u2014 the three progressive-disclosure levels",
+        "draft": "Table of the three progressive-disclosure levels, four columns: Level, File, Context Window, # Tokens. Level 1 is SKILL.md metadata (YAML), always loaded, about 100 tokens. Level 2 is the SKILL.md body (Markdown), loaded when the Skill triggers, under 5k tokens. Level 3 and beyond is bundled files \u2014 text files, scripts, data \u2014 loaded as needed by Claude, marked unlimited with an asterisk. The table is an IMAGE, so none of these figures appear in the page's text layer."
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "the context-window walkthrough \u2014 how a Skill enters and is read",
+        "draft": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present \u2014 the body and the bundled files are read on demand."
+      },
+      "img-p006-1": {
+        "role": "figure",
+        "saw": "the executable-script diagram \u2014 forms.md linking to extract_fields.py",
+        "draft": "Diagram titled \"Bundling executable scripts\". pdf/forms.md on the left, pdf/extract_fields.py on the right, with an arrow from the highlighted `./extract_fields.py` link in the prose to the script itself. The script imports PdfReader from pypdf and defines write_field_info, which reads a PDF's form fields and writes them to JSON, with a __main__ guard checking argv length. The point is that a skill can bundle runnable code, not only prose."
+      }
+    }
+  }
+}

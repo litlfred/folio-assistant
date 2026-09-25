@@ -7,7 +7,7 @@ pages: 88-88
 pdf_page: 88
 source_pdf: 9789240010567-eng.pdf
 source_sha256: a4804f85ebb5c223
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 76

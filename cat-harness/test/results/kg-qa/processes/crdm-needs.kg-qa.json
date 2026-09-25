@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Needs",
     "path": "processes/crdm-needs.bpmn"
   },
-  "source_hash": "sha256:e8c8237eb046472804d20e491d98d70d839b2d501a729cd14c396ad926025dc5",
+  "source_hash": "sha256:cbe810d1357dd40c1dd1b857a3721f1caa5d593f3f83e9e76c05aad5b1e959aa",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,27 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Synthesise",
-          "detail": "\"Phase 1: Synthesise needs from sources\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "S_ConfirmNeeds",
-          "detail": "\"Confirm needs statement\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 14,
+    "fail": 0,
+    "n/a": 10,
     "unknown": 0
   }
 }

@@ -33,6 +33,7 @@
  * its run.
  *
  * @module content/pipeline/orphan-verdict-sweep
+ * @covers qa
  */
 import { existsSync, readdirSync } from "node:fs";
 import { dirname, join, relative } from "node:path";

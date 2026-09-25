@@ -20,7 +20,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_CopyOutMaterialized"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -37,12 +38,12 @@ The copy-out re-opens NONE of the five materialisation gates. Those were answere
 
 The three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_CopyOutMaterialized_LaneSet">
       <bpmn:lane id="Lane_Reader" name="Reader (any actor)">
         <bpmn:documentation>ANY reader, and that is a ruling rather than an oversight — the owner, 2026-09-22, chose it over restricting the copy-out to an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="user" /></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user" /></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_WantToEdit</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Frozen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_EditDirectly</bpmn:flowNodeRef>
@@ -50,18 +51,18 @@ The three states, the five gates and the provenance pair are folio-assistant-cor
       </bpmn:lane>
       <bpmn:lane id="Lane_Source" name="Source graph — read-only">
         <bpmn:documentation>This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="corpus" /></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="corpus" /></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ReadSource</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Folio" name="Copier's own folio/">
         <bpmn:documentation>Where the copy lands, chosen by the owner 2026-09-22 over a scratch area. A scratch area lost because it makes the copy publishable by accident: a directory nobody declared is a directory nobody gates. The two writes here are ordered and both required — Task_Land puts the bytes somewhere, Task_RecordProvenance says what they are a copy OF, and a process that stopped after the first would produce a file indistinguishable from original work one rename later.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="author" /></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author" /></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Land</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RecordProvenance</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Verify" name="Verification">
         <bpmn:documentation>Asks the question the whole process exists to keep answerable: does the SOURCE still hash to its recorded digest? A copy-out that disturbed the original is not a copy-out, and this lane is the only thing that can tell the difference after the fact — the bytes look the same either way.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="validation-pipeline" /></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="validation-pipeline" /></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_VerifySourceUntouched</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Copied</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -84,7 +85,7 @@ materialized / read-only?">
 it is your own content">
       <bpmn:documentation>The ordinary path, drawn so the process does not read as though every edit needs a copy. Content in a writable directory is authored content and is edited where it lives; the copy-out is for somebody else's bytes, not for yours.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="copy-out-materialized" />
+        <bootstrap.processes:skill ref="copy-out-materialized" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_Writable</bpmn:incoming>
       <bpmn:outgoing>Flow_NotFrozen</bpmn:outgoing>
@@ -94,7 +95,7 @@ it is your own content">
 and write nothing">
       <bpmn:documentation>A read, and the only interaction this process has with the source. Its digest and `provenance` are carried forward: the digest so Task_VerifySourceUntouched has something to check against, and `provenance` so the copy can name what it came out of without re-deriving it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="copy-out-materialized" />
+        <bootstrap.processes:skill ref="copy-out-materialized" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_Frozen</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -104,7 +105,7 @@ and write nothing">
 the copier's own folio/">
       <bpmn:documentation>Into the copier's own declared `folio/`, never a scratch area — a directory nobody declared is a directory nobody gates, and the copy would be publishable by accident. The copy is NOT read-only: it is the copier's own content, makes no claim about anybody else's bytes, and freezing it too would mean the next person needs a copy of the copy.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="copy-out-materialized" />
+        <bootstrap.processes:skill ref="copy-out-materialized" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
@@ -114,8 +115,8 @@ the copier's own folio/">
 what this is a copy OF">
       <bpmn:documentation>The step that is easy to omit and impossible to reconstruct afterwards. `provenance` is a PAIR: `upstream` is the remote thing, `local` is the original in this repository. A copy-out writes `local`; it does not overwrite `upstream`, and it does not reuse `upstream` for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without `local`, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="copy-out-materialized" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="copy-out-materialized" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
@@ -125,7 +126,7 @@ what this is a copy OF">
 still hashes to its digest">
       <bpmn:documentation>`check:materialized-fixity`. Run against the SOURCE, not the copy — the copy is new content with no claim to verify, and the source is the thing a botched copy-out would have disturbed. A mismatch here means the copy-out was an edit in place wearing a copy's clothes, and it is the only signal that tells the two apart.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="copy-out-materialized" />
+        <bootstrap.processes:skill ref="copy-out-materialized" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>

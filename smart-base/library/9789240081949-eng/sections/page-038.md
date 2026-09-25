@@ -7,7 +7,7 @@ pages: 38-38
 pdf_page: 38
 source_pdf: 9789240081949-eng.pdf
 source_sha256: af6fd10ed03d5ee3
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 3.1.5  

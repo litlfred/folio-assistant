@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/todo-manager.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -434,7 +434,7 @@ skills to explain in context of larger process."*
 
 | | **a per-activity op** | **a periodic sweep** |
 |---|---|---|
-| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| what it is | a step inside one process — a fourth `<cat-harness.processes:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
 | the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
 | what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
 | what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
@@ -545,7 +545,7 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
 | [Getting started](../../processes/getting-started.html) | Seed the work plan |
-| [Incremental IG build](../../processes/ig-incremental-build.html) | Log findings on the bean; File QC findings as beans |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
 | [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
 | [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
 

@@ -10,7 +10,7 @@
     "container"
   ],
   "subsetIsSelfContained": false,
-  "_subsetIsSelfContained_note": "FALSE, and this is the row that makes the abstraction real rather than IRIS with an interface drawn round it. An IRIS item stands alone: fetch it and you have it. A mathlib declaration does not — it needs its import closure, and a subset that omits what its members depend on is not a smaller corpus, it is one that does not compile. The breakage surfaces at BUILD time, long after the subset was chosen. Any source with this flag false must be closed over dependencies before the five materialization gates are even asked, because the size being gated is the closure's, not the request's.",
+  "subsetBasis": "FALSE, and this is the row that makes the abstraction real rather than IRIS with an interface drawn round it. An IRIS item stands alone: fetch it and you have it. A mathlib declaration does not — it needs its import closure, and a subset that omits what its members depend on is not a smaller corpus, it is one that does not compile. The breakage surfaces at BUILD time, long after the subset was chosen. Any source with this flag false must be closed over dependencies before the five materialization gates are even asked, because the size being gated is the closure's, not the request's.",
   "identifiers": [
     {
       "name": "fully-qualified name",

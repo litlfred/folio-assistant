@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_CRDM_Signoff" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CRDM_Signoff">
@@ -14,11 +15,13 @@
     <bpmn:laneSet id="LaneSet_Process_CRDM_Signoff">
       <bpmn:lane id="Lane_BA" name="BA / Feature Requestor">
         <bpmn:documentation>Makes two decisions of different character here: BA_Signoff approves what was drafted, and BA_ChooseKg commits it — or explicitly does not — to a knowledge-graph destination, where NONE is a legitimate answer rather than a refusal to answer. Only this lane may decide that a requirement is fully carried by the code and becomes a commit and nothing else; an agent that decided so on its own would be placing a node in somebody else's graph.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="business-analyst"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>BA_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>BA_ChooseKg</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Turns Lane_BA's two decisions into durable artefacts: A_CreateBeans and A_RecordKg each mint their own bean directly with the CLI, since the engine's own vocabulary has no create, only claim, note and resolve on an instance's bean. A_AnnounceBranch then closes the phase on its one path to End with no loop of its own, so it fires exactly once — Phase 6's own loops re-enter implementation on the same branch without ever crossing back through this edge.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Process_CRDM_Signoff</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CreateBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_OfferKg</bpmn:flowNodeRef>
@@ -35,13 +38,14 @@
 no `create` op — it claims, notes and resolves the instance's OWN bean — so
 what this step records here is a note that the plan now exists.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="todo-manager"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="BA_Signoff" name="Sign off on
 requirements">
-      <bpmn:extensionElements><folio:skill ref="decision-audit"/></bpmn:extensionElements>
+      <bpmn:documentation>The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="decision-audit"/></bpmn:extensionElements>
     </bpmn:task>
     <bpmn:task id="A_AnnounceBranch" name="Announce the branch
 on the issue">
@@ -55,8 +59,8 @@ A_Implement (increment rejected, MVP not ready, feedback translated) re-enter
 implementation on the SAME branch, and re-announcing on each would be noise.
 Announce once, when the branch is created.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="crdm-requirements-workflow"/>
-        <folio:bean op="claim"/>
+        <bootstrap.processes:skill ref="crdm-requirements-workflow"/>
+        <cat-harness.processes:bean op="claim"/>
       </bpmn:extensionElements>
     </bpmn:task>
     <bpmn:endEvent id="End_Process_CRDM_Signoff" name="Phase complete"/>
@@ -69,7 +73,7 @@ ONE question for the SET, not one per requirement: a six-phase run can agree man
 
 The options are DERIVED from the graphs this instance declares in `&lt;name&gt;.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="kg-contribution-offer"/>
+        <bootstrap.processes:skill ref="kg-contribution-offer"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SF_Process_CRDM_Signoff_3</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_1</bpmn:outgoing>
@@ -79,8 +83,8 @@ The options are DERIVED from the graphs this instance declares in `&lt;name&gt;.
 
 The default creates NOTHING. An agent that decides on its own that a requirement "is really a skill" has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="kg-contribution-offer"/>
-        <folio:policy relaxable="false"/>
+        <bootstrap.processes:skill ref="kg-contribution-offer"/>
+        <cat-harness.processes:policy relaxable="false"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SF_Kg_1</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_2</bpmn:outgoing>
@@ -88,7 +92,7 @@ The default creates NOTHING. An agent that decides on its own that a requirement
     <bpmn:exclusiveGateway id="GW_KgChosen" name="A destination?">
       <bpmn:documentation>Drawn as a branch rather than folded into the task above, because `none` being a real outcome is the property worth being able to see. A diagram where every path ends in a created node is a diagram of a ritual.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:judgement reason="Whether agreed requirements belong in a knowledge graph, and in which, is the requester's call about their own content. No declared fact decides it, so no DMN table can."/>
+        <cat-harness.processes:judgement reason="Whether agreed requirements belong in a knowledge graph, and in which, is the requester's call about their own content. No declared fact decides it, so no DMN table can."/>
       </bpmn:extensionElements>
       <bpmn:incoming>SF_Kg_2</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_3</bpmn:outgoing>
@@ -99,8 +103,8 @@ The default creates NOTHING. An agent that decides on its own that a requirement
 
 `op="note"` and not `create`, for the reason `A_CreateBeans` above states: the engine has no `create` op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with `beans create`, running the exact-title existence check first, and what this step records is a note that the decision was taken.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="placement"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="placement"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
       <bpmn:incoming>SF_Kg_3</bpmn:incoming>
       <bpmn:outgoing>SF_Kg_4</bpmn:outgoing>

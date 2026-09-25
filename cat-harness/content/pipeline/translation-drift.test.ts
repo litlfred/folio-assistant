@@ -18,7 +18,10 @@
  */
 import { describe, expect, test } from "bun:test";
 
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 import {
   KNOWN_DRIFT,
@@ -134,7 +137,6 @@ describe("the backlogs are reviewable, not a policy", () => {
     // "drifted" alone would leave a translator re-deriving the divergence,
     // and an entry with no date cannot be told from one that has become
     // permanent.
-    expect(KNOWN_DRIFT.length).toBeGreaterThan(0);
     for (const k of KNOWN_DRIFT) {
       expect(k.reason.trim().length).toBeGreaterThan(20);
       expect(k.since).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -184,11 +186,21 @@ describe("the real corpus — and the gate can actually fail", () => {
     expect(fixed).toEqual([]);
   });
 
-  test("with the backlog ignored, the gate REPORTS — it is not vacuous", () => {
-    // If this were empty the check would be passing because it finds nothing,
-    // not because the corpus is clean. The five recorded pages are what it
-    // finds, and they are what proves it looks.
-    const { findings } = driftFor(ROOT, { ignoreKnownDrift: true });
-    expect(findings.filter((f) => f.severity === "error").length).toBeGreaterThan(0);
+  test("the gate is not vacuous — a real page, with a section cut, is drift", () => {
+    // This used to be proved by the backlog itself: with KNOWN_DRIFT ignored,
+    // the five untranslated landing pages turned the sweep red. Translating
+    // them (bean `alox`, 2026-09-23) emptied the backlog, and with it that
+    // witness — a clean corpus and a comparison that finds nothing look the
+    // same. So the witness is now a MUTATION of a real page: the French
+    // landing page matches its source, and the same page with one section
+    // removed does not.
+    const site = resolve(ROOT, siteDirFor(ROOT));
+    const src = headingsOf(readFileSync(resolve(site, "index.md"), "utf-8"));
+    const fr = readFileSync(resolve(site, "fr/index.md"), "utf-8");
+    expect(comparableSource(src)).toBe(true);
+    expect(sameStructure(src, headingsOf(fr))).toBe(true);
+    const cut = fr.replace(/^## Quatre choses, dans l'ordre$/m, "");
+    expect(cut).not.toBe(fr);
+    expect(sameStructure(src, headingsOf(cut))).toBe(false);
   });
 });

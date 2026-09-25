@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 /**
- * Every `<folio:skill ref="…"/>` in a BPMN names a skill that exists, and
+ * Every `<bootstrap.processes:skill ref="…"/>` in a BPMN names a skill that exists, and
  * every activity says which skill implements it.
  *
- * AGENTS.md: "Each activity carries a `<folio:skill ref="…"/>` extension
+ * AGENTS.md: "Each activity carries a `<bootstrap.processes:skill ref="…"/>` extension
  * naming the skill that implements it". Nothing checked either half, and both
  * had drifted by the time this was written (2026-09-18):
  *
@@ -28,6 +28,8 @@
  *
  * Usage:  bun run check:workflow-refs  [--strict]
  * Exit:   0 clean · 1 dangling ref (or, with --strict, any uncovered activity)
+ *
+ * @covers processes, skills
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { workflowFiles } from "./known-skills.js";
@@ -45,7 +47,7 @@ const strict = process.argv.includes("--strict");
  * Every instance whose diagrams this repository is responsible for.
  *
  * Root-only until 2026-09-19, and the comment below is the argument for the
- * change: *"a dangling `<folio:skill ref>` in a diagram this checker never
+ * change: *"a dangling `<bootstrap.processes:skill ref>` in a diagram this checker never
  * opens is a broken reference reported as clean."* `bootstrap/` is a separate
  * instance with its own declaration and its own two skills, so
  * `bootstrap/processes/bootstrap.bpmn` was in exactly that state from the day
@@ -86,6 +88,30 @@ const branches = {
   undeclared: [] as Array<{ file: string; node: string }>,
 };
 
+/**
+ * Every call into a process that JUDGES, and whether the caller says which
+ * answers it can act on. Bean `bvuk`.
+ *
+ * REPORTED, not enforced, and the reason is specific rather than the usual
+ * adoption argument. Six diagrams called `Process_Adjudication` when it still
+ * held the QA-criterion outcome half; **none of them branched on its outcome**
+ * — each call activity has one outgoing flow and the called process had one
+ * settled end event — so the mismatch was invisible in the diagram's shape.
+ * The split (bean `bvuk`) moved that half into `criterion-adjudication.bpmn`
+ * and left `A_Adjudicate` deferring its enum, which fixes the four callers
+ * that were running QA branches for a question with no criterion in it. What
+ * each of those four SHOULD ask is still an open decision, not a backfill.
+ *
+ * So an undeclared caller is "could not determine", printed rather than
+ * failed. A DECLARED one that disagrees with its adjudicator is refused at
+ * load, by `checkAcceptedCodes` in `process-model.ts` — this list is the third
+ * state between that refusal and silence.
+ */
+const adjudicationCalls = {
+  declared: [] as Array<{ file: string; node: string; codes: string[] }>,
+  undeclared: [] as Array<{ file: string; node: string; called: string }>,
+};
+
 let knownCount = 0;
 let fileCount = 0;
 let rootFiles: string[] = [];
@@ -93,7 +119,7 @@ let rootFiles: string[] = [];
 for (const root of INSTANCES) {
 const skills = knownSkills(root);
 knownCount += skills.size;
-// Absolute paths from every declared directory. A dangling `<folio:skill
+// Absolute paths from every declared directory. A dangling `<bootstrap.processes:skill
 // ref>` in a diagram this checker never opens is a broken reference reported
 // as clean, which is the exact failure this script exists to prevent.
 const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
@@ -132,6 +158,23 @@ for (const file of files) {
     else if (node.judgementReason) branches.judgement.push(where);
     else branches.undeclared.push(where);
   }
+
+  // Calls into an adjudicating process. `model.children` is what the loader already
+  // resolved, so a call OUT of this corpus is absent here rather than counted
+  // — a process no file defines is opaque by design and cannot be checked.
+  for (const [nodeId, child] of model.children) {
+    const fixed = [...child.nodes.values()].some((n) => n.adjudication !== undefined);
+    const defers = [...child.nodes.values()].some((n) => n.adjudicationDefers);
+    if (!fixed && !defers) continue;
+    const node = model.nodes.get(nodeId)!;
+    const where = { file: relative(INSTANCE_ROOT, file), node: nodeId };
+    // Two ways to be declared, one per kind of callee. A fixed enum is
+    // ACCEPTED (the caller has read it); a deferred one is DECLARED (the
+    // caller writes it, and its own gateway acts on it).
+    const codes = node.adjudicationAccepts ?? (defers ? node.adjudication?.codes : undefined);
+    if (codes) adjudicationCalls.declared.push({ ...where, codes });
+    else adjudicationCalls.undeclared.push({ ...where, called: child.id });
+  }
 }
 }
 
@@ -166,6 +209,29 @@ if (totalUncovered) {
 }
 
 if (!dangling.length && !totalUncovered) console.log("\nAll refs resolve, every activity covered.");
+
+const adjTotal = adjudicationCalls.declared.length + adjudicationCalls.undeclared.length;
+if (adjTotal > 0) {
+  console.log(
+    `\nAdjudication callers — ${adjudicationCalls.declared.length} of ${adjTotal} say ` +
+      `which answers they can act on`,
+  );
+  for (const d of adjudicationCalls.declared) {
+    console.log(`  \u2713 ${d.file} \u00b7 ${d.node} accepts (${d.codes.join(", ")})`);
+  }
+  for (const u of adjudicationCalls.undeclared) {
+    console.log(`  ? ${u.file} \u00b7 ${u.node} \u2192 ${u.called}: does not say`);
+  }
+  if (adjudicationCalls.undeclared.length) {
+    console.log(
+      `\n${adjudicationCalls.undeclared.length} caller(s) run an adjudication without naming the\n` +
+        `answers it may give. Not an error — what each should ask is the open question in\n` +
+        `bean \`bvuk\`, and guessing would make an undecided thing look checked. Declare\n` +
+        `<cat-harness.processes:adjudication codes="…"/> here, with this step's gateway coding the same\n` +
+        `set, once the answer is decided — or \`accepts\` where the callee fixes its own.`,
+    );
+  }
+}
 
 /*
  * The same failure, one layer over: `schemas/translation-tools.ts` lists

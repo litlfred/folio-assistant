@@ -19,6 +19,7 @@ Materialized content is read-only. The owner, 2026-09-21: "if we have a material
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 - **Skill:** [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html)
 
 ## Lanes — who acts
@@ -41,5 +42,13 @@ Every one of the 5 step(s) is documented.
 | **Land the bytes in the copier's own folio/**<br>`Task_Land` | Copier's own folio/ | [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html) | Into the copier's own declared `folio/`, never a scratch area — a directory nobody declared is a directory nobody gates, and the copy would be publishable by accident. The copy is NOT read-only: it is the copier's own content, makes no claim about anybody else's bytes, and freezing it too would mean the next person needs a copy of the copy. |
 | **Record provenance.local — what this is a copy OF**<br>`Task_RecordProvenance` | Copier's own folio/ | [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html) | The step that is easy to omit and impossible to reconstruct afterwards. `provenance` is a PAIR: `upstream` is the remote thing, `local` is the original in this repository. A copy-out writes `local`; it does not overwrite `upstream`, and it does not reuse `upstream` for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without `local`, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down. |
 | **Verify the ORIGINAL still hashes to its digest**<br>`Task_VerifySourceUntouched` | Verification | [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html) | `check:materialized-fixity`. Run against the SOURCE, not the copy — the copy is new content with no claim to verify, and the source is the thing a botched copy-out would have disturbed. A mismatch here means the copy-out was an edit in place wearing a copy's clothes, and it is the only signal that tells the two apart. |
+
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Is the target materialized / read-only?**<br>`Gateway_Frozen` | The one gate. `check:read-only-graphs` answers it from the directory's declaration, and `readOnly` absent is NOT `false` — it is not declared, a third state. An undeclared directory holding materialized nodes is reported as a finding rather than waved through here, because "nobody answered" and "somebody said it is writable" must not share a branch. | **yes — read-only** → Read the original — and write nothing<br>**no, or not declared** → Edit it in place — it is your own content |
 
 {% endraw %}

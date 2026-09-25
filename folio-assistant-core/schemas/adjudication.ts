@@ -19,7 +19,7 @@
  *
  * So the two layers **meet at the data, not at the code**. This module says
  * what a request and an outcome ARE, as documents. The harness reads
- * `<folio:adjudication/>` off a diagram and validates the code against what
+ * `<cat-harness.processes:adjudication/>` off a diagram and validates the code against what
  * that diagram declares, the same way `INVOLVEMENT_VOCABULARIES` handles RACI
  * versus RASCI — a vocabulary read from a declaration, never imported from a
  * layer above.
@@ -27,7 +27,7 @@
  * The cost that split accepts, stated because it is real: the code enum is
  * written twice, once in a diagram and once in a recorded outcome. The
  * mitigation is {@link AdjudicationOutcomeSchema.codes} — an outcome carries
- * the enum it was judged against, so a consumer COMPARES the two rather than
+ * the enum it was adjudicated against, so a consumer COMPARES the two rather than
  * assuming they agree. An outcome that carried only its code would make the
  * divergence undetectable, which is the failure this whole file is shaped
  * against.
@@ -36,11 +36,11 @@
  *
  * It does not decide anything, and it cannot. Adjudication is the step entered
  * precisely because no mechanism could settle the question — `adjudication.bpmn`
- * says it of its own judge step: *"the one step nothing here can check: if a
+ * says it of its own adjudicator step: *"the one step nothing here can check: if a
  * mechanism could decide it, the process would not have been entered."* What is
  * checkable is everything AROUND the judgement: that the judge was shown a
  * declared set, that the answer is one of the declared codes, that a reason
- * exists, and that the actor was permitted to judge at all.
+ * exists, and that the actor was permitted to adjudicate at all.
  *
  * @module folio-assistant-core/schemas/adjudication
  * @graphNode schema
@@ -52,13 +52,13 @@ import { MATERIALIZATION_STATES } from "./materialization.js";
 export const ADJUDICATION_SCHEMA_TAG = "folio-adjudication/v1";
 
 /**
- * Who may judge — **the harness's spelling, not a second one.**
+ * Who may adjudicate — **the harness's spelling, not a second one.**
  *
  * The owner: *"ONLY agentic human actor."* In this repository's vocabulary
  * that is `person` and `agent`; `system` is the mechanical kind and `external`
  * a participant outside the instance. Both are excluded, and
- * `adjudication.bpmn`'s judge step already says so in the same words —
- * `<folio:fulfilment kinds="person agent"/>`, whose reason reads *"a
+ * `adjudication.bpmn`'s adjudicator step already says so in the same words —
+ * `<cat-harness.processes:fulfilment kinds="person agent"/>`, whose reason reads *"a
  * mechanical system may NOT take this step, which is the whole reason the
  * process exists."*
  *
@@ -80,12 +80,12 @@ export const ADJUDICATOR_KINDS = ["person", "agent"] as const;
 export type AdjudicatorKind = (typeof ADJUDICATOR_KINDS)[number];
 
 /**
- * One thing the judge is shown.
+ * One thing the adjudicator is shown.
  *
  * `state` is {@link MATERIALIZATION_STATES}, reused rather than restated —
  * the owner's *"IO is materialized or by reference"*, in the vocabulary core
  * already owns. The third state, `unknown`, comes along with it and is not an
- * accident: an asset nobody has located is not a referenced one, and a judge
+ * accident: an asset nobody has located is not a referenced one, and an adjudicator
  * told "here is the evidence" about bytes nobody can find has been misled.
  */
 export const AdjudicationAssetSchema = z
@@ -111,7 +111,7 @@ export const AdjudicationAssetSchema = z
 export type AdjudicationAsset = z.infer<typeof AdjudicationAssetSchema>;
 
 /**
- * One answer the judge is allowed to give.
+ * One answer the adjudicator is allowed to give.
  *
  * A code carries its own meaning because an enum of bare tokens is a set of
  * strings somebody will interpret differently later —
@@ -129,7 +129,7 @@ export const JudgementCodeSchema = z
 export type JudgementCode = z.infer<typeof JudgementCodeSchema>;
 
 /**
- * What a judge is given.
+ * What an adjudicator is given.
  *
  * Note what is NOT here: any hint of the expected answer. The request names
  * the question and the permitted answers, and says nothing about which is
@@ -142,7 +142,7 @@ export const AdjudicationRequestSchema = z
     /** Stable id, so an outcome can point back at the exact question asked. */
     id: z.string().min(1),
     /**
-     * Everything the judge is shown, and **nothing else is**.
+     * Everything the adjudicator is shown, and **nothing else is**.
      *
      * The restriction is the feature, not a limitation of the type.
      * `adjudication.bpmn`'s `A_Dispatch` exists to compose this set —
@@ -175,7 +175,7 @@ export const AdjudicationRequestSchema = z
 export type AdjudicationRequest = z.infer<typeof AdjudicationRequestSchema>;
 
 /**
- * What a judge answers.
+ * What an adjudicator answers.
  *
  * Carries `codes` as well as `code` — see the module docstring. That is the
  * mitigation for the enum living in two layers, and without it a diagram
@@ -188,7 +188,7 @@ export const AdjudicationOutcomeSchema = z
     request: z.string().min(1),
     /** The chosen code. Must be one of `codes`. */
     code: z.string().min(1),
-    /** The enum in force when this was judged. */
+    /** The enum in force when this was adjudicated. */
     codes: z.array(z.string().min(1)).min(2),
     /**
      * Why, as markdown. REQUIRED, and never empty.
@@ -202,26 +202,26 @@ export const AdjudicationOutcomeSchema = z
      */
     reasoning: z.string().min(1),
     /**
-     * Who judged, and of which kind. An outcome with no judge is
+     * Who adjudicated, and of which kind. An outcome with no adjudicator is
      * indistinguishable from a default.
      */
     by: z
       .object({
         id: z.string().min(1),
         kind: z.enum(ADJUDICATOR_KINDS),
-        /** An `agent` judge must name its model, so a verdict can be re-examined. */
+        /** An `agent` adjudicator must name its model, so a verdict can be re-examined. */
         model: z.string().min(1).optional(),
       })
       .strict()
       .refine((b) => b.kind !== "agent" || b.model !== undefined, {
-        message: "an `agent` judge must name its model",
+        message: "an `agent` adjudicator must name its model",
         path: ["model"],
       }),
     at: z.string().min(1),
   })
   .strict()
   .refine((o) => o.codes.includes(o.code), {
-    message: "the chosen code is not in the enum it was judged against",
+    message: "the chosen code is not in the enum it was adjudicated against",
     path: ["code"],
   });
 export type AdjudicationOutcome = z.infer<typeof AdjudicationOutcomeSchema>;
@@ -230,7 +230,7 @@ export type AdjudicationOutcome = z.infer<typeof AdjudicationOutcomeSchema>;
  * Why an outcome does not answer its request. Empty means it does.
  *
  * Returned rather than thrown, and reported per defect rather than
- * first-only, because a caller showing a judge their errors should show all of
+ * first-only, because a caller showing an adjudicator their errors should show all of
  * them.
  */
 export function adjudicationDefects(
@@ -252,8 +252,8 @@ export function adjudicationDefects(
   const b = [...new Set(outcome.codes)].sort();
   if (a.join("\u0000") !== b.join("\u0000")) {
     out.push(
-      `the enum drifted: judged against (${b.join(", ")}), the request now permits (${a.join(", ")}). ` +
-        `The outcome is not wrong — it was judged under a different contract, and that is why it records one.`,
+      `the enum drifted: adjudicated against (${b.join(", ")}), the request now permits (${a.join(", ")}). ` +
+        `The outcome is not wrong — it was adjudicated under a different contract, and that is why it records one.`,
     );
   }
   return out;

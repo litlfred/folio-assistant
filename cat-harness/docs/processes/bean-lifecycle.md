@@ -19,13 +19,14 @@ The whole life of a work-plan item, and the rules that make one agent's bean leg
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** [Beans and todos — The agent bean lifecycle](../beans-and-todos.html#the-agent-bean-lifecycle)
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Agent (this session) | — | Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here. |
-| Sibling session or human (not yours to close) | — | The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans. |
+| Agent (this session) | `authoring-agent` | Owns every transition on a bean it holds — check, create, claim, work, and the three-way outcome at the end — but GW_Owner is the one branch this lane cannot complete itself: the moment a bean turns out to be someone else's, the only correct move is to leave the whole lifecycle to Lane_Sibling rather than resolve, scrap or edit it from here. |
+| Sibling session or human (not yours to close) | `sibling-session` | The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans. |
 
 ## Steps
 
@@ -41,5 +42,15 @@ Every one of the 8 step(s) is documented.
 | **Complete (no unchecked todos left)**<br>`Task_Complete` | Agent (this session) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | Only once nothing is unchecked, and with a summary of what changed. The engine's `resolve` completes a bean only after the instance itself has completed — whether work is done is a judgement, and a bean is not closed on someone else's say-so. |
 | **Scrap with reasons NEVER delete**<br>`Task_Scrap` | Agent (this session) | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | `status: scrapped`, plus a "Reasons for Scrapping" section. This is what "disable" means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though `beans delete` exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end. |
 | **Record the blocker and hand back**<br>`Task_RecordBlocker` | Agent (this session) | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | Blocked is not scrapped. Set `--blocked-by`, say in the body what would unblock it, and return it to `todo` so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work. |
+
+## Decisions
+
+Every one of the 3 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Already exists?**<br>`GW_Exists` | Answered by the exact-title check before it (`todo-manager` §'Check before you create'): `beans list --json --search` followed by an exact comparison of titles, since `--search` is fuzzy. `no` (0 exact matches) creates the bean. `yes` (1 or more) does not create a second one — `beans create` mints a fresh id every call and dedupes on nothing — and asks whose the existing bean is. | **no** → Create the bean (agent CLI, not an engine op)<br>**yes** → Whose bean? |
+| **Whose bean?**<br>`GW_Owner` | Answered from the existing bean and its surroundings (`bean-coordination`). `someone else's` means a sibling is mid-flight on it: a claim naming a branch, a recent note, or an open PR. That bean is left alone and the lifecycle ends here. `mine / unclaimed` claims it. A claim is branch-local, so check the bean's status on origin/main and the open PRs naming it, not only the copy on your branch. | **someone else's** → Leave it alone (coordinate instead)<br>**mine / unclaimed** → Claim it (status: in-progress) |
+| **Outcome?**<br>`GW_Outcome` | The performer's judgement on the work, and one of three recorded endings. `done`: complete it only when no todo is unchecked, with a summary of what changed. `not wanted`: set it `scrapped` with a 'Reasons for Scrapping' section — never delete. `blocked`: record what it waits on with `--blocked-by`, say what would unblock it, and return it to `todo`, because an in-progress bean nobody is progressing reads as active work. | **done** → Complete (no unchecked todos left)<br>**not wanted** → Scrap with reasons NEVER delete<br>**blocked** → Record the blocker and hand back |
 
 {% endraw %}

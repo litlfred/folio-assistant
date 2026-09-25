@@ -7,7 +7,7 @@ pages: 8-8
 pdf_page: 8
 source_pdf: sammut-bonnici-galea-2015-swot-analysis.pdf
 source_sha256: 013951cbb83c3d65
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 SWOT analysis

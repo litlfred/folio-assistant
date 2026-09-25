@@ -19,12 +19,13 @@ Judging changed CODE NODES — Tool definitions and schema definition nodes — 
 
 - **Called by:** [Review task](review-task.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| Code reviewer | — | Forks on node kind but never on verdict: Task_ReviewTool catches a skill that is satisfied but whose mechanism is reachable from nowhere, Task_ReviewSchema catches a visual fact with two homes instead of one, and both branches converge on the same Task_RecordVerdict — so whichever kind of node changed, the reader of the finding sees one recording discipline, not two. |
+| Code reviewer | `code-reviewer` | Forks on node kind but never on verdict: Task_ReviewTool catches a skill that is satisfied but whose mechanism is reachable from nowhere, Task_ReviewSchema catches a visual fact with two homes instead of one, and both branches converge on the same Task_RecordVerdict — so whichever kind of node changed, the reader of the finding sees one recording discipline, not two. |
 
 ## Steps
 
@@ -36,5 +37,13 @@ Every one of the 4 step(s) is documented.
 | **Review the Tool node**<br>`Task_ReviewTool` | Code reviewer | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html)<br>[`covered-is-not-reachable`](../reference/skill-instructions/covered-is-not-reachable.html) | Does it name skills, and do they resolve? Is the mechanism it advertises the one that actually runs? Are its IRIs minted rather than written out? And the question a covered skill hides: is the COMMAND reachable, or only the skill satisfied? A skill can be served by the neighbours of its mechanism while the mechanism itself is reachable from no node, and check:tools reports it as covered and is right to. |
 | **Review the schema definition node**<br>`Task_ReviewSchema` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html)<br>[`site-presentation-assets`](../reference/skill-instructions/site-presentation-assets.html) | Does the node declare what KIND of node it is? Does a widened type carry its mirrors? Does a removed field leave a reason behind, so the next author does not re-add it in good faith? And where the node RENDERS to something the site serves — a colour, a glyph, a theme's tokens — does a Tool maintain that artefact, and does the visual fact have only one home? The node decides; the stylesheet reports. |
 | **Record the verdict on the node**<br>`Task_RecordVerdict` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | Findings are advice, not commits — the same separation the generic reviewer lane keeps. Record them where the next reader meets the node. |
+
+## Decisions
+
+Every one of the 1 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which node kind?**<br>`GW_NodeKind` | What kind of node is under review? `Tool` goes to the Tool-node review; `schema` goes to the schema-definition review. | **Tool** → Review the Tool node<br>**schema** → Review the schema definition node |
 
 {% endraw %}

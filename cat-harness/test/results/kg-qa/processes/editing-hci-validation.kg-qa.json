@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:30849a78abfd1bf297859ec4f0687d16e3768e493c0173dc0ff8e2f46d131ce1",
+  "source_hash": "sha256:95f36a596190f36be315fec4ad3217f0e1009279098361a30b2b342a4c7dfa46",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,23 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_ReviseEdit",
-          "detail": "\"Revise the proposed change\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
-    "n/a": 6,
+    "pass": 16,
+    "fail": 0,
+    "n/a": 8,
     "unknown": 0
   }
 }

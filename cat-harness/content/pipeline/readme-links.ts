@@ -31,6 +31,7 @@
  * the config that supplies the publish targets, and the CLI.
  *
  * @module content/pipeline/readme-links
+ * @covers docs
  */
 
 

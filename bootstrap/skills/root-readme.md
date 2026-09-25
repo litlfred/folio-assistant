@@ -3,12 +3,12 @@ name: root-readme
 description: >
   Write the repository's root README when there is none, carrying a link to the
   harness that was installed and the overall install status. Never replaces one
-  that exists. The last thing initialize-harness does before it ends installed.
+  that exists. It runs only once the install has succeeded.
 ---
 
 # The root README, and the one fact it must carry
 
-**You are the Initiator, and the install has just succeeded.** The repository
+**You are the Bootstrapping Agent, and the install has just succeeded.** The repository
 now *is* an instance of something, and — unless somebody wrote one before you
 got here — nothing at its root says so.
 
@@ -41,10 +41,10 @@ is the copy that drifted.
 Two things, and **no more**:
 
 1. **A link to the harness that was installed.** Whatever reference the
-   Requestor gave you at `A_ConfirmHarness`, resolved to something clickable.
+   Requestor gave when the harness was confirmed, resolved to something clickable.
 2. **The overall install status.** Not one line per location dug out of a log —
    the question a reader has is *"is this repository set up, and as what"*, and
-   that is what you answer. Say how many locations `A_Install` touched and
+   that is what you answer. Say how many locations the install touched and
    whether every one of them succeeded.
 
 Write nothing else. You do not know what this repository is for, what it will
@@ -70,7 +70,7 @@ duplicated sentence rather than a lost page.
 
 ## What you do not decide here
 
-Whether the install *succeeded* — `A_Install` decided that, and you are on the
+Whether the install *succeeded* — the install step decided that, and you are on the
 path where it did. Which harness it was — the Requestor decided that. What the
 README should eventually say — its author decides that, and you are not its
 author.

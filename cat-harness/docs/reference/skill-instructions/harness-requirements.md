@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/harness-requirements.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/harness-requirements.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/harness-requirements.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/harness-requirements.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/harness-requirements.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/harness-requirements.md){: .fa-edit-source }
 
 {% raw %}
 # Harness requirements — what an instance owes for what it declares
@@ -25,8 +25,8 @@ how to read it and what to do before adding to it.
 | obligation | declared as | the question it answers |
 |---|---|---|
 | **visualiser** | `coverage.visualiser` on the directory entry | can a person LOOK at this? |
-| **docs** | `coverage.docs` | can a person READ ABOUT this? |
-| **skill** | `coverage.skill` | is an agent handed something that GOVERNS this? |
+| **docs** | by the PAGE: `documents:` in its front matter (or its manifest, or `<meta name="documents">` in generated HTML) names the kind or `<instance>/<id>` (#1168 B7c) | can a person READ ABOUT this? |
+| **skill** | by the SKILL: `graph-kinds:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
 | **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
 | **README** | an `instance-readme` asset, inside the instance | can a reader ENTER this instance at all? |
 

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # l2-dak-authoring
@@ -72,7 +72,7 @@ happens when `SMART_BASE_HOME` is unset (the skill degrades to `skip`, it does
 
 ## Where this sits
 
-`l2-dak-authoring.bpmn` carries `<folio:policy enforcement="advisory"/>`: it is
+`l2-dak-authoring.bpmn` carries `<cat-harness.processes:policy enforcement="advisory"/>`: it is
 a per-content-type process, and this package owns what "adequate" means in its
 domain. That is licence to adapt the sequence, not to skip the gate — the base
 processes it feeds (`editing-hci-validation`, `content-lifecycle`) stay strict.

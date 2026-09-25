@@ -19,12 +19,13 @@ Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
 | lane | role | what it does here |
 |---|---|---|
-| CI/CD Pipeline | — | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
+| CI/CD Pipeline | `build-pipeline` | Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it. |
 
 ## Steps
 
@@ -38,5 +39,14 @@ Every one of the 6 step(s) is documented.
 | **Append `removed` with the reason**<br>`A_LogRemoved` | CI/CD Pipeline | [`render-logging`](../reference/skill-instructions/render-logging.html) | BEFORE the removal, not after: a job that dies mid-step must leave a record of the intent rather than an artefact that vanished with no entry. A reason is REQUIRED — an entry saying an artefact went and not why is the ambiguity this log exists to prevent. |
 | **Remove the artefact**<br>`A_Remove` | CI/CD Pipeline | [`render-logging`](../reference/skill-instructions/render-logging.html) | `rm -rf STAGING/<slug>`. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref. |
 | **Append `restored`**<br>`A_LogRestored` | CI/CD Pipeline | [`render-logging`](../reference/skill-instructions/render-logging.html) | A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because "somebody pushed this branch" and "an unrelated merge nearly deleted it" are different facts — and bean `plj1` is what happens when the second is invisible. |
+
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **What is happening?**<br>`GW_What` | What is about to happen to the publish branch? A `deploy` appends `rendered`; a `takedown` first preflights whether the preview is live; a `full-replace deploy` appends `restored` for the previews it put back. | **deploy** → Append `rendered`<br>**takedown** → Preflight: is the preview live?<br>**full-replace deploy** → Append `restored` |
+| **Any liveness signal fired?**<br>`GW_Live` | Answered by the preflight: did any liveness signal fire for this preview? `yes — refuse` keeps it and appends `retained` with the reason; `no` removes it and appends `removed` with the reason. | **yes — refuse** → Append `retained` with the reason<br>**no** → Append `removed` with the reason |
 
 {% endraw %}

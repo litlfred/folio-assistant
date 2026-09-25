@@ -101,6 +101,33 @@ Four questions, in this order. The worked call for each term is in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
 
+## Every key is a declared term — in content documents too
+
+Rule 5 above, applied to CONTENT (bean `yh6u`): in every document on the
+published content context, a plain key must be a declared term, or a JSON-LD
+processor drops it without a word. Measured before the check existed: 8
+undeclared keys across 392 committed figure blocks — every agent-drafted figure
+narrative was being dropped. `bun run check:context-emission` now fails on one.
+
+It does **not** descend into a value typed `@json`. Such a value is a JSON
+literal by declaration: its inner keys are data, not properties. That is the
+right home for a nested structure that is ours rather than linked data, and
+**the only way its nulls survive** — the three-state rule lives in them.
+
+**A path is a literal, never an `@id`.** A document-relative path coerced to
+`@id` resolves against the context's `@base`, not against the document, and so
+names a location the file is not at. `text` did exactly that on all 1,323
+committed prose blocks — `../sections/x.md` became a well-formed link to
+nowhere — until bean `589f` made it, `leanSource` and `file` literals.
+`check:context-emission` now fails if a file path sits under any `@id` term.
+
+**The upgrade rule** (owner, 2026-09-23, chosen for the least drift): a path
+term becomes a link — `@type: @id` with ABSOLUTE IRIs minted by the one
+function that mints block IRIs — when, and only when, the files it names are
+SERVED at a URL an instance declares. Until then a link is a promise nothing
+keeps, and a literal is the honest record: one reading, resolved by our tools
+against the file that carries it.
+
 ## A prefix is the stub — and a prefix that is spoken must be bound
 
 Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is
@@ -154,11 +181,13 @@ whether or not it is bound. The evidence that closes a prefix defect is a
 document run through a JSON-LD processor, with **zero** expanded IRIs outside
 `http(s):`.
 
-**Where a prefix cannot be bound at all, the answer is an absolute IRI, not a
-different spelling.** CSVW metadata allows only `@language` and `@base` in
-its local context, so the `fac:` keys in
-[`tabular-metadata`](tabular-metadata.md) dangle under ANY prefix. Renaming
-them would move the defect, not fix it (bean `792y`).
+**Where a prefix cannot be bound at all, a different spelling is never the
+answer.** CSVW metadata allows only `@language` and `@base` in its local
+context, so the `fac:` keys in [`tabular-metadata`](tabular-metadata.md)
+dangled under ANY prefix. The two real answers are absolute IRIs, or not being
+JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
+the CSVW document is derived from it. **A file whose extension says `.jsonld`
+is making a claim** — a processor will read every colon-key in it as an IRI.
 
 ## `fsh-guts` NEVER reaches a published graph
 
@@ -323,11 +352,12 @@ worth a pipeline. What makes the export worth having is the relations that
 already exist on disk and that **no tool surfaces**:
 
 - **activity → skill.** Every BPMN activity may carry
-  `<folio:skill ref="…"/>`, so the export can say which process step is
+  `<bootstrap.processes:skill ref="…"/>`, so the export can say which process step is
   implemented by which skill.
 - **activity → role.** A BPMN lane is the role that performs the step.
 - **skill → package**, and a skill's **two facets**: its instruction body
-  (`<name>.md`) and its I/O contract (`schemas/skills/<name>/`).
+  (`<name>.md`) and the I/O contract it names in its front matter
+  (`input:`/`output:`, usually `schemas/skills/<name>/`).
 
 That last one is the one to understand before editing the exporter. **A name
 may have an instruction body, an I/O contract, or both — they are facets of one

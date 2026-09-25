@@ -19,6 +19,7 @@ Getting a change to the PLATFORM from "this is needed" to merged: claim the work
 
 - **Called by:** [Actor and role administration](actor-role-administration.html)
 - **Calls:** none
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
@@ -45,5 +46,14 @@ Every one of the 11 step(s) is documented.
 | **Record what was done, and close**<br>`Task_CloseBean` | Authoring agent | [`todo-manager`](../reference/skill-instructions/todo-manager.html) | A closed work item is read later by somebody deciding whether to reopen the subject, so "completed" with nothing behind it cannot be audited. An ISSUE is never closed on the agent's own say-so. |
 | **Run the gates against the merge of head into base**<br>`Task_RunCI` | CI/CD pipeline | — | CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent's tree and the merge result are different trees, and the difference is invisible from a checkout. |
 | **Review the change**<br>`Task_Review` | Code reviewer | [`code-node-review`](../reference/skill-instructions/code-node-review.html) | A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. |
+
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **CI green?**<br>`GW_CIGreen` | Answered by the gates run against the merge of head into base. `green` goes to review; `red` goes to root-causing the failure first, since a red change is never waiting on review. | **green** → Review the change<br>**red** → Root-cause the failure |
+| **Review clear?**<br>`GW_ReviewClear` | The reviewer's result. `findings` go back to be addressed; `clear` goes to preparing the merge and watching it through. | **findings** → Address the review<br>**clear** → Prepare the merge, and watch it through |
 
 {% endraw %}

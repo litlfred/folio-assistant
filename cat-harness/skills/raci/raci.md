@@ -31,16 +31,16 @@ not restate it and declares only the other three:
 | letter | where it comes from HERE |
 |---|---|
 | **R**esponsible | read from the BPMN **lane**, never declared |
-| **A**ccountable | `folio:raci`, exactly one per activity, gated |
-| **C**onsulted | `folio:raci` |
-| **I**nformed | `folio:raci` |
+| **A**ccountable | `cat-harness.processes:raci`, exactly one per activity, gated |
+| **C**onsulted | `cat-harness.processes:raci` |
+| **I**nformed | `cat-harness.processes:raci` |
 
 ```xml
 <bpmn:task id="A_Entities" name="Identify entities">
   <bpmn:extensionElements>
-    <folio:skill ref="crdm-data-model"/>
-    <folio:raci ref="business-analyst" involvement="accountable"/>
-    <folio:raci ref="stakeholder" involvement="consulted"/>
+    <bootstrap.processes:skill ref="crdm-data-model"/>
+    <cat-harness.processes:raci ref="business-analyst" involvement="accountable"/>
+    <cat-harness.processes:raci ref="stakeholder" involvement="consulted"/>
   </bpmn:extensionElements>
 </bpmn:task>
 ```
@@ -113,8 +113,10 @@ overlay, and each names the declaration RACI must not be mistaken for:
 **Not an approval mechanism.** Gates are BPMN — a `userTask` in a lane, with
 the `fulfilmentKindsForBpmnType` rule that a system actor cannot fill one.
 
-**Not permissions.** What an actor may DO is
-`skills/permissions/permissions.json` and cross-cuts roles.
+**Not permissions.** What an actor may DO is an ODRL rule in `policies/`
+(actions in `skills/permissions/permissions.json`), and cross-cuts roles.
+Being R for a task says who is expected to do it; performing it also needs a
+rule that permits `perform-task` there (issue #1180).
 
 **Not a substitute for the lane.** If the chart and the lane disagree about who
 performs something, the lane is right and the chart is stale — which is why R

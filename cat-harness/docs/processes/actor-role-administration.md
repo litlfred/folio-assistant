@@ -19,6 +19,7 @@ Changing who can do what: adding an actor, opening or closing a role to one, gra
 
 - **Called by:** no call activity names this process
 - **Calls:** [Code change and review](code-change-review.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 
@@ -39,5 +40,14 @@ Every one of the 6 step(s) is documented.
 | **Retire an actor — never delete one**<br>`Task_RetireActor` | Administrator | [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html)<br>[`role-model`](../reference/skill-instructions/role-model.html) | An actor id is referenced from roles, diagrams, beans and commits, so removing the file leaves every one of those unable to tell retirement from accident. Same rule, and the same reason, as a scrapped bean. |
 | **Branch, gates, PR and review**<br>`CallActivity_CodeChangeReview` | Administrator | calls [Code change and review](code-change-review.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html)<br>[`continual-progress`](../reference/skill-instructions/continual-progress.html) | Called rather than restated. The mechanics of getting an edit reviewed and merged are not specific to the role graph, and a second description of them is a second thing free to disagree with the first. |
 | **Audit the graph [kg:audit]**<br>`Task_RunKgAudit` | Graph audit (system) | [`role-model`](../reference/skill-instructions/role-model.html) | AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, "unbound since it was drawn" and "broken by this change" are indistinguishable. |
+
+## Decisions
+
+Every one of the 2 decision(s) is documented.
+
+| decision | what decides it | branches |
+|---|---|---|
+| **Which administration change?**<br>`Gateway_WhichChange` | Read from the request. Deliberately NOT DMN-backed: the four branches are not computable from a fact anyone reports — they are what was asked for, and a table that pretended otherwise would return an answer that is not the request. | **add actor** → Add an actor, and declare its kind<br>**assign roles** → Open or close a role to an actor<br>**permission** → Grant or revoke a permission<br>**retire** → Retire an actor — never delete one |
+| **Audit clean?**<br>`Gateway_AuditClean` | The administrator's call, not the pipeline's: `kg:audit:check` fails on `critical` and `kg:audit:strict` adds `major`, so what holds a change is a policy choice about this instance rather than arithmetic the audit performs. | **no** → Which administration change?<br>**yes** → Graph changed and audited |
 
 {% endraw %}

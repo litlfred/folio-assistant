@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/glossary-build.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/glossary-build.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/glossary-build.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/glossary-build.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/glossary-build.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/glossary-build.md){: .fa-edit-source }
 
 {% raw %}
 # Glossary Build Skill
@@ -16,8 +16,24 @@ parent: Skill instructions
 
 Maintain the project-wide glossary of defined terms. Builds the
 `glossary.json` index from every block's `defines: [...]` field,
-generates the `chapters/glossary.tex` chapter, and gates CI with
-`--check` mode.
+generates the `chapters/glossary.tex` chapter, writes the same terms as a
+SKOS scheme for the glossary page, and gates CI with `--check` mode.
+
+## The SKOS scheme (bean `lqo9`, ruling 2: converge on SKOS)
+
+The builder also writes `<glossary dir>/paper-<paper>.glossary.json`, a
+`folio-glossary/v1` scheme, into the glossary directory declared by the
+instance that holds the paper. Core's glossary page reads it through
+`collect()`, so the paper's terms are on the page, in the instance's
+namespace, beside every other scheme. The rules (status by provenance,
+verbatim definitions, the slug as `notation`) are in
+[`glossary-terms`](glossary-terms.md).
+
+`--check` also fails when the scheme is stale, when two slugs would mint
+one term IRI, or when another document in the directory holds the scheme id.
+A scheme not written yet is reported and does not fail, so a paper that has
+not regenerated since the change keeps a green gate. `glossary.json` and
+`glossary.tex` are unchanged.
 
 ## When to invoke
 
@@ -32,7 +48,7 @@ generates the `chapters/glossary.tex` chapter, and gates CI with
 
 | Command | Purpose |
 |---------|---------|
-| `cd content && bun run pipeline/build-glossary.ts <paper-dir>` | Generate `glossary.json` + `chapters/glossary.tex` |
+| `cd content && bun run pipeline/build-glossary.ts <paper-dir>` | Generate `glossary.json` + `chapters/glossary.tex` + the SKOS scheme |
 | `cd content && bun run pipeline/build-glossary.ts <paper-dir> --check` | CI gate — non-zero exit on duplicates or out-of-date JSON |
 | `cd content && bun run pipeline/glossary-candidates.ts <paper-dir>` | Phase C: propose candidate owner blocks per slug → `glossary-candidates.json` (gitignored) |
 | `cd content && bun run pipeline/apply-glossary-curation.ts <paper-dir>` | Dry-run: show edits implied by `glossary-curation.json` |

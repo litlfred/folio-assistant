@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   id="Definitions_ContentChangeReview"
-                  targetNamespace="https://folio-assistant.dev/workflows"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="0.1.0">
 
   <bpmn:collaboration id="Collaboration_ContentChangeReview">
@@ -20,6 +21,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     <bpmn:laneSet id="LaneSet_ContentChangeReview">
       <bpmn:lane id="Lane_Author" name="Content Author">
         <bpmn:documentation>Judges the staged rendering against what was asked for and either sends it back for another iteration or submits it onward. Unlike editing-hci-validation's equivalent lane, acceptance itself is not this lane's call — that is Task_Approve, downstream in the Review Committee's lane.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="author"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Author</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DescribeChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewStaging</bpmn:flowNodeRef>
@@ -30,6 +32,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Folio-Assistant Agent">
         <bpmn:documentation>Owns the entire technical execution of the change end to end — scoping impact, branching, editing both narrative content and deterministic logic, assessing what else it touches, weighing how to absorb that, and pushing. It is also the single re-entry point for both the author's and the committee's feedback, which is why Task_Iterate has two incoming edges rather than the diagram forking a second revision path.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Agent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DetectScope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CreateBranch</bpmn:flowNodeRef>
@@ -42,17 +45,25 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         <bpmn:flowNodeRef>End_Agent</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Reviewer" name="Review Committee">
-        <bpmn:documentation>Compares staged against main and judges the impact assessment, and — unusually for this role elsewhere in this corpus — is where the accept decision itself is made: Task_Approve triggers the merge and the rebuild, so a rejection routes back to Task_Iterate in the agent's lane rather than to the author.</bpmn:documentation>
+        <bpmn:documentation>Compares staged against main, reviews the slices it is assigned (review-task.bpmn, one call per slice), takes a disputed finding to adjudication, and judges the impact assessment. It is also, unusually for this role elsewhere in this corpus, where the accept decision is made. Task_Approve records the approval, and Task_Merge merges only on the owner's explicit confirmation: they were one task, "Approve and merge", until bean en2d split them, because approving is the committee's judgement and merging is a separate, confirmed act. A rejection routes back to Task_Iterate in the agent's lane rather than to the author.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Reviewer</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_CompareBeforeAfter</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_ReviewSlices</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Withdraw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WithdrawComment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Disputed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Adjudication</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReviewImpact</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Approved</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RequestChanges</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Approve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Merge</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Reviewer</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="CI/CD Pipeline">
         <bpmn:documentation>Runs build, stage, comment and watch once per push, re-entering from Task_Iterate on every later revision rather than only the first. GW_Merged sits downstream of Task_Approve in the Reviewer's lane, so it is checking whether that approval actually resulted in a merge rather than deciding whether to approve one, and a "No" ends the pipeline quietly instead of looping back into review.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Pipeline</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_BuildStaging</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_DeployStaging</bpmn:flowNodeRef>
@@ -63,6 +74,14 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         <bpmn:flowNodeRef>Task_RebuildMain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_WatchMainCI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Pipeline</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotMerged</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Coordinator" name="Review Coordinator">
+        <bpmn:documentation>Organises a review large enough to need organising, and decides nothing about the content: ingests the reviewers' tagged comments, slices the change into pieces a reviewer can hold, assigns each slice to a review lane, and watches coverage until every changed block has a verdict or a reasoned waiver. A separate role from the editor on the owner's ruling of 2026-09-23 (bean en2d): organising a review and deciding its outcome are different accountabilities, and a process where one lane did both could not say which it was doing.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="review-coordinator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_IngestComments</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SliceAndAssign</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Covered</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
 
@@ -77,7 +96,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         Example: "Update the immunization schedule to add a booster at 18 months."
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="The author states, in their own words, the change they want. There is no procedure that produces somebody's intent for them." />
+        <cat-harness.processes:no-skill reason="The author states, in their own words, the change they want. There is no procedure that produces somebody's intent for them." />
       </bpmn:extensionElements>
       <bpmn:incoming>f1</bpmn:incoming>
       <bpmn:outgoing>f2</bpmn:outgoing>
@@ -85,7 +104,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_ReviewStaging" name="Review staged rendering">
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="staging-review"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -98,6 +117,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_AuthorSatisfied" name="Satisfied with changes?">
+      <bpmn:documentation>The author's own call after looking at the staged rendering. `No` requests further revisions; `Yes` submits the change to the review committee.</bpmn:documentation>
       <bpmn:incoming>f3</bpmn:incoming>
       <bpmn:outgoing>f4</bpmn:outgoing>
       <bpmn:outgoing>f6</bpmn:outgoing>
@@ -109,7 +129,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         Agent iterates on the feature branch.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="staging-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>f4</bpmn:incoming>
       <bpmn:outgoing>f5</bpmn:outgoing>
@@ -121,7 +141,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
         The STAGING URL is the review surface.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review" />
+        <bootstrap.processes:skill ref="staging-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>f6</bpmn:incoming>
       <bpmn:outgoing>f7</bpmn:outgoing>
@@ -140,7 +160,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_DetectScope" name="Detect change scope &amp; impact">
       <bpmn:extensionElements>
-        <folio:skill ref="semantic-review-scoping"/>
+        <bootstrap.processes:skill ref="semantic-review-scoping"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -156,7 +176,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_CreateBranch" name="Create feature branch">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -170,7 +190,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_EditContent" name="Edit narrative content blocks">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -184,7 +204,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_EditLogic" name="Edit deterministic logic (if needed)">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -200,7 +220,7 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
 
     <bpmn:task id="Task_AssessImpact" name="Assess downstream impact">
       <bpmn:extensionElements>
-        <folio:skill ref="content-graph"/>
+        <bootstrap.processes:skill ref="content-graph"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -226,7 +246,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:callActivity>
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge-auto"/>
+        <bootstrap.processes:skill ref="prepare-merge-auto"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -240,7 +260,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_Iterate" name="Iterate on author feedback">
       <bpmn:extensionElements>
-        <folio:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="content-author"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -265,7 +285,8 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_CompareBeforeAfter" name="Compare main vs staging">
       <bpmn:extensionElements>
-        <folio:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="visual-diff"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -273,15 +294,96 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         - Main site: &lt;pages-url&gt;/ (current published state)
         - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/
         The staging banner shows the commit SHA so they can verify
-        what they are reviewing matches the PR.
+        what they are reviewing matches the PR. A changed figure, diagram
+        or table is also pictured before and after on the review page,
+        with the share of changed pixels in words (skill visual-diff,
+        Tool folio-block-screenshots).
       </bpmn:documentation>
       <bpmn:incoming>r1</bpmn:incoming>
       <bpmn:outgoing>r2</bpmn:outgoing>
     </bpmn:task>
 
+    <bpmn:task id="Task_IngestComments" name="Ingest tagged review comments&#10;[folio-review-comments]">
+      <bpmn:documentation>Every PR conversation comment that starts with `block: &lt;label&gt;` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="review-comments" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>r2</bpmn:incoming>
+      <bpmn:outgoing>c1</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_SliceAndAssign" name="Slice the change and assign reviewers">
+      <bpmn:documentation>From the ChangeSet and the heat map on the review page: cut the change into slices a reviewer can hold (usually a section, or a run of sections where the heat map clusters), and assign each slice to a review lane by what it contains — clinical content to a clinical SME, a decision table to a QC reviewer, prose to a narrative reviewer. A block that needs no review (a pure rename, say) is WAIVED here with a written reason, which is what the coverage gate counts. Re-entered from GW_Covered when coverage is incomplete: the uncovered blocks become new slices.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="review-heatmap" />
+        <bootstrap.processes:skill ref="staging-review" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>c1</bpmn:incoming>
+      <bpmn:incoming>c8</bpmn:incoming>
+      <bpmn:outgoing>c2</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:callActivity id="Call_ReviewSlices" name="Review each slice&#10;[review-task]" calledElement="Process_Review">
+      <bpmn:documentation>review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="review-comments" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>c2</bpmn:incoming>
+      <bpmn:outgoing>c3</bpmn:outgoing>
+    </bpmn:callActivity>
+
+    <bpmn:exclusiveGateway id="GW_Withdraw" name="A comment withdrawn?">
+      <bpmn:documentation>Asked after the slices are reviewed: did a reviewer withdraw a comment? `Yes` records the withdrawal first; either way the flow then asks whether a finding is disputed.</bpmn:documentation>
+      <bpmn:incoming>c3</bpmn:incoming>
+      <bpmn:outgoing>c4</bpmn:outgoing>
+      <bpmn:outgoing>c5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_WithdrawComment" name="Withdraw a review comment&#10;[folio-review-comment-move]">
+      <bpmn:documentation>The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="review-comments" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>c4</bpmn:incoming>
+      <bpmn:outgoing>c6</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_Disputed" name="A finding disputed?">
+      <bpmn:documentation>Is any finding disputed between author and reviewer? `Yes` goes to adjudication; `No` goes on to check that every changed block was reviewed.</bpmn:documentation>
+      <bpmn:incoming>c5</bpmn:incoming>
+      <bpmn:incoming>c6</bpmn:incoming>
+      <bpmn:outgoing>c7</bpmn:outgoing>
+      <bpmn:outgoing>c9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:callActivity id="Call_Adjudication" name="Adjudicate the disagreement&#10;[adjudication]" calledElement="Process_Adjudication">
+      <bpmn:documentation>adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it.
+
+Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="adjudication" />
+        <cat-harness.processes:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="the restriction Process_Adjudication states on A_Adjudicate, restated here because this is where the enum is declared; the engine refuses system or external on any step carrying cat-harness.processes:adjudication."/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>c7</bpmn:incoming>
+      <bpmn:outgoing>c10</bpmn:outgoing>
+    </bpmn:callActivity>
+
+    <bpmn:exclusiveGateway id="GW_Covered" name="Every changed block reviewed?">
+      <bpmn:documentation>Computed, not chosen: `decisions/review-coverage-gate.dmn` reads `uncoveredBlocks` (changed blocks with neither a verdict nor a reasoned waiver) and `openDefects`. Resolved comments are not coverage, and coverage is not approval — that is GW_Approved.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>c9</bpmn:incoming>
+      <bpmn:incoming>c10</bpmn:incoming>
+      <bpmn:outgoing>c8</bpmn:outgoing>
+      <bpmn:outgoing>c11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
     <bpmn:task id="Task_ReviewImpact" name="Review impact assessment">
       <bpmn:extensionElements>
-        <folio:skill ref="content-review"/>
+        <bootstrap.processes:skill ref="content-review"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -290,11 +392,12 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         - Are the indicator changes acceptable?
         - Does the logic change match the narrative intent?
       </bpmn:documentation>
-      <bpmn:incoming>r2</bpmn:incoming>
+      <bpmn:incoming>c11</bpmn:incoming>
       <bpmn:outgoing>r3</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Approved" name="Changes approved?">
+      <bpmn:documentation>The committee's decision on the impact assessment. `No` requests changes; `Yes` approves.</bpmn:documentation>
       <bpmn:incoming>r3</bpmn:incoming>
       <bpmn:outgoing>r4</bpmn:outgoing>
       <bpmn:outgoing>r6</bpmn:outgoing>
@@ -306,25 +409,42 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         Author and agent iterate further.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-review" />
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>r4</bpmn:incoming>
       <bpmn:outgoing>r5</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_Approve" name="Approve and merge">
+    <bpmn:task id="Task_Approve" name="Approve">
       <bpmn:documentation>
-        Committee approves the PR. Merge to main triggers:
-        1. docs-site.yml rebuilds the main site with the changes
-        2. feature-staging.yml cleanup job removes STAGING/&lt;slug&gt;/
-        3. The rendered content on main now carries the merged commit SHA
+        The committee approves the change: the judgement, recorded with the
+        evidence it rests on. Approving is not merging. They were one task
+        ("Approve and merge") until bean en2d split them, because a
+        self-authored change cannot be approved through GitHub's own review
+        (the approver may not be the PR's author), and a merge needs the
+        owner's explicit confirmation whoever approved.
       </bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit" />
-        <folio:skill ref="decision-audit" />
+        <bootstrap.processes:skill ref="decision-audit" />
       </bpmn:extensionElements>
       <bpmn:incoming>r6</bpmn:incoming>
+      <bpmn:outgoing>r8</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_Merge" name="Merge, on explicit confirmation">
+      <bpmn:documentation>
+        The owner says "merge it", and only then is the branch merged. Merge
+        to main triggers:
+        1. the main site rebuilds with the changes;
+        2. the staging preview's cleanup runs;
+        3. the review comments committed on the feature branch land on main,
+           as the review record.
+      </bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="prepare-merge" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>r8</bpmn:incoming>
       <bpmn:outgoing>r7</bpmn:outgoing>
       <bpmn:outgoing>flow_approve_to_pipeline</bpmn:outgoing>
     </bpmn:task>
@@ -342,7 +462,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_BuildStaging" name="Build staging site">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -359,7 +479,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_DeployStaging" name="Deploy to STAGING/&lt;slug&gt;/">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -373,7 +493,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_CommentPR" name="Comment staging URL on PR">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -386,9 +506,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
         <bpmn:task id="Task_WatchBranchCI" name="Open the branch-watch bean&#10;[watch]">
       <bpmn:extensionElements>
-        <folio:skill ref="watch" />
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="watch" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -410,6 +530,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:outgoing>p4b</bpmn:outgoing>
     </bpmn:task>
 <bpmn:exclusiveGateway id="GW_Merged" name="PR merged?">
+  <bpmn:documentation>Was the PR merged? `Yes` removes the STAGING/&lt;slug&gt;/ preview; `No` ends this run at End_NotMerged without deploying and without looping back into review (the lane note says why); the preview stays in place, and the next push starts a new run.</bpmn:documentation>
       <bpmn:incoming>flow_approve_to_pipeline</bpmn:incoming>
       <bpmn:outgoing>p5</bpmn:outgoing>
       <bpmn:outgoing>p8</bpmn:outgoing>
@@ -417,7 +538,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_CleanupStaging" name="Remove STAGING/&lt;slug&gt;/">
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
+        <bootstrap.processes:skill ref="feature-staging"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -431,7 +552,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
     <bpmn:task id="Task_RebuildMain" name="Rebuild main site">
       <bpmn:extensionElements>
-        <folio:skill ref="content-publish"/>
+        <bootstrap.processes:skill ref="content-publish"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -445,9 +566,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
 
         <bpmn:task id="Task_WatchMainCI" name="Note the main-branch watch&#10;[watch]">
       <bpmn:extensionElements>
-        <folio:skill ref="watch" />
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="watch" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -468,6 +589,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     </bpmn:task>
 <bpmn:endEvent id="End_Pipeline" name="Deployment complete">
       <bpmn:incoming>p7b</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_NotMerged" name="Not merged: preview kept">
+      <bpmn:documentation>The approval did not end in a merge. Nothing is deployed and STAGING/&lt;slug&gt;/ is left up; a later push to the branch starts a new run of this process.</bpmn:documentation>
       <bpmn:incoming>p8</bpmn:incoming>
     </bpmn:endEvent>
 
@@ -496,39 +620,51 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:sequenceFlow id="f7" sourceRef="Task_SubmitForReview" targetRef="End_Author" />
     <bpmn:sequenceFlow id="flow_submit_to_reviewer" sourceRef="Task_SubmitForReview" targetRef="Start_Reviewer" />
     <bpmn:sequenceFlow id="r1" sourceRef="Start_Reviewer" targetRef="Task_CompareBeforeAfter" />
-    <bpmn:sequenceFlow id="r2" sourceRef="Task_CompareBeforeAfter" targetRef="Task_ReviewImpact" />
+    <bpmn:sequenceFlow id="r2" sourceRef="Task_CompareBeforeAfter" targetRef="Task_IngestComments" />
+    <bpmn:sequenceFlow id="c1" sourceRef="Task_IngestComments" targetRef="Task_SliceAndAssign" />
+    <bpmn:sequenceFlow id="c2" sourceRef="Task_SliceAndAssign" targetRef="Call_ReviewSlices" />
+    <bpmn:sequenceFlow id="c3" sourceRef="Call_ReviewSlices" targetRef="GW_Withdraw" />
+    <bpmn:sequenceFlow id="c4" name="Yes" sourceRef="GW_Withdraw" targetRef="Task_WithdrawComment" />
+    <bpmn:sequenceFlow id="c5" name="No" sourceRef="GW_Withdraw" targetRef="GW_Disputed" />
+    <bpmn:sequenceFlow id="c6" sourceRef="Task_WithdrawComment" targetRef="GW_Disputed" />
+    <bpmn:sequenceFlow id="c7" name="Yes" sourceRef="GW_Disputed" targetRef="Call_Adjudication" />
+    <bpmn:sequenceFlow id="c9" name="No" sourceRef="GW_Disputed" targetRef="GW_Covered" />
+    <bpmn:sequenceFlow id="c10" sourceRef="Call_Adjudication" targetRef="GW_Covered" />
+    <bpmn:sequenceFlow id="c8" name="no" sourceRef="GW_Covered" targetRef="Task_SliceAndAssign" />
+    <bpmn:sequenceFlow id="c11" name="yes" sourceRef="GW_Covered" targetRef="Task_ReviewImpact" />
     <bpmn:sequenceFlow id="r3" sourceRef="Task_ReviewImpact" targetRef="GW_Approved" />
     <bpmn:sequenceFlow id="r4" name="No" sourceRef="GW_Approved" targetRef="Task_RequestChanges" />
     <bpmn:sequenceFlow id="r5" sourceRef="Task_RequestChanges" targetRef="Task_Iterate" />
     <bpmn:sequenceFlow id="r6" name="Yes" sourceRef="GW_Approved" targetRef="Task_Approve" />
-    <bpmn:sequenceFlow id="r7" sourceRef="Task_Approve" targetRef="End_Reviewer" />
-    <bpmn:sequenceFlow id="flow_approve_to_pipeline" sourceRef="Task_Approve" targetRef="GW_Merged" />
+    <bpmn:sequenceFlow id="r8" sourceRef="Task_Approve" targetRef="Task_Merge" />
+    <bpmn:sequenceFlow id="r7" sourceRef="Task_Merge" targetRef="End_Reviewer" />
+    <bpmn:sequenceFlow id="flow_approve_to_pipeline" sourceRef="Task_Merge" targetRef="GW_Merged" />
     <bpmn:sequenceFlow id="p5" name="Yes" sourceRef="GW_Merged" targetRef="Task_CleanupStaging" />
     <bpmn:sequenceFlow id="p6" sourceRef="Task_CleanupStaging" targetRef="Task_RebuildMain" />
     <bpmn:sequenceFlow id="p7" sourceRef="Task_RebuildMain" targetRef="Task_WatchMainCI" />
     <bpmn:sequenceFlow id="p7b" sourceRef="Task_WatchMainCI" targetRef="End_Pipeline" />
-    <bpmn:sequenceFlow id="p8" name="No (iterate)" sourceRef="GW_Merged" targetRef="End_Pipeline" />
+    <bpmn:sequenceFlow id="p8" name="No" sourceRef="GW_Merged" targetRef="End_NotMerged" />
   </bpmn:process>
 
   <bpmndi:BPMNDiagram id="BPMNDiagram_ContentChangeReview">
     <bpmndi:BPMNPlane id="BPMNPlane_ContentChangeReview" bpmnElement="Collaboration_ContentChangeReview">
       <!-- Participant / Pool -->
       <bpmndi:BPMNShape id="Participant_ContentChangeReview_di" bpmnElement="Participant_ContentChangeReview" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="4560" height="800" />
+        <dc:Bounds x="160" y="80" width="6000" height="1000" />
       </bpmndi:BPMNShape>
 
       <!-- Lanes -->
       <bpmndi:BPMNShape id="Lane_Author_di" bpmnElement="Lane_Author" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="4530" height="200" />
+        <dc:Bounds x="190" y="80" width="5970" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Agent_di" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="190" y="280" width="4530" height="200" />
+        <dc:Bounds x="190" y="280" width="5970" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Reviewer_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
-        <dc:Bounds x="190" y="480" width="4530" height="200" />
+        <dc:Bounds x="190" y="480" width="5970" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Pipeline_di" bpmnElement="Lane_Pipeline" isHorizontal="true">
-        <dc:Bounds x="190" y="680" width="4530" height="200" />
+        <dc:Bounds x="190" y="680" width="5970" height="200" />
       </bpmndi:BPMNShape>
 
       <!-- Author Shapes -->
@@ -612,24 +748,24 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         <dc:Bounds x="3170" y="540" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReviewImpact_di" bpmnElement="Task_ReviewImpact">
-        <dc:Bounds x="3370" y="540" width="140" height="80" />
+        <dc:Bounds x="4770" y="540" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="GW_Approved_di" bpmnElement="GW_Approved" isMarkerVisible="true">
-        <dc:Bounds x="3570" y="555" width="50" height="50" />
+        <dc:Bounds x="4970" y="555" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3545" y="520" width="100" height="30" />
+          <dc:Bounds x="4945" y="520" width="100" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_RequestChanges_di" bpmnElement="Task_RequestChanges">
-        <dc:Bounds x="3680" y="540" width="140" height="80" />
+        <dc:Bounds x="5080" y="540" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Approve_di" bpmnElement="Task_Approve">
-        <dc:Bounds x="3880" y="540" width="140" height="80" />
+        <dc:Bounds x="5280" y="540" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Reviewer_di" bpmnElement="End_Reviewer">
-        <dc:Bounds x="4080" y="562" width="36" height="36" />
+        <dc:Bounds x="5680" y="562" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4060" y="605" width="80" height="30" />
+          <dc:Bounds x="5660" y="605" width="80" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
 
@@ -650,21 +786,27 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         <dc:Bounds x="2310" y="740" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="GW_Merged_di" bpmnElement="GW_Merged" isMarkerVisible="true">
-        <dc:Bounds x="3925" y="755" width="50" height="50" />
+        <dc:Bounds x="5325" y="755" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3910" y="810" width="80" height="30" />
+          <dc:Bounds x="5310" y="810" width="80" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CleanupStaging_di" bpmnElement="Task_CleanupStaging">
-        <dc:Bounds x="4040" y="740" width="140" height="80" />
+        <dc:Bounds x="5440" y="740" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_RebuildMain_di" bpmnElement="Task_RebuildMain">
-        <dc:Bounds x="4240" y="740" width="140" height="80" />
+        <dc:Bounds x="5640" y="740" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_NotMerged_di" bpmnElement="End_NotMerged">
+        <dc:Bounds x="5412" y="832" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="5454" y="836" width="150" height="28" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Pipeline_di" bpmnElement="End_Pipeline">
-        <dc:Bounds x="4640" y="762" width="36" height="36" />
+        <dc:Bounds x="6040" y="762" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4620" y="718" width="80" height="30" />
+          <dc:Bounds x="6020" y="718" width="80" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
 
@@ -673,7 +815,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         <dc:Bounds x="2510" y="740" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_WatchMainCI_di" bpmnElement="Task_WatchMainCI">
-        <dc:Bounds x="4440" y="740" width="140" height="80" />
+        <dc:Bounds x="5840" y="740" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
         <di:waypoint x="276" y="180" />
@@ -709,8 +851,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         <di:waypoint x="1620" y="380" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="a7_di" bpmnElement="a7">
-        <di:waypoint x="1760" y="380" />
-        <di:waypoint x="1838" y="380" />
+        <di:waypoint x="1890" y="420" />
+        <di:waypoint x="1890" y="700" />
+        <di:waypoint x="1838" y="700" />
         <di:waypoint x="1838" y="762" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p1_di" bpmnElement="p1">
@@ -781,69 +924,193 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r2_di" bpmnElement="r2">
         <di:waypoint x="3310" y="580" />
-        <di:waypoint x="3370" y="580" />
+        <di:waypoint x="3340" y="580" />
+        <di:waypoint x="3340" y="980" />
+        <di:waypoint x="3370" y="980" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r3_di" bpmnElement="r3">
-        <di:waypoint x="3510" y="580" />
-        <di:waypoint x="3570" y="580" />
+        <di:waypoint x="4910" y="580" />
+        <di:waypoint x="4970" y="580" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r4_di" bpmnElement="r4">
-        <di:waypoint x="3620" y="580" />
-        <di:waypoint x="3680" y="580" />
+        <di:waypoint x="5020" y="580" />
+        <di:waypoint x="5080" y="580" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3635" y="560" width="20" height="14" />
+          <dc:Bounds x="5035" y="560" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r5_di" bpmnElement="r5">
-        <di:waypoint x="3750" y="540" />
-        <di:waypoint x="3750" y="460" />
+        <di:waypoint x="5150" y="540" />
+        <di:waypoint x="5150" y="460" />
         <di:waypoint x="2930" y="460" />
         <di:waypoint x="2930" y="420" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r6_di" bpmnElement="r6">
-        <di:waypoint x="3595" y="605" />
-        <di:waypoint x="3595" y="650" />
-        <di:waypoint x="3950" y="650" />
-        <di:waypoint x="3950" y="620" />
+        <di:waypoint x="4995" y="605" />
+        <di:waypoint x="4995" y="650" />
+        <di:waypoint x="5350" y="650" />
+        <di:waypoint x="5350" y="620" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3605" y="620" width="20" height="14" />
+          <dc:Bounds x="5005" y="620" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="r7_di" bpmnElement="r7">
-        <di:waypoint x="4020" y="580" />
-        <di:waypoint x="4080" y="580" />
+        <di:waypoint x="5620" y="580" />
+        <di:waypoint x="5680" y="580" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="flow_approve_to_pipeline_di" bpmnElement="flow_approve_to_pipeline">
-        <di:waypoint x="3950" y="620" />
-        <di:waypoint x="3950" y="755" />
+        <di:waypoint x="5550" y="620" />
+        <di:waypoint x="5550" y="700" />
+        <di:waypoint x="5350" y="700" />
+        <di:waypoint x="5350" y="755" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p5_di" bpmnElement="p5">
-        <di:waypoint x="3975" y="780" />
-        <di:waypoint x="4040" y="780" />
+        <di:waypoint x="5375" y="780" />
+        <di:waypoint x="5440" y="780" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3990" y="760" width="20" height="14" />
+          <dc:Bounds x="5390" y="760" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p6_di" bpmnElement="p6">
-        <di:waypoint x="4180" y="780" />
-        <di:waypoint x="4240" y="780" />
+        <di:waypoint x="5580" y="780" />
+        <di:waypoint x="5640" y="780" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p7_di" bpmnElement="p7">
-        <di:waypoint x="4380" y="780" />
-        <di:waypoint x="4440" y="780" />
+        <di:waypoint x="5780" y="780" />
+        <di:waypoint x="5840" y="780" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p7b_di" bpmnElement="p7b">
-        <di:waypoint x="4580" y="780" />
-        <di:waypoint x="4640" y="780" />
+        <di:waypoint x="5980" y="780" />
+        <di:waypoint x="6040" y="780" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="p8_di" bpmnElement="p8">
-        <di:waypoint x="3950" y="805" />
-        <di:waypoint x="3950" y="850" />
-        <di:waypoint x="4658" y="850" />
-        <di:waypoint x="4658" y="798" />
+        <di:waypoint x="5350" y="805" />
+        <di:waypoint x="5350" y="850" />
+        <di:waypoint x="5412" y="850" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3960" y="825" width="70" height="14" />
+          <dc:Bounds x="5358" y="828" width="20" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Lane_Coordinator_di" bpmnElement="Lane_Coordinator" isHorizontal="true">
+        <dc:Bounds x="190" y="880" width="5970" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IngestComments_di" bpmnElement="Task_IngestComments">
+        <dc:Bounds x="3370" y="940" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SliceAndAssign_di" bpmnElement="Task_SliceAndAssign">
+        <dc:Bounds x="3570" y="940" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_ReviewSlices_di" bpmnElement="Call_ReviewSlices">
+        <dc:Bounds x="3770" y="540" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Withdraw_di" bpmnElement="GW_Withdraw" isMarkerVisible="true">
+        <dc:Bounds x="3970" y="555" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3935" y="520" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WithdrawComment_di" bpmnElement="Task_WithdrawComment">
+        <dc:Bounds x="4070" y="540" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Disputed_di" bpmnElement="GW_Disputed" isMarkerVisible="true">
+        <dc:Bounds x="4270" y="555" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4235" y="520" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_Adjudication_di" bpmnElement="Call_Adjudication">
+        <dc:Bounds x="4370" y="540" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Covered_di" bpmnElement="GW_Covered" isMarkerVisible="true">
+        <dc:Bounds x="4595" y="955" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4650" y="1010" width="120" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Merge_di" bpmnElement="Task_Merge">
+        <dc:Bounds x="5480" y="540" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="c1_di" bpmnElement="c1">
+        <di:waypoint x="3510" y="980" />
+        <di:waypoint x="3570" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c2_di" bpmnElement="c2">
+        <di:waypoint x="3710" y="980" />
+        <di:waypoint x="3740" y="980" />
+        <di:waypoint x="3740" y="580" />
+        <di:waypoint x="3770" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c3_di" bpmnElement="c3">
+        <di:waypoint x="3910" y="580" />
+        <di:waypoint x="3970" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c4_di" bpmnElement="c4">
+        <di:waypoint x="4020" y="580" />
+        <di:waypoint x="4070" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4030" y="560" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c5_di" bpmnElement="c5">
+        <di:waypoint x="3995" y="605" />
+        <di:waypoint x="3995" y="650" />
+        <di:waypoint x="4295" y="650" />
+        <di:waypoint x="4295" y="605" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4130" y="652" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c6_di" bpmnElement="c6">
+        <di:waypoint x="4210" y="580" />
+        <di:waypoint x="4270" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c7_di" bpmnElement="c7">
+        <di:waypoint x="4320" y="580" />
+        <di:waypoint x="4370" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4330" y="560" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c9_di" bpmnElement="c9">
+        <di:waypoint x="4295" y="605" />
+        <di:waypoint x="4295" y="640" />
+        <di:waypoint x="4540" y="640" />
+        <di:waypoint x="4540" y="980" />
+        <di:waypoint x="4595" y="980" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4550" y="960" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c10_di" bpmnElement="c10">
+        <di:waypoint x="4510" y="580" />
+        <di:waypoint x="4620" y="580" />
+        <di:waypoint x="4620" y="955" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c8_di" bpmnElement="c8">
+        <di:waypoint x="4620" y="1005" />
+        <di:waypoint x="4620" y="1060" />
+        <di:waypoint x="3640" y="1060" />
+        <di:waypoint x="3640" y="1020" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4120" y="1062" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="c11_di" bpmnElement="c11">
+        <di:waypoint x="4645" y="980" />
+        <di:waypoint x="4720" y="980" />
+        <di:waypoint x="4720" y="580" />
+        <di:waypoint x="4770" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4655" y="960" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="r8_di" bpmnElement="r8">
+        <di:waypoint x="5420" y="580" />
+        <di:waypoint x="5480" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="a6b_di" bpmnElement="a6b">
+        <di:waypoint x="1760" y="380" />
+        <di:waypoint x="1820" y="380" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -5,13 +5,8 @@
   "ref": "main",
   "path": "/",
   "maintainer": "TopologyHealth",
-  "sync": {
-    "strategy": "shallow-clone",
-    "frequency": "weekly",
-    "autoUpdate": true
-  },
   "wrapper": {
-    "description": "Light wrapper providing SkillPackageManifest compliance for the external SMARTerFHIR library.",
+    "description": "Declares the SMARTerFHIR library as an external dependency (Docker requirements only). It holds no skill files, measured at 506463af on 2026-09-24. The skills that use it, smart-launch and fhir-client-operations, are authored in fhir-harness/skills/fhir-client/ (issue #556).",
     "docker": {
       "baseImage": "ubuntu:24.04",
       "aptPackages": [
@@ -41,10 +36,7 @@
       "smart-on-fhir",
       "fhir-client"
     ],
-    "skills": [
-      "smart-launch",
-      "fhir-client-operations"
-    ],
+    "skills": [],
     "lifecycleStages": [
       "author",
       "test"

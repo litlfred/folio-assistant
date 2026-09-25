@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Requirements",
     "path": "processes/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:76a6160cf26faf969f689a11faa082e97fd3fefed0f3900046a28e3528b494b5",
+  "source_hash": "sha256:8fdb28b2a33ba113f2cb4479e5837211d39d6813293717329f7b640dc795ff31",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -77,23 +77,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "S_ApproveReqs",
-          "detail": "\"Approve requirements\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
-    "n/a": 8,
+    "pass": 13,
+    "fail": 1,
+    "n/a": 10,
     "unknown": 0
   }
 }

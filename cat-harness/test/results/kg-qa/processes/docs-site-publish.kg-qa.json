@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:2cdc6abd973b4d4d617f82f90b71dbc887c87c45cf02bbabd91384150c7601c5",
+  "source_hash": "sha256:daed89633b0ecd9703de283725c9920eac0086fce84fc6e64f1e03b6ffb46c7f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,7 +64,7 @@
       "findings": []
     },
     "call-activity-resolves": {
-      "result": "n/a",
+      "result": "pass",
       "findings": []
     },
     "process-diagram-published": {
@@ -72,39 +72,52 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Regenerate",
-          "detail": "\"Regenerate every derived&#10;reference from its source\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Build",
-          "detail": "\"Build the Jekyll site&#10;and the API reference\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Export",
-          "detail": "\"Export the knowledge graph&#10;and its schema\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Restore",
-          "detail": "\"Restore the OPEN PRs'&#10;staging previews\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Publish",
-          "detail": "\"Publish to gh-pages&#10;(FULL REPLACE)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 9,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 17,
+    "fail": 0,
+    "n/a": 7,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/docs-site-publish.bpmn",
+      "code": ".github/workflows/docs-site.yml",
+      "prose_hash": "daed89633b0e",
+      "code_hash": "4a075282128a",
+      "by": "baseline"
+    }
+  ]
 }

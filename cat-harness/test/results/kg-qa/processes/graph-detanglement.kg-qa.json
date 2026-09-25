@@ -5,7 +5,7 @@
     "id": "Process_GraphDetanglement",
     "path": "processes/graph-detanglement.bpmn"
   },
-  "source_hash": "sha256:f59aa1ee18d3d92e76da6efc9e1858ae117cc544656b4cf6272a732eb0d33233",
+  "source_hash": "sha256:f8fe4c79cb236c7936bf8f1bac6dcaf6bd4ddf2fd2f60574873add9c33e51a9e",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -72,27 +72,42 @@
       "findings": []
     },
     "activity-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Isolate",
-          "detail": "\"3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Extract",
-          "detail": "\"4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 11,
-    "fail": 1,
-    "n/a": 6,
+    "pass": 16,
+    "fail": 0,
+    "n/a": 8,
     "unknown": 0
   }
 }

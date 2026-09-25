@@ -5,7 +5,7 @@
     "id": "Process_Publication",
     "path": "processes/draft-to-publication.bpmn"
   },
-  "source_hash": "sha256:749da60b35470599081135f8106ef21215279f8413441e3e267a7aad483b17d6",
+  "source_hash": "sha256:8609611ea1b0a929accfbe4d7ba31db9d8ce8455ab3d07ab13ae2902c9d29bca",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -78,12 +78,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 13,
+    "pass": 17,
     "fail": 0,
-    "n/a": 5,
+    "n/a": 7,
     "unknown": 0
   }
 }

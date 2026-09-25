@@ -57,13 +57,18 @@ describe("a variable is DECLINED, not flagged", () => {
 });
 
 describe("this repository's own templates", () => {
+  // One scan for both tests: it is pure and read-only, and both called it with
+  // no argument, so the second call recomputed the same value (bean `6brk`).
+  let scanned: ReturnType<typeof checkDocsTemplates> | undefined;
+  const templates = () => (scanned ??= checkDocsTemplates());
+
   test("carry no unresolved site-root literal", () => {
-    const { findings } = checkDocsTemplates();
+    const { findings } = templates();
     expect(unresolved(findings).map((f) => `${f.file}:${f.line}`)).toEqual([]);
   });
 
   test("and were actually examined — an empty corpus is not a pass", () => {
-    const { files, findings } = checkDocsTemplates();
+    const { files, findings } = templates();
     expect(files).toBeGreaterThan(0);
     expect(findings.length).toBeGreaterThan(0);
   });

@@ -27,12 +27,35 @@
           "detail": "heading \"Running locally\" repeated (also at line 52)"
         }
       ]
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-core/docs-generation.ts",
+          "detail": "cat-harness/skills/folio-core/docs-generation.ts changed since cat-harness/skills/folio-core/docs-generation.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 3,
-    "fail": 1,
-    "n/a": 0,
+    "fail": 2,
+    "n/a": 1,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-core/docs-generation.md",
+      "code": "cat-harness/skills/folio-core/docs-generation.ts",
+      "prose_hash": "dd4b8dc02de2",
+      "code_hash": "9300fd4e716e",
+      "by": "baseline"
+    }
+  ]
 }

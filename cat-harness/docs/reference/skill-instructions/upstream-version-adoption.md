@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/upstream-version-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/upstream-version-adoption.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/upstream-version-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/upstream-version-adoption.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/upstream-version-adoption.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/upstream-version-adoption.md){: .fa-edit-source }
 
 {% raw %}
 # Adopting an upstream version bump
@@ -138,7 +138,7 @@ ours go to the decision as they are.
 **A person decides, and the diagram says so.** `PM_Decide` is a `bpmn:userTask`
 in the publication manager's lane, and that role admits `person` only, so
 `activity-fulfilment-kind` fails the moment somebody tries to make an agent the
-accepting party. It also carries `<folio:policy relaxable="false"/>`: no
+accepting party. It also carries `<cat-harness.processes:policy relaxable="false"/>`: no
 package may relax it.
 
 The lane is the publication manager's rather than the editor's because the pin

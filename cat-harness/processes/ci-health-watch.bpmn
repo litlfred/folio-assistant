@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_CiHealth" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_CiHealth">
@@ -18,12 +19,12 @@
            permit reaching the clean path without the gateway that separates
            "nothing is red" from "nobody could look", which is the single
            thing this watchdog exists to keep apart. -->
-      <folio:policy enforcement="strict"/>
-      <folio:implements workflow=".github/workflows/ci-health.yml"/>
+      <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CiHealth">
       <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
         <bpmn:documentation>Named a 'sweep' but every path through it writes something — the report file, the tracking label, and the issue itself (opened, edited or closed) — and keeping all three in one lane is what makes 'one tracking issue, edited in place' enforceable: a write split across lanes would leave two different actors able to touch the same issue with no ordering between them.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
@@ -37,19 +38,18 @@
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Sweep" name="Weekly (Mon 09:17 UTC),&amp;#10;or on dispatch">
-      <bpmn:extensionElements>
-        <folio:job name="report"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Check" name="Run check:ci-health,&amp;#10;WRITING the report file">
+      <bpmn:documentation>Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Determined" name="Could we&amp;#10;tell?">
+      <bpmn:documentation>Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -58,20 +58,23 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
+      <bpmn:documentation>Create the ci-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="GW_Finding" name="Anything red&amp;#10;on main?">
+      <bpmn:documentation>Asked of the same `verdict`, once it is known. `clean` is verdict == 'clean' (exit 0): the open `ci-health` issue, if there is one, is closed saying main is clean. `not clean` is verdict == 'red' (exit 1 with a report): the one open issue labelled `ci-health` is edited in place with the report as its body, or created if there is none. Neither branch fails the job — a red main speaks through the issue, not through this workflow's status.</bpmn:documentation>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
+      <bpmn:documentation>Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
@@ -80,8 +83,9 @@
       <bpmn:incoming>Flow_6</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
+      <bpmn:documentation>Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ci-health"/>
+        <bootstrap.processes:skill ref="ci-health"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_7</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>

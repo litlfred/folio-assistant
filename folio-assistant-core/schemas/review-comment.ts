@@ -44,6 +44,7 @@ import { z } from "zod";
 
 import { nodeKind } from "../../cat-harness/schemas/node-kind.js";
 import { TodoNodeKind } from "../../cat-harness/schemas/todo.js";
+import { ReviewVerdictSchema } from "./review-verdict.js";
 
 export const REVIEW_COMMENT_SCHEMA = "folio-review-comment/v1" as const;
 
@@ -75,13 +76,11 @@ export interface ReviewTransition {
   to: ReviewCommentStatus;
   by: ProcessTask & {
     /** The `.bpmn` under `cat-harness/processes/` that declares it. */
-    file: string;
     /**
-     * Set when the diagram does not exist yet: the bean that will author it.
-     * A test holds every other entry to a task that EXISTS in its file, so
-     * a renamed task cannot leave this table pointing at nothing.
+     * A test holds every entry to a task that EXISTS in this file, so a
+     * renamed task cannot leave this table pointing at nothing.
      */
-    awaits?: string;
+    file: string;
   };
   /** A transition that closes a comment must name the Decision that closed it. */
   needsDecision?: boolean;
@@ -92,16 +91,24 @@ export interface ReviewTransition {
  *
  * Existing diagrams are used where they already hold the step: the editor's
  * "Accept, or send back" in `review-task.bpmn`, and the adjudicator's
- * recorded entry in `adjudication.bpmn`. Ingestion and withdrawal belong to
- * `large-document-review.bpmn`, which bean `en2d` authors. Those two entries
- * say so in `awaits` rather than pointing at a task that is not there.
+ * recorded entry in `criterion-adjudication.bpmn`. Ingestion and withdrawal are
+ * the reviewer and coordinator steps bean `en2d` added to
+ * `content-change-review.bpmn`, the process a change is reviewed in. A
+ * separate large-document diagram was the plan until the owner ruled
+ * (2026-09-23) to extend the existing one rather than fork it.
+ *
+ * The adjudicator's entry is in `criterion-adjudication.bpmn` rather than
+ * `adjudication.bpmn` since bean `bvuk` split the outcome half out the same
+ * day — see the `adjudicate` transition below for why it went with the
+ * outcome. Two independent moves, one docstring: `en2d` changed where
+ * ingestion comes FROM, `bvuk` changed where adjudication lands.
  */
 export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
   {
     name: "ingest",
     from: [null],
     to: "open",
-    by: { file: "large-document-review.bpmn", process: "Process_LargeDocumentReview", task: "Task_IngestComments", awaits: "en2d" },
+    by: { file: "content-change-review.bpmn", process: "Process_ContentChangeReview", task: "Task_IngestComments" },
   },
   {
     name: "address",
@@ -126,14 +133,24 @@ export const REVIEW_TRANSITIONS: readonly ReviewTransition[] = [
     name: "adjudicate",
     from: ["open", "addressed"],
     to: "adjudicated",
-    by: { file: "adjudication.bpmn", process: "Process_Adjudication", task: "A_RecordEntry" },
+    // `criterion-adjudication.bpmn`, not `adjudication.bpmn`: bean `bvuk` split
+    // the outcome half out on 2026-09-23, because six diagrams called the
+    // shared process and only two asked a question its three outcomes answer.
+    // A_RecordEntry went with the outcome, which is where it belongs — the
+    // entry written depends on what was adjudicated. It is still
+    // `relaxable="false"` there.
+    by: {
+      file: "criterion-adjudication.bpmn",
+      process: "Process_CriterionAdjudication",
+      task: "A_RecordEntry",
+    },
     needsDecision: true,
   },
   {
     name: "withdraw",
     from: ["open", "addressed"],
     to: "withdrawn",
-    by: { file: "large-document-review.bpmn", process: "Process_LargeDocumentReview", task: "Task_WithdrawComment", awaits: "en2d" },
+    by: { file: "content-change-review.bpmn", process: "Process_ContentChangeReview", task: "Task_WithdrawComment" },
   },
 ];
 
@@ -251,7 +268,8 @@ export function transition(
  * the rest of the line, because labels contain colons. `kind` defaults to
  * `question`, the one that asserts least; `role` defaults to `reviewer`.
  * A comment without a `block:` line is not a review comment and is left
- * alone: a PR conversation is also where people talk.
+ * alone: a PR conversation is also where people talk. A tag with `verdict:`
+ * or `waive:` is a VERDICT (`review-verdict.ts`), and is left alone here too.
  */
 export interface ReviewTag {
   block: string;
@@ -267,10 +285,14 @@ export function parseReviewTag(body: string): ReviewTag | { error: string } | nu
   let i = 0;
   while (i < lines.length && lines[i].trim() === "") i++;
   for (; i < lines.length; i++) {
-    const m = /^\s*(block|kind|role):\s*(.*?)\s*$/i.exec(lines[i]);
+    const m = /^\s*(block|kind|role|verdict|waive):\s*(.*?)\s*$/i.exec(lines[i]);
     if (!m) break;
     header[m[1].toLowerCase()] = m[2];
   }
+  // A verdict (`verdict:` or `waive:`) is not a review comment. It is read by
+  // `parseVerdictTag`, which also refuses one that carries `kind:` too, so a
+  // comment is never counted under both meanings.
+  if ("verdict" in header || "waive" in header) return null;
   if (!("block" in header)) return null;
   if (!/^\S+$/.test(header.block)) return { error: `\`block:\` needs one label, got "${header.block}"` };
   const kind = (header.kind ?? "question").toLowerCase();
@@ -426,6 +448,8 @@ export function reanchor(comments: readonly ReviewComment[], changes: readonly A
 export interface BlockAnchor {
   hash: string;
   renamedFrom: readonly string[];
+  /** The section listing the block (the ChangeSet's form). The heat map's row for its comments (bean `qbfi`). */
+  section?: string;
 }
 
 /**
@@ -490,5 +514,11 @@ export const ReviewCommentsFileSchema = z.object({
   comments: z.array(ReviewCommentSchema),
   malformed: z.array(z.object({ commentId: z.number().int(), url: z.string(), error: z.string() })),
   untagged: z.number().int().nonnegative(),
+  /**
+   * Reviewers' per-block verdicts (`folio-review-verdict/v1`, bean `px0t`),
+   * ingested from the same PR comments. Default `[]`, so a file written
+   * before verdicts existed still reads.
+   */
+  verdicts: z.array(ReviewVerdictSchema).default([]),
 });
 export type ReviewCommentsFile = z.infer<typeof ReviewCommentsFileSchema>;

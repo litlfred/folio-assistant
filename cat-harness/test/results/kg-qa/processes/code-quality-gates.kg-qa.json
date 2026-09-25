@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:7598efd571dd8b146bec8fcee44b101eb832891dc27af191040f1dcaf1c46de5",
+  "source_hash": "sha256:0bbb6b81a3decd4bf1a4aacd13c1c4cf018afdcc1171495cdfbe80e0a9f711ce",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -97,39 +97,58 @@
       "findings": []
     },
     "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Lean",
-          "detail": "\"Lean: no bare&#10;`import Mathlib` (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Python",
-          "detail": "\"Python: unused and&#10;wildcard imports (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_TypeScript",
-          "detail": "\"TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_E2E",
-          "detail": "\"End-to-end +&#10;accessibility (HARD)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
-        },
-        {
-          "where": "Task_Rust",
-          "detail": "\"Rust wildcard imports&#10;(WARN-ONLY)\" carries no <bpmn:documentation>, so its page shows a name and nothing more."
+          "where": ".github/workflows/code-quality-gates.yml",
+          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
         }
       ]
     },
-    "activity-calls-skill-process": {
+    "prose-claims-resolve": {
       "result": "pass",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 14,
     "fail": 2,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/code-quality-gates.bpmn",
+      "code": ".github/workflows/code-quality-gates.yml",
+      "prose_hash": "0bbb6b81a3de",
+      "code_hash": "396d0456dac9",
+      "by": "agent",
+      "reason": "Re-read the process documentation against the yml change. The change adds one step, check:code-accounting, inside the TypeScript job. The prose's claim about that box is 'TypeScript IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES' and lists their families; a thirty-first gate of the same kind is what that sentence already describes, deliberately approximately, so the box's meaning does not move. Nothing about the six-job shape, the four-hard/two-warn asymmetry, continue-on-error or the lane changes: the new step is hard-failing inside an already-hard job, so it adds no warn-only mechanism to keep apart."
+    }
+  ]
 }

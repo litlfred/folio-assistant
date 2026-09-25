@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/dmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/dmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/dmn-authoring.html).
+> Generated from [`cat-harness/skills/workflow/dmn-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/dmn-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/dmn-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/dmn-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/dmn-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # dmn-authoring
@@ -29,7 +29,7 @@ that back this repository's own computed gateways.
 ## A computed gateway is not a chosen one
 
 In this repository a DMN table has a second job: an exclusive gateway carrying
-`<folio:decision ref="decisions/<file>.dmn#<Decision_Id>"/>` has its branch
+`<cat-harness.processes:decision ref="decisions/<file>.dmn#<Decision_Id>"/>` has its branch
 **computed** from the table rather than picked by the agent.
 
 `workflow_complete` **refuses a hand-supplied `outcome`** at such a gateway.
@@ -37,7 +37,7 @@ Asserting the answer would defeat the point of writing the table. You pass
 `facts` — e.g. `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals — and
 the table returns the branch.
 
-Adding one means adding the `.dmn`, the `folio:decision` ref, and nothing else:
+Adding one means adding the `.dmn`, the `cat-harness.processes:decision` ref, and nothing else:
 the loader checks that **every outcome the table can return names a real
 outgoing flow**, so a table that can route somewhere the diagram cannot go is a
 load error rather than a surprise at the moment of decision.

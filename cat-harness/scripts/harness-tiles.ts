@@ -51,7 +51,7 @@
  * `GENERIC`, which is reported as a finding rather than rendered as a blank.
  */
 import { existsSync, readdirSync } from "node:fs";
-import { join, relative } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
@@ -61,12 +61,15 @@ import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
   type CatHarnessDeclaration,
   type NavbarIcon,
+  artefactStub,
   resolveNavbarIcons,
   findDeclarationFile,
   isExemptFrom,
   readDeclaration,
   siteDirFor,
   visualisationsOf,
+  defaultGraphKinds,
+  nestedDirectories,
 } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -96,6 +99,12 @@ export type HarnessStat = {
 export type HarnessVisualisation = {
   /** The declared graph kind this shows. */
   kind: string;
+  /**
+   * The kind this one is a sub-graph of, from the registry's `within`
+   * (issue #1164). Every list of kinds draws it inside that kind's row,
+   * folded shut. Absent for a top-level kind.
+   */
+  within?: string;
   /** Site-root-relative, for `relative_url`. Absent when nothing is published. */
   path?: string;
   /**
@@ -142,6 +151,26 @@ export type HarnessVisualisation = {
    * maintenance.
    */
   note?: string;
+  /**
+   * The page this row opens is WITHHELD from the canonical deploy.
+   *
+   * `compose-docs.ts` lays a `publish: "staging-only"` page into the site only
+   * under `--staging`, so on the canonical build the file exists in the SOURCE
+   * and not in the published tree. `path` is resolved against the source, so
+   * it is present and correct and the link is still dead.
+   *
+   * The graph TILE has carried this since `graphTiles` was written, and
+   * `docs-ui.js` skips such a tile unless the page says it is a staging
+   * preview — its own comment: *"Conflating them would let 'show hidden'
+   * resurrect a link to a 404."* The navbar's folder list carried it nowhere
+   * and linked `fsh-guts` on the canonical site, which is that 404 arriving by
+   * the other door. Measured 2026-09-23 by sweeping a canonical-shaped local
+   * build: 1 of 387 sidebar links.
+   *
+   * Absent means "publishes normally". It is not a third state: a page that is
+   * withheld says so, and everything else is published.
+   */
+  stagingOnly?: true;
 };
 
 /** A fat navbar tile for one initiated harness. */
@@ -214,9 +243,10 @@ export type HarnessTile = {
    *
    * - `folio`   — the instance's own themed root
    * - `viewer`  — a kind handler's view of one of its graphs
-   * - `handled` — a page ANOTHER instance publishes about it, named by its
-   *               own `renderExemption.reachableAt`. Only a render-exempt
-   *               instance can have this, and it is the last resort.
+   * - `handled` — one of the instance's OWN files, published for it by the
+   *               site build and named by its `renderExemption.reachableAt`.
+   *               Only a render-exempt instance can have this, and it is the
+   *               last resort.
    */
   hrefKind?: "folio" | "viewer" | "handled";
   stats: HarnessStat[];
@@ -392,8 +422,8 @@ function folioRoot(repoRoot: string, name: string, atSiteRoot: boolean): string 
   return existsSync(join(dir, siteDirFor(dir))) ? `/${name}/` : undefined;
 }
 
-/** Every `harness.json` in the tree: the repository root and one level down. */
-function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
+/** Every `harness.json` in the tree: the repository root and one level down. Exported for `harness-panel.ts`. */
+export function instanceDirs(repoRoot: string, names: readonly string[]): string[] {
   const out: string[] = [];
   if (findDeclarationFile(repoRoot) !== undefined) out.push(repoRoot);
   for (const name of names) {
@@ -460,7 +490,25 @@ function tileFor(
    */
   owner?: { decl: CatHarnessDeclaration; dir: string },
 ): HarnessTile {
-  const dirs = decl.directories ?? [];
+  // THE SUB-GRAPHS A DIRECTORY DECLARES FROM WITHIN (issue #1164) join the
+  // list — but only those whose kind says it is LISTED under its parent
+  // (`within`). `beans/` and `todos/` also carry nested declarations, and
+  // their inner nodes (`bean-defs`, `workflow-state`) are parts of one graph,
+  // not graphs a reader browses; `within` is the registry's statement that a
+  // kind is the second thing.
+  const byId = new Map((decl.directories ?? []).map((d) => [d.id, d]));
+  const listedSubgraphs = nestedDirectories(instanceDir, decl).filter((n) => {
+    const parentKinds = byId.get(n.parentId)?.graphKinds ?? [];
+    return n.graphKinds.some((g) => {
+      const w = defaultGraphKinds.get(g)?.within;
+      return w !== undefined && parentKinds.includes(w);
+    });
+  });
+  type Dir = NonNullable<CatHarnessDeclaration["directories"]>[number];
+  const dirs: Dir[] = [
+    ...(decl.directories ?? []),
+    ...listedSubgraphs.map(({ parentId: _parent, ...d }) => d as Dir),
+  ];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
@@ -535,7 +583,12 @@ function tileFor(
     const candidates = ownsSite
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
-    const found = candidates.find((p) => existsSync(join(siteDir, p, "index.html")));
+    // `index.md` COUNTS TOO (issue #1164): Jekyll builds it to the same URL,
+    // so a plain documentation page at the conventional place IS the kind's
+    // page. Only `index.html` was recognised, which is why `methodologies`
+    // had to declare a viewer for a page the convention already named.
+    const found = candidates.find((p) =>
+      existsSync(join(siteDir, p, "index.html")) || existsSync(join(siteDir, p, "index.md")));
     // CONVENTION FIRST, declaration as the fallback — and the order is
     // OBSERVABLE, so it is a decision rather than a detail. Exactly one kind
     // in this repository resolves both ways today: cat-harness's `uploads`,
@@ -551,10 +604,21 @@ function tileFor(
     // edited". Both branches carry it, so a kind never loses its read-only
     // state by failing to resolve a page.
     const ro = readOnlyFor(kind);
+    // WITHHELD FROM THE CANONICAL DEPLOY — read from the same declaration
+    // `declaredFor` reads it from, rather than inferred from anything. See
+    // `HarnessVisualisation.stagingOnly` for what its absence cost.
+    const withheld = dirs.some(
+      (d) =>
+        (d.graphKinds ?? []).includes(kind) &&
+        visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
+    );
+    const within = defaultGraphKinds.get(kind)?.within;
     visualisations.push({
       kind,
+      ...(within ? { within } : {}),
       ...(path ? { path } : {}),
       ...(ro === undefined ? {} : { readOnly: ro }),
+      ...(withheld ? { stagingOnly: true as const } : {}),
     });
   }
   // TWO REASONS A KIND HAS NO PATH, and they are not the same finding.
@@ -803,33 +867,35 @@ function tileFor(
    * is `flh4`'s defect and a DIFFERENT finding from "nothing is published":
    * one says the declaration is wrong, the other says nobody built it. Both
    * leave the tab unlinked, which is correct either way.
+   *
+   * RELATIVE TO THE INSTANCE, and inside it (owner, 2026-09-23, bean iwtn:
+   * "bootstrap is bootstrap"). It named a page in the site-owning harness's
+   * docs until then, which made the floor of the stack point at a layer above
+   * it. It now names one of the instance's OWN files, which the site build
+   * publishes at `<base>/<stub>/` (`publish-instance-files.ts`), `.md`
+   * rendered as `.html`.
    */
   let handled: string | undefined;
   const reachable = decl.renderExemption?.reachableAt;
   if (folio === undefined && firstViewer === undefined && reachable !== undefined) {
-    // `sitePrefix`, the same repo-relative site directory the declared
-    // visualisers were rebased onto above — one computation, so the two
-    // cannot disagree about where the site is.
-    const prefix = sitePrefix;
-    const onDisk = join(repoRoot, reachable);
-    if (!existsSync(onDisk)) {
+    const onDisk = resolve(instanceDir, reachable);
+    const inside = !isAbsolute(reachable) && !relative(instanceDir, onDisk).startsWith("..");
+    if (!inside) {
+      findings.push(
+        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
+          `outside the instance. It must name one of the instance's own files, relative to ` +
+          `its own directory, so the tab stays unlinked.`,
+      );
+    } else if (!existsSync(onDisk)) {
       findings.push(
         `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
           `not a file. The tab stays unlinked — a declared path that does not resolve is a ` +
           `wrong declaration, which is a different problem from nothing being published.`,
       );
-    } else if (!reachable.startsWith(prefix)) {
-      findings.push(
-        `${decl.name}: its renderExemption declares \`reachableAt: ${reachable}\`, which is ` +
-          `outside the site-owning harness's site directory (${prefix}), so it is not published ` +
-          `and cannot be linked to.`,
-      );
     } else {
-      // `.md` is published as `.html` by Jekyll; anything else is served as
-      // it sits. Deriving the extension rather than assuming one keeps this
-      // honest if an exemption ever points at an already-built page.
-      const rest = reachable.slice(prefix.length);
-      handled = `/${rest.replace(/\.md$/, ".html")}`;
+      // `.md` is published as `.html` (`publish-instance-files.ts`); anything
+      // else is served as it sits.
+      handled = `/${artefactStub(decl)}/${reachable.replace(/\.md$/, ".html")}`;
     }
   }
 
@@ -949,8 +1015,8 @@ function tileFor(
   }
   if (handled !== undefined) {
     findings.push(
-      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens the page ` +
-        `another instance publishes about it (${handled}), declared as \`reachableAt\`.`,
+      `${decl.name}: renders nothing of its own (render-exempt), so its tab opens one of its ` +
+        `own files as published (${handled}), declared as \`reachableAt\`.`,
     );
   }
 

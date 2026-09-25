@@ -5,7 +5,7 @@
     "id": "Process_CopyOutMaterialized",
     "path": "processes/copy-out-materialized.bpmn"
   },
-  "source_hash": "sha256:749cdc191aeeba1348f33b1f426384a74421e2965ecba2ebe8fb37ce74add87c",
+  "source_hash": "sha256:76d36905dd17db67deddb66de47bb88aeae3db4a97f3bfafb50c9abc4f5e01a3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -85,11 +85,11 @@
       "findings": [
         {
           "where": "Task_Land",
-          "detail": "\"Land the bytes in the copier's own folio/\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Land the bytes in the copier's own folio/\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_RecordProvenance",
-          "detail": "\"Record provenance.local — what this is a copy OF\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Record provenance.local — what this is a copy OF\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },
@@ -108,12 +108,36 @@
     "activity-calls-skill-process": {
       "result": "pass",
       "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 9,
+    "pass": 13,
     "fail": 2,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

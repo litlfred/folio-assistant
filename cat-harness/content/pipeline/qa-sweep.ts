@@ -50,7 +50,7 @@
  */
 
 import { existsSync, statSync } from "fs";
-import { resolve, relative, dirname, join } from "path";
+import { resolve, relative, dirname } from "path";
 import { fileURLToPath } from "url";
 
 // Stable anchor for path normalisation: repo root, computed from
@@ -63,44 +63,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
 
-/**
- * Root of the CONTENT repo that owns the swept blocks, discovered by
- * walking up from the sweep target until a directory containing `.git`
- * (a dir in a normal checkout, a file in a git worktree) or
- * `harness.config.json` is found.
- *
- * Sidecar `paths` must be anchored HERE, not at `REPO_ROOT` (this
- * platform checkout): anchoring at REPO_ROOT bakes the content
- * checkout's *directory name* into every recorded path
- * (`../qou/content/...`), which poisons sidecars when the sweep runs
- * against a git worktree (`../agent-<id>/content/...` — dangling once
- * the worktree is pruned; observed live in qou PR #3604). Paths
- * relative to the content repo root (`content/...`) are invariant
- * across checkout names, worktrees, and invocation cwd.
- *
- * REPO_ROOT remains the right anchor for the *checker script* hashes
- * and script sidecars — those genuinely live in this platform repo.
- */
-function findContentRepoRoot(startAbs: string): string {
-  // The sweep target may be a block-path PREFIX (`.../<block>` with no
-  // extension) rather than an existing file or directory — statSync on
-  // it would throw ENOENT. Walk up from the nearest existing directory.
-  let dir = existsSync(startAbs) && statSync(startAbs).isDirectory()
-    ? startAbs
-    : dirname(startAbs);
-  while (true) {
-    if (existsSync(join(dir, ".git")) || resolveHarnessConfigPath(dir)) {
-      return dir;
-    }
-    const parent = dirname(dir);
-    if (parent === dir) {
-      // Fell off the filesystem root: fall back to the legacy anchor so
-      // the sweep still runs (paths then match the pre-fix behaviour).
-      return REPO_ROOT;
-    }
-    dir = parent;
-  }
-}
 import { GIT_SHA_UNKNOWN, applicabilityGap, computeCriterionScriptHashes, entryIsFresh, freshnessKeys, gitHeadSha, hashBlockFiles, loadQaReport, loadQaScriptSidecar, missingCompanionNote, preserveNonScriptEntries, sameScriptVerdict, saveQaReport, saveQaScriptSidecar, sweepActor, type CriterionScriptHashes, walkBlocks } from "./qa-utils.ts";
 import {
   qaCriteriaFor,
@@ -113,7 +75,7 @@ import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-sourc
 import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
-import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
 
 
 import type { BlockQaReport, CheckerResult, CompanionRole, QaCriterionEntry, QaScriptSidecar} from "../../schemas/block-qa";
@@ -126,7 +88,6 @@ import {
 import { adapterForKind } from "../../schemas/block-kinds";
 import { readDeclaredFolioProfile } from "./profile-check";
 import { readActiveVoices } from "../../schemas/voices";
-import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -236,7 +197,7 @@ async function run(): Promise<void> {
   const rootAbs = resolve(args.root);
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
-  const contentRepoRoot = findContentRepoRoot(rootAbs);
+  const contentRepoRoot = findContentRepoRoot(rootAbs, REPO_ROOT);
   // The folio's declared content profile, read ONCE per run from the same
   // repo root the block paths are anchored to. `profile` is `undefined` when
   // the folio does not say — see the profile gate below for what that means

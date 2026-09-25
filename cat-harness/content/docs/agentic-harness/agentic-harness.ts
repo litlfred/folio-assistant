@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "agentic-harness",
   title: "Agentic harness",
+  documents: ["interaction"],
   navOrder: 5,
   nodes: [
     {
@@ -33,6 +34,11 @@ export default webpage({
       id: "deterministic-and-agentic",
       title: "Deterministic and agentic processing",
       block: "deterministic-and-agentic",
+    },
+    {
+      id: "bpmn-execution",
+      title: "BPMN execution: one skill, two engines",
+      block: "bpmn-execution",
     },
     {
       id: "feature-request-workflow",
