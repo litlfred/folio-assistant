@@ -70,7 +70,7 @@ skill, how to add an MCP service. It is a Tool repo whose content is its manual.
 | today | lands in |
 |---|---|
 | `src/server.ts`, `src/core/{rbac,git,cache,logging}.ts` | `agentic-harness` |
-| `src/workflow/`, `src/tools/workflow.ts`, `skills/workflows/*.bpmn` (the three content-agnostic ones) | `agentic-harness` |
+| `src/workflow/`, `src/tools/workflow.ts`, `processes/*.bpmn` (the three content-agnostic ones) | `agentic-harness` |
 | `schemas/assistant-{package,types,workflow}.ts` | `agentic-harness` |
 | `src/tools/{check-deps,capabilities,skill-fetch,preferences,beans-prime}.ts` | `agentic-harness` |
 | `scripts/install-beans.sh`, `scripts/session-start-coord-sweep.sh`, `beans/` discipline | `agentic-harness` |
@@ -169,7 +169,7 @@ L2–L3; adaptation skills; OCL skills.
 |---|---|
 | `schemas/dak-blocks.ts`, the `dak` adapter's kinds | `smart-base` |
 | `content/pipeline/fsh-cone.ts`, FHIR/FSH tooling | `smart-base` |
-| `skills/workflows/l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` | `smart-base` |
+| `processes/l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` | `smart-base` |
 | `docs/guides/who-smart-{dak,ig}.md`, `skills/authoring-who-smart-guidelines/` (L2–L3) | `smart-base` |
 | the DAK translation extractors (PlantUML, ArchiMate, Excel, BPMN) from [PR #237](https://github.com/litlfred/folio-assistant/pull/237) | `smart-base` |
 | OCL skills, adaptation skills | `smart-base` (**mostly not yet written**) |

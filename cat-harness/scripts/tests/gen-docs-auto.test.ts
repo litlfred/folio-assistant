@@ -105,14 +105,14 @@ describe("index/processes extracts what a BPMN declares about itself", () => {
 describe("owningDirectory picks the most specific declaration", () => {
   const dirs = [
     { id: "outer", path: "cat-harness/skills" },
-    { id: "inner", path: "cat-harness/skills/workflows" },
+    { id: "inner", path: "cat-harness/processes" },
     { id: "other", path: "who-iris/skills" },
   ];
 
   it("an inner declaration wins over the outer one that also contains the file", () => {
     // Attributing a workflow to `cat-harness` would leave the workflow
     // directory's own declaration indexing nothing while looking populated.
-    expect(owningDirectory("cat-harness/skills/workflows/x.bpmn", dirs)?.id).toBe("inner");
+    expect(owningDirectory("cat-harness/processes/x.bpmn", dirs)?.id).toBe("inner");
   });
 
   it("a file only the outer declaration contains goes to the outer one", () => {

@@ -20,28 +20,39 @@
  * Dependency-free (bun + fs only). Never hand-edit the output.
  *
  * @module scripts/gen-skill-docs
+ * @covers skills, docs
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
-import { join, resolve, basename, relative } from "path";
+import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module reads this instance's declaration and the instance
-// DECLARES a folio graph, so without this it throws `unknown graph kind
-// "folio"` on a valid declaration.
-//
-// Found statically, by listing every script any workflow invokes and checking
-// each for the import — NOT by running them. Running `site-links.ts` from the
-// wrong directory made it fail with "no harness.json; nothing to resolve",
-// which masked this and got it wrongly dismissed as a local-args artefact. A
-// script failing on bad arguments says nothing about whether it fails on good
-// ones.
-import "../schemas/folio-graph-kind.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
+const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
+
+/**
+ * The REPOSITORY-relative path of an absolute directory, or `undefined` when it
+ * cannot be named as one.
+ *
+ * Bean `oe98`. The source and edit links were composed from a prefix relative
+ * to the INSTANCE root, so 240 of 244 pages linked `skills/...` (the pre-split
+ * path — there is no `skills/` at the repository root) and nine linked
+ * `../bootstrap/skills/...`, a parent segment no GitHub URL can carry. Both are
+ * the same mistake: a link into the repository has to be relative to the
+ * repository, and `repoRootFor` is the one place that says where that is.
+ *
+ * A directory outside the checkout (a dependency resolved from a sibling
+ * clone) has no path in THIS repository, so it gets no link rather than a
+ * normalised one that 404s.
+ */
+export function repoRelative(abs: string, repoRoot: string = REPO_ROOT): string | undefined {
+  const rel = relative(repoRoot, abs);
+  if (rel === "" || rel === ".." || rel.startsWith(`..${sep}`) || isAbsolute(rel)) return undefined;
+  return rel.split(sep).join("/");
+}
 // A pencil, as a text glyph rather than an inline SVG. 130 generated pages
 // each carrying an SVG is 130 copies of the same markup in the repo and in
 // every reader's download; one character is not.
@@ -69,8 +80,8 @@ const drifted: string[] = [];
  * them and no entry in {@link SAME_BASENAME_DIFFERENT_DOCUMENT}.
  *
  * Bean `v3se`. This was a `↪` line in a list of 173 successes, and the
- * consequence was the one cat-bootstrap exists to prevent: `kg-navigation` existed
- * twice — cat-bootstrap's assuming NOTHING, folio-core's assuming the harness is
+ * consequence was the one bootstrap exists to prevent: `kg-navigation` existed
+ * twice — bootstrap's assuming NOTHING, folio-core's assuming the harness is
  * installed — and the generator kept folio-core's. CatBootstrap's README sends a
  * cold agent to read that name *before anything else is known*, so the reader
  * least able to notice was served the body written for a repository it was not
@@ -82,7 +93,7 @@ const drifted: string[] = [];
  * somebody has to make, not something a generator may settle by running order.
  *
  * Promoted to a hard failure while the count is ZERO (measured 2026-09-20,
- * after `3jj9` renamed cat-bootstrap's copy). That is this repository's rule for
+ * after `3jj9` renamed bootstrap's copy). That is this repository's rule for
  * every ratchet — an error only once the backlog is drained — and it is also
  * the only moment the promotion is free.
  */
@@ -119,7 +130,7 @@ function reportCollisions(): void {
     `\n  Resolve it deliberately rather than by running order — give the group a ` +
       `\`publishPrefix\`, or\n  declare the pair in SAME_BASENAME_DIFFERENT_DOCUMENT ` +
       `so both publish with a directional banner.\n  Bean \`v3se\`: the collision this ` +
-      `guards served a cold cat-bootstrap agent the body for a\n  repository it was not in.`,
+      `guards served a cold bootstrap agent the body for a\n  repository it was not in.`,
   );
   process.exit(1);
 }
@@ -142,8 +153,13 @@ const SCHEMA_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "reference", "
 interface Group {
   category: string;
   dir: string;
-  /** GitHub path prefix for the "source" link. */
-  repoPrefix: string;
+  /**
+   * REPOSITORY-relative path of {@link dir}, for the "source" and "edit"
+   * links — derived by {@link repoRelative}, never written by hand.
+   * `undefined` when the directory is not inside this checkout; the page then
+   * says so instead of linking.
+   */
+  repoPrefix: string | undefined;
   /**
    * Prefix for the PUBLISHED filename, for a group whose basenames can collide
    * with another group's.
@@ -182,19 +198,17 @@ interface Group {
  */
 const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
   string,
-  Array<{ published: string; label: string; repoPrefix: string; canonical?: true }>
+  Array<{ published: string; label: string; canonical?: true }>
 > = {
   "todo-manager": [
     {
       published: "todo-manager",
       label: "Session Task Manager (folio-core)",
-      repoPrefix: "skills/folio-core",
       canonical: true,
     },
     {
       published: "local-todo-manager",
       label: "todo-manager (local stub)",
-      repoPrefix: ".claude/skills/local",
     },
   ],
   // Collided exactly as `todo-manager` did and carried NO banner, so a reader
@@ -204,26 +218,22 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
     {
       published: "kg-navigation",
       label: "Reading the knowledge graph (tooled)",
-      repoPrefix: "kg-navigation/skills",
       canonical: true,
     },
     {
       published: "local-kg-navigation",
       label: "Reading a knowledge graph before you have anything (bootstrap)",
-      repoPrefix: "bootstrap/skills",
     },
   ],
   "bean-coordination": [
     {
       published: "bean-coordination",
       label: "Bean Coordination (folio-core)",
-      repoPrefix: "skills/folio-core",
       canonical: true,
     },
     {
       published: "local-bean-coordination",
       label: "bean-coordination (local stub)",
-      repoPrefix: ".claude/skills/local",
     },
   ],
 };
@@ -260,7 +270,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // declared-but-absent directory is the `dh4f` defect.
   // Keyed on the DECLARATION'S id, not the directory basename: this root
   // holds its skills directly, so `discoverGroups` takes the
-  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `cat-bootstrap` uses
+  // `SKILLS_CATEGORIES[decl.id]` branch — the same one `bootstrap` uses
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
   // `theming` is above, keyed by its package-subdirectory name. Two sessions
   // built that package independently on 2026-09-20 and this entry was the
@@ -270,30 +280,46 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // it twice. The subdirectory won on evidence — bean `lps0` measured that
   // `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so the top-level
   // placement silently dropped its skills out of skill QA.
-  "methodology-crdm": "CRDM requirements methodology (methodologies/crdm)",
-  "methodology-raci": "RACI involvement model (methodologies/raci)",
-  "remote-stubs": "Declared but not implemented here (stubs)",
-  // The two entries below are declared kg directories that hold their skills
+  // KEYED BY BASENAME SINCE 2026-09-22, not by declaration id. These two
+  // were `methodology-crdm` and `methodology-raci` while they were
+  // top-level declared directories under `methodologies/`; the owner's
+  // "dont bury sub-graph assets" moved them into `skills/`, where they are
+  // package subdirectories and `discoverGroups` takes the basename branch
+  // instead. The old keys would not have failed loudly — they would simply
+  // never match, and the generator throws naming the id it wanted, which is
+  // how this was caught rather than shipped as two uncategorised packages.
+  crdm: "CRDM requirements methodology (skills/crdm)",
+  raci: "RACI involvement model (skills/raci)",
+  // Synced from claude-scientific-skills at a pinned commit (issue #556):
+  // somebody else's bytes, one package per skill so upstream's relative links
+  // resolve. `remote-stubs` was retired when these arrived.
+  "hypothesis-generation": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-critical-thinking": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-visualization": "Synced from claude-scientific-skills (pinned, read-only)",
+  // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
-  // directory's DECLARED ID — `cat-bootstrap` and `cat-harness-src`, not
-  // `cat-bootstrap/skills` and `src/skills`.
+  // directory's DECLARED ID — `bootstrap`, not `bootstrap/skills`.
   //
   // #428 keyed them by repo-relative path, which works and has a short
-  // half-life: `harness.json` says on its own entry that "ids are stable
+  // half-life: the declaration says on its own entry that "ids are stable
   // across a relocation, paths are not", and this file had already paid for
-  // that twice in one day — the basename was `cat-bootstrap` only until #422 moved
-  // those skills to `cat-bootstrap/skills/`. A path key breaks again at the
-  // `cat-harness/` move, which is the next step on bean `wggr` and would turn
-  // `src/skills` into `cat-harness/src/skills`.
-  "cat-bootstrap": "CatBootstrap (read before anything else is known)",
+  // that twice in one day — the basename was `bootstrap` only until #422 moved
+  // those skills to `bootstrap/skills/`.
+  //
+  // `cat-harness-src` was a third such entry, for `src/skills/`, and is gone
+  // as of #760. That directory held ONE skill beside the `.ts` implementing
+  // it — a thing `skills/folio-core/` already does eight times over — and its
+  // only distinguishing property was that `discoverLocalPackages` named it
+  // `cat-harness` while the declaration gave that id to `skills/`: one name,
+  // two real directories. `corpus-grep` now sits in `folio-core` with its
+  // siblings and needs no category of its own.
+  "bootstrap": "CatBootstrap (read before anything else is known)",
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
   // emission ARE the substitute. Its own heading, because a reader meeting
-  // "how cat-bootstrap emits its graph" under "read before anything else is
+  // "how bootstrap emits its graph" under "read before anything else is
   // known" would reasonably conclude they have to read it first. Bean `hfkl`.
-  "cat-bootstrap-render": "CatBootstrap rendering (cat-bootstrap/render)",
-  "cat-harness-src": "Agent skills",
   // Two top-level named subgraphs, staged ahead of the split (#223) and both
   // keyed by DECLARED ID for the reason the comment above gives: their paths
   // will change at the `cat-harness/` move and their ids will not.
@@ -306,6 +332,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // collision `todo-manager` and `bean-coordination` are listed for below, and
   // it is resolved the same way.
   "kg-navigation": "Knowledge-graph navigation (tooled)",
+  // folio-assistant-core’s own `skills/`, keyed by DECLARED ID for the same
+  // reason as the two below it: the directory moves when core splits out and
+  // the id does not. A LABEL is data, not a dependency — nothing here imports
+  // core, so naming its package does not invert the layer order that
+  // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
+  "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
 };
@@ -320,7 +352,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  * `authoring-who-smart-guidelines` (9) were absent, so all twelve of their
  * instruction bodies were NEVER PUBLISHED — and four of them
  * (`fhir-validation`, `l2-dak-authoring`, `bpmn-authoring`,
- * `latex-authoring`) are named by `<folio:skill ref>` in the BPMN diagrams.
+ * `latex-authoring`) are named by `<bootstrap.processes:skill ref>` in the BPMN diagrams.
  * An agent following `workflow_next` to one of those steps is handed a skill
  * whose published reference page 404s.
  *
@@ -352,26 +384,25 @@ function discoverGroups(): Group[] {
   const undeclared: string[] = [];
   // Every DECLARED knowledge-graph directory, not `skills/` alone: an instance
   // may put its graph anywhere, and this repository declares three —
-  // `skills/`, `cat-bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
+  // `skills/`, `bootstrap/skills/` and `src/skills/` (beans `x3bd`, `osbo`).
   //
   // A directory may hold skills DIRECTLY as well as in packages: `src/skills/`
   // holds `corpus-grep.md` beside the `.ts` implementing it, and
-  // `cat-bootstrap/skills/` holds both of cat-bootstrap's.
+  // `bootstrap/skills/` holds both of bootstrap's.
   //
   // THE TWO CASES ARE KEYED DIFFERENTLY, and that is the point. A package
   // NAMES ITSELF, so its basename is the key. A root does not — its basename
   // is an artefact of where the declaration happens to point — so the key is
   // its DECLARED ID. This file keyed a root by basename until #422 moved
-  // cat-bootstrap's skills one level down and the generator demanded a heading for
+  // bootstrap's skills one level down and the generator demanded a heading for
   // a package called "skills"; #428 then keyed by repo-relative path, which
   // has the same shape of failure one move later.
   for (const decl of kgDirectories(INSTANCE_ROOT)) {
     const skillsRoot = decl.absPath;
-    const rel = relative(INSTANCE_ROOT, skillsRoot);
     if (holdsSkill(skillsRoot)) {
       const direct = SKILLS_CATEGORIES[decl.id];
       if (direct === undefined) undeclared.push(decl.id);
-      else out.push({ category: direct, dir: skillsRoot, repoPrefix: rel });
+      else out.push({ category: direct, dir: skillsRoot, repoPrefix: repoRelative(skillsRoot) });
     }
     for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       if (!d.isDirectory()) continue;
@@ -391,7 +422,7 @@ function discoverGroups(): Group[] {
         undeclared.push(d.name);
         continue;
       }
-      out.push({ category, dir, repoPrefix: `${rel}/${d.name}` });
+      out.push({ category, dir, repoPrefix: repoRelative(dir) });
     }
   }
   if (undeclared.length > 0) {
@@ -403,6 +434,16 @@ function discoverGroups(): Group[] {
     );
   }
   return out;
+}
+
+/**
+ * Repository-relative directory of the group that publishes `name` as
+ * `published`, or `undefined` when no group does or it is outside the checkout.
+ */
+function publishedSourceDir(name: string, published: string): string | undefined {
+  return GROUPS.find(
+    (g) => `${g.publishPrefix ?? ""}${name}` === published && existsSync(join(g.dir, `${name}.md`)),
+  )?.repoPrefix;
 }
 
 const GROUPS: Group[] = [
@@ -422,8 +463,8 @@ const GROUPS: Group[] = [
   // agent-audit.md` is the real content this group exists to publish.
   {
     category: "Local skills (.claude/skills/local)",
-    dir: join(repoRootFor(INSTANCE_ROOT), ".claude", "skills", "local"),
-    repoPrefix: ".claude/skills/local",
+    dir: join(REPO_ROOT, ".claude", "skills", "local"),
+    repoPrefix: repoRelative(join(REPO_ROOT, ".claude", "skills", "local")),
     publishPrefix: "local-",
   },
 ];
@@ -493,8 +534,46 @@ function escapePipes(s: string): string {
   return s.replace(/\|/g, "\\|");
 }
 
-function main(): void {
+/**
+ * The processes that run a skill, appended to its page (bean `ooq3`).
+ *
+ * The reverse of `<bootstrap.processes:skill ref>`, which `processes/index.md` tabulates and
+ * which a reader standing on the skill could not see. When a process shares the
+ * skill's name it is the skill's OWN procedure, so its diagram is embedded
+ * here rather than only linked — that is the case `adjudication` was in: a
+ * skill, a process, and no page showing the second from the first.
+ */
+function processesSection(name: string, rows: readonly ProcessRow[]): string[] {
+  const own = rows.find((r) => r.stem === name && r.loadError === undefined);
+  const runners = rows
+    .filter((r) => r.loadError === undefined)
+    .map((r) => ({ r, steps: r.steps.filter((st) => st.skills.includes(name)) }))
+    .filter((x) => x.steps.length > 0);
+  if (!own && runners.length === 0) return [];
+  const out: string[] = ["", "## Processes that run this skill", ""];
+  if (own) {
+    out.push(`This skill has its own process: **[${own.name}](../../processes/${own.stem}.html)**.`);
+    out.push("");
+    if (own.svg) {
+      out.push(`<img src="../../assets/img/workflows/${own.stem}.svg" alt="BPMN diagram: ${own.name.replace(/"/g, "&quot;")}" style="max-width:100%">`);
+      out.push("");
+    }
+  }
+  if (runners.length) {
+    out.push("| process | step(s) that name it |");
+    out.push("|---|---|");
+    for (const { r, steps } of runners) {
+      const names = steps.map((st) => (st.calledElement ? `${st.name} (calls a sub-process)` : st.name));
+      out.push(`| [${escapePipes(r.name)}](../../processes/${r.stem}.html) | ${escapePipes(names.join("; "))} |`);
+    }
+    out.push("");
+  }
+  return out;
+}
+
+async function main(): Promise<void> {
   mkdirSync(OUT_DIR, { recursive: true });
+  const procRows = await processRows();
 
   const indexRows: Record<string, string[]> = {};
   // One page per skill id in a flat output dir; if a skill appears in more than
@@ -507,8 +586,8 @@ function main(): void {
     if (!existsSync(group.dir)) continue;
     // `isSkillMd`, not a bare `.md` test — the FOURTH place in this repository
     // that predicate was spelled out by hand, and the second in this file.
-    // Without it `cat-bootstrap/README.md` was published as a skill instruction
-    // page titled "cat-bootstrap", complete with an "edit this page's source"
+    // Without it `bootstrap/README.md` was published as a skill instruction
+    // page titled "bootstrap", complete with an "edit this page's source"
     // link, for a file that is not a skill.
     const files = readdirSync(group.dir)
       .filter((f) => f.endsWith(".md") && isSkillMd(join(group.dir, f)))
@@ -555,15 +634,21 @@ function main(): void {
       if (twin) {
         const other = twin.find((t) => t.published !== published);
         const self = twin.find((t) => t.published === published);
+        // The twin's location is LOOKED UP from the group that publishes it,
+        // not written into the table: the table carried `skills/folio-core`,
+        // the pre-split path, three times (bean `oe98`).
+        const otherAt = other ? publishedSourceDir(name, other.published) : undefined;
+        const at = otherAt === undefined ? "" : `lives at \`${otherAt}\` and `;
+        const from = otherAt === undefined ? "" : `, from \`${otherAt}\``;
         if (other) {
           body =
             (self?.canonical === true
               ? `> **This is the skill \`skill_fetch\` serves.** A stub of the same name\n` +
-                `> lives at \`${other.repoPrefix}\` and is published as\n` +
+                `> ${at}is published as\n` +
                 `> [${other.label}](${other.published}.html); it only points here.\n` +
                 `> Edit this page's source, never the stub.\n\n`
               : `> **This is a stub, not the skill.** The skill is\n` +
-                `> [${other.label}](${other.published}.html), from \`${other.repoPrefix}\`,\n` +
+                `> [${other.label}](${other.published}.html)${from},\n` +
                 `> which is what \`skill_fetch\` serves. Read that one; this page exists\n` +
                 `> only so an old link still lands somewhere truthful.\n\n`) +
             body;
@@ -572,14 +657,15 @@ function main(): void {
       const title = deriveTitle(body, name);
 
       const hasSchema = existsSync(join(SCHEMA_DIR, `${name}.md`));
-      const sourceUrl = `https://github.com/litlfred/folio-assistant/blob/main/${group.repoPrefix}/${file}`;
+      const sourcePath = group.repoPrefix === undefined ? undefined : `${group.repoPrefix}/${file}`;
+      const sourceUrl = `https://github.com/litlfred/folio-assistant/blob/main/${sourcePath}`;
       // `/edit/`, not `/blob/`. The banner has always carried the CORRECT
       // source path -- the thing it lacked was a way to act on it. GitHub's
       // in-browser editor lives at /edit/<branch>/<path>; /blob/ is read-only,
       // so a reader who spotted a typo had to navigate to the file, find the
       // pencil, and then edit. This is the same target, one click instead of
       // three.
-      const editUrl = `https://github.com/litlfred/folio-assistant/edit/main/${group.repoPrefix}/${file}`;
+      const editUrl = `https://github.com/litlfred/folio-assistant/edit/main/${sourcePath}`;
 
       const page: string[] = [];
       page.push("---");
@@ -603,22 +689,34 @@ function main(): void {
       page.push("---");
       page.push("");
       page.push("{: .note }");
-      page.push(
-        `> Generated from [\`${group.repoPrefix}/${file}\`](${sourceUrl}) — do not edit here.` +
-          (hasSchema ? ` Typed contract: [schema reference](../skills/${name}.html).` : ""),
-      );
+      const schemaNote = hasSchema ? ` Typed contract: [schema reference](../skills/${name}.html).` : "";
+      if (sourcePath === undefined) {
+        // Bean `oe98`: a source outside this checkout has no repository path,
+        // so it is SAID rather than linked — a normalised URL would 404.
+        page.push(
+          `> Generated from \`${file}\` in a dependency outside this repository — do not edit here.` +
+            schemaNote,
+        );
+      } else {
+        page.push(`> Generated from [\`${sourcePath}\`](${sourceUrl}) — do not edit here.` + schemaNote);
+      }
       page.push(">");
       // The edit affordance is a SEPARATE line inside the callout rather than
       // more prose on the end of it. "do not edit here" and "edit it there"
       // are opposite instructions, and running them into one sentence is how
       // a reader ends up editing the generated copy anyway.
-      page.push(`> [${EDIT_GLYPH} Edit this page's source](${editUrl}){: .fa-edit-source }`);
+      if (sourcePath !== undefined) {
+        page.push(`> [${EDIT_GLYPH} Edit this page's source](${editUrl}){: .fa-edit-source }`);
+      } else {
+        page.push("> The source is not in this repository, so there is no edit link.");
+      }
       page.push("");
       // Wrap the body in a Liquid raw block so prose containing `{{ }}` / `{% %}`
       // (math, code, templates) is emitted verbatim, not parsed by Jekyll.
       page.push("{% raw %}");
       page.push(body.trimEnd());
       page.push("{% endraw %}");
+      page.push(...processesSection(name, procRows));
       page.push("");
       emit(join(OUT_DIR, `${published}.md`), page.join("\n"));
       written.set(published, group.category);
@@ -677,4 +775,4 @@ function main(): void {
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }
 
-main();
+if (import.meta.main) await main();

@@ -9,7 +9,7 @@
  * Usage: npx ts-node cat-harness/scripts/generate-schemas.ts
  */
 
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { namedJsonSchema } from "../schemas/to-json-schema.ts";
 import { writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -25,10 +25,8 @@ import {
   SkillPackageManifestSchema,
   SkillCapabilityRefSchema,
   SkillDependencySchema,
-  SkillScriptSchema,
-  SkillValidatorSchema,
   RequirementStatementSchema,
-  SatisfiedByRefSchema,
+  RequirementStatementRefSchema,
   SessionHookSchema,
   HookCommandSchema,
   SkillPackageRefSchema,
@@ -47,11 +45,9 @@ const schemas = {
   "SkillDefinition": SkillDefinitionSchema,
   "SkillCapabilityRef": SkillCapabilityRefSchema,
   "SkillDependency": SkillDependencySchema,
-  "SkillScript": SkillScriptSchema,
-  "SkillValidator": SkillValidatorSchema,
   "Requirement": RequirementSchema,
   "RequirementStatement": RequirementStatementSchema,
-  "SatisfiedByRef": SatisfiedByRefSchema,
+  "RequirementStatementRef": RequirementStatementRefSchema,
   "SkillRegistry": SkillRegistrySchema,
   "SkillPackageRef": SkillPackageRefSchema,
   "SessionHook": SessionHookSchema,
@@ -66,10 +62,7 @@ const schemas = {
 console.log("Generating JSON Schemas...\n");
 
 for (const [name, schema] of Object.entries(schemas)) {
-  const jsonSchema = zodToJsonSchema(schema, {
-    name,
-    $refStrategy: "none",
-  });
+  const jsonSchema = namedJsonSchema(schema, name);
 
   const filePath = join(outDir, `${name}.schema.json`);
   writeFileSync(filePath, JSON.stringify(jsonSchema, null, 2) + "\n");

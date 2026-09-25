@@ -31,7 +31,7 @@ describe("this repository's own declarations", () => {
   test("both instances declare their agent instructions", () => {
     // The gap that started this: `AGENTS.md` was the only root artefact in
     // neither `directories[]` nor `images[]`.
-    for (const inst of [ROOT, join(repoRootFor(ROOT), "cat-bootstrap")]) {
+    for (const inst of [ROOT, join(repoRootFor(ROOT), "bootstrap")]) {
       const agents = declaredAssets(inst).filter((a) => a.role === AGENT_INSTRUCTIONS_ROLE);
       expect(agents).toHaveLength(1);
       expect(agents[0]!.exists).toBe(true);
@@ -39,28 +39,28 @@ describe("this repository's own declarations", () => {
   });
 
   test("no declared asset is missing and no link is dead", () => {
-    for (const inst of [ROOT, join(repoRootFor(ROOT), "cat-bootstrap")]) {
+    for (const inst of [ROOT, join(repoRootFor(ROOT), "bootstrap")]) {
       expect(auditInstance(inst).findings).toEqual([]);
     }
   });
 
-  test("the provenance sits on the file cat-bootstrap actually copies", () => {
+  test("the provenance sits on the file bootstrap actually copies", () => {
     // Absent `source` is a THIRD STATE — authored here — and is a different
     // fact from an upstream that cannot be reached.
     //
     // Which file carries it moved in #592. cat-harness used to declare the
     // REPOSITORY's AGENTS.md as its own (`scope: "repository"`) and carried
-    // the cat-bootstrap provenance with it. Once the two were split, that
-    // provenance belonged to the repository root's file — the one cat-bootstrap
+    // the bootstrap provenance with it. Once the two were split, that
+    // provenance belonged to the repository root's file — the one bootstrap
     // copies at initialisation — and cat-harness's own became authored in
     // place. Both halves are asserted, because moving a `source` onto the
     // wrong file is exactly as wrong as dropping it.
-    const boot = declaredAssets(join(repoRootFor(ROOT), "cat-bootstrap")).find((a) => a.id === "agent-instructions");
+    const boot = declaredAssets(join(repoRootFor(ROOT), "bootstrap")).find((a) => a.id === "agent-instructions");
     const harness = declaredAssets(ROOT).find((a) => a.id === "agent-instructions");
     const repo = declaredAssets(repoRootFor(ROOT)).find((a) => a.id === "agent-instructions");
     expect(boot!.source).toBeUndefined();
     expect(harness!.source).toBeUndefined();
-    expect(repo!.source?.path).toBe("cat-bootstrap/AGENTS.md");
+    expect(repo!.source?.path).toBe("bootstrap/AGENTS.md");
   });
 });
 

@@ -23,7 +23,7 @@ Owner, 2026-09-20, in two messages:
 
 Every piece it needs already exists as committed state:
 
-- **The diagrams are executable.** `.bpmn` under `skills/workflows/` are the
+- **The diagrams are executable.** `.bpmn` under `processes/` are the
   source of truth, and `workflow_list` / `workflow_start` / `workflow_next` /
   `workflow_gate` / `workflow_complete` run them.
 - **Position is committed, not in a session.** Running instance state lives in

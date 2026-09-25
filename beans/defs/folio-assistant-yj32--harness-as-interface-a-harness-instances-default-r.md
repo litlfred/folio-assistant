@@ -111,7 +111,7 @@ designing them separately is how they end up disagreeing:
   nowhere in the repository~~ **ANSWERED, and the second half was wrong.**
 
   The owner confirmed **Knowledge Graph Data Store**, and pointed at the
-  sibling that already carries it: `cat-bootstrap/skills/roles/roles.json`
+  sibling that already carries it: `bootstrap/scenarios/roles.json`
   declares a role with exactly that id and title. So the term was in the
   repository all along — only the ACRONYM was absent, and I searched for the
   acronym. Searching for the abbreviation and concluding the concept is
@@ -232,3 +232,78 @@ board (`mountTodoBoard`, `docs-ui.js:2020`) by an earlier owner instruction —
 *"i want todo board inside of the landing folio/board"* — so whatever the
 answer, harness cards and todo stickies already share one surface. `5y4b`
 (todo stickies carry theme art) is independent of the answer and can proceed.
+
+---
+
+## OWNER RULING, 2026-09-22 — a declared graph with NO viewer is SHOWN, inert and labelled
+
+Asked by stream `10uc` (GOAL 2) as the one decision that was next, with the
+three options and their costs compared. Session
+https://claude.ai/code/session_01SrFVoXeLER715HHQQaK22u
+
+**The owner chose: show it, inert and labelled.** A greyed row saying the graph
+exists and has no viewer yet — over omitting it (the default the code would
+have inherited) and over linking it to a generic listing.
+
+### What the question had shrunk to, and why
+
+The open question read *"Which subgraphs are 'display' subgraphs? Every
+declared `graphs` entry, or an opt-in subset?"* **Most of that was already
+built**, and measuring it first is what left one real decision:
+
+| already there | where |
+|---|---|
+| a directory declares its viewers | `coverage.visualiser` |
+| one bare string or a list, normalised in ONE place | `visualisationsOf()`, `cat-harness/schemas/cat-harness.ts:985` |
+| **which surface a visualisation appears on** | `showsOn(v, "navbar" \| "board")`, `:995` — the `surfaces` field |
+| a declared viewer that does not resolve, as a DIFFERENT defect from none | `flh4`, reported by `check:instance-render` |
+| a finding when a declared graph owes a viewer and has none | `2krx`, with `renderExemption` for bootstrap |
+
+So "which subgraphs display" is answered **by the declaration**, and `[]` is,
+in the schema's own words, *"a real answer and a different one from 'declares a
+visualiser that does not resolve'"*. The only thing the declaration could not
+answer is what a READER SEES in that real-answer case — which is not
+hypothetical: `uploads` and `library` are declared today with no renderer, and
+`folio-assist-core` declares none of the four directories at all.
+
+### Why this option, in the repository's own words
+
+`harness-tiles.ts:558` already argues it, about this exact case:
+
+> *staying silent would hide a working viewer behind a rule, which is how
+> "declared and not rendered" and "rendered and not declared" both end up
+> **invisible**.*
+
+Omitting the row is that invisibility moved into the navbar — a reader cannot
+tell *"no viewer yet"* from *"no such graph"*. The generic-listing option was
+priced and rejected in the asking: it is a new renderer, and it would make
+"has a viewer" meaningless, **silencing `2krx`** because everything would then
+have one.
+
+### What the implementer owes, and it is an accessibility obligation
+
+`gjli` is the standing rule, and it binds here specifically:
+
+> **An inert row must not read as a control.** It is not a disabled button and
+> it is not a link with nothing behind it. A greyed thing that takes focus and
+> does nothing is worse than an omitted one, because it costs a keyboard or
+> screen-reader user an interaction to discover it is dead.
+
+So: not focusable, not a `<a>` or `<button>`, and its *state* carried in text
+an assistive technology reads — not in colour alone, which would also fail the
+contrast measurement every other surface here pays.
+
+**And the label says WHICH of the two it is.** `flh4`'s distinction is
+load-bearing: a graph that declares **no** viewer and a graph that declares one
+that **does not resolve** are different defects with different remedies. A row
+that renders both as "no viewer" throws that away at the last step, after two
+gates went to the trouble of telling them apart.
+
+### What this does NOT settle
+
+The **`surfaces`** field already decides navbar-versus-board per visualisation.
+This ruling is about a graph with no visualisation at all; it does not change
+what a declared-and-resolving viewer does, and it does not make any graph
+appear on a surface its declaration excludes.
+
+**This is one of this epic's open questions**, closed. Its other two — *"what IS the writable store"* and *"KG-DS"* — were already answered and struck through in this bean on 2026-09-20. **What remains open on `yj32` is one question: where does the background live?** — a theme's `backdrop` is sticky-scoped today, and making it the docs page ground is a different CSS surface and possibly a different crop set, since a sticky's crop is chosen for a CARD.

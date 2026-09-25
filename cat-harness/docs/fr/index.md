@@ -31,6 +31,35 @@ d'objets de contenu typé.
 
 ---
 
+## Quatre choses, dans l'ordre
+
+**1. Le plan de travail est l'endroit où vous dites ce que vous faites.**
+Pas un message de discussion, pas un commentaire — des [beans]({{ '/beans-and-todos.html' | relative_url }}), un dépôt versionné que toute session ou tout agent peut lire. Réservez avant de travailler, pour qu'une session voisine ne prenne pas le même élément ; un bean qui s'avère inutile est marqué `scrapped`, avec ses raisons, jamais supprimé.
+
+```sh
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+beans list                          # ce qui est ouvert
+beans create "<title>"              # …après avoir vérifié que le titre n'existe pas
+beans <id> --status in-progress     # le réserver, visiblement
+```
+
+**2. Créez votre premier folio.** Ce dépôt est la *plateforme* ; votre contenu vit dans le sien. Une seule commande le prépare — les manifestes, la déclaration, les fichiers d'agent et le lien vers ici :
+
+```sh
+bun run init-folio --help
+```
+
+Ensuite, [Démarrer]({{ '/getting-started.html' | relative_url }}) accompagne le premier bloc à travers la validation, le rendu et la relecture.
+
+**3. Sachez quel genre de chose vous écrivez.** Un *document* est de la prose structurée ; un *article* (paper) est cela, plus les types de blocs dont l'assertion est une affirmation formelle, appuyée par Lean et composée avec LaTeX. Ce choix décide quels blocs sont permis et quels contrôles s'exécutent : [Types de contenu]({{ '/content-types.html' | relative_url }}).
+
+**4. La documentation que vous ne lirez jamais.**
+[Toute la documentation]({{ '/guides/index.html' | relative_url }}) — les guides de rédaction, l'architecture, le flux de publication, la référence générée des schémas et des compétences. Elle est là, elle est complète, et l'attente honnête est que vous y arriverez depuis un moteur de recherche au moment exact où quelque chose casse. C'est une bonne façon de s'en servir. Les trois étapes ci-dessus sont celles qui valent d'être lues maintenant.
+
+Quand c'est la *machinerie* qui vous déroute plutôt que la rédaction — qui fait quoi, dans quel processus, avec quelle compétence — commencez par [La plateforme]({{ '/platform.html' | relative_url }}). Une seule phrase y porte tout le modèle, et chacun de ses mots est un objet déclaré séparément.
+
+---
+
 ## Qu'est-ce que folio-assistant ?
 
 **folio-assistant** est la *plateforme* — elle ne contient pas de contenu. Elle

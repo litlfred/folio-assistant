@@ -31,6 +31,35 @@ de objetos de contenido tipado.
 
 ---
 
+## Cuatro cosas, en orden
+
+**1. El plan de trabajo es donde dices lo que estás haciendo.**
+No un mensaje de chat, no un comentario: [beans]({{ '/beans-and-todos.html' | relative_url }}), un almacén versionado que cualquier sesión o agente puede leer. Reclama antes de trabajar para que una sesión hermana no tome el mismo elemento; un bean que resulta no ser necesario se marca `scrapped`, con sus razones, y nunca se borra.
+
+```sh
+cat-harness/scripts/install-beans.sh && export PATH="$HOME/.local/bin:$PATH"
+beans list                          # lo que está abierto
+beans create "<title>"              # …tras comprobar que el título no existe
+beans <id> --status in-progress     # reclamarlo, de forma visible
+```
+
+**2. Crea tu primer folio.** Este repositorio es la *plataforma*; tu contenido vive en el suyo. Un solo comando lo prepara: los manifiestos, la declaración, los archivos del agente y el enlace de vuelta aquí:
+
+```sh
+bun run init-folio --help
+```
+
+Después, [Primeros pasos]({{ '/getting-started.html' | relative_url }}) acompaña el primer bloque por la validación, el renderizado y la revisión.
+
+**3. Sabe qué tipo de cosa estás escribiendo.** Un *documento* es prosa estructurada; un *artículo* (paper) es eso más los tipos de bloque cuya afirmación es una aserción formal, respaldada por Lean y compuesta con LaTeX. La elección decide qué bloques son válidos y qué controles se ejecutan: [Tipos de contenido]({{ '/content-types.html' | relative_url }}).
+
+**4. La documentación que nunca leerás.**
+[Toda ella]({{ '/guides/index.html' | relative_url }}): las guías de autoría, la arquitectura, el flujo de publicación, la referencia generada de esquemas y habilidades. Está aquí, es exhaustiva, y lo honesto es esperar que llegues a ella desde un buscador en el momento exacto en que algo se rompe. Es una buena forma de usarla. Los tres pasos de arriba son los que vale la pena leer ahora.
+
+Cuando lo que te desconcierta es la *maquinaria* y no la autoría —quién hace algo, en qué proceso, con qué habilidad— empieza por [La plataforma]({{ '/platform.html' | relative_url }}). Una sola frase allí contiene todo el modelo, y cada palabra en ella es un objeto declarado por separado.
+
+---
+
 ## ¿Qué es folio-assistant?
 
 **folio-assistant** es la *plataforma* — no contiene contenido. Proporciona

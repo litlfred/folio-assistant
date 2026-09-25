@@ -16,7 +16,7 @@ import { join } from "node:path";
 
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { countConsideredOptions, frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
+import { countConsideredOptions, doneWhenState, frontMatter, frontMatterValue, probeBranches, probeBeans, probeRepoSize, probeStaging, probeTodos } from "./probes.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -277,7 +277,7 @@ describe("probeTodos", () => {
       // empty store — the `dh4f` shape.
       "todos/todos.json": JSON.stringify({
         name: "fixture",
-        directories: [{ id: "elsewhere", path: "elsewhere", graphs: ["todo-items"] }],
+        directories: [{ id: "elsewhere", path: "elsewhere", graphKinds: ["todo-items"] }],
       }),
       "todos/elsewhere/one.md": "---\n$schema: folio-todo/v1\nid: one\nstatus: open\ncreatedAt: 2026-01-01\n---\nbody\n",
       "todos/items/decoy.md": "---\nid: decoy\nstatus: open\n---\n",
@@ -395,6 +395,81 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     expect(countConsideredOptions(text)).toBe(2);
   });
 
+  // ── Bean `vq8g`: three enumeration forms, and the most structured wins ──
+  //
+  // Counting top-level list items alone was wrong in BOTH directions on the
+  // real store, measured 2026-09-23 over its 12 decision records. `j6t3` and
+  // `xgd8` enumerate with bold paragraphs and counted ZERO — and they carry
+  // FIVE options each against the store's typical three, so the two most
+  // developed analyses in the corpus were the two reported empty, against an
+  // action that says to "drop the section". `dhvf` enumerates with `###`
+  // subheadings over Pro/Con/Cost bullets and counted TEN for four options.
+  //
+  // MADR is format-agnostic — "at least two, every one real", never a markdown
+  // list — so the detector is what changes, not the beans.
+
+  it("counts options written as BOLD ENUMERATED paragraphs — `j6t3`, `xgd8`", () => {
+    const text = [
+      "## Options — to develop, not yet chosen",
+      "",
+      "**A. Generate the slash commands.** Emit one per skill.",
+      "*For:* smallest change. *Against:* Claude Code only.",
+      "",
+      "**B. Serve them as MCP tools.** The harness already runs a server.",
+      "*For:* host-agnostic. *Against:* offered, not enforced.",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("counts options written as SUBHEADINGS, not their pros and cons — `dhvf`", () => {
+    // The over-count direction, and the reason the forms are not summed:
+    // summing would give 6 here for a bean with 2 options.
+    const text = [
+      "## Considered options",
+      "",
+      "### A — adopt the rules wholesale",
+      "- **Pro.** Proven at scale.",
+      "- **Con.** Needs a registry.",
+      "",
+      "### B — pin the git ref (RECOMMENDED)",
+      "- **Pro.** Exact and verifiable.",
+      "- **Con.** No compatibility signal.",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("an ordinary subheading inside the section is not an option", () => {
+    // `j6t3` really carries `### Tier 1 — a person types these`. A looser rule
+    // would count it and inflate every bean that explains its options under
+    // headings of their own.
+    const text = [
+      "## Options",
+      "",
+      "**A. One.** first",
+      "**B. Two.** second",
+      "",
+      "### Tier 1 — a person types these",
+      "### The drift runs BOTH ways",
+      "",
+    ].join("\n");
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("a subheading form OUTRANKS bare list items in the same section", () => {
+    // Precedence, stated as a test rather than left to reading order: when both
+    // appear the list items are sub-points of the headed options.
+    const text = "## Options\n\n### A. one\n- pro\n- con\n### B. two\n- pro\n- con\n";
+    expect(countConsideredOptions(text)).toBe(2);
+  });
+
+  it("plain list items still count when no other form appears — the 9 that already worked", () => {
+    // The regression guard: ten of the twelve records on the store enumerate
+    // this way and must not move.
+    expect(countConsideredOptions("## Options\n\n- a\n- b\n- c\n")).toBe(3);
+  });
+
   it("an options section with no items is 0 — a real, reportable count", () => {
     // Not `undefined`. The section exists, so the bean claims an analysis; that
     // it lists nothing is the finding, and it gets a different remedy from one
@@ -421,5 +496,88 @@ describe("countConsideredOptions — the parse the MADR criterion rests on", () 
     if (p.state !== "ok") return;
     const records = p.value.filter((b) => b.consideredOptions !== undefined);
     expect(records.length).toBeGreaterThan(0);
+  });
+});
+
+describe("doneWhenState — the four states `fkjo` needs kept apart", () => {
+  it("reads every Done-when spelling the store actually uses", () => {
+    // 25 distinct spellings across 457 beans, measured 2026-09-21. The
+    // qualifier after the two words is deliberately NOT parsed — treating
+    // "REPLACES the list above" as an instruction about which list counts
+    // would make this adjudicate supersession.
+    for (const h of [
+      "## Done when",
+      "### Done when",
+      "## Done when — revised",
+      "## Done when — REPLACES the list above",
+      "## DONE WHEN",
+    ]) {
+      expect(doneWhenState(`${h}\n\n- [x] a\n`)).toEqual({ kind: "all-ticked", total: 1 });
+    }
+  });
+
+  it("an unticked box is an open bean, and the partial count is kept", () => {
+    expect(doneWhenState("## Done when\n\n- [x] a\n- [ ] b\n")).toEqual({
+      kind: "open",
+      ticked: 1,
+      total: 2,
+    });
+  });
+
+  it("no Done-when section is `absent` — not an empty pass", () => {
+    expect(doneWhenState("# Work\n\nDid the thing.\n")).toEqual({ kind: "absent" });
+  });
+
+  it("a Done-when carrying no checkbox is `unreadable` — criteria this cannot judge", () => {
+    expect(doneWhenState("## Done when\n\n- a thing happens\n- another\n")).toEqual({
+      kind: "unreadable",
+    });
+  });
+
+  it("`unreadable` OUTRANKS a fully ticked sibling section — the `z4mq` shape", () => {
+    // Bean `z4mq` carries two matching headings: its real criteria are a bullet
+    // list under the first, and under `## Done when — item 3` sits a three-box
+    // SUB-CHECKLIST of one item, all ticked. A body-wide `[x]` count calls it
+    // finished and so does a count scoped to its Done-when sections; what
+    // separates it is that one section states criteria in a form this cannot
+    // read. Measured: this is the single bean between the crude sweep's 6 and
+    // this parse's 4, and it was the one that was not finished at all.
+    const z4mq = "## Done when\n\n\u2022 a\n\u2022 b\n\n## Done when — item 3\n\n- [x] x\n- [x] y\n- [x] z\n";
+    expect(doneWhenState(z4mq)).toEqual({ kind: "unreadable" });
+  });
+
+  it("a sibling h2 ends the section, so a `## Do not` list is not read as criteria", () => {
+    // Load-bearing: many beans carry a `## Do not` section written as dashes,
+    // and several of those items would never be ticked. Leaking them in would
+    // make every such bean permanently `open`.
+    expect(doneWhenState("## Done when\n\n- [x] a\n\n## Do not\n\n- [ ] never do this\n")).toEqual({
+      kind: "all-ticked",
+      total: 1,
+    });
+  });
+
+  it("a DEEPER heading does not end it — criteria may carry a note", () => {
+    expect(doneWhenState("## Done when\n\n- [x] a\n\n#### Note\n\n- [ ] b\n")).toEqual({
+      kind: "open",
+      ticked: 1,
+      total: 2,
+    });
+  });
+
+  it("a bare `[x]` with no list marker counts — the store writes both", () => {
+    expect(doneWhenState("## Done when\n\n[x] a\n[x] b\n")).toEqual({ kind: "all-ticked", total: 2 });
+  });
+
+  it("the real store yields all four states — not a parse that matches nothing", () => {
+    // Vacuity guard, and the reason it is here rather than in the check: a
+    // regex narrowed by a later edit would make every bean `absent`, and every
+    // assertion above is a literal that would keep passing.
+    const p = probeBeans(process.cwd());
+    if (p.state !== "ok") return;
+    const kinds = new Set(p.value.map((b) => b.doneWhen?.kind));
+    expect(kinds.has("all-ticked")).toBe(true);
+    expect(kinds.has("open")).toBe(true);
+    expect(kinds.has("absent")).toBe(true);
+    expect(kinds.has("unreadable")).toBe(true);
   });
 });

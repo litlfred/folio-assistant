@@ -15,6 +15,18 @@ has_children: true
 
 ## Overview
 
+> **The rules behind this page.** Architecture describes the shape; the Skills
+> govern the decisions. Adapters against profiles —
+> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> Where a new node belongs before you create it —
+> [`placement`](reference/skill-instructions/placement.html). The repository
+> layout and every graph kind —
+> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> Composing and verifying the MCP surface —
+> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) and
+> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> Where this page and a Skill disagree, the Skill wins.
+
 folio-assistant is an **MCP server** with a pluggable **content adapter** layer,
 a **skill** system, a typed **content-object model**, **RBAC**, and a deploy
 story. The content it operates on lives in a *separate* repository — the
@@ -30,7 +42,7 @@ flowchart TD
     Server --> Adapter{Content adapter}
     Adapter --> Paper[paper adapter<br/>lean · validate · render]
     Adapter --> Future[other adapters …]
-    Server --> RBAC[RBAC · src/core/rbac.ts]
+    Server --> RBAC[Access · src/core/rbac.ts + access.ts → ODRL policies/]
     Server --> Git[Git helper · src/core/git.ts]
     Server --> Feedback[Feedback store · src/core/feedback.ts]
     Tools --> Skills[Skill packages<br/>schemas/skills/*]
@@ -55,9 +67,9 @@ into five composable folio-assistant instances. Child pages carry it:
 The last two look like they disagree — the minimum says a harness produces
 nothing a human looks at, and the instance page says an instance renders by
 default. They do not: the requirement is a **floor that rises**, with
-`cat-bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
+`bootstrap` exempt from the visualiser and owing its own `.json`/`.jsonld`
 instead, and `cat-harness` the layer where the rest begins to apply. See
-[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--cat-bootstrap-is-the-exception).
+[Where the requirement starts](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 The rest of this page describes the architecture **as it is now**.
 
@@ -114,11 +126,26 @@ For papers, content is a tree of typed **blocks** validated at runtime with Zod:
 
 These are documented in the generated [TypeScript API reference](api/).
 
-## RBAC
+## Access control — ODRL, checked before every task
 
-`src/core/rbac.ts` provides role-based access control so multi-actor workflows
-(business analyst, FHIR modeller, terminologist, clinical SME, …) have scoped
-permissions over lifecycle stages.
+There is one permission system, and it is W3C ODRL 2.2 (issue #1180): actions
+in `skills/permissions/permissions.json`, grants in `policies/*.jsonld`,
+evaluated by `permits()` / `decide()` in `schemas/odrl.ts`. Two callers ask it:
+
+- **The BPMN executor**, before every task and decision
+  (`src/workflow/authorize.ts`): is the actor authenticated, eligible for the
+  lane's role, permitted to `perform-task` here, and allowed to touch the
+  content? Advisory today: a `deny` or a role mismatch refuses, and `unknown`
+  is recorded.
+- **The HTTP routes**, through `src/core/rbac.ts`: each route names the action
+  it performs (`content-authoring`, `review-comments`, `adjudication`), and the
+  auth-gateway's sessions are declared actors whose grants are
+  `policies/http-gateway.jsonld`. Here `unknown` refuses.
+
+Until issue #1207 (2026-09-23), `rbac.ts` was a separate viewer < collaborator
+< owner ladder and the executor checked nothing. The discipline is the
+[`task-authorization`](reference/skill-instructions/task-authorization.html)
+skill.
 
 ## Work-plan priming (cross-harness)
 

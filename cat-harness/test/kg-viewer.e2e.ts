@@ -429,7 +429,11 @@ test.describe("kg viewer — with a catalogue", () => {
     // geometry.
     await page.goto(`${FIXTURE}?lang=qaa`);
     const parts = page.locator("#meta bdi");
-    expect(await parts.count()).toBeGreaterThan(1);
+    // Retrying, not a bare `count()`: the line is written inside the graph
+    // fetch's `.then`, so `goto` returns before it exists. The same race as
+    // the pressed-facet count below (d345255); reproduced by delaying the
+    // `.jsonld` route 900 ms — bare count 0, this green.
+    await expect(parts.nth(1)).toBeAttached();
     await expect(parts.first()).toHaveText(/^\d+ nodes$/);
 
     // In RTL the first part sits at the RIGHT, and the last to its left.
@@ -502,5 +506,94 @@ test.describe("kg viewer — the failed fetch", () => {
     await page.goto(PAGE);
     await expect(page.locator("#meta")).toContainText("could not load");
     await expect(page.locator(".detail")).toContainText("not an empty graph");
+  });
+});
+
+/**
+ * Bean `tac5` asked whether a cross-tallied facet can hide a button that is
+ * still filtering — the `l4zi` shape, *an action whose inverse is not
+ * reachable is not a toggle*.
+ *
+ * **These assert the INVARIANT, not the defect**, because driving the page
+ * could not produce the defect and reading the source says why: `kind` and
+ * `sub` are written in exactly two places, both `onPick` handlers, and
+ * `drawGroup` wires `onPick` only to buttons it rendered. A button exists only
+ * for a non-zero tally, so every pick leaves the two selections with a
+ * non-empty intersection — and a non-empty intersection is precisely the
+ * condition for both buttons to be re-rendered.
+ *
+ * A test that reproduced nothing would be worth little; these pin the property
+ * that makes the defect unreachable, so a future change that breaks the
+ * invariant fails here rather than shipping the bean's scenario for real.
+ */
+test.describe("kg viewer — a selected facet is always unselectable", () => {
+  // Local copies: the originals are scoped to the first describe block, and
+  // hoisting them would edit tests this change has no business touching.
+  const UNSTAMPED = "(no declared subgraph)";
+  const subTally = (): Record<string, number> => {
+    const c: Record<string, number> = {};
+    for (const n of KG["@graph"]) {
+      const v = n.inSubgraph;
+      const k = typeof v === "string" && v.length > 0 ? String(v).split("/").pop()! : UNSTAMPED;
+      c[k] = (c[k] ?? 0) + 1;
+    }
+    return c;
+  };
+
+  test("picking a subgraph then a kind leaves BOTH selected buttons on the page", async ({ page }) => {
+    await page.goto(PAGE);
+    const [biggest] = Object.entries(subTally())
+      .filter(([id]) => id !== UNSTAMPED)
+      .sort((a, b) => b[1] - a[1])[0]!;
+    await page.locator("#subs .facet", { hasText: new RegExp(`^${escapeRe(biggest)}\\d+$`) }).click();
+
+    // Whatever kinds remain are, by construction, kinds present in `biggest`.
+    const kindText = (await page.locator("#facets .facet").allTextContents()).find((t) => !t.startsWith("All"));
+    expect(kindText, "the subgraph must admit at least one kind").toBeTruthy();
+    const kindName = kindText!.replace(/\d+$/, "");
+    await page.locator("#facets .facet", { hasText: new RegExp(`^${escapeRe(kindName)}\\d+$`) }).click();
+
+    // The defect would be: one of these is gone while its filter still bites.
+    await expect(page.locator("#subs .facet[aria-pressed='true']")).toHaveCount(1);
+    await expect(page.locator("#facets .facet[aria-pressed='true']")).toHaveCount(1);
+    // ...and the list is non-empty, which is what "still filtering" would empty.
+    expect(await page.locator("#list li").count()).toBeGreaterThan(0);
+  });
+
+  test("EVERY facet group always has exactly one pressed control", async ({ page }) => {
+    await page.goto(PAGE);
+    // This is the property that makes the bean's scenario impossible, and it
+    // is stronger than "the selected button survives": `drawGroup` marks
+    // `All` pressed when the selection is null, so a group is never without a
+    // pressed control — and the bean's failure state is precisely a group
+    // with NONE, its selected button hidden while `All` reads false.
+    const groups = ["#facets", "#subs"] as const;
+    // RETRYING, not a bare `await …count()`. `kg-viewer.ts` draws the facets
+    // inside `fetch(DOC).then(…)`, so `page.goto` — which resolves on `load` —
+    // returns with ZERO pressed controls and the count samples before
+    // `drawGroup` has run. That is not this page's defect; it is the
+    // assertion's, and it is the only bare count in this file: every other
+    // test here either uses `toHaveCount` or a `.click()`, both of which wait.
+    //
+    // It went red in CI on 2026-09-23 while passing locally and on the base
+    // branch at the identical commit — a race lost rather than a behaviour
+    // changed, and lost here because this branch's export is bigger, so the
+    // fetch takes longer. Reproduced deterministically by delaying the
+    // `.jsonld` route 900 ms: bare count 0, `toHaveCount(1)` green on the same
+    // page. The property asserted is unchanged.
+    const pressedIn = (g: string) => page.locator(`${g} .facet[aria-pressed='true']`);
+
+    for (const g of groups) await expect(pressedIn(g), `${g} at rest`).toHaveCount(1);
+    const all = await page.locator("#list li").count();
+    expect(all).toBeGreaterThan(0);
+
+    await page.locator("#facets .facet", { hasText: /^Tool\d+$/ }).click();
+    for (const g of groups) await expect(pressedIn(g), `${g} while filtered`).toHaveCount(1);
+
+    // The inverse is REACHABLE — the whole of `l4zi`. Clicking the pressed
+    // control returns the full list rather than merely changing something.
+    await page.locator("#facets .facet[aria-pressed='true']").click();
+    for (const g of groups) await expect(pressedIn(g), `${g} after undo`).toHaveCount(1);
+    expect(await page.locator("#list li").count()).toBe(all);
   });
 });

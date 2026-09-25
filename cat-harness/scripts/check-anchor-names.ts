@@ -64,6 +64,7 @@
  * Exit: 0 clean, 1 a mismatched or ambiguous name, 2 could not check.
  *
  * @module folio-assistant/scripts/check-anchor-names
+ * @covers docs
  */
 
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -208,7 +209,7 @@ export function checkAnchorNames(repo: string = repoRootFor(INSTANCE_ROOT)): Anc
             lands: to,
             detail:
               `\`${name}\` claims an instance root and lands on \`${to}\`` +
-              `${isRepo ? ", which is the REPOSITORY root — rename it to `REPO_ROOT`" : ", which carries no harness.json"}.`,
+              `${isRepo ? ", which is the REPOSITORY root — rename it to `REPO_ROOT`" : ", which carries no declaration"}.`,
           });
         }
       }

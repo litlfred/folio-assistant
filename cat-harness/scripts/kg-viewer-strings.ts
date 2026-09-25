@@ -34,17 +34,20 @@
  *
  * @module scripts/kg-viewer-strings
  */
-// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
-// and this module resolves a DECLARED directory. Without it the first
-// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
-// 2026-09-20 across the 20 modules that resolve a declared directory: 10
-// threw, including `narratives.ts` and the `translation` MCP tool, while
-// every gate and all 3298 tests passed — nothing covered the path.
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it — and since #840 every caller does, because
+// the trigger sits at the foot of `cat-harness.ts` and a reader lives in that
+// module, so loading it is a precondition of calling one.
 //
-// Importing core's registration is correct by LAYERING, not a workaround:
-// `folio` is CORE's kind, so a content-side module may import it, while the
-// harness alone never sees it (schemas/folio-graph-kind.ts says so).
-import "../schemas/folio-graph-kind.ts";
+// THIS COMMENT NAMED `check:composition-roots` AS THE GUARANTEE UNTIL
+// 2026-09-22, in SEVEN files, AND THAT SCRIPT DOES NOT EXIST. `bun run
+// check:composition-roots` exits "Script not found". The safety argument for
+// a library omitting the registration rested on a gate nobody built, and no
+// gate failed to say so — the same silence this repository keeps paying for.
+// It is moot now rather than fixed: #840 made the registration automatic, so
+// there is no longer a command that can forget it (bean `z9ax`).
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -108,7 +111,7 @@ export const UI_STRINGS: readonly UiString[] = [
     en: "Subgraph",
     comment:
       "Heading of the SECOND filter column, added 2026-09-20. The values are declared-directory ids " +
-      "from the instance's own harness.json (cat-harness, bootstrap, schemas, …) and come from the " +
+      "from the instance's own declaration (cat-harness, bootstrap, schemas, …) and come from the " +
       "graph, so like the kinds they are NOT translated — a reader types them into a query, and a " +
       "translated id resolves to nothing.",
   },

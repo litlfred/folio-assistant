@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-document-adapter/document-publishing.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/document-publishing.md) — do not edit here. Typed contract: [schema reference](../skills/document-publishing.html).
+> Generated from [`cat-harness/skills/folio-document-adapter/document-publishing.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-publishing.md) — do not edit here. Typed contract: [schema reference](../skills/document-publishing.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/document-publishing.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-document-adapter/document-publishing.md){: .fa-edit-source }
 
 {% raw %}
 # document-publishing
@@ -87,3 +87,10 @@ Publication authorisation is the base process's, not this skill's:
 review, then take the release decision through the workflow —
 `workflow_next` will tell you what is enabled.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 7 · Render MD / HTML / PDF |
+

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_Translation"
+             targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       Translation Workflow — folio-assistant
+       Issue: https://github.com/litlfred/folio-assistant/issues/206
+
+       Stages:
+         1. Content authored (source locale)
+         2. POT extracted (translatable strings)
+         3. Translation produced (agent / human / smart-base PO)
+         4. PO injected → translated .md
+         5. Round-trip QA (bean ktt2)
+         6. Drift gateway → human adjudication if needed
+         7. Official sign-off (human)
+         8. Staleness watch (source changes trigger re-extraction)
+       ═══════════════════════════════════════════════════════════ -->
+
+  <process id="Process_Translation" name="Translation Workflow" isExecutable="false">
+    <documentation>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.
+
+You are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it.
+
+Staleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.</documentation>
+
+    <!-- ── Lanes: who is accountable for each step ─────────────
+         An activity in no lane is a step nobody owns. The split is by
+         actor, not by tooling: `serviceTask` is the platform acting,
+         `userTask` is a person acting, and a gateway is the platform
+         reading state that a person may have produced. Gateway_Signoff
+         therefore sits with the platform even though what it reads is a
+         human decision.  ──────────────────────────────────────── -->
+    <laneSet id="LaneSet_Translation">
+      <lane id="Lane_Author" name="Author (source content)">
+        <extensionElements><bootstrap.processes:role ref="author"/></extensionElements>
+        <flowNodeRef>Start_ContentAuthored</flowNodeRef>
+      </lane>
+      <lane id="Lane_Platform" name="Agent / platform (automated)">
+        <documentation>Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file's presence.
+
+It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer's lane instead.</documentation>
+        <extensionElements><bootstrap.processes:role ref="authoring-agent"/></extensionElements>
+        <flowNodeRef>Task_PotExtract</flowNodeRef>
+        <flowNodeRef>Task_Translate</flowNodeRef>
+        <flowNodeRef>Task_PoInject</flowNodeRef>
+        <flowNodeRef>Task_RoundTripQA</flowNodeRef>
+        <flowNodeRef>Gateway_Drift</flowNodeRef>
+        <flowNodeRef>Gateway_PostQA</flowNodeRef>
+        <flowNodeRef>Task_WriteUnofficial</flowNodeRef>
+        <flowNodeRef>Gateway_Signoff</flowNodeRef>
+        <flowNodeRef>Task_WriteOfficial</flowNodeRef>
+        <flowNodeRef>Task_StalenessCheck</flowNodeRef>
+        <flowNodeRef>End_TranslationComplete</flowNodeRef>
+        <flowNodeRef>End_Stale</flowNodeRef>
+      </lane>
+      <lane id="Lane_Reviewer" name="Human reviewer / adjudicator">
+        <documentation>The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.
+
+Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.</documentation>
+        <extensionElements><bootstrap.processes:role ref="translation-adjudicator"/></extensionElements>
+        <flowNodeRef>Task_Adjudicate</flowNodeRef>
+        <flowNodeRef>Task_EditTranslation</flowNodeRef>
+        <flowNodeRef>Task_Signoff</flowNodeRef>
+      </lane>
+    </laneSet>
+
+    <!-- ── Start ──────────────────────────────────────────────── -->
+    <startEvent id="Start_ContentAuthored" name="Content authored&#10;(source locale)">
+      <documentation>Source content exists in the folio's defaultLocale.
+A change to source content also triggers this event for staleness re-evaluation.</documentation>
+    </startEvent>
+
+    <!-- ── Extract ────────────────────────────────────────────── -->
+    <serviceTask id="Task_PotExtract" name="Extract translatable strings&#10;(POT generation)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Scans content nodes and extracts translatable strings
+to .pot files. Excludes math, labels, code, and Lean companions.
+Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts</documentation>
+    </serviceTask>
+
+    <!-- ── Translate ──────────────────────────────────────────── -->
+    <serviceTask id="Task_Translate" name="Produce translation&#10;(PO file)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Translation of .pot → .po by one of:
+1. Existing PO from smart-base (Weblate/Crowdin/Launchpad)
+2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy)
+3. Agent (LLM) translation
+4. Human translator
+
+Result: &lt;locale&gt;/block.po with msgid/msgstr pairs.</documentation>
+    </serviceTask>
+
+    <!-- ── Inject ─────────────────────────────────────────────── -->
+    <serviceTask id="Task_PoInject" name="Inject translations&#10;(PO → Markdown)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Reads .po file and source .md, substitutes msgstr for
+msgid, preserves non-translatable elements, writes translated .md to
+translations/&lt;locale&gt;/block.md.
+Tool: translation_inject MCP tool or bun run content/pipeline/po-inject.ts</documentation>
+    </serviceTask>
+
+    <!-- ── Round-trip QA ──────────────────────────────────────── -->
+    <serviceTask id="Task_RoundTripQA" name="Round-trip translation QA&#10;(back-translate)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Bean: folio-assistant-ktt2
+Back-translates the target-language .md into the source language and
+compares meaning with the original. Detects semantic drift and
+terminology misses that a forward-only fluency check cannot see.
+Tool: translation_validate MCP tool</documentation>
+    </serviceTask>
+
+    <!-- ── Drift gateway ──────────────────────────────────────── -->
+    <exclusiveGateway id="Gateway_Drift" name="Drift or bad terminology?">
+      <documentation>Answered by the round-trip (back-translation) QA: did it flag drift or a terminology miss? `Drift detected` sends the passage to a human reviewer; `Clean` writes an unofficial status.json.</documentation>
+    </exclusiveGateway>
+
+    <!-- ── Human adjudication ─────────────────────────────────── -->
+    <callActivity id="Task_Adjudicate" calledElement="Process_Adjudication" name="Adjudicate flagged passage&#10;(human reviewer)">
+      <documentation>A human SME or editor reviews the flagged passage.
+They may:
+- Accept the translation as-is (false positive)
+- Edit the translation and re-run QA
+- Reject and request re-translation
+
+The round trip establishes that two readings differ. Which one is
+right is a human call.</documentation>
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="adjudication" />
+        <cat-harness.processes:adjudication codes="accept edit retranslate" list="adjudication-translation-passage"/>
+        <cat-harness.processes:fulfilment kinds="person agent" reason="the step names its own performer — `a human SME or editor` — and this lane is the one whose actor cannot be the checker that raised the flag." />
+      </extensionElements>
+    </callActivity>
+
+    <!-- ── Converge after QA ──────────────────────────────────── -->
+    <exclusiveGateway id="Gateway_PostQA" name="Which of the three?">
+      <extensionElements>
+        <cat-harness.processes:judgement reason="The round trip establishes that two readings differ; which is right is the reviewer's call, and no rule keying on either reading can make it without knowing what the passage is for." />
+      </extensionElements>
+      <documentation>The three this diagram's own adjudication step has always promised — *"Accept the translation as-is (false positive) / Edit the translation and re-run QA / Reject and request re-translation"* — and until 2026-09-23 it offered TWO. `edit` had no branch, so a reviewer who wanted to correct a passage had to choose between accepting a wrong one and discarding a good translation wholesale. Bean `bvuk`, found while wiring the codes.
+
+`edit` and `retranslate` re-enter at different points, which is the difference: an edit keeps the translation and re-injects, so QA re-runs over the corrected PO; a re-translation goes back to Task_Translate and produces a new one.
+
+Renamed from "QA passed?", which was the wrong question: its only incoming flow is the adjudication's, so it never read a QA result.</documentation>
+      <incoming>Flow_Adjudicated</incoming>
+      <outgoing>Flow_PostQA_Accept</outgoing>
+      <outgoing>Flow_PostQA_Edit</outgoing>
+      <outgoing>Flow_PostQA_Redo</outgoing>
+    </exclusiveGateway>
+
+    <!-- ── Write status (unofficial) ──────────────────────────── -->
+    <userTask id="Task_EditTranslation" name="Edit the flagged passage&#10;and re-inject">
+      <documentation>The reviewer corrects the passage in the PO rather than sending the whole translation back. Flows to Task_PoInject, so the round-trip QA runs again over the corrected text — "edit the translation and re-run QA", which is what the adjudication step has always offered and what this process could not do.
+
+A userTask, not a service task: this is the one step here where a person edits content, and the lane's actor is the reviewer who just adjudicated.</documentation>
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+      </extensionElements>
+      <incoming>Flow_PostQA_Edit</incoming>
+      <outgoing>Flow_Edited</outgoing>
+    </userTask>
+    <serviceTask id="Task_WriteUnofficial" name="Write status.json&#10;(unofficial)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Records the translation as unofficial in
+translations/&lt;locale&gt;/status.json:
+{ official: false, generatedBy: "...", generatedAt: "..." }
+The translation is usable but carries a visible warning badge.</documentation>
+    </serviceTask>
+
+    <!-- ── Sign-off gateway ───────────────────────────────────── -->
+    <exclusiveGateway id="Gateway_Signoff" name="Human sign-off?">
+      <documentation>Is a human sign-off happening now? `Yes` goes to the adjudicator's sign-off, which makes the translation official; `Not now` ends with the translation complete but unofficial.</documentation>
+    </exclusiveGateway>
+
+    <!-- ── Official sign-off ──────────────────────────────────── -->
+    <userTask id="Task_Signoff" name="Sign off translation&#10;(human adjudicator)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>A human reviewer signs off the translation at the
+chosen hierarchy level (block, section, chapter, or folio).
+Updates status.json:
+{ official: true, signedOffBy: "...", signedOffAt: "...", sourceHash: "..." }
+Tool: translation_signoff MCP tool</documentation>
+    </userTask>
+
+    <!-- ── Write status (official) ────────────────────────────── -->
+    <serviceTask id="Task_WriteOfficial" name="Write status.json&#10;(official)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>Records the sign-off with the SHA-256 of the source
+.md, enabling staleness detection on future source changes.</documentation>
+    </serviceTask>
+
+    <!-- ── Staleness check ────────────────────────────────────── -->
+    <serviceTask id="Task_StalenessCheck" name="Check staleness&#10;(source hash)">
+      <extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </extensionElements>
+
+      <documentation>On source content change: computes sha256(source.md)
+and compares to each translation's status.json sourceHash. If they
+differ, sets stale: true. The translation remains visible with a
+"stale — needs re-adjudication" indicator.</documentation>
+    </serviceTask>
+
+    <!-- ── End ────────────────────────────────────────────────── -->
+    <endEvent id="End_TranslationComplete" name="Translation complete" />
+    <endEvent id="End_Stale" name="Translation marked stale&#10;(re-enter at Extract)" />
+
+    <!-- ── Sequence flows ─────────────────────────────────────── -->
+    <sequenceFlow id="Flow_Start" sourceRef="Start_ContentAuthored" targetRef="Task_PotExtract" />
+    <sequenceFlow id="Flow_Extract" sourceRef="Task_PotExtract" targetRef="Task_Translate" />
+    <sequenceFlow id="Flow_Translate" sourceRef="Task_Translate" targetRef="Task_PoInject" />
+    <sequenceFlow id="Flow_Inject" sourceRef="Task_PoInject" targetRef="Task_RoundTripQA" />
+    <sequenceFlow id="Flow_QA" sourceRef="Task_RoundTripQA" targetRef="Gateway_Drift" />
+
+    <sequenceFlow id="Flow_DriftYes" name="Drift detected" sourceRef="Gateway_Drift" targetRef="Task_Adjudicate" />
+    <sequenceFlow id="Flow_DriftNo" name="Clean" sourceRef="Gateway_Drift" targetRef="Task_WriteUnofficial" />
+
+    <sequenceFlow id="Flow_Adjudicated" sourceRef="Task_Adjudicate" targetRef="Gateway_PostQA" />
+    <sequenceFlow id="Flow_PostQA_Redo" name="Reject — re-translate" sourceRef="Gateway_PostQA" targetRef="Task_Translate">
+      <extensionElements><cat-harness.processes:adjudication code="retranslate" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_PostQA_Accept" name="Accept as-is (false positive)" sourceRef="Gateway_PostQA" targetRef="Task_WriteUnofficial">
+      <extensionElements><cat-harness.processes:adjudication code="accept" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_PostQA_Edit" name="Edit and re-run QA" sourceRef="Gateway_PostQA" targetRef="Task_EditTranslation">
+      <extensionElements><cat-harness.processes:adjudication code="edit" /></extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_Edited" sourceRef="Task_EditTranslation" targetRef="Task_PoInject" />
+
+    <sequenceFlow id="Flow_Unofficial" sourceRef="Task_WriteUnofficial" targetRef="Gateway_Signoff" />
+    <sequenceFlow id="Flow_SignoffYes" name="Yes" sourceRef="Gateway_Signoff" targetRef="Task_Signoff" />
+    <sequenceFlow id="Flow_SignoffNo" name="Not now" sourceRef="Gateway_Signoff" targetRef="End_TranslationComplete" />
+
+    <sequenceFlow id="Flow_Signoff" sourceRef="Task_Signoff" targetRef="Task_WriteOfficial" />
+    <sequenceFlow id="Flow_Official" sourceRef="Task_WriteOfficial" targetRef="Task_StalenessCheck" />
+    <sequenceFlow id="Flow_Stale" sourceRef="Task_StalenessCheck" targetRef="End_Stale" />
+
+  </process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Translation">
+    <bpmndi:BPMNPlane id="Plane_Translation" bpmnElement="Process_Translation">
+      <bpmndi:BPMNShape id="Start_ContentAuthored_di" bpmnElement="Start_ContentAuthored">
+        <dc:Bounds x="160" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PotExtract_di" bpmnElement="Task_PotExtract">
+        <dc:Bounds x="250" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Translate_di" bpmnElement="Task_Translate">
+        <dc:Bounds x="450" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PoInject_di" bpmnElement="Task_PoInject">
+        <dc:Bounds x="650" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RoundTripQA_di" bpmnElement="Task_RoundTripQA">
+        <dc:Bounds x="850" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Drift_di" bpmnElement="Gateway_Drift" isMarkerVisible="true">
+        <dc:Bounds x="1050" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Adjudicate_di" bpmnElement="Task_Adjudicate">
+        <dc:Bounds x="1160" y="80" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_PostQA_di" bpmnElement="Gateway_PostQA" isMarkerVisible="true">
+        <dc:Bounds x="1350" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EditTranslation_di" bpmnElement="Task_EditTranslation">
+        <dc:Bounds x="1305" y="-40" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Edit_di" bpmnElement="Flow_PostQA_Edit">
+        <di:waypoint x="1375" y="95" /><di:waypoint x="1375" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Edited_di" bpmnElement="Flow_Edited">
+        <di:waypoint x="1305" y="0" /><di:waypoint x="720" y="0" /><di:waypoint x="720" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_WriteUnofficial_di" bpmnElement="Task_WriteUnofficial">
+        <dc:Bounds x="1460" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Signoff_di" bpmnElement="Gateway_Signoff" isMarkerVisible="true">
+        <dc:Bounds x="1660" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_TranslationComplete_di" bpmnElement="End_TranslationComplete">
+        <dc:Bounds x="1667" y="382" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Signoff_di" bpmnElement="Task_Signoff">
+        <dc:Bounds x="1770" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WriteOfficial_di" bpmnElement="Task_WriteOfficial">
+        <dc:Bounds x="1970" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StalenessCheck_di" bpmnElement="Task_StalenessCheck">
+        <dc:Bounds x="2170" y="220" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Stale_di" bpmnElement="End_Stale">
+        <dc:Bounds x="2370" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_Start_di" bpmnElement="Flow_Start">
+        <di:waypoint x="196" y="260" />
+        <di:waypoint x="250" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Extract_di" bpmnElement="Flow_Extract">
+        <di:waypoint x="390" y="260" />
+        <di:waypoint x="450" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Translate_di" bpmnElement="Flow_Translate">
+        <di:waypoint x="590" y="260" />
+        <di:waypoint x="650" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Inject_di" bpmnElement="Flow_Inject">
+        <di:waypoint x="790" y="260" />
+        <di:waypoint x="850" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_QA_di" bpmnElement="Flow_QA">
+        <di:waypoint x="990" y="260" />
+        <di:waypoint x="1050" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_DriftYes_di" bpmnElement="Flow_DriftYes">
+        <di:waypoint x="1075" y="235" />
+        <di:waypoint x="1075" y="120" />
+        <di:waypoint x="1160" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_DriftNo_di" bpmnElement="Flow_DriftNo">
+        <di:waypoint x="1100" y="260" />
+        <di:waypoint x="1460" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Adjudicated_di" bpmnElement="Flow_Adjudicated">
+        <di:waypoint x="1300" y="120" />
+        <di:waypoint x="1350" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Redo_di" bpmnElement="Flow_PostQA_Redo">
+        <di:waypoint x="1375" y="95" />
+        <di:waypoint x="1375" y="50" />
+        <di:waypoint x="520" y="50" />
+        <di:waypoint x="520" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PostQA_Accept_di" bpmnElement="Flow_PostQA_Accept">
+        <di:waypoint x="1400" y="120" />
+        <di:waypoint x="1530" y="120" />
+        <di:waypoint x="1530" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Unofficial_di" bpmnElement="Flow_Unofficial">
+        <di:waypoint x="1600" y="260" />
+        <di:waypoint x="1660" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignoffYes_di" bpmnElement="Flow_SignoffYes">
+        <di:waypoint x="1710" y="260" />
+        <di:waypoint x="1770" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SignoffNo_di" bpmnElement="Flow_SignoffNo">
+        <di:waypoint x="1685" y="285" />
+        <di:waypoint x="1685" y="382" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Signoff_di" bpmnElement="Flow_Signoff">
+        <di:waypoint x="1910" y="260" />
+        <di:waypoint x="1970" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Official_di" bpmnElement="Flow_Official">
+        <di:waypoint x="2110" y="260" />
+        <di:waypoint x="2170" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Stale_di" bpmnElement="Flow_Stale">
+        <di:waypoint x="2310" y="260" />
+        <di:waypoint x="2370" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>

@@ -38,28 +38,20 @@
  * collide.
  */
 
-// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
-// and this module resolves a DECLARED directory. Without it the first
-// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
-// 2026-09-20 across the 20 modules that resolve a declared directory: 10
-// threw, including `narratives.ts` and the `translation` MCP tool, while
-// every gate and all 3298 tests passed — nothing covered the path.
-//
-// Importing core's registration is correct by LAYERING, not a workaround:
-// `folio` is CORE's kind, so a content-side module may import it, while the
-// harness alone never sees it (schemas/folio-graph-kind.ts says so).
-import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
 import { EMPTY_NOTE_TAGS, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 // declared-path-literal: the convention fallback, at the call site so the choice is visible.
-export const TODO_ROOT = directoryForGraph(ROOT, "todos") ?? join(repoRootFor(ROOT), "todos");
+export const TODO_ROOT = deferResolution(
+  () => directoryForGraph(ROOT, "todos") ?? join(repoRootFor(ROOT), "todos"),
+  { moduleUrl: import.meta.url, what: "its todo directory", under: ROOT },
+);
 
 interface Block {
   fm: Record<string, unknown>;
@@ -157,14 +149,14 @@ function tagsFrom(fm: Record<string, unknown>): NoteTags {
  * default has todos that render as flat cards, which is the behaviour before
  * bean `5y4b` and stays correct for a folio that wants it.
  */
-export function todoDefaultTheme(root: string = TODO_ROOT): string | undefined {
+export function todoDefaultTheme(root: string = TODO_ROOT()): string | undefined {
   const decl = join(root, TODO_GRAPH_FILE);
   if (!existsSync(decl)) return undefined;
   return parseTodoGraph(JSON.parse(readFileSync(decl, "utf8"))).defaultTheme;
 }
 
 /** The directories the todo graph declares, resolved against `todos/`. */
-export function todoDirs(root: string = TODO_ROOT): string[] {
+export function todoDirs(root: string = TODO_ROOT()): string[] {
   const decl = join(root, TODO_GRAPH_FILE);
   if (!existsSync(decl)) return [];
   const g = parseTodoGraph(JSON.parse(readFileSync(decl, "utf8")));
@@ -178,7 +170,7 @@ export function todoDirs(root: string = TODO_ROOT): string[] {
  * malformed todo is a person's outstanding item that no consumer will show
  * them, and reporting a clean run over it is worse than failing.
  */
-export function readTodos(root: string = TODO_ROOT): TodoNode[] {
+export function readTodos(root: string = TODO_ROOT()): TodoNode[] {
   return readTodoFiles(root).map((f) => f.todo);
 }
 
@@ -192,7 +184,7 @@ export function readTodos(root: string = TODO_ROOT): TodoNode[] {
  * of its own. Deriving the path from the id would be a guess: `id` defaults to
  * the basename but front matter may set it to anything.
  */
-export function readTodoFiles(root: string = TODO_ROOT): Array<{ todo: TodoNode; path: string }> {
+export function readTodoFiles(root: string = TODO_ROOT()): Array<{ todo: TodoNode; path: string }> {
   const out: Array<{ todo: TodoNode; path: string }> = [];
   for (const dir of todoDirs(root)) {
     if (!existsSync(dir)) continue;
@@ -224,6 +216,9 @@ export function readTodoFiles(root: string = TODO_ROOT): Array<{ todo: TodoNode;
         // every consumer downstream — including the one that has to show a
         // reviewer what was actually decided. Bean `5y4b`.
         theme: typeof fm["theme"] === "string" ? fm["theme"] : undefined,
+        // Which crop of the theme's art the sticky shows. Absent means the
+        // square `card` crop — the default is the renderer's, not the parser's.
+        layout: typeof fm["layout"] === "string" ? fm["layout"] : undefined,
         tags: tagsFrom(fm),
         $schema: TODO_SCHEMA_TAG,
       });

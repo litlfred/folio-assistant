@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_Process_RepoHealth" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_RepoHealth">
+    <bpmn:participant id="Participant_Process_RepoHealth" name="Is the repository itself healthy?" processRef="Process_RepoHealth"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_RepoHealth" name="Is the repository itself healthy?" isExecutable="false">
+    <bpmn:documentation>THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY &amp;#8212; how much of `gh-pages` the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.&amp;#10;&amp;#10;IT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding's action names something a PERSON does. That is `deletion-requires-confirmation` applied to the tool that most wants to break it: the skill's own worked example is bean `plj1`, a workflow whose shape deleted every open PR's preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.&amp;#10;&amp;#10;THE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (`if: always()`), which is why `Run the health checks` says "keeping the report either way". A sweep whose output survives only on success cannot be used to investigate the run that failed.&amp;#10;&amp;#10;The daily cron is at 06:41, OFF THE HOUR deliberately: GitHub's scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.&amp;#10;&amp;#10;THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.&amp;#10;&amp;#10;ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue &amp;#8212; a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.&amp;#10;&amp;#10;`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label &amp;#8212; the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- STRICT, and declared (bean `30hn`). Same verdict gateway as
+           `ci-health-watch`, and one more reason: this diagram REPORTS AND
+           NEVER ACTS. There is no removal task on it, and that absence is
+           `deletion-requires-confirmation` being followed rather than an
+           omission. Advisory would make the shape of the process negotiable
+           at exactly the point the skill says it is not. -->
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_RepoHealth">
+      <bpmn:lane id="Lane_Ci" name="Scheduled log sweep">
+        <bpmn:documentation>The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while "could not tell" is the only outcome that turns the job RED and leaves that issue deliberately untouched.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Sweep</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Determined</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Unknown</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Label</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Finding</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Clean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Track</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Found</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Sweep" name="Daily (06:41 UTC),&amp;#10;or on dispatch">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Check" name="Run the health checks,&amp;#10;keeping the report either way">
+      <bpmn:documentation>Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Determined" name="Could we&amp;#10;tell?">
+      <bpmn:documentation>Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one.</bpmn:documentation>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Unknown" name="Unknown &amp;#8212; job RED,&amp;#10;issue UNTOUCHED">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Label" name="Ensure the tracking&amp;#10;label exists">
+      <bpmn:documentation>Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="ci-health"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Finding" name="Any&amp;#10;findings?">
+      <bpmn:documentation>Asked of the same `verdict`. `clean` is verdict == 'clean': the `repo-health` tracking issue is closed. `not clean` is verdict == 'findings': the one tracking issue is opened or edited in place with the report. A finding does not fail the job; only `unknown` does.</bpmn:documentation>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Close" name="Close the&amp;#10;tracking issue">
+      <bpmn:documentation>Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="ci-health"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Clean" name="Repository clean">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Track" name="Open or EDIT the one&amp;#10;tracking issue">
+      <bpmn:documentation>Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="ci-health"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Found" name="Recorded &amp;#8212; job stays GREEN">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Sweep" targetRef="Task_Check"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Check" targetRef="GW_Determined"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Determined" targetRef="End_Unknown" name="no"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Determined" targetRef="Task_Label" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_Label" targetRef="GW_Finding"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="GW_Finding" targetRef="Task_Close" name="clean"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Close" targetRef="End_Clean"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="GW_Finding" targetRef="Task_Track" name="not clean"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_Track" targetRef="End_Found"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_RepoHealth">
+    <bpmndi:BPMNPlane id="Plane_Process_RepoHealth" bpmnElement="Collaboration_Process_RepoHealth">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_RepoHealth" bpmnElement="Participant_Process_RepoHealth" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="1890" height="470"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="1860" height="360"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Sweep" bpmnElement="Start_Sweep">
+        <dc:Bounds x="122" y="92" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Check" bpmnElement="Task_Check">
+        <dc:Bounds x="300" y="70" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Determined" bpmnElement="GW_Determined">
+        <dc:Bounds x="615" y="85" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Unknown" bpmnElement="End_Unknown">
+        <dc:Bounds x="622" y="332" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Label" bpmnElement="Task_Label">
+        <dc:Bounds x="800" y="70" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Finding" bpmnElement="GW_Finding">
+        <dc:Bounds x="1115" y="85" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Close" bpmnElement="Task_Close">
+        <dc:Bounds x="1300" y="70" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Clean" bpmnElement="End_Clean">
+        <dc:Bounds x="1622" y="92" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Track" bpmnElement="Task_Track">
+        <dc:Bounds x="1300" y="190" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Found" bpmnElement="End_Found">
+        <dc:Bounds x="1622" y="212" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="158" y="110"/>
+        <di:waypoint x="300" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="480" y="110"/>
+        <di:waypoint x="615" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="640" y="135"/>
+        <di:waypoint x="640" y="332"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="665" y="110"/>
+        <di:waypoint x="800" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="980" y="110"/>
+        <di:waypoint x="1115" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="1165" y="110"/>
+        <di:waypoint x="1300" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="1480" y="110"/>
+        <di:waypoint x="1622" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="1165" y="110"/>
+        <di:waypoint x="1390" y="110"/>
+        <di:waypoint x="1390" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1480" y="230"/>
+        <di:waypoint x="1622" y="230"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

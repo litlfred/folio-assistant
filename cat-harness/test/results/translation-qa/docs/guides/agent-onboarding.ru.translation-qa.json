@@ -8,85 +8,87 @@
   },
   "po": "translations/ru/agent-onboarding.po",
   "source_hashes": {
-    "md": "68377b6e4537",
-    "po": "049bb38e22b7"
+    "md": "7ac55a1c839c",
+    "po": "41c693780b62"
   },
   "criteria": {
     "translation-coverage": [
       {
         "field_hash": {
-          "md": "68377b6e4537",
-          "po": "049bb38e22b7"
+          "md": "7ac55a1c839c",
+          "po": "41c693780b62"
         },
         "result": "warn",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "7eb346adbac4",
-          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+          "script_hash": "15b27604e366",
+          "script_commit_sha": "fb5f57c1c5bb0d6c45f34b8b80ed7334e2cd8a70"
         },
-        "reviewed_at": "2026-09-21T13:29:41.942Z",
-        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "reviewed_at": "2026-09-24T06:03:10.634Z",
+        "reviewed_sha": "7e4d8cb2398a066ff3db60037ca86a6d74dec5bf",
         "severity": "minor",
         "metrics": {
-          "translated": 80,
-          "total": 86,
+          "translated": 79,
+          "total": 85,
           "pct": 93
         },
-        "notes": "6 of 86 strings carry no translation in this locale."
+        "notes": "6 of 85 strings carry no translation in this locale."
       }
     ],
     "translation-terms-preserved": [
       {
         "field_hash": {
-          "md": "68377b6e4537",
-          "po": "049bb38e22b7"
+          "md": "7ac55a1c839c",
+          "po": "41c693780b62"
         },
         "result": "pass",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "7eb346adbac4",
-          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+          "script_hash": "15b27604e366",
+          "script_commit_sha": "fb5f57c1c5bb0d6c45f34b8b80ed7334e2cd8a70"
         },
-        "reviewed_at": "2026-09-21T13:29:41.947Z",
-        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "reviewed_at": "2026-09-24T06:03:10.645Z",
+        "reviewed_sha": "7e4d8cb2398a066ff3db60037ca86a6d74dec5bf",
         "metrics": {
-          "checked": 80,
+          "checked": 79,
           "missing": 0,
           "missing_strict": 0,
           "missing_acronyms": 0,
           "glossary_broken": 0,
-          "glossary_resolved": 1
-        },
-        "notes": "1 further acronym(s) are absent verbatim and the glossary accounts for each: TOC — the glossary marks it localised, so an absent verbatim form is expected."
+          "glossary_resolved": 0
+        }
       }
     ],
     "translation-not-echo": [
       {
         "field_hash": {
-          "md": "68377b6e4537",
-          "po": "049bb38e22b7"
+          "md": "7ac55a1c839c",
+          "po": "41c693780b62"
         },
         "result": "pass",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
           "version": "v1",
-          "script_hash": "7eb346adbac4",
-          "script_commit_sha": "8517ae32edf79cbc5dce106e7510b64ca7619373"
+          "script_hash": "15b27604e366",
+          "script_commit_sha": "fb5f57c1c5bb0d6c45f34b8b80ed7334e2cd8a70"
         },
-        "reviewed_at": "2026-09-21T13:29:41.953Z",
-        "reviewed_sha": "d096fad5675de30a2bbd72fabae11ce8bdcc507a",
+        "reviewed_at": "2026-09-24T06:03:10.655Z",
+        "reviewed_sha": "7e4d8cb2398a066ff3db60037ca86a6d74dec5bf",
         "metrics": {
           "echoed": 0,
-          "translated": 80
+          "translated": 79
         }
       }
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-09-21T13:29:41.955Z"
+  "updated_at": "2026-09-24T06:03:10.658Z"
 }

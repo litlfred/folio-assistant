@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/blocks/figure-img-p005-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p005-1.png",
+  "pageStart": 5,
+  "pageEnd": 5,
+  "narrative": {
+    "text": "Diagram titled \"Skills and the Context Window\", showing one conversation as it fills the window. At the top, the agent's system prompt followed by short snippets from each equipped Skill (bigquery, docx, nda-review, pdf, pptx, xlsx). Below it the user's message asking for a PDF to be filled out, with an attachment at /mnt/uploads/order_form.pdf. Claude then replies that it will use the PDF Skill and issues Bash(\"cat /mnt/skills/pdf/SKILL.md\"); the tool result returns that file's contents. A second tool use, Bash(\"cat /mnt/skills/pdf/forms.md\"), follows the reference found inside SKILL.md. Callouts on either side label each step. The point is that only the snippets are always present — the body and the bundled files are read on demand.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "claude-opus-5"
+    },
+    "drafted_at": "2026-09-23"
+  },
+  "derivedFrom": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/sections/page-005",
+  "sourceDocument": "library/equipping-agents-for-the-real-world-with-agent-skills-anthro/manifest",
+  "provenance": "ingested"
+}

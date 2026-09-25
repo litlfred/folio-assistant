@@ -170,3 +170,66 @@ rest are the guards themselves, which must keep passing if the rule is widened.
       edit them; baseline entries come out as they are
 
 *Issue link, recorded on creation.* **[#696](https://github.com/litlfred/folio-assistant/issues/696)**
+
+
+## The quotation-guard Done-when is closed, 2026-09-21 — `4v62`
+
+> [x] The quotation guard covers a markdown table cell, or the guard's stated
+> scope says it does not and why — a workaround in one bean is not a fix
+
+**The second branch, on the corpus's evidence rather than on taste.** Measured
+over every bean body for `blocked on \`id\`` on a line beginning `|`: two hits.
+This bean quotes yg29 and marks it; `xgd8` asserts its OWN blocker in a cell,
+and `slw1` was `todo`, so that block is live. The only unquoted cell in the
+store is a genuine self-assertion the checker must keep reading — treating a
+cell as a quotation would silently exempt exactly it.
+
+So this bean's double-quoting was **never a workaround**: quoting what you
+quote is correct English and is precisely the signal the guard reads. The
+scope now says so in `insideQuotation`'s docstring, `insideQuotation` and
+`BLOCKER` are exported and tested case by case, and a table row's finding
+message teaches the marking instead of the checker guessing at it.
+
+A blockquote rule was considered and **not built**: `>` is unambiguously a
+quotation, and the store contains zero of them. Priced, not missed, with a
+test recording the choice.
+
+Entered here rather than by editing the checklist above, because this bean is
+another session's and an append cannot collide. The remaining Done-when —
+*"`p5wm` and `yg29` are repaired by their owners"* — is untouched and is not
+an agent's.
+
+## Half of the remaining Done-when is closed, 2026-09-22 — `yg29` repaired by its owner
+
+> [ ] `p5wm` and `yg29` are repaired **by their owners** — this bean does not
+> edit them; baseline entries come out as they are
+
+**`yg29` is repaired.** Stream 3 of the #956 consolidation (`w0cr`) owns GOAL 3,
+so the repair was made by the milestone's owner, which is exactly the condition
+this clause states. `p5wm` is stream 2's and is **untouched** — the clause stays
+open for it.
+
+This bean's judgement was right on both halves and is worth recording as having
+held rather than as having been overtaken:
+
+- **The defect was real and worse than measured here.** This bean found `yg29`
+  routing through `z7ev` and `jbx2`. Re-measuring the whole body found two more:
+  `hqku`, carried as a live *"blocked on the owner"* for two days after it
+  completed, and *"`who-iris/` has no `docs/`"* against a directory holding three
+  rendered pages. A milestone's staleness is not confined to the lines a path
+  detector can see, which is the argument for repairing the body rather than only
+  the path.
+- **Declining to edit it was also right.** The repair needed `check:voices`,
+  `check:catalogue`, `iris:pages:check` and a *built site* re-run to state what is
+  true now. A checker could not have written that, and a checker that guessed
+  would have replaced a stale belief with an invented one.
+
+`stale-paths-baseline.json` shrank from 3 entries to 1 by the route the file
+describes — the entry was removed when its milestone was repaired, and the run
+reported **no stale unmatched entry**, which is the property that exists so the
+baseline cannot quietly become empty.
+
+Entered as an append, on this bean's own stated precedent: it is another
+session's, and an append cannot collide.
+
+*Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

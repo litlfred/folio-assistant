@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/docs-auto.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/docs-auto.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/docs-auto.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-auto.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/docs-auto.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/docs-auto.md){: .fa-edit-source }
 
 {% raw %}
 # docs-auto — the index is generated, the meaning is authored
@@ -68,11 +68,25 @@ table** when the source moves. Do that, not a transcription.
 
 ## What the handler emits, and what it does not
 
+**Read the type list off `TYPES` in `gen-docs-auto.ts`, not off this table.**
+The table below was wrong on two rows until 2026-09-24 — it called `glossary`
+unbuilt while it was emitting pages, and omitted `index/docs` entirely — which
+is the failure this skill's own §Related points at `uses-editorial-review` for.
+
 | | |
 |---|---|
-| built | `index/skills`, `index/processes` |
-| declared, **not** built | `glossary` (gated by bean `lqo9`'s roast), `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles` |
+| built | `index/skills`, `index/docs`, `index/processes`, `glossary` — four declarations in `gen-docs-auto.ts`, each emitting under `docs-auto/` |
+| declared, **not** built | `index`, `index/bpmn`, `index/dmn`, `index/tasks`, `index/roles` |
 | **withdrawn** | `toc` |
+
+**`glossary` moved rows, and `lqo9` has not been told.** It was listed here as
+*"gated by bean `lqo9`'s roast"*. That roast was held on 2026-09-20 and the
+type now builds — `docs-auto/glossary/` carries an `index.html` and a
+`glossary/` subtree. Bean `lqo9` is still open and still carries the gating as
+a live constraint on its own remaining work, so a reader arriving from either
+side is told the glossary index is blocked on something that has been
+overtaken. Whoever next works `lqo9` should re-scope it against what is
+actually emitting.
 
 **`toc` is out and stays out.** Owner: *"no toc,... ther is no meanging at
 folio level/. (mayber later)"* — a table of contents is a document-order
@@ -101,7 +115,7 @@ Two answers to "what is a skill" is one answer too many.
 
 The owner wrote `<path>`; the URL carries the declared entry's **`id`**.
 Deliberate, and the reasons are `state-visualizer`'s own: `id` is what
-`harness.json` declares and what an override matches on, so an id-derived URL
+`<name>.json` declares and what an override matches on, so an id-derived URL
 **survives the directory moving**. It also stays one segment, which is what
 lets `orphanSubjectPages()` prune with an exact ownership test rather than a
 fourth pruner (bean `ankg` asks for no more of those). Each page **states its
@@ -126,5 +140,16 @@ own `var SCOPE` line, never assumed from the directory.
   a claim rather than evidence, which is why these pages compute their counts.
 - Bean `06e3` — the handler, the authoring rule, the per-harness docs landing
   page and its QA check, and the navbar over harnesses with populated `docs/`.
-  The last two are **not built**.
+  **Their states differ and are worth naming separately**, because this entry
+  said "the last two are not built" until 2026-09-24 and one of them was
+  gating CI at the time:
+  - the **QA check** is **built and gated** — `check:docs-populated`
+    (`package.json`, run by `code-quality-gates.yml`);
+  - the **landing page** is **not built**. `06e3` records one at
+    `cat-harness/docs/cat-harness/index.md`; there is no such file, and
+    `<base>/cat-harness/` is served by `published-graphs.md`, which is
+    GENERATED. So §"The obligation" above is **unmet** for that route rather
+    than satisfied — an index with no authored prose around it is exactly what
+    this skill exists to refuse;
+  - the **navbar** is **not built**.
 {% endraw %}

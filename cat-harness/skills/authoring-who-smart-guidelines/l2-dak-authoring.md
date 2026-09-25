@@ -1,3 +1,8 @@
+---
+input: schemas/skills/l2-dak-authoring/input.schema.json
+output: schemas/skills/l2-dak-authoring/output.schema.json
+---
+
 # l2-dak-authoring
 
 > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` ·
@@ -43,7 +48,7 @@ stated as a data element, a decision rule or an indicator, it belongs here.
 
 | step | produces | note |
 |---|---|---|
-| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `skills/roles/roles.json` — do not conflate the two vocabularies. |
+| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `scenarios/roles.json` — do not conflate the two vocabularies. |
 | Data dictionary and core data elements | the data dictionary | `data-dictionary-authoring` is a facet of this skill, not a separate one; the input schema already carries `data-dictionary` as a component. |
 | Indicators and requirements | indicators, functional and non-functional requirements | Requirements here are the DAK's, distinct from `skills/requirements/*.json`, which are this harness's own conformance obligations. |
 
@@ -60,7 +65,7 @@ happens when `SMART_BASE_HOME` is unset (the skill degrades to `skip`, it does
 
 ## Where this sits
 
-`l2-dak-authoring.bpmn` carries `<folio:policy enforcement="advisory"/>`: it is
+`l2-dak-authoring.bpmn` carries `<cat-harness.processes:policy enforcement="advisory"/>`: it is
 a per-content-type process, and this package owns what "adequate" means in its
 domain. That is licence to adapt the sequence, not to skip the gate — the base
 processes it feeds (`editing-hci-validation`, `content-lifecycle`) stay strict.

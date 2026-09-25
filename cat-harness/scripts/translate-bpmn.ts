@@ -43,7 +43,10 @@
  *
  * **Three states, not two.** A `.pot` that is absent is STALE; one that
  * differs is STALE; one that cannot be READ is reported as such and fails,
- * never as a pass. "Could not determine" is never rendered green.
+ * never as a pass. "Could not determine" is never rendered green — and a run
+ * in which NO locale gates, so that no template was examined at all, exits 2
+ * rather than 0 (exit codes: 0 fresh, 1 stale/missing/orphaned, 2 nothing
+ * examined or nothing to do).
  *
  * ## What it gates on, and what it only reports
  *
@@ -55,7 +58,7 @@
  * nobody asked for, and misreporting how far those locales have actually
  * got.
  *
- * So a locale with a `workflows/` tree GATES, and one without is reported as
+ * So a locale with a `processes/` tree GATES, and one without is reported as
  * NOT A TARGET with its count. That is the same shape as `kg-audit`'s
  * coverage criteria: legitimate instances exist, so it must not gate — and it
  * must not be silent either, because a locale scanned and found empty,
@@ -67,19 +70,42 @@
  *   bun run translate-bpmn --check   [--locale fr]
  *   bun run translate-bpmn --inject --locale fr
  *
- * Injection writes `translations/<locale>/workflows/<name>.bpmn`. Rendering it
+ * Injection writes `translations/<locale>/processes/<name>.bpmn`. Rendering it
  * is `bun run render:bpmn` territory and is deliberately a separate step: the
  * renderer drives headless Chromium, and an extract/inject run should not.
+ *
+ * @covers processes, translation-sources
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolveDirectories } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
-import { formatPot } from "../content/pipeline/pot-extract.js";
+import { formatPot, potWithoutTimestamp } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
-const root = resolve(import.meta.dir, "..");
+/**
+ * The instance whose diagrams are extracted — this one, or `--instance <root>`.
+ *
+ * Bean `j28g`. `bootstrap/` is a NESTED instance, so the root's scan does not
+ * reach its three diagrams by design (`7u3g`, enforced by
+ * `instance-graph-isolation.test.ts`) — and it must not, because widening the
+ * scan re-introduces the leak that test exists to stop. But their `.pot` files
+ * sat under `cat-harness/translations/` regardless, where nothing would ever
+ * refresh them: measured 2026-09-21, `log-message.pot` did not carry the lane
+ * documentation added to that diagram the same day, so a translator opening it
+ * would have translated text the diagram no longer contains.
+ *
+ * The fix is not a wider scan but a SECOND RUN, pointed at the instance that
+ * owns those diagrams — the same shape `kg-export.ts --instance ./bootstrap`
+ * already uses, and for the same reason.
+ */
+const instanceFlag = ((): string | undefined => {
+  const a = process.argv.slice(2);
+  const i = a.indexOf("--instance");
+  return i === -1 ? undefined : a[i + 1];
+})();
+const root = instanceFlag ? resolve(instanceFlag) : resolve(import.meta.dir, "..");
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -124,7 +150,7 @@ if (diagrams.length === 0) {
  */
 function translationsRoot(): string {
   const d = resolveDirectories([{ name: "(local)", root, own: true }]).find((x) =>
-    x.graphs.includes("translation-sources"),
+    x.graphKinds.includes("translation-sources"),
   );
   // declared-path-literal: the base case for an instance that declares
   // nothing. Reading a declaration to learn the fallback for having no
@@ -135,6 +161,22 @@ function translationsRoot(): string {
 const TRANSLATIONS = translationsRoot();
 
 /**
+ * The per-locale subdirectory holding a diagram's `.pot`/`.po`/injected `.bpmn`.
+ *
+ * declared-path-literal: NOT the declared `processes/` graph — this is a
+ * sibling INSIDE `translations/<locale>/`, named after the kind whose
+ * diagrams it carries so that a translator opening the tree sees the same
+ * word the corpus uses. It was `workflows/` until 2026-09-21 and was renamed
+ * with the kind; the scanner cannot tell the two apart from the literal
+ * alone, which is why the reason is here rather than repeated five times.
+ *
+ * One constant rather than five joins for the reason `potPathFor`'s own
+ * docstring gives about its sibling: two copies of a path is how a check
+ * passes over a file the extractor never wrote.
+ */
+const DIAGRAM_SUBDIR = "processes";
+
+/**
  * Where a diagram's template lives — ONE answer, for the writer and the
  * checker alike.
  *
@@ -143,19 +185,11 @@ const TRANSLATIONS = translationsRoot();
  * close.
  */
 function potPathFor(file: string, loc: string): string {
-  return join(TRANSLATIONS, loc, "workflows", `${basename(file, ".bpmn")}.pot`);
+  return join(TRANSLATIONS, loc, DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
 }
 
-/**
- * A `.pot` with its creation timestamp blanked, for comparison only.
- *
- * Never written back: the header is real metadata a translator's tooling
- * reads. It is excluded from the COMPARISON because it is the one line that
- * changes on every run regardless of content.
- */
-function withoutTimestamp(text: string): string {
-  return text.replace(/^"POT-Creation-Date:.*$/m, '"POT-Creation-Date: <ignored>\\n"');
-}
+/** The comparison form of a template, shared with core's `glossary-pot` (see `potWithoutTimestamp`). */
+const withoutTimestamp = potWithoutTimestamp;
 
 /** Locales that already have a translations directory. */
 function knownLocales(): string[] {
@@ -179,8 +213,22 @@ if (wantCheck) {
   // that it is reported, not demanded. `--locale` is an explicit request, so
   // naming one opts it in.
   const gating = new Set(
-    targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, "workflows"))),
+    targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR))),
   );
+
+  // THE THIRD STATE. With no gating locale the loop below examines nothing and
+  // would print "Every diagram has a current .pot" over zero comparisons —
+  // the `dh4f` shape, a clean run over nothing. That is "could not
+  // determine", so it exits 2, neither 0 (a claim of freshness nobody
+  // checked) nor 1 (a staleness nobody found). Bean `0hd6`.
+  if (gating.size === 0) {
+    console.log(
+      `  gating on: (none) — ${targets.join(", ")} carry no ${DIAGRAM_SUBDIR}/ tree, so no template was examined.\n` +
+        `\nNothing was checked. Opt a locale in with --locale <code>, or extract one with\n` +
+        `  bun run translate-bpmn --extract --locale <code>`,
+    );
+    process.exit(2);
+  }
 
   const missing: string[] = [];
   const stale: string[] = [];
@@ -215,11 +263,40 @@ if (wantCheck) {
     }
   }
 
-  const bad = missing.length + stale.length + unreadable.length;
+  // THE REVERSE QUESTION, and nothing asked it until bean `j28g`.
+  //
+  // Everything above asks "does every diagram have a template". A template
+  // that outlives its diagram is invisible to all of it: `bootstrap.pot` sat
+  // in five locales for a day after `7d57e2d279` renamed the diagram away,
+  // while this check printed "Every diagram has a current .pot in every
+  // locale" — true of the diagrams it looked at, and silent about the file it
+  // never did. `fd6i`: declared and never used, so nothing breaks, which is
+  // exactly why it survived.
+  //
+  // Scoped to THIS instance's own templates. A nested instance's diagrams are
+  // deliberately unscanned (`7u3g`), so its templates are not orphans here —
+  // they are somebody else's to check, with their own `--instance` run.
+  const owned = new Set(diagrams.map((f) => basename(f, ".bpmn")));
+  const orphaned: string[] = [];
+  for (const loc of [...gating].sort()) {
+    const dir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
+    let names: string[];
+    try {
+      names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
+    } catch {
+      continue;
+    }
+    for (const n of names.sort()) {
+      if (!owned.has(basename(n, ".pot"))) orphaned.push(`translations/${loc}/${DIAGRAM_SUBDIR}/${n}`);
+    }
+  }
+
+  const bad = missing.length + stale.length + unreadable.length + orphaned.length;
   console.log(`  gating on: ${[...gating].sort().join(", ") || "(none)"}`);
   console.log(`  ${missing.length ? "✗" : "✓"} ${String(missing.length).padStart(3)}  never extracted`);
   console.log(`  ${stale.length ? "✗" : "✓"} ${String(stale.length).padStart(3)}  out of date`);
   if (unreadable.length) console.log(`  ✗ ${String(unreadable.length).padStart(3)}  could not be read`);
+  console.log(`  ${orphaned.length ? "✗" : "✓"} ${String(orphaned.length).padStart(3)}  template with no diagram`);
   for (const [loc, n] of [...notTarget].sort()) {
     console.log(`  · ${String(n).padStart(3)}  ${loc} — not a workflow-translation target yet, so not demanded`);
   }
@@ -237,11 +314,21 @@ if (wantCheck) {
     for (const m of unreadable) console.log(`  ✗ ${m}`);
   }
 
+  if (orphaned.length) {
+    console.log("\nNO DIAGRAM — a template this instance will never refresh again:");
+    for (const m of orphaned) console.log(`  ✗ ${m}`);
+    console.log(
+      "  Either the diagram was renamed or removed and this is a relic, or it belongs to a\n" +
+        "  nested instance and should live under ITS translations, extracted with\n" +
+        "  `--instance <root>`. Removing a translator's input is a person's call, not this check's.",
+    );
+  }
+
   if (bad) {
-    console.log(`\n${bad} template(s) need regenerating: bun run translate-bpmn --extract`);
+    console.log(`\n${bad} template(s) need attention: bun run translate-bpmn --extract`);
     process.exit(1);
   }
-  console.log("\nEvery diagram has a current .pot in every locale.");
+  console.log("\nEvery diagram has a current .pot in every locale, and every template has a diagram.");
 }
 
 if (wantExtract) {
@@ -279,8 +366,8 @@ if (wantExtract) {
 
 if (wantInject) {
   const loc = locale!;
-  const poDir = join(TRANSLATIONS, loc, "workflows");
-  const outDir = join(TRANSLATIONS, loc, "workflows");
+  const poDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
+  const outDir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
   let injected = 0;
   const skipped: string[] = [];
 
@@ -307,7 +394,7 @@ if (wantInject) {
     console.log(`  ${skipped.join(", ")}`);
   }
   console.log(
-    `\n${injected} diagram(s) written to translations/${loc}/workflows/.` +
+    `\n${injected} diagram(s) written to translations/${loc}/${DIAGRAM_SUBDIR}/.` +
       (injected ? "\nRender them with `bun run render:bpmn` once the output path is wired." : ""),
   );
 }

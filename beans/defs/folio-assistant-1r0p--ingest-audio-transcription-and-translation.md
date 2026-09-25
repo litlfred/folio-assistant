@@ -7,8 +7,6 @@ priority: normal
 created_at: 2026-09-16T06:43:50Z
 updated_at: 2026-09-20T04:16:04Z
 parent: folio-assistant-slw1
-blocked_by:
-    - folio-assistant-68dt
 ---
 
 ## What
@@ -23,10 +21,22 @@ translation, both referenced from `manifest.jsonld`, both carrying the
 provenance stamp (`folio-assistant-iqim`), and both subject to the round-trip
 QA (`folio-assistant-ktt2`).
 
-Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Audio`.
+Diagram: `processes/ingest-derive-content.bpmn`, `Task_Audio`.
 
-_2026-09-19T16:20Z_ — **Blocked on `folio-assistant-68dt`** (declare Python
-dependencies and install them in CI).
+_2026-09-19T16:20Z_ — a block was recorded here against
+`folio-assistant-68dt` (declare Python dependencies and install them in CI).
+
+_2026-09-22_ — **NOT blocked on `folio-assistant-68dt` any more.** It is
+`completed`: `schemas/python-deps.ts` declares the dependencies,
+`requirements.txt` is generated from it, and `code-quality-gates.yml:148`
+installs the lean set. Verified against those files rather than against the
+bean's status word.
+
+The handoff below already said what to do in this case — *"if `68dt` has
+landed, this is ordinary work — unblock and proceed"* — so the block is
+withdrawn on its own terms. The rest of the entry stands: it records what was
+measured absent in 2026-09-19 and why, which is still the reason not to
+hand-roll a parser.
 
 - **waits on**: a working backend for audio transcription that CI also has. Measured absent
   2026-09-19; `pip` reaches an index but CI installs only `ruff`, so anything
@@ -105,3 +115,7 @@ what THIS bean says its arm will write, and one proving a directory probe
 actually fires (`existsSync` is not file-only). A probe is a claim about
 another arm's output and has to be read from that arm's own statement, not
 from the shape a sidecar usually takes.
+
+## 2026-09-23 — the backend is now a choice among declared Tools
+
+`r279` closed on the owner's ruling. The backend options are Tool nodes (`transcribe-whisper-cpp`, `transcribe-faster-whisper`, `transcribe-vosk`), declared but not installed. When the first recording arrives, this bean's first step is to pick one by its `selection` record, install it, declare it in `schemas/python-deps.ts` if it is Python, and re-measure the CI install cost. Until then there is still nothing to transcribe.

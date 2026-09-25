@@ -1,6 +1,7 @@
 #!/usr/bin/env ts-node
 /**
  * @module validate-skills
+ * @covers skills
  * @description Validates all skill package manifests against SkillPackageManifest schema
  * and all .claude/skills/ JSON files against their respective schemas.
  *

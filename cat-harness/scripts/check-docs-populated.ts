@@ -3,6 +3,7 @@
  * Every harness owes at least one MEANINGFULLY POPULATED documentation page.
  *
  * @module scripts/check-docs-populated
+ * @covers docs
  *
  * Usage: `bun run check:docs-populated [--json]`
  * Exit:  0 every harness has one · 1 one is thin · 2 could not determine
@@ -60,7 +61,6 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
-import "../schemas/folio-graph-kind.js";
 
 /**
  * Words of prose a page needs to count.
@@ -261,7 +261,7 @@ export function harnessesWithDocs(repoRoot: string): { instance: string; dirs: s
     const decl = readDeclaration(inst);
     if (!decl) continue;
     const dirs = (decl.directories ?? [])
-      .filter((d) => (d.graphs ?? []).includes("docs"))
+      .filter((d) => (d.graphKinds ?? []).includes("docs"))
       .map((d) => relative(repoRoot, join(inst, d.path)).split("\\").join("/"));
     if (dirs.length > 0) out.push({ instance: decl.name ?? inst, dirs: [...new Set(dirs)].sort() });
   }

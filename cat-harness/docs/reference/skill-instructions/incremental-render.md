@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/incremental-render.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/incremental-render.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/incremental-render.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/incremental-render.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/incremental-render.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/incremental-render.md){: .fa-edit-source }
 
 {% raw %}
 # Incremental render — the cache is easy, the cascade is the work
@@ -63,7 +63,7 @@ to use:
 | field | what it names | when |
 |---|---|---|
 | `inputs` | repository-relative files or directories | a path that is not a declared graph — a config file, a script's own fixtures |
-| `inputGraphs` | graph **kinds** from `harness.json` — `cat-harness`, `beans`, `schemas`, … | anything the declaration already locates |
+| `inputGraphs` | graph **kinds** from `<name>.json` — `cat-harness`, `beans`, `schemas`, … | anything the declaration already locates |
 
 The first draft used `inputs` throughout and `check:declared-paths` rejected
 nine literals. **It was right.** A second answer to *where do the skills live*
@@ -207,7 +207,7 @@ so use `--seed` only where the previous output is already in place.
 - `scripts/render-selection.ts` — the selection, the manifest, and the hash.
 - `scripts/declared-dirs.ts` — the graph-kind resolver, and why it is a process.
 - [`directory-conventions`](directory-conventions.md) — what a graph kind is
-  and where `harness.json` declares it.
+  and where `<name>.json` declares it.
 - [`ci-health`](ci-health.md) — the same third-state discipline one level out.
 - Bean `9c34`.
 {% endraw %}

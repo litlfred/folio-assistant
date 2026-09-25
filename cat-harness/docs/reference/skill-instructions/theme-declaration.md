@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/theming/theme-declaration.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theme-declaration.md) — do not edit here.
+> Generated from [`cat-harness/skills/theming/theme-declaration.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-declaration.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theme-declaration.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/theme-declaration.md){: .fa-edit-source }
 
 {% raw %}
 # Declaring a theme
@@ -39,7 +39,7 @@ A premise a schema cannot hold is a premise that needs a test.
 
 `laptop`, `mobile`, `card`. The owner: *"themes need all three layouts to be
 defined to be considered valid."* Not a new vocabulary — exactly the set
-`harness.json`'s `images[].layout` already uses.
+`<name>.json`'s `images[].layout` already uses.
 
 **Missing a layout is invalid, never degraded.** There is deliberately no
 fallback to another layout's geometry: a theme that renders wrong on a phone

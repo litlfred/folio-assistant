@@ -2,11 +2,11 @@
   "$schema": "folio-workflow-instance/v1",
   "id": "crdm--folio-assistant-6lb8",
   "processId": "Process_CRDM",
-  "source": "cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn",
+  "source": "cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn",
   "subject": "folio-assistant-6lb8",
   "bean": "folio-assistant-6lb8",
   "tokens": [
-    "Call_Signoff"
+    "A_AnnounceBranch"
   ],
   "arrivals": {},
   "history": [
@@ -57,6 +57,30 @@
       "node": "Call_DataModel",
       "actor": "claude",
       "note": "subprocess Process_CRDM_DataModel completed"
+    },
+    {
+      "at": "2026-09-21T18:25:00.000Z",
+      "node": "BA_Signoff",
+      "actor": "owner",
+      "note": "SIGNED OFF. Asked as a selection, 2026-09-21; the owner chose \"§2 is right — run Phase 2\". The needs statement in issue #602 §2 stands as written, the stakeholders in §3 stand, and the todos/-vs-cat-harness split in §5 is confirmed as a constraint rather than a preference. NOTE ON THE WORDING OF THE QUESTION, recorded because it was the agent's error and not the owner's: the option said \"run Phase 2\", and Phase 2 closed 2026-09-20. §6 of the issue is Phase-1 text that was never updated after Call_Needs completed, and the agent composed the question from it rather than from this instance. The owner's intent — the needs statement is correct, proceed — is unambiguous and is what BA_Signoff asks for, so the token advances; the mislabelled phase number is corrected on the issue rather than silently."
+    },
+    {
+      "at": "2026-09-21T18:25:00.000Z",
+      "node": "A_OfferKg",
+      "actor": "claude",
+      "note": "Knowledge-graph destinations offered for the agreed set, per kg-contribution-offer: one question for the SET, destinations DERIVED from the instance's declared graphs rather than typed from memory, `none` listed as a first-class answer, default stated. Offerable graphs read from cat-harness.json at the time of asking: cat-harness (skills and BPMN), schemas, tools, beans, fsh-guts, folio. Excluded as incoming/derived/record-of-what-happened: uploads, qa, health, translation-sources, issue-marks, memory, interaction, library. Stated in the offer: much of the agreed set ALREADY landed as KG content — three BPMN processes and the board skills (sd8x), and six schemas (board-positions, window-stack, panel-chrome, reader-filter, semantic-zoom, safe-url) — so the live question is only about what is not yet captured, which is the requirement set R1-R17 itself. Awaiting BA_ChooseKg."
+    },
+    {
+      "at": "2026-09-21T18:45:00.000Z",
+      "node": "BA_ChooseKg",
+      "actor": "owner",
+      "note": "DESTINATION CHOSEN: the owning instance's docs/. Verbatim: \"this is a memory asset as part of design, so it goes into docs/. update skills for documentation filing. fsh-guts can be thrown away/lost... this was an asset as part of building a feature (or accessing data, or other skill realtaed to manament/rendering of that type of content) but it is not the content we want displayed itself.\" And, sharpening it: \"if it is realated to some harness/feature/tool that detailed infromation/design/planning/etc go into that harness' docs/. docs/ can also include information about how to access data sources related to the content described or provide more detailed information that is beyond what a human/agent needs to know in order to perform a task if they are competentnt in the given skill.\" NONE OF THE THREE OFFERED OPTIONS WAS THE ANSWER, and that is the agent's defect rather than a gap in the process: kg-contribution-offer says the destinations are DERIVED from the declared graphs, and the derivation DROPPED `docs`, which cat-harness.json declares. Deriving the list is not enough if the derivation loses a declared graph."
+    },
+    {
+      "at": "2026-09-21T18:45:30.000Z",
+      "node": "A_RecordKg",
+      "actor": "claude",
+      "note": "Placement run for the chosen kind, per kg-contribution-offer step 1. Instance: cat-harness, because the board's schema and behaviour live there by the requester's own layering and the ruling says a feature's design record goes in THAT harness's docs/. Graph: docs. Section: architecture/, per placement's filing table. Written as cat-harness/docs/architecture/folio-board-requirements.md, nav_order 8 under parent Architecture. Bean cekz carries the authoring work, parented to 6lb8. FINDING RECORDED RATHER THAN RECONSTRUCTED: R15 and R16 are referenced by beans 51wf and zsah and defined in no comment on #602; the page states them as undefined with the inferred meaning marked as inference, because invented text reads exactly like agreed text. Skills updated per the instruction: kg-contribution-offer (docs as a destination, the identifying question, whose docs/, the competence line, why not fsh-guts), placement (instance-scoped docs/, the filing table, three rules for a design record), and crdm-requirements-workflow Phase 5 and 6 so the step is in the PROCESS rather than only in a skill."
     }
   ],
   "status": "running",
@@ -66,7 +90,7 @@
     "Call_Issue": {
       "id": "crdm--folio-assistant-6lb8/Call_Issue",
       "processId": "Process_CRDM_Issue",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-issue-linking.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [],
@@ -109,7 +133,7 @@
     "Call_Needs": {
       "id": "crdm--folio-assistant-6lb8/Call_Needs",
       "processId": "Process_CRDM_Needs",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-needs.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [],
@@ -135,13 +159,13 @@
         {
           "at": "2026-09-20T20:46:29.971Z",
           "node": "BA_ReviewNeeds",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "APPROVED by the requestor, 2026-09-20, verbatim: \"needs statement is right, run phase 2\". Recorded with litlfred as the actor because this step is theirs — the agent proposed the statement at A_Synthesise and the requestor accepted it here. The three questions in issue #602 section 6 were answered by acceptance of section 2 as written; no correction to the stakeholder list or to the todos/ vs cat-harness split was offered, so both stand as posted."
         },
         {
           "at": "2026-09-20T20:46:43.118Z",
           "node": "S_ConfirmNeeds",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "Confirmed by litlfred, who is the ONLY HUMAN stakeholder of the five recorded at A_Stakeholders. Said plainly rather than staged: the requestor and the stakeholder lane are the same person here, so this is one confirmation recorded twice because the diagram has two lanes, not two independent reviews. The other four are not people — readers of the published site are REPRESENTED by the linear-collapse floor being a requirement rather than a fallback; the todos/ graph, cat-harness and the positions layer are artefacts whose interests are constraints in section 5; sibling agent sessions are represented by the mergeability property, which is stated with its limit. If a second human stakeholder appears later, Phase 1 loops rather than being re-opened by exception."
         },
         {
@@ -164,7 +188,7 @@
     "Call_Requirements": {
       "id": "crdm--folio-assistant-6lb8/Call_Requirements",
       "processId": "Process_CRDM_Requirements",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-requirements-definition.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [],
@@ -196,13 +220,13 @@
         {
           "at": "2026-09-20T21:05:40.790Z",
           "node": "BA_ReviewReqs",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "APPROVED by the requestor, 2026-09-20: \"run 5\". Approval of Phases 3 and 4 as posted to #602 — seven requirements with acceptance criteria and consumer burden, and the impact analysis including the folio-todo-index/v1-has-no-schema finding. THE DECISION IS TAKEN BY THE STATED DEFAULT: the comparison offered A, B and C with recommendation C and said in terms that silence means C; the requestor advanced the process without naming an option, so C stands — define v1 as what is actually published, then add R3's target under it. Recorded here rather than assumed silently, because a default exercised without being written down is indistinguishable from an agent choosing for itself."
         },
         {
           "at": "2026-09-20T21:05:48.970Z",
           "node": "S_ApproveReqs",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "Approved by litlfred, the only HUMAN stakeholder of the five recorded at A_Stakeholders — the same one-confirmation-two-lanes situation recorded at S_ConfirmNeeds, and said plainly here too rather than implying a second independent review. The four non-human stakeholders are represented in the requirements themselves: readers by R4 (linear collapse as a floor, reachable without JS), the todos/ graph and cat-harness by the layering held in R1, and sibling sessions by the mergeability property and its stated limit."
         },
         {
@@ -225,7 +249,7 @@
     "Call_DataModel": {
       "id": "crdm--folio-assistant-6lb8/Call_DataModel",
       "processId": "Process_CRDM_DataModel",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-data-model.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [],
@@ -251,20 +275,20 @@
         {
           "at": "2026-09-20T21:26:34.123Z",
           "node": "BA_ConfirmEntities",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "Entities confirmed by litlfred, acting as BA / feature requestor. The confirmation is INDIRECT and is recorded as such rather than upgraded: no entity was disputed, and all four answers were given in the model's own vocabulary (note, board, content node, kind, folio), which is the recognition this lane asks for — \"are these the things?\" is a naming question, and the names were used rather than corrected.\n\nWhat was NOT separately asserted: nobody said \"Board is the right name\" in those words. If a name is wrong the loop returns here, which is cheap; the gateway loops back to A_Entities by design.\n\nThree of the four answers ADD a fact, and each lands on a different entity — which is itself a check on the model, because a fact with no entity to sit on would have been the finding this phase exists to produce:\n  Q1 -> Note gains a declared SECONDARY reference list (primary attachment unchanged).\n  Q3 -> Board gains an OPTIONAL filter (absent = the whole folio).\n  Q4 -> Folio gains a DEFAULT zoom threshold; Kind may override it.\nEvery one had a home. No requirement turned out to be about something nobody had named."
         },
         {
           "at": "2026-09-20T21:26:51.326Z",
           "node": "S_ConfirmCardinality",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "All four open cardinalities answered by litlfred, the only HUMAN stakeholder of the five recorded at A_Stakeholders. Answers verbatim as selected, each with what it settles and what it now costs:\n\nQ1 -> \"One primary + declared secondaries\". Note --- ContentNode is 1:0..1 for the PRIMARY attachment (unchanged, so targetLabel, note-anchor and mountPageStickies keep working untouched), plus an explicit list of SECONDARY references. The badge counts PRIMARIES ONLY, which keeps R6 intact: the badge is still the cardinality of the panel's query, and the panel is still \"notes whose primary attachment is here\". Cost: one new field and one rule a consumer must know, and that rule must be EMITTED rather than documented or it is exactly the burden R3 exists to remove.\n\nQ2 -> \"One per board, make it structural\". BoardPositions.boards moves from an ARRAY of {note,x,y} to a RECORD keyed by note id. The type then enforces what place() already enforced in code, so the two answers become one. Mergeability is preserved or improved: keys sort, each note occupies its own lines, which is the whole reason the document is indented. sortPositions, renderPositions, orphanPositions, place and unplace all change shape, and the 17 tests in board-positions.test.ts move with them. Merged only yesterday in PR #601 and nothing downstream consumes it yet, so the migration cost is a schema and its tests.\n\nQ3 -> \"Everything by default, optional declared filter\". Board --- ContentNode is 0..n and DERIVED: absent filter means the whole folio, so nothing can go stale and content added later appears by itself. A board MAY narrow. The filter is a declared query, not a stored list — the difference is that a list needs a staleness check and a query does not.\n\nQ4 -> \"Folio default, a kind may override\". ZoomThreshold is NOT an entity: it is a fact on Folio with an override on Kind, which is the repository's own inheritance rule (inherit everything, override anything; a variant states only what it CHANGES). Requiredness is checked AFTER resolution — a kind that states nothing is complete, not invalid. An override CITES WHY, per the same skill, so the model records where the value came from and not only what it is.\n\nWHAT THIS SETTLES ABOUT THE ASK ITSELF: Q1's answer means \"show attachment to content nodes based on relationships\" is ONE feature, not two — a primary attachment that behaves as today, and secondary references drawn as lines. That was the sentence carrying two features, and it now carries one."
         },
         {
           "at": "2026-09-20T21:26:51.493Z",
           "node": "GW_Model",
           "outcome": "yes",
-          "actor": "litlfred",
+          "actor": "owner",
           "note": "Entities recognised and every cardinality answered — the two conditions this gateway names, both met in the same exchange. Four questions asked with selectable options, four answered; none deferred, so the loop leaves rather than returning to A_Entities. The skill's own exit rule is the reason the count matters: a model with one unanswered cardinality is not 95 per cent done, it is a model with a hole exactly where the exceptions live."
         },
         {
@@ -286,7 +310,7 @@
     "Call_Signoff": {
       "id": "crdm--folio-assistant-6lb8/Call_Signoff",
       "processId": "Process_CRDM_Signoff",
-      "source": "cat-harness/methodologies/crdm/workflows/crdm-signoff.bpmn",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn",
       "subject": "folio-assistant-6lb8",
       "bean": "folio-assistant-6lb8",
       "tokens": [

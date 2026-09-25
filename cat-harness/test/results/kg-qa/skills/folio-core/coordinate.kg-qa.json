@@ -5,15 +5,20 @@
     "id": "coordinate",
     "path": "skills/folio-core/coordinate.md"
   },
-  "source_hash": "c3fdde6ed706",
+  "source_hash": "69c8c32f5b74",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/coordinate.md",
+          "detail": "393 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -22,12 +27,20 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 0,
-    "n/a": 0,
+    "pass": 3,
+    "fail": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

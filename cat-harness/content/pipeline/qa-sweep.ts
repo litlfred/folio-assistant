@@ -50,7 +50,7 @@
  */
 
 import { existsSync, statSync } from "fs";
-import { resolve, relative, dirname, join } from "path";
+import { resolve, relative, dirname } from "path";
 import { fileURLToPath } from "url";
 
 // Stable anchor for path normalisation: repo root, computed from
@@ -63,65 +63,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = resolve(dirname(__filename), "..", "..");
 
-/**
- * Root of the CONTENT repo that owns the swept blocks, discovered by
- * walking up from the sweep target until a directory containing `.git`
- * (a dir in a normal checkout, a file in a git worktree) or
- * `harness.config.json` is found.
- *
- * Sidecar `paths` must be anchored HERE, not at `REPO_ROOT` (this
- * platform checkout): anchoring at REPO_ROOT bakes the content
- * checkout's *directory name* into every recorded path
- * (`../qou/content/...`), which poisons sidecars when the sweep runs
- * against a git worktree (`../agent-<id>/content/...` — dangling once
- * the worktree is pruned; observed live in qou PR #3604). Paths
- * relative to the content repo root (`content/...`) are invariant
- * across checkout names, worktrees, and invocation cwd.
- *
- * REPO_ROOT remains the right anchor for the *checker script* hashes
- * and script sidecars — those genuinely live in this platform repo.
- */
-function findContentRepoRoot(startAbs: string): string {
-  // The sweep target may be a block-path PREFIX (`.../<block>` with no
-  // extension) rather than an existing file or directory — statSync on
-  // it would throw ENOENT. Walk up from the nearest existing directory.
-  let dir = existsSync(startAbs) && statSync(startAbs).isDirectory()
-    ? startAbs
-    : dirname(startAbs);
-  while (true) {
-    if (existsSync(join(dir, ".git")) || resolveHarnessConfigPath(dir)) {
-      return dir;
-    }
-    const parent = dirname(dir);
-    if (parent === dir) {
-      // Fell off the filesystem root: fall back to the legacy anchor so
-      // the sweep still runs (paths then match the pre-fix behaviour).
-      return REPO_ROOT;
-    }
-    dir = parent;
-  }
-}
+import { GIT_SHA_UNKNOWN, applicabilityGap, computeCriterionScriptHashes, entryIsFresh, freshnessKeys, gitHeadSha, hashBlockFiles, loadQaReport, loadQaScriptSidecar, missingCompanionNote, preserveNonScriptEntries, sameScriptVerdict, saveQaReport, saveQaScriptSidecar, sweepActor, type CriterionScriptHashes, walkBlocks } from "./qa-utils.ts";
 import {
-  hashBlockFiles,
-  gitHeadSha,
-  walkBlocks,
-  loadQaReport,
-  saveQaReport,
-  entryIsFresh,
-  freshnessKeys,
-  preserveNonScriptEntries,
-  sameScriptVerdict,
-  applicabilityGap,
-  missingCompanionNote,
-  computeCriterionScriptHashes,
-  saveQaScriptSidecar,
-  loadQaScriptSidecar,
-  GIT_SHA_UNKNOWN,
-  type CriterionScriptHashes,
-} from "./qa-utils";
-import {
-  QA_CRITERIA_REGISTRY,
-  QA_CRITERIA_BY_ID,
+  qaCriteriaFor,
+  qaCriteriaByIdFor,
   WATCHER_CRITERIA_BY_AXIS,
   getCriterionExtraInputs,
 } from "./qa-criteria-registry";
@@ -130,7 +75,7 @@ import { isCriterionSourceMiss, resolveCriterionSource } from "./criterion-sourc
 import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
-import { blockQaPath, existingBlockQaPath } from "./qa-paths";
+import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
 
 
 import type { BlockQaReport, CheckerResult, CompanionRole, QaCriterionEntry, QaScriptSidecar} from "../../schemas/block-qa";
@@ -143,7 +88,6 @@ import {
 import { adapterForKind } from "../../schemas/block-kinds";
 import { readDeclaredFolioProfile } from "./profile-check";
 import { readActiveVoices } from "../../schemas/voices";
-import { resolveHarnessConfigPath } from "../../schemas/harness-config";
 
 
 // ── CLI parsing ─────────────────────────────────────────────────
@@ -253,7 +197,7 @@ async function run(): Promise<void> {
   const rootAbs = resolve(args.root);
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
-  const contentRepoRoot = findContentRepoRoot(rootAbs);
+  const contentRepoRoot = findContentRepoRoot(rootAbs, REPO_ROOT);
   // The folio's declared content profile, read ONCE per run from the same
   // repo root the block paths are anchored to. `profile` is `undefined` when
   // the folio does not say — see the profile gate below for what that means
@@ -296,12 +240,22 @@ async function run(): Promise<void> {
   //   --axis NAME[,...] one or more watcher axes (one-voice, proof,
   //                     canonical, compute, detangler)
   //   (default)         every registered criterion across all axes
+  // Criteria BY ID, through the instance-aware index rather than the static
+  // one. Since bean `btuv` the voice-overlay criteria are derived from the
+  // voices an instance ships, and every lookup below would return `undefined`
+  // for them: the selection filter would drop `--only voice-overlay-milnor`,
+  // the per-block loop's `if (!def) continue` would leave them out of every
+  // sidecar, and — worst — the voice gate would see `{}` and a criterion naming
+  // no voice always runs, so a WHO criterion would sweep a folio that never
+  // adopted WHO style. Read once per run; the derivation is memoised anyway.
+  const criteriaById = qaCriteriaByIdFor(REPO_ROOT);
+
   const criteriaSelected: string[] =
     args.only && args.only.length > 0
-      ? args.only.filter((id) => QA_CRITERIA_BY_ID[id])
+      ? args.only.filter((id) => criteriaById[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
-        : QA_CRITERIA_REGISTRY.map((c) => c.id);
+        : qaCriteriaFor(REPO_ROOT).map((c) => c.id);
 
   // VOICE GATE, applied ONCE here rather than per block, because the question is
   // a property of the folio and not of any block: which editorial registers did
@@ -321,7 +275,7 @@ async function run(): Promise<void> {
   // per block would be sidecar bloat carrying no information a reader of the
   // folio's own configuration does not already have.
   const voiceSkipped = criteriaSelected.filter((id) =>
-    voiceExcludesCriterion(QA_CRITERIA_BY_ID[id] ?? {}, activeVoiceIds),
+    voiceExcludesCriterion(criteriaById[id] ?? {}, activeVoiceIds),
   );
   const criteriaToRun: string[] = criteriaSelected.filter(
     (id) => !voiceSkipped.includes(id),
@@ -343,7 +297,7 @@ async function run(): Promise<void> {
   // script sidecar under `content/pipeline/script-sidecars/`.
   const scriptHashesByCriterion: Record<string, CriterionScriptHashes> = {};
   for (const id of criteriaToRun) {
-    const def = QA_CRITERIA_BY_ID[id];
+    const def = criteriaById[id];
     if (!def?.automated) continue;
     // Same ONE answer discovery used. Hashing a contributed checker against
     // this repo's root would read the wrong bytes — or none — and a
@@ -356,7 +310,7 @@ async function run(): Promise<void> {
       located.sourceFile,
       getCriterionExtraInputs(id),
       located.root,
-      QA_CRITERIA_BY_ID[id],
+      criteriaById[id],
       located.label,
     );
   }
@@ -468,7 +422,7 @@ async function run(): Promise<void> {
     };
 
     for (const criterionId of criteriaToRun) {
-      const def = QA_CRITERIA_BY_ID[criterionId];
+      const def = criteriaById[criterionId];
       if (!def) continue;
 
       // Applicability gate.
@@ -539,6 +493,9 @@ async function run(): Promise<void> {
       const scriptReviewer = {
         kind: "script" as const,
         id: scriptHashes?.source_file ?? "content/pipeline/qa-sweep.ts",
+        // WHO it acted as, which is a different question from WHAT ran and is
+        // the one `qa-reporting` is checked against — see `sweepActor`.
+        actor: sweepActor(),
         version: "v1",
         script_hash: scriptHashes?.script_hash || undefined,
         script_commit_sha:

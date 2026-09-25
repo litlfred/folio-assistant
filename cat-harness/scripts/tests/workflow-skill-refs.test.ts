@@ -33,7 +33,7 @@ const ROOT = join(import.meta.dir, "../..");
  * missed **19** real skills, among them `bpmn-authoring` and `l2-dak-authoring`
  * (named by `<folio:skill ref>` in the diagrams this very test checks),
  * `bpmn-processes` and `process-state` the moment they moved into
- * `skills/workflow/`, and both of cat-bootstrap's. A list somebody must remember
+ * `skills/workflow/`, and both of bootstrap's. A list somebody must remember
  * to extend is not a single answer; it is a copy that happens to match today,
  * and this one had stopped matching.
  *
@@ -48,7 +48,7 @@ function knownSkills(): Set<string> {
 describe("declared diagram paths resolve", () => {
   test("every bpmnDiagrams entry names a file that exists", async () => {
     // Same failure one layer over. `schemas/translation-tools.ts` listed
-    // `skills/workflows/publication-workflow.bpmn`, which has never existed —
+    // `processes/publication-workflow.bpmn`, which has never existed —
     // `docs/publication-workflow.md` is a PAGE embedding three diagrams. The
     // re-render skipped it silently, and a skipped diagram is
     // indistinguishable from one that needed no work.
@@ -87,7 +87,7 @@ describe("workflow skill refs resolve", () => {
 
   test("every folio:skill ref names a skill in this repository", async () => {
     const skills = knownSkills();
-    const dir = join(ROOT, "skills", "workflows");
+    const dir = join(ROOT, "processes");
     const dangling: string[] = [];
 
     for (const file of readdirSync(dir).filter((f) => f.endsWith(".bpmn")).sort()) {

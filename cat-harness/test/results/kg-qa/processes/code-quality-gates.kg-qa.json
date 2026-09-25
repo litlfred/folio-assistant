@@ -1,0 +1,154 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CodeQualityGates",
+    "path": "processes/code-quality-gates.bpmn"
+  },
+  "source_hash": "sha256:0bbb6b81a3decd4bf1a4aacd13c1c4cf018afdcc1171495cdfbe80e0a9f711ce",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Lean",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Python",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_TypeScript",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_E2E",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Rust",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Advisories",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/code-quality-gates.yml",
+          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 14,
+    "fail": 2,
+    "n/a": 8,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/code-quality-gates.bpmn",
+      "code": ".github/workflows/code-quality-gates.yml",
+      "prose_hash": "0bbb6b81a3de",
+      "code_hash": "396d0456dac9",
+      "by": "agent",
+      "reason": "Re-read the process documentation against the yml change. The change adds one step, check:code-accounting, inside the TypeScript job. The prose's claim about that box is 'TypeScript IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES' and lists their families; a thirty-first gate of the same kind is what that sentence already describes, deliberately approximately, so the box's meaning does not move. Nothing about the six-job shape, the four-hard/two-warn asymmetry, continue-on-error or the lane changes: the new step is hard-failing inside an already-hard job, so it adds no warn-only mechanism to keep apart."
+    }
+  ]
+}

@@ -174,7 +174,7 @@ export const TodoItemSchema = z.object({
    *
    * ## Why a bare string rather than an enum of theme ids
    *
-   * Same reason `GraphNodeDirectorySchema.graphs` is an open string checked
+   * Same reason `GraphNodeDirectorySchema.graphKinds` is an open string checked
    * against the registry later: a closed enum has to be built at module load,
    * and this module is the CONTENT model — importing the theme table here
    * would drag rendering into the content schema and give every consumer of a
@@ -245,6 +245,11 @@ export const BlockBaseSchema = z.object({
    */
   audience: z.array(z.string()).optional(),
   uses: z.array(z.string()).optional(),
+  /**
+   * Former labels — see `BlockBase.renamedFrom` in `schemas/types.ts`.
+   * Declared here too because Zod strips what it does not know (bean `zdrf`).
+   */
+  renamedFrom: z.array(z.string().min(1)).optional(),
   foreshadows: z.array(z.string()).optional(),
   cites: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),

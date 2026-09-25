@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-19T08:52:35Z
-updated_at: 2026-09-19T09:56:04Z
+updated_at: 2026-09-22T21:05:00Z
 ---
 
 Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),
@@ -120,3 +120,73 @@ overlap on the other nine. Issues #369, #370, #371.
 All four Done-when boxes are now ticked. This epic stays in-progress as the
 container for its children rather than completing — an epic is a thematic
 container and is not worked on directly.
+
+## Closed 2026-09-21 — re-derived on `645dd7dd91`, with one stale path
+
+The proposal exists, at `cat-harness/docs/proposals/deployment-topologies.md` rather
+than the `docs/proposals/` this bean names: `e65dfe547f` moved proposals off
+the docs site into the declared trashcan. **Searched before concluding**, for
+the `pomp` reason — *"not in my checkout" is not "does not exist"*, and the
+first look at the path the bean gives found nothing.
+
+- 15 child beans declare `parent: folio-assistant-5a3l`; the bean says 13, so
+  the set grew rather than shrank.
+- The BA sign-off on the axes is recorded in the body, dated 2026-09-19.
+
+The children are unblocked against this vocabulary, which is what this bean
+existed to produce.
+
+Found by the `fkjo` sweep: this was `in-progress` with every box ticked.
+
+---
+
+## RE-OPENED 2026-09-22 on the owner's ruling — `completed` with 12 open children
+
+Owner, 2026-09-22: *"re-open 5a3l"*, answering stream 4's question *"`5a3l`
+(DEPLOYMENT) reads `completed` while 12 of its children are open. What should
+happen to it?"*
+
+**The finding, and where it came from.** Stream 4 of the #956 consolidation
+(`kpcl`) shipped `check:bean-rollup`, whose `closed-container-open-subtree`
+rule asks whether a bean's status contradicts its own subtree. It fired exactly
+once across the store, on this epic. The rule is pure graph and owns no clock:
+it needs no date to know that *finished* and *twelve children still open* cannot
+both be true.
+
+**Measured 2026-09-22T21:05Z against the store — 16 children, 12 open:**
+
+| | |
+|---|---|
+| in-progress | `0hi8` |
+| todo | `1lfx`, `2ngl`, `4y2i`, `61tg`, `6qk5`, `81vy`, `amom`, `mkqf`, `vljz`, `vm6m`, `wp49` |
+
+Eleven of those are this epic's own subject — the two topology beans, the mode
+beans, the deployment-awareness and staging-host beans, the test-data family.
+The twelfth, `mkqf`, is queued stream C, which exists *because* this work is
+open.
+
+**Why re-opening rather than closing the children or re-parenting them.** The
+three alternatives were put to the owner and each would have asserted something
+unmeasured: closing the twelve claims work is done that nobody re-derived;
+re-parenting claims they belong elsewhere, which is a judgement about each one;
+leaving it baselined keeps the roadmap reading DEPLOYMENT as finished while
+eleven of its beans are open. **The epic's own subtree is the evidence, and it
+says the work is not done.**
+
+### What this unwinds
+
+`mkqf` was moved off this epic in PR #967, by the session that had parented it
+here and so made the finding worse by one. **That move is now unnecessary** —
+with this epic open, `mkqf`'s original parenting was correct, and it is the
+honest one: `mkqf`'s larger half is this epic's eleven deployment beans. #967 is
+closed rather than merged, and its reasoning is preserved here.
+
+### For stream 4
+
+The `bean-rollup-baseline.json` entry for this epic in PR #962 **should now stop
+matching**, which is the property that file has so it shrinks rather than
+fossilises. Not edited from here: #962 is stream 4's and unmerged, and the
+baseline is its file to keep honest.
+
+**Nothing was closed, scrapped or deleted.** Only this epic's own claim about
+itself is corrected.

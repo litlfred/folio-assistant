@@ -2,6 +2,9 @@
 layout: default
 title: Beans and todos
 nav_order: 6
+documents:
+  - beans
+  - todos
 lang: en
 available_locales: ["en"]
 ---
@@ -68,14 +71,14 @@ first.
 ## The agent bean lifecycle
 {: #the-agent-bean-lifecycle data-fa-label="sec:beans-and-todos-the-agent-bean-lifecycle" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/bean-lifecycle.bpmn){: .fa-node-edit title="Edit skills/workflows/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/bean-lifecycle.bpmn){: .fa-node-edit title="Edit processes/bean-lifecycle.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-agent-bean-lifecycle.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-agent-bean-lifecycle.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/beans-and-todos/the-agent-bean-lifecycle.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/beans-and-todos/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-agent-bean-lifecycle">
   <img src="assets/img/workflows/bean-lifecycle.svg"
        alt="BPMN swimlane diagram with two lanes. In the agent's lane: durable work is identified, the agent runs an exact-title search before creating anything, then a gateway asks whether the bean already exists. If not, it creates one; if it does, a second gateway asks whose it is. A bean owned by someone else routes to the lower lane — sibling session or human — where the only action is to leave it alone and coordinate, ending there. The agent's own or an unclaimed bean is claimed as in-progress, worked on with the body kept current, and then reaches an outcome gateway with three branches: done goes to complete, not wanted goes to scrap with reasons and never delete, and blocked goes to recording the blocker and handing it back. All three converge on a single end event, state recorded.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/bean-lifecycle.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/bean-lifecycle.bpmn){: .btn .btn-outline }
 
 The diagram above is the whole cycle, and three of its edges are the ones
 worth reading twice.
@@ -128,7 +131,7 @@ Two different things can change a bean, and a step that confuses them will
 announce an effect it does not have.
 
 **The workflow engine** performs `claim`, `note` and `resolve` on a process
-instance's own bean when a step marked `<folio:bean op="…"/>` completes.
+instance's own bean when a step marked `<cat-harness.processes:bean op="…"/>` completes.
 `claim` sets `in-progress` and is idempotent; `note` appends; `resolve`
 completes the bean **only once the instance itself has completed**, because
 whether work is done is a judgement and a bean is not closed on someone else's
@@ -138,7 +141,7 @@ say-so.
 retitling, setting a blocker. The engine has no operation for any of these.
 
 This is not a hypothetical distinction. An activity in the CRDM diagram
-carried `<folio:bean action="create"/>` — `action`, where the engine reads
+carried `<cat-harness.processes:bean action="create"/>` — `action`, where the engine reads
 `op` — so it parsed as no operation at all. The step advertised that sign-off
 produced beans, performed nothing, and did so silently until somebody read the
 parser.

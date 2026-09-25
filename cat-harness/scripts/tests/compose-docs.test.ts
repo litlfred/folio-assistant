@@ -28,7 +28,16 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, readFileSync
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { compose, docsLayers, mergeConfig, treeDigest } from "../compose-docs.ts";
+import {
+  carriedInstances,
+  compose,
+  docsLayers,
+  instanceStub,
+  isWithheld,
+  mergeConfig,
+  treeDigest,
+  type ComposedInstance,
+} from "../compose-docs.ts";
 import {  } from "../../schemas/cat-harness.js";
 import { parse as parseYaml } from "yaml";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -46,11 +55,11 @@ const INSTANCE = "cat-harness";
  * `site-dir-single-answer.test.ts` guards against. The fixture derives them.
  */
 const ENTRIES = [
-  { id: "docs", path: "docs/", dependents: "reproduce", graphs: ["docs"] },
-  { id: "root-docs", path: "docs/", scope: "repository", dependents: "skip", graphs: ["docs"] },
+  { id: "docs", path: "docs/", dependents: "reproduce", graphKinds: ["docs"] },
+  { id: "root-docs", path: "docs/", scope: "repository", dependents: "skip", graphKinds: ["docs"] },
   // A non-docs entry, so the filter is doing something rather than happening
   // to match everything.
-  { id: "schemas", path: "schemas/", dependents: "skip", graphs: ["schemas"] },
+  { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas"] },
 ] as const;
 
 const layerDir = (root: string, id: string): string => {
@@ -125,9 +134,68 @@ describe("an EMPTY overlay composes byte-identically — the safety property", (
 
     const before = treeDigest(base.dir);
     const after = treeDigest(dest);
-    expect(after.size).toBe(before.size);
-    const differing = [...before].filter(([p, h]) => after.get(p) !== h).map(([p]) => p);
+
+    // THE PROPERTY IS "COMPOSITION NEVER CHANGES A BASE FILE", not "the tree
+    // has the same number of files in it". Those were the same assertion until
+    // instances could be composed (`jut3`), and the size check is the half
+    // that stopped being true: `smart-trust/docs/` now lands under
+    // `smart-trust/`, so the composed tree is base PLUS that.
+    //
+    // Weakening it to "the base files match" alone would license a composer
+    // that scattered files anywhere, so the additions are checked too: every
+    // path the composed tree adds must sit under a composed instance's own
+    // prefix. That is strictly stronger than the count it replaces, which
+    // said nothing about WHERE a new file could appear.
+    // WITHHELD PATHS ARE ABSENT ON PURPOSE, so the property is stated against
+    // the base MINUS them rather than against the base. Added 2026-09-21 with
+    // `publish: "staging-only"`.
+    //
+    // This is the one weakening in this file that had to be argued rather than
+    // just made. The property licenses pointing `docs-site.yml`'s `source:` at
+    // the composed tree, and it did so by saying composition changes NOTHING.
+    // A canonical compose now deliberately omits a page, so that sentence is
+    // no longer true as written.
+    //
+    // What replaces it is not "nothing changes except what changed" — that
+    // would license anything. It is two separate claims, and the second is why
+    // this is still a safety property:
+    //
+    //   1. every base file that is NOT withheld is byte-identical, and
+    //   2. the withheld set is exactly what the declarations asked for,
+    //      which `staging-only-publish.test.ts` asserts against the real
+    //      declaration (`["fsh-guts/"]`) rather than against whatever the
+    //      composer happened to drop.
+    //
+    // Without (2) this assertion would pass for a composer that silently lost
+    // files, since it would simply report them as withheld. The two tests are
+    // load-bearing together and neither is sufficient alone.
+    const withheld = report.withheld;
+    const differing = [...before]
+      .filter(([p]) => !isWithheld(p, withheld))
+      .filter(([p, h]) => after.get(p) !== h)
+      .map(([p]) => p);
     expect(differing).toEqual([]);
+
+    // And the omissions are ONLY the withheld ones — a base file missing for
+    // any other reason is the failure this property exists to catch.
+    const missingFromComposed = [...before.keys()].filter((p) => !after.has(p));
+    expect(missingFromComposed.sort()).toEqual([...withheld].sort());
+
+    const prefixes = report.composed.map((c) => `${c.under}/`);
+    const strays = [...after.keys()].filter(
+      (p) => !before.has(p) && !prefixes.some((pre) => p.startsWith(pre)),
+    );
+    expect(strays).toEqual([]);
+
+    // ...and the composition actually happened. Both checks above are
+    // satisfied by a composer that emitted nothing: no base file differs and
+    // there are no strays if there are no new files at all. The line this
+    // replaces read `expect(after.size).toBe(before.size + (after.size -
+    // before.size))`, which is an identity and guarded nothing — the same
+    // defect as a test that restates the expression it checks.
+    expect(report.composed.length).toBeGreaterThan(0);
+    const added = [...after.keys()].filter((p) => !before.has(p));
+    expect(added.length).toBeGreaterThan(0);
     rmSync(join(dest, ".."), { recursive: true, force: true });
   });
 
@@ -268,5 +336,168 @@ describe("the merge rule itself", () => {
     const { merged, changed } = mergeConfig({ a: 1, b: 2 }, { a: 9 });
     expect(merged).toEqual({ a: 9, b: 2 });
     expect(changed).toEqual(["a"]);
+  });
+});
+
+/**
+ * Bean `ga8a` — a composed instance is carried only when the branch touches it.
+ *
+ * `tebu` cut `reference/` and `api/` from a preview whose branch cannot have
+ * changed them. This is the same cut one directory over, and by 2026-09-23 the
+ * bigger one: measured across `origin/gh-pages`, `smart-trust/` was **776.6 MB
+ * over 13 previews, 37 % of a 2.10 GB `STAGING/` tree**, against `reference/`'s
+ * 464.7 MB — because `smart-trust/docs/` is 3.2 MB of markdown that Jekyll
+ * inflates to 111.6 MB of themed HTML across 681 pages.
+ *
+ * ## What is asserted
+ *
+ * **The decision, not the size.** A test that pinned megabytes would fail every
+ * time somebody added a page, and the number it guarded would be this repo's
+ * own `dh4f` shape: a figure in a test rather than a measurement. The saving is
+ * measured against the real tree below as a RATIO with a floor, which fails if
+ * the cut stops working and survives the corpus growing.
+ *
+ * **Both directions of the doubt rule.** "No list" and "an empty list" are
+ * different facts — one is a failed lookup, the other a determined zero — and
+ * conflating them is exactly the failure this family of bugs keeps making.
+ */
+describe("carriedInstances — what a preview must carry (bean `ga8a`)", () => {
+  /** A composed instance shaped like the real one, without touching disk. */
+  const inst = (root: string, under = root): ComposedInstance => ({
+    instance: under,
+    dir: `/nowhere/${root}/docs`,
+    under,
+    root,
+  });
+
+  test("NO list carries everything — any doubt keeps the pages under review", () => {
+    // The asymmetry that decides the default: a preview that is too big is a
+    // threshold finding somebody reads; a preview missing the pages under
+    // review is a reviewer misled.
+    const d = carriedInstances([inst("smart-trust"), inst("who-iris")], undefined);
+    expect(d.map((x) => x.carry)).toEqual([true, true]);
+    for (const x of d) expect(x.why).toContain("no readable file list");
+  });
+
+  test("an EMPTY list is a determined zero, and it stubs", () => {
+    // A pull request that genuinely changes nothing touches no instance. If
+    // this fell through to "carry everything", the flag would be unable to
+    // distinguish a failed API call from a real answer — the `dh4f` shape.
+    const d = carriedInstances([inst("smart-trust")], []);
+    expect(d[0]!.carry).toBe(false);
+  });
+
+  test("a file under the instance carries it, and the reason NAMES that file", () => {
+    // Named rather than counted: a build log saying "carried" without saying
+    // what triggered it leaves nobody able to check the predicate.
+    const d = carriedInstances([inst("smart-trust")], [
+      "cat-harness/docs/index.md",
+      "smart-trust/fhir-artifact-index/dak/x.json",
+    ]);
+    expect(d[0]!.carry).toBe(true);
+    expect(d[0]!.why).toContain("smart-trust/fhir-artifact-index/dak/x.json");
+  });
+
+  test("the predicate is the INSTANCE, not its composed directory", () => {
+    // `smart-trust/docs/` is GENERATED from `fhir-artifact-index/` by
+    // `scripts/`. A branch that changes the generator and regenerates in the
+    // same commit must still get the rebuilt pages, so matching `docs/` alone
+    // would drop exactly the review that needed them.
+    expect(carriedInstances([inst("smart-trust")], ["smart-trust/scripts/gen.ts"])[0]!.carry).toBe(
+      true,
+    );
+  });
+
+  test("a branch touching nothing of the instance's stubs it", () => {
+    const d = carriedInstances([inst("smart-trust")], ["cat-harness/schemas/types.ts"]);
+    expect(d[0]!.carry).toBe(false);
+    expect(d[0]!.why).toContain("smart-trust/");
+  });
+
+  test("a SIBLING sharing the name's prefix does not count as a touch", () => {
+    // `startsWith("smart-trust")` without the separator would carry the whole
+    // IG for a branch that only edited `smart-trust-notes/`. Cheap to get
+    // wrong, silent when wrong, and it inflates rather than truncates — so
+    // nothing downstream would ever notice.
+    expect(
+      carriedInstances([inst("smart-trust")], ["smart-trust-notes/readme.md"])[0]!.carry,
+    ).toBe(false);
+  });
+
+  test("a `./`-prefixed path still matches", () => {
+    // Some diff tools spell it that way. A miss here reads as "this branch
+    // touches nothing", which is the failure direction that loses pages.
+    expect(carriedInstances([inst("smart-trust")], ["./smart-trust/docs/x.md"])[0]!.carry).toBe(
+      true,
+    );
+  });
+
+  test("the match is on the DIRECTORY, not the declaration's name", () => {
+    // `under` is what a URL carries; `root` is where the files sit. They
+    // coincide today and are free to diverge, and matching the wrong one would
+    // fail silently the day somebody renames a declaration.
+    const renamed = inst("smart-trust", "WHO SMART Trust");
+    expect(carriedInstances([renamed], ["smart-trust/docs/x.md"])[0]!.carry).toBe(true);
+    expect(carriedInstances([renamed], ["WHO SMART Trust/x.md"])[0]!.carry).toBe(false);
+  });
+
+  test("the stub says where the full copy is — `pb04`", () => {
+    // The navbar's harness tiles address `/<instance>/`. Removing the tree
+    // outright turns a working link into a 404 a reviewer has to diagnose.
+    const s = instanceStub(inst("smart-trust"));
+    expect(s).toContain("https://litlfred.github.io/folio-assistant/smart-trust/");
+    expect(s).toContain("smart-trust/");
+    expect(s.startsWith("---\n")).toBe(true);
+  });
+});
+
+describe("the cut, on the REAL tree", () => {
+  test("every composed instance gets exactly one decision", () => {
+    // Reported rather than inferred: a tree quietly missing an instance's
+    // pages must be distinguishable from an instance that failed to read.
+    const dest = join(mkdtempSync(join(tmpdir(), "composecarry-")), "site");
+    const r = compose(dest, REPO, { changedFiles: ["cat-harness/docs/index.md"] });
+    expect(r.composed.length).toBeGreaterThan(0);
+    expect(r.carried.map((d) => d.instance.under).sort()).toEqual(
+      r.composed.map((c) => c.under).sort(),
+    );
+    rmSync(join(dest, ".."), { recursive: true, force: true });
+  });
+
+  test("a branch touching no instance composes MATERIALLY fewer files", () => {
+    // The saving, measured rather than projected — bean `ga8a`'s fourth
+    // Done-when. Stated as a ratio with a floor rather than as megabytes: a
+    // pinned byte count would fail on every added page while saying nothing
+    // about whether the cut still fires.
+    const a = join(mkdtempSync(join(tmpdir(), "composeall-")), "site");
+    const b = join(mkdtempSync(join(tmpdir(), "composecut-")), "site");
+    const all = compose(a, REPO);
+    const cut = compose(b, REPO, { changedFiles: ["cat-harness/docs/index.md"] });
+
+    const nAll = Object.keys(all.suppliedBy).length;
+    const nCut = Object.keys(cut.suppliedBy).length;
+    // The cut fired at all, and on something worth cutting. Without the second
+    // claim this passes for a composer that dropped a single page.
+    expect(cut.carried.some((d) => !d.carry)).toBe(true);
+    expect(nCut).toBeLessThan(nAll * 0.75);
+
+    // ...and what remains in place of each stubbed instance is its stub, not a
+    // hole. A 404 where a tile links is the `pb04` defect this replaces.
+    for (const d of cut.carried.filter((x) => !x.carry)) {
+      const stub = join(b, d.instance.under, "index.md");
+      expect(existsSync(stub)).toBe(true);
+      expect(readFileSync(stub, "utf-8")).toContain("not built into this preview");
+    }
+    rmSync(join(a, ".."), { recursive: true, force: true });
+    rmSync(join(b, ".."), { recursive: true, force: true });
+  });
+
+  test("with no list, the real tree carries every instance in full", () => {
+    // The canonical publisher passes nothing, so this is the property that
+    // keeps `docs-site.yml` unaffected by the flag.
+    const dest = join(mkdtempSync(join(tmpdir(), "composefull-")), "site");
+    const r = compose(dest, REPO);
+    expect(r.carried.every((d) => d.carry)).toBe(true);
+    rmSync(join(dest, ".."), { recursive: true, force: true });
   });
 });

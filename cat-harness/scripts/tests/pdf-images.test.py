@@ -183,8 +183,13 @@ def main() -> int:
     # like the arm above: these live in the folio's uploads/, one level out.
     folio_root = os.path.dirname(ROOT)
     captures = [
-        # (file, expected roles) -- measured 2026-09-21.
-        ("Agent Skills - Google Antigravity Docs.pdf", {"chrome": 104}),
+        # (file, expected roles) -- DISTINCT images, not placements. Measured
+        # 2026-09-21 as {"chrome": 104}; that was 104 PLACEMENTS of 44 image
+        # objects, each of the browser's nav glyphs re-emitted on every page.
+        # `extract` now returns one entry per `xref` (bean `j820`, issue
+        # #1234), so the honest number is 44 and the 104 lives in
+        # `placements[]`, which the assertion below counts.
+        ("Agent Skills - Google Antigravity Docs.pdf", {"chrome": 44}),
         # The one that matters most: a browser print whose images are REAL
         # figures. If the bound ever drifts up, this is what goes red -- a
         # change that made everything chrome would pass the promotion gate and
@@ -209,6 +214,12 @@ def main() -> int:
                   and i["basis"].get("producer") for i in s2["images"]))
         check("...no chrome entry carries a narrative slot",
               all("narrative" not in i for i in s2["images"] if i["role"] == "chrome"))
+        # EVERY PLACEMENT IS STILL RECORDED. Without this, a dedup bug that
+        # dropped images rather than collapsing them would read as a smaller
+        # count and pass -- which is exactly how the number above moved.
+        placed = sum(len(i.get("placements", [None])) for i in s2["images"])
+        check(f"...{placed} placement(s) across {len(s2['images'])} distinct image(s)",
+              placed >= len(s2["images"]))
         check("...every figure still does",
               all("narrative" in i for i in s2["images"] if i["role"] == "figure"))
     if not ran_capture:

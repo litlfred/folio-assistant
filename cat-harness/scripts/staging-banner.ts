@@ -96,6 +96,8 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "fs";
 import { join, relative } from "path";
 
+import { commentGuard } from "./html-comments.ts";
+
 /** The per-preview facts. One file per build, read by the banner at load time. */
 export interface StagingFacts {
   /** Raw branch name — the slug is sanitised, this is not. */
@@ -112,8 +114,17 @@ export interface StagingFacts {
   issue: string | null;
   issueUrl: string | null;
   runUrl: string;
-  /** Root of the PUBLISHED site, for the compare link. */
+  /**
+   * Root of the PUBLISHED site this preview is compared with: `main`'s, or for
+   * a stacked PR its base branch's preview (bean `5uuf`).
+   */
   mainSite: string;
+  /**
+   * Which branch `mainSite` is the published site of, so a page can say which
+   * "before" it used. `null` when the caller did not say: read as `main`, the
+   * only before side there was until `5uuf`.
+   */
+  beforeRef?: string | null;
   /**
    * Whether the publish ref could be read at all. `false` collapses the
    * compare link to the site root, worded neutrally — "could not tell" must
@@ -208,13 +219,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \\u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \\u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \\u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \\u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \\u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \\u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
@@ -265,6 +276,48 @@ function htmlFiles(dir: string, out: string[] = []): string[] {
 }
 
 /**
+ * The first `<body …>` that is REAL — i.e. not inside an HTML comment.
+ *
+ * ## Why this is not `html.search(/<body/i)`
+ *
+ * It was, and it put the banner inside a comment on 323 of 670 staged pages —
+ * 48 % of a preview, measured on the deployed tree, 2026-09-21. The prose
+ * comment in `docs/_includes/head_custom.html` that explains why a `<meta>`
+ * is used rather than a `<div>` contains the words `<body>` as an EXAMPLE:
+ *
+ *     A browser hoists a stray `<div>` into `<body>` and the code still works
+ *
+ * `head_custom.html` is in the `<head>` of every just-the-docs page, so that
+ * sentence is the first `<body>` in the file and the non-global `replace`
+ * spent its one substitution on it. The real tag, hundreds of lines later,
+ * got nothing. The `who-iris` pages were fine because they are generated
+ * without that include — which is why the failure looked like a `who-iris`
+ * feature rather than a bug.
+ *
+ * **A comment about the banner broke the banner**, and nothing said so: the
+ * page still contained `data-fa-staging-banner`, so every check that asked
+ * "did the string land" answered yes.
+ *
+ * Returns the index just past the opening tag, or `-1` when the document has
+ * no real `<body>` at all.
+ */
+export function bodyInsertionPoint(html: string): number {
+  const inComment = commentGuard(html);
+  for (const m of html.matchAll(/<body[^>]*>/gi)) {
+    if (!inComment(m.index!)) return m.index! + m[0].length;
+  }
+  return -1;
+}
+
+/**
+ * What happened to one page. THREE states, not two, and the third is the one
+ * that was being reported as success: a page the injector could not place the
+ * banner in looked exactly like a page it had just placed it in, because the
+ * only question asked was "did the bytes change".
+ */
+export type Injection = "injected" | "already" | "no-body";
+
+/**
  * Inject after the WHOLE opening tag, not the literal `<body`.
  *
  * Matching `<body` alone re-emitted `<body>` and left the original tag's own
@@ -275,25 +328,32 @@ function htmlFiles(dir: string, out: string[] = []): string[] {
  * Idempotent: a page that already carries the banner is left alone, so a
  * second pass over a tree is a no-op rather than a doubled banner.
  */
-export function injectInto(html: string): string {
-  if (html.includes("data-fa-staging-banner")) return html;
-  return html.replace(/<body([^>]*)>/i, (_m, attrs: string) => `<body${attrs}>${FRAGMENT}`);
+export function injectInto(html: string): { html: string; outcome: Injection } {
+  if (html.includes("data-fa-staging-banner")) return { html, outcome: "already" };
+  const at = bodyInsertionPoint(html);
+  if (at < 0) return { html, outcome: "no-body" };
+  return { html: html.slice(0, at) + FRAGMENT + html.slice(at), outcome: "injected" };
 }
 
-export function run(site: string, facts: StagingFacts): { injected: number; skipped: number } {
+export function run(
+  site: string,
+  facts: StagingFacts,
+): { injected: number; skipped: number; noBody: string[] } {
   writeFileSync(join(site, "staging.json"), JSON.stringify(facts, null, 2) + "\n");
   let injected = 0;
   let skipped = 0;
+  const noBody: string[] = [];
   for (const f of htmlFiles(site)) {
     const before = readFileSync(f, "utf-8");
-    const after = injectInto(before);
-    if (after === before) skipped++;
+    const { html: after, outcome } = injectInto(before);
+    if (outcome === "no-body") noBody.push(relative(site, f));
+    else if (outcome === "already") skipped++;
     else {
       writeFileSync(f, after);
       injected++;
     }
   }
-  return { injected, skipped };
+  return { injected, skipped, noBody };
 }
 
 function flag(name: string): string | undefined {
@@ -345,11 +405,12 @@ if (import.meta.main) {
     issueUrl: issue ? `${required("issues-url").replace(/\/+$/, "")}/${issue}` : null,
     runUrl: required("run-url"),
     mainSite,
+    beforeRef: flag("before-ref") || null,
     mainPagesKnown,
     newPages,
   };
 
-  const { injected, skipped } = run(site, facts);
+  const { injected, skipped, noBody } = run(site, facts);
   console.log(
     mainPagesKnown
       ? `Read the publish ref; ${newPages.length} page(s) have no counterpart on main`
@@ -360,4 +421,19 @@ if (import.meta.main) {
       (skipped ? ` (${skipped} already carried it)` : "") +
       ` and wrote staging.json`,
   );
+
+  // A PAGE WITH NO BANNER IS INDISTINGUISHABLE FROM THE LIVE SITE, which is
+  // the whole reason the banner exists — so this fails the build rather than
+  // printing a warning nobody reads in a green job. Measured before making it
+  // fatal: of 670 pages on the deployed preview, 0 had no `<body>`, so this
+  // branch costs nothing today and catches the day a generator emits a
+  // fragment as a page.
+  if (noBody.length > 0) {
+    console.error(
+      `\n${noBody.length} page(s) have no <body> tag outside a comment, so they carry NO banner:`,
+    );
+    for (const f of noBody.slice(0, 20)) console.error(`  · ${f}`);
+    if (noBody.length > 20) console.error(`  … and ${noBody.length - 20} more`);
+    process.exit(1);
+  }
 }

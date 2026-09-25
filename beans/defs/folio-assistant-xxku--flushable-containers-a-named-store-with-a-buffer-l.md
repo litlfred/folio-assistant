@@ -139,7 +139,7 @@ happens also to be the last thing standing between HTML and deduplication —
 two slug-bearing lines are enough to make a blob distinct.
 
 **Note what this does NOT touch.** `@context` prefixes are already absolute and
-slug-free (`https://litlfred.github.io/folio-assistant/cat-bootstrap/ns#`), so the
+slug-free (`https://litlfred.github.io/folio-assistant/bootstrap/ns#`), so the
 vocabulary namespace is stable across previews and was never at risk.
 
 And a question I am deliberately not answering, because it is the owner's:

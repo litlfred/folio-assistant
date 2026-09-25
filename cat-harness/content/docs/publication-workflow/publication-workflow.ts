@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "publication-workflow",
   title: "Publication workflow",
+  documents: ["processes"],
   navOrder: 6,
   nodes: [
     {
@@ -43,11 +44,11 @@ export default webpage({
       title: "Editing and the HCI validation gate",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/editing-hci-validation.bpmn",
+        source: "processes/editing-hci-validation.bpmn",
         rendered: "assets/img/workflows/editing-hci-validation.svg",
         alt: "BPMN swimlane diagram: an editor describes a change, an authoring agent drafts it, the proposed change fans out through mechanical and non-mechanical validation, the findings are shown to the editor, and only an accepted change is committed to the corpus.",
         sourceLinks: [
-          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/editing-hci-validation.bpmn" },
+          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/editing-hci-validation.bpmn" },
         ],
         linkStyle: "button",
       },
@@ -76,11 +77,11 @@ export default webpage({
       title: "From corpus to published folio",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/draft-to-publication.bpmn",
+        source: "processes/draft-to-publication.bpmn",
         rendered: "assets/img/workflows/draft-to-publication.svg",
         alt: "BPMN swimlane diagram: the corpus is built into a draft publication, QA gates run, the publication manager circulates it, the review team and SMEs review in parallel, change requests become beans that re-enter editing, and an approved draft is authorised by the programme manager and published.",
         sourceLinks: [
-          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/draft-to-publication.bpmn" },
+          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/draft-to-publication.bpmn" },
         ],
         linkStyle: "button",
       },
@@ -92,11 +93,11 @@ export default webpage({
       title: "Content lifecycle overview",
       asset: {
         kind: "bpmn",
-        source: "skills/workflows/content-lifecycle.bpmn",
+        source: "processes/content-lifecycle.bpmn",
         rendered: "assets/img/workflows/content-lifecycle.svg",
         alt: "BPMN swimlane diagram: the programme manager plans, the plan is seeded as beans, editing and HCI validation runs, integration test and QA sweep, draft-review-publish, feedback is triaged and filed as beans, then either another cycle or retirement.",
         sourceLinks: [
-          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/content-lifecycle.bpmn" },
+          { text: "Open the BPMN source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn" },
         ],
         linkStyle: "button",
       },

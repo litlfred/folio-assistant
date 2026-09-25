@@ -52,6 +52,7 @@ import {
 } from "./checks.ts";
 import type {
   BeanEvidence,
+  DoneWhenState,
   HealthContext,
   Probe,
   RepoSizeEvidence,
@@ -560,9 +561,9 @@ function declaredDir(
   repoRoot: string,
   root: string,
   file: string,
-  read: (raw: unknown) => { directories: { path: string; graphs: string[] }[] },
-  pick: (g: { directories: { path: string; graphs: string[] }[] }) => { path: string } | undefined,
-  fallback: { directories: { path: string; graphs: string[] }[] },
+  read: (raw: unknown) => { directories: { path: string; graphKinds: string[] }[] },
+  pick: (g: { directories: { path: string; graphKinds: string[] }[] }) => { path: string } | undefined,
+  fallback: { directories: { path: string; graphKinds: string[] }[] },
 ): { dir: string } | { reason: string } {
   const graphPath = join(repoRoot, root, file);
   let graph = fallback;
@@ -599,6 +600,18 @@ const OPTIONS_HEADING = /^##\s+(?:considered\s+)?options\b/i;
 
 /** A top-level list item — `- x`, `* x` or `1. x`. Indented items are sub-points of one option. */
 const OPTION_ITEM = /^(?:[-*]|\d+\.)\s+\S/;
+
+/**
+ * An option written as its own subheading — `### A — …`, `### Option B:`.
+ *
+ * A SINGLE capital letter is required after the optional `Option`, so an
+ * ordinary subheading inside the section does not match: `### Tier 1 — a person
+ * types these` fails because `T` is followed by `ier`, not by a separator.
+ */
+const OPTION_SUBHEADING = /^###\s+(?:Option\s+)?[A-Z](?:[.):]|\s)/;
+
+/** An option written as a bold enumerated paragraph — `**A. Generate them.**` */
+const OPTION_ENUMERATED = /^\*\*[A-Z][.)]\s/;
 
 /**
  * How many options a bean's options section lists, or `undefined` when it has
@@ -639,16 +652,111 @@ export function hasRenderedDecision(text: string): boolean {
   return RENDERED_DECISION_ROWS.every((r) => r.test(text));
 }
 
+/**
+ * The `## Done when` heading, in every spelling the store actually uses.
+ *
+ * Measured 2026-09-21 across 457 beans: **25 distinct spellings**, among them
+ * `### Done when`, `## Done when — revised`, `## Done when — REPLACES the list
+ * above` and `## Done when — status`. All 25 begin with the two words, so the
+ * prefix is what is matched and the qualifier is deliberately not parsed —
+ * reading "revised" or "REPLACES" as an instruction about WHICH list counts
+ * would make this check adjudicate supersession, which is a judgement about
+ * intent rather than a fact about the file.
+ */
+const DONE_WHEN_HEADING = /^#{2,3}\s+done when\b/i;
+/** A GFM task-list item, ticked or not. The store writes both `- [x]` and `[x]`. */
+const DONE_WHEN_BOX = /^\s*(?:[-*]\s*)?\[([ xX])\]/;
+
+/**
+ * What a bean's own completion criteria say about it.
+ *
+ * Four states, and the two that are NOT about ticking are the point — bean
+ * `fkjo`, which exists because an `in-progress` bean is a CLAIM a sibling
+ * honours, so one that says "done" in its body and "claimed" in its front
+ * matter is two answers to one question.
+ *
+ * - `absent` — no Done-when section. 26 of 96 claimed beans, measured
+ *   2026-09-21. Nothing was recorded, so nothing can be concluded.
+ * - `unreadable` — a Done-when section carrying **no checkboxes at all**, so
+ *   its criteria are prose or plain bullets. 15 of 96.
+ * - `open` / `all-ticked` — the machine-readable cases.
+ *
+ * **`unreadable` wins over `all-ticked` when a bean has both**, and that rule
+ * is the whole reason this is not a plain box count. Bean `z4mq` carries TWO
+ * matching headings: its real criteria are a `•` bullet list under the first,
+ * and under `## Done when — item 3` sits a three-box SUB-CHECKLIST of one
+ * item — all ticked. A body-wide count of `[x]` calls that bean finished; so
+ * does a count scoped to its Done-when sections. What separates it is that one
+ * of those sections states criteria this cannot read, and a bean with any
+ * unreadable criterion is not a bean whose criteria are all met.
+ *
+ * That direction is chosen deliberately. Suppressing a genuinely finished bean
+ * costs a report nobody gets; reporting an unfinished one spends a person's
+ * attention on re-deriving work that is not done — and `fkjo` was opened
+ * precisely because that attention had already been spent once.
+ */
+export function doneWhenState(text: string): DoneWhenState {
+  const lines = text.split("\n");
+  const starts = lines.flatMap((l, i) => (DONE_WHEN_HEADING.test(l) ? [i] : []));
+  if (starts.length === 0) return { kind: "absent" };
+
+  let ticked = 0;
+  let total = 0;
+  for (const at of starts) {
+    let inSection = 0;
+    for (let i = at + 1; i < lines.length; i++) {
+      // Any heading at h1–h3 ends the section. A DEEPER heading does not, so a
+      // `#### Note` inside the criteria keeps them together.
+      if (/^#{1,3}\s/.test(lines[i]!)) break;
+      const m = DONE_WHEN_BOX.exec(lines[i]!);
+      if (!m) continue;
+      inSection++;
+      total++;
+      if (m[1]!.toLowerCase() === "x") ticked++;
+    }
+    // A matching heading whose section holds no checkbox at all: the criteria
+    // are there and this cannot read them. See the type's docs for why this
+    // outranks everything counted above.
+    if (inSection === 0) return { kind: "unreadable" };
+  }
+  return ticked === total ? { kind: "all-ticked", total } : { kind: "open", ticked, total };
+}
+
 export function countConsideredOptions(text: string): number | undefined {
   const lines = text.split("\n");
   const at = lines.findIndex((l) => OPTIONS_HEADING.test(l));
   if (at < 0) return undefined;
-  let n = 0;
+  // THREE FORMS, AND THE MOST STRUCTURED ONE WINS — bean `vq8g`.
+  //
+  // Counting top-level list items alone was wrong in BOTH directions on the
+  // real store, measured 2026-09-23 over the 12 beans that have an options
+  // heading:
+  //
+  //   · `j6t3` and `xgd8` write their options as bold enumerated paragraphs
+  //     (`**A. …**`) and were counted as ZERO. Both carry FIVE options against
+  //     the store's typical three, so the two most developed analyses in the
+  //     corpus were the two reported empty — and the finding's action says to
+  //     "drop the section", which would have destroyed them.
+  //   · `dhvf` writes four options as `### A —` subheadings with Pro/Con/Cost
+  //     bullets beneath each, and was counted as TEN.
+  //
+  // MADR is the authority here and it is FORMAT-AGNOSTIC: `madr.md` asks for
+  // "at least two, every one real" and never for a markdown list. The list
+  // requirement was the detector's invention, so the detector is what changes.
+  //
+  // The forms are NOT SUMMED. A section enumerates its options one way, and the
+  // other matches are sub-points of those options — summing `dhvf` would give
+  // 14 for a bean with 4. So the most structured form present wins: an option
+  // subheading is an option, a bold enumeration is an option, and bare list
+  // items are options only when neither appears.
+  const counts = { subheading: 0, enumerated: 0, item: 0 };
   for (let i = at + 1; i < lines.length; i++) {
     if (/^#{1,2}\s/.test(lines[i]!)) break;
-    if (OPTION_ITEM.test(lines[i]!)) n++;
+    if (OPTION_SUBHEADING.test(lines[i]!)) counts.subheading++;
+    else if (OPTION_ENUMERATED.test(lines[i]!)) counts.enumerated++;
+    else if (OPTION_ITEM.test(lines[i]!)) counts.item++;
   }
-  return n;
+  return counts.subheading > 0 ? counts.subheading : counts.enumerated > 0 ? counts.enumerated : counts.item;
 }
 
 export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
@@ -691,7 +799,9 @@ export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
       // appear inside front matter, so narrowing the input would only add a
       // parse step that can go wrong.
       consideredOptions: countConsideredOptions(text),
+      doneWhen: doneWhenState(text),
       renderedDecision: hasRenderedDecision(text),
+      parent: frontMatterValue(fm, "parent"),
     });
   }
   // An empty store is not a clean one. A walk that found nothing is how a

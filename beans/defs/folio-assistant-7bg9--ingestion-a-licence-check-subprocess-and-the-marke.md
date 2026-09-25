@@ -18,7 +18,7 @@ parallel and not pivot.
 
 Measured 2026-09-20 against `origin/main` at `dc78e7ccf`:
 
-    cat-harness/skills/workflows/document-ingestion.bpmn
+    cat-harness/processes/document-ingestion.bpmn
       "Document ingestion — uploads/ to the L1 source knowledge graph"
       callActivity -> Process_ExtractStructure
                       Process_DeriveContent

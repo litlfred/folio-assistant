@@ -25,7 +25,7 @@
  * ## The edges are the point
  *
  * A list of skills is not a graph. What makes this worth publishing is that
- * BPMN activities carry `<folio:skill ref="…"/>` and sit in a lane, so the
+ * BPMN activities carry `<bootstrap.processes:skill ref="…"/>` and sit in a lane, so the
  * export can say **which process step is implemented by which skill, performed
  * by which role** — a relation that exists on disk today and that no tool
  * surfaces. `check:workflow-refs` already guarantees those refs resolve, so
@@ -39,15 +39,22 @@
  * looking at part of one. Bean `dh4f` is the local precedent.
  *
  * @module scripts/kg-export
+ *
+ * @conformsTo schema-org
+ * @conformsTo w3c-prov-o
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-xsd11-datatypes
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative, resolve } from "node:path";
+import { join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
-import { BASE_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { readPolicyGrants } from "../schemas/odrl.js";
+import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
@@ -62,6 +69,7 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
+import { isExternalContract, skillContracts } from "./skill-contracts.js";
 import {
   isSkillMd,
   kgDirectories,
@@ -72,8 +80,7 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
-import "../schemas/folio-graph-kind.js"; // registers `folio` — see directory-conventions
-import { tools } from "../tools/index.js";
+import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
@@ -133,7 +140,7 @@ const SKILL_IO_DIR = "schemas/skills";
  * Directories holding BPMN processes, DISCOVERED.
  *
  * This was the literal `docs/workflows`, and a sibling PR moved the diagrams
- * to `skills/workflows/` while this branch was open. A hardcoded path does not
+ * to `processes/` while this branch was open. A hardcoded path does not
  * fail when its target moves — it finds nothing and reports a clean run over
  * zero processes, which is bean `dh4f` exactly. That is the FOURTH hardcoded
  * path in this module to be wrong; the pattern is now a rule: this exporter
@@ -146,13 +153,13 @@ const SKILL_IO_DIR = "schemas/skills";
  *
  * It walked the filesystem — every directory under the root to depth 4, minus
  * a skip list of *names*. That was right while this repository was the only
- * instance in the tree. `cat-bootstrap/` is now a second one, with its own
+ * instance in the tree. `bootstrap/` is now a second one, with its own
  * declaration, and the walk does not know that: measured 2026-09-19 on `main`,
  * `_kg/folio-assistant.jsonld` contained **88** references to
  * `Process_CatBootstrap`. CatBootstrap's process was being published as part of
  * folio-assistant's graph.
  *
- * The repair that suggests itself is `skip.add("cat-bootstrap")` — a directory
+ * The repair that suggests itself is `skip.add("bootstrap")` — a directory
  * name written in code, which is the defect `check:declared-paths` exists to
  * refuse, and which would need another line for every instance ever added.
  * Reading the declaration needs none: an instance's diagrams are the ones it
@@ -234,6 +241,19 @@ export function buildContext(): Record<string, unknown> {
     sourceTreeDirty: { "@id": termIri("sourceTreeDirty"), "@type": `${XSD}boolean` },
     sourceCommitUnavailable: termIri("sourceCommitUnavailable"),
 
+    // §3.4's published dependency set. `uri` is a LINK — it is the thing a
+    // consumer dereferences, and a bare string here would be the `inSubgraph`
+    // mistake: a second, unresolvable way of naming something that resolves.
+    // `version` is NOT redeclared here: it is already `schema:softwareVersion`
+    // above, and a dependency's version is a software version. A second
+    // `folio:version` beside it would be two names for one term in one
+    // document — the exact drift the single term table exists to stop.
+    dependsOn: termIri("dependsOn"),
+    packageId: termIri("packageId"),
+    uri: { "@id": termIri("uri"), ...link },
+    dependsOnGaps: termIri("dependsOnGaps"),
+    dependsOnUnavailable: termIri("dependsOnUnavailable"),
+
     // Edges. Each of these is a LINK, not a string — see above.
     partOf: { "@id": termIri("partOf"), ...link },
     // A LINK, not a literal, and the gate was right to demand the decision:
@@ -255,8 +275,11 @@ export function buildContext(): Record<string, unknown> {
     // off five skill modules onto the one capability it describes.
     fallbackToCapability: { "@id": termIri("fallbackToCapability"), ...link },
     satisfies: { "@id": termIri("satisfies"), ...link },
-    // The role REGISTRY's own two edges, as against the lane-derived view.
-    // `hasSkill` is what the role knows; `bindsLane` is where it is bound.
+    // The role REGISTRY's edge, and the lane's edge to it. `hasSkill` is what
+    // the role knows; `bindsRole` is on the LANE, naming the role it binds
+    // (its `<bootstrap.processes:role ref>`). It was `bindsLane` on the role until #1168: a
+    // role is the general node and must not name its lanes (data-modelling
+    // step 8).
     //
     // REUSED, not coined. `schemas/role-graph.ts`'s own JSON-LD projection
     // already publishes exactly these two relations under these two IRIs, so
@@ -268,7 +291,7 @@ export function buildContext(): Record<string, unknown> {
     // Links for `partOf`'s reason: a bare name leaves a consumer to re-derive
     // the IRI this document already minted.
     hasSkill: { "@id": termIri("hasSkill"), ...link },
-    bindsLane: { "@id": termIri("bindsLane"), ...link },
+    bindsRole: { "@id": termIri("bindsRole"), ...link },
     // A LINK: the artefact's published URL, which dereferences. Undeclared it
     // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
     // property names were used in `@graph` and absent from `@context`, so the
@@ -435,7 +458,7 @@ export function buildContext(): Record<string, unknown> {
     // wrong coercion this bean warns about, not an edge.
     hasCapability: { "@id": termIri("hasCapability"), ...link },
     // Roles and permissions stay LITERALS, deliberately and provisionally. The
-    // role registry (`skills/roles/roles.json`) and the permission vocabulary
+    // role registry (`scenarios/roles.json`) and the permission vocabulary
     // (`skills/permissions/permissions.json`) are NOT exported, so this graph
     // holds no node for any of them -- the Role nodes it does hold are BPMN
     // LANES, a different identity scheme with different names. Coercing would
@@ -443,6 +466,9 @@ export function buildContext(): Record<string, unknown> {
     // until those registries are nodes, and `roleName`/`permissionName` say so
     // instead of implying an edge the graph cannot honour.
     roleName: termIri("roleName"),
+    // A literal like `roleName`: requirement statements are not nodes of this
+    // graph, so a `req:<id>#<key>` is a name here, not a link (#1168, B3).
+    satisfiesStatement: termIri("satisfiesStatement"),
     permissionName: termIri("permissionName"),
 
     // ---- Structured values whose own vocabulary this graph does not model ---
@@ -522,6 +548,18 @@ export function buildContext(): Record<string, unknown> {
     // where the truncation check used to be, which is worse than leaving it
     // undeclared, because undeclared at least loses the whole thing visibly.
     counts: { "@id": termIri("counts"), "@type": "@json" },
+    // `omitted` — the instance-bound collectors that were NOT run, present
+    // only on a foreign instance's document. A plain list of collector names,
+    // so a declared container is enough; there is no open key set as there is
+    // for `counts`.
+    //
+    // It is a root field carrying real data, and `dyd3` is why it is here: it
+    // came over from `gen-bootstrap-graph.ts` when that generator's publish
+    // step was retired, because it was the one thing that document had which
+    // this one did not. Adding it WITHOUT this line made `undeclaredRootTerms`
+    // fatal on the first run — which is the guard working, and the reason the
+    // field is not silently dropped by a JSON-LD processor instead.
+    omitted: { "@id": termIri("omitted"), "@container": "@set" },
     //
     // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
     // `danglingLinks` were declared here and are NOT any more — the document
@@ -647,7 +685,7 @@ function keywordAliases(): Set<string> {
  * 404s. An `@id` that looks dereferenceable and is not is worse than one that
  * is obviously local.
  */
-function makeIri(docIri: string, kind: string, id: string): string {
+export function makeIri(docIri: string, kind: string, id: string): string {
   // `/` is legal in a fragment and is the separator this scheme uses, so it is
   // deliberately NOT escaped — `encodeURIComponent` would turn every process
   // node into `…#process/P%2Fnode%2FT`, which is both unreadable and a
@@ -674,6 +712,20 @@ interface Export {
   "@type": string | string[];
   /** On a preview: the canonical document this one is an alternate of. */
   canonicalDocument?: string;
+  /**
+   * Instance-bound collectors that were NOT run, for a foreign instance.
+   *
+   * Carried so a reader can tell *"this instance has no tools"* from *"tools
+   * were never looked for"* — the `dh4f` defect, a clean run reported over a
+   * corpus the tool could not read. It came here from
+   * `gen-bootstrap-graph.ts` when `dyd3` retired that generator's publish
+   * step: the field was the one thing that document had which this one did
+   * not, so dropping the generator without it would have lost the guard.
+   *
+   * Absent for the host instance, where every collector runs and "omitted" is
+   * not a question.
+   */
+  omitted?: readonly string[];
   repository: string;
   generatedAt: string;
   /**
@@ -702,6 +754,35 @@ interface Export {
    * for a missing field.
    */
   sourceCommitUnavailable?: string;
+  /**
+   * §3.4's published dependency set — `{packageId, version, uri}` per edge.
+   *
+   * Present only when THIS instance declares `publishable: true`. An undecided
+   * instance emitting one would assert a published dependency set for
+   * something nobody has said is published, which is the ceremony §3.1 is
+   * written against — and `dependsOnUnavailable` says so in that case rather
+   * than leaving an absent field to be read as "depends on nothing".
+   */
+  dependsOn?: readonly DependsOnRecord[];
+  /**
+   * Edges that could NOT become a record, each carrying which of the four
+   * reasons applies.
+   *
+   * The `dh4f` rule applied to an edge: `dependsOn: []` beside four
+   * unpublishable dependencies would state that this instance depends on
+   * nothing, which is false. Present only alongside `dependsOn`.
+   */
+  dependsOnGaps?: readonly DependsOnGap[];
+  /**
+   * Why there is no `dependsOn`, when the reason is not an empty dependency
+   * set.
+   *
+   * Same contract as `sourceCommitUnavailable`: present exactly when the field
+   * it explains is absent for a reason, so a consumer never infers one. Today
+   * every instance is undecided, so every export carries this — which is the
+   * honest reading of the repository rather than a silence over it.
+   */
+  dependsOnUnavailable?: string;
   /** Node counts by `@type`, so a consumer can spot a truncated graph. */
   counts: Record<string, number>;
   /**
@@ -783,7 +864,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
       // `isSkillMd`, not a bare `.md` test. This carried its OWN copy of the
       // predicate — a third definition of "is this a skill" in a module whose
       // own header is about two definitions disagreeing — and it admitted
-      // `cat-bootstrap/README.md` as a skill named `README` the moment a second
+      // `bootstrap/README.md` as a skill named `README` the moment a second
       // knowledge-graph root existed. `skill-coverage.test.ts` caught it,
       // which is the only reason this is a comment rather than a published
       // graph node nobody could explain.
@@ -810,21 +891,28 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
     }
   }
 
-  const ioRoot = join(root, SKILL_IO_DIR);
-  if (existsSync(ioRoot)) {
-    for (const e of readdirSync(ioRoot, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const s = get(e.name);
-      const inp = join(ioRoot, e.name, "input.schema.json");
-      const out = join(ioRoot, e.name, "output.schema.json");
-      // The PUBLISHED IRI, minted by the one function that owns it — not the
-      // repo-relative path. A relative value here resolves against this
-      // document's own IRI and names something nothing serves; and since the
-      // context now coerces these to `@id`, a relative value would silently
-      // become a wrong absolute one rather than an obviously local string.
-      if (existsSync(inp)) s.inputSchema = skillIoIri(base, e.name, "input");
-      if (existsSync(out)) s.outputSchema = skillIoIri(base, e.name, "output");
-    }
+  // Each skill names its own contracts (`input:`/`output:` in its front
+  // matter, #1168 B3b); nothing is inferred from a directory name. A local
+  // contract publishes under the schemas base at its path below `schemas/`;
+  // an external one is already an IRI.
+  //
+  // The PUBLISHED IRI, never the repo-relative path. A relative value here
+  // resolves against this document's own IRI and names something nothing
+  // serves; and since the context coerces these to `@id`, a relative value
+  // would silently become a wrong absolute one rather than an obviously local
+  // string.
+  // Minted by `skillIoIri`, the one function that owns a contract's IRI, so a
+  // local contract outside `schemas/skills/<skill>/<io>.schema.json` has no
+  // published address and is left unset rather than composed here.
+  const contractIri = (ref: string): string | undefined => {
+    if (isExternalContract(ref)) return ref;
+    const m = new RegExp(`^${SKILL_IO_DIR}/([^/]+)/(input|output)\\.schema\\.json$`).exec(ref);
+    return m ? skillIoIri(base, m[1]!, m[2]!) : undefined;
+  };
+  for (const c of skillContracts(root).values()) {
+    const s = get(c.skill);
+    if (c.input !== undefined) s.inputSchema = contractIri(c.input);
+    if (c.output !== undefined) s.outputSchema = contractIri(c.output);
   }
 
   // The skill documenting an unpublished kind is itself unpublished — it
@@ -897,7 +985,7 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
  *   rather than minting a second name for one relation. Note a TOOL's
  *   `requires` is a different relation entirely -- see `collectTools`.
  * - **`roles` and `permissions` -> `roleName`/`permissionName`, LITERALS.**
- *   Neither registry is in this graph: `skills/roles/roles.json` and
+ *   Neither registry is in this graph: `scenarios/roles.json` and
  *   `skills/permissions/permissions.json` are never collected, and the Role
  *   nodes that do exist are BPMN lanes under different names. All 44 role and
  *   21 permission references would dangle. A name is what these are until the
@@ -924,9 +1012,13 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, fallbackTo, ...other } = rest;
+    const { requires, fallbackTo, satisfies, ...other } = rest;
     return {
       ...other,
+      // Not `satisfies`: that term is a LINK to a skill, and a Tool's. A
+      // capability discharges a requirement STATEMENT, which this graph does
+      // not hold as a node, so the ref stays a name (#1168, B3).
+      ...(satisfies === undefined ? {} : { satisfiesStatement: names(satisfies) }),
       ...(requires === undefined
         ? {}
         : { requiresCapability: names(requires).map((c) => makeIri(doc, "capability", c)) }),
@@ -943,6 +1035,11 @@ function registryFields(
 
 function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   const nodes: Node[] = [];
+  // What an actor may do lives in the ODRL policies since issue #1180, not on
+  // the actor file. Restored here so `permissionName` still says what it held.
+  // declared-path-literal: the convention home of the policies graph kind,
+  // resolved beside the actor registry this function already reads by path.
+  const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
     const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
     if (!existsSync(abs)) continue;
@@ -951,6 +1048,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
       try {
         const d = JSON.parse(readFileSync(join(abs, f), "utf-8")) as Record<string, unknown>;
         const id = String(d.id ?? d.name ?? f.slice(0, -5));
+        if (group === "actors" && d.permissions === undefined && grants.has(id)) d.permissions = grants.get(id);
 
         // The registry files carry `id` and `type` of their own, and spreading
         // them verbatim put BOTH a keyword and its alias on 71 nodes: `id`
@@ -991,7 +1089,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
  *
  * The id was `dir.split("/").pop()`, and eleven of the twelve packages here
  * hid that, because their directory is named after the package. The twelfth
- * is `cat-bootstrap/skills/`, whose manifest declares `"name": "cat-bootstrap"`
+ * is `bootstrap/skills/`, whose manifest declares `"name": "bootstrap"`
  * and whose node was `package/skills`, **named `skills`** — the manifest's own
  * name was never read.
  *
@@ -999,7 +1097,7 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
  * and the `seen` set below silently dropped whichever came second while its
  * skills kept emitting `inPackage -> package/skills`. So `corpus-grep`, a
  * cat-harness skill in a directory with no manifest at all, was published as a
- * member of cat-bootstrap's package. Nothing reported it: both sides resolved,
+ * member of bootstrap's package. Nothing reported it: both sides resolved,
  * no link dangled, and the audit's `skill-servable` criterion was SATISFIED by
  * the collision — a skill served by a package it was never listed in.
  *
@@ -1135,7 +1233,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
  *
  * ## Longest prefix wins, and that is load-bearing
  *
- * `src/skills/` sits inside `src/`, and `skills/workflows/` inside `skills/`.
+ * `src/skills/` sits inside `src/`, and `processes/` inside `skills/`.
  * Matching the first declaration that fits would file a workflow under the
  * skills graph. Sorting by descending path length makes the most specific
  * declaration win, which is the same rule a router uses and the same one
@@ -1146,10 +1244,26 @@ function collectPackages(doc: string, problems: string[]): Node[] {
  * from "belongs to the root graph", and the viewer shows it as its own facet
  * so the gap is visible instead of absorbed.
  */
-function stampSubgraph(graph: Node[], doc: string): void {
-  const dirs = declaredGraphs(ROOT)
+function stampSubgraph(graph: Node[], doc: string, instanceRoot: string = ROOT): void {
+  // THE INSTANCE BEING EXPORTED, not the module-level `ROOT`.
+  //
+  // It read `ROOT` on both lines until 2026-09-21, so exporting ANOTHER
+  // instance stamped its nodes with THIS instance's directory ids wherever the
+  // two share a relative path. `bootstrap/scenarios/` and
+  // `cat-harness/scenarios/` are both `scenarios`, so bootstrap's
+  // own directory node came out carrying `inSubgraph ->
+  // bootstrap.jsonld#directory/cat-harness-roles` — an id from the other
+  // instance, in a document that does not define it, which the dangling-link
+  // check caught as soon as the second `scenarios/` was declared.
+  //
+  // One instance's graph must not carry another's nodes
+  // (`instance-graph-isolation.test.ts`, guarding a live leak of 88
+  // references). This is that rule in the facet that says WHICH SUBGRAPH a
+  // node came from — the one place where getting the root wrong produces a
+  // plausible id rather than a missing one.
+  const dirs = declaredGraphs(instanceRoot)
     .filter((d) => d.absPath !== undefined)
-    .map((d) => ({ id: d.id, rel: relative(ROOT, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
+    .map((d) => ({ id: d.id, rel: relative(instanceRoot, d.absPath!).replace(/\\/g, "/").replace(/\/$/, "") }))
     // `..` is KEPT, and dropping it is what made this facet useless.
     //
     // Every repository-scoped entry — `who-iris/`, `folio-assistant-core/`,
@@ -1246,13 +1360,13 @@ async function collectProcesses(
   // CI — so it would leak a runner's filesystem layout into a public document
   // and change on every build.
   //
-  // It said "a COMMITTED artefact (`cat-bootstrap/cat-bootstrap.jsonld`) ... so its
+  // It said "a COMMITTED artefact (`bootstrap/bootstrap.jsonld`) ... so its
   // staleness gate would fail on a tree nobody touched". **That file is not
   // committed and has no staleness gate.** `.gitignore:108` ignores it
   // deliberately — it was committed once, on a rationale citing a README step
-  // that no prose file under `cat-bootstrap/` actually contains, and it was 52 %
-  // of `cat-bootstrap/` by line count. `docs-site.yml:274` builds it into
-  // `_site/cat-bootstrap/cat-bootstrap.jsonld` at render time instead.
+  // that no prose file under `bootstrap/` actually contains, and it was 52 %
+  // of `bootstrap/` by line count. `docs-site.yml:274` builds it into
+  // `_site/bootstrap/bootstrap.jsonld` at render time instead.
   //
   // The CHOICE was right and its stated reason was not, which is the worse
   // failure of the two: a reader checking the claim finds no gate, concludes
@@ -1323,7 +1437,13 @@ async function collectProcesses(
   // named "a declared-but-ABSENT directory is reported" passed while its
   // fixture created the directory.
   for (const d of resolveDirectories([{ name: "(local)", root, own: true }])) {
-    if (!d.graphs.includes("cat-harness")) continue;
+    // All four spellings of "this is harness knowledge-graph content": the
+    // umbrella, plus the three kinds split out of it on 2026-09-21. Testing
+    // only the umbrella here would have quietly narrowed this sweep to the
+    // mixed `["schemas","cat-harness"]` entries the moment the split landed —
+    // a declared-but-absent skills directory would have stopped being
+    // reported, which is the `dh4f` shape this very loop exists to catch.
+    if (!d.graphKinds.some((k) => KG_CONTENT_GRAPH_KINDS.includes(k))) continue;
     if (!existsSync(d.absPath)) {
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }
@@ -1372,7 +1492,7 @@ async function collectProcesses(
       // to name. An `actedUpon` lane holds no activities by construction — it
       // is written to and never acts — so deriving lanes from node references
       // drops exactly the lanes whose emptiness is the point. Measured: the
-      // `log` role's `bindsLane` was the one dangling link in the graph.
+      // `log` lane's link to its role was the one dangling link in the graph.
       for (const lane of m.lanes) {
         const name = lane.name ?? lane.id;
         if (lanes.has(name)) continue;
@@ -1385,6 +1505,8 @@ async function collectProcesses(
           // and this is a provenance KIND. One term over both would assert
           // that `bpmn-lane` is a path.
           sourceKind: "bpmn-lane",
+          // The lane's own ref: the join from the lane view to the registry.
+          bindsRole: lane.roleRef === undefined ? undefined : makeIri(doc, "role", lane.roleRef),
         });
       }
       for (const n of m.nodes.values()) {
@@ -1450,13 +1572,13 @@ async function collectProcesses(
  * ## Why a Tool may name a skill this document does not contain
  *
  * `gn4l`: the Tool nodes for `discussion` and `log-message` live in
- * cat-harness because a Tool is cat-harness's vocabulary and cat-bootstrap may
+ * cat-harness because a Tool is cat-harness's vocabulary and bootstrap may
  * not import it — recorded there as *a limitation rather than a decision*,
  * with the nodes moving unchanged once tool collection stops being
- * import-bound. The SKILLS live in cat-bootstrap so an Initiator can read them
+ * import-bound. The SKILLS live in bootstrap so a Bootstrapping Agent can read them
  * with nothing installed. So the edge crosses instances by construction.
  *
- * While cat-harness declared `cat-bootstrap/skills/` the crossing was hidden:
+ * While cat-harness declared `bootstrap/skills/` the crossing was hidden:
  * both ends landed in one document. The owner's `pve3` ruling of 2026-09-21
  * ("neither") removed that declaration, and a link minted into THIS document
  * then pointed at a node no document contains.
@@ -1492,7 +1614,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
   let defs;
   try {
     // The SAME base the document is published against — see tools/index.ts.
-    defs = tools(base);
+    defs = toolsOf(ROOT, base);
   } catch (e) {
     problems.push(`tools/ did not load: ${e instanceof Error ? e.message : String(e)}`);
     return [];
@@ -1537,7 +1659,7 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
  *
  * ## Why this did not exist until 2026-09-19
  *
- * `harness.json` has declared `schemas/` with `graphs: ["schemas", "kg"]`
+ * `harness.json` has declared `schemas/` with `graphKinds: ["schemas", "kg"]`
  * since Phase 0.3, and the export produced **zero** nodes of that kind —
  * measured on `814b693e`, 11 node types and none a schema. So the instance's
  * own declaration promised a graph nothing backed: a consumer resolving the
@@ -1566,7 +1688,7 @@ function collectSchemas(doc: string, base: string): Node[] {
   // Tool → artefact, inverted once so each schema node can name its keeper.
   const keeper = new Map<string, string[]>();
   try {
-    for (const t of tools(base)) {
+    for (const t of toolsOf(ROOT, base)) {
       for (const m of t.maintains ?? []) {
         keeper.set(m.source, (keeper.get(m.source) ?? []).concat(makeIri(doc, "tool", t.id)));
       }
@@ -1589,7 +1711,7 @@ function collectSchemas(doc: string, base: string): Node[] {
 }
 
 /**
- * The DECLARED roles, from `skills/roles/roles.json`.
+ * The DECLARED roles, from `scenarios/roles.json`.
  *
  * **Role nodes used to come only from BPMN lane names**, and that left the
  * role model itself out of the graph. Measured 2026-09-19: 65 of 66 Role
@@ -1605,14 +1727,14 @@ function collectSchemas(doc: string, base: string): Node[] {
  * because some other diagram gave its lane an activity.
  *
  * Lane-derived nodes are kept as they were — they are keyed by lane name and
- * other links point at them — and a declared role that claims a lane links
- * to it with `bindsLane`, so the two views join rather than compete.
+ * other links point at them — and each lane links to the declared role it
+ * binds with `bindsRole`, so the two views join rather than compete.
  */
 function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
   // that answers. `kgRoots` is explicit that taking the first is the `dh4f`
   // defect arriving through the helper written to prevent it: a topical
-  // layout (`cat-bootstrap/`, `crdm/`) would report a clean run over the roots
+  // layout (`bootstrap/`, `crdm/`) would report a clean run over the roots
   // this never visited. First declaration of a role id wins, so a later root
   // cannot silently redefine one.
   const roles: RoleDef[] = [];
@@ -1636,7 +1758,6 @@ function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
     judgementOnly: r.judgementOnly,
     // Links, so a consumer can walk role -> skill without string surgery.
     hasSkill: (r.skills ?? []).map((n) => makeIri(doc, "skill", n)),
-    bindsLane: (r.lanes ?? []).map((l) => makeIri(doc, "role", l)),
   }));
 }
 
@@ -1650,21 +1771,21 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   // ── EMIT ONLY WHAT THIS INSTANCE DECLARES.
   //
   // `defaultGraphKinds` is the UNIVERSAL registry — every kind any layer
-  // defines. Emitting all of it into every instance's graph made `cat-bootstrap`,
+  // defines. Emitting all of it into every instance's graph made `bootstrap`,
   // whose whole premise is that it knows nothing yet, publish 16 GraphKind
   // nodes when its declaration names exactly ONE (`cat-harness`, across both
   // its directories). It advertised `folio`, `voices` and `library` — core's —
   // and `beans` and `todos` — cat-harness's — none of which it can reach.
   //
   // The comment below already recorded the layering ("`voices` and `library`
-  // are core's") without acting on it; this is the missing half. A cat-bootstrap
+  // are core's") without acting on it; this is the missing half. A bootstrap
   // that names a vocabulary it cannot resolve is the same defect as a `@type`
   // that does not dereference (`blv9`), one level up: the node is there, and
   // nothing behind it is.
   //
   // Reuses `declaredKinds` rather than re-deriving: it already follows the
   // NESTED declarations (`beans/beans.json` naming `bean-defs` and
-  // `workflow-state`), which a plain read of `directories[].graphs` misses —
+  // `workflow-state`), which a plain read of `directories[].graphKinds` misses —
   // and missing them here would drop kinds the instance really does own.
   //
   // Falls back to the full set when there is no declaration, because an
@@ -1679,7 +1800,7 @@ function collectGraphKinds(root: string = ROOT): Node[] {
     return {
       // The instance sits in the SAME namespace as the class it instantiates,
       // which is not always the harness's: `cat-harness` and `schemas` are
-      // cat-bootstrap's kinds, `voices` and `library` are core's. Derived from the
+      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
       // kind's own `type` rather than chosen here, so the two cannot drift.
       "@id": `${graphKindNamespace(name)}graphKind/${name}`,
       "@type": termIri("GraphKind"),
@@ -1749,7 +1870,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       directories?: Array<{
         id: string;
         path: string;
-        graphs?: string[];
+        graphKinds?: string[];
         title?: string;
         description?: string;
       }>;
@@ -1761,7 +1882,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       // `graph` became `graphs[]` — a directory may hold more than one graph,
       // and `schemas/` is the first real use of that. Both spellings are read
       // so this does not break on a declaration written before the change.
-      const kinds = x.graphs ?? [];
+      const kinds = x.graphKinds ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
         "@type": termIri("Directory"),
@@ -1776,7 +1897,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       };
     });
   } catch (e) {
-    problems.push(`unparseable harness.json: ${e instanceof Error ? e.message : String(e)}`);
+    problems.push(`unparseable declaration: ${e instanceof Error ? e.message : String(e)}`);
     return [];
   }
 }
@@ -1786,7 +1907,7 @@ const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage", "inSubgraph",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
-  "hasSkill", "bindsLane",
+  "hasSkill", "bindsRole",
 ] as const;
 
 /**
@@ -1823,7 +1944,7 @@ export const COLLECTOR_SCOPE = {
 } as const;
 
 /**
- * The nodes ANY declared instance contributes — cat-bootstrap included.
+ * The nodes ANY declared instance contributes — bootstrap included.
  *
  * ## Why this exists rather than a `--root` flag
  *
@@ -1865,7 +1986,7 @@ export async function collectInstanceNodes(
   //
   // `collectSkills` puts `inPackage` on every skill, and the package nodes are
   // minted by `collectPackages` — which is instance-bound and therefore NOT
-  // run here. Left in place that is 7 dangling links in cat-bootstrap's
+  // run here. Left in place that is 7 dangling links in bootstrap's
   // export, measured: every skill pointing at `#package/skills` or
   // `#package/render`, neither of which this document can contain.
   //
@@ -1981,7 +2102,7 @@ export interface ExportOptions {
    *
    * It stops being invisible the moment one graph must REFERENCE another —
    * bean `pve3`, where a Tool in cat-harness satisfies a skill published in
-   * cat-bootstrap's graph and the link has to name cat-bootstrap's document.
+   * bootstrap's graph and the link has to name bootstrap's document.
    */
   instanceRoot?: string;
 }
@@ -2088,6 +2209,18 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * doing it is two chances to disagree about what the base is.
    */
   base: string;
+  /**
+   * The document's path under the publication base — and under `_site/`,
+   * which is the same thing because `_site/` is served at the base.
+   *
+   * Returned rather than recomposed from `stub`, for the reason `base` is:
+   * `<stub>.jsonld` is right for the host instance and WRONG for a foreign
+   * one, which sits at `<stub>/<stub>.jsonld` (bean `dyd3`). A caller that
+   * rebuilds it from the stub gets the host's answer for every instance, and
+   * the QA sidecar did exactly that — naming its findings' subject as a
+   * document at a path nothing writes.
+   */
+  docPath: string;
   /** The canonical document's IRI, when one is declared. */
   canonicalIri?: string;
   /** True when this export is published somewhere other than canonical. */
@@ -2101,8 +2234,22 @@ export function exportIdentity(opts: ExportOptions = {}): {
    * and a second copy of a default is a second chance to disagree with it.
    */
   instanceDir: string;
+  /** Is this an instance other than the one the exporter lives in? */
+  foreignInstance: boolean;
+  /**
+   * Is that instance one THIS repository publishes?
+   *
+   * Returned rather than recomputed because the caller's diagnostic turns on
+   * it, and a second path-boundary comparison is a second chance to write
+   * `startsWith` and call `/repo-other` a child of `/repo`.
+   */
+  publishedHere: boolean;
 } {
   const instance = opts.instanceRoot ?? ROOT;
+  // Foreign = an instance other than the one this exporter lives in. The same
+  // test `buildExport` uses to pick the generic collectors, so the identity
+  // and the content cannot disagree about which instance this is.
+  const foreignInstance = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
   const decl = readDeclaration(instance);
   // `package.json` is the REPOSITORY's and is the fallback stub for an
   // instance that declares nothing, so it is read from the repo root rather
@@ -2117,16 +2264,37 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // This is the same argument the `stub` line above already makes about
   // `package.json`, and not applying it here is what took `docs-site.yml` red
   // on `main` for every push between 11:31 and 14:0x on 2026-09-21 (bean
-  // `40fl`). `cat-bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
+  // `40fl`). `bootstrap` declares no `canonicalUrl` DELIBERATELY — it has
   // no site of its own, as its own declaration says at length — but its graph
-  // is published into THIS site, at `<base>/cat-bootstrap.jsonld`, by the very
+  // is published into THIS site, at `<base>/bootstrap.jsonld`, by the very
   // step that was failing. So "the exported instance declares no base" was
   // never the same question as "this document has no base".
   //
   // Fallback, never override: an instance that declares its own canonical URL
   // keeps it, because then the document really does belong somewhere else.
+  //
+  // AND ONLY FOR AN INSTANCE THIS REPOSITORY ACTUALLY PUBLISHES. The first
+  // version of this fallback (mine, #718) had no such condition, and that was
+  // wrong in the quiet direction: an instance root outside this checkout got
+  // THIS site's base, so exporting `/tmp/outside` minted
+  // `https://litlfred.github.io/folio-assistant/outside.jsonld` — a URL that
+  // will never resolve, claiming a document this repository does not publish,
+  // and reported as no problem at all. Measured, not reasoned: that is what
+  // the command printed before this line existed.
+  //
+  // `bootstrap` inherits because it IS published here, by the deploy step
+  // one function away. `/tmp/outside` is not, so the honest answer there is
+  // the third state the next block already implements — a document-relative
+  // `@id` plus a reported problem — because a base for it would be a guess
+  // wearing the clothes of a fact. Same rule `makeIri` follows.
+  //
+  // A path-boundary comparison, never `startsWith`: `/repo-other` begins with
+  // `/repo` and is not inside it.
+  const repoRoot = resolve(repoRootFor(ROOT));
+  const here = resolve(instance);
+  const publishedHere = here === repoRoot || here.startsWith(repoRoot + sep);
   const ownCanonical = decl?.canonicalUrl ?? "";
-  const publisherCanonical = ownCanonical ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
+  const publisherCanonical = ownCanonical || !publishedHere ? "" : (readDeclaration(ROOT)?.canonicalUrl ?? "");
   const canonicalBase = (ownCanonical || publisherCanonical).replace(/\/+$/, "");
   const base = (opts.baseUrl ?? canonicalBase).replace(/\/+$/, "");
   // No base declared → a document-relative IRI. Deliberately NOT a fabricated
@@ -2135,21 +2303,46 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // to be here was written out in seven places, five of them minting an `$id`.
   // An empty base still yields a document-RELATIVE IRI, deliberately — see
   // `makeIri`'s note on links that look dereferenceable.
-  const docIri = renderingPath(base, `${stub}.jsonld`);
-  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, `${stub}.jsonld`) : undefined;
+  // ── WHERE A FOREIGN INSTANCE'S DOCUMENT LIVES — `<base>/<stub>/<stub>.jsonld`
+  //
+  // The owner's URL-space rule (bean `x0hj`): the base IS one instance's
+  // rendering, and **everything else is
+  // `<baseurl>/<instantiated harness>/<path to rendered content>`** — with
+  // `<baseurl>/bootstrap/bootstrap.jsonld` named as the worked example.
+  //
+  // So the host publishes at the root and a foreign instance publishes under
+  // its own segment. This was `<base>/<stub>.jsonld` for both until `dyd3`,
+  // which is how bootstrap's graph came to exist at TWO paths under TWO
+  // `@id`s — 88 subjects with two identities no consumer would ever merge.
+  // Measured 2026-09-21: the site-root path had the 2 links and violated the
+  // rule; the `bootstrap/` path conformed and had none.
+  const docPath = foreignInstance ? `${stub}/${stub}.jsonld` : `${stub}.jsonld`;
+  const docIri = renderingPath(base, docPath);
+  const canonicalIri = canonicalBase ? renderingPath(canonicalBase, docPath) : undefined;
   return {
     stub,
     docIri,
     base,
+    docPath,
     canonicalIri,
     isPreview: canonicalIri !== undefined && docIri !== canonicalIri,
     instanceDir: instance,
+    publishedHere,
+    foreignInstance,
   };
 }
 
 export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   const problems: string[] = [];
-  const { stub, docIri, base, canonicalIri, isPreview, instanceDir: exportedInstance } = exportIdentity(opts);
+  const {
+    stub,
+    docIri,
+    base,
+    canonicalIri,
+    isPreview,
+    instanceDir: exportedInstance,
+    publishedHere: exportedInstancePublishedHere,
+  } = exportIdentity(opts);
 
   // Provenance of the SOURCE. Absent fields are absent, never placeholders:
   // a consumer must be able to tell "this export did not know" from "this
@@ -2177,20 +2370,34 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     // #695 — so the one reader it exists for was sent to a file that is not
     // there, while the real declaration sat one rename away. A diagnostic that
     // names a retired path is worse than a bare one: it reads as specific.
+    //
+    // AND IT SAYS WHICH OF THE TWO REASONS APPLIES. "none declared by the
+    // publishing instance" was true when the fallback was unconditional and
+    // became false the moment it gained a boundary: for an instance outside
+    // this checkout the host DOES declare a base, it simply does not extend
+    // there. A diagnostic that names the wrong reason sends its reader to add
+    // a `canonicalUrl` that is already present.
     const looked = declarationPathIn(exportedInstance);
+    const where = looked
+      ? relative(repoRootFor(ROOT), looked)
+      : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`;
+    const why = exportedInstancePublishedHere
+      ? ", and none declared by the publishing instance"
+      : ", and it resolves outside this repository, so the publishing instance's base does not extend to it";
     problems.push(
-      `no canonicalUrl in ${looked ? relative(repoRootFor(ROOT), looked) : `${relative(repoRootFor(ROOT), exportedInstance)} (no declaration found)`}` +
-        ", and none declared by the publishing instance, and no --base-url given: " +
+      `no canonicalUrl in ${where}` +
+        why +
+        ", and no --base-url given: " +
         "@id values are document-relative and will not dereference",
     );
   }
 
   // ANOTHER instance's document is built from the GENERIC collectors only.
   //
-  // `opts.instanceRoot` already gave this export cat-bootstrap's identity —
+  // `opts.instanceRoot` already gave this export bootstrap's identity —
   // its stub, its docIri. Running the list below unchanged would then fill
   // that document with THIS instance's content: cat-harness's 222 skills and
-  // 55 processes published as `cat-bootstrap.jsonld`. A graph that is wrong
+  // 55 processes published as `bootstrap.jsonld`. A graph that is wrong
   // about whose it is, under a name a consumer trusts.
   //
   // `COLLECTOR_SCOPE` already states which collectors are instance-bound and
@@ -2199,7 +2406,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
   // the seam being used for the first time by something other than a test.
   const foreign = opts.instanceRoot !== undefined && resolve(opts.instanceRoot) !== resolve(ROOT);
   // Audited over the instance being exported, not over this one. For a
-  // foreign instance that is honestly empty (cat-bootstrap declares no
+  // foreign instance that is honestly empty (bootstrap declares no
   // `schemas/`), where a hand-built empty object would be asserting the same
   // thing without having looked.
   const schemaAudit = auditSchemaNodes(foreign ? opts.instanceRoot! : ROOT);
@@ -2223,7 +2430,7 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
         ]
   ).map(compact);
 
-  stampSubgraph(graph, docIri);
+  stampSubgraph(graph, docIri, exportedInstance);
 
   // A preview's nodes say, explicitly and per node, which canonical node they
   // are an alternate presentation of.
@@ -2247,6 +2454,17 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     }
   }
 
+  // §3.4. Computed over the instance being EXPORTED, not over this one — a
+  // foreign instance's document states that instance's dependency set, and
+  // reading it from `ROOT` would publish cat-harness's stack under
+  // bootstrap's name. Same seam, same reason, as `schemaAudit` above.
+  const deps = dependsOnFor(exportedInstance);
+  const dependsOnFields = {
+    ...(deps.unavailable === undefined
+      ? { dependsOn: deps.records, ...(deps.gaps.length > 0 ? { dependsOnGaps: deps.gaps } : {}) }
+      : { dependsOnUnavailable: deps.unavailable }),
+  };
+
   const counts: Record<string, number> = {};
   for (const n of graph) {
     // Strip WHICHEVER namespace applies. A single `.replace(FOLIO_NS, "")`
@@ -2269,8 +2487,10 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
     "@type": isPreview ? [`${PROV}Entity`, termIri("PreviewGraph")] : `${PROV}Entity`,
     ...(isPreview && canonicalIri !== undefined ? { canonicalDocument: canonicalIri } : {}),
     repository: stub,
+    ...(instanceOnly ? { omitted: instanceOnly.omitted } : {}),
     generatedAt: new Date().toISOString(),
     ...commitFields,
+    ...dependsOnFields,
     counts,
     problems,
     undeclaredTerms: undeclaredTerms(graph, buildContext()),
@@ -2294,7 +2514,7 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
-  const { stub } = exportIdentity({ baseUrl, instanceRoot });
+  const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
   // is what tells a fetcher to treat it as one.
@@ -2361,9 +2581,9 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   //
   // The stem was the constant `"kg-export"`, so EVERY instance's export wrote
   // the same committed file and the last writer won. Measured 2026-09-21: one
-  // `--instance ./cat-bootstrap` run replaced this instance's committed result
+  // `--instance ./bootstrap` run replaced this instance's committed result
   // wholesale — `subject.id` flipped from `cat-harness.jsonld` to
-  // `cat-bootstrap.jsonld` and the findings with it, in a file whose whole
+  // `bootstrap.jsonld` and the findings with it, in a file whose whole
   // purpose is saying what was found about WHICH graph.
   //
   // Invisible while one document was ever built, and it stayed invisible in CI
@@ -2379,7 +2599,11 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
-    subject: { kind: "graph", id: `${stub}.jsonld` },
+    // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
+    // `<stub>/<stub>.jsonld` (bean `dyd3`), so composing it here named a
+    // document nothing writes — in the file whose whole purpose is saying
+    // what was found about WHICH graph.
+    subject: { kind: "graph", id: docPath },
     families: {
       undeclaredTerms: {
         summary:

@@ -39,7 +39,7 @@
  *
  * So `@id` is **minted** by {@link resolveLabel}, which resolves all three
  * authored reference forms to one canonical relative IRI, and the label is
- * additionally preserved verbatim in `folio:label` for grep and round-tripping.
+ * additionally preserved verbatim in `folio-assistant-core:label` for grep and round-tripping.
  * Nothing in `content/**` has to change.
  *
  * ## Why `@id` is relative
@@ -52,6 +52,15 @@
  *
  * @module schemas/jsonld
  * @graphNode schema
+ *
+ * @conformsTo hl7-fhir
+ * @conformsTo spar-doco-deo-cito
+ * @conformsTo w3c-csvw
+ * @conformsTo w3c-web-annotation
+ * @conformsTo who-smart-base
+ * @conformsTo w3c-prov-o
+ * @conformsTo w3c-skos
+ * @conformsTo w3c-xsd11-datatypes
  */
 
 import {
@@ -72,7 +81,7 @@ import {
  * harness-layer module must not import the content vocabulary — see that
  * module's note.
  */
-import { CORE_NS } from "./namespaces";
+import { CORE_NS, FOLIO_BASE } from "./namespaces";
 
 // Content terms are folio-assist-core's, so they hang off core's namespace —
 // the same layer that owns block kinds, voices and the library.
@@ -122,32 +131,32 @@ export const CONTENT_CONTEXT_URL =
  * Base every minted `@id` is relative to. Declared in the context rather
  * than baked into emitted files — see the module docstring.
  */
-export const FOLIO_BASE = "https://litlfred.github.io/folio/";
+export { FOLIO_BASE };
 
 // ── Block kind → RDF types ───────────────────────────────────────
 
 /**
- * `folio:` type for each block kind. These are folio's own classes because
+ * `folio-assistant-core:` type for each block kind. These are folio's own classes because
  * no published vocabulary distinguishes a theorem from a lemma from a
  * conjecture in the way this project's editorial machinery needs.
  */
 export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = {
-  definition: "folio:Definition",
-  theorem: "folio:Theorem",
-  lemma: "folio:Lemma",
-  proposition: "folio:Proposition",
-  corollary: "folio:Corollary",
-  algorithm: "folio:Algorithm",
-  conjecture: "folio:Conjecture",
-  example: "folio:Example",
-  remark: "folio:Remark",
-  proof: "folio:Proof",
-  simulator: "folio:Simulator",
-  prose: "folio:Prose",
-  equation: "folio:Equation",
-  diagram: "folio:Diagram",
-  table: "folio:Table",
-  figure: "folio:Figure",
+  definition: "folio-assistant-core:Definition",
+  theorem: "folio-assistant-core:Theorem",
+  lemma: "folio-assistant-core:Lemma",
+  proposition: "folio-assistant-core:Proposition",
+  corollary: "folio-assistant-core:Corollary",
+  algorithm: "folio-assistant-core:Algorithm",
+  conjecture: "folio-assistant-core:Conjecture",
+  example: "folio-assistant-core:Example",
+  remark: "folio-assistant-core:Remark",
+  proof: "folio-assistant-core:Proof",
+  simulator: "folio-assistant-core:Simulator",
+  prose: "folio-assistant-core:Prose",
+  equation: "folio-assistant-core:Equation",
+  diagram: "folio-assistant-core:Diagram",
+  table: "folio-assistant-core:Table",
+  figure: "folio-assistant-core:Figure",
 };
 
 /**
@@ -170,20 +179,20 @@ export const BLOCK_KIND_TO_FOLIO_TYPE: Record<BlockKind, string> = {
  * `corpus_search` where the ingestion pipeline is documented should find the
  * page as readily as they find a block.
  *
- * `folio:WebPage` is a NEW term rather than a borrowed one. schema.org has
+ * `folio-assistant-core:WebPage` is a NEW term rather than a borrowed one. schema.org has
  * `schema:WebPage`, and this corpus has never used schema.org anywhere — the
  * committed vocabularies are DCTERMS, SPAR (DoCO/DEO/CiTO) and one PROV term.
  * Introducing a whole namespace for one class, when the house rule is
  * "generalising is sound; inventing is not", would be inventing by import. A
- * `folio:` term for a folio-specific concept is what that rule allows.
+ * `folio-assistant-core:` term for a folio-specific concept is what that rule allows.
  *
  * The DoCO half is borrowed and verified: a page is `doco:Section` (its own
  * containment is `dcterms:hasPart`, per the note on `contains` below), an
  * asset node is `doco:Figure` — the same class `diagram` blocks already get.
  */
-export const SITE_PAGE_TYPES = ["folio:WebPage", "doco:Section"] as const;
-export const SITE_NARRATIVE_TYPES = ["folio:Prose", "doco:Section"] as const;
-export const SITE_ASSET_TYPES = ["folio:Figure", "doco:Figure"] as const;
+export const SITE_PAGE_TYPES = ["folio-assistant-core:WebPage", "doco:Section"] as const;
+export const SITE_NARRATIVE_TYPES = ["folio-assistant-core:Prose", "doco:Section"] as const;
+export const SITE_ASSET_TYPES = ["folio-assistant-core:Figure", "doco:Figure"] as const;
 
 /**
  * Relative IRI for a docs-site node. `site/<slug>` for a page, and
@@ -203,7 +212,7 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
   diagram: "doco:Figure",
   // A FACT, not a stretch: DoCO's Figure is a figure in a document, which is
   // exactly what an extracted `figure` block is. `diagram` already maps here,
-  // and `SITE_ASSET_TYPES` already pairs `folio:Figure` with `doco:Figure`.
+  // and `SITE_ASSET_TYPES` already pairs `folio-assistant-core:Figure` with `doco:Figure`.
   figure: "doco:Figure",
   table: "doco:Table",
   prose: "doco:Section",
@@ -220,7 +229,7 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
 };
 
 /**
- * `folio:` type for each DAK kind.
+ * `folio-assistant-core:` type for each DAK kind.
  *
  * Folio's own classes rather than FHIR's, deliberately. A `value-set` *block*
  * is the authored unit that carries the label, the editorial edges and the QA
@@ -230,27 +239,27 @@ export const BLOCK_KIND_TO_DOCO_TYPE: Partial<Record<BlockKind, string>> = {
  * The link to the resource is the companion, not the type.
  */
 export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
-  "health-intervention": "folio:HealthIntervention",
-  persona: "folio:Persona",
-  "user-scenario": "folio:UserScenario",
-  "business-process": "folio:BusinessProcess",
-  "data-element": "folio:DataElement",
-  "decision-table": "folio:DecisionTable",
-  "scheduling-logic": "folio:SchedulingLogic",
-  indicator: "folio:Indicator",
-  "functional-requirement": "folio:FunctionalRequirement",
-  "non-functional-requirement": "folio:NonFunctionalRequirement",
-  "test-scenario": "folio:TestScenario",
-  "logical-model": "folio:LogicalModel",
-  profile: "folio:Profile",
-  "value-set": "folio:ValueSet",
-  questionnaire: "folio:Questionnaire",
-  "cql-library": "folio:CqlLibrary",
-  "structure-map": "folio:StructureMap",
-  "plan-definition": "folio:PlanDefinition",
-  measure: "folio:Measure",
-  "test-case": "folio:TestCase",
-  "actor-definition": "folio:ActorDefinition",
+  "health-intervention": "folio-assistant-core:HealthIntervention",
+  persona: "folio-assistant-core:Persona",
+  "user-scenario": "folio-assistant-core:UserScenario",
+  "business-process": "folio-assistant-core:BusinessProcess",
+  "data-element": "folio-assistant-core:DataElement",
+  "decision-table": "folio-assistant-core:DecisionTable",
+  "scheduling-logic": "folio-assistant-core:SchedulingLogic",
+  indicator: "folio-assistant-core:Indicator",
+  "functional-requirement": "folio-assistant-core:FunctionalRequirement",
+  "non-functional-requirement": "folio-assistant-core:NonFunctionalRequirement",
+  "test-scenario": "folio-assistant-core:TestScenario",
+  "logical-model": "folio-assistant-core:LogicalModel",
+  profile: "folio-assistant-core:Profile",
+  "value-set": "folio-assistant-core:ValueSet",
+  questionnaire: "folio-assistant-core:Questionnaire",
+  "cql-library": "folio-assistant-core:CqlLibrary",
+  "structure-map": "folio-assistant-core:StructureMap",
+  "plan-definition": "folio-assistant-core:PlanDefinition",
+  measure: "folio-assistant-core:Measure",
+  "test-case": "folio-assistant-core:TestCase",
+  "actor-definition": "folio-assistant-core:ActorDefinition",
 };
 
 /**
@@ -264,7 +273,7 @@ export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
  * stable identifier**, and it is the same one `DAKComponentSources.fsh` uses as
  * `canonical ^type[0].targetProfile`.
  *
- * So a block keeps its `folio:` `@type` — it is a manifest, not a FHIR resource
+ * So a block keeps its `folio-assistant-core:` `@type` — it is a manifest, not a FHIR resource
  * — and gains this as a separate assertion: *the thing this block is an
  * authored instance of*. That makes a folio DAK joinable with WHO's published
  * vocabularies instead of merely parallel to them.
@@ -542,7 +551,7 @@ export function resolveReferenceKey(key: string): string {
 export const CONTENT_CONTEXT = {
   "@version": 1.1,
   "@base": FOLIO_BASE,
-  fac: CORE_NS,
+  "folio-assistant-core": CORE_NS,
   doco: DOCO_NS,
   deo: DEO_NS,
   cito: CITO_NS,
@@ -555,34 +564,99 @@ export const CONTENT_CONTEXT = {
 
   // Identity. `label` is the authored string, kept verbatim alongside the
   // minted `@id` so a grep hit in .jsonld matches a grep hit in .ts.
-  label: "folio:label",
+  label: "folio-assistant-core:label",
   title: "dcterms:title",
-  kind: "folio:kind",
+  kind: "folio-assistant-core:kind",
 
   // Editorial relations — folio's own, because no vocabulary models the
   // reader-facing prerequisite relation these encode.
-  uses: { "@id": "folio:uses", "@type": "@id", "@container": "@set" },
-  interprets: { "@id": "folio:interprets", "@type": "@id" },
-  foreshadows: { "@id": "folio:foreshadows", "@type": "@id", "@container": "@set" },
-  proofs: { "@id": "folio:proofs", "@type": "@id", "@container": "@set" },
-  examples: { "@id": "folio:examples", "@type": "@id", "@container": "@set" },
+  uses: { "@id": "folio-assistant-core:uses", "@type": "@id", "@container": "@set" },
+  interprets: { "@id": "folio-assistant-core:interprets", "@type": "@id" },
+  foreshadows: { "@id": "folio-assistant-core:foreshadows", "@type": "@id", "@container": "@set" },
+  proofs: { "@id": "folio-assistant-core:proofs", "@type": "@id", "@container": "@set" },
+  examples: { "@id": "folio-assistant-core:examples", "@type": "@id", "@container": "@set" },
 
   cites: { "@id": "cito:cites", "@type": "@id", "@container": "@set" },
-  tags: { "@id": "folio:tag", "@container": "@set" },
-  defines: { "@id": "folio:defines", "@container": "@set" },
+  tags: { "@id": "folio-assistant-core:tag", "@container": "@set" },
+  defines: { "@id": "folio-assistant-core:defines", "@container": "@set" },
 
   // Formal side. `leanRef` stays a literal: a Lean declaration is not a web
   // resource, and minting an IRI for one would imply a dereference that does
   // not exist.
-  leanRef: "folio:leanRef",
-  sorryFree: "folio:sorryFree",
+  leanRef: "folio-assistant-core:leanRef",
+  sorryFree: "folio-assistant-core:sorryFree",
 
-  // Companions, as links rather than inlined content. Inlining prose would
+  // Companions, by PATH rather than inlined content. Inlining prose would
   // duplicate the corpus and make every prose edit a two-file diff.
-  text: { "@id": "folio:text", "@type": "@id" },
-  leanSource: { "@id": "folio:leanSource", "@type": "@id" },
+  //
+  // LITERALS, not `@id` — bean `589f`, the owner's choice (2026-09-23) for the
+  // least drift. The values are paths relative to the DOCUMENT
+  // (`../sections/sec-001-intro.md`, `thm-foo.md`). Coerced to `@id`, a
+  // JSON-LD processor resolves them against the context's `@base` instead, and
+  // `../sections/x.md` became `https://litlfred.github.io/sections/x.md` —
+  // a well-formed link to nowhere, on all 1,323 committed prose blocks.
+  //
+  // A literal has ONE reading: a path, resolved by our tools against the file
+  // that carries it, exactly as they already did. Nothing is regenerated and no
+  // reader changes.
+  //
+  // THE UPGRADE RULE, so this does not become the next thing nobody revisits:
+  // these become links — `@type: @id` with ABSOLUTE IRIs minted by the one
+  // function that mints block IRIs — when, and only when, the files they name
+  // are SERVED at a URL an instance declares. Until then any link would be a
+  // promise nothing keeps. `check:context-emission` fails if a path is put
+  // back under an `@id` term (`checkPathsAreNotLinks`).
+  text: { "@id": "folio-assistant-core:text" },
+  leanSource: { "@id": "folio-assistant-core:leanSource" },
 
-  meta: { "@id": "folio:meta", "@type": "@json" },
+  meta: { "@id": "folio-assistant-core:meta", "@type": "@json" },
+
+  // ── Ingest-arm records, and the narrative they share — bean `yh6u` ──────
+  //
+  // `tabular.jsonld` (folio-tabular-records/v1) and `contents.jsonld`
+  // (folio-archive-contents/v1) were named `.jsonld` and carried an `@id`, but
+  // no `@context`, so a JSON-LD processor dropped every key. And the
+  // `narrative` object on 392 committed figure blocks used keys this context
+  // did not declare, so every agent-drafted figure narrative was dropped too.
+  // Owner's choice, 2026-09-23: make them real JSON-LD, not rename them.
+  //
+  // THE SPLIT, and why. A fact a consumer queries across documents gets a
+  // real term: what the record conforms to, its format, its counts, its
+  // header vocabulary. A structure that is OURS and nested — a narrative with
+  // its attribution, a sheet's shape, an archive's entry list, a file's
+  // technical metadata — is `@json`: kept verbatim, NULLS INCLUDED. That is
+  // not a shortcut. The three-state rule lives in those nulls — `text: null`
+  // means "nobody has written one", `rows: null` means "could not be counted"
+  // — and JSON-LD DROPS a null in any other position, which would make
+  // "determined absent" and "never recorded" the same fact. The same reason
+  // bean `792y` kept the CSVW record as plain JSON.
+  //
+  // Datatypes are written as full IRIs rather than through an `xsd` prefix: a
+  // prefix spoken only inside this context is one `check:context-emission`
+  // correctly reports as bound-and-never-emitted.
+  $schema: { "@id": "dcterms:conformsTo" },
+  format: { "@id": "dcterms:format" },
+  narrative: { "@id": "folio-assistant-core:narrative", "@type": "@json" },
+  source: { "@id": "folio-assistant-core:sourceTechnicalMetadata", "@type": "@json" },
+  archive: { "@id": "folio-assistant-core:archiveTechnicalMetadata", "@type": "@json" },
+  sheets: { "@id": "folio-assistant-core:sheets", "@type": "@json" },
+  entries: { "@id": "folio-assistant-core:archiveEntries", "@type": "@json" },
+  n_sheets: { "@id": "folio-assistant-core:sheetCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_entries: { "@id": "folio-assistant-core:entryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_files: { "@id": "folio-assistant-core:fileCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  n_directories: { "@id": "folio-assistant-core:directoryCount", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  uncompressed_bytes: { "@id": "folio-assistant-core:uncompressedBytes", "@type": "http://www.w3.org/2001/XMLSchema#integer" },
+  // The findable surface — `p67i`: "a grep for a column header finds the
+  // dataset that has it". A SET on the record (deduplicated, sorted); an
+  // ordered LIST on a table block, where column order is a fact.
+  header_vocabulary: { "@id": "folio-assistant-core:headerVocabulary", "@container": "@set" },
+  headers: { "@id": "folio-assistant-core:headers", "@container": "@list" },
+  // A figure block's image, as a path RELATIVE TO THE BLOCK (`../images/…`).
+  // A LITERAL, deliberately — `kg-export`'s rule for a path. Coerced to `@id`
+  // it would resolve against `@base` rather than against the block, and name
+  // `https://litlfred.github.io/images/…`, which is not where the image is. That
+  // is what `text` above does today (bean filed with `yh6u`); it is not copied.
+  file: { "@id": "folio-assistant-core:file" },
 
   // Ingest side. Declared in the shared context precisely so that an
   // ingested node and an authored block are the same kind of thing.
@@ -596,13 +670,13 @@ export const CONTENT_CONTEXT = {
   // verified super-property. Generalising is sound; inventing is not.
   // Narrow it to `po:contains` once the namespace can be checked.
   contains: { "@id": "dcterms:hasPart", "@type": "@id", "@container": "@set" },
-  refs: { "@id": "folio:refs", "@type": "@id", "@container": "@set" },
+  refs: { "@id": "folio-assistant-core:refs", "@type": "@id", "@container": "@set" },
   derivedFrom: { "@id": "prov:wasDerivedFrom", "@type": "@id" },
-  sourceDocument: { "@id": "folio:sourceDocument", "@type": "@id" },
-  provenance: "folio:provenance",
-  pageStart: "folio:pageStart",
-  pageEnd: "folio:pageEnd",
-  strength: "folio:strength",
+  sourceDocument: { "@id": "folio-assistant-core:sourceDocument", "@type": "@id" },
+  provenance: "folio-assistant-core:provenance",
+  pageStart: "folio-assistant-core:pageStart",
+  pageEnd: "folio-assistant-core:pageEnd",
+  strength: "folio-assistant-core:strength",
   // No `certainty` term yet. It must bind to FHIR's GRADE value set
   // (`QualityOfEvidenceRating` on HL7 Terminology), and the exact predicate
   // wants checking against a real IG rather than guessed — it lands with the

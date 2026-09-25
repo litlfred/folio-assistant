@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/workflow-state.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/workflow-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/workflow-state.md){: .fa-edit-source }
 
 {% raw %}
 # State in a running process
@@ -21,7 +21,7 @@ plan comes to disagree with itself.**
 
 | question | store | graph kind | layer |
 |---|---|---|---|
-| what does this process DO? | `skills/workflows/*.bpmn` | `cat-harness` | **content** |
+| what does this process DO? | `processes/*.bpmn` | `cat-harness` | **content** |
 | where did this instance GET TO? | the workflow-state node of the bean graph | `workflow-state` | **state** |
 | what is being worked on? | the bean-defs node of the bean graph | `bean-defs` | **state** |
 | what does a PERSON still owe? | `todos/` | `todo-items` | **state** |
@@ -60,7 +60,7 @@ retroactively took a different path.
 to*. Those must be one answer or they diverge, and a work plan that disagrees
 with itself is worse than one that is merely coarse.
 
-The loop is closed by `<folio:bean op="…">` on an activity. **A bean-marked
+The loop is closed by `<cat-harness.processes:bean op="…">` on an activity. **A bean-marked
 step is not a step *about* the work plan — it IS the work-plan operation**, so
 completing the step performs it:
 

@@ -80,7 +80,7 @@ Three shapes for it, none chosen:
   renderer, so this bean CLEARS half of that finding.
 - **`yj32`**'s open question "what is the writable datastore?" — the upload
   half of this cannot be designed until that is answered. Git is now confirmed
-  as the store (`cat-bootstrap/skills/roles/roles.json`, the
+  as the store (`bootstrap/scenarios/roles.json`, the
   `knowledge-graph-data-store` role), so the remaining question is narrower:
   which write path — a forge API, a local server, or a commit from a checkout.
 
@@ -171,3 +171,78 @@ still blocked on `yj32`'s write-path question, and deliberately so.
       than assumed
 - [x] Badge count and browsable queue, per declaring instance, never merged
 - [ ] An upload path whose write mechanism the owner has chosen (`yj32`)
+
+---
+
+*2026-09-23* — **RE-VERIFIED, and on an entry ingested TODAY rather than only
+on legacy ones.**
+
+The refutation above was measured 2026-09-20 over four entries that predated
+the pipeline. The obvious weakness in that evidence is that all four were
+built by hand, so `meta.source_file` + `meta.source_sha256` being present
+proved the relation EXISTS but not that anything still WRITES it.
+
+`skills-in-openai-api` was ingested and promoted today through
+`bun run ingest` (#1050), and `library-graph` reports it **`upload=match`** —
+so `l1-blocks.ts` writes both fields and the hash recomputes against the file
+in `uploads/`. The relation is maintained by the pipeline, not merely inherited
+from four hand-built entries.
+
+### The badge today
+
+| queue | files | ingested | **uningested** |
+|---|---|---|---|
+| `uploads` (repository root) | 31 | 12 | **19** |
+| `cat-harness/uploads` | 7 | 6 | **1** |
+| `who-iris/uploads` | 4 | 3 | **1** |
+
+Every one of the 21 library entries reports `upload=match`. Not one `unknown`,
+not one `differs` — which is the third and fourth states this bean insisted on
+keeping, and they are still there for when they are needed.
+
+Note the root queue has grown from 22 files to 31 since 2026-09-20 and its
+uningested count from 22 to 19, so the relation is tracking movement in both
+directions rather than a frozen snapshot.
+
+### The write path — ANSWERED, and built
+
+Owner, 2026-09-23, over a forge API and a local server: **a commit from a
+checkout.**
+
+That answer decides the SHAPE of the affordance, not just its plumbing. A
+published page cannot write to somebody's working tree, so the upload action
+is a PATH AND A COMMAND rather than a control. A button that looked like it
+could write would be `pb04` one layer up: a dead link invites a click and
+then reads as a broken site.
+
+The panel is generated PER QUEUE from each queue's own `dir`. Three queues
+with three different paths; one hardcoded "put it in `uploads/`" would be
+wrong for two of them — the same defect as `ingest`'s printed `-o` (#1050).
+
+### `--library` is NOT printed, and that had to be measured
+
+The obvious move is a sibling convention, `<instance>/library`. **The corpus
+contradicts it in all three queues**, derived from the `source_file` relation
+rather than from the path:
+
+| queue | where its files actually landed |
+|---|---|
+| `uploads` | agent-skills/library (5) **and** smart-base/library (7) |
+| `cat-harness/uploads` | cat-harness/library (5) **and** folio-assistant-sci/library (1) |
+| `who-iris/uploads` | **none ingested** — and the convention would have said `who-iris/library` |
+
+**A queue does not determine a destination.** The choice is per document,
+which is exactly why `ingest` refuses to guess it, so the page says what the
+tool says and prints `<destination>`.
+
+### What the generated-viewer gate caught
+
+The first draft emitted a literal newline inside a single-quoted JS string —
+the template literal collapsed the escape one level too far — and the whole
+inline script failed to parse. `generated-viewer-scripts` parses every inline
+script in every generated viewer and refused it. The page looked fine and was
+dead. Fixed, with a regression test on the escape.
+
+Also hit, and it is written down twice elsewhere in this repository: a
+backtick in a comment inside the page template literal ends the string and
+turns the rest of the file into TypeScript.

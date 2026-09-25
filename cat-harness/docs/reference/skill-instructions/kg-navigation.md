@@ -5,13 +5,13 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../kg-navigation/skills/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/../kg-navigation/skills/kg-navigation.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg-navigation/kg-navigation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg-navigation/kg-navigation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../kg-navigation/skills/kg-navigation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
-> lives at `bootstrap/skills` and is published as
+> is published as
 > [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
 > Edit this page's source, never the stub.
 
@@ -30,11 +30,11 @@ moment the layout moves."* One of them had already moved.
 ## The one fact everything else follows from
 
 **Skills are content in a declared graph, not files in a directory you
-memorise.** An instance says where its graph is, in `harness.json` at its
+memorise.** An instance says where its graph is, in its declaration at its
 repository root. It may put it anywhere. In *this* instance the entry reads:
 
 ```json
-{ "id": "cat-harness", "path": "skills/", "graphs": ["cat-harness"] }
+{ "id": "skills", "path": "skills/", "graphKinds": ["skills"] }
 ```
 
 Read that as three separate things, because they change independently:
@@ -43,18 +43,24 @@ Read that as three separate things, because they change independently:
 |---|---|---|
 | `id` | this instance's name for the directory | stable across a relocation — that is its job |
 | `path` | where it happens to be **here** | not stable, and not yours to assume |
-| `graphs` | what kind of graph lives there | the vocabulary, shared across instances |
+| `graphKinds` | what kind of graph lives there | the vocabulary, shared across instances |
 
 An agent that learned `skills/` learned the one column that is allowed to
 change. Ask for the graph; do not navigate to the path.
 
 > **`kg` is the old name for the kind and still reads.** It was renamed to
 > `cat-harness` on 2026-09-19 so the kind is named for the layer that defines
-> it, like `harness.json` and `CatHarness` itself. `GRAPH_KIND_ALIASES` in
+> it, like `CatHarness` itself. `GRAPH_KIND_ALIASES` in
 > `schemas/cat-harness.ts` maps `kg` → `cat-harness`, so a declaration or a
 > query using `kg` resolves and is marked deprecated. **Do not read `kg` as a
-> directory `id`** — in this instance the id is `cat-harness`, and text that
+> directory `id`** — in this instance the id is `skills`, and text that
 > tells you otherwise predates the rename.
+>
+> **A Subgraph id is its name inside its Harness**, and the Harness name
+> qualifies it: `cat-harness.skills`, `bootstrap.skills`. The id was
+> `cat-harness` until 2026-09-23. `RENAMED_DIRECTORY_IDS` in
+> `schemas/cat-harness.ts` still reads that id as `skills`, so an older
+> declaration keeps overriding the entry it meant.
 
 ## Tool 1 — the MCP pair
 
@@ -73,10 +79,10 @@ and each running process's position beside its bean.
 **What `skill_list` serves is a registry, not the declaration.** `LOCAL_PACKAGES`
 in `src/tools/skill-fetch.ts` maps seven package names to seven paths, resolved
 against the server's own location. It is accurate today and it is a second
-answer to a question `harness.json` already answers — so a directory the
+answer to a question `<name>.json` already answers — so a directory the
 instance declares and the registry omits is invisible to `skill_fetch`. That
 has bitten: `content-lifecycle` was absent from the table until 2026-09-18
-while **52** `<folio:skill ref>` activities across the workflow diagrams named
+while **52** `<bootstrap.processes:skill ref>` activities across the workflow diagrams named
 its skills, so `workflow_next` handed an agent `content-validate` and
 `skill_fetch` answered *"package not found"* — for every step of every content
 process. `kg:audit`'s `skill-servable` criterion exists to keep that shut.
@@ -94,7 +100,7 @@ of something else.
 **The harness is designed to work with nothing but files.** Same graph, same
 content, no server:
 
-1. Read `harness.json` at the repository root.
+1. Read `<name>.json` at the repository root.
 2. Take every `directories[]` entry whose `graphs` includes `cat-harness`
    (accepting `kg` as the deprecated spelling).
 3. Read the `.md` files under each — one skill per file, the id being the
@@ -103,8 +109,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](../../cat-harness/skills/folio-core/skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](../../cat-harness/skills/folio-core/directory-conventions.md)
+[`skills-and-tools`](../folio-core/skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](../folio-core/directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill
@@ -117,7 +123,7 @@ so they cannot disagree.
 - **`.claude/skills/` is not uniformly skills.** `actors/`, `capabilities/`,
   `roles/`, `hooks/` and `requirements/` are other node kinds that live there.
   Reading the tree as skills put 46 non-skills into the set, at which point
-  `<folio:skill ref="viewer"/>` resolved — to a capability probe.
+  `<bootstrap.processes:skill ref="viewer"/>` resolved — to a capability probe.
 - **A `.md` under the skills path that declares its own `$schema` is not a
   skill.** The agent-memory nodes under `memory/` declare
   `folio-memory/v1`. Without this rule the audit treated all 25 as skills and

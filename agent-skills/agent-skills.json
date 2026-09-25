@@ -1,6 +1,7 @@
 {
   "_comment": "THE AGENT-SKILL LITERATURE, staged as a top-level directory ahead of becoming its own repository — the same arrangement as who-iris/, who-style-guide/, folio-assistant-sci/ and folio-assistant-core/. It holds the corpus of published guidance on authoring and operating agent skills, and the voices read out of it. ONE instance rather than the who-iris/who-style-guide pair, and the reason is the corpus: that pair is split because IRIS is a catalogue of a million items from which three were read, so the corpus and the reading have genuinely different scopes. Here the corpus IS the subject — every document in it exists to be read into these voices — so splitting would put two directories in two repositories with a one-to-one relation between them. Same shape as folio-assistant-sci, which holds `library/milnorlink` and is where the `milnor` voice is going. THIS IS NOT PLATFORM CONTENT: `AGENTS.md` opens by saying folio-assistant is the platform and not the content, and vendor documentation about skill authoring is somebody else's writing, so it does not go in cat-harness even though it is ABOUT the harness's own subject.",
   "name": "agent-skills",
+  "version": "0.1.0",
   "description": "Published guidance on authoring and operating agent skills — vendor documentation and peer-reviewed evidence — and the voices derived from it.",
   "assets": [
     {
@@ -24,23 +25,25 @@
       "path": "library/",
       "dependents": "reproduce",
       "description": "The ingested corpus — one `<bib-slug>/` per document, holding `sections/*.md` and `structure.json`. THREE PUBLISHERS AND TWO KINDS, and the distinction is load-bearing rather than bibliographic: the vendor documentation is ASSERTION (a publisher describing its own product, revisable without notice and in one case describing a product that no longer exists), while the arXiv papers are EVIDENCE (a measurement somebody else can repeat). A voice rule derived from the first is a convention; one derived from the second is a finding. Nothing in the schema can tell them apart, which is why each document's `structure.json` carries its publisher and why the voices state which kind they are reading.",
-      "graphs": [
+      "graphKinds": [
         "library"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "library-ingestion"
+        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html"
       }
     },
     {
       "id": "voices",
-      "path": "voices/",
+      "path": "skills/voices/",
       "dependents": "reproduce",
-      "description": "`folio-voice/v1` profiles read out of `library/` above — a shared base plus one override per vendor, on the owner's ruling of 2026-09-20: 'for model specific sources, make those model specific voices.' Citations are INTERNAL to this instance (no `instance:` key), unlike who-style-guide's, because here the corpus and the reading live together. The rules are deliberately NOT formally constrained: owner, same day, 'preference leave unstructured schema, agentic review b/c of best practice drift, not formal' — published best practice is revised without notice, so a schema gate would pin whichever vintage was current when it was written and then report clean over the drift.",
-      "graphs": [
+      "description": "`folio-voice/v1` profiles read out of `library/` above — a shared base plus one override per vendor, on the owner's ruling of 2026-09-20: 'for model specific sources, make those model specific voices.' Citations are INTERNAL to this instance (no `instance:` key), unlike who-style-guide's, because here the corpus and the reading live together. The rules are deliberately NOT formally constrained: owner, same day, 'preference leave unstructured schema, agentic review b/c of best practice drift, not formal' — published best practice is revised without notice, so a schema gate would pin whichever vintage was current when it was written and then report clean over the drift. PATH REALIGNED 2026-09-21 (bean `26tu`): it named the pre-migration `voices/` while `who-style-guide` and `folio-assistant-sci` moved to `skills/voices/`, because a voice IS a skill (bean `btuv`). The directory is STILL ABSENT either way — this instance declares the graph ahead of shipping it, which the entry above says is deliberate — so realigning the path does not close `26tu`; it only means that when the voices arrive they land where every consumer already looks. Whether to ship them or drop the declaration until then is this instance's call, and deleting another instance's roadmap is not a migration decision. VENDOR OVERRIDES live in the reserved `vendors/` sub-sub-graph inside this same directory — `skills/voices/vendors/<id>/voice.json` — on the owner's ruling of 2026-09-22: 'vendor overides go in sub-sub-grahiphs like voice/vendors or voices-vendors'. The nested spelling was taken because the flat one needs a SECOND declared graph for one concept, and a declaration inside a declaration is the defect #263 names. The directory is where a person looks; a vendor voice still declares what it overrides in its own `extends` field, so nothing infers the relation from a path.",
+      "graphKinds": [
         "voices"
-      ]
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/cat-harness/voices/index.html",
+        "_visualiser_comment": "the index, not a subject page: this instance declares the graph and ships no voice, so the generator writes it no page of its own. Bean `26tu`."
+      }
     }
   ]
 }

@@ -4,7 +4,7 @@
  *
  * Owner, 2026-09-19: *"each content type should have an avatar in and out of
  * trash. dark and light mode"*, and then: *"all kinds need an avatary.
- * cat-bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
+ * bootstrap has avatar, so does cat-harness, folio-asst, sticky/todo, etc."*
  *
  * ## The glyph is a MASK, not an image or an inline `<svg>`
  *
@@ -64,7 +64,7 @@ export interface Avatar {
 export const AVATARS: Readonly<Record<string, Avatar>> = {
   // ── The layer identities the owner named ───────────────────────────
   //
-  // Owner: *"cat-bootstrap has avatar, so does cat-harness, folio-asst"*.
+  // Owner: *"bootstrap has avatar, so does cat-harness, folio-asst"*.
   //
   // THIS TABLE SERVES TWO KEY SPACES, and the entries below are the second
   // one. `kind-fan` and `gen-avatars-css` key by GRAPH KIND; `harness-tiles`
@@ -77,9 +77,9 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // assert.
   //
   // THE COMMENT HERE WAS STALE AND COST THE INSTANCE ITS FACE. It read: *"the
-  // split (#223) has not happened, so `cat-bootstrap` and `folio-assist-core`
+  // split (#223) has not happened, so `bootstrap` and `folio-assist-core`
   // exist as layers in the namespace and as nothing in `harness.json`"*. Both
-  // halves were false by 2026-09-21 — `cat-bootstrap/harness.json` and
+  // halves were false by 2026-09-21 — `bootstrap/harness.json` and
   // `folio-assistant-core/harness.json` both exist and both declare a `name`
   // — and the second is not even the name that was adopted. Measured on
   // 2026-09-21: `avatarFor("folio-assistant-core")` returned GENERIC, the
@@ -87,7 +87,7 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
   // of paper below sat in the table under a spelling nothing carries. A key
   // nobody can reach is worse than a missing one: the coverage check counted
   // it as declared. Bean `hso8`, whose rename this completes.
-  "cat-bootstrap": {
+  "bootstrap": {
     // A seed with a shoot: the graph an agent reads before it knows anything.
     glyph: "M12 21c0-5 0-7 0-9m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5z",
     tone: 96,
@@ -98,6 +98,112 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M4 9V6l3 2h10l3-2v3m0 0v9H4V9zM8 13h.01M16 13h.01M10 17h4",
     tone: 268,
     reads: "a framed face with ears — the harness the instance is held in",
+  },
+  // WHO BLUE, AND NO EMBLEM. Owner, 2026-09-23: *"no logo on who-iris icon
+  // (for now). just WHO blue"* — reversing their own choice of 2026-09-22,
+  // which had the WHO emblem-and-wordmark cropped to the emblem. The image
+  // stays declared in `who-iris.json`; only the `icon` pointer to it is gone,
+  // so restoring it is one field rather than a re-ingest.
+  //
+  // 199 is MEASURED from #0093D5, the organisation's blue as `who-iris.json`
+  // already records it: rgb(0,147,213), max channel blue, so the hue is
+  // 4 + (0-147)/213 sixths of a turn = 198.6°, rounded. Written as an angle
+  // rather than as the hex because that is what this table holds and what the
+  // stylesheet builds both schemes from — a literal colour here would be
+  // legible in one mode and not the other, which is the `y8cm` failure.
+  //
+  // Without this entry `avatarFor("who-iris")` falls to GENERIC, so the tile
+  // would have taken the generic hue and reported a finding — "no avatar
+  // declared" is true of an instance nobody has decided about, and this one
+  // has been decided about twice.
+  // SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner,
+  // 2026-09-23: *"smart-base avatar: use who-iris route, WHO blue no logo"*,
+  // taking the route this instance's exemption had named as open and
+  // preferable rather than leaving it exempt.
+  //
+  // TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is
+  // measured from the same #0093D5 — the organisation's own blue — and these
+  // are two instances of the SAME organisation's material. A reader scanning
+  // the navbar should see them as a family; giving smart-base a near-miss hue
+  // would assert a distinction that does not exist. The registry requires
+  // distinct GLYPHS, not distinct tones, and that is the right constraint:
+  // the glyph says which instance, the tone says whose.
+  //
+  // And no emblem, which is the whole of "the who-iris route": an
+  // organisation's published colour with a neutral glyph is not inventing its
+  // identity, where cropping its logo would be.
+  "smart-base": {
+    // A broad base with three narrowing courses above it — the layer the rest
+    // of the stack rests on. smart-base is exactly that: `fhir-harness` sits
+    // under it, and `smart-l1`, `smart-dak` and `smart-ig` are built on top,
+    // so the glyph reads the instance's position rather than its subject.
+    glyph: "M3 18h18M6 14h12M9 10h6M11 6h2",
+    tone: 199,
+    reads: "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
+  },
+  "who-iris": {
+    // An open book with a band across it — a repository of published
+    // documents, which is what IRIS is. Deliberately NOT the emblem: the
+    // owner asked for the colour without the logo.
+    glyph: "M4 6h6a2 2 0 012 2v10a2 2 0 00-2-2H4zM20 6h-6a2 2 0 00-2 2v10a2 2 0 012-2h6zM4 6v10M20 6v10",
+    tone: 199,
+    reads: "an open book — a repository of published documents, in WHO blue",
+  },
+  // ── The three kinds split out of `cat-harness`, 2026-09-21 ──────────────
+  //
+  // TONES NEAR THE PARENT'S 268 ON PURPOSE. These are the parts of one graph,
+  // and a reader scanning a legend should see them as a family rather than as
+  // three unrelated kinds that happen to sit together. Far enough apart to
+  // tell the three from each other; close enough that none reads as belonging
+  // somewhere else.
+  skills: {
+    // An open book. A Skill is an instruction body, and nothing else here is.
+    glyph: "M4 5h6a2 2 0 012 2v12a2 2 0 00-2-2H4zm16 0h-6a2 2 0 00-2 2v12a2 2 0 012-2h6z",
+    tone: 256,
+    reads: "an open book — the instruction an Actor performs a Task from",
+  },
+  processes: {
+    // Two nodes and a gateway between them: the smallest honest BPMN.
+    glyph: "M4 12h4m4 0h4m4 0h.01M6 12a2 2 0 11-4 0 2 2 0 014 0zm14 0a2 2 0 11-4 0 2 2 0 014 0zM12 9l3 3-3 3-3-3z",
+    tone: 280,
+    reads: "two nodes either side of a diamond — a process and the decision in it",
+  },
+  scenarios: {
+    // Two figures. A Role is a part somebody plays, so the glyph is people
+    // rather than a document.
+    glyph: "M9 11a3 3 0 100-6 3 3 0 000 6zm0 0c-2.5 0-4 1.5-4 4v4h8v-4c0-2.5-1.5-4-4-4zm8-6a2.5 2.5 0 110 5M17 12c2 0 3 1.5 3 3v4h-3",
+    tone: 292,
+    reads: "two figures — the Actors and the Roles they take on",
+  },
+  policies: {
+    // A shield with a tick: what is permitted, and to whom. ODRL policies,
+    // issue #1180.
+    glyph: "M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zm-3.5 9l2.5 2.5 4.5-4.5",
+    tone: 304,
+    reads: "a shield with a tick — what each Actor is permitted to do",
+  },
+  // THE ROOT INSTANCE, and it had no entry until 2026-09-22 — bean `zc7m`.
+  //
+  // Owner, reporting it: *"folio assistant icon is messed up still. I want
+  // theme like in avaatars"*. It was the GENERIC question mark, which is what
+  // `avatarFor` returns for a name nothing declares, and the table's own
+  // header has carried the instruction the whole time: *"bootstrap has
+  // avatar, so does cat-harness, folio-asst"*. Two of those three were here.
+  //
+  // TONE 236, between `folio` (224) and `tools` (250), and deliberately near
+  // `folio-assistant-core`'s 212 — the same reasoning the three kinds below
+  // `cat-harness` are given: these are parts of one graph and a reader
+  // scanning a legend should see them as a family. Far enough to tell apart,
+  // close enough that neither reads as belonging somewhere else.
+  //
+  // THE GLYPH IS THE CORE'S LEAF, HELD. `folio-assistant-core` is the leaf of
+  // paper; the root instance is what holds one, so this is that leaf inside a
+  // frame rather than a second unrelated mark. An instance and its core
+  // drawn as two unrelated things would be the same drift the tones avoid.
+  "folio-assistant": {
+    glyph: "M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2zM8 7h5l3 3v7H8zM13 7v3h3",
+    tone: 236,
+    reads: "a leaf of paper held in a frame — the folio, and the instance that holds it",
   },
   // Keyed on the DECLARED NAME, which is `folio-assistant-core` — directory
   // and name both spelled in full, per the owner's ruling of 2026-09-20 and
@@ -168,6 +274,11 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 320,
     reads: "a speech bubble — a remark about the work, not the work",
   },
+  "review-verdicts": {
+    glyph: "M5 4h14v16H5zM8 12l3 3 5-6",
+    tone: 200,
+    reads: "a page with a tick — somebody read this version and judged it",
+  },
   tools: {
     glyph: "M14 4a4 4 0 00-5 5l-5 5 2 2 5-5a4 4 0 005-5l-2 2-2-2 2-2z",
     tone: 250,
@@ -191,10 +302,80 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 268,
     reads: "a fork in a path — parallel ways to a judgement, one chosen by context",
   },
+  // A CHIP, because the subject is the machine rather than what it says. The
+  // tempting glyph — a speech bubble, a globe — draws LANGUAGE, and this
+  // graph is not about language: it is about which languages somebody has
+  // checked a given model is good at. A globe here would read as the
+  // translation pipeline, which is a different kind two rows down.
+  models: {
+    glyph: "M8 8h8v8H8zM4 10h4M4 14h4M16 10h4M16 14h4M10 4v4M14 4v4M10 16v4M14 16v4",
+    tone: 300,
+    reads: "a chip with its pins — the machine an agent is running on, not what it says",
+  },
+  // An OPEN BOOK, and the choice is between two readings of "glossary". A tag
+  // or a label would draw the `notation` — the code a term carries — which is
+  // one field of a concept and not the thing itself. A book draws what a
+  // reader does with it: looks a word up. `tone: 84` is unused and sits
+  // between `qa`'s green verdict and `library`'s, which is right for a
+  // reference rather than a judgement.
+  "external-schema": {
+    glyph: "M4 6h7v12H4zM13 6h7v12h-7zM11 9h2M11 12h2M11 15h2",
+    tone: 208,
+    reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
+  },
+  // A LIST OF ENTRIES, each a short code tag beside a longer line: a code and
+  // what it means, which is the whole of a code list. Deliberately not the
+  // glossary's book — a book is looked up; a code list is CHOSEN from, closed,
+  // and every entry carries its definition. `tone: 180` is unused and sits
+  // between the reference tones and `external-schema`'s 208.
+  "code-list": {
+    glyph: "M4 6h3v2H4zM9 7h11M4 11h3v2H4zM9 12h11M4 16h3v2H4zM9 17h11",
+    tone: 180,
+    reads: "a closed list of codes, each beside its meaning — values chosen from, never free text",
+  },
+  // A CLASS BOX — a title compartment over an attribute compartment, with an
+  // association line leaving it. The one glyph that says "a diagram of shapes"
+  // rather than any shape in particular. `tone: 220` was unused, and sits beside
+  // `external-schema`'s 208 because both are about the shape of things.
+  uml: {
+    glyph: "M3 4h9v12H3zM3 8h9M12 10h4M16 7h5v6h-5z",
+    tone: 220,
+    reads: "a class box with an association leaving it — a diagram of what the nodes are, derived and never drawn by hand",
+  },
+  // The harness's swimlane-role ledger, renamed from `glossary` on 2026-09-23:
+  // three lanes with a tag on one, the terms a process's swimlanes define.
+  "swimlane-glossary": {
+    glyph: "M3 6h18M3 12h18M3 18h18M15 9h5v6h-5z",
+    tone: 92,
+    reads: "three swimlanes with a tag — the roles a process's lanes define",
+  },
+  glossary: {
+    glyph: "M12 7v12M12 7C10 5 7 5 4 6v12c3-1 6-1 8 1M12 7c2-2 5-2 8-1v12c-3-1-6-1-8 1",
+    tone: 84,
+    reads: "an open book — terms somebody looks up, not terms a machine mints",
+  },
   health: {
     glyph: "M3 13h4l2-5 3 10 2-6 2 3h5",
     tone: 4,
     reads: "a trace — the repository's own vital signs, over time",
+  },
+  // A clipboard with a tick and a cross: a run REPORTING on itself, carrying
+  // both outcomes. Deliberately not the `qa` mark and not `health`'s trace —
+  // the three are different subjects (an artefact, a repository, an execution)
+  // and an avatar that borrowed either would say they are the same question.
+  // Angle brackets around a caret: source, as the thing that is written rather
+  // than the thing that runs. Deliberately not a terminal prompt or a gear --
+  // both read as EXECUTION, and this kind is about code as authored content,
+  // which is exactly the distinction `holds: "content"` records.
+  code: {
+    glyph: "M8 7l-5 5 5 5m8-10l5 5-5 5M13 5l-2 14",
+    tone: 268,
+    reads: "angle brackets around a slash — source as something written, not something running",
+  },
+  "qa-report": {
+    glyph: "M9 4h6v3H9zM7 6h2m6 0h2a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V7a1 1 0 011-1zm1.5 7l1.5 1.5L13 11m1 5l3 3m0-3l-3 3",
+    tone: 168,
+    reads: "a clipboard carrying a tick and a cross — one run's own account of what it did, both outcomes on the same sheet",
   },
   uploads: {
     glyph: "M12 17V5m0 0l-4 4m4-4l4 4M5 19h14",
@@ -250,6 +431,20 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
+  },
+  proposals: {
+    // A lightbulb over a page — an idea argued on paper, not yet agreed.
+    // A sub-graph of `docs` (issue #1164), so it shares the page's outline.
+    glyph: "M12 3a5 5 0 00-3 9v2h6v-2a5 5 0 00-3-9zM10 17h4M10.5 20h3",
+    tone: 38,
+    reads: "a lightbulb — an idea being argued, not yet a promise",
+  },
+  requirements: {
+    // A page with two ticked lines — what was agreed, each line checkable.
+    // A proposal is MOVED here when its feature ships (issue #1164).
+    glyph: "M6 3h12v18H6zM9 8l1.5 1.5L13 7M9 14l1.5 1.5L13 13M15 8h1M15 14h1",
+    tone: 148,
+    reads: "a page of ticked lines — what the harness promises, each checkable",
   },
   interaction: {
     // A speech bubble with a tick inside — a preference that has been STATED,

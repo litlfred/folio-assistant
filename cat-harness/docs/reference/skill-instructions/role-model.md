@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/role-model.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/role-model.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/role-model.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/role-model.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/role-model.md){: .fa-edit-source }
 
 {% raw %}
 # Roles are swimlanes
@@ -21,11 +21,11 @@ Four objects, each with a home:
 | object | what it is | declared in |
 |---|---|---|
 | **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
-| **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `skills/roles/roles.json` |
-| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md`, `src/skills/`, `schemas/skills/<name>/`, `.claude/skills/local/` |
-| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `skills/workflows/*.bpmn`, `skills/workflows/decisions/*.dmn` |
-| **Requirement** | a conformance obligation that **points at** the others: `satisfiedBy` names the skill or capability discharging it, `actors` who is bound, `derivedFrom` the broader requirement it specialises. | `skills/requirements/*.json` |
-| **Permission** | what an actor is **allowed to do**, in any lane. Cross-cuts roles. | `skills/permissions/permissions.json` |
+| **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
+| **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
+| **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
+| **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
+| **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
 Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
 [`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
@@ -103,7 +103,7 @@ Three facts, in case the question comes up again:
   swimlane roles into it. At removal, across the 114 skill files: 288
   annotations, **260 of them — 90 % — resolving to nothing.**
 
-To learn who performs a skill, read `skills/roles/roles.json`. The registry is
+To learn who performs a skill, read `scenarios/roles.json`. The registry is
 the only answer that resolves.
 
 **What the removal did not decide.** Whether a skill *should* declare its
@@ -259,35 +259,78 @@ activity whose lane is unbound or absent is already reported by
 
 ```xml
 <bpmn:extensionElements>
-  <folio:fulfilment kinds="person agent"
+  <cat-harness.processes:fulfilment kinds="person agent"
                     reason="a person or an agent drafts this; a pipeline cannot." />
 </bpmn:extensionElements>
 ```
 
 The **reason is required at load time** and a reasonless declaration does not
-parse — the same rule `<folio:no-skill reason>` follows, and for the same
+parse — the same rule `<cat-harness.processes:no-skill reason>` follows, and for the same
 reason. Widening `kinds` is the cheapest way to make this criterion pass, so
 silencing it has to cost a sentence somebody reads in the diff.
 
 **Read a failure as a question with three answers, not one.** The task type may
 be wrong, the lane may be wrong, or the step may really admit that kind — and
-only the third is a `<folio:fulfilment/>`. Reaching for the exemption first is
+only the third is a `<cat-harness.processes:fulfilment/>`. Reaching for the exemption first is
 how it becomes a rubber stamp.
 
-## An actor has three lists, and they answer three different questions
+## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
+// .claude/skills/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
-  "permissions":  ["admin-settings", "role-management", "release-authorization"],
   "capabilities": ["git-push"] }
+
+// policies/folio-defaults.jsonld: a W3C ODRL 2.2 Set
+{ "permission": [ { "assignee": "admin", "action": "role-management" }, … ] }
 ```
 
-| field | question | scope |
+| question | answered by | scope |
 |---|---|---|
-| `roles` | what may it act **AS**? | per lane |
-| `permissions` | what may it **DO**? | every lane |
-| `capabilities` | what does its **machine have**? | the environment |
+| what may it act **AS**? | `roles` on the actor | per lane |
+| what may it **DO**? | ODRL rules in `policies/` naming it as `assignee` | everywhere, or as narrow as a rule's `cat-harness:process`, `cat-harness:task` and `cat-harness:role` constraints |
+| what does its **machine have**? | `capabilities` on the actor | the environment |
+
+**What an actor may DO moved off the actor on 2026-09-23** (issue #1180; owner:
+*"W3C ODRL 2.2 and W3C PROV-O for logging"*). Every `permissions` list became
+one ODRL rule per action, and `schemas/odrl.test.ts` pins that nobody lost or gained
+one. What this buys:
+
+- **Inheritance.** Each action in `permissions.json` says which broader actions
+  it is `includedIn`, ending at ODRL's own (`odrl:display`, `odrl:modify`,
+  `odrl:execute`, …). A grant of a broader action permits everything included
+  in it. The graph need not be a tree and may have cycles.
+- **Scope.** A rule may be limited to a Process, a Task or a Role. No
+  constraint means everywhere.
+- **One question, three answers.** `permits()` in `schemas/odrl.ts` returns
+  `permit`, `deny` or `unknown`, and `unknown` is never permit. Performing a
+  task in a lane needs the permission **and** the lane's role, so eligibility
+  (`roles`) and permission stay separate, as below.
+- **Anyone.** `cat-harness:anyone` is an unauthenticated reader. The owner's floor:
+  it may `visualize` and `render`, and nothing else. Owner, 2026-09-24:
+  *"person acting w/ no login = reader/browser"*. A person with no login is a
+  reader/browser, whoever they are, and holds exactly this.
+
+**Identity is not here.** Which login is which actor is the data store's to
+know (owner, 2026-09-23). No actor file and no policy carries a login, and
+workflow history names the **actor**, never the login: the repository owner's
+steps are recorded as `owner` (owner, 2026-09-24, *"Yes, exactly"*), and the
+data store maps the login to `owner`.
+
+**Who reads all three before a task runs:** the BPMN executor. Before any task
+or decision is recorded, `authorizeTask` asks whether the actor is
+authenticated, eligible for the lane's role (`roles`), and permitted by policy
+to `perform-task` here and on this content. A role mismatch or a `deny`
+refuses; `unknown` is recorded while the rollout is advisory. The HTTP routes
+ask the same policies through `src/core/rbac.ts`. See
+[`task-authorization`](task-authorization.md), issue #1207.
+
+**Adding a permission:** declare the action in `permissions.json` with its
+`includedIn`, then add a rule to a policy in `policies/`. Never add a
+`permissions` list to an actor file: the audit reads it (an unmigrated
+downstream registry still works), but a list there is invisible to every
+scoped decision.
 
 **These were one field until 2026-09** (bean `ind9`), and the conflation meant
 nothing could resolve any of them: 27 claims across 19 names pointed at a
@@ -307,8 +350,9 @@ The line that does hold: **a skill answers what the performer of this task needs
 to KNOW, and belongs to the lane. A permission answers what this participant may
 DO, and travels with the participant through every lane it enters.**
 
-Both are audited and both are `critical` — `actor-permissions-resolve` and
-`actor-capabilities-resolve`. The latter was `major` only while the field was
+Both are audited and both are `critical` — `actor-permissions-resolve` (which
+also checks that every policy rule names a declared action and a declared actor
+or `cat-harness:anyone`) and `actor-capabilities-resolve`. The latter was `major` only while the field was
 overloaded, carrying entries no vocabulary could ever resolve.
 
 **Three names were neither**: `cql-authoring`, `data-dictionary-authoring` and
@@ -326,21 +370,31 @@ A requirement is not a skill and not a role. It is an obligation *about* them:
   "actors": ["author", "admin"],
   "statements": [
     { "key": "no-secrets", "conformance": "SHALL",
-      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…",
-      "satisfiedBy": [{ "kind": "skill", "ref": "content-plan" }] } ] }
+      "requirement": "Commits SHALL NOT include secrets, API keys, tokens…" } ] }
 ```
 
-Three reference types, all audited: `requirement-satisfied-by-resolves`,
-`requirement-actors-resolve` and `requirement-derived-from-resolves` are all
-`critical`, because a reader following a broken one gets nothing — the same test
-as a dangling `<folio:skill ref>`. `requirement-statements-graded` is `major`: an
+and a skill that discharges a statement says so in its own front matter:
+
+```yaml
+satisfies:
+  - "req:commit-hygiene#no-secrets"
+```
+
+The statement names no satisfier (#1168): a requirement is written once, and
+what discharges it arrives later, so the pointer lives on the arrival.
+
+The references are audited. `satisfies-resolves`, `requirement-actors-resolve`
+and `requirement-derived-from-resolves` are `critical`, because a reader
+following a broken one gets nothing — the same test as a dangling
+`<bootstrap.processes:skill ref>`. `requirement-statement-satisfied` is `minor` coverage: a
+statement nothing claims is visible only from the requirement's side. `requirement-statements-graded` is `major`: an
 ungraded statement is readable, it just cannot be conformance-tested, and
 SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.
 
 **Do not fold a requirement into the skill that satisfies it.** The grading, the
-`derivedFrom` lattice, the actor binding and the many-to-many `satisfiedBy` are
+`derivedFrom` lattice, the actor binding and the many-to-many `satisfies` are
 the only machine-checkable things about it, and prose in a skill doc carries
-none of them. `satisfiedBy` is many-to-many in both directions — one skill
+none of them. `satisfies` is many-to-many in both directions — one skill
 discharges statements in several requirements — so inlining duplicates rather
 than relocates.
 
@@ -385,34 +439,24 @@ editor)", "Review Committee"); three of *the work plan*. Nothing joined any of
 them to anything, so "which skills does this task's performer have" had no
 answer and an undefined lane was a silence rather than a finding.
 
-A role therefore declares the lane names it **binds**:
-
-```jsonc
-{
-  "id": "reviewer",
-  "name": "Reviewer / SME",
-  "summary": "Reads a change and judges it. Cannot accept it — that is the editor's lane.",
-  "actorKind": "person",
-  "lanes": ["Reviewer / SME", "Reviewer (SME or editor)", "Review Committee"],
-  "skills": ["content-review", "content-feedback"],
-  "inherits": ["viewer"]
-}
-```
-
-That resolved the whole existing corpus without editing a single `.bpmn`.
-
-**A new diagram should not add a name here.** Bind the lane explicitly:
+The first fix had each role declare the lane names it bound, a `lanes[]` of
+exact strings. That resolved the corpus without editing a `.bpmn`, but it put
+the pointer on the wrong node: a role is the general node, a lane the dependent
+one, and a general node never names its users (`data-modelling` step 8; owner,
+2026-09-23, #1168). So every one of the ~140 lanes that bound by name was given
+an explicit reference, and `lanes[]` was removed. **A lane binds its role
+itself, and only this way:**
 
 ```xml
 <bpmn:lane id="Lane_Reviewer" name="Reviewer">
   <bpmn:extensionElements>
-    <folio:role ref="reviewer" />
+    <bootstrap.processes:role ref="reviewer" />
   </bpmn:extensionElements>
   ...
 </bpmn:lane>
 ```
 
-An explicit `<folio:role ref>` **wins** over name matching: a diagram that has
+An explicit `<bootstrap.processes:role ref>` **wins** over name matching: a diagram that has
 said which role it means must not be second-guessed by a string table. A ref
 naming no declared role is a `critical` finding — it is *not* quietly
 name-matched instead.
@@ -516,7 +560,7 @@ reachability questions** and only one of them is about the role model:
 was a live defect: `actors/` holds participants, `capabilities/` holds
 environment probes (`docker`, `pandoc`, `python3`), `roles/` holds an assignment
 table and `hooks/` holds a shell script. Scanning all of them put 46 non-skills
-into the set, so `<folio:skill ref="viewer"/>` or `ref="latex-compiler"` would
+into the set, so `<bootstrap.processes:skill ref="viewer"/>` or `ref="latex-compiler"` would
 have resolved. `NON_SKILL_GROUPS` excludes them — 176 names down to 136, with no
 existing reference becoming dangling.
 
@@ -529,7 +573,7 @@ group of something else is a one-line addition.
 The role graph is the substrate every diagram's lanes bind to. Changing it —
 adding an actor, opening a role, granting a permission, retiring a
 participant — is therefore a process like any other, and it is drawn:
-[`actor-role-administration.bpmn`](../workflows/actor-role-administration.bpmn),
+[`actor-role-administration.bpmn`](../../processes/actor-role-administration.bpmn),
 in the `administrator` lane.
 
 **That was a question, not a deduction.** Until the owner answered it, there
@@ -560,7 +604,7 @@ uniquely was had no picture.
 
 ## Adding a role
 
-1. Add it to `skills/roles/roles.json` with a **`description`** that says what
+1. Add it to `scenarios/roles.json` with a **`description`** that says what
    the **position** is, not what it is called. **`actorKinds` is a SET** drawn
    from `person`, `agent`, `system` and `external` — human, agentic,
    mechanical, or outside this instance. It is what `activity-fulfilment-kind`
@@ -576,8 +620,10 @@ uniquely was had no picture.
    > instruction type-checks, parses, and silently loses the field. That is
    > bean `zdrf`'s failure class, and it happened — the three roles added in
    > #453 each carry a `summary` that reaches no graph.
-2. Bind its lanes — `<folio:role ref>` in new diagrams, `lanes[]` for an
-   existing name you are not renaming.
+2. Bind its lanes: each lane that this role plays carries
+   `<bootstrap.processes:role ref="<role id>">`. The role lists no lanes, since a role is the
+   general node and a lane the dependent one (`data-modelling` step 8, #1168).
+   A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
 4. `bun run kg:audit` and commit the sidecars.
@@ -585,3 +631,10 @@ uniquely was had no picture.
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Add an actor, and declare its kind; Open or close a role to an actor; Grant or revoke a permission; Retire an actor — never delete one; Audit the graph [kg:audit] |
+

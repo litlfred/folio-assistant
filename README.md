@@ -21,7 +21,8 @@ per-content-type skill system.
 The three live badges are the workflows that actually run on `main` — the only
 ones a badge can tell the truth about. A badge for a `workflow_dispatch`-only
 workflow reports its last dispatch forever, which is how `witness-refresh.yml`
-and `qa-sweep.yml` would read as red for all time (bean `lq7e`). If you add a
+and `qa-sweep.yml` (now a `folio_init` template, bean `52dz`) would read as red
+for all time (bean `lq7e`). If you add a
 workflow that auto-triggers on `main`, badge it here; if you add one that does
 not, do not.
 -->
@@ -42,10 +43,10 @@ not, do not.
 
 | | |
 |---|---|
-| **1. What the harness is, from nothing** | [`cat-bootstrap/README.md`](cat-bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
-| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |
+| **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |
+| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |
 | **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |
-| **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
+| **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |
 
 *Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*
 
@@ -54,9 +55,9 @@ not, do not.
 ## Harness instances
 
 This repository holds several **instances**, each declaring its own
-`folio-assistant.config.json`. Every one has two entry points on purpose: a **README** saying
-what it *is*, and an **`AGENTS.md`** saying what to *do* — the second augments
-the first rather than restating it.
+`<instance>.json`. Every one has two entry points on purpose: a **README**
+saying what it *is*, and an **`AGENTS.md`** saying what to *do* — the second
+augments the first rather than restating it.
 
 The table is generated from the declarations themselves by `bun run
 readme:sync`; it is not a list anybody keeps. Add an instance and it appears;
@@ -68,19 +69,22 @@ rename a directory and the links follow.
 |----------|------|--------------|--------------|
 | `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
 | `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
-| `cat-bootstrap` | cat-bootstrap | [AGENTS.md](./cat-bootstrap/AGENTS.md) | [README](./cat-bootstrap/README.md) |
-| `cat-bootstrap-tools` | cat-bootstrap-tools | [AGENTS.md](./cat-bootstrap-tools/AGENTS.md) | [README](./cat-bootstrap-tools/README.md) |
+| `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
-| `detangle` | detangle | [AGENTS.md](./detangle/AGENTS.md) | [README](./detangle/README.md) |
+| `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
-| `kg-navigation` | kg-navigation | [AGENTS.md](./kg-navigation/AGENTS.md) | [README](./kg-navigation/README.md) |
 | `large-datasets` | large-datasets | [AGENTS.md](./large-datasets/AGENTS.md) | [README](./large-datasets/README.md) |
+| `smart-base` | smart-base | [AGENTS.md](./smart-base/AGENTS.md) | [README](./smart-base/README.md) |
+| `smart-dak` | smart-dak | [AGENTS.md](./smart-dak/AGENTS.md) | [README](./smart-dak/README.md) |
+| `smart-ig` | smart-ig | [AGENTS.md](./smart-ig/AGENTS.md) | [README](./smart-ig/README.md) |
+| `smart-immunizations` | smart-immunizations | [AGENTS.md](./smart-immunizations/AGENTS.md) | [README](./smart-immunizations/README.md) |
+| `smart-l1` | smart-l1 | [AGENTS.md](./smart-l1/AGENTS.md) | [README](./smart-l1/README.md) |
 | `smart-trust` | smart-trust | [AGENTS.md](./smart-trust/AGENTS.md) | [README](./smart-trust/README.md) · [docs](./smart-trust/docs/) |
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/docs/) |
 | `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
-> **10 of 13** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **13 of 16** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -89,7 +93,7 @@ rename a directory and the links follow.
 
 ## Bootstrapping — setting up a repository to write in
 
-**`cat-bootstrap litlfred/cat-harness`** means *set this repository up the same way
+**`bootstrap litlfred/cat-harness`** means *set this repository up the same way
 that one is set up.*
 
 A repository that has been bootstrapped carries a small file saying what kind
@@ -102,11 +106,11 @@ which editorial style are all read from **that** repository's setup file, so
 there is nothing else to ask.
 
 An agent pointed at a repository that is not set up yet starts at
-**[`cat-bootstrap/README.md`](cat-bootstrap/README.md)**, which is written for someone
+**[`bootstrap/README.md`](bootstrap/README.md)**, which is written for someone
 who knows none of the above.
 
 Why it is built this way, and the questions still open:
-[proposals/cat-bootstrap](fsh-guts/proposals/cat-bootstrap.md) — in `fsh-guts/`, which
+[proposals/bootstrap](cat-harness/docs/proposals/bootstrap.md) — in `fsh-guts/`, which
 is kept and addressable but deliberately not published as a page, so that is a
 repository link rather than a site one.
 
@@ -166,7 +170,7 @@ flowchart LR
 ## How a change gets published
 
 The editing and publication processes are modelled as **BPMN 2.0 swimlane
-diagrams**. Sources live in [`skills/workflows/`](cat-harness/skills/workflows) — open them in
+diagrams**. Sources live in [`processes/`](cat-harness/processes) — open them in
 [bpmn.io](https://demo.bpmn.io/) or Camunda Modeler; the SVGs below are
 generated from them by `bun run render:bpmn`.
 
@@ -183,13 +187,13 @@ editor; only an accepted change is written to the corpus.
 
 <img src="cat-harness/docs/assets/img/workflows/editing-hci-validation.svg" alt="BPMN swimlane diagram of the editing process and its HCI validation gate" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/editing-hci-validation.bpmn)
+[BPMN source](cat-harness/processes/editing-hci-validation.bpmn)
 
 ### Corpus → draft → review team → published
 
 <img src="cat-harness/docs/assets/img/workflows/draft-to-publication.svg" alt="BPMN swimlane diagram: corpus to draft publication, review team and SME sign-off, programme-manager authorisation, publication" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/draft-to-publication.bpmn)
+[BPMN source](cat-harness/processes/draft-to-publication.bpmn)
 
 ### One cycle of a folio, plan → retire
 
@@ -200,16 +204,16 @@ findings, resolved on commit — so a human and an agent read the same answer to
 
 <img src="cat-harness/docs/assets/img/workflows/content-lifecycle.svg" alt="BPMN swimlane diagram of the content lifecycle from plan to retire" width="100%">
 
-[BPMN source](cat-harness/skills/workflows/content-lifecycle.bpmn)
+[BPMN source](cat-harness/processes/content-lifecycle.bpmn)
 
 ### Per content type
 
 | Diagram | Content type |
 |---------|--------------|
-| [`authoring-a-document.bpmn`](cat-harness/skills/workflows/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
-| [`authoring-a-paper.bpmn`](cat-harness/skills/workflows/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](cat-harness/skills/workflows/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
-| [`l3-fhir-pipeline.bpmn`](cat-harness/skills/workflows/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
+| [`authoring-a-document.bpmn`](cat-harness/processes/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
+| [`authoring-a-paper.bpmn`](cat-harness/processes/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
+| [`l2-dak-authoring.bpmn`](cat-harness/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l3-fhir-pipeline.bpmn`](cat-harness/processes/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---
 
@@ -248,7 +252,7 @@ content/my-guidance-note/            the document
 content/schema/                      builder shim — the one place the platform path is written
 uploads/                             source PDFs, for offline citation verification
 library/                             ingested source documents (read-only reference)
-harness.config.json                    selects the adapter
+<name>.config.json                   selects the adapter
 AGENTS.md                            agent guidance, tailored to your content type
 CLAUDE.md · GEMINI.md                thin stubs pointing at AGENTS.md
 .mcp.json                            wires folio-assistant as an MCP server
@@ -297,7 +301,7 @@ in a repo you are not sure about.
 
 Choose `document` unless the folio will actually carry formal mathematics —
 `paper` adds two large toolchains. Switching later is a one-line change to
-`harness.config.json`; going from `paper` to `document` additionally means
+`<name>.config.json`; going from `paper` to `document` additionally means
 removing the math blocks, which `content_profile_check` lists for you.
 
 ➡️ Full walk-throughs:

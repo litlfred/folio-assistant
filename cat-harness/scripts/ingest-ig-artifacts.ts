@@ -36,6 +36,7 @@
  * actually had — an IG missing one of them yields a thinner index, not a
  * guessed one.
  */
+import { createHash } from "node:crypto";
 import { readFileSync, existsSync, mkdirSync, writeFileSync, copyFileSync, statSync, readdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { gunzipSync } from "node:zlib";
@@ -47,6 +48,7 @@ import {
   type FhirArtifact,
   type FhirArtifactIndex,
   type Representation,
+  type UnboundSidecar,
   type IgSourceKind,
 } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
@@ -128,8 +130,44 @@ function main(): void {
   const out = arg("out");
   const check = process.argv.includes("--check");
   const materializeDak = process.argv.includes("--materialize-dak");
+  const USAGE =
+    "usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] " +
+    "[--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]";
+
+  // A MISINVOCATION AND "NOTHING HERE TO CHECK" ARE DIFFERENT, and printing one
+  // usage string for both is why `ingest:ig:check` read as a broken script for
+  // as long as it did.
+  //
+  // Measured 2026-09-22: the registered `ingest:ig:check` ended in a dangling
+  // `--source` with no value, so every run printed the line above and exited 2.
+  // It escaped the "no check script is unrun" test because that covers
+  // `check:*`-prefixed scripts only, and no workflow invokes it — a registered
+  // script nobody runs, which would have failed if anybody had.
+  //
+  // The dangling flag is fixed in `package.json`. What is fixed HERE is the
+  // report: with `--out` naming an index whose `source.of` is a REMOTE URL,
+  // there is no local directory to diff against, and saying so is a different
+  // statement from "you typed the command wrong". `--check` cannot pass over
+  // nothing either — a checker with no input that exited 0 would be the `dh4f`
+  // shape, a clean run over a corpus it never saw.
+  if (!source && out && check) {
+    const idxPath = join(out, "fhir-artifact-index", "index.json");
+    const of = existsSync(idxPath)
+      ? (JSON.parse(readFileSync(idxPath, "utf8")) as Partial<FhirArtifactIndex>).source?.of
+      : undefined;
+    console.error(
+      of
+        ? `--check needs a local IG build to compare against, and none was given.\n` +
+          `  ${idxPath} records its source as ${of}\n` +
+          `  — a REMOTE build, so there is nothing on disk to diff. Fetch it and pass\n` +
+          `  --source <dir>, or run this where the IG output lives. Not a pass: a\n` +
+          `  checker with no input cannot report a clean corpus.`
+        : `--check needs --source <dir>, and ${idxPath} records no source to name one.\n${USAGE}`,
+    );
+    process.exit(1);
+  }
   if (!source || !out) {
-    console.error("usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] [--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]");
+    console.error(USAGE);
     process.exit(2);
   }
 
@@ -206,7 +244,7 @@ function main(): void {
         const r = rep(source, base, `${stem}.${f}`);
         if (r) published[f] = r;
       }
-      a = { key, resourceType, id: rid, published, materialization: { state: "referenced", of: `${base.replace(/\/$/, "")}/${stem}.html` } };
+      a = { key, resourceType, id: rid, published, materialization: { state: "referenced", provenance: { upstream: `${base.replace(/\/$/, "")}/${stem}.html` } } };
       byKey.set(key, a);
     }
     return a;
@@ -229,45 +267,213 @@ function main(): void {
     if (e.description) a.description = e.description;
   }
 
-  // ── DAK overlay, keyed off each artefact's own stem ────────────────────
-  // Inside the declared graph directory, not beside it: one `harness.json`
-  // entry then covers the index and the bytes it points at, and a consumer
-  // scanning the declared directory finds both. A sibling `dak/` would be an
-  // undeclared directory holding content the index claims to have.
+  /**
+   * The five materialisation gates for a DAK sidecar.
+   *
+   * `size.basis` is MEASURED from this IG's own surface at ingest time. It was
+   * a hardcoded sentence quoting smart-trust's 332K/71 files and 7.1M corpus,
+   * which every other IG's index would then have asserted about itself — a
+   * basis that is wrong for its subject is worse than none, because it reads
+   * as though somebody checked.
+   */
+  const dakGates = (): NonNullable<FhirArtifact["materialization"]["gates"]> => ({
+    size: {
+      verdict: "permitted",
+      basis:
+        `The DAK surface materialised here is ${dakBytes().toLocaleString()} bytes across ` +
+        `${dakFiles} file(s), measured from ${base} at ingest. The full resource corpus is left by reference.`,
+    },
+    restrictions: { verdict: "permitted", basis: "Published openly on the IG's public Pages site; no access control on the source." },
+    retention: { verdict: "permitted", basis: "Working copy, regenerable by re-running this ingest against the same source revision." },
+    sourceLoss: { verdict: "unknown", basis: "Not established. The IG is actively published; no statement has been made about how long a given version's Pages build remains reachable." },
+    copyright: { verdict: "unknown", basis: "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest." },
+  });
+  let dakFiles = 0;
+  let dakByteTotal = 0;
+  const dakBytes = (): number => dakByteTotal;
+
+  // ── DAK overlay ───────────────────────────────────────────────────────
+  //
+  // RESOLVED THROUGH THE ENUMERATION, not composed from the artefact's id.
+  //
+  // The first version keyed sidecars off `<ResourceType>-<id>`, and that held
+  // for smart-trust only because its ids happen to equal the published stems.
+  // smart-immunizations names a Logical Model's sidecar after the model's
+  // TITLE — `StructureDefinition-IMMZ_C4_Create_client_record` for the
+  // artefact `StructureDefinition/IMMZC4` — so ten of its 198 schemas bound to
+  // nothing and the census came out ten short, in silence.
+  //
+  // So the enumeration's own `example.schemas[]` is the map, tried in
+  // descending order of authority:
+  //
+  //   1. the canonical URL it carries (`valueSetUrl` / `logicalModelUrl`)
+  //   2. the filename stem, which is what the old code assumed
+  //   3. the title, against an artefact's `title` or `name`
+  //
+  // Each is a fact the PUBLISHER wrote down; none is a guess about layout. The
+  // asymmetry is real and no single field can carry it: smart-immunizations
+  // fills `valueSetUrl` on 190 of 191 ValueSets and `logicalModelUrl` on NONE
+  // of 11 Logical Models, though its own schema declares that field.
+  //
+  // Anything still unbound is RECORDED in `dakUnbound`, never dropped — the
+  // defect above was invisible precisely because nothing recorded it.
+  //
+  // `dak/` sits inside the declared graph directory rather than beside it, so
+  // one declaration covers the index and the bytes it points at.
+  interface EnumEntry {
+    filename?: string;
+    title?: string;
+    valueSetUrl?: string;
+    logicalModelUrl?: string;
+    codeCount?: number;
+    propertyCount?: number;
+  }
   const graphDir = join(out, "fhir-artifact-index");
   const dakDir = join(graphDir, "dak");
   const materialized: Array<[string, string]> = [];
-  if (dakApi === "present") {
-    for (const a of byKey.values()) {
-      const stem = `${a.resourceType}-${a.id}`;
-      const sidecars: Array<[keyof NonNullable<FhirArtifact["dak"]>, string]> = [
-        ["schema", `schemas/${stem}.schema.json`],
-        ["displays", `schemas/${stem}.displays.json`],
-        ["openapi", `schemas/${stem}.openapi.json`],
-        ["jsonld", `${stem}.jsonld`],
-      ];
-      for (const [slot, file] of sidecars) {
-        if (!existsSync(join(source, file))) continue;
-        const local = materializeDak ? join("fhir-artifact-index", "dak", basename(file)) : undefined;
-        const r = rep(source, base, file, local);
-        if (!r) continue;
-        a.dak = a.dak ?? {};
-        (a.dak as Record<string, unknown>)[slot] = r;
-        if (materializeDak) materialized.push([file, basename(file)]);
+  const unbound: UnboundSidecar[] = [];
+  const materializedStems = new Map<string, string>();
+  /** `dak/<basename>` → the source file it was copied from, for fixity. */
+  const materializedFrom = new Map<string, string>();
+
+  const byCanonical = new Map<string, FhirArtifact>();
+  const byStem = new Map<string, FhirArtifact>();
+  const byTitle = new Map<string, FhirArtifact>();
+  for (const a of byKey.values()) {
+    if (a.canonical) byCanonical.set(a.canonical, a);
+    byStem.set(`${a.resourceType}-${a.id}`, a);
+    if (a.title) byTitle.set(a.title, a);
+    if (a.name) byTitle.set(a.name, a);
+  }
+
+  /** Attach the four sidecars named by `stem`, materialising if asked. Returns whether any landed. */
+  const attach = (a: FhirArtifact, stem: string, counts?: EnumEntry): boolean => {
+    const sidecars: Array<[keyof NonNullable<FhirArtifact["dak"]>, string]> = [
+      ["schema", `schemas/${stem}.schema.json`],
+      ["displays", `schemas/${stem}.displays.json`],
+      ["openapi", `schemas/${stem}.openapi.json`],
+      ["jsonld", `${stem}.jsonld`],
+    ];
+    let any = false;
+    for (const [slot, file] of sidecars) {
+      if (!existsSync(join(source, file))) continue;
+      const local = materializeDak ? join("fhir-artifact-index", "dak", basename(file)) : undefined;
+      const r = rep(source, base, file, local);
+      if (!r) continue;
+      a.dak = a.dak ?? {};
+      (a.dak as Record<string, unknown>)[slot] = r;
+      if (materializeDak) {
+        materialized.push([file, basename(file)]);
+        // The copy into `dak/` happens at the end of the run, long after the
+        // materialization records are built — so fixity is taken from the
+        // SOURCE, and this is what maps a recorded `localPath` back to it.
+        materializedFrom.set(basename(file), file);
       }
-      if (a.dak) a.materialization = { state: "materialized", of: a.materialization.of, localPath: join("fhir-artifact-index", "dak", `${stem}.schema.json`),
-        // `working`, not `archival`: these bytes are regenerable by re-running
-        // this ingest against the same source revision, so they carry none of
-        // archival's obligations — no fixity, no expectation of surviving the
-        // source. `--check` is what proves the claim.
+      dakFiles += 1;
+      dakByteTotal += r.bytes ?? statSync(join(source, file)).size;
+      any = true;
+    }
+    if (any && counts?.codeCount !== undefined) a.dak = { ...a.dak, codeCount: counts.codeCount };
+    if (any && counts?.propertyCount !== undefined) a.dak = { ...a.dak, propertyCount: counts.propertyCount };
+    // Gates are assigned AFTER every sidecar has landed, not here: `dakGates`
+    // reads running totals, so building them mid-loop gave each artefact a
+    // different "measured" surface — 14 files on the first, hundreds on the
+    // last. A basis that varies per row is not a measurement.
+    if (any) materializedStems.set(a.key, stem);
+    return any;
+  };
+
+  if (dakApi === "present") {
+    // Pass 1 — the enumerations, which are authoritative about what exists.
+    for (const enumFile of enumerations) {
+      let entries: EnumEntry[] = [];
+      try {
+        entries = JSON.parse(readFileSync(join(source, enumFile), "utf8"))?.example?.schemas ?? [];
+      } catch {
+        entries = [];
+      }
+      for (const e of entries) {
+        if (!e?.filename) continue;
+        // An enumeration lists ITSELF. That is not an artefact and not a gap.
+        if (enumerations.includes(e.filename)) continue;
+        const stem = e.filename.replace(/\.schema\.json$/, "");
+        const canonical = e.valueSetUrl ?? e.logicalModelUrl;
+        const a =
+          (canonical ? byCanonical.get(canonical) : undefined) ??
+          byStem.get(stem) ??
+          (e.title ? byTitle.get(e.title) : undefined);
+        if (!a) {
+          unbound.push({
+            filename: e.filename,
+            ...(e.title ? { title: e.title } : {}),
+            enumeration: enumFile,
+            reason: `no artefact matched by canonical URL (${canonical ?? "not given"}), stem (${stem}) or title`,
+          });
+          continue;
+        }
+        attach(a, stem, e);
+      }
+    }
+    // Pass 2 — artefacts no enumeration mentioned, by their own stem. This is
+    // what covers an IG publishing sidecars it does not enumerate.
+    for (const a of byKey.values()) {
+      if (a.dak) continue;
+      attach(a, `${a.resourceType}-${a.id}`);
+    }
+    // One measurement, taken once, applied to every materialised node.
+    const gates = dakGates();
+    // Keys only: the stem used to compose `localPath` and no longer does —
+    // the path is read from the sidecar that actually attached.
+    for (const key of materializedStems.keys()) {
+      const a = byKey.get(key);
+      if (!a) continue;
+      // LOCALPATH MUST NAME A SIDECAR THAT ACTUALLY LANDED.
+      //
+      // It was hardcoded to `${stem}.schema.json`, while `materializedStems`
+      // is set when ANY of the four sidecars lands. An artefact publishing
+      // only a `.jsonld` therefore got a materialization pointing at a schema
+      // file that was never written — a record asserting bytes that are not
+      // there, which `check-materialized-fixity` reports as `absent`.
+      //
+      // Measured 2026-09-22 on smart-immunizations: `IMMZ.D.DE19` and
+      // `IMMZ.Z.VS`, both `dak: { jsonld }` only, both declaring a
+      // `.schema.json` that does not exist and never did. 198 schema files on
+      // disk against 200 materialized claims.
+      //
+      // Preference order matches what a consumer wants first — the schema is
+      // the richest sidecar — but the path is now READ from what attached
+      // rather than composed from a stem and a hope.
+      const landed = ["schema", "displays", "openapi", "jsonld"]
+        .map((slot) => (a.dak as Record<string, { localPath?: string }> | undefined)?.[slot]?.localPath)
+        .find((p): p is string => typeof p === "string");
+      if (landed === undefined) {
+        // Nothing materialised after all. Leaving the node `referenced` is the
+        // true answer; claiming `materialized` with no path would be the same
+        // defect one step along.
+        continue;
+      }
+      a.materialization = {
+        state: "materialized",
+        provenance: a.materialization.provenance,
+        localPath: landed,
         purpose: "working",
-        gates: {
-          size: { verdict: "permitted", basis: "The DAK surface is 332K across 71 files, measured 2026-09-21. The full resource corpus is 7.1M and is deliberately left by reference." },
-          restrictions: { verdict: "permitted", basis: "Published openly on the IG's public Pages site; no access control on the source." },
-          retention: { verdict: "permitted", basis: "Working copy, regenerable by re-running this ingest against the same source revision." },
-          sourceLoss: { verdict: "unknown", basis: "Not established. The IG is actively published; no statement has been made about how long a given version's Pages build remains reachable." },
-          copyright: { verdict: "unknown", basis: "Not established. WHO SMART Guideline IG content carries WHO's own licensing, which has not been read for this ingest." },
-        } };
+        // FIXITY AT MATERIALISE TIME, which is the only moment it can be
+        // recorded as a fact rather than observed later as a baseline.
+        // `materialization.ts` already said "the fixity data already exists …
+        // nothing reads them as fixity today"; nothing WROTE them here either,
+        // which is why 217 artefacts needed backfilling.
+        ...(() => {
+          const from = materializedFrom.get(basename(landed));
+          if (from === undefined) return {};
+          return {
+            fixity: {
+              algorithm: "sha256" as const,
+              digest: createHash("sha256").update(readFileSync(join(source, from))).digest("hex"),
+            },
+          };
+        })(),
+        gates,
+      };
     }
   }
 
@@ -304,6 +510,7 @@ function main(): void {
     provenance,
     dakApi,
     ...(contexts.length ? { contexts } : {}),
+    ...(unbound.length ? { dakUnbound: unbound } : {}),
     count: artifacts.length,
     artifacts,
   };
@@ -342,6 +549,11 @@ function main(): void {
   console.log(`  materialization: ${Object.entries(census).map(([k, v]) => `${k}=${v}`).join(" ")}`);
   console.log(`  dak sidecars: ${Object.entries(dakCensus).map(([k, v]) => `${k}=${v}`).join(" ")}`);
   console.log(`  contexts: ${contexts.length}`);
+  if (unbound.length) {
+    console.log(`  UNBOUND sidecars: ${unbound.length} — listed by an enumeration, matched to no artefact:`);
+    for (const u of unbound.slice(0, 5)) console.log(`    ${u.filename}${u.title ? ` (${u.title})` : ""}`);
+    if (unbound.length > 5) console.log(`    …and ${unbound.length - 5} more; all are recorded in the index`);
+  }
 }
 
 main();

@@ -1,5 +1,11 @@
 {
   "$schema": "folio-todo-index/v1",
+  "tile": {
+    "todos": {
+      "count": 3,
+      "unit": "todos"
+    }
+  },
   "repoWeb": "https://github.com/litlfred/folio-assistant",
   "items": [
     {
@@ -138,7 +144,7 @@
     {
       "id": "what-kick-off-means-for-a-ci-watcher",
       "summary": "Decide what 'kick off' means mechanically for the two CI-watcher dispatch points",
-      "comment": "Stated 2026-09-19: a CI watcher *\"should kick off during feature development\nonce changes are made to feature branch. and when approved for final\npublication/merge to main.\"*\n\nThe two dispatch points are clear. **What performs the dispatch is not**, and\nthe three candidates differ enough that guessing would be wasted work.\n\n## ANSWERED, 2026-09-19\n\nOwner: *\"kick off if like task or workflow initation or bean roast\"*.\n\n**Option 2.** A dispatch point is a **task / workflow initiation**, and it\nopens a **bean** — not a GitHub Actions job. That is the answer the repo's own\nmachinery is already shaped for: an activity carrying\n`<folio:bean op=\"claim\"/>` performs the bean operation when the step\ncompletes, so \"start the watcher\" and \"record that it is running\" are one\ndeclared step rather than two mechanisms that can disagree.\n\nIt also settles the cost I flagged against option 2 — that a BPMN activity\nonly fires while somebody is working. With a bean opened at initiation, the\nwork is *durable*: a later session sees the bean whether or not the session\nthat opened it is still alive.\n\nRemaining, and now narrow: which diagrams host the two steps, and whether the\nfeature-branch one needs a process that does not yet exist.\n\n## Options, with what each costs\n\n1. **A GitHub Actions job.** Fires without anybody present, which is the whole\n   premise of `xom7` — the failure being guarded against is a quiet stretch\n   with nobody looking. Cost: it cannot read the session's memory, so the\n   \"dispatch an agent with a specific memory context\" half does not happen.\n2. **An activity in a BPMN process**, performed by a session. Gets the memory\n   context, and puts the dispatch where `workflow_next` can report it. Cost: it\n   only fires while somebody is working — precisely the stretch that is already\n   covered.\n3. **An MCP tool a workflow step calls.** Both, at the price of building the\n   tool and deciding who calls it.\n\n## Where the two dispatch points already live\n\nBoth are steps in diagrams that exist, which is why this todo is tagged with\nthem rather than describing them:\n\n- **\"approved for final publication / merge to `main`\"** is\n  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries\n  *Authorise the release* and *Version, tag and publish*. The dispatch point\n  the owner named is that authorisation step.\n- **\"once changes are made to feature branch\"** is `Process_CodeReview`,\n  reached from `Process_Review`.\n\n## What is already true, so this is not started from nothing\n\nThe two dispatch points are process events, so wherever they are performed they\nshould be DRAWN in BPMN under `skills/workflows/`. The likely homes are\n`draft-to-publication` for the merge-to-main gate and a feature-branch process\nthat may not exist yet — that needs checking rather than assuming.\n\n## If nothing is decided\n\nNothing fires. `bun run check:ci-health` still runs in the session-start sweep\nand `ci-health.yml` still runs weekly, so the watcher is not silent — it is\njust not tied to the two moments named above.",
+      "comment": "Stated 2026-09-19: a CI watcher *\"should kick off during feature development\nonce changes are made to feature branch. and when approved for final\npublication/merge to main.\"*\n\nThe two dispatch points are clear. **What performs the dispatch is not**, and\nthe three candidates differ enough that guessing would be wasted work.\n\n## ANSWERED, 2026-09-19\n\nOwner: *\"kick off if like task or workflow initation or bean roast\"*.\n\n**Option 2.** A dispatch point is a **task / workflow initiation**, and it\nopens a **bean** — not a GitHub Actions job. That is the answer the repo's own\nmachinery is already shaped for: an activity carrying\n`<folio:bean op=\"claim\"/>` performs the bean operation when the step\ncompletes, so \"start the watcher\" and \"record that it is running\" are one\ndeclared step rather than two mechanisms that can disagree.\n\nIt also settles the cost I flagged against option 2 — that a BPMN activity\nonly fires while somebody is working. With a bean opened at initiation, the\nwork is *durable*: a later session sees the bean whether or not the session\nthat opened it is still alive.\n\nRemaining, and now narrow: which diagrams host the two steps, and whether the\nfeature-branch one needs a process that does not yet exist.\n\n## Options, with what each costs\n\n1. **A GitHub Actions job.** Fires without anybody present, which is the whole\n   premise of `xom7` — the failure being guarded against is a quiet stretch\n   with nobody looking. Cost: it cannot read the session's memory, so the\n   \"dispatch an agent with a specific memory context\" half does not happen.\n2. **An activity in a BPMN process**, performed by a session. Gets the memory\n   context, and puts the dispatch where `workflow_next` can report it. Cost: it\n   only fires while somebody is working — precisely the stretch that is already\n   covered.\n3. **An MCP tool a workflow step calls.** Both, at the price of building the\n   tool and deciding who calls it.\n\n## Where the two dispatch points already live\n\nBoth are steps in diagrams that exist, which is why this todo is tagged with\nthem rather than describing them:\n\n- **\"approved for final publication / merge to `main`\"** is\n  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries\n  *Authorise the release* and *Version, tag and publish*. The dispatch point\n  the owner named is that authorisation step.\n- **\"once changes are made to feature branch\"** is `Process_CodeReview`,\n  reached from `Process_Review`.\n\n## What is already true, so this is not started from nothing\n\nThe two dispatch points are process events, so wherever they are performed they\nshould be DRAWN in BPMN under `processes/`. The likely homes are\n`draft-to-publication` for the merge-to-main gate and a feature-branch process\nthat may not exist yet — that needs checking rather than assuming.\n\n## If nothing is decided\n\nNothing fires. `bun run check:ci-health` still runs in the session-start sweep\nand `ci-health.yml` still runs weekly, so the watcher is not silent — it is\njust not tied to the two moments named above.",
       "status": "in_progress",
       "priority": "medium",
       "origin": "agent",
@@ -195,30 +201,11 @@
     }
   ],
   "processes": {
-    "Process_CRDM_Close": [],
-    "Process_CRDM_DataModel": [],
-    "Process_CRDM_Deliver": [
-      "Process_OptionsAnalysis",
-      "Process_Review",
-      "Process_ThemeUIReview"
-    ],
-    "Process_CRDM_Issue": [],
-    "Process_CRDM_Needs": [],
-    "Process_CRDM_Requirements": [],
-    "Process_CRDM": [
-      "Process_CRDM_Close",
-      "Process_CRDM_DataModel",
-      "Process_CRDM_Deliver",
-      "Process_CRDM_Issue",
-      "Process_CRDM_Needs",
-      "Process_CRDM_Requirements",
-      "Process_CRDM_Signoff"
-    ],
-    "Process_CRDM_Signoff": [],
     "Process_ActivityLog": [],
     "Process_ActorRoleAdministration": [
       "Process_CodeChangeReview"
     ],
+    "Process_Adjudication": [],
     "Process_AtomicMassDrift": [],
     "Process_DocumentAuthoring": [],
     "Process_PaperAuthoring": [],
@@ -231,17 +218,48 @@
     "Process_CodeQualityGates": [],
     "Process_ContentAcquisition": [],
     "Process_ContentChangeReview": [
-      "Process_OptionsAnalysis"
+      "Process_Adjudication",
+      "Process_OptionsAnalysis",
+      "Process_Review"
     ],
     "Process_Lifecycle": [
       "Process_Editing",
       "Process_Publication"
     ],
-    "Process_DocsSite": [],
+    "Process_CopyOutMaterialized": [],
+    "Process_CRDM_Close": [],
+    "Process_CRDM_DataModel": [],
+    "Process_CRDM_Deliver": [
+      "Process_OptionsAnalysis",
+      "Process_Review"
+    ],
+    "Process_CRDM_Issue": [
+      "Process_RelatedWork"
+    ],
+    "Process_CRDM_Needs": [],
+    "Process_CRDM_Requirements": [],
+    "Process_CRDM": [
+      "Process_CRDM_Close",
+      "Process_CRDM_DataModel",
+      "Process_CRDM_Deliver",
+      "Process_CRDM_Issue",
+      "Process_CRDM_Needs",
+      "Process_CRDM_Requirements",
+      "Process_CRDM_Signoff"
+    ],
+    "Process_CRDM_Signoff": [],
+    "Process_CriterionAdjudication": [
+      "Process_Adjudication"
+    ],
+    "Process_DocsSite": [
+      "Process_PublishAlert",
+      "Process_PublishVerification"
+    ],
     "Process_Ingestion": [
       "Process_BuildL1Kg",
       "Process_DeriveContent",
       "Process_ExtractStructure",
+      "Process_IngestTheme",
       "Process_L1Gate"
     ],
     "Process_Publication": [
@@ -260,37 +278,70 @@
     "Process_BuildL1Kg": [],
     "Process_DeriveContent": [],
     "Process_ExtractStructure": [],
-    "Process_L1Gate": [],
-    "Process_IngestTheme": [],
+    "Process_L1Gate": [
+      "Process_Adjudication"
+    ],
+    "Process_IngestTheme": [
+      "Process_ThemeUIReview"
+    ],
     "Process_JsonLdDrift": [],
     "Process_KgToPortal": [],
     "Process_L2Dak": [],
     "Process_L3Fhir": [],
     "Process_MaterializeRemote": [],
+    "Process_MethodologyFromSource": [
+      "Process_Ingestion",
+      "Process_RelatedWork"
+    ],
+    "Process_NarrativeCodeReview": [
+      "Process_CriterionAdjudication"
+    ],
     "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [],
+    "Process_PublishAlert": [],
+    "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
-    "Process_RefreshMaterialized": [],
+    "Process_RefreshMaterialized": [
+      "Process_Adjudication"
+    ],
+    "Process_RelatedWork": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
     "Process_NarrativeReview": [
+      "Process_CriterionAdjudication",
       "Process_VoiceReview"
     ],
     "Process_Review": [
       "Process_CodeReview",
+      "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
+    ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
     ],
     "Process_SessionStateMachine": [],
     "Process_RenderLog": [],
+    "Process_SwotAnalysis": [],
     "Process_ThemeUIReview": [],
-    "Process_Translation": [],
+    "Process_Translation": [
+      "Process_Adjudication"
+    ],
     "Process_UpstreamPinWatch": [
       "Process_UpstreamAdoption"
     ],
     "Process_UpstreamAdoption": [
       "Process_OptionsAnalysis"
     ],
-    "Process_VoiceReview": []
+    "Process_VoiceReview": [
+      "Process_CriterionAdjudication"
+    ],
+    "Process_WireframeDesignReview": [
+      "Process_CriterionAdjudication",
+      "Process_OptionsAnalysis"
+    ],
+    "Process_DeepDocumentResearch": [],
+    "Process_DIIG": []
   },
   "themeArt": {
     "library": {

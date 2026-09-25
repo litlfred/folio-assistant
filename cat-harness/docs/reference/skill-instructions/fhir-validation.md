@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/fhir-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/fhir-validation.md) — do not edit here. Typed contract: [schema reference](../skills/fhir-validation.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/fhir-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/fhir-validation.md) — do not edit here. Typed contract: [schema reference](../skills/fhir-validation.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/fhir-validation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/fhir-validation.md){: .fa-edit-source }
 
 {% raw %}
 # fhir-validation
@@ -77,3 +77,11 @@ Quality gates on the aggregate are `quality-control`; publishing is
 `ig-publication`. Keep them separate — a validator's verdict is an input to the
 QC reviewer's decision, not the decision.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Validate the cone (fhir_validate) |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Validate against profiles |
+

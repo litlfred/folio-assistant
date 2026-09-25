@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ovkk
 title: The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:07:39Z
-updated_at: 2026-09-19T05:53:12Z
+updated_at: 2026-09-23T19:25:46Z
 parent: folio-assistant-zzmr
 ---
 
@@ -37,7 +37,7 @@ tree — the graph grew — which is the reason the brief says to re-measure.
   `hasCapability` (actor → capability, 20/20 resolve), `requiresCapability`
   (capability → capability, 12/12).
 - **LITERALS because the referent is not a node here**: `roleName`,
-  `permissionName` (`skills/roles/roles.json` and
+  `permissionName` (`scenarios/roles.json` and
   `skills/permissions/permissions.json` are never collected, and the Role nodes
   that do exist are BPMN **lanes** under other names — 65 IRIs would have
   dangled), and `decisionRef` (no Decision nodes).
@@ -62,7 +62,7 @@ shipping a lossy graph. The same rule `problems[]` has always followed.
    so the same role would acquire two identities unless `roleForLane` resolution
    is applied at export time.
 2. **`#role/role-assignments` is not a Role** — `collectRegistryNodes` types
-   every `.claude/skills/roles/*.json` as one, and that directory holds only the
+   every `.claude/scenarios/*.json` as one, and that directory holds only the
    identity → actor mapping table.
 3. **The document's own report fields are undeclared too** — `repository`,
    `counts`, `problems`, `danglingLinks`, `undeclaredTerms`, and staging's
@@ -70,3 +70,9 @@ shipping a lossy graph. The same rule `problems[]` has always followed.
    dropped on expansion exactly as the node properties were. Whether the
    export's self-report belongs in RDF is a different question from this bean's,
    but it should be asked rather than inherited.
+
+## Summary of Changes
+
+Closed 2026-09-23 **on evidence, not authorship**, in the owner's "go through remaining beans" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:
+
+`kg-export.ts` declares the terms that were used but undeclared (`hasCapability`, `requiresCapability`, `sourceKind`) and removed the denormalised properties. An undeclared term is now fatal at graph level and at the document root, and the export runs in the publish workflows. Residues 1 and 2 were split off by this bean itself; residue 3 is checked.

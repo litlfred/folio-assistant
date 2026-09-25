@@ -3,6 +3,7 @@
  * The landing stickies, as a data file Jekyll can read.
  *
  * @module scripts/gen-landing-data
+ * @covers folio, docs
  *
  * ## Why this is a separate script from `sync-docs-harness.ts`
  *
@@ -44,9 +45,6 @@ import {
   sourceLinks,
 } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
-// `folio` is registered by CORE on import, and this instance declares a folio
-// graph; without it `readDeclaration` throws on a valid declaration.
-import "../schemas/folio-graph-kind.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
 import { themeById } from "../schemas/themes.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";

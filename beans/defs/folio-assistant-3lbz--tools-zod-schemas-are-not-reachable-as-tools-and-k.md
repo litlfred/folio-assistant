@@ -15,7 +15,7 @@ and put in tools? (like validate node in graph, or so) in kg-navigation?"* —
 and, on shape: *"a Tool per Zod schema... no, but there should be common
 patterns (single pattern?) with some parameters more or less"*.
 
-Analysis: `fsh-guts/proposals/zod-schemas-as-tools.md`, attached to
+Analysis: `cat-harness/docs/proposals/zod-schemas-as-tools.md`, attached to
 [#223](https://github.com/litlfred/folio-assistant/issues/223), whose text
 already carries the requirement — *"must constrain Skills i/o with schemas
 (json,.ts)"*.

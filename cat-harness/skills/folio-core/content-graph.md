@@ -279,6 +279,12 @@ Two DOT/SVG outputs (via Graphviz):
   coupling, gray = normal backward dependencies
 
 **5b. Block graph heat-map** (`/tmp/content_block_heatmap.svg`)
+
+This is the DEPENDENCY heat map, for a paper's structure. For "where should a
+reviewer of this edit look first", the heat map is the review page's
+section-by-metric table, and the `review-heatmap` skill says what each of its
+columns means.
+
 - Nodes: blocks (grouped by chapter/section in clusters)
 - Edges: forward references only (red), cross-chapter edges (orange)
 - Isolated blocks highlighted in yellow
@@ -443,3 +449,18 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 | `/tmp/content-graph.json` | Machine-readable graph export |
 | `/tmp/content-graph-report.md` | Full analysis report |
 | `/tmp/content-graph-proposals.md` | Concrete reorganisation proposals |
+
+## Drawing it
+
+`bun run content:graph:uml --root <content dir> --out <dir> [--status proof-objects.json]`
+(Tool `content-graph-uml`) draws this graph under the
+[`graph-rendering`](../graph-management/graph-rendering.md) rules:
+- chapters as packages;
+- `uses[]` and `interprets` solid, Lean `type` and `value` dashed purple;
+- status fills from `proof-objects.json`;
+- one diagram per chapter, with blocks in other chapters as dashed stubs;
+- portrait and landscape views, and a `--check` that needs no Java.
+
+It builds on `buildContentGraph`, so it draws exactly the graph the QA checks
+read. The older `content-graph-analysis.py` drawing re-parses the sources and
+has no staleness check.

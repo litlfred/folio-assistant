@@ -9,6 +9,10 @@ _site/
 # that ship none (bpmn-moddle); the blanket rule above is for generated output,
 # and without this exception a fresh clone fails `tsc` on a missing module.
 !types/*.d.ts
+# ...and the identifier lookup's client (bean `4pm8`), which is hand-written
+# JavaScript a browser loads as written, with its hand-written types beside it.
+!large-datasets/id-lookup/lookup.js
+!large-datasets/id-lookup/lookup.d.ts
 .env
 .env.*
 *.log
@@ -98,14 +102,14 @@ cat-harness/docs/_data/build.yml
 _kg/
 .claude/skills/registry.json
 
-# The cat-bootstrap graph, built at render time into the published site by
+# The bootstrap graph, built at render time into the published site by
 # `.github/workflows/docs-site.yml` rather than committed. It WAS committed,
 # on a rationale that said its reader "has nothing installed" and cited a
 # README step telling that reader to load it. Neither held: no prose file
-# under `cat-bootstrap/` mentions this document, and nothing published it, so the
-# `@id` it names itself by resolved to nothing. It was 52 % of `cat-bootstrap/`
-# by line count. Regenerate locally with `bun run cat-bootstrap:graph`.
-cat-bootstrap/cat-bootstrap.jsonld
+# under `bootstrap/` mentions this document, and nothing published it, so the
+# `@id` it names itself by resolved to nothing. It was 52 % of `bootstrap/`
+# by line count. Regenerate locally with `bun run bootstrap:graph`.
+bootstrap/bootstrap.jsonld
 
 # Playwright artefacts — the WHOLE directory, including `.last-run.json`.
 #

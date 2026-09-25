@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-18T21:55:40Z
-updated_at: 2026-09-21T16:55:00Z
+updated_at: 2026-09-22T18:19:04Z
 parent: folio-assistant-vke6
 ---
 
@@ -435,3 +435,40 @@ The sci cluster is 39 modules and moves as a unit, under `zmdo` / `wggr`.
 
 `qa-checkers-dak.ts` is blocked on something simpler: there is no `smart-base`
 instance in this checkout at all.
+
+
+## RE-MEASURED 2026-09-22 on `main` at `b7f8945b` — still zero, and the gate battery has grown
+
+_Stream 1/3 (`upgd`)._ `bun run check:partition`, run rather than quoted:
+
+    Partition — 920 modules, 2045 internal import edges
+      agentic-harness  226   folio-assist-core  224   folio-asst-sci  39
+      smart-kg  0   smart-base  7   (test material) 424   unassigned  0
+    Wrong-direction edges: 0
+    Edges touching an unassigned module: 0
+
+`bun run gates` — **123 of 123, exit 0**, 10,270 tests across 398 files. This
+bean's §Status records "85 of 85"; the set has grown by 38 gates since and is
+still clean, which is a stronger result than the one recorded.
+
+**Nothing here changes this bean's own verdict.** §Status is right that the
+build-time gate is clear while the "can the cut be made" half is not, and it is
+right about why: the declared runtime edges, and the A/B/C registration
+question — now settled as **C now, B as the destination** and carried into
+`rfev`, with one of the five runtime edges already drained.
+
+### What the re-verification is FOR: this bean is not on the critical path
+
+`upgd`, the stream claim, states the path as **`wggr` → `zlmp` → `rnfl`**. That
+ordering is wrong, and **this bean already says so** in its own §Status:
+
+> `wggr` / `b5f0` / `zmdo` are **not waiting on it**.
+
+`vuip` states the path differently again — *"wggr, then b5f0 / zkgs, then
+zmdo"* — so the two statements of the same path disagree with each other and
+one of them disagrees with the bean it names. Anything sequenced behind `zlmp`
+is sequenced behind a box that is open for descendant work (`rfev`) and is
+gating nobody.
+
+Left `in-progress`, unchanged, for exactly the reason §Status gives. What is
+withdrawn is its position in the path, not its status.

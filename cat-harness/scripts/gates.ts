@@ -3,7 +3,7 @@
  * Run the gates CI runs — DERIVED from the workflow, never listed here.
  *
  * Bean `folio-assistant-n60j`. The SDLC audit
- * (`fsh-guts/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
+ * (`cat-harness/docs/proposals/sdlc-process-audit.md` §3) found the VERIFICATION
  * phase unowned for the platform: the commands a contributor runs before
  * pushing lived in `package.json` and in CI YAML and nowhere an agent was
  * told to read. An agent found them by grepping.
@@ -125,9 +125,12 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
  * exemption with the same reason, and a test pins it.
  *
- * What the rename does NOT yet reach — `scripts/init-folio.ts` still
- * scaffolds `content/<slug>/`, and these workflows still `cd content` — is
- * `52dz`'s open half and the owner's call, not this table's to settle.
+ * `52dz`'s owner ruling (2026-09-24) settled the rest: the generic QA
+ * workflows and the Lean workflows that `cd content` were moved OUT of
+ * `.github/workflows/` into the platform's `templates/`, which `folio_init`
+ * writes into a new folio pointed at `folio/`. Their entries left this table
+ * with them — an exemption for a step no workflow here runs is the stale
+ * claim `gates.test.ts` refuses.
  *
  * These steps are not broken and not runnable here, and until this table
  * existed nothing could tell either from a real gap.
@@ -148,6 +151,27 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
+    // `as-is.html` and bootstrap's `.md`-rendered siblings — which inherit no
+    // layout and so no sidebar.
+    //
+    // `ci-only` for the same reason as `mount-instance-docs`: it WRITES INTO a
+    // built `./_site`, which only the deploy and staging jobs produce, so there
+    // is nothing for it to operate on in the fast set. Its logic is pinned by
+    // `standalone-rail.test.ts` in `bun test`, over a fixture site carrying one
+    // page per case, and `bun run preview:site` builds a site to run it on.
+    //
+    // Its ORDERING is the part no unit test can hold: it must run after every
+    // generator that writes a page, and a version that ran 142 lines earlier
+    // missed ten pages silently. That is asserted by
+    // `check:invocation-parity`, which requires both workflows to run it.
+    match: "rail-standalone-pages",
+    kind: "ci-only",
+    reason:
+      "writes into the built ./_site that only the deploy and staging jobs produce; its logic is " +
+      "pinned by standalone-rail.test.ts in `bun test`, and its ordering by check:invocation-parity",
+  },
+  {
     // The unattended PR sweep and its `gh` plumbing. `ci-only` rather than a
     // gate, for the same reason the script itself is exempt: a CI job asking
     // whether a commit has a CI run has already answered it. Bean `3pqn`.
@@ -155,6 +179,17 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     kind: "ci-only",
     reason:
       "circular as a gate, and it needs `issues: write` and `pull-requests: write`, which the gate jobs deliberately do not have",
+  },
+  {
+    // Bean `uknu`. It reads a BUILT Jekyll site, which only the staging job
+    // produces (`actions/jekyll-build-pages`), so it cannot join the fast set.
+    // Its logic is pinned by `duplicate-ids.test.ts`, which IS in `bun test`,
+    // and `bun run preview:site` builds a site to run it on locally.
+    match: "check:duplicate-ids",
+    kind: "ci-only",
+    reason:
+      "runs on the built ./_site that only the staging job produces; its scanner and the " +
+      "nav include's one-checkbox rule are pinned by duplicate-ids.test.ts in `bun test`",
   },
   {
     // Mounts each instance's rendered content into the built site. It COPIES
@@ -274,6 +309,27 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`library:viz:check` is intentionally not gated — see code-quality-gates.yml",
   },
   {
+    match: "run uploads:viz",
+    kind: "covered-by",
+    reason:
+      "the site build runs the writer at deploy, so nothing PUBLISHED goes stale; " +
+      "`uploads:viz:check` is intentionally not gated, for `library:viz:check`'s reason — " +
+      "it renders that same projection (bean `flh4`: one dataset, two viewers)",
+  },
+  {
+    // The WRITER's step in the site build. Its `--check` IS gated — see the
+    // reason beside it in code-quality-gates.yml — so this is the ordinary
+    // writer-runs-at-deploy case rather than the schema/library exception.
+    match: "run voices:viz",
+    kind: "covered-by",
+    reason: "`voices:viz:check` is in the gate set; the site build runs the writer at deploy",
+  },
+  {
+    match: "run handler:index",
+    kind: "covered-by",
+    reason: "`handler:index:check` is in the gate set; the site build runs the writer at deploy",
+  },
+  {
     match: "run translation:index",
     kind: "covered-by",
     reason: "`translation:index:check` is in the gate set; the site build runs the writer",
@@ -309,10 +365,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   // workflows and prose; it is true of these and now declared.
   //
   // WORTH SAYING PLAINLY: several of these were authored for `litlfred/qou`
-  // and live here. One names `quantum-observable-universe` outright. Whether
-  // they belong in the platform repository at all is bean `52dz` — this table
-  // records what they are, and does not pretend that is the same as deciding
-  // where they go.
+  // and lived here. Bean `52dz` decided where they go (owner, 2026-09-24):
+  // `qa-sweep.yml`, `qa-sweep-nightly.yml`, `section-title-audit.yml` and the
+  // four Lean workflows are now templates `folio_init` writes, so the
+  // `qa-staleness` and `qa-section-title-audit.ts` entries went with them.
+  // What remains below still matches a workflow in `.github/workflows/`.
   {
     match: "pipeline/build.ts",
     kind: "no-folio",
@@ -323,16 +380,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "(bean `52dz`, 2026-09-20)",
   },
   {
+    // Since `52dz` the only match is the reusable `folio-staging.yml`, which
+    // runs inside a FOLIO's staging job and sweeps that folio's `folio_dir`.
     match: "qa-sweep",
     kind: "no-folio",
     reason:
-      "sweeps a folio's blocks from `content/`, a root the convention has " +
-      "retired in favour of `folio/` (owner, 2026-09-20)",
-  },
-  {
-    match: "qa-staleness",
-    kind: "no-folio",
-    reason: "as `qa-sweep` — a verdict's freshness against blocks the platform does not have",
+      "runs inside a FOLIO's staging job (`folio-staging.yml`, a reusable " +
+      "workflow) over that folio's blocks; the platform carries no folio. " +
+      "The standalone qa-sweep workflows are folio_init templates (bean `52dz`)",
   },
   {
     match: "check-witnesses",
@@ -348,13 +403,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "latex-overfull-report.ts",
     kind: "no-folio",
     reason: "reads `main.log` from a folio's LaTeX run",
-  },
-  {
-    match: "qa-section-title-audit.ts",
-    kind: "no-folio",
-    reason:
-      "audits section titles from a root `content/` — retired; the " +
-      "convention is `folio/`, which this instance declares",
   },
   {
     match: "scripts/audit-wiring.ts",
@@ -395,6 +443,13 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "takes `--site ./_site`: it resolves links in the BUILT site, which Jekyll produces in CI",
   },
   {
+    match: "publish-verify.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--dir ./_site`: it verifies the BUILT site before a deploy (bean `vigi`); its " +
+      "logic is covered in a checkout by publish-verify.test.ts, which builds the documents in memory",
+  },
+  {
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
@@ -410,6 +465,65 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "`waitFor` is the only arithmetic here and this script does not repeat it (bean `06kg`). " +
       "That it is reached from every retry loop, rather than each loop computing its own wait, " +
       "is covered by `retry-backoff-in-workflows.test.ts` in `bun test`, which is a gate",
+  },
+  {
+    // The ChangeSet step of `folio-staging.yml`, the reusable workflow folios
+    // call (bean `ojcx`). It computes over a folio's `folio` graph against
+    // its base, and this repository holds no folio, so there is nothing for
+    // a gate here to run it on. Its logic is not exempt: every change kind
+    // is asserted by `folio-assistant-core/schemas/changeset.test.ts` in
+    // `bun test`, which IS in the gate set.
+    match: "changeset.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's graph; the platform carries no folio. " +
+      "Covered by changeset.test.ts in `bun test`",
+  },
+  {
+    // Same reason as the ChangeSet above (bean `423d`): the review-comments
+    // Tool ingests a FOLIO's pull-request comments against that folio's
+    // blocks, in the folio's staging job and in its comment-triggered
+    // refresh. The platform has no folio and no such pull request to run it
+    // on here. Its logic is not exempt: `review-comments.test.ts` (the Tool,
+    // including the command run offline exactly as both jobs call it) and
+    // `review-comment.test.ts` (the kind) are in `bun test`.
+    match: "review-comments.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging and comment-refresh jobs over that folio's PR and blocks; the platform carries no folio. " +
+      "Covered by review-comments.test.ts and review-comment.test.ts in `bun test`",
+  },
+  {
+    // The same reason again (bean `qbfi`): the block QA summary reads a
+    // FOLIO's committed verdicts, in that folio's staging job. The platform
+    // has no folio. Its logic is covered by `publish-block-qa.test.ts` and
+    // the heat map's unit and Playwright tests, in the gate set.
+    match: "publish-block-qa.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's committed QA verdicts; the platform carries no folio. " +
+      "Covered by publish-block-qa.test.ts and the review heat map tests in `bun test` and the e2e job",
+  },
+  {
+    // The same reason (bean `0rxe`): the visual diff pictures a FOLIO's
+    // changed figures on that folio's published main site and staging build.
+    // The platform has no folio. The pixel compare is unit-tested, and the
+    // whole Tool runs in Chromium in `block-screenshots.e2e.ts`.
+    match: "block-screenshots.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's staging job over that folio's published site and staging build; the platform carries no folio. " +
+      "Covered by block-screenshots.test.ts in `bun test` and block-screenshots.e2e.ts in the e2e job",
+  },
+  {
+    // Bean `5uuf`: publishes a FOLIO's main site at its publish branch's root,
+    // the before side of every preview. The platform has no folio, and no
+    // publish branch checked out in a gate run.
+    match: "publish-main-site.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's publish-main job over that folio's built site and its publish branch; the platform carries no folio. " +
+      "Covered by publish-main-site.test.ts in `bun test`: the manifest, the reserved paths, and the refusals",
   },
   {
     match: "staging-banner.ts",
@@ -439,6 +553,18 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   },
   {
     match: "--out-dir ./_site",
+    kind: "ci-only",
+    reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
+  },
+  {
+    // The third spelling, and the reason there are three: `match` is a
+    // substring, and a deploy step whose destination carries a shell variable
+    // must quote it. `--out "./_site` and `--out-dir ./_site` were the two
+    // forms that had occurred; `--out-dir "./_site` had not until a per-locale
+    // export wrote into a foreign instance's subdirectory. Same reason, not a
+    // new exemption — a step that got to green by being spelled differently
+    // would be the thing this ratchet exists to stop.
+    match: '--out-dir "./_site',
     kind: "ci-only",
     reason: "writes into the BUILT `_site`, which Jekyll produces in CI",
   },
@@ -646,6 +772,24 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:kind-validators",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
+  },
+  {
+    script: "check:harness-state",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
+  },
+  {
+    script: "audit:coverage:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `audit:coverage:require-all`, which CI runs: that is the same script with `--check --require-all`, so it performs this check's entire job and one more assertion on top. Kept as a script because it is what a contributor runs locally when they want the staleness answer WITHOUT being told about a gate somebody else left undeclared — the two questions have different owners. Bean `3srh`",
+  },
+  {
     script: "schema:viz:check",
     kind: "covered-by",
     reason:
@@ -656,6 +800,30 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "covered-by",
     reason:
       "same as `schema:viz:check` and for the same reason: the writer runs at deploy, and the projection derives from the whole repository, so its red means a sibling merged rather than that this diff forgot. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "uploads:viz:check",
+    kind: "covered-by",
+    reason:
+      "same as `library:viz:check`, and NECESSARILY so: it renders that projection. The writer runs at deploy (`docs-site.yml`), and what it draws derives from the whole repository, so a red here means a sibling merged rather than that this diff forgot. Gating it would also be worse than gating its sibling, because this generator emits no projection of its own — it publishes a viewer over `assets/library/index.json` (bean `flh4`: one dataset, since two would be two answers to how many are queued), so its staleness is the library projection's staleness wearing a second name. Run it by hand, or from `/prepare-merge`",
+  },
+  {
+    script: "wireframe:check",
+    kind: "covered-by",
+    reason:
+      "not a gate but the Tool `wireframe-check`: it takes the candidate files to render as arguments, and with none it has nothing to measure. What it writes, `checks/report.json` beside each wireframe, IS gated, by `check:wireframes`, which fails on a declared visualiser whose wireframe has no report, or a report missing a viewport or holding a fail (issue #1023). Run it by hand when a wireframe changes",
+  },
+  {
+    script: "ingest:ig-menu:check",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT. It compares the committed `menu.json` against the IG's OWN `sushi-config.yaml`, which lives in the upstream source repository — not in this checkout, and not reachable from a runner: `worldhealthorganization.github.io:443` and `litlfred.github.io:443` both answer 403 CONNECT from this environment (measured 2026-09-23, and `wjfu` recorded the same denial on the 21st). Wired as a gate it would exercise nothing on every run. It is built so that CANNOT be mistaken for a pass: with no `--source` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed menu's effect: `smart-trust:pages:check` regenerates the 5 left-hand-nav sections FROM `menu.json` and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-menu/v1`. Run this one by hand after cloning the IG, or from `/prepare-merge`. Bean `0818`",
+  },
+  {
+    script: "ingest:ig-chrome:check",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN ITS INPUT, and here it needs THREE checkouts rather than one. It compares the committed `chrome.json` against the `fhir.template` chain the IG's `ig.ini` names — `fhir.base.template` and `who.template.root`, which are separate repositories (`HL7/ig-template-base`, `WorldHealthOrganization/smart-ig-template`) that this checkout does not contain and a runner cannot fetch. Same wall as `ingest:ig-menu:check`, one layer worse: an IG's appearance is declared in no file the IG owns. Built so a skip CANNOT be mistaken for a pass — with no `--ig`/`--layer` it exits **2**, printing `could not determine`, rather than the 0 a silent skip would give. What IS gated, on every run and without the network, is the committed chrome's EFFECT: `smart-trust:pages:check` regenerates all 681 pages from it and compares them byte for byte, and `check:kind-validators` parses the file against `folio-ig-chrome/v1`. Run this one by hand after cloning the IG and its templates, or from `/prepare-merge`. Bean `ajx9`",
   },
   {
     script: "check:session-staleness",
@@ -697,26 +865,16 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
   {
-    script: "check:theme-art:check",
-    kind: "report",
-    // NOT a permanent exemption, and the unblocking condition is exact rather
-    // than "when somebody gets round to it": it refuses `landing-architecture`,
-    // which is declared with laptop and card and NO mobile crop.
-    // `resolveThemeBackdrop` refuses an incomplete backdrop wholesale, so that
-    // theme would render with no art at all — a real finding, not a false one.
-    //
-    // Gating on it today would make CI red over art that is MISSING rather than
-    // over a regression somebody introduced, which is the one thing a ratchet
-    // must not do. Wire it the moment the architecture mobile crop lands, or
-    // the incomplete declaration is withdrawn.
-    reason:
-      "refuses `landing-architecture`, whose mobile crop has never been supplied; gating would make CI red over missing art rather than over a regression. Wire it when that crop lands",
-  },
-  {
     script: "check:undeclared-files",
     kind: "report",
     reason:
       "prints the unaccounted paths with their sizes; `check:undeclared-files:check` is the gating form and is wired",
+  },
+  {
+    script: "check:merged",
+    kind: "covered-by",
+    reason:
+      "runs the WHOLE gate set on this branch merged with the current base (bean `nytj`), so wiring it into the workflow the gate set is read from would run the gates inside the gates. In CI the same question is answered by the merge queue: `merge_group:` on the gating workflows tests exactly the commit that will land. `check:merged` is the agent's half, run from `/prepare-merge` before asking for a merge",
   },
   {
     script: "ingest:ig:check",

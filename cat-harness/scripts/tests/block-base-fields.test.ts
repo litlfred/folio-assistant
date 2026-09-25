@@ -37,24 +37,26 @@ import { BlockBaseSchema, BlockSchema } from "../../schemas/constraints";
 import { BLOCK_KINDS } from "../../schemas/types";
 
 /**
- * `BlockSchema` is `z.discriminatedUnion(...).superRefine(...)`, i.e. a
- * `ZodEffects` wrapping the union. Unwrap rather than importing the fifteen
- * schemas by name, so a kind added later is covered without editing this file.
+ * `BlockSchema` is `z.discriminatedUnion(...).superRefine(...)`, and its
+ * `options` are read directly rather than by importing the sixteen schemas by
+ * name, so a kind added later is covered without editing this file.
  *
- * Asserted STRUCTURALLY — `{ innerType(): { options: … } }` — rather than
- * through `z.ZodEffects<z.ZodDiscriminatedUnion<…>>`. Naming zod's own
- * generics looks tighter and is not: `ZodDiscriminatedUnionOption<"kind">`
- * requires the shape to be `{ kind: ZodTypeAny } & ZodRawShape`, which a bare
- * `ZodObject<ZodRawShape>` does not satisfy, so the "precise" spelling is a
- * `tsc` error (TS2344) while proving nothing extra at runtime. The runtime
- * checks below are what establish the shape — including the first test, which
- * fails unless every `BLOCK_KINDS` member turns up here.
+ * NO UNWRAPPING, and that changed under zod 4. In zod 3 `.superRefine()`
+ * returned a `ZodEffects` WRAPPING the union, so this read
+ * `.innerType().options` through a structural cast. zod 4 attaches the check
+ * to the union itself and returns the same `ZodDiscriminatedUnion`, so
+ * `innerType` does not exist and the cast threw at module load —
+ * `TypeError: BlockSchema.innerType is not a function`.
+ *
+ * The cast was the problem, not the upgrade. It asserted a zod INTERNAL, the
+ * same class of defect as reading `_def.unknownKeys` to prove strictness two
+ * files over. `options` is zod's public accessor on a discriminated union and
+ * survives both versions.
+ *
+ * The runtime checks below are what establish the shape — including the first
+ * test, which fails unless every `BLOCK_KINDS` member turns up here.
  */
-const options: z.ZodObject<z.ZodRawShape>[] = (
-  BlockSchema as unknown as {
-    innerType(): { options: z.ZodObject<z.ZodRawShape>[] };
-  }
-).innerType().options;
+const options = BlockSchema.options as unknown as z.ZodObject<z.ZodRawShape>[];
 
 const shapeOf = (schema: z.ZodObject<z.ZodRawShape>) => Object.keys(schema.shape);
 

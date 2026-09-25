@@ -32,6 +32,11 @@
     color: var(--iris-ink); background: var(--iris-surface);
   }
   .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  /* A long path in inline code has no break opportunity, and at a 390 px
+     viewport three of them made kg-to-portal 566 px wide (bean xwrt). These
+     pages are mounted verbatim, so the harness's narrow-viewport.css never
+     reaches them. Breaking the string beats widening the page. */
+  :not(pre) > code { overflow-wrap: anywhere; }
   a { color: var(--iris-accent); text-decoration: none; }
   a:hover, a:focus { text-decoration: underline; }
 
@@ -100,6 +105,13 @@
   .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
   .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
   .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  /* The KG view's tables. Deliberately plainer than the replica's furniture:
+     this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
+     it as IRIS would invite a reader to take its counts for IRIS's. */
+  .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th { font-weight: 600; white-space: nowrap; }
+  .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
@@ -323,7 +335,7 @@
 <tr>
   <td><code>9789241548960-eng-cover.png</code></td>
   <td>THUMBNAIL</td>
-  <td>0.02 MB</td>
+  <td>0.01 MB</td>
   <td><span class="state materialized">materialized</span></td>
 </tr>
 </tbody>
@@ -335,7 +347,7 @@
 <tbody>
 <tr><td>Upstream, at WHO</td><td><a href="https://iris.who.int/handle/10665/145714">https://iris.who.int/handle/10665/145714</a></td></tr>
 <tr><td>Held here, in folio-assistant</td>
-    <td><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">9789241548960_eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/9789241548960-eng/9789241548960_eng.pdf">via CDN</a></td></tr>
+    <td><span class="none" title="copyright: refused — The publication's copyright page (library/9789241548960-eng/sections/sec-000-who-handbook-for-guideline-development.md l.31-36): &quot;© World Health Organization 2014. All rights reserved. … Requests for permission to reproduce or translate WHO publications –whether for sale or for non-commercial distribution– should be addressed to WHO Press&quot;. No such permission has been sought.; restrictions: refused — Reproduction, for sale or non-commercial distribution alike, requires WHO Press's permission (same page, l.35-36); none has been sought.">held here, not published — copyright: refused, restrictions: refused</span></td></tr>
 <tr><td>In collection</td><td><a href="collection-collection-hq-publications.html">Publications</a><br><code>in 1. Headquarters</code></td></tr>
 <tr><td>Ingested text (L1)</td>
     <td><a href="https://github.com/litlfred/folio-assistant/tree/main/who-iris/library/9789241548960-eng/sections">who-iris/library/9789241548960-eng/sections/</a></td></tr>
@@ -358,6 +370,16 @@
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
   This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
-
+<script data-fa-folio-mount>(function(){
+var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
+if(!m||m[1]==null)return;
+var r=m[1];
+var l=document.createElement('link');
+l.rel='stylesheet';l.href=r+'assets/css/docs-ui.css';
+document.head.appendChild(l);
+var s=document.createElement('script');
+s.src=r+'assets/js/docs-ui.js';s.defer=true;
+document.head.appendChild(s);
+})();</script>
 </body>
 </html>

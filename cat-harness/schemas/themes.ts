@@ -140,7 +140,46 @@ const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
     kind: "sticky",
-    id: "cat-bootstrap",
+    id: "grumpy-cyborg-agents",
+    name: "Grumpy cyborg agents",
+    description: "Cloud cream and a harness teal, behind the cat on the sled and the four robot cats pulling it.",
+    palette: {
+      // Sampled from the art: binned into a 16-step cube over the square crop,
+      // the thought-cloud cream (#f0f0e0 bin) is 21% of the frame, far ahead of
+      // the rain-grey blues. `ink` is the hoodie's dark green, 14.15:1 on
+      // `surface`.
+      surface: "#fbf9ef", ink: "#1c2a24", edge: "#c5cdc3",
+      // The teal of the harness lines and the robots' chest marks — the colour
+      // that says "harness" in the picture. 4.72:1 on `surface`, past the 3:1
+      // SC 1.4.11 floor for the priority stripe, and clear of the literal amber
+      // and red the high and critical stripes carry.
+      accent: "#2f7a80",
+    },
+    // CAT-HARNESS'S OWN, owner 2026-09-24: "use this for the cat-harness theme,
+    // the current plain grump cat them it is using should be for
+    // folio-assisnt-core". The same grumpy cat in the same sage hoodie, now in
+    // a sled with the reins in paw, pulled by four robot cats in harness — the
+    // name drawn literally. Named by the owner: "grumpy-cyborg-agents" — the
+    // robot cats are the agents doing the pulling. `grumpy-cat` is unchanged and moves to
+    // folio-assistant-core, which keeps "each harness its own theme" true.
+    //
+    // All three crops declare their own `textRegion`, measured by rendering
+    // boxes over them: the @ mark sits at the cloud's top centre, so the words
+    // go below it.
+    backdrop: {
+      imageRole: "landing-grumpy-cyborg-agents",
+      // Measured like its siblings: `ink` over this scrim laid on PURE BLACK is
+      // 9.29:1, clear of the AAA 7:1 floor; 14.29:1 on pure white.
+      scrim: "rgba(251, 249, 239, 0.82)",
+      description:
+        "The instance's declared grumpy-cyborg-agents art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "bootstrap",
     name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
     palette: {
@@ -162,7 +201,7 @@ const RAW = [
     // would fall back to the default grumpy cloud, whose geometry is a
     // different composition's and would put the text across the @.
     backdrop: {
-      imageRole: "landing-cat-bootstrap",
+      imageRole: "landing-bootstrap",
       // Measured the same way as its siblings: `ink` over this scrim laid on
       // PURE BLACK, the darkest art any instance could declare, is 9.25:1 \u2014
       // clear of the AAA 7:1 floor. 14.37:1 on pure white.
@@ -311,6 +350,57 @@ const RAW = [
       scrim: "rgba(242, 242, 232, 0.82)",
       description:
         "The instance's declared analyst art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
+    id: "architecture",
+    name: "Grumpy cat, architecture",
+    description: "Cloud cream and a drafting slate, behind the cat with the rolled drawings.",
+    palette: {
+      // SAMPLED FROM THE ART, not chosen to match its neighbours: the card was
+      // drawn to a canvas and every pixel binned into a 32-step cube, so these
+      // are the colours the image is actually made of with the share each
+      // occupies.
+      //
+      //   #fdfbf0  35.38%   the thought-cloud cream
+      //   #6a7c73  33.07%   the drafting slate — the second signature colour
+      //   #a6aea8   3.45%   its light edge
+      //   #1a372d   2.32%   the darkest green in the frame
+      //
+      // `ink` on `surface` measures **12.43:1**, past the AAA 7:1 floor the
+      // whole set is held to. `edge` is 5.68:1 against that ink — a divider
+      // rather than a second text colour, which is why the chip rule paints on
+      // `surface` and never on `edge`.
+      surface: "#fdfbf0", ink: "#1a372d", edge: "#a6aea8",
+      // The drafting slate, a third of the frame. NOT the white of the coat or
+      // the hard hat, however much those read as "architect": `accent` is the
+      // priority stripe's hue for `medium`, and a near-white stripe would be
+      // invisible on a cream surface — the same reasoning that keeps
+      // `engineer` off its hi-vis orange, one step along. Clear of the literal
+      // amber and red the high and critical stripes carry, so urgency reads
+      // the same on every board.
+      accent: "#6a7c73",
+    },
+    // THE ART IS COMPLETE since 2026-09-24, and this is the edit the earlier
+    // comment here said it would be. Owner, 2026-09-23: *"create architecture
+    // theme"* — shipped palette-only then, because `landing-architecture`
+    // declared laptop and card and NO mobile crop (commit 1b62b57's third
+    // upload was a byte-identical copy of its second), and
+    // `resolveThemeBackdrop` refuses a partial set wholesale. The owner then
+    // supplied the portrait crop and a matching square one.
+    //
+    // The scrim was measured before the crop existed and is used unchanged:
+    // ink over it is **9.02:1** on PURE BLACK and 12.52:1 over white — 0.78
+    // already clears the 7:1 floor at 7.36:1, and 0.86 buys margin without
+    // going past where the other cards settled.
+    backdrop: {
+      imageRole: "landing-architecture",
+      scrim: "rgba(253, 251, 240, 0.86)",
+      description:
+        "The instance's declared architecture art, behind the sticky's ink rather than composited with it.",
     },
     layouts: LAYOUTS,
   },

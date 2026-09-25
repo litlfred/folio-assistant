@@ -12,7 +12,6 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { defaultGraphKinds, isActiveKg, undecidedWorkKinds, workPlanGraphsIn } from "../../schemas/cat-harness";
-import "../../schemas/folio-graph-kind";
 import { formatReport } from "../check-graph-kind-work";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -64,7 +63,7 @@ describe("recordsWork is narrower than holds: state", () => {
 describe("the verdict is asked of the REPOSITORY, not one instance", () => {
   it("a work-plan graph anywhere in the checkout makes it active", () => {
     const root = repoWith({
-      layer: { name: "layer", directories: [{ id: "b", path: "beans/", dependents: "skip", graphs: ["beans"] }] },
+      layer: { name: "layer", directories: [{ id: "b", path: "beans/", dependents: "skip", graphKinds: ["beans"] }] },
     });
     expect(isActiveKg(root)).toBe(true);
     expect(workPlanGraphsIn(root).plan).toEqual([{ instance: "layer", kinds: ["beans"] }]);
@@ -73,7 +72,7 @@ describe("the verdict is asked of the REPOSITORY, not one instance", () => {
 
   it("an instance with only non-work state is static", () => {
     const root = repoWith({
-      layer: { name: "layer", directories: [{ id: "u", path: "uploads/", dependents: "skip", graphs: ["uploads"] }] },
+      layer: { name: "layer", directories: [{ id: "u", path: "uploads/", dependents: "skip", graphKinds: ["uploads"] }] },
     });
     expect(isActiveKg(root)).toBe(false);
     rmSync(root, { recursive: true, force: true });
@@ -124,7 +123,7 @@ describe("could not determine is a THIRD state, never STATIC", () => {
     const root = mkdtempSync(join(tmpdir(), "activekg-mix-"));
     writeDeclaration(root, JSON.stringify({ name: "root" }));
     mkdirSync(join(root, "ok"), { recursive: true });
-    writeDeclaration(join(root, "ok"), JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", dependents: "skip", graphs: ["beans"] }] }));
+    writeDeclaration(join(root, "ok"), JSON.stringify({ name: "ok", directories: [{ id: "b", path: "beans/", dependents: "skip", graphKinds: ["beans"] }] }));
     mkdirSync(join(root, "broken"), { recursive: true });
     writeDeclaration(join(root, "broken"), "{ not json", "broken");
     expect(isActiveKg(root)).toBe(true);

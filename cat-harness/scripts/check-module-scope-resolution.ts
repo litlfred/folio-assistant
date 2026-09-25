@@ -34,18 +34,11 @@
  * THROW waits for a caller, and arrives naming the module.
  *
  * @module scripts/check-module-scope-resolution
+ * @covers code
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-// `folio` is registered by IMPORT SIDE EFFECT, and this file reaches
-// `instanceRootsIn`, which resolves declared directories. Without it a fresh
-// process importing this module alone throws "unknown graph kind" —
-// `declared-directory-resolves.test.ts` spawns exactly that process per module
-// for this reason, because in one shared process the first module to reach
-// core registers the kind for everybody and the test becomes incapable of
-// failing.
-import "../schemas/folio-graph-kind.js";
 import { instanceRootsIn } from "../schemas/cat-harness.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
@@ -119,21 +112,24 @@ function walk(dir: string, out: string[]): void {
 }
 
 /**
- * Sites kept, with the reason, because their constants are EXPORTED — making
- * one deferred is a change at every import site rather than in one file.
+ * Sites kept, with the reason — and **it is empty**, which is a determined
+ * empty rather than an unused mechanism.
  *
- * Short on purpose, and it POLICES ITSELF: an entry whose file no longer
- * matches is reported as stale and to be deleted. An allow-list that keeps an
- * entry after the reason for it is gone stops being a list of known exceptions
- * and becomes a blind spot — which is the defect this repository has already
- * paid for in `qa-criterion-source-file.test.ts`, where a hardcoded checker
- * list hid three real mismatches.
+ * It held three entries when this gate was widened: `scripts/todos.ts`,
+ * `scripts/agent-memory.ts` and `adapters/mcp-server/paths.ts`, whose
+ * constants are EXPORTED, so deferring one is a change at every import site
+ * rather than in one file. All three are converted now, and the entries went
+ * with them.
+ *
+ * The mechanism stays because the next such case will want it, and because it
+ * POLICES ITSELF: an entry whose file no longer matches is reported as stale
+ * and to be deleted. An allow-list that keeps an entry after the reason for it
+ * is gone stops being a list of known exceptions and becomes a blind spot —
+ * the defect this repository has already paid for in
+ * `qa-criterion-source-file.test.ts`, where a hardcoded checker list hid three
+ * real mismatches.
  */
-const ALLOWED: Record<string, string> = {
-  "cat-harness/scripts/todos.ts": "exported TODO_ROOT",
-  "cat-harness/scripts/agent-memory.ts": "exported MEMORY_DIRS",
-  "cat-harness/adapters/mcp-server/paths.ts": "exported UPLOADS_DIR and TODOS_DIR, 5+ importers",
-};
+const ALLOWED: Record<string, string> = {};
 
 /**
  * Is the throwing call already behind an arrow, and therefore deferred?

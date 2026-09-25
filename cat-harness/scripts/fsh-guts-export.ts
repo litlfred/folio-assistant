@@ -46,19 +46,6 @@ import {
   resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module reads this instance's declaration and the instance
-// DECLARES a folio graph, so without this it throws `unknown graph kind
-// "folio"` on a valid declaration.
-//
-// Found statically, by listing every script any workflow invokes and checking
-// each for the import — NOT by running them. Running `site-links.ts` from the
-// wrong directory made it fail with "no harness.json; nothing to resolve",
-// which masked this and got it wrongly dismissed as a local-args artefact. A
-// script failing on bad arguments says nothing about whether it fails on good
-// ones.
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -128,7 +115,7 @@ export interface FshGutsDir {
    * instance root and `relative(root, absPath)` came back `../fsh-guts`. That
    * went into `scans`, into every node's `sourcePath`, and into every `@id` —
    * whose sanitiser permits `.` and would have published
-   * `…/fsh-guts.jsonld#../fsh-guts/proposals/x.md`. A link-shaped value that
+   * `…/fsh-guts.jsonld#../docs/proposals/x.md`. A link-shaped value that
    * dereferences to nothing is the `blv9` shape, and it would have been minted
    * into a document whose whole job is to stay addressable.
    */
@@ -139,7 +126,7 @@ export interface FshGutsDir {
 export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
     return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphs.includes("fsh-guts"))
+      .filter((d) => d.graphKinds.includes("fsh-guts"))
       .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
       .filter((d) => existsSync(d.absPath));
   } catch {
@@ -251,6 +238,12 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       body: "schema:text",
       nodeCount: termIri("nodeCount"),
       scans: termIri("scans"),
+      // Declared, with its entries' two keys: a processor dropped the whole
+      // list when it was bare (bean vigi, found by expanding).
+      skipped: {
+        "@id": termIri("skipped"),
+        "@context": { path: termIri("sourcePath"), reason: "rdfs:comment" },
+      },
     },
     "@id": docIri,
     "@type": termIri("FshGutsGraph"),

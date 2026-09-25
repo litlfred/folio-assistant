@@ -1,0 +1,841 @@
+{
+  "_comment": "The ROLE GRAPH. A role is a BPMN swimlane — a persona an actor takes on because of the lane it is acting in — and it carries the skills needed to perform that lane's tasks. Actors (who) are in .claude/skills/actors/; skills (what they need to know) are the packages beside this directory. Schema and rationale: schemas/role-graph.ts. A lane binds its role with <folio:role ref=\"...\"/>; the role lists no lanes. Nor does a role name its voice or its stories: a voice profile points at the roles it addresses (`activeIn.roles`) and a user story at the role it is told as (scenarios/stories.json). Each dependent holds the pointer, so the role is added to without being edited (#1168). `bun run kg:audit` reports any role no lane binds and any activity whose skill its lane's role does not carry.",
+  "name": "folio-assistant",
+  "roles": [
+    {
+      "id": "user",
+      "title": "User",
+      "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "adjudication",
+        "dispatch-agent",
+        "getting-started",
+        "interaction-modality",
+        "materialize-remote",
+        "repo-conversion"
+      ],
+      "persona": "Has a goal and no interest in the machinery. Types with difficulty and will not read three paragraphs to find a choice. Knows their own domain far better than the system, and will be right about it when the agent is not."
+    },
+    {
+      "id": "author",
+      "title": "Author",
+      "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "content-author",
+        "content-plan",
+        "content-review",
+        "decision-audit",
+        "evidence-appraisal",
+        "milnor-exposition-standard",
+        "staging-review",
+        "voice-authoring-guidance"
+      ],
+      "persona": "Knows the subject and is mid-edit. Came to change one block, not to learn the system. Has the folio open and the schema only half in mind; will follow a convention if it is stated where they already are, and invent one if it is not."
+    },
+    {
+      "id": "editor",
+      "title": "Editor",
+      "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "author"
+      ],
+      "skills": [
+        "content-validate",
+        "milnor-exposition-standard",
+        "voice-authoring-guidance"
+      ],
+      "persona": "Author plus the authority to accept. Sees QA findings and decides which are real. Under time pressure and accountable for what lands, so they need the evidence before the argument."
+    },
+    {
+      "id": "reviewer",
+      "title": "Reviewer / SME",
+      "description": "Reads a change and judges it. Cannot accept it — that is the editor's lane — and the separation is why review findings are advice rather than commits. The GENERIC review position: what kind of thing changed decides which subprocess it descends into (review-task.bpmn), and the actor takes on that inner lane's role for the call path only.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "adjudication",
+        "content-block-review",
+        "content-feedback",
+        "content-review",
+        "content-validation",
+        "decision-audit",
+        "document-intake",
+        "milnor-exposition-standard",
+        "narrative-asserts-code",
+        "rendering-auditor",
+        "semantic-review-scoping",
+        "staging-review",
+        "translation-manager",
+        "visual-diff",
+        "voice-overlay-review"
+      ],
+      "persona": "Reading someone else's change, usually against a deadline, usually without the context that produced it. Needs to know what changed and what it affects before they need to know why."
+    },
+    {
+      "id": "review-coordinator",
+      "title": "Review coordinator",
+      "description": "Organises a review without deciding it. Pulls tagged review comments in, splits a large change into slices by section, assigns each slice to a reviewer of the right role, and watches coverage until every changed block has a verdict or a reasoned waiver. Cannot accept or reject: that is the editor's lane, and the separation is the owner's ruling (2026-09-23, bean en2d). Not a reviewer: it does not inherit one, because assigning a slice is not reading it.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "review-comments",
+        "review-heatmap",
+        "staging-review",
+        "visual-diff"
+      ],
+      "persona": "Holding a 300-page change and a handful of reviewers with different expertise. Needs to know where the changes are, who has read what, and what is still open, section by section, without reading every block themselves."
+    },
+    {
+      "id": "narrative-reviewer",
+      "title": "Narrative reviewer",
+      "description": "Judges PROSE — register and voice, the editorial dependencies a reader needs, and translation. Entered by DESCENDING into Process_NarrativeReview: the actor keeps its outer review role and adds these skills along that call path, rather than every reviewer carrying them everywhere.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "adjudication",
+        "content-feedback",
+        "content-review",
+        "milnor-exposition-standard",
+        "translation-manager",
+        "uses-editorial-review",
+        "voice-editorial-review",
+        "voice-overlay-review"
+      ],
+      "persona": "Reads for the reader, not for the author. Knows the subject well enough to tell a register slip from a term of art, and is looking at prose that already passed its mechanical checks — so everything left is judgement. Will not re-read a chapter to find out what a block assumes; if the editorial dependency is not stated, they record that as the finding."
+    },
+    {
+      "id": "code-reviewer",
+      "title": "Code reviewer",
+      "description": "Judges the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/`. Not ordinary code review: the question is whether the NODE is sound — does it declare what it is, do its references resolve, is the mechanism it advertises the one that runs — which a passing test suite does not answer. Entered by DESCENDING into Process_CodeReview.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "code-node-review",
+        "covered-is-not-reachable",
+        "placement",
+        "site-presentation-assets",
+        "skills-and-tools",
+        "test-engineer"
+      ],
+      "persona": "Reads a node, not a program. Knows the graph's vocabulary and expects a node to declare what it is; does not know why this one was written and should not have to guess. The failure they are hunting is a node that looks well-formed and resolves to nothing — which no test catches, because nothing ran."
+    },
+    {
+      "id": "qc-reviewer",
+      "title": "QC reviewer",
+      "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "content-publish",
+        "evidence-review",
+        "quality-control",
+        "untainted-verification"
+      ],
+      "persona": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
+    },
+    {
+      "id": "clinical-sme",
+      "title": "Clinical / scientific SME",
+      "description": "Reviewer whose judgement is about the subject matter rather than the artefact.",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [],
+      "persona": "Expert in the subject, not in the system. Judges whether the content is clinically right; is not interested in FHIR profiles or schema fields and should not have to be."
+    },
+    {
+      "id": "administrator",
+      "title": "Administrator",
+      "description": "Administers the role graph itself: who exists, what they may act as, and what they may do. The ONE lane whose activities change the substrate every other diagram's lanes bind to — which is why it is drawn rather than left as a filesystem edit. Declared 2026-09-20 on the owner's answer that administration is a swimlane; `role-model.md`'s rule is that a role is never invented to make a diagram drawable, so it waited for that.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "role-model",
+        "task-authorization",
+        "deletion-requires-confirmation",
+        "confirmation-waiver"
+      ],
+      "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
+    },
+    {
+      "id": "programme-manager",
+      "title": "Programme manager",
+      "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "content-plan",
+        "content-publish",
+        "content-retire",
+        "decision-audit",
+        "methodology-adoption"
+      ],
+      "persona": "Tracking delivery across several workstreams. Needs state and trend, not detail. Will plan against any number shown, so an invented estimate is worse than a blank."
+    },
+    {
+      "id": "publication-manager",
+      "title": "Publication manager",
+      "description": "Takes an authorised release to its published form and is accountable for what is live.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "content-publish",
+        "content-review",
+        "ig-publication",
+        "decision-audit",
+        "qa-report-signing",
+        "publish-verification"
+      ],
+      "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
+    },
+    {
+      "id": "business-analyst",
+      "title": "Business analyst",
+      "description": "Turns a stated need into a modelled requirement. Owns the CRDM lane and the BPMN/DMN that come out of it.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "bpmn-authoring",
+        "content-validate",
+        "crdm-requirements-workflow",
+        "decision-audit",
+        "dmn-authoring",
+        "l2-dak-authoring",
+        "methodology-adoption",
+        "opening-brief"
+      ],
+      "persona": "Turns stated needs into requirements others can build against. Works in the gap between what a stakeholder said and what the system can do, and is the one who notices when those differ."
+    },
+    {
+      "id": "terminologist",
+      "title": "Terminologist",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "terminology-management"
+      ],
+      "persona": "Owns coded concepts and value sets. Precise by profession; a near-enough code is a wrong code. Cares about provenance and binding strength more than prose."
+    },
+    {
+      "id": "fhir-modeller",
+      "title": "FHIR modeller",
+      "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "l3-fhir-authoring"
+      ],
+      "persona": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
+    },
+    {
+      "id": "translation-coordinator",
+      "title": "Translation coordinator",
+      "description": "Decides what is translated, into which languages, and when a translation is accepted.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "translation-manager"
+      ],
+      "persona": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since."
+    },
+    {
+      "id": "translator",
+      "title": "Human translator",
+      "description": "Produces the target-language text. Distinct from the coordinator because accepting one's own translation is the gate this separation removes.",
+      "actorKinds": [
+        "person"
+      ],
+      "skills": [
+        "translation-manager"
+      ],
+      "persona": "Works in the target language and needs the source's INTENT, not just its words. Context-starved by default: a string with no surrounding meaning gets translated wrong."
+    },
+    {
+      "id": "translation-adjudicator",
+      "title": "Translation adjudicator",
+      "description": "Adjudicator who settles a disagreement between machine and human translation. The first specialisation of `adjudicator`, and the only one that existed before the role did — its lane documentation in translation-workflow.bpmn is where \"a reviewer reports, an adjudicator settles\" was written down.",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "adjudicator"
+      ],
+      "skills": [
+        "translation-manager"
+      ],
+      "persona": "Decides between competing translations, usually a subject expert in the target language. Arrives at a disagreement and needs both options and the reason each was offered."
+    },
+    {
+      "id": "adjudicator",
+      "title": "Adjudicator",
+      "description": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "adjudication",
+        "decision-audit",
+        "untainted-verification"
+      ],
+      "persona": "Arrives at a disagreement, not at an artefact. Is given the findings and the checker's output and — deliberately — not the thing being judged, so the verdict measures the disagreement rather than a fresh reading of the source. Needs both sides and the reason each was offered, before needing anything else."
+    },
+    {
+      "id": "feedback-provider",
+      "title": "Feedback provider",
+      "description": "Offers a finding on content or code — a script checker, a review agent, a reader, an SME. PLURAL by design: an adjudication is the judgement of one or more feedback providers' feedback, and the process draws the lane once for any number of them. Not an adjudicator: this role states what it found and on what evidence, and has no entitlement to settle the disagreement its finding creates.",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "skills": [
+        "content-feedback",
+        "todo-review",
+        "wireframe-design-review"
+      ],
+      "persona": "May be a program that cannot be argued with, or a reader with no context for why the artefact is as it is. Either way it knows one thing the adjudicator does not — what it actually looked at — and the process is worthless if that does not reach the lane below."
+    },
+    {
+      "id": "stakeholder",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "skills": [],
+      "persona": "Affected by the outcome, not building it. Reviews at defined checkpoints and otherwise is not watching. Needs to re-acquire context each time without reading the history."
+    },
+    {
+      "id": "authoring-agent",
+      "title": "Authoring agent",
+      "description": "The session agent doing the work. The broadest skill set here, and the one whose membership most needs auditing.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "adopt-methodology-from-source",
+        "bean-coordination",
+        "bpmn-authoring",
+        "ci-health",
+        "confirmation-waiver",
+        "content-author",
+        "content-graph",
+        "content-plan",
+        "continual-progress",
+        "crdm-detect",
+        "crdm-requirements-workflow",
+        "decision-audit",
+        "deletion-requires-confirmation",
+        "delivery-summary",
+        "document-authoring",
+        "document-structure",
+        "feature-staging",
+        "github-state-inspection",
+        "graph-detanglement",
+        "issue-working",
+        "library-ingestion",
+        "methodology-adoption",
+        "normative-statements",
+        "opening-brief",
+        "placement",
+        "platform-gates",
+        "prepare-merge",
+        "prepare-merge-auto",
+        "related-work-coordination",
+        "semantic-review-scoping",
+        "session-context",
+        "session-state-machine",
+        "todo-manager",
+        "translation-manager",
+        "upstream-version-adoption",
+        "voice-authoring-guidance",
+        "watch",
+        "wireframe-design-review",
+        "workflow-state"
+      ],
+      "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
+    },
+    {
+      "id": "onboarding-agent",
+      "title": "Onboarding agent",
+      "description": "The authoring agent acting before there is a folio: clarifying what the user means by \"create a folio\", scanning an existing repo, and scaffolding.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "getting-started",
+        "interaction-modality",
+        "repo-conversion",
+        "document-intake"
+      ],
+      "persona": "Meets a repository it has never seen and must orient before acting. Will follow the first plausible convention it finds, so the earliest instruction it reads matters most."
+    },
+    {
+      "id": "ingestion-agent",
+      "title": "Ingestion engine",
+      "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "document-intake",
+        "library-ingestion",
+        "materialize-remote",
+        "paper-importer",
+        "proof-status-tracking",
+        "theme-art-intake",
+        "theme-ui-review"
+      ],
+      "persona": "Turns an uploaded source into corpus. Works from documents of unknown quality and must record provenance for everything it derives, because a derived claim with no source is unusable later."
+    },
+    {
+      "id": "librarian",
+      "title": "Librarian",
+      "description": "Acquires a source and files it. Distinct from `ingestion-agent`, which DERIVES structure from a source already in hand: this role decides what to capture, how faithfully, and what must be recorded at the moment of capture because nobody can reconstruct it later.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "filing-dublin-core",
+        "archiving-web-pages",
+        "archiving-arxiv",
+        "document-intake",
+        "library-ingestion"
+      ],
+      "persona": "Treats provenance as the perishable part. A document can be re-read at any time; how it arrived, from where, in what state and under what licence is knowable only while it is arriving, so that is what gets written down first."
+    },
+    {
+      "id": "deep-researcher",
+      "title": "Deep researcher",
+      "description": "Answers a question FROM a corpus already held, and is answerable for the answer. Distinct from `librarian`, which decides what to capture, and from `ingestion-agent`, which derives structure from what was captured: both produce the corpus, and this role consumes it. Added 2026-09-23 with the `doc-researcher` methodology, because the accountability it names — somebody who must stand behind a synthesis and its citations — belonged to no declared role. THE LANE IT BINDS IS DRAWN IN ANOTHER INSTANCE — the `Deep researcher` lane of `folio-assistant-core/processes/deep-document-research.bpmn`, which names this role with `<folio:role ref>`. It carried a `lanes[]` here for about an hour on 2026-09-23 before #1168 landed and inverted the relation: a lane names its role, and a role does not list its lanes, because a general node never names its users. The binding is therefore stated once, on the lane, and this role says nothing about where it is drawn.",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "skills": [
+        "deep-document-research"
+      ],
+      "persona": "Stops on a stated condition rather than on a feeling of having read enough. Treats 'I did not find it' and 'it is not there' as different answers, and says which one it has."
+    },
+    {
+      "id": "evidence-agent",
+      "title": "Evidence agent",
+      "description": "Retrieves and appraises external evidence for a guideline claim.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "document-intake"
+      ],
+      "persona": "Searches trusted sources and appraises what comes back. Its value is in what it REJECTS, so it must be able to say why a source was not used."
+    },
+    {
+      "id": "sibling-session",
+      "title": "Sibling session",
+      "description": "Another agent or human working the same store. Present in bean-lifecycle precisely to mark what is NOT yours to close.",
+      "actorKinds": [
+        "agent"
+      ],
+      "skills": [
+        "bean-coordination"
+      ],
+      "persona": "Another agent or human on the same store, with different context and its own claims. Present precisely to mark what is NOT yours to close."
+    },
+    {
+      "id": "build-pipeline",
+      "title": "Build pipeline",
+      "description": "Validates, renders and publishes, and watches whether that actually worked. A system lane: it runs a fixed program and exercises no judgement, so anything needing a decision belongs in a different lane. It carries `todo-manager` for the two CI-watcher dispatch points in `content-change-review`, which `claim` and `note` a bean and never `resolve` one -- claim is idempotent and note appends, both fixed programs, while deciding that a publish SUCCEEDED is the judgement this lane must not make (bean xom7: docs-site.yml failed 30 times while reporting its own exit code).",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "content-publish",
+        "content-test",
+        "content-validate",
+        "document-publishing",
+        "feature-staging",
+        "publish-verification",
+        "fhir-validation",
+        "ig-publication",
+        "l3-fhir-authoring",
+        "latex-authoring",
+        "quality-control",
+        "todo-manager",
+        "translation-manager",
+        "upstream-version-adoption",
+        "watch",
+        "build-docs",
+        "build-pdf",
+        "latex-build-cache",
+        "latex-validation",
+        "smart-base-tools"
+      ]
+    },
+    {
+      "id": "board-renderer",
+      "title": "Board renderer",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "board-windows",
+        "board-diagram-interchange",
+        "harness-tiles",
+        "deletion-requires-confirmation"
+      ]
+    },
+    {
+      "id": "validation-pipeline",
+      "title": "Validation pipeline",
+      "description": "The mechanical half of the HCI validation gate. Its findings are inputs to the editor's decision, never the decision.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "content-test",
+        "content-validate"
+      ]
+    },
+    {
+      "id": "publish-target",
+      "title": "Publish target",
+      "description": "GitHub Pages, or wherever the folio is served from. Reached, probed and reported on — never assumed live.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "skills": [
+        "getting-started"
+      ]
+    },
+    {
+      "id": "lean-toolchain",
+      "title": "Lean toolchain",
+      "description": "Elaborates and checks the formal half of a paper folio. Answers only what Lean can answer.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "lean-formalization",
+        "proof-verification"
+      ]
+    },
+    {
+      "id": "ig-publisher-service",
+      "title": "IG publisher + validator",
+      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "fhir-validation",
+        "ig-publication"
+      ]
+    },
+    {
+      "id": "attestation-service",
+      "title": "Attestation service",
+      "description": "Signs a QA report's run hashes over an API. A MECHANICAL role, and the one that DISAPPEARS when the actor performing it cannot reach out — which is why the signing process carries a second, human lane rather than a retry.",
+      "actorKinds": [
+        "system"
+      ],
+      "skills": [
+        "qa-report-signing"
+      ]
+    },
+    {
+      "id": "work-plan",
+      "title": "Work plan (beans)",
+      "description": "The shared store, modelled as a lane because tasks act ON it and a reader needs to see where the plan is touched. No actor takes this role on; it is acted upon.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "skills": [
+        "todo-manager",
+        "content-feedback"
+      ]
+    },
+    {
+      "id": "corpus",
+      "title": "Corpus",
+      "description": "The versioned content store and the L1 source knowledge graph. Like the work plan, a lane that is written to rather than a participant that acts.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "skills": [
+        "document-intake",
+        "materialize-remote"
+      ]
+    },
+    {
+      "id": "external-registry",
+      "title": "External registry",
+      "description": "Trusted registries and observatories outside this instance's control. Carries no skills because nothing here instructs it.",
+      "actorKinds": [
+        "external"
+      ],
+      "actedUpon": true,
+      "skills": []
+    },
+    {
+      "id": "log",
+      "title": "Activity log",
+      "description": "The agent activity log. A MECHANICAL role and an `actedUpon` one: it is written to at task start and task end, and emptied by an actor — one entry, all of them, or on a periodic sweep — and it decides nothing. Modelled on `work-plan` and `corpus`, the two existing stores that are acted upon rather than acting. Its entries are held in the instance's unpublished store and never reach a published graph; the `activity-log` skill names the location, which is deliberately not repeated here because a role description IS published.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "skills": [
+        "activity-log"
+      ]
+    },
+    {
+      "id": "session-record",
+      "title": "Session record",
+      "description": "A session's context — who is acting, which instances are open, what it waits on. A MECHANICAL role and an `actedUpon` one: written to as the session moves and read by a sibling deciding whether a claim is live, and it decides nothing. Modelled on `work-plan`, `corpus` and `log`, the stores that are acted upon rather than acting. It carries `session-context` because the shape of what is written IS the discipline here — unlike `work-plan`, whose store has a CLI, this one is written by a machine that may be an LLM playing the part, so the schema is the contract.",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "skills": [
+        "session-context"
+      ]
+    },
+    {
+      "id": "editorial-authoring-agent",
+      "title": "Editorial authoring agent",
+      "description": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "block-density",
+        "chapter-complexity-review",
+        "readability-editing",
+        "scientific-accuracy",
+        "one-voice-audit",
+        "ontologist",
+        "md-authoring",
+        "html-rendering-qc",
+        "markdown-render-check",
+        "exposition-swarm-drain",
+        "todo-review",
+        "bib-human-review",
+        "bib-qa"
+      ],
+      "persona": "Reads a block already written and asks whether a reader could follow it. Knows the house voice and the rendering pipeline; does not know the mathematics, and must not be asked to judge it."
+    },
+    {
+      "id": "docs-authoring-agent",
+      "title": "Docs authoring agent",
+      "description": "The authoring agent producing what a person reads ABOUT the instance — generated references, the glossary, sticky notes, theme art and deployment documentation.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "docs-generation",
+        "glossary-build",
+        "create-sticky-note",
+        "theme-art-intake",
+        "tabular-metadata",
+        "deployment-auth",
+        "editor"
+      ],
+      "persona": "Writes for somebody who has not read the codebase. Knows which directories are generated and must never be hand-edited; assumes nothing about what the reader already believes."
+    },
+    {
+      "id": "platform-authoring-agent",
+      "title": "Platform authoring agent",
+      "description": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "mcp-assembly",
+        "mcp-contract",
+        "serving-renderings",
+        "kg-export",
+        "kg-viewer",
+        "domain-fencing"
+      ],
+      "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
+    },
+    {
+      "id": "session-coordinator",
+      "title": "Session coordinator",
+      "description": "The authoring agent managing the SESSION rather than the content: what this session intends, what is already in flight elsewhere, and what to pick up next.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "coordinate",
+        "pickup",
+        "session-intent",
+        "goal-review",
+        "pending-show",
+        "idle-backlog",
+        "diff",
+        "corpus-grep",
+        "process-state",
+        "task-authorization"
+      ],
+      "persona": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
+    },
+    {
+      "id": "integration-watcher",
+      "title": "Integration watcher",
+      "description": "Watches the default branch and open branches for newly-landed work that an existing audit axis should be re-run over. Reports findings; does not author the fix.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "canonical-watcher",
+        "compute-integration-watcher",
+        "detangler-integration-watcher",
+        "devils-advocate-watcher",
+        "one-voice-integration-watcher",
+        "bib-photo-ingestion-watcher",
+        "integration-watch",
+        "integration-audit",
+        "integration-backlog",
+        "proof-integration-watcher",
+        "q-usage-watcher"
+      ],
+      "persona": "Sees a diff, not a conversation. Knows its axis narrowly and deeply, and knows that a finding it cannot substantiate costs more than one it never raised."
+    },
+    {
+      "id": "lean-authoring-agent",
+      "title": "Lean authoring agent",
+      "description": "Writes and repairs the Lean 4 formalization — translating narrative mathematics into declarations, keeping the build green, and curating what is staged for upstream.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "formalizer",
+        "chapter-analysis",
+        "lean-generation",
+        "lean-substantive-pass",
+        "lean-build-fix",
+        "lean-cache-restore",
+        "lean-environment-setup",
+        "lean-mathlibext-curator",
+        "lean-formal-graph",
+        "proof-triage",
+        "category-theory",
+        "groebner-basis"
+      ],
+      "persona": "Reads mathematics and writes Lean. Knows the toolchain is slow and the cache is load-bearing; knows a `sorry` is a debt with a location, not a failure."
+    },
+    {
+      "id": "proof-review-agent",
+      "title": "Proof review agent",
+      "description": "Reviews proofs — narrative and formal — for gaps, vacuity, redundancy and divergence between the two renderings of the same claim.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "lean-proof-review",
+        "lean-proof-vacuity-audit",
+        "proof-gap-audit",
+        "proof-conciseness",
+        "proof-editor",
+        "proof-exposition-review",
+        "proof-simplifier",
+        "proof-narrative-lean-equivalence",
+        "lean-completeness-audit",
+        "remark-audit",
+        "definition-clarity-audit",
+        "proposition-consolidation-audit",
+        "critical-path-analysis"
+      ],
+      "persona": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
+    },
+    {
+      "id": "compute-authoring-agent",
+      "title": "Compute authoring agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "actorKinds": [
+        "agent"
+      ],
+      "inherits": [
+        "authoring-agent"
+      ],
+      "skills": [
+        "compute-audit",
+        "compute-author",
+        "ffi-roundtrip-audit",
+        "lean-witness-audit",
+        "witnessed-values",
+        "verify-local-substrate",
+        "simulator",
+        "simulator-math-audit"
+      ],
+      "persona": "Knows a number in prose and a number from a script are two claims until something ties them. Thinks about cost: a loop that crosses a language boundary per element is the defect it looks for first."
+    }
+  ]
+}

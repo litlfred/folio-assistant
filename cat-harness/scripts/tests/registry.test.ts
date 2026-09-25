@@ -12,7 +12,7 @@
  * `packages` was filled with `skills/<name>/package-manifest.json` files while
  * the schema asked for `SkillPackageRef` — a reference to an *external* package
  * in another repo. On top of that the generator never emitted
- * `roleAssignments` at all, though `.claude/skills/roles/role-assignments.json`
+ * `roleAssignments` at all, though `.claude/scenarios/role-assignments.json`
  * has three rules in it and the field is required.
  *
  * This runs the generator and validates its output. It is the check whose
@@ -62,7 +62,7 @@ describe("generated skill registry", () => {
   test("carries the role rules that are on disk", () => {
     // Required by the schema, and never populated before: the registry
     // advertised no role assignments while three sat in
-    // `.claude/skills/roles/role-assignments.json`.
+    // `.claude/scenarios/role-assignments.json`.
     const reg = SkillRegistrySchema.parse(JSON.parse(readFileSync(OUT, "utf-8")));
     expect(reg.roleAssignments.length).toBeGreaterThan(0);
     // Highest priority first — the evaluation order the type documents.

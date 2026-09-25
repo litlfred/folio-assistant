@@ -4,7 +4,7 @@
  * `beans/` says *what is being worked on*; an instance says *where it got to*.
  * Kept apart they diverge, and a work plan that disagrees with itself is worse
  * than one that is merely coarse. Eleven activities across the six diagrams
- * carry `<folio:bean store="beans/" op="…"/>` — completing one is not a step
+ * carry `<cat-harness.processes:bean op="…"/>` — completing one is not a step
  * *about* the work plan, it **is** the work-plan operation, so doing one does
  * the other.
  *

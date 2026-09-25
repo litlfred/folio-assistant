@@ -39,11 +39,6 @@ import {
   isPublishedGraphKind,
   readDeclaration,
 } from "../schemas/cat-harness.js";
-// Imported for its SIDE EFFECT: `folio` registers itself on import. Without
-// this the check's answer depends on what else happened to be loaded, which
-// is how `folio` — the one renderable kind — was missing from the registry
-// and reported as covered. See `requiredKinds`.
-import "../schemas/folio-graph-kind.js";
 import { avatarsCssPath } from "./gen-avatars-css.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 
@@ -90,7 +85,7 @@ export function requiredKinds(root: string = ROOT): { required: string[]; declar
   let declared: string[] = [];
   try {
     const d = readDeclaration(root);
-    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphs ?? []))];
+    declared = [...new Set((d?.directories ?? []).flatMap((x) => x.graphKinds ?? []))];
   } catch {
     // An unreadable declaration is the instance's problem to fix, not this
     // check's to guess around; the registry half still reports.

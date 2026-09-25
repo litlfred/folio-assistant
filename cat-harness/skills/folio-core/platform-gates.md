@@ -114,6 +114,59 @@ Two things follow, and the second is the one to act on:
 
 ---
 
+## ...and a green gate is not a VERIFIED FACT
+
+The step after that one. The section above is about a gate that could not *see*
+the artefact; this is about a gate that saw a different question and answered it
+correctly.
+
+Measured 2026-09-22 on the work-plan consolidation's own first commit
+(issue #956). A session wrote three delegated claims, each citing bean `k59d` —
+*milestone critical paths go stale here* — and each instructing its reader to
+**re-verify the path before acting on it**. It then copied `p5wm`'s critical
+path into one of them verbatim, through four `completed` beans.
+
+| claim | carried the stale content | `check:stale-paths` |
+|---|---|---|
+| `10uc` | yes, as a numbered path | **✗ failed the push** |
+| `w0cr` | yes, as prose | **✓ passed** |
+
+Two lessons, and they are different failures that look identical from the
+outside.
+
+**1. A rule that lives only in prose has a compliance ceiling nobody measures.**
+Knowing about `k59d` — citing it, quoting it, instructing three other agents
+about it — did not prevent reproducing `k59d` in the same commit. The gate
+worked and the discipline did not. When you find yourself writing a rule into
+prose, ask what would fail if somebody ignored it; if the answer is *nothing*,
+you have written a wish. The measurable form of the same rule is a check, a
+schema field, or a test — and `bean-blocking`'s `status: blocked` is the worked
+example of the other outcome: a prescribed form the tool refuses to store has a
+**0 % ceiling**, and across 99 in-progress beans it was honoured exactly 0 times.
+
+**2. A gate's silence is bounded by its stated scope, and `w0cr` is why.**
+`check:stale-paths` judges two shapes — an id adjacent to an arrow, and a
+numbered step under a path heading — and **declines** everything else, on
+purpose and in writing. Prose that merely mentions a closed bean is outside it.
+So `w0cr` passed while carrying the same defect, and a reader who stopped at the
+tick was entitled to believe it.
+
+**Green over a narrow rule is worse than red**, because red is examined. This is
+`1xhc`'s *"a gate that does not fire is indistinguishable from one that passed"*,
+and it is the same shape as `check:ci-health` reporting eight workflows green
+beside **31 further workflow files that produced no run at all** — which it
+labels *unjudged, not green*. Anything summarising that as green CI is the
+defect.
+
+So, before quoting a tick as evidence:
+
+> **What does this gate say it judges, and is my claim inside it?**
+
+Read the check's own header — every one here states its scope and its declined
+cases — rather than inferring the scope from the fact that it ran.
+
+---
+
 ## Fast versus full, and why the split is not a judgement call
 
 It is job membership in the workflow, read at run time.
@@ -177,7 +230,7 @@ change being pushed, and its "60 of 60" was quoted as though it did.
 
 **`bun run gates` reads the WORKING TREE, not the commit**, which is the
 mechanism behind that sentence and worth knowing on its own. A third instance,
-2026-09-20: a splice script corrupted `harness.json` while a run was in
+2026-09-20: a splice script corrupted `<name>.json` while a run was in
 flight, and **40 of 61 gates failed reading a file that was invalid for about
 a minute**. Every one of the five failures the summary named passed when
 re-run by hand. So a mid-run edit does not merely leave the change unverified
@@ -251,7 +304,7 @@ Every gate in that workflow carries a comment saying what it caught and when.
 If you think one is wrong, that comment is what you are arguing with.
 
 **It does not make `--all` optional before a push that touches a diagram.**
-Anything under `skills/workflows/` changes a rendered SVG, and the check for
+Anything under `processes/` changes a rendered SVG, and the check for
 that is in the browser job.
 
 ---

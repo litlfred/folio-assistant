@@ -13,10 +13,10 @@
  *
  *   1. Anchors stop depending on heading text. `heading_anchors: true` derives
  *      `#extract-structure` from the words in the heading, so a retitle
- *      silently breaks every inbound link — including the
- *      `<folio:link href="document-ingestion.html#extract-structure">` hrefs
- *      authored into the BPMN sources, which is a live round trip today. Each
- *      node's `id` is pinned with kramdown's `{: #id }` instead.
+ *      silently breaks every inbound link — including the subprocess links
+ *      `render-bpmn.ts` derives from a node's `asset.source`
+ *      (`process-presentations.ts`). Each node's `id` is pinned with
+ *      kramdown's `{: #id }` instead.
  *   2. Every node gets an edit link to ITS OWN source. Jekyll knows only
  *      `page.path`, so a per-node link is impossible from the theme: the
  *      node -> file mapping exists only here, in the thing that assembles the
@@ -28,6 +28,8 @@
  * Usage:
  *   bun run cat-harness/scripts/gen-docs-pages.ts            # write
  *   bun run cat-harness/scripts/gen-docs-pages.ts --check    # fail if any page is stale
+ *
+ * @covers docs
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "node:fs";
@@ -65,6 +67,7 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.ts";
 import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
+import { tileCounts } from "../schemas/tile-count.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -721,6 +724,12 @@ function renderPage(page: WebPage): string {
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);
+  // What the page documents (#1168 B7c): read from here by the coverage
+  // check, since the directory no longer names its page.
+  if (page.documents?.length) {
+    lines.push("documents:");
+    for (const d of page.documents) lines.push(`  - ${d}`);
+  }
   lines.push(`lang: ${SOURCE_LOCALE}`);
   if (locales.length > 0) {
     lines.push(`available_locales: ${JSON.stringify(locales)}`);
@@ -1241,7 +1250,18 @@ function processHierarchy(): Record<string, string[]> {
   emit(
     TODO_ASSET,
     JSON.stringify(
-      { $schema: "folio-todo-index/v1", repoWeb: REPO_WEB, items, processes, themeArt },
+      {
+        $schema: "folio-todo-index/v1",
+        // The tile's headline number, declared here because only this
+        // generator knows WHICH of the projection's arrays is the one — see
+        // `schemas/tile-count.ts`. `items`, not `processes`: a process is a
+        // lane the board draws, not a todo somebody owes.
+        ...tileCounts({ todos: [items.length, "todos"] }),
+        repoWeb: REPO_WEB,
+        items,
+        processes,
+        themeArt,
+      },
       null,
       2,
     ) + "\n",
@@ -1341,6 +1361,11 @@ function processHierarchy(): Record<string, string[]> {
       JSON.stringify(
         {
         $schema: "folio-bean-index/v1",
+        // `items`, not `items + findings`: a finding is a defect ABOUT the
+        // work plan, not an item on it, and adding them would make the tile
+        // disagree with the board it opens. See `schemas/tile-count.ts` for
+        // why the number is declared here rather than inferred by the reader.
+        ...tileCounts({ beans: [items.length, "beans"] }),
         // The forge, so `work-plan.js` composes its links from DATA rather
         // than carrying one instance's address in shared client code. Same
         // reason `editHref` is composed here, one level further on.
@@ -1415,7 +1440,12 @@ function processHierarchy(): Record<string, string[]> {
     mkdirSync(dirname(out), { recursive: true });
     emit(
       out,
-      JSON.stringify(ix, null, 2) + "\n",
+      // `ix.files`, not `ix.families.length`: a family is a schema the sweep
+      // groups by, and 7 on the tile where 636 documents were swept would be
+      // a number the reader cannot reconcile with the page it opens. The two
+      // third states this block already prints — `unclassified`, `unreadable`
+      // — stay in the console; the tile carries one number and its unit.
+      JSON.stringify({ ...tileCounts({ qa: [ix.files, "documents"] }), ...ix }, null, 2) + "\n",
       "verdict",
     );
     const fams = ix.families.map((f) => `${f.schema} ${f.files}`).join(", ");
@@ -1457,6 +1487,11 @@ function processHierarchy(): Record<string, string[]> {
  * directory and one of the two would overwrite the other — the same collision
  * the PO resolution in `translation-block-qa.ts` just had to be taught to
  * refuse, one layer down.
+ *
+ * That pair went away on 2026-09-21 (bean `8h42`, and the generated page that
+ * took the route is `published-graphs.md`, not a second `index.md`). The rule
+ * stays: it is about stems, not about those two files, and the next pair to
+ * share one will not announce itself.
  */
 function publishAuthoredPageTranslationQa(): void {
   const siteDir = OUT_DIR;

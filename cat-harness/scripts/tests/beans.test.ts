@@ -25,7 +25,7 @@ function store(beans: Record<string, string>): string {
     join(root, "beans", "beans.json"),
     JSON.stringify({
       name: "t",
-      directories: [{ id: "defs", path: "defs", graphs: ["bean-defs"] }],
+      directories: [{ id: "defs", path: "defs", graphKinds: ["bean-defs"] }],
     }),
   );
   for (const [name, body] of Object.entries(beans)) {

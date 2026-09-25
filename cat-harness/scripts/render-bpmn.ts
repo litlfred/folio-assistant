@@ -1,7 +1,7 @@
 /**
  * Render BPMN 2.0 sources to standalone SVG.
  *
- * The `.bpmn` files under `skills/workflows/` are the source of truth — they are
+ * The `.bpmn` files under `processes/` are the source of truth — they are
  * plain BPMN 2.0 with diagram interchange, so they open in bpmn.io, Camunda
  * Modeler, or any other BPMN tool. This script rasterises them to SVG for the
  * docs site and for GitHub's Markdown renderer, which cannot draw BPMN itself.
@@ -12,6 +12,11 @@
  * catch a `.bpmn` edit that never had its SVG regenerated.
  *
  * Never hand-edit `docs/assets/img/workflows/*.svg` — regenerate instead.
+ *
+ * @covers processes
+ *
+ * @conformsTo omg-bpmn-2.0
+ * @conformsTo omg-dd-1.0
  */
 import { chromium } from "@playwright/test";
 import { workflowFiles } from "./known-skills.js";
@@ -21,15 +26,16 @@ import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { processPresentations, processTarget } from "./process-presentations.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
  * The `.bpmn` sources, from EVERY directory the instance declares as holding
- * its knowledge graph — not from the literal `skills/workflows/`.
+ * its knowledge graph — not from the literal `processes/`.
  *
  * `workflowFiles` returns absolute paths, so `file` below is already complete
  * and nothing joins it to a base. That is the point: a topical layout
- * (`cat-bootstrap/workflows/`, `crdm/workflows/`) is found without this script
+ * (`bootstrap/processes/`, `crdm/workflows/`) is found without this script
  * knowing the layout exists.
  *
  * Output names are still the BASENAME, which is a latent collision if two
@@ -103,48 +109,46 @@ await page.addScriptTag({ path: VIEWER });
  * `calledElement` can be resolved to a diagram rather than to a bare id.
  */
 const processHome = new Map<string, string>();
+const processFile = new Map<string, string>();
 for (const file of sources) {
   const xml = await readFile(file, "utf8");
   for (const m of xml.matchAll(/<bpmn:process\s+id="([^"]+)"/g)) {
     processHome.set(m[1], basename(file, ".bpmn"));
+    processFile.set(m[1], relative(ROOT, file));
   }
 }
+
+/** Page sections presenting each diagram, keyed as a page spells its source. */
+const presentations = await processPresentations(ROOT);
+
+/**
+ * From a rendered SVG back up to the site root. Every link is written
+ * relative to the SVG FILE, so it resolves correctly when the file is opened
+ * on its own; `docs-ui.js` re-anchors it to the file's URL when it inlines the
+ * drawing into a page, which may sit at any depth (the docs root, or
+ * `processes/`). A link written relative to the page instead worked from the
+ * docs root and broke under `processes/` — bean `xl55`.
+ */
+const SITE_UP = `${relative(OUT_DIR, join(ROOT, siteDirFor(ROOT))).split("\\").join("/")}/`;
 
 /**
  * Where a call activity should take a reader who clicks it.
  *
- * `<folio:link href="…"/>` on the activity wins — that is how a page says "the
- * section for this subprocess is here", which is the useful destination when
- * the diagram is embedded in a docs page.
- *
- * Without one, fall back to the called process's own rendered SVG. That is
- * always correct and needs no knowledge of any page, so a folio that has not
- * declared links still gets working navigation.
+ * DERIVED from the pages, never authored on the process: the page section
+ * whose `asset.source` names the called diagram, or — when none does, or more
+ * than one — the called process's own generated page
+ * (`process-presentations.ts`). The process names no page; the page names
+ * the process (data-modelling step 8, bean `xl55`).
  */
 function subprocessLinks(xml: string): Map<string, string> {
   const out = new Map<string, string>();
-  for (const m of xml.matchAll(/<bpmn:callActivity\b([^>]*)>([\s\S]*?)<\/bpmn:callActivity>/g)) {
+  for (const m of xml.matchAll(/<bpmn:callActivity\b([^>]*)>/g)) {
     const id = /\sid="([^"]+)"/.exec(m[1])?.[1];
-    if (!id) continue;
-    const explicit = /<folio:link\s+href="([^"]+)"\s*\/?>/.exec(m[2])?.[1];
-    if (explicit) {
-      out.set(id, explicit);
-      continue;
-    }
     const called = /\scalledElement="([^"]+)"/.exec(m[1])?.[1];
-    const home = called ? processHome.get(called) : undefined;
-    // Fallback, and it is a WEAK one on purpose. Linking to the rendered SVG
-    // of the called process at least takes the reader somewhere true, but a
-    // bare file has no page chrome and no prose around it — the destination
-    // you actually want is the section that documents that subprocess, which
-    // only the model can name. So prefer `<folio:link>`; this is what happens
-    // when nobody wrote one.
-    //
-    // The path is asset-relative, which assumes the embedding page sits at
-    // the docs root. Every page that embeds a diagram today does. A page in
-    // `guides/` or `reference/` would need `../`, so if one ever embeds a
-    // diagram whose call activity has no explicit link, give it one.
-    if (home) out.set(id, `assets/img/workflows/${home}.svg`);
+    if (!id || !called) continue;
+    const home = processHome.get(called);
+    if (!home) continue;
+    out.set(id, SITE_UP + processTarget(home, presentations.get(processFile.get(called)!)));
   }
   return out;
 }

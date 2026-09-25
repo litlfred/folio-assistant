@@ -54,7 +54,12 @@ whole reason for adopting a standard.
 - [ ] location-on-sheet is recorded as an annotation ON CSVW, with a test that
       a CSVW-only reader still parses the output
 - [ ] `folio-tabular-records/v1` is migrated, and the undetermined third state
-      survives it
+      survives it — **the third state is already safe**: `yh6u` (#1078) made
+      the record real JSON-LD with `narrative`/`sheets` typed `@type: "@json"`,
+      so its nulls survive expansion. What is still open is MIGRATION proper,
+      meaning CSVW replacing v1, which waits on the extractors. Read as "v1's
+      format is broken", this line sends you to a defect that no longer
+      exists — it did, on 2026-09-23 (bean `nbjv`)
 - [ ] this unblocks `p67i`'s manifest: what a sheet IS in the graph is answered
 
 ## Not this bean

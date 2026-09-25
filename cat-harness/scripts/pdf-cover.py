@@ -40,7 +40,17 @@ import sys
 from pathlib import Path
 
 
-def render(pdf: Path, page: int, width: int) -> tuple[bytes, dict]:
+# Mid grey, and deliberately NOT the surrounding page colour.
+#
+# A mask filled to match its background is invisible, and an invisible mask is
+# a claim nobody can check: the rendering then looks like a publication that
+# never carried the thing that was removed. Grey reads as "something was taken
+# out here" on both the white covers and the blue one, which is the honest
+# answer and the one a reader can question.
+MASK_FILL = (128, 128, 128)
+
+
+def render(pdf: Path, page: int, width: int, masks: list[tuple[int, int, int, int]] = []) -> tuple[bytes, dict]:
     """PNG bytes for one page, plus the facts a provenance record needs.
 
     Raises rather than returning a placeholder. A missing backend and a
@@ -80,6 +90,30 @@ def render(pdf: Path, page: int, width: int) -> tuple[bytes, dict]:
     # it misrepresented.
     scale = width / rect.width
     pix = pg.get_pixmap(matrix=pymupdf.Matrix(scale, scale), alpha=False)
+
+    # MASKS ARE APPLIED BEFORE THE DIGESTS, never after.
+    #
+    # `sha256` and `bytes` below describe the bytes this script WRITES, and a
+    # consumer checks a committed file against them. Masking after the fact --
+    # in a second pass, or in the caller -- would leave provenance describing a
+    # rendering nobody has, and `gen-covers --check` would fail on every run
+    # while the file was correct. So the mask belongs inside the render.
+    #
+    # Refused rather than clamped when a region falls outside the raster: a
+    # clamp silently covers less than asked, which is the one failure mode that
+    # matters here -- a mask exists to hide something, and a mask that hides
+    # part of it looks exactly like one that worked.
+    for m in masks:
+        x0, y0, x1, y1 = m
+        if x1 <= x0 or y1 <= y0:
+            sys.exit(f"--mask must have positive area; got {x0},{y0},{x1},{y1}")
+        if x1 > pix.width or y1 > pix.height:
+            sys.exit(
+                f"--mask {x0},{y0},{x1},{y1} falls outside the {pix.width}x{pix.height} rendering. "
+                f"Regions are in OUTPUT pixels; a region measured at a different --width will not fit."
+            )
+        pix.set_rect(pymupdf.IRect(x0, y0, x1, y1), MASK_FILL)
+
     png = pix.tobytes("png")
 
     return png, {
@@ -95,6 +129,9 @@ def render(pdf: Path, page: int, width: int) -> tuple[bytes, dict]:
         "sha256": hashlib.sha256(png).hexdigest(),
         "mediaType": "image/png",
         "renderer": f"pymupdf {pymupdf.version[0]}",
+        # Reported even when empty, so a consumer can tell "this rendering
+        # masked nothing" from "this renderer does not know about masking".
+        "maskedRegions": [{"x0": m[0], "y0": m[1], "x1": m[2], "y1": m[3]} for m in masks],
     }
 
 
@@ -107,6 +144,14 @@ def main() -> int:
     ap.add_argument("--page", type=int, default=1, help="1-based page to render (default 1)")
     ap.add_argument("--width", type=int, default=300, help="output width in pixels (default 300)")
     ap.add_argument(
+        "--mask",
+        action="append",
+        default=[],
+        metavar="x0,y0,x1,y1",
+        help="blank this rectangle, in OUTPUT pixels, origin top-left, x1/y1 exclusive. "
+        "Repeatable. Refused if it falls outside the rendering.",
+    )
+    ap.add_argument(
         "--json",
         action="store_true",
         help="print the provenance facts to stdout — source, page, geometry, digests",
@@ -118,7 +163,17 @@ def main() -> int:
     )
     a = ap.parse_args()
 
-    png, facts = render(a.pdf, a.page, a.width)
+    masks = []
+    for raw in a.mask:
+        parts = raw.split(",")
+        if len(parts) != 4:
+            sys.exit(f"--mask wants x0,y0,x1,y1 (four integers); got {raw!r}")
+        try:
+            masks.append(tuple(int(p) for p in parts))
+        except ValueError:
+            sys.exit(f"--mask wants four integers; got {raw!r}")
+
+    png, facts = render(a.pdf, a.page, a.width, masks)
 
     if a.check:
         prev = a.out.read_bytes() if a.out.exists() else None

@@ -2,9 +2,11 @@
 name: session-context
 description: >
   What a state machine tracks across a session, as against one process
-  instance. The six fields, why `actor` is required and the rest are not, why
+  instance. What the record carries, why `actor` is required and the rest are not, why
   the session's view of a node is advisory, and what a sibling session reads it
   for.
+graph-kinds:
+  - session-state
 ---
 
 # Session context
@@ -27,6 +29,19 @@ Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
 [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
 means by live state.
 
+## The fields — read them off the schema, never off this page
+
+`SessionContextSchema` in `schemas/session-context.ts` is authoritative. This
+description said *"the six fields"* until 2026-09-24, by which point there were
+**eight** — `waitingOn` and `$schema` had joined `id`, `actor`, `startedAt`,
+`updatedAt`, `open`, `claimed`. Bean `s8mo` carried the same "six" and drifted
+with it, so the bean and this skill agreed with each other and both disagreed
+with the code, which is the one shape comparing them cannot catch.
+
+No count is given here on purpose. A field list in prose beside a Zod object is
+a second answer to a question the schema already answers, and it is wrong the
+first time somebody adds a field.
+
 ## `actor` is required, and it is the point of the record
 
 Every other field can be recovered by looking at the repository. Open
@@ -36,7 +51,7 @@ derived from anything.**
 
 The machine keeping the session cannot infer it — the same reason the Logger
 cannot infer who wrote a log line, which is why
-[`log-message`](../../../cat-bootstrap/skills/log-message.md) takes `actor` too. A
+[`log-message`](../../../bootstrap/skills/log-message.md) takes `actor` too. A
 session record that cannot name its actor records that something is happening
 and nothing about **who is answerable for it**, which is the first question a
 sibling session needs answered before it touches the same bean.
@@ -112,7 +127,7 @@ and the parse is where it is enforced.
 session; this says who is working and where they are right now. Delete every
 session record and the plan is intact.
 
-**Not a log.** [`log-message`](../../../cat-bootstrap/skills/log-message.md)
+**Not a log.** [`log-message`](../../../bootstrap/skills/log-message.md)
 records what an actor DID at a moment, append-only. This is the current
 position, overwritten as it moves. A log tells you how you got here; this tells
 you where you are.

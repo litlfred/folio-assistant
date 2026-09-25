@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/opening-brief.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/opening-brief.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/opening-brief.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/opening-brief.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/opening-brief.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/opening-brief.md){: .fa-edit-source }
 
 {% raw %}
 # Opening brief — brief the topic before you touch anything
@@ -73,13 +73,28 @@ nothing."
 
 | provenance | how to say it |
 |---|---|
-| measured this session | "measured just now: 22 of 22 seeded, 0 missed" |
+| measured this session, on this tree | "measured just now: 22 of 22 seeded, 0 missed" |
+| measured this session, on a DIFFERENT tree | "grepped 0 on `claude/x` before branching — **not re-run here**" |
 | carried from a prior session | "recorded 2026-08-24 as 43 drifted; not re-measured" |
 | asserted by a bean or a doc | "bean `qou-q7lf` says X — **unverified**" |
 
-That third row is the one that bites. A sibling's bean is not a primary source,
-and neither is a source file's `## Status` note; both go stale, and a specific,
-recent, confidently-worded bean is exactly the kind that gets believed.
+The last row is the one that bites hardest. A sibling's bean is not a primary
+source, and neither is a source file's `## Status` note; both go stale, and a
+specific, recent, confidently-worded bean is exactly the kind that gets
+believed.
+
+**The second row was added 2026-09-23, because "measured this session" had
+been reading as the safe case.** A measurement is scoped to the TREE it was
+taken on, and `git switch` invalidates every earlier one without saying so.
+That session ran `grep -c "@context"` over a writer, got `0` — correctly, on a
+branch cut before the commit that added one — then branched from fresh `main`,
+carried the `0` across without re-running it, briefed on it as current, and
+put a settled question back to the owner as new. Its next commit would have
+reverted merged work.
+
+Nothing announces this. The number is real, recent, and yours; only the tree
+underneath it moved. So say which tree, and re-run anything load-bearing after
+a branch change — the re-run costs one command and it is the same command.
 
 **3. The route and the gate.** How you plan to do it, what you will verify
 against, and **what would falsify the approach**. A plan with no failure mode is
@@ -91,6 +106,70 @@ you decline to widen into, the thing you will flag rather than fix. Stating it
 up front is what stops it becoming either silent scope creep or a silent
 omission — and it puts the scope call where it can still be argued with, which
 is before the diff.
+
+### Before you offer options, check whether it is already ruled (STRICT)
+
+Part two of the brief is *what do I already know, with each measurement's
+provenance*. This is the half that gets skipped, because an unsettled question
+is more interesting than a settled one and nothing in a checkout announces that
+a decision exists.
+
+> **Presenting options for a settled question is worse than presenting none.**
+> It reopens a decision, spends the owner's attention on it a second time, and
+> the options offered will not be the ones already weighed.
+
+Three places to look, in this order, and none of them is the code:
+
+1. **The proposals — the design corpus.** They live in the `docs/` of the
+   instance whose stub needs them; today that is
+   [`cat-harness/docs/proposals/`](../../docs/proposals/index.md), and its
+   `index.md` is where to start.
+
+   They were in `fsh-guts/proposals/` until 2026-09-23, under a kind named for
+   *deprecated and throwaway* content, and the owner moved them rather than
+   re-describing the kind: *"proposals not in fsh-guts but docs/ for needed
+   &lt;stub&gt;"*. **Resolve the directory rather than remembering this
+   sentence** — a stub's `docs/` is where its proposals are, and this path is
+   an example of the rule, not the rule.
+2. **The owner's rulings**, in beans and in the declarations that quote them
+   verbatim. A `_comment` field in a `*.json` is frequently where a decision
+   was recorded, because that is where it had to be obeyed.
+3. **The skill that owns the area** — and read it, rather than recalling it.
+4. **The commit history** — `git log -S "<symbol>"` over the file you are
+   about to change, and a `beans list | grep <topic>` that does **not** filter
+   to open items.
+
+   Added 2026-09-23, when a ruling landed as CODE two hours before a session
+   proposed re-deciding it. It was in none of the three places above: no
+   proposal described it, the bean recording it was already `completed` and so
+   absent from any listing of open work, and the owning skill still described
+   the defect as unfixed. **A decision that shipped is invisible to every
+   instrument that looks for pending ones** — and it is the likeliest kind to
+   have shipped recently, which is exactly when you are most confident your
+   own reading is current. One `git log -S` answers it.
+
+**Cite what you read, never what you remember.** A half-remembered line used as
+an authority is the fake-reference failure `activity-names-skill` exists to
+prevent, one level up: it is unfalsifiable by the reader, because it sounds
+like something this repository would say.
+
+#### The failure this is written from
+
+2026-09-22, bean `5kn6`. A session found that `needs` and `dependencies` were
+two unreconciled relations, wrote up **three candidate shapes** and declined to
+choose — citing `AGENTS.md`'s warning that *"merging the two compositions gives
+a closure too broad to fail an audit"* as the reason.
+
+Both halves were wrong. The question was **already settled**:
+`cat-harness/docs/proposals/instance-versioning.md` §3.3 and an owner ruling of
+2026-09-20 — *"sha is for staging, regernecing in published SEMVER"* — had
+decided it, with the gate already implemented. And the citation was about
+**Roles** — `inherits` versus the scoped subprocess stack — not about
+dependencies at all.
+
+The cost was not the wasted options. It was that the owner had to answer a
+question twice, and the second answer had to overrule a confident-sounding
+reason that did not exist.
 
 ### Worked example
 
@@ -149,3 +228,11 @@ non-obvious, because it has just finished finding them out.
 the topic.** A task you cannot brief is one you have not understood well enough
 to begin.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before&#10;touching anything |
+| [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
+

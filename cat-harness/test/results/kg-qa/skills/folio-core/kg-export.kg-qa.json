@@ -5,7 +5,7 @@
     "id": "kg-export",
     "path": "skills/folio-core/kg-export.md"
   },
-  "source_hash": "2160b21cc8eb",
+  "source_hash": "3b277b107e87",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -16,23 +16,36 @@
       "findings": [
         {
           "where": "skills/folio-core/kg-export.md",
-          "detail": "336 lines; p75 of the skill corpus is 279."
+          "detail": "444 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/kg-export.md",
+          "detail": "444 lines; p90 is 391. At this length it is a document."
+        }
+      ]
     },
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 1,
-    "n/a": 0,
+    "pass": 2,
+    "fail": 2,
+    "n/a": 2,
     "unknown": 0
   }
 }

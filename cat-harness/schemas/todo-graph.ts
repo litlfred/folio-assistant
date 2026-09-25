@@ -63,7 +63,7 @@ import {
  * shared with `harness.json`. This is a convenience for callers wanting
  * the todo-specific subset, never a second source of truth.
  */
-export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;
+export const TODO_NODE_KINDS = ["todo-items", "todo-feedback", "review-verdicts"] as const;
 export type TodoNodeKind = (typeof TODO_NODE_KINDS)[number];
 
 export const TodoGraphNodeSchema = GraphNodeDirectorySchema;
@@ -148,8 +148,8 @@ export const DEFAULT_TODO_GRAPH_ROOT = "todos";
 export const DEFAULT_TODO_GRAPH: TodoGraph = {
   name: "default",
   directories: [
-    { id: "items", path: "items", graphs: ["todo-items"] },
-    { id: "feedback", path: "feedback", graphs: ["todo-feedback"] },
+    { id: "items", path: "items", graphKinds: ["todo-items"] },
+    { id: "feedback", path: "feedback", graphKinds: ["todo-feedback"] },
   ],
 };
 
@@ -184,7 +184,7 @@ export function parseTodoGraph(
 
   const seen = new Set<string>();
   for (const node of graph.directories) {
-    for (const g of node.graphs) {
+    for (const g of node.graphKinds) {
       if (!registry.has(g)) {
         throw new Error(
           `todo graph: directory "${node.id}" declares unknown graph kind "${g}". ` +
@@ -220,5 +220,5 @@ export function parseTodoGraph(
  * and there is no shared mutable state for a second store to split.
  */
 export function nodeOfKind(graph: TodoGraph, kind: TodoNodeKind): TodoGraphNode | undefined {
-  return graph.directories.find((n) => n.graphs.includes(kind));
+  return graph.directories.find((n) => n.graphKinds.includes(kind));
 }

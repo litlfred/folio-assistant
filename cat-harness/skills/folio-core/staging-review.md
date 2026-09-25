@@ -2,11 +2,16 @@
 name: staging-review
 description: >-
   Staging preview and before/after comparison for content review.
-  Provides before (MAIN) and after (STAGING) URLs for rendered content
-  so reviewers can visually compare changes. Used by CRDM feature
-  development workflow and content authoring review sessions.
+  Takes one optional string — what the reader wants to look at, in their own
+  words — and returns a list of URLs, each looked up in the publish ref, with
+  what is published at it and what to review there. Provides before (MAIN) and
+  after (STAGING) pairs so reviewers can compare rather than guess. Used by the
+  CRDM feature development workflow, content authoring review sessions, and
+  whenever a staging preview deploys or someone asks to see it.
 capability: review
 package: folio-core
+user_invocable: true
+allowed-tools: Bash(git*) Read Grep Glob mcp__github__pull_request_read mcp__github__issue_read
 ---
 
 # Staging review — before/after comparison
@@ -16,6 +21,221 @@ package: folio-core
 Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving
 visual content.
+
+## Signature — one optional string in, a reviewable list out
+
+Stated formally because this skill is invoked by other processes and by a
+person typing `/staging-review`, and a contract that lives in prose is one each
+caller re-derives.
+
+### Input
+
+| | |
+|---|---|
+| **type** | string |
+| **cardinality** | `0,1` — optional, and at most one |
+| **meaning** | what the reader wants to look at, **in their own words** |
+| **absent** | the whole preview: every page this branch changed |
+
+Keep the wording **verbatim** wherever the output echoes it — the same rule
+[`goal-review`](goal-review.md) applies to a goal, and for the same reason: a
+request the agent paraphrased is a different request, and the reader cannot
+tell which one the list was built for.
+
+It **narrows**; it never adds. *"The navbar"* gets the pages carrying it, not a
+page that mentions it. **An ask matching nothing that changed is said, not
+answered with the whole preview** — a list that silently ignores its input is
+worse than an empty one, because the reader believes it was answered.
+
+### Output
+
+Markdown, in this order. Every part is required; an absent part is **stated**,
+not dropped.
+
+1. **Where to start** — one line, one URL: the one that best answers the input,
+   or the page with the most change behind it when there was none. A reader
+   opens one thing first whether or not you choose it for them.
+2. **The comparison table** below — before (main), after (staging), what to
+   review.
+3. **What could not be checked**, per the three states below.
+
+### The third column is the one with value
+
+`What changed` must be phrased as **something to look at**, never as a
+restatement of the filename. Build it by mapping changed files to published
+surfaces:
+
+| what changed | which page | what to say |
+|---|---|---|
+| a stylesheet or client script | every page that loads it | the affordance that changed, and **the gesture to make** |
+| a template or include | the pages that include it | where on the page to look |
+| generated content | the page it generates | **what it was generated from** — a stale generator and a correct one look identical on the page |
+| a schema, a test, a gate | **none** | say so, and point at the diff |
+| **folio content** (block manifests and prose) | the page each block renders on | **the ChangeSet's aspect**: reworded, moved, renamed, added, removed. See below. |
+
+**Where a change is only visible after an interaction — a control behind a
+disclosure, a mode a reader turns on — say WHICH interaction.** A reviewer who
+cannot find the thing reports it as missing. That failure is on the record: a
+contrast defect survived two days behind a tile nobody clicked (bean `rptk`),
+because the gate that swept the page never opened the view.
+
+### You can open it yourself — the publish ref is a git branch
+
+Everything above composes URLs **for a reader**. The agent writing them
+usually cannot open them, and that gap has a measured cost.
+
+Probed 2026-09-22 from inside a session container, all three routes:
+
+| route | result |
+|---|---|
+| `curl https://<owner>.github.io/…` | `403` — CONNECT tunnel failed (policy denial) |
+| `WebFetch` | `EGRESS_BLOCKED` |
+| Playwright / Chromium | `net::ERR_TUNNEL_CONNECTION_FAILED` |
+
+**A browser is not a way around it** — Chromium is proxy-configured too, so
+"use Playwright" fails identically. That is worth stating because it is the
+first thing anybody tries.
+
+WHAT IT COST: twelve navbar tiles shipped pointing at the ORIGIN rather than
+the site, because their href carried no `baseurl` (#801). Over a hundred green
+gates were fine with it, and the owner found it by clicking one — which is
+exactly `rptk`'s shape one layer out. Nothing in the repository could look at
+what deployed.
+
+**But the site is published to the `gh-pages` BRANCH, and git works.** So the
+deployed bytes are readable with `git show`, and a Playwright route handler can
+serve them at their real path:
+
+```ts
+const blob = (p: string) => {
+  try { return execFileSync("git", ["show", `origin/gh-pages:${ROOT}/${p}`], { maxBuffer: 1 << 28 }); }
+  catch { return undefined; }                 // absent is a FINDING, not a 200
+};
+let missing = 0;                              // REPORT THIS. See below.
+await page.route(`${ORIGIN}/**`, (route) => {
+  const u = new URL(route.request().url());
+  let p = u.pathname.startsWith(BASE) ? u.pathname.slice(BASE.length) : u.pathname;
+  p = p.replace(/^\/+/, "");
+  if (p === "" || p.endsWith("/")) p += "index.html";
+  const b = blob(p) ?? blob(`${p}/index.html`);
+  if (!b) { missing++; return route.fulfill({ status: 404, body: "not in the publish ref" }); }
+  return route.fulfill({ contentType: typeFor(p), body: b });
+});
+```
+
+`ROOT` is `""` for the canonical deploy and `STAGING/<slug>` for a preview, so
+the same handler gives you the **before/after pair this skill is about** — and
+a count, not an impression. Fetch the ref first (`git fetch --depth=1
+--filter=blob:none origin gh-pages`); blobs are then fetched on demand.
+
+**Serve it under the real `BASE`.** A page served at the origin root cannot
+reveal a missing `baseurl`, because *"composed against the base"* and *"not
+composed at all"* are the same string there. That is precisely how #801's e2e
+stayed green over the defect.
+
+**And `BASE` is NOT the site's base when you are reading a preview.** A
+preview is published at `<origin>/folio-assistant/STAGING/<slug>/`, so that
+whole prefix is what its pages compose hrefs against — `BASE` and `ROOT` carry
+the same staging segment, one in the URL and one in the ref:
+
+| reading | `ROOT` (in the ref) | `BASE` (in the URL) |
+|---|---|---|
+| the canonical deploy | `""` | `/folio-assistant` |
+| a STAGING preview | `STAGING/<slug>` | `/folio-assistant/STAGING/<slug>` |
+
+Getting that wrong doubles the segment — `STAGING/<slug>/STAGING/<slug>/...` —
+and every asset 404s.
+
+#### Report the absent count, and read it before anything else
+
+**A run that could not fetch the page's assets has established nothing**, and
+its other numbers are not merely unreliable, they are actively misleading.
+This page's own technique produced, on a deploy that was in fact correct:
+
+```
+STAGED SITE — 0 distinct tiles, 14 asset(s) absent from the ref
+OFF-SITE hrefs (#801): 0
+badged: 0
+```
+
+Read at face value that says the staged site has no tiles — which is the shape
+of the very defect this section exists to catch. It was a broken rig: the
+`BASE` above. The corrected run on the same commit gave 23 tiles, 0 absent,
+12 badged.
+
+So the rule, and it outranks every other number the run prints:
+
+> **`missing > 0` is COULD NOT DETERMINE.** Not clean, and not a finding.
+> Discard the run's other counts rather than reading them, fix the rig, and
+> re-run.
+
+`dh4f` is this repository's name for scanning nothing and reporting it clean.
+This is its mirror — scanning nothing and reporting it *broken* — and it is
+the more expensive of the two, because an agent acting on it goes looking for
+a defect that is not there, or "fixes" one.
+
+#### What this does NOT verify, and it matters
+
+It serves the **bytes in the publish ref**. It is not the live host, so it
+cannot see:
+
+- redirects, headers, or anything else the host decides at request time
+- Pages' own 404 handling, or its directory-index rules where they differ
+  from the handler above
+- whether the deploy has actually *published* — a ref can hold bytes that
+  Pages has not served yet (§"Say how long")
+
+So a green result here means *"the published bytes are right"*, never *"the
+site works"*. Report it in those words. A stronger claim than the method
+supports is the thing this skill's third-state table exists to stop.
+
+#### When it stops applying
+
+The technique rests on one assumption: **publishing goes to a branch.** If this
+repository ever moves to the Pages artifact API, `git fetch origin gh-pages`
+fails and there is nothing to read.
+
+That failure must be reported as **could not determine**, never as a clean run
+— an empty ref and a correct deploy are opposite facts, and `dh4f` is this
+repository's name for the defect of scanning nothing and calling it clean.
+
+### The third state, here as everywhere
+
+"Could not determine" is never rendered as clean — and a change with **no
+rendered surface** is not a failure, it is the useful answer.
+
+| case | report it as |
+|---|---|
+| not deployed yet | not deployed, with the timing from §"Say how long" — never a link to where it will be |
+| a changed page absent from the publish ref | **a finding** — the build dropped it, or it is not a page |
+| no rendered surface | reviewed in the diff, naming the files |
+
+The middle row is the most useful thing this skill can report, and composing
+its URL anyway would hide exactly that — §"Before you report a staging URL as
+broken".
+
+### The commit in the bot's comment is NOT your branch head
+
+Measured 2026-09-21, by getting it wrong in this skill's own first use. The
+comment named `3894c41`; the branch head was `037812c7`; I reported the preview
+as *"one commit behind"*. **It was current.** On a `pull_request` trigger the
+stage job builds `refs/pull/<n>/merge` — your head merged into the base — so
+the commit it names is an object that **never** equals your head and is not
+even in your clone. Comparing the two reports a stale preview on every PR,
+forever.
+
+Resolve it instead. The merge commit's **second parent** is the head it was
+built from:
+
+```sh
+git fetch origin "refs/pull/<n>/merge:refs/remotes/origin/pr-<n>-merge" -q
+git log --format="%h %p" -1 origin/pr-<n>-merge   # <merge> <base> <YOUR HEAD>
+```
+
+Stale means that second parent is not your head — nothing else does. This is
+the same fact `bun run gates` exists around: **CI tests the merge**, and so
+does the preview, so a branch behind its base is previewing a tree nobody will
+have.
 
 ## When to provide before/after URLs
 
@@ -76,7 +296,7 @@ When reporting changes to the user:
 https://<owner>.github.io/<repo>/<path>
 ```
 
-Read from `harness.config.json` → `readme.pagesBaseUrl`, or construct from
+Read from `<name>.config.json` → `readme.pagesBaseUrl`, or construct from
 the repo's GitHub Pages URL.
 
 ### Staging (after)
@@ -104,7 +324,12 @@ function branchToSlug(branch: string): string {
 In the CRDM requirements workflow (Phase 5: implementation), once a staging
 preview is deployed:
 
-1. **Post the staging URL** on the GitHub issue as a comment
+1. **Post the staging URL** on the GitHub issue as a comment. For a folio,
+   post the **review page** too, `STAGING/<slug>/review/`, and name it as the
+   page a reviewer opens first. The `folio-staging` workflow's PR comment
+   carries both links. The page lists every changed block, not only every
+   changed page. Posting the site root alone sends a reviewer hunting through
+   a 300-page document for a one-word edit.
 2. **Include before/after table** for every changed page
 3. **Link from the PR body** to the staging preview
 4. **Remind reviewers** that staging uses the magenta "FEATURE BRANCH" banner
@@ -116,10 +341,91 @@ review the rendered output, not just the code diff.
 
 When an author has made content changes on a feature branch:
 
-1. **List all changed files** in the feature branch vs main
-2. **Construct before/after URLs** for each changed docs page
+1. **Compute the ChangeSet**, not a file list, when the branch touches a
+   folio's `folio` graph:
+   `bun run <platform>/folio-assistant-core/schemas/changeset.ts --folio <folio dir> --base origin/main --head <branch>`.
+   It says, per block, whether it was added, removed, reworded (`prose`),
+   edited (`manifest`), `moved` or `renamed`. A file list cannot: a
+   prose-only edit changes no `.ts`, and a move changes two files that look
+   unrelated. Rank "where to start" by it. For a large document, the section
+   with the most changed blocks is where a reviewer's time goes first.
+2. **Construct before/after URLs** for each changed docs page, and for each
+   page carrying a changed block
 3. **Present the comparison table** to the author
 4. **Offer to run the staging workflow** if not already running
+
+### Finding your way on the review page (bean `eb4l`)
+
+A 300-page review needs to know where it is, and to move in one key or one
+click. The review page has a navigation pane, beside the list on a wide
+screen and above it on a narrow one:
+
+- **Outline.** Each document's chapters and sections, in manifest order,
+  from the `outline.json` the folio's site build writes.
+  - A section with something to review is a button that moves focus to it,
+    with word badges ("2 changed, 1 comment, QA failing").
+  - Any other section links to its published page.
+  - By the owner's ruling it is **on the review page only**. The "no toc"
+    ruling for normal pages stands.
+- **Minimap.** One cell per block, in order. It is **one tab stop**: Up and
+  Down move, Home and End jump to either end, and Enter opens the block.
+  Each cell is labelled in words and marked with glyphs (Δ changed, + added,
+  ● open comments, ! QA failing), so colour is never the only signal.
+- **Where am I.** Every move announces "document › chapter › section ›
+  block" in the page's one live status line.
+
+**Keys, each with a visible button twin:**
+
+| key | button | goes to |
+|---|---|---|
+| `j` | Next | the next item |
+| `k` | Previous | the previous item |
+| `n` | Next with comments | the next block with open comments |
+| `p` | Previous with comments | the previous block with open comments |
+| `u` | Next unreviewed | the next changed block with no reviewer verdict on its CURRENT version (bean `px0t`) |
+
+**"Unreviewed" means no verdict on this version**, not "no comments". A
+block whose only verdict is on an earlier version is unreviewed, and says so
+in words ("1 verdict on an earlier version, not counted"). A build whose
+`review-comments.json` carries no verdicts says "No verdict data on this
+build" rather than treating every block as unread. Typing into a selector is never navigation.
+
+**Tests.** `cat-harness/test/review-nav.e2e.ts` drives all of this with the
+keyboard alone. It uses no mouse, no click and no hover.
+
+### The review page, and choosing how to see a change
+
+A folio's preview carries `review/index.html`: every changed block, grouped by
+section, with its reviewer comments (the `review-comments` skill). Each
+changed block has a **"Show this change as"** selector (bean `d903`), and one
+at the top applies to every block:
+
+| renderer | shows | the default for | needs |
+|---|---|---|---|
+| **Word diff of the source** | the Markdown with removed words struck and added words marked: exactly what the author typed | any kind not listed below | the block's prose |
+| **Inline, as rendered** | the block as a reader sees it now, with the change marked in place | `prose`, `remark`, `definition`, `example` | the block's prose |
+| **Pictures, before and after** | a picture of the block on each side, the changed pixels marked, and the share changed in words ([`visual-diff`](visual-diff.md), bean `0rxe`) | `table`, `figure`, `diagram`, `equation`, `simulator` | `visual-diff.json` from the `folio-block-screenshots` Tool |
+| **Side by side** | `main` and the preview next to each other, each scrolled to the block | the same kinds, as the second choice when a build published no pictures | a page on either side |
+
+- **Where the data comes from.** The ChangeSet step's `--text-out` writes
+  `changeset-text.json`: the source and rendered prose of each listed block,
+  on each side that has it. The pictures step writes `visual-diff.json`
+  and `visual/`. With neither file, only side by side is available, and
+  the page says so.
+- **Two renderers may default for one kind.** Order is preference: the
+  page opens a block on the first renderer that lists its kind AND can run.
+- **A renderer that cannot run on a block is listed, disabled, with the
+  reason.** For example, a manifest-only change has no prose to diff. If the
+  page-level choice cannot run on a block, that block falls back to one
+  that can.
+- **The page-level choice is remembered** for this viewer in
+  `localStorage`. A private window just gets the defaults.
+- **The renderers and the registry** are `cat-harness/scripts/review-renderers.ts`,
+  `cat-harness/scripts/word-diff.ts` (no diff library; about forty lines,
+  tested) and `cat-harness/schemas/diff-renderers.ts`. To add one, declare it
+  in the registry with what it needs and which kinds it defaults for, add its
+  function to `review-renderers.ts`, and add a case to the page's
+  `renderInto`.
 
 ## Staging retention
 

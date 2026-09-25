@@ -2,11 +2,15 @@
 name: interaction-modality
 description: Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.
 user_invocable: true
+satisfies:
+  - "req:agent-workflow#context-before-question"
+graph-kinds:
+  - interaction
 ---
 
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 
@@ -115,6 +119,16 @@ If answering needs them to open an issue, a file, a diff or a scrollback, the
 question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
+**And when a link IS the right thing — a rendered page the reader has to see
+for themselves — it points at the page, not at the site it is on.** Owner,
+2026-09-21, after three turns of being handed a staging root while being asked
+about one page on it: *"next time give appropraite link
+…/STAGING/<branch>/who-iris/"*. Linking the root hands the reader a route the
+agent already knew, and hands it to somebody who types with difficulty. Full
+rule, with the failure it also hides:
+[`continual-progress`](continual-progress.md) §"Link the PAGE, never the site
+root".
+
 Six parts, in order:
 
 1. **What is being decided**, in plain words — stated as what will *differ*
@@ -145,6 +159,54 @@ doing that *feels* defined.** It is not. The names you coined an hour ago inside
 an issue are the ones most likely to reach the reader undefined, precisely
 because you can no longer see them as new.
 
+#### The prose does not travel — the question object must stand alone (STRICT)
+
+The six parts above assume the reader is **in the conversation**, reading the
+prose that precedes the question. Often they are not. A question asked by a
+background session, a cloud session, a subagent or a scheduled run reaches the
+person through a channel that carries **only the structured fields** — the
+question text, the option labels, the option descriptions. Everything written
+around the call stays in a transcript the person would have to go and open.
+
+So the test grows one clause:
+
+> **Can the reader answer without opening anything — including the session that
+> asked?**
+
+**Measured here, 2026-09-22.** Two of four consolidation streams blocked on an
+`AskUserQuestion` and both containers then disconnected. Their reasoning was in
+their own transcripts. A sibling session relaying the block to the owner had to
+**reconstruct** the context from session metadata, PR bodies and bean files —
+and the owner read *the relay's* reconstruction rather than the asker's. The
+askers had done the analysis; none of it travelled. One of the four questions
+would have committed to a different repository, so the reconstruction was
+load-bearing.
+
+**Put in the structured fields everything needed to choose:**
+
+| field | carries |
+|---|---|
+| the question | what will **differ** depending on the answer, with every identifier expanded. Never a bare noun phrase — *"`kupb` scope"* is a topic, not a question. |
+| each option's description | that option's own consequence and **how reversible** it is. A reader comparing two options must be able to do it from the two descriptions alone. |
+| **one** option's description | **what happens if they say nothing**, marked as the default and phrased as what you will then do. |
+
+**The comparison table still belongs in the prose**, where rows can be read
+against each other — a selection tool shows one option at a time, so a table is
+genuinely better there. What changes is that **nothing may be load-bearing
+*only* in the prose**. The prose is where a comparison is easier to read; the
+fields are where it survives.
+
+Two things this rules out, both of which read as complete to their author:
+
+- **A question whose context sits in the paragraph above the call.** Correct in
+  a live conversation, invisible through a relay.
+- **An option label carrying the trade-off and a description carrying nothing**
+  — or the reverse. A label is a handle; the description is the argument.
+
+And when you are the one **relaying** somebody else's blocked question: say
+that you are relaying, and say where the answer has to be given. An answer
+typed at the relay does not reach the asker.
+
 #### Worked example — a real failure, 2026-09-18
 
 Ending a turn, this agent wrote:
@@ -174,7 +236,7 @@ The same decision, askable:
 >    Nothing here has to change, and the collision is solved where collisions
 >    actually happen.
 > 2. **In this repository itself** — rename every skill file. That touches the
->    package manifests, every `<folio:skill ref>` in the BPMN diagrams, two doc
+>    package manifests, every `<bootstrap.processes:skill ref>` in the BPMN diagrams, two doc
 >    generators and every cross-reference between skill bodies. It is the kind
 >    of change that is painful to reverse.
 >
@@ -182,6 +244,45 @@ The same decision, askable:
 
 Same information, same length, and the second can be answered by typing one
 character.
+
+#### A pending question is not a STATUS — ask it (STRICT)
+
+Owner, 2026-09-22, after four sessions sat blocked while this agent reported
+that they were blocked: *"show the questions!!!!!!!! why are you not. dont say
+a unansnwered question is a blocker, ask a question."*
+
+**"Stream 3 is blocked on four questions" is not a report. It is a question you
+declined to ask.** Naming a block, linking to where it lives, and summarising
+what it is about all *feel* like diligence — the information is accurate and
+the person is informed. They still cannot answer, because nothing was put to
+them in a form that takes a click.
+
+The failure has a specific shape, and it is seductive because each step is
+defensible:
+
+1. A sibling session blocks on a question it cannot deliver.
+2. You notice, and correctly judge it worth surfacing.
+3. You describe it — what it asks, why it matters, where to answer it.
+4. **You stop there**, because the question "belongs to" the other session.
+
+Step 4 is the error. **Whoever can put the question to the person owns asking
+it.** If you can act on the answer — and an agent with repository access
+usually can — the question is yours to ask, not merely to relay. If you truly
+cannot act, ask anyway and carry the answer back; an answer you can hand over
+is worth more than a pointer the person has to follow.
+
+**Pointing somewhere is the failure mode, not the fix.** *"Answer it in that
+session"* asks the person to navigate, load, read and choose. For somebody who
+types with difficulty that is not a small ask — it is the whole cost of the
+decision, moved onto them. Reserve it for what genuinely cannot be done from
+here, and say plainly that it cannot.
+
+**When several are pending and they do not fit one ask**, ask the most
+consequential in full and say **how many remain and what they are about** in one
+line each. Do not ask *"which question would you like me to ask?"* — that is a
+turn spent on nothing, and it is still not a question they can act on. Choose,
+ask, and say what is queued behind it. §"More than one decision pending" below
+carries the rest of that rule.
 
 #### More than one decision pending — ask ONE, count the rest
 
@@ -248,19 +349,40 @@ So the posture is:
    kind. Write the object, render the prose, then offer the selection.
 3. **Gating is revisited on EVIDENCE, not on a date.**
 
-> **The condition: twelve real decision records.** `bun run health` reports
-> `bean-decision-records` — beans carrying a `## Options` section — and it read
-> **7** on 2026-09-20. At twelve, a person can read them and answer the question
-> the schema cannot answer about itself: does this shape fit the decisions this
-> repository actually has?
+> **The condition: twelve RENDERED decision records.** `bun run health` reports
+> **`bean-rendered-decision-records`** — beans whose decision actually went
+> through {@link renderDecision}, detected from the five-row table it emits. At
+> twelve, a person can read them and answer the question the schema cannot
+> answer about itself: does this shape fit the decisions this repository
+> actually has?
 
-**The counter is the one that already existed**, and deliberately so. Adding a
-second store of decision objects would have created a parallel count free to
-disagree with `bean-store`'s — the `beans`/`todos` confusion one level along. So
-a decision worth keeping goes into the **bean it belongs to**, under
-`## Options`, where `madr.md`'s two-option floor and
-`bean-thin-decision-records` already govern it. `renderDecision` composes the
-chat message; the bean keeps the record.
+*Superseded, kept as provenance and NOT as the condition:* this said
+**`bean-decision-records`** — beans carrying an `## Options` heading — reading
+**7** on 2026-09-20. **Corrected 2026-09-21 on the owner's ruling** (*"C —
+require `renderDecision`, then revisit"*, bean `hajp`, [#645](https://github.com/litlfred/folio-assistant/issues/645)).
+The two metrics count different populations: `bean-decision-records` had grown
+7 → 10 in a day **without anyone adopting anything**, because this store writes
+considered-options sections as ordinary practice, while
+`bean-rendered-decision-records` stood at **1** — `hajp` itself. So the old
+condition would have reached twelve on schedule and delivered **none** of the
+evidence the deferral was granted to buy, which is evidence about whether
+`DecisionRequestSchema` is too narrow, and only a decision that went through it
+can supply that. `checks.test.ts` states the distinction it missed: *"an
+`## Options` heading is NOT a rendered decision"*.
+
+**Two things the correction does not change.** The counter is still a
+**health metric over `beans/`**, not a second store: a parallel store of
+decision objects would be a count free to disagree with `bean-store`'s — the
+`beans`/`todos` confusion one level along. And the record still goes in the
+**bean it belongs to**, under `## Options`, where `madr.md`'s two-option floor
+and `bean-thin-decision-records` already govern it. `renderDecision` composes
+the chat message; the bean keeps the record.
+
+**The unit is BEANS, not decisions**, and whoever reads this at the revisit
+needs to know it: `hasRenderedDecision` is a per-bean boolean, so a bean
+carrying five rendered decisions contributes **one**. Twelve therefore means
+twelve different beans. Recorded rather than changed, because moving the unit
+without moving the number is a silent re-calibration (bean `hajp`).
 
 **A deferral with no trigger is not a deferral**, which is the defect class this
 whole section is about: it is a rule with no home, indistinguishable a month
@@ -284,6 +406,19 @@ Before any question, all five:
 And the negative rule: **do not ask a question whose answer you could look up.**
 Every fact `getting-started` reads from the filesystem is a question not asked.
 This is the largest accessibility win available, and it is invisible.
+
+### 4.3 After the answer — a ruling is a skill edit, not just an applied answer
+
+The asking is half the loop. The answer comes back, and if it settles how a
+*kind* of thing is decided rather than only this one, it is a rule and it is
+written into the skill that governs it **in the same turn**, quoted and dated.
+Otherwise the next session asks again, which is this skill's §0 failure arriving
+a week late.
+
+**The rule, the three questions that identify a rule-level answer, and why it
+needs no permission**: [`symbiotic-interaction`](symbiotic-interaction.md) §2.
+It applies to any author correction, not only to answers to questions asked
+here.
 
 ## 5. Driving the questions from DMN — one logic, four surfaces
 

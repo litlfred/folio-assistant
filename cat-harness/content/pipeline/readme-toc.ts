@@ -356,14 +356,14 @@ function accessNote(cfg: ReadmeTocConfig, published: Set<string> | undefined): s
       return (
         `> PDF links point at the GitHub Pages site, which resolves **only while Pages is ` +
         `public**. For a private folio set \`readme.linkStyle\` to \`blob\` in ` +
-        `\`harness.config.json\`. A chapter with no published PDF shows \`—\`.\n`
+        `\`<name>.config.json\`. A chapter with no published PDF shows \`—\`.\n`
       );
     case "raw":
       return (
         `> PDF links point at \`raw.githubusercontent.com\`, which serves **public ` +
         `repositories only** — it returns 404 for a private repo unless the request carries a ` +
         `token, and a browser session does not supply one. For a private folio set ` +
-        `\`readme.linkStyle\` to \`blob\` in \`harness.config.json\`.\n`
+        `\`readme.linkStyle\` to \`blob\` in \`<name>.config.json\`.\n`
       );
   }
 }

@@ -3,7 +3,7 @@
 **The content layer.** What a *folio* is — the content-object model, the block
 kinds, the adapters, and the `folio` graph kind itself.
 
-It sits between `cat-bootstrap/` (what an agent reads before anything is installed)
+It sits between `bootstrap/` (what an agent reads before anything is installed)
 and the science layer, and it is composed **on top of** the agentic harness: it
 may import from the harness, and the harness may never import from it. That
 direction is checked — `bun run check:partition:edges` reports any edge running
@@ -49,6 +49,13 @@ They are one chain, read in that order. The third is the load-bearing one:
 and has never named** — `who-iris` taking three items out of 361.55 GB, and
 `bootstrap` fetching a harness and landing it locally. `upstream-pins.json` is
 half of that second one's refresh.
+
+Outside that chain, and answering a different question:
+
+| node | question it answers |
+|---|---|
+| [`schemas/changeset.ts`](schemas/changeset.ts) | what changed in a folio between two refs, **block by block**: added, removed, renamed, reworded or moved? Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard. Read by the review page (epic `q4jm`). |
+| [`schemas/review-comment.ts`](schemas/review-comment.ts) | a reviewer's comment on one block, as a **todo kind** (`folio-review-comment/v1`, parent: the harness todo). It is required to name its block, has a closed lifecycle that only review-process tasks may move, is ingested idempotently from tagged PR comments, and follows renames. A removed block's comments are kept as orphaned (bean `423d`). |
 
 ## Three states, and there is no default
 

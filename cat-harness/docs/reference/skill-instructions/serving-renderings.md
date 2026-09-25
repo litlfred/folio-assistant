@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/serving-renderings.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/serving-renderings.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/serving-renderings.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/serving-renderings.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/serving-renderings.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/serving-renderings.md){: .fa-edit-source }
 
 {% raw %}
 # Serving a rendering — endpoints, MIME types, and what each host can enforce
@@ -44,7 +44,7 @@ consumer asking for one instance's graph must not be handed another's because
 the paths collided.
 
 **They sit at the base, not in a subdirectory.** An instance's repository IS its
-declaration that it holds a graph — `harness.json` at the root says which
+declaration that it holds a graph — `<name>.json` at the root says which
 graphs are here — so there is nothing left for a `kg/` segment to distinguish it
 from, and the stub is already doing the separating that a directory would have
 been doing. The renderings lived under `kg/` until 2026-09-19 and were moved.

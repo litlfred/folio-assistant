@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theming.md) — do not edit here.
+> Generated from [`cat-harness/skills/theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theming.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theming.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/theming.md){: .fa-edit-source }
 
 {% raw %}
 # Theming, split on the stage it fails at
@@ -78,6 +78,7 @@ missing rule is where it goes wrong.
 | the theme renders as a flat surface with no art | `theme-generation` — **run `bun run themes:css`** |
 | text on art is hard to read, or you need a scrim ratio | `theme-contrast` |
 | it is right everywhere except on one surface | `theme-artefacts` |
+| a page flashes white (or light) before going dark on load | `theme-artefacts` §"The page ground: the first paint is DARK" |
 
 ## Why this directory exists at all
 

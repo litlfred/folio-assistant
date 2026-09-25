@@ -51,6 +51,7 @@
  *   bun run check:fallback-roles -- --explain   # print each derivation
  *
  * @module scripts/check-fallback-roles
+ * @covers scenarios
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
@@ -75,7 +76,7 @@ export interface FallbackUse {
  *
  * Through `kgRoots` and `readRoleGraph` rather than a literal path: the
  * `kg` directory is declared in `harness.json` and an instance may put it
- * anywhere, so a hardcoded `skills/roles/roles.json` is one relocation away
+ * anywhere, so a hardcoded `scenarios/roles.json` is one relocation away
  * from checking nothing. `check:declared-paths` caught exactly that in the
  * first draft of this file.
  */

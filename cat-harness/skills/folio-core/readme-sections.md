@@ -104,7 +104,7 @@ Added 2026-09-20 (issue #592). The owner:
 > to main one. should provide both Agent links (agents.md , memories) AND human
 > docuemntaion (docs/) link for each harness.
 
-One row per instance declaring a `harness.json`, with **two entries because two
+One row per instance declaring a declaration, with **two entries because two
 readers arrive**: an agent entry (`AGENTS.md`, memories) and a human one
 (README, docs). Both halves are resolved from that instance's own declaration —
 declared assets for the file links, declared `graphs` for the directory links.

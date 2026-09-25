@@ -29,8 +29,8 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
 function instance(declareFshGuts = true): string {
   const root = mkdtempSync(join(tmpdir(), "log-writer-"));
   const directories = declareFshGuts
-    ? [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphs: ["fsh-guts"] }]
-    : [{ id: "schemas", path: "schemas/", dependents: "reproduce", description: "schemas", graphs: ["schemas"] }];
+    ? [{ id: "fsh-guts", path: "fsh-guts/", dependents: "reproduce", description: "trashcan", graphKinds: ["fsh-guts"] }]
+    : [{ id: "schemas", path: "schemas/", dependents: "reproduce", description: "schemas", graphKinds: ["schemas"] }];
   for (const d of directories) mkdirSync(join(root, d.path), { recursive: true });
   writeDeclaration(root, JSON.stringify({ name: "t", stub: "t", directories }, null, 2));
   return root;
@@ -245,7 +245,7 @@ describe("command execution", () => {
  * route would have broken.
  */
 describe("the process says whether running it is logged", () => {
-  const dir = join(import.meta.dir, "../../skills/workflows");
+  const dir = join(import.meta.dir, "../../processes");
 
   test("the three processes the owner named declare capture", async () => {
     // Located through `workflowFiles`, not composed from a literal
@@ -283,7 +283,7 @@ describe("the process says whether running it is logged", () => {
     // worse here than elsewhere, because the missing artefact IS the record.
     const root = mkdtempSync(join(tmpdir(), "log-bpmn-"));
     const good = readFileSync(join(dir, "content-lifecycle.bpmn"), "utf-8");
-    const bad = good.replace('<folio:log capture="on" />', '<folio:log capture="sometimes" />');
+    const bad = good.replace('<cat-harness.processes:log capture="on" />', '<cat-harness.processes:log capture="sometimes" />');
     expect(bad).not.toBe(good);
     const p = join(root, "content-lifecycle.bpmn");
     writeFileSync(p, bad);

@@ -1,5 +1,5 @@
 /**
- * `<folio:precondition>` — what must hold before a process starts.
+ * `<bootstrap.processes:precondition>` — what must hold before a process starts.
  *
  * @module scripts/tests/precondition
  * @graphNode none — a test
@@ -24,7 +24,7 @@ import {
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, "../.."));
-const REAL = join(ROOT, "cat-bootstrap/workflows/initialize-harness.bpmn");
+const REAL = join(ROOT, "bootstrap/processes/initialize-harness.bpmn");
 
 /** A minimal loadable process, with whatever extension XML the case needs. */
 function fixture(ext: string): string {
@@ -34,7 +34,7 @@ function fixture(ext: string): string {
     p,
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   targetNamespace="urn:t">
   <bpmn:process id="Process_T" name="T" isExecutable="false">
     <bpmn:extensionElements>${ext}</bpmn:extensionElements>
@@ -49,8 +49,8 @@ function fixture(ext: string): string {
 const refuses = (ext: string) => expect(loadProcessModel(fixture(ext))).rejects.toThrow();
 
 describe("the real diagram — `initialize-harness`", () => {
-  // Loaded BY PATH because no corpus test covers `cat-bootstrap/workflows/`:
-  // the platform's sweeps scan `cat-harness/skills/workflows/` only, which is
+  // Loaded BY PATH because no corpus test covers `bootstrap/processes/`:
+  // the platform's sweeps scan `cat-harness/processes/` only, which is
   // the same asymmetry bean `pve3` is about. Without this the element could be
   // added and the one diagram that needed it left behind.
   test("declares four preconditions, three of them unobservable", async () => {
@@ -58,7 +58,7 @@ describe("the real diagram — `initialize-harness`", () => {
     expect(m.preconditions).toHaveLength(4);
     expect(m.preconditions.filter((p) => p.kind === "stated").map((p) => p.id)).toEqual([
       "knows-the-vocabulary",
-      "told-it-is-an-initiator",
+      "told-it-is-a-bootstrapping-agent",
       "at-the-start",
     ]);
     expect(m.preconditions.filter((p) => p.kind === "checkable")).toHaveLength(1);
@@ -69,18 +69,18 @@ describe("the real diagram — `initialize-harness`", () => {
     const v = evaluatePreconditions(m, ROOT);
     expect(v.filter((x) => x.verdict === "could-not-determine").map((x) => x.precondition.id)).toEqual([
       "knows-the-vocabulary",
-      "told-it-is-an-initiator",
+      "told-it-is-a-bootstrapping-agent",
       "at-the-start",
     ]);
   });
 
   test("the one claim about the WORLD is answered, and answers what it says", async () => {
-    // It checks that README.md EXISTS. Whether the Initiator READ it is not
+    // It checks that README.md EXISTS. Whether the Bootstrapping Agent READ it is not
     // observable, and the declaration says so rather than implying otherwise.
     const m = await loadProcessModel(REAL);
     const readme = evaluatePreconditions(m, ROOT).find((x) => x.precondition.id === "readme-present")!;
     expect(readme.verdict).toBe("satisfied");
-    expect(readme.precondition.check).toEqual({ kind: "file-exists", ref: "cat-bootstrap/README.md" });
+    expect(readme.precondition.check).toEqual({ kind: "file-exists", ref: "bootstrap/README.md" });
     // And it is a real check, not a constant: point it at a root without the
     // file and it must say so.
     expect(evaluatePrecondition(readme.precondition, mkdtempSync(join(tmpdir(), "empty-")))).toBe(
@@ -99,7 +99,7 @@ describe("a stated precondition can never read as satisfied", () => {
       id: "x",
       text: "the actor understands roles",
       kind: "stated",
-      check: { kind: "file-exists", ref: "cat-bootstrap/README.md" },
+      check: { kind: "file-exists", ref: "bootstrap/README.md" },
     } as unknown as Precondition;
     expect(evaluatePrecondition(smuggled, ROOT)).toBe("could-not-determine");
   });
@@ -112,17 +112,17 @@ describe("a stated precondition can never read as satisfied", () => {
 
 describe("refusals — every way of writing a precondition that lies", () => {
   test("no kind: there is deliberately no default", async () => {
-    await refuses('<folio:precondition id="a" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" text="t"/>');
   });
 
   test("a kind that is neither", async () => {
-    await refuses('<folio:precondition id="a" kind="probably" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="probably" text="t"/>');
   });
 
   test("checkable with no check — the central case", async () => {
     // This is the failure the element exists for: a condition that LOOKS
     // verified and verifies nothing.
-    await refuses('<folio:precondition id="a" kind="checkable" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="checkable" text="t"/>');
   });
 
   test("checkable with a check nobody implemented", async () => {
@@ -131,32 +131,32 @@ describe("refusals — every way of writing a precondition that lies", () => {
     // test passed with that branch disabled, which is how this was found.
     // A refusal test has to leave exactly one reason to refuse.
     await refuses(
-      '<folio:precondition id="a" kind="checkable" check="agent-understood" ref="x" text="t"/>',
+      '<bootstrap.processes:precondition id="a" kind="checkable" check="agent-understood" ref="x" text="t"/>',
     );
   });
 
   test("checkable with no ref — a check that does not know what to check", async () => {
-    await refuses('<folio:precondition id="a" kind="checkable" check="file-exists" text="t"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" text="t"/>');
   });
 
   test("stated WITH a check — mislabelled either way", async () => {
     await refuses(
-      '<folio:precondition id="a" kind="stated" check="file-exists" ref="x" text="t"/>',
+      '<bootstrap.processes:precondition id="a" kind="stated" check="file-exists" ref="x" text="t"/>',
     );
   });
 
   test("no id — a verdict that cannot name its subject", async () => {
-    await refuses('<folio:precondition kind="stated" text="t"/>');
+    await refuses('<bootstrap.processes:precondition kind="stated" text="t"/>');
   });
 
   test("no text — an id says a condition exists, not what it is", async () => {
-    await refuses('<folio:precondition id="a" kind="stated"/>');
+    await refuses('<bootstrap.processes:precondition id="a" kind="stated"/>');
   });
 
   test("two sharing an id", async () => {
     await refuses(
-      '<folio:precondition id="a" kind="stated" text="one"/>' +
-        '<folio:precondition id="a" kind="stated" text="two"/>',
+      '<bootstrap.processes:precondition id="a" kind="stated" text="one"/>' +
+        '<bootstrap.processes:precondition id="a" kind="stated" text="two"/>',
     );
   });
 });
@@ -165,7 +165,7 @@ describe("a process that declares none", () => {
   test("gets an empty list, not undefined — most processes are this", async () => {
     // A process running inside a harness has had its actor established
     // already. The empty case must be ordinary rather than exceptional.
-    const m = await loadProcessModel(fixture('<folio:policy enforcement="advisory"/>'));
+    const m = await loadProcessModel(fixture('<cat-harness.processes:policy enforcement="advisory"/>'));
     expect(m.preconditions).toEqual([]);
     expect(evaluatePreconditions(m, ROOT)).toEqual([]);
   });

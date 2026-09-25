@@ -3,6 +3,7 @@
  * The reverse sweep: files on disk that no declaration names.
  *
  * @module scripts/check-undeclared-files
+ * @covers cat-harness
  *
  * `check-declared-assets.ts` walks **declared → disk**: it reports a declared
  * asset that is missing, a dead link, or one it could not check. Nothing walked
@@ -28,7 +29,7 @@
  * ## Why the repository root is swept EXPLICITLY
  *
  * This paragraph read that `check-declared-assets.ts` carries
- * `DECLARED_INSTANCES = ["cat-harness", "cat-bootstrap"]` and that "since the
+ * `DECLARED_INSTANCES = ["cat-harness", "bootstrap"]` and that "since the
  * instance moved under `cat-harness/` the repository root is deliberately
  * **not an instance**". **Both halves are now false**, and they became false
  * a day apart: the root gained a `harness.json` of its own
@@ -65,9 +66,6 @@ import { join, relative } from "node:path";
 
 import { findDeclarationFile, instanceRootFor, readDeclaration, repoRootFor, rootForScope } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
-// REQUIRED: an instance here declares a `folio` graph, whose kind is registered
-// by a load-time side effect in core.
-import "../schemas/folio-graph-kind.js";
 
 /**
  * Repository-level files that belong at the root, each with why.
@@ -243,11 +241,11 @@ export function accountedRootPaths(repoRoot: string): Map<string, string> {
   //
   // A single pass got this wrong in a way that only CI could see. It marked a
   // directory "an instance", then walked that instance's declared directories
-  // and OVERWROTE entries — and `cat-harness` declares `cat-bootstrap/skills/` at
-  // repository scope, whose first segment is `cat-bootstrap`. So whether
-  // `cat-bootstrap` ended up reading "an instance: it declares itself" or "declared
+  // and OVERWROTE entries — and `cat-harness` declares `bootstrap/skills/` at
+  // repository scope, whose first segment is `bootstrap`. So whether
+  // `bootstrap` ended up reading "an instance: it declares itself" or "declared
   // by folio-assistant" depended on which `readdirSync` returned first. Locally
-  // that is cat-bootstrap; on the CI runner it is not, and the test failed there and
+  // that is bootstrap; on the CI runner it is not, and the test failed there and
   // nowhere else.
   //
   // Being an instance is the stronger fact and must win: an instance is

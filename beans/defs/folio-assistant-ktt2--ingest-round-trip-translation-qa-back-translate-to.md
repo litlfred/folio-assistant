@@ -7,8 +7,6 @@ priority: normal
 created_at: 2026-09-16T06:43:50Z
 updated_at: 2026-09-19T17:12:55Z
 parent: folio-assistant-slw1
-blocked_by:
-    - folio-assistant-68dt
 ---
 
 ## What
@@ -35,7 +33,7 @@ The round trip runs over every localized narrative in the completeness gate,
 mismatches become reviewer-adjudicated findings, and a terminology miss is
 distinguishable in the output from a general semantic drift.
 
-Diagram: `skills/workflows/ingest-l1-completeness-gate.bpmn`, `Task_RoundTrip`.
+Diagram: `processes/ingest-l1-completeness-gate.bpmn`, `Task_RoundTrip`.
 
 ## 2026-09-19T17:15Z — already answered, and better than this bean asked for
 
@@ -83,7 +81,8 @@ bean asks for exists structurally, not as a note in a report.
 
 - **waits on**: an independent back-translator — a model or MT service that has
   not seen the source. Plus content to run it over (`d5f1` / `1r0p` produce the
-  localized narratives, and both are blocked on `68dt`).
+  localized narratives; both carried a block against `68dt`, and as of
+  2026-09-22 each is **not blocked on `68dt`** because it completed).
 - **since**: 2026-09-19.
 - **expires**: 2026-10-19. Re-measure rather than trusting this.
 - **handoff**: **do not build a PO-reversal round trip to close this.** It

@@ -32,6 +32,11 @@
     color: var(--iris-ink); background: var(--iris-surface);
   }
   .wrap { max-width: var(--iris-col); margin: 0 auto; padding: 0 var(--iris-pad); }
+  /* A long path in inline code has no break opportunity, and at a 390 px
+     viewport three of them made kg-to-portal 566 px wide (bean xwrt). These
+     pages are mounted verbatim, so the harness's narrow-viewport.css never
+     reaches them. Breaking the string beats widening the page. */
+  :not(pre) > code { overflow-wrap: anywhere; }
   a { color: var(--iris-accent); text-decoration: none; }
   a:hover, a:focus { text-decoration: underline; }
 
@@ -100,6 +105,13 @@
   .state.materialized { color: #1d5c1d; border-color: #94BA65; background: #f0f6e9; }
   .state.referenced   { color: var(--iris-dark); border-color: var(--iris-edge); background: var(--iris-wash); }
   .state.unknown      { color: #7a4a10; border-color: #ec9433; background: #fdf4e8; }
+  /* The KG view's tables. Deliberately plainer than the replica's furniture:
+     this page is ABOUT the catalogue rather than a mock of IRIS, and dressing
+     it as IRIS would invite a reader to take its counts for IRIS's. */
+  .kg { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .kg th, .kg td { text-align: left; padding: .4rem .55rem; border-bottom: 1px solid var(--iris-edge); vertical-align: top; }
+  .kg th { font-weight: 600; white-space: nowrap; }
+  .dim { opacity: .65; font-size: .85em; }
 
   table.items { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.97rem; }
   table.items th, table.items td {
@@ -296,7 +308,7 @@
   failing at a line far from the mistake.)
 -->
 <nav class="main"><div class="wrap">
-  <a href="community-list.html">Communities &amp; Collections</a>
+  <span>Communities &amp; Collections</span>
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
 </div></nav>
 
@@ -478,7 +490,7 @@ say: which stages are actually built here, with this instance&rsquo;s own number
 <tr><th class="rid">2</th><td><strong>Serialize</strong><br><span class="why"><code>kg-export</code> emits the harness graph as JSON-LD; this instance&rsquo;s catalogue is 13 nodes with 3 item(s).</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">3</th><td><strong>Package</strong><br><span class="why">There is no manifest. The pages and assets are published individually, so nothing here can detect a file that was <em>removed</em>.</span></td><td><span class="state referenced">not built</span></td></tr>
 <tr><th class="rid">4</th><td><strong>Sign</strong><br><span class="why">Nothing is signed. The catalogue records a <code>sha256</code> per bitstream, which is a digest and not an attestation &mdash; anyone who can change the bytes can change the digest beside them. The trust anchor is to be <strong>GDHCN</strong>, via WHO SMART Trust; see below.</span></td><td><span class="state referenced">not built</span></td></tr>
-<tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">10 generated page(s) and 3 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
+<tr><th class="rid">5</th><td><strong>Distribute</strong><br><span class="why">10 generated page(s) and 0 cover(s) on GitHub Pages, with a jsDelivr route to the same bytes.</span></td><td><span class="state materialized">built</span></td></tr>
 <tr><th class="rid">6</th><td><strong>Verify</strong><br><span class="why">No consumer verifies anything, because there is nothing signed to verify. This is the stage that gets dropped, and it is dropped here.</span></td><td><span class="state referenced">not built</span></td></tr>
   </tbody>
 </table>
@@ -493,7 +505,7 @@ generation time &mdash; not quoted, not remembered.</p>
     <tr><th class="rid">items</th><td>3 here, of <strong>273,559</strong> upstream</td><td class="why">the completeness denominator</td></tr>
     <tr><th class="rid">files</th><td>1,057,223 upstream</td><td class="why">a different denominator; 3.86 files per item, so a fraction built from the wrong one is wrong by that factor</td></tr>
     <tr><th class="rid">bytes</th><td><strong>7.86 MB</strong> held, of 361.55 GiB upstream</td><td class="why">the size-gate denominator, and the reason this catalogue is by reference</td></tr>
-    <tr><th class="rid">served</th><td>10 page(s), 3 cover(s)</td><td class="why">what a publication period would actually move</td></tr>
+    <tr><th class="rid">served</th><td>10 page(s), 0 cover(s)</td><td class="why">what a publication period would actually move</td></tr>
     <tr><th class="rid">readers</th><td><span class="none">not measured</span></td><td class="why">traffic is bytes &times; requests, and nothing here counts requests. Unknown rather than assumed &mdash; an invented reader count would make every cost figure below it fiction</td></tr>
   </tbody>
 </table>
@@ -575,6 +587,16 @@ requirements this instance paid for, generated from the skill that records them.
   <p>Source of record: <a href="https://iris.who.int/">iris.who.int</a> — © WHO.
   This copy asserts no endorsement and carries no WHO mark.</p>
 </div></footer>
-
+<script data-fa-folio-mount>(function(){
+var m=location.pathname.match(new RegExp("^(.*?)(?:docs\\/)?who-iris\\/"));
+if(!m||m[1]==null)return;
+var r=m[1];
+var l=document.createElement('link');
+l.rel='stylesheet';l.href=r+'assets/css/docs-ui.css';
+document.head.appendChild(l);
+var s=document.createElement('script');
+s.src=r+'assets/js/docs-ui.js';s.defer=true;
+document.head.appendChild(s);
+})();</script>
 </body>
 </html>

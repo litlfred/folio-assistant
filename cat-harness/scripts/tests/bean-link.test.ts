@@ -112,7 +112,7 @@ describe("an instance with no bean", () => {
 
 describe("the diagrams declare which operation each step performs", () => {
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    const dir = resolve(import.meta.dir, "../../skills/workflows");
+    const dir = resolve(import.meta.dir, "../../processes");
     let marked = 0;
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
                      "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
@@ -132,7 +132,7 @@ describe("the diagrams declare which operation each step performs", () => {
 
   test("the editing process claims, notes, then resolves — in that order", async () => {
     const model = await loadProcessModel(
-      resolve(import.meta.dir, "../../skills/workflows/editing-hci-validation.bpmn"),
+      resolve(import.meta.dir, "../../processes/editing-hci-validation.bpmn"),
     );
     expect(model.nodes.get("Task_ClaimBean")!.workPlanOp).toBe("claim");
     expect(model.nodes.get("Task_LogFindings")!.workPlanOp).toBe("note");
@@ -145,12 +145,12 @@ describe("the diagrams declare which operation each step performs", () => {
       join(dir, "bad.bpmn"),
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="D" targetNamespace="urn:x">
   <bpmn:process id="Process_Bad" name="Bad" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>
     <bpmn:task id="T" name="Do">
-      <bpmn:extensionElements><folio:bean store="beans/" op="obliterate" /></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:bean op="obliterate" /></bpmn:extensionElements>
       <bpmn:incoming>F1</bpmn:incoming><bpmn:outgoing>F2</bpmn:outgoing>
     </bpmn:task>
     <bpmn:endEvent id="E"><bpmn:incoming>F2</bpmn:incoming></bpmn:endEvent>

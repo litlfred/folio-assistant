@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/retry-backoff.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/retry-backoff.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/retry-backoff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/retry-backoff.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/retry-backoff.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/retry-backoff.md){: .fa-edit-source }
 
 {% raw %}
 # A falling-off retry rate, on every error
@@ -110,8 +110,8 @@ not that a timer elapsed.
 | `scripts/check-head-has-run.ts` | asks GitHub whether a commit has a run; a blip would read as could-not-ask |
 | `scripts/check-prs-have-runs.ts` | the PR listing fails the WHOLE sweep, where one PR's failure only makes that row `unknown` |
 
-Git operations follow the same shape by convention — `git push -u origin
-<branch>`, retried with 2s, 4s, 8s, 16s on a **network** error, never on a
+Git operations follow the same shape by convention —
+`git push -u origin <branch>`, retried with 2s, 4s, 8s, 16s on a **network** error, never on a
 rejected push.
 
 ## Related

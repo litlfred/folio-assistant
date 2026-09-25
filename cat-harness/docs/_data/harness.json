@@ -1,12 +1,22 @@
 {
-  "_generated": "scripts/sync-docs-harness.ts — do not hand-edit; edit harness.json",
+  "_generated": "scripts/sync-docs-harness.ts — do not hand-edit; edit cat-harness.json",
   "name": "cat-harness",
-  "title": "folio-assistant",
+  "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
   "icon": {
     "src": "/assets/img/icons/cat-mark.svg",
     "title": "c@t",
     "description": "An at-sign whose inner a is a cat: the a's bowl is the head, its counter is the face, the ears grow out of the top of the bowl and cross the ring, and the whiskers are cut in white across the sage. The ring keeps its gap and its tail, so it still reads as an @."
+  },
+  "iconMask": {
+    "src": "/assets/img/icons/cat-mark-mask.svg",
+    "title": "c@t mark, as a mask",
+    "description": "The same at-sign expressed as ALPHA rather than as colour: opaque where the mark takes the instance's declared tone, transparent where it cuts out — the face and the whiskers, both of which are already cut-outs in the coloured mark."
+  },
+  "iconDark": {
+    "src": "/assets/img/icons/cat-mark-dark.svg",
+    "title": "c@t (dark scheme)",
+    "description": ""
   },
   "smallIcon": {
     "src": "/assets/img/icons/cat-mark-small.svg",
@@ -24,6 +34,7 @@
         "w": 53,
         "h": 28
       },
+      "avatar": null,
       "title": "Thinking about it — wide",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Wide crop. The region is the cloud's lower interior, below the mark and clear of the ear that rises into its lower left. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     },
@@ -37,6 +48,7 @@
         "w": 72,
         "h": 22.5
       },
+      "avatar": null,
       "title": "Thinking about it — tall",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Portrait crop for a phone: the cloud fills the upper half and the cat sits below it, so the region is wider in fraction and shallower than the laptop's, and the cat is nowhere near it. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     },
@@ -50,6 +62,12 @@
         "w": 58,
         "h": 23.5
       },
+      "avatar": {
+        "width": 200,
+        "height": 200,
+        "left": 0,
+        "top": -92
+      },
       "title": "Thinking about it — square",
       "description": "A grumpy cat in a sage hoodie stands in the rain under a thought-cloud carrying the c@t mark; the instance's description is drawn inside the cloud. Square crop for a card or sticker. The cloud is pushed right by the cat at the lower left, so the region starts further in than either other variant — the clearest case for why each layout carries its own. The text region was found by rendering candidate boxes over the image and looking at them — the first attempt spilled past the cloud edge, which no amount of arithmetic on the aspect ratio would have caught."
     }
@@ -57,7 +75,10 @@
   "declaredKinds": [
     "beans",
     "cat-harness",
+    "code",
+    "code-list",
     "docs",
+    "external-schema",
     "folio",
     "fsh-guts",
     "health",
@@ -66,13 +87,18 @@
     "library",
     "memory",
     "methodology",
+    "policies",
+    "processes",
     "qa",
+    "scenarios",
     "schemas",
+    "skills",
+    "swimlane-glossary",
     "todos",
     "tools",
     "translation-sources",
+    "uml",
     "uploads",
-    "voices",
     "waiver"
   ],
   "links": [
@@ -99,10 +125,13 @@
       "ref": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/library/agent-skills/",
-      "hidden": false
+      "hidden": false,
+      "count": 11,
+      "unit": "entries"
     },
     {
       "id": "beans",
@@ -111,34 +140,55 @@
       "ref": "cat-harness/docs/beans/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/beans/",
+      "hidden": false,
+      "icon": "beans",
+      "count": 327,
+      "unit": "beans"
+    },
+    {
+      "id": "docs",
+      "directory": "docs",
+      "title": "Docs — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/docs/docs/",
       "hidden": false
     },
     {
-      "id": "cat-bootstrap-tools-schemas",
-      "directory": "cat-bootstrap-tools-schemas",
-      "title": "cat-bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/cat-bootstrap-tools/index.html",
+      "id": "external-schemas",
+      "directory": "external-schemas",
+      "title": "External schemas",
+      "ref": "cat-harness/docs/external-schemas/index.md",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
-      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
+      "href": "/external-schemas/",
       "hidden": false
     },
     {
-      "id": "detangle-schemas",
-      "directory": "detangle-schemas",
-      "title": "detangle-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/detangle/index.html",
+      "id": "folio",
+      "directory": "folio",
+      "title": "folio",
+      "ref": "cat-harness/docs/cat-harness/folio/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
-      "href": "/cat-harness/schemas/detangle/",
-      "hidden": false
+      "href": "/cat-harness/folio/",
+      "hidden": false,
+      "count": 5,
+      "unit": "stickies"
     },
     {
       "id": "folio-assist-core-schemas",
@@ -147,10 +197,13 @@
       "ref": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/schemas/folio-assistant-core/",
-      "hidden": false
+      "hidden": false,
+      "count": 22,
+      "unit": "modules"
     },
     {
       "id": "folio-assistant-sci-library",
@@ -159,10 +212,27 @@
       "ref": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/library/folio-assistant-sci/",
-      "hidden": false
+      "hidden": false,
+      "count": 1,
+      "unit": "entry"
+    },
+    {
+      "id": "fsh-guts",
+      "directory": "fsh-guts",
+      "title": "fsh-guts",
+      "ref": "cat-harness/docs/fsh-guts/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/fsh-guts/",
+      "hidden": false,
+      "publish": "staging-only"
     },
     {
       "id": "large-datasets-schemas",
@@ -171,9 +241,25 @@
       "ref": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/schemas/large-datasets/",
+      "hidden": false,
+      "count": 5,
+      "unit": "modules"
+    },
+    {
+      "id": "large-datasets-skills",
+      "directory": "large-datasets-skills",
+      "title": "Skills — large-datasets",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
       "hidden": false
     },
     {
@@ -183,9 +269,39 @@
       "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/library/cat-harness/",
+      "hidden": false,
+      "count": 6,
+      "unit": "entries"
+    },
+    {
+      "id": "methodologies",
+      "directory": "methodologies",
+      "title": "Methodologies",
+      "ref": "cat-harness/docs/methodologies/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/methodologies/",
+      "hidden": false,
+      "theme": "analyst"
+    },
+    {
+      "id": "processes",
+      "directory": "processes",
+      "title": "processes",
+      "ref": "cat-harness/docs/processes/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/processes/",
       "hidden": false
     },
     {
@@ -195,9 +311,39 @@
       "ref": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/schemas/cat-harness/",
+      "hidden": false,
+      "count": 169,
+      "unit": "modules"
+    },
+    {
+      "id": "skills",
+      "directory": "skills",
+      "title": "Skills — cat-harness",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
+      "hidden": false,
+      "readOnly": false
+    },
+    {
+      "id": "swimlane-glossary",
+      "directory": "swimlane-glossary",
+      "title": "swimlane-glossary",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/glossary/glossary/",
       "hidden": false
     },
     {
@@ -207,22 +353,57 @@
       "ref": "cat-harness/docs/todos/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/todos/",
+      "hidden": false,
+      "count": 3,
+      "unit": "todos"
+    },
+    {
+      "id": "tools",
+      "directory": "tools",
+      "title": "Tools",
+      "ref": "cat-harness/docs/tools/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/tools/",
       "hidden": false
+    },
+    {
+      "id": "translation-sources",
+      "directory": "translation-sources",
+      "title": "translation-sources",
+      "ref": "cat-harness/docs/translation-status/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/translation-status/",
+      "hidden": false,
+      "count": 5,
+      "unit": "locales"
     },
     {
       "id": "uploads",
       "directory": "uploads",
       "title": "uploads",
-      "ref": "cat-harness/docs/cat-harness/library/cat-harness/index.html",
+      "ref": "cat-harness/docs/cat-harness/uploads/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
-      "href": "/cat-harness/library/cat-harness/",
-      "hidden": false
+      "href": "/cat-harness/uploads/",
+      "hidden": false,
+      "icon": "uploads",
+      "count": 21,
+      "unit": "waiting"
     },
     {
       "id": "who-iris-library",
@@ -231,9 +412,25 @@
       "ref": "cat-harness/docs/cat-harness/library/who-iris/index.html",
       "surfaces": [
         "navbar",
-        "board"
+        "board",
+        "glass"
       ],
       "href": "/cat-harness/library/who-iris/",
+      "hidden": false,
+      "count": 3,
+      "unit": "entries"
+    },
+    {
+      "id": "who-iris-skills",
+      "directory": "who-iris-skills",
+      "title": "Skills — who-iris",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
       "hidden": false
     }
   ],
@@ -245,43 +442,91 @@
       "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
       "footer": false,
       "needs": [
-        "folio-assistant-core"
+        "smart-ig"
       ],
       "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-operations-card.webp",
+        "title": "Grumpy cat, operations",
+        "region": {
+          "x": 0.17,
+          "y": 0.475,
+          "w": 0.27,
+          "h": 0.27
+        },
+        "crop": {
+          "width": 370.3704,
+          "height": 370.3704,
+          "left": -62.963,
+          "top": -175.9259
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-operations-card.webp",
+        "title": "Grumpy cat, operations",
+        "region": {
+          "x": 0.17,
+          "y": 0.475,
+          "w": 0.27,
+          "h": 0.27
+        },
+        "crop": {
+          "width": 370.3704,
+          "height": 370.3704,
+          "left": -62.963,
+          "top": -175.9259
+        }
+      },
       "tone": 0,
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
-      "instantiated": false,
+      "instantiated": true,
       "href": "/smart-trust/",
       "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
         {
-          "kind": "docs"
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
-          "kind": "fhir-artifact-index"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/smart-trust-docs/"
+        },
+        {
+          "kind": "fhir-artifact-index",
+          "readOnly": true,
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "smart-trust: declares 2 graph(s) with no published viewer — docs, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
@@ -311,7 +556,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -320,102 +565,22 @@
           "path": "/cat-harness/library/agent-skills/"
         },
         {
-          "kind": "voices"
+          "kind": "voices",
+          "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ]
-    },
-    {
-      "name": "cat-bootstrap-tools",
-      "title": "cat-bootstrap-tools",
-      "label": "cat-bootstrap-tools",
-      "description": "Zod for the shapes cat-bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/cat-bootstrap-tools/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
       ],
-      "visualisations": [
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/cat-bootstrap-tools/"
-        }
-      ],
-      "findings": [
-        "cat-bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "cat-bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/cat-bootstrap-tools/) rather than the instance's own themed root.",
-        "cat-bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ]
-    },
-    {
-      "name": "detangle",
-      "title": "detangle",
-      "label": "detangle",
-      "description": "Is this candidate subgraph really a subgraph? Size, cohesion, and whether the arrows' direction is a fact or a filing decision.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/detangle/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 2
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "cat-harness"
-        },
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/detangle/"
-        }
-      ],
-      "findings": [
-        "detangle: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
-        "detangle: no avatar declared for this instance — showing the generic mark.",
-        "detangle: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/detangle/) rather than the instance's own themed root.",
-        "detangle: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
@@ -435,68 +600,41 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-sci/"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ]
-    },
-    {
-      "name": "kg-navigation",
-      "title": "kg-navigation",
-      "label": "kg-navigation",
-      "description": "How an agent finds the knowledge graph, and the skill that governs its task, before it knows the layout.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 0
-        }
       ],
-      "visualisations": [
-        {
-          "kind": "cat-harness"
-        }
-      ],
-      "findings": [
-        "kg-navigation: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
-        "kg-navigation: no avatar declared for this instance — showing the generic mark.",
-        "kg-navigation: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
@@ -516,90 +654,126 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 4
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/large-datasets/"
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
           "kind": "schemas",
           "path": "/cat-harness/schemas/large-datasets/"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "large-datasets: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: declares 2 graph(s) with no published viewer — code, skills. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
       "name": "who-iris",
-      "title": "who-iris",
-      "label": "who-iris",
+      "title": "WHO IRIS",
+      "label": "WHO IRIS",
       "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.",
       "footer": false,
       "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
+      "tone": 199,
+      "reads": "an open book — a repository of published documents, in WHO blue",
+      "genericAvatar": false,
+      "instantiated": true,
       "href": "/who-iris/",
       "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 4
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "catalogue",
+          "path": "/cat-harness/catalogue/who-iris/",
+          "readOnly": true
         },
         {
-          "kind": "catalogue"
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
-          "kind": "docs"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/who-iris-docs/"
         },
         {
           "kind": "library",
           "path": "/cat-harness/library/who-iris/"
         },
         {
-          "kind": "themes"
+          "kind": "skills",
+          "note": "no viewer yet"
         },
         {
-          "kind": "uploads"
+          "kind": "themes",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "uploads",
+          "path": "/cat-harness/library/who-iris/",
+          "readOnly": false
         }
       ],
       "findings": [
-        "who-iris: declares 5 graph(s) with no published viewer — cat-harness, catalogue, docs, themes, uploads. Declared and not rendered is a gap, not a dead link.",
-        "who-iris: no avatar declared for this instance — showing the generic mark.",
+        "who-iris: declares 3 graph(s) with no published viewer — code, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
@@ -613,6 +787,59 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/cat-harness/voices/who-style-guide/",
+      "hrefKind": "viewer",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 1
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 1
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/who-style-guide/"
+        }
+      ],
+      "findings": [
+        "who-style-guide: no avatar declared for this instance — showing the generic mark.",
+        "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root.",
+        "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-immunizations",
+      "title": "smart-immunizations",
+      "label": "smart-immunizations",
+      "description": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published IG's artefact index, reconstructed: 748 artefacts known, 200 materialized.",
+      "footer": false,
+      "needs": [
+        "smart-ig"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
       "stats": [
         {
           "id": "directories",
@@ -632,28 +859,276 @@
       ],
       "visualisations": [
         {
-          "kind": "voices"
+          "kind": "fhir-artifact-index",
+          "readOnly": true,
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "who-style-guide: declares 1 graph(s) with no published viewer — voices. Declared and not rendered is a gap, not a dead link.",
-        "who-style-guide: no avatar declared for this instance — showing the generic mark.",
-        "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
+        "smart-immunizations: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-immunizations: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-l1",
+      "title": "SMART L1",
+      "label": "SMART L1",
+      "description": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evidence a Digital Adaptation Kit is written from.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-l1: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-ig",
+      "title": "SMART IG",
+      "label": "SMART IG",
+      "description": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyond a bare FHIR IG.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-ig: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-dak",
+      "title": "SMART DAK",
+      "label": "SMART DAK",
+      "description": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. The harness every WHO SMART DAK instantiates.",
+      "footer": false,
+      "needs": [
+        "smart-base"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 0
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 0
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [],
+      "findings": [
+        "smart-dak: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "smart-base",
+      "title": "SMART Base",
+      "label": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "footer": false,
+      "needs": [
+        "fhir-harness"
+      ],
+      "icon": null,
+      "tone": 199,
+      "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
+      "genericAvatar": false,
+      "instantiated": true,
+      "href": "/cat-harness/library/smart-base/",
+      "hrefKind": "viewer",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 6
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 6
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 2
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "fhir-artifact-index",
+          "readOnly": true,
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/smart-base/"
+        },
+        {
+          "kind": "methodology",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "tools",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/smart-base/"
+        }
+      ],
+      "findings": [
+        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
+        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
       "name": "folio-assistant",
-      "title": "folio-assistant",
-      "label": "folio-assistant",
+      "title": "Folio Assistant",
+      "label": "Folio Assistant",
       "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
       "footer": false,
       "needs": [
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
+      "avatar": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
+      "tone": 236,
+      "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
+      "genericAvatar": false,
       "instantiated": true,
       "href": "/",
       "hrefKind": "folio",
@@ -671,19 +1146,79 @@
         {
           "id": "views",
           "label": "visualisations you can open",
+          "value": 1
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "uploads",
+          "path": "/cat-harness/uploads/folio-assistant/"
+        }
+      ],
+      "findings": [
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
+      "name": "fhir-harness",
+      "title": "FHIR IG Harness",
+      "label": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "footer": false,
+      "needs": [
+        "folio-assistant-core"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
           "value": 0
         }
       ],
       "visualisations": [
         {
-          "kind": "uploads"
+          "kind": "skills",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "tools",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "folio-assistant: declares 1 graph(s) with no published viewer — uploads. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it.",
-        "folio-assistant: no avatar declared for this instance — showing the generic mark.",
-        "folio-assistant: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "fhir-harness: declares 2 graph(s) with no published viewer — skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
@@ -696,6 +1231,38 @@
         "cat-harness"
       ],
       "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
+        "region": {
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
+        },
+        "crop": {
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
+        "region": {
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
+        },
+        "crop": {
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
+        }
+      },
       "tone": 212,
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
@@ -706,48 +1273,122 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 11
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 5
         }
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/folio-assistant-core/"
         },
         {
-          "kind": "folio"
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "folio",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "glossary",
+          "path": "/glossary/"
+        },
+        {
+          "kind": "library",
+          "path": "/cat-harness/library/folio-assistant-core/"
+        },
+        {
+          "kind": "methodology",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "note": "no viewer yet"
         },
         {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "tools",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-core/"
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 2 graph(s) with no published viewer — cat-harness, folio. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
       "name": "cat-harness",
-      "title": "folio-assistant",
-      "label": "folio-assistant (cat-harness)",
+      "title": "C@T Harness",
+      "label": "C@T Harness",
       "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
       "footer": false,
       "needs": [
-        "cat-bootstrap"
+        "bootstrap"
       ],
       "icon": {
         "src": "/assets/img/icons/cat-mark.svg",
         "title": "c@t"
+      },
+      "avatar": {
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
+        "region": {
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
+        },
+        "crop": {
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
+        "region": {
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
+        },
+        "crop": {
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
+        }
       },
       "tone": 268,
       "reads": "a framed face with ears — the harness the instance is held in",
@@ -759,17 +1400,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 34
+          "value": 46
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 19
+          "value": 29
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 8
+          "value": 21
         }
       ],
       "visualisations": [
@@ -778,23 +1419,41 @@
           "path": "/beans/"
         },
         {
-          "kind": "cat-harness"
+          "kind": "cat-harness",
+          "path": "/cat-harness/schemas/cat-harness/"
         },
         {
-          "kind": "docs"
+          "kind": "code",
+          "note": "no viewer yet"
         },
         {
-          "kind": "folio"
+          "kind": "code-list",
+          "note": "no viewer yet"
         },
         {
-          "kind": "fsh-guts"
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/docs/"
+        },
+        {
+          "kind": "external-schema",
+          "path": "/external-schemas/"
+        },
+        {
+          "kind": "folio",
+          "path": "/cat-harness/folio/"
+        },
+        {
+          "kind": "fsh-guts",
+          "path": "/fsh-guts/",
+          "stagingOnly": true
         },
         {
           "kind": "health",
           "path": "/health/"
         },
         {
-          "kind": "interaction"
+          "kind": "interaction",
+          "note": "no viewer yet"
         },
         {
           "kind": "issue-marks",
@@ -805,67 +1464,147 @@
           "path": "/cat-harness/library/cat-harness/"
         },
         {
-          "kind": "memory"
+          "kind": "memory",
+          "note": "no viewer yet"
         },
         {
-          "kind": "methodology"
+          "kind": "methodology",
+          "path": "/methodologies/"
+        },
+        {
+          "kind": "policies",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
+        },
+        {
+          "kind": "proposals",
+          "within": "docs",
+          "path": "/proposals/"
         },
         {
           "kind": "qa",
           "path": "/qa/"
         },
         {
+          "kind": "requirements",
+          "within": "docs",
+          "path": "/requirements/"
+        },
+        {
+          "kind": "scenarios",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/cat-harness/"
+        },
+        {
+          "kind": "skills",
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
+          "readOnly": false
+        },
+        {
+          "kind": "swimlane-glossary",
+          "path": "/swimlane-glossary/"
         },
         {
           "kind": "todos",
           "path": "/todos/"
         },
         {
-          "kind": "tools"
+          "kind": "tools",
+          "path": "/tools/"
         },
         {
-          "kind": "translation-sources"
+          "kind": "translation-sources",
+          "path": "/translation-status/"
+        },
+        {
+          "kind": "uml",
+          "note": "no viewer yet"
         },
         {
           "kind": "uploads",
           "path": "/uploads/"
         },
         {
-          "kind": "voices"
-        },
-        {
-          "kind": "waiver"
+          "kind": "waiver",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "cat-harness: declares 11 graph(s) with no published viewer — cat-harness, docs, folio, fsh-guts, interaction, memory, methodology, tools, translation-sources, voices, waiver. Declared and not rendered is a gap, not a dead link.",
-        "cat-harness: its title \"folio-assistant\" is also another instance's. The tile is labelled with its directory name as well, because a label that does not identify its subject is not a label."
+        "cat-harness: declares 8 graph(s) with no published viewer — code, code-list, interaction, memory, policies, scenarios, uml, waiver. Declared and not rendered is a gap, not a dead link.",
+        "cat-harness/skills: declares visualiser \"Skills — cat-harness\" at \"cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html\", which does not resolve on disk.",
+        "cat-harness/swimlane-glossary: declares visualiser \"swimlane-glossary\" at \"cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html\", which does not resolve on disk."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     },
     {
-      "name": "cat-bootstrap",
-      "title": "cat-bootstrap",
-      "label": "cat-bootstrap",
+      "name": "bootstrap",
+      "title": "Bootstrap",
+      "label": "Bootstrap",
       "description": "The graph an agent reads before it knows what this repository is.",
       "footer": true,
       "needs": [],
       "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-bootstrap-card.webp",
+        "title": "CatBootstrap",
+        "region": {
+          "x": 0.27,
+          "y": 0.615,
+          "w": 0.24,
+          "h": 0.24
+        },
+        "crop": {
+          "width": 416.6667,
+          "height": 416.6667,
+          "left": -112.5,
+          "top": -256.25
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-bootstrap-card.webp",
+        "title": "CatBootstrap",
+        "region": {
+          "x": 0.27,
+          "y": 0.615,
+          "w": 0.24,
+          "h": 0.24
+        },
+        "crop": {
+          "width": 416.6667,
+          "height": 416.6667,
+          "left": -112.5,
+          "top": -256.25
+        }
+      },
       "tone": 96,
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
+      "href": "/bootstrap/README.html",
+      "hrefKind": "handled",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 7
         },
         {
           "id": "views",
@@ -875,12 +1614,1028 @@
       ],
       "visualisations": [
         {
-          "kind": "cat-harness"
+          "kind": "models",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "processes",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "scenarios",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "schemas",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "swimlane-glossary",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "translation-sources",
+          "note": "no viewer by design"
         }
       ],
       "findings": [
-        "cat-bootstrap: declares 1 graph(s) with no published viewer — cat-harness. Declared and not rendered is a gap, not a dead link."
+        "bootstrap: 7 graph(s) render no viewer — models, processes, scenarios, schemas, skills, swimlane-glossary, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: renders nothing of its own (render-exempt), so its tab opens one of its own files as published (/bootstrap/README.html), declared as `reachableAt`."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
       ]
     }
-  ]
+  ],
+  "navbar": {
+    "icons": [
+      "close",
+      "todos",
+      "beans",
+      "processes",
+      "kg",
+      "launcher"
+    ],
+    "hrefs": {
+      "todos": "/todos/",
+      "beans": "/beans/",
+      "processes": "/processes/",
+      "kg": "/cat-harness/"
+    },
+    "notes": {},
+    "folders": [
+      {
+        "kind": "beans",
+        "path": "/beans/"
+      },
+      {
+        "kind": "cat-harness",
+        "path": "/cat-harness/schemas/cat-harness/"
+      },
+      {
+        "kind": "code",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "code-list",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "docs",
+        "path": "/cat-harness/docs-auto/index/docs/docs/"
+      },
+      {
+        "kind": "external-schema",
+        "path": "/external-schemas/"
+      },
+      {
+        "kind": "folio",
+        "path": "/cat-harness/folio/"
+      },
+      {
+        "kind": "fsh-guts",
+        "path": "/fsh-guts/",
+        "stagingOnly": true
+      },
+      {
+        "kind": "health",
+        "path": "/health/"
+      },
+      {
+        "kind": "interaction",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "issue-marks",
+        "path": "/issue-marks/"
+      },
+      {
+        "kind": "library",
+        "path": "/cat-harness/library/cat-harness/"
+      },
+      {
+        "kind": "memory",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "methodology",
+        "path": "/methodologies/"
+      },
+      {
+        "kind": "policies",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "processes",
+        "path": "/processes/"
+      },
+      {
+        "kind": "proposals",
+        "within": "docs",
+        "path": "/proposals/"
+      },
+      {
+        "kind": "qa",
+        "path": "/qa/"
+      },
+      {
+        "kind": "requirements",
+        "within": "docs",
+        "path": "/requirements/"
+      },
+      {
+        "kind": "scenarios",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "schemas",
+        "path": "/cat-harness/schemas/cat-harness/"
+      },
+      {
+        "kind": "skills",
+        "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+      },
+      {
+        "kind": "swimlane-glossary",
+        "path": "/swimlane-glossary/"
+      },
+      {
+        "kind": "todos",
+        "path": "/todos/"
+      },
+      {
+        "kind": "tools",
+        "path": "/tools/"
+      },
+      {
+        "kind": "translation-sources",
+        "path": "/translation-status/"
+      },
+      {
+        "kind": "uml",
+        "note": "no viewer yet"
+      },
+      {
+        "kind": "uploads",
+        "path": "/uploads/"
+      },
+      {
+        "kind": "waiver",
+        "note": "no viewer yet"
+      }
+    ]
+  },
+  "config": {
+    "properties": [
+      {
+        "key": "name",
+        "skills": [
+          {
+            "name": "instance-kinds",
+            "path": "/reference/skill-instructions/instance-kinds.html"
+          },
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "title",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "description",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "images",
+        "skills": [
+          {
+            "name": "theme-declaration",
+            "path": "/reference/skill-instructions/theme-declaration.html"
+          },
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "assets",
+        "skills": [
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "icon",
+        "skills": [
+          {
+            "name": "theme-declaration",
+            "path": "/reference/skill-instructions/theme-declaration.html"
+          },
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "navbarIcons",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "stub",
+        "skills": [
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "canonicalUrl",
+        "skills": [
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "previewUrl",
+        "skills": [
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "publication",
+        "skills": [
+          {
+            "name": "document-publishing",
+            "path": "/reference/skill-instructions/document-publishing.html"
+          },
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          }
+        ]
+      },
+      {
+        "key": "topology",
+        "skills": [],
+        "gap": "no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)"
+      },
+      {
+        "key": "directories",
+        "skills": [
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          },
+          {
+            "name": "schema-management",
+            "path": "/reference/skill-instructions/schema-management.html"
+          }
+        ]
+      },
+      {
+        "key": "remoteGraphs",
+        "skills": [
+          {
+            "name": "library-ingestion",
+            "path": "/reference/skill-instructions/library-ingestion.html"
+          },
+          {
+            "name": "materialize-remote",
+            "path": "/reference/skill-instructions/materialize-remote.html"
+          }
+        ]
+      },
+      {
+        "key": "associatedHarnesses",
+        "skills": [
+          {
+            "name": "associate-harness",
+            "path": "/reference/skill-instructions/associate-harness.html"
+          }
+        ]
+      },
+      {
+        "key": "stickies",
+        "skills": [
+          {
+            "name": "create-sticky-note",
+            "path": "/reference/skill-instructions/create-sticky-note.html"
+          }
+        ]
+      },
+      {
+        "key": "renderExemption",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "needs",
+        "skills": [
+          {
+            "name": "instance-kinds",
+            "path": "/reference/skill-instructions/instance-kinds.html"
+          },
+          {
+            "name": "confirm-harness"
+          }
+        ]
+      },
+      {
+        "key": "id",
+        "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "version",
+        "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      }
+    ],
+    "harnesses": [
+      {
+        "name": "smart-trust",
+        "title": "smart-trust",
+        "group": "instantiated",
+        "declaredIn": "smart-trust/smart-trust.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-trust/smart-trust.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-trust/smart-trust.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-trust"
+          },
+          {
+            "key": "description",
+            "summary": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconst…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "directories",
+            "summary": "3: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: smart-trust"
+          },
+          {
+            "key": "needs",
+            "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "agent-skills",
+        "title": "agent-skills",
+        "group": "checkout",
+        "declaredIn": "agent-skills/agent-skills.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/agent-skills.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/agent-skills/agent-skills.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "agent-skills"
+          },
+          {
+            "key": "description",
+            "summary": "Published guidance on authoring and operating agent skills — vendor documentation and pee…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "2: library, voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "folio-assistant-sci",
+        "title": "folio-assistant-sci",
+        "group": "checkout",
+        "declaredIn": "folio-assistant-sci/folio-assistant-sci.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/folio-assistant-sci.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/folio-assistant-sci.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "folio-assistant-sci"
+          },
+          {
+            "key": "description",
+            "summary": "Scientific source material used by folios that formalise mathematics — one document today."
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "2: library, voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "large-datasets",
+        "title": "large-datasets",
+        "group": "checkout",
+        "declaredIn": "large-datasets/large-datasets.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/large-datasets/large-datasets.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/large-datasets/large-datasets.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "large-datasets"
+          },
+          {
+            "key": "description",
+            "summary": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for th…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "5: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "who-iris",
+        "title": "WHO IRIS",
+        "group": "instantiated",
+        "declaredIn": "who-iris/who-iris.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/who-iris.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/who-iris/who-iris.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "who-iris"
+          },
+          {
+            "key": "title",
+            "summary": "WHO IRIS"
+          },
+          {
+            "key": "description",
+            "summary": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057…"
+          },
+          {
+            "key": "images",
+            "summary": "1: who-emblem"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "7: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "who-style-guide",
+        "title": "who-style-guide",
+        "group": "checkout",
+        "declaredIn": "who-style-guide/who-style-guide.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/who-style-guide/who-style-guide.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/who-style-guide/who-style-guide.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "who-style-guide"
+          },
+          {
+            "key": "description",
+            "summary": "The WHO house voices — editorial style, guideline development, publication design — each …"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "1: voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "smart-immunizations",
+        "title": "smart-immunizations",
+        "group": "checkout",
+        "declaredIn": "smart-immunizations/smart-immunizations.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-immunizations/smart-immunizations.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-immunizations/smart-immunizations.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-immunizations"
+          },
+          {
+            "key": "description",
+            "summary": "WHO SMART Immunizations (smart.who.int.immunizations) v0.2.0, FHIR 4.0.1 — the published …"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "directories",
+            "summary": "1: smart-immunizations-artifact-index"
+          },
+          {
+            "key": "needs",
+            "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "smart-l1",
+        "title": "SMART L1",
+        "group": "checkout",
+        "declaredIn": "smart-l1/smart-l1.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-l1/smart-l1.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-l1/smart-l1.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-l1"
+          },
+          {
+            "key": "title",
+            "summary": "SMART L1"
+          },
+          {
+            "key": "description",
+            "summary": "The narrative layer of WHO SMART Guidelines — the guideline text, recommendations and evi…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "needs",
+            "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "smart-ig",
+        "title": "SMART IG",
+        "group": "checkout",
+        "declaredIn": "smart-ig/smart-ig.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-ig/smart-ig.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-ig/smart-ig.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-ig"
+          },
+          {
+            "key": "title",
+            "summary": "SMART IG"
+          },
+          {
+            "key": "description",
+            "summary": "The L3 layer — a WHO SMART Guideline's FHIR Implementation Guide, and what one owes beyon…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "needs",
+            "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "smart-dak",
+        "title": "SMART DAK",
+        "group": "checkout",
+        "declaredIn": "smart-dak/smart-dak.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-dak/smart-dak.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-dak/smart-dak.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-dak"
+          },
+          {
+            "key": "title",
+            "summary": "SMART DAK"
+          },
+          {
+            "key": "description",
+            "summary": "The L2 layer — Digital Adaptation Kit components and the authoring transforms over them. …"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "needs",
+            "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "smart-base",
+        "title": "SMART Base",
+        "group": "instantiated",
+        "declaredIn": "smart-base/smart-base.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/smart-base.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/smart-base/smart-base.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "smart-base"
+          },
+          {
+            "key": "title",
+            "summary": "SMART Base"
+          },
+          {
+            "key": "description",
+            "summary": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodo…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "canonicalUrl",
+            "summary": "http://smart.who.int/base"
+          },
+          {
+            "key": "directories",
+            "summary": "6: library, methodologies, voices, processes, smart-base-artifact-index, tools"
+          },
+          {
+            "key": "needs",
+            "summary": "fhir-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "folio-assistant",
+        "title": "Folio Assistant",
+        "group": "instantiated",
+        "declaredIn": "folio-assistant.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "folio-assistant"
+          },
+          {
+            "key": "title",
+            "summary": "Folio Assistant"
+          },
+          {
+            "key": "description",
+            "summary": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "directories",
+            "summary": "1: uploads"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: folio-assistant"
+          },
+          {
+            "key": "needs",
+            "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "fhir-harness",
+        "title": "FHIR IG Harness",
+        "group": "checkout",
+        "declaredIn": "fhir-harness/fhir-harness.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/fhir-harness.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/fhir-harness.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "fhir-harness"
+          },
+          {
+            "key": "title",
+            "summary": "FHIR IG Harness"
+          },
+          {
+            "key": "description",
+            "summary": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — wi…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "canonicalUrl",
+            "summary": "https://litlfred.github.io/folio-assistant/fhir-harness"
+          },
+          {
+            "key": "directories",
+            "summary": "2: fhir-ig-skills, fhir-ig-tools"
+          },
+          {
+            "key": "needs",
+            "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "folio-assistant-core",
+        "title": "folio-assistant-core",
+        "group": "checkout",
+        "declaredIn": "folio-assistant-core/folio-assistant-core.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/folio-assistant-core.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/folio-assistant-core.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "folio-assistant-core"
+          },
+          {
+            "key": "description",
+            "summary": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "10: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: folio-assist-core"
+          },
+          {
+            "key": "needs",
+            "summary": "cat-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "cat-harness",
+        "title": "C@T Harness",
+        "group": "instantiated",
+        "declaredIn": "cat-harness/cat-harness.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/cat-harness.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/cat-harness/cat-harness.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "cat-harness"
+          },
+          {
+            "key": "title",
+            "summary": "C@T Harness"
+          },
+          {
+            "key": "description",
+            "summary": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-har…"
+          },
+          {
+            "key": "images",
+            "summary": "28: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
+          },
+          {
+            "key": "assets",
+            "summary": "3: agent-instructions, instance-readme, bootstrap-initialization"
+          },
+          {
+            "key": "icon",
+            "summary": "mark"
+          },
+          {
+            "key": "navbarIcons",
+            "summary": "close, todos, beans, processes, kg, launcher"
+          },
+          {
+            "key": "stub",
+            "summary": "cat-harness"
+          },
+          {
+            "key": "canonicalUrl",
+            "summary": "https://litlfred.github.io/folio-assistant"
+          },
+          {
+            "key": "publication",
+            "summary": "{ host }"
+          },
+          {
+            "key": "directories",
+            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+          },
+          {
+            "key": "associatedHarnesses",
+            "summary": "1: ihris"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: cat-harness"
+          },
+          {
+            "key": "needs",
+            "summary": "bootstrap"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
+        "name": "bootstrap",
+        "title": "Bootstrap",
+        "group": "instantiated",
+        "declaredIn": "bootstrap/bootstrap.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap/bootstrap.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap/bootstrap.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "bootstrap"
+          },
+          {
+            "key": "title",
+            "summary": "Bootstrap"
+          },
+          {
+            "key": "description",
+            "summary": "The graph an agent reads before it knows what this repository is."
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "7: skills, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translations"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: bootstrap"
+          },
+          {
+            "key": "renderExemption",
+            "summary": "{ of, reason, owes, reachableAt }"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      }
+    ],
+    "associated": [
+      {
+        "name": "ihris",
+        "title": "iHRIS Knowledge Base",
+        "url": "https://litlfred.github.io/ihris/",
+        "repository": "https://github.com/litlfred/ihris",
+        "editHref": "https://github.com/litlfred/ihris",
+        "relation": "folio-of",
+        "note": "The iHRIS folio: a knowledge base on this platform, published from its own repository.",
+        "declaredBy": [
+          "cat-harness"
+        ]
+      }
+    ],
+    "findings": [
+      "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
+      "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
+      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops."
+    ]
+  }
 }

@@ -146,7 +146,7 @@ describe("kgQaSidecarPath", () => {
   });
 
   test("an outside subject is re-rooted under _external and stays portable", () => {
-    const p = kgQaSidecarPath(root, "/bootstrap/workflows", "req:x");
-    expect(p).toBe(join(root, "test", "results", "kg-qa", "_external", "bootstrap", "workflows", "req%3Ax.kg-qa.json"));
+    const p = kgQaSidecarPath(root, "/bootstrap/processes", "req:x");
+    expect(p).toBe(join(root, "test", "results", "kg-qa", "_external", "bootstrap", "processes", "req%3Ax.kg-qa.json"));
   });
 });

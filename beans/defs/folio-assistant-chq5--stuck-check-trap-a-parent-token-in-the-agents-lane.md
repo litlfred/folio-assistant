@@ -166,3 +166,43 @@ with this item ticked. `check:bean-bodies` failed it as a **shadow checklist**,
 and was right to: two lists disagreeing about the same item means the one a
 reader consults says not-done while another says done. The canonical list above
 is ticked instead, and there is no second copy.
+
+---
+
+## 2026-09-22 — the four open items are CONSTRAINTS ON `v49e`, not work of their own
+
+Re-entered today expecting the `blv9` shape — instance repaired, guard
+missing. **Both halves were wrong**, and recording that is the point of this
+section:
+
+- The data is clean: no `"/home/`, `"/Users/` or drive-letter path in any
+  committed instance.
+- The guard exists: `relativiseSource` in `src/workflow/store.ts`, applied
+  inside `saveInstance`, recursive into `children`.
+- It is tested: five cases via `saveInstance`/`loadInstance` in
+  `scripts/tests/workflow-interpreter.test.ts` — absolute-inside-repo,
+  children, repair-on-write, already-relative, outside-repo.
+
+An intermediate reading here was that `relativiseSource` **had no test**,
+because grepping the helper's name across the repo returns only its own
+module. That was wrong and the grep was the wrong instrument: the tests
+exercise it through the **public path** that actually writes files, which is
+the better test and the reason its name does not appear.
+
+### Why the remaining four boxes cannot be ticked by anyone working on THIS bean
+
+Every one of them constrains a stuck-state check:
+
+- recurse into `children`, report the LIVE position
+- waiting-on-a-human is a first-class outcome, not a stall
+- `updatedAt` and last-step-taken are two facts
+- age is the client's arithmetic, never build-time
+
+**No such check exists.** It is `v49e`'s, and `v49e` is a bean the owner
+explicitly asked be written up rather than started (*"do not do this, just
+bean up"*). So these are requirements waiting for their subject, and this bean
+is a **specification** for work not yet begun — not a queue item anybody can
+pick up.
+
+Leaving them unticked is correct. Leaving them *unexplained* is what cost the
+re-entry, so the explanation is here rather than in a session log.

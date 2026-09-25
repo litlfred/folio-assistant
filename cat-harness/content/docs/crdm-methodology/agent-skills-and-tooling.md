@@ -38,7 +38,7 @@ distinction is kept explicit.
 
 **`crdm_start` and `crdm_status` were proposed here and should not be built.**
 The generic workflow tools already run this process, because
-`methodologies/crdm/workflows/crdm-requirements.bpmn` is a loadable BPMN process like every
+`processes/crdm-requirements.bpmn` is a loadable BPMN process like every
 other diagram in this repository:
 
 | Instead of | Use |

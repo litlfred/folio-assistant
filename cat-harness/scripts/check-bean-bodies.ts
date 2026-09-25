@@ -36,6 +36,7 @@
  * Exit: 0 clean (or no store), 1 a real defect, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-bodies
+ * @covers bean-defs, beans
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -61,8 +62,27 @@ import {
  * dataset"*, *"blocked on effort"* and four more, none of them a bean. So the
  * id must be **in a code span** and must be **id-shaped**: the store's
  * `id_length` is 4, with the instance prefix optional.
+ *
+ * ## The `not` escape is LINE-SCOPED, and a wrap defeats it
+ *
+ * The caller scans `body.split("\n")` one line at a time, so `\s+` in the
+ * `not` group can never span a newline. A withdrawal written as
+ *
+ * ```md
+ * ... and as of 2026-09-22 each is **not
+ * blocked on `68dt`** because it completed.
+ * ```
+ *
+ * reads correctly to a person and is reported as a live block, because the
+ * line the checker sees begins at `blocked on`. Hit while withdrawing the six
+ * dead blockers on 2026-09-22 — the fix is to keep `not blocked on \`id\``
+ * on ONE line, not to widen the pattern: making it multi-line would also let
+ * a `not` three paragraphs up silence a real assertion.
+ *
+ * The same scoping is why {@link insideQuotation} takes a line rather than
+ * the body, and it is deliberate there for the identical reason.
  */
-const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{4})`/gi;
+export const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{4})`/gi;
 
 /**
  * Is the match inside a quotation on its own line?
@@ -75,8 +95,42 @@ const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{
  *
  * Counted rather than pattern-matched: an odd number of unescaped `"` before
  * the match on that line means the match sits inside one.
+ *
+ * ## SCOPE: the quote mark is the whole signal, and a TABLE CELL is not one
+ *
+ * `k59d` asked whether this should also read a markdown table cell — *"the
+ * guard covers a markdown table cell, or the guard's stated scope says it
+ * does not and why — a workaround in one bean is not a fix"*. It does not,
+ * and the corpus is what settles it rather than taste.
+ *
+ * Measured 2026-09-21 over every bean body, for `blocked on \`id\`` on a line
+ * beginning `|`. **Two occurrences, and they point opposite ways:**
+ *
+ * | bean | the cell | what it is |
+ * |---|---|---|
+ * | `k59d` | `"blocked on \`hqku\`, …"` | yg29's sentence, quoted — already marked, already skipped |
+ * | `xgd8` | `blocked on \`slw1\`, see above` | **its own** blocker, asserted in a cell. `slw1` is `todo`, so the block is live |
+ *
+ * So the only unquoted cell in the store is a genuine self-assertion that
+ * must keep being read. **Treating a cell as a quotation would silently
+ * exempt exactly it** — and every future one, since a table is where a bean
+ * naturally states structured facts about itself.
+ *
+ * That also means `k59d`'s double-quoting was never a workaround. Quoting
+ * text you are quoting is correct English and is precisely the signal this
+ * function reads; the finding message below says so, on the one line shape
+ * where an author is most likely to leave it off.
+ *
+ * ## What is deliberately NOT read, and why nothing was built for it
+ *
+ * A **blockquote** (`> blocked on \`x\``) is unambiguously a quotation in
+ * markdown and would be a defensible extension. The store contains **zero**
+ * of them, measured the same way, so implementing it would be building for a
+ * case that does not exist. Emphasis (`*…*`) is not attribution at all and is
+ * not a candidate. If a blockquote form appears later, this is the paragraph
+ * that says the gap was known and priced rather than missed.
  */
-function insideQuotation(line: string, at: number): boolean {
+export function insideQuotation(line: string, at: number): boolean {
   let quotes = 0;
   for (let i = 0; i < at && i < line.length; i++) {
     if (line[i] === '"' && line[i - 1] !== "\\") quotes++;
@@ -233,6 +287,39 @@ export interface BeanBodyReport {
   outstanding: BeanBodyProblem[];
   /** Baseline entries nothing matched — repaired, and the baseline can shrink. */
   stale: string[];
+  /**
+   * CLOSED beans carrying the shadow-checklist shape. Counted, never failed.
+   *
+   * Bean `sfhr` left it open *"whether the check should also scan closed
+   * beans"*, and the question sat undecided because nobody had the number.
+   * Measured 2026-09-21, and the shape of the answer is in the dates rather
+   * than the count:
+   *
+   * | | |
+   * |---|---|
+   * | closed beans with the shape | 30 (75 items), against 3 open |
+   * | **archived** beans with it | **0 of 219** — and archived beans are the OLD ones |
+   * | last updated 2026-09-20 | **21** |
+   * | last updated 2026-09-21 | 9 |
+   * | this check shipped (#589) | **2026-09-21** |
+   *
+   * So it is not sediment and not a trend. It is a ONE-DAY BURST on
+   * 2026-09-20 — the 54-merge window bean `vlhk` describes — and the gate
+   * shipped the day after, in response to it.
+   *
+   * **That is why closed beans are not scanned as a failure.** Every bean is
+   * open before it is closed, so the open-bean rule already prevents
+   * recurrence; extending it backwards would add 75 baseline entries, all
+   * belonging to other owners, for work already finished. A completed bean's
+   * unticked checklist misleads nobody about what to do next — its `status`
+   * says `completed` and dominates.
+   *
+   * It is COUNTED rather than dropped so *"is it recurring?"* stays answerable
+   * every run. A rising number here means the open-bean gate is being evaded;
+   * a flat one means the burst is history. A measurement that lives only in a
+   * bean is a printed verdict — gone, and unaskable later.
+   */
+  closedWithShadow: number;
 }
 
 /**
@@ -264,9 +351,29 @@ function lookup(all: BeanFile[], ref: string): BeanFile | undefined {
   return all.find((b) => b.id === ref) ?? all.find((b) => b.id.endsWith(`-${ref}`));
 }
 
+/**
+ * The closed-bean line: counted, never failed, and never silent.
+ *
+ * `sfhr` asked whether closed beans should be scanned. They are not — the
+ * reasoning is on {@link BeanBodyReport.closedWithShadow} — but "not scanned"
+ * and "none there" must not look alike from the report, which is the same
+ * three-state rule this repository applies to every other sweep.
+ */
+function closedNote(r: BeanBodyReport, out: string[]): void {
+  if (r.closedWithShadow === 0) return;
+  out.push(
+    `  ~ ${r.closedWithShadow} CLOSED bean(s) carry the shadow-checklist shape — counted, not failed.`,
+  );
+  out.push("    Measured 2026-09-21: a one-day burst on 09-20, the day before this check shipped;");
+  out.push("    0 of 219 ARCHIVED beans have it. Every bean is open before it is closed, so the");
+  out.push("    open-bean rule already prevents recurrence. A RISING number here means it does not.");
+}
+
 export function checkBeanBodies(root: string): BeanBodyReport {
   const all = readBeanFiles(root);
-  if (all === null) return { store: false, examined: 0, problems: [], outstanding: [], stale: [] };
+  if (all === null) {
+    return { store: false, examined: 0, problems: [], outstanding: [], stale: [], closedWithShadow: 0 };
+  }
   const open = all.filter((b) => !b.archived && OPEN_STATUSES.has(b.status));
   const found: BeanBodyProblem[] = [];
   const problems = found;
@@ -303,13 +410,23 @@ export function checkBeanBodies(root: string): BeanBodyReport {
       if (insideQuotation(line, m.index ?? 0)) continue;
       const ref = m[2]!;
       const target = lookup(all, ref);
+      // A TABLE ROW is the one line shape where an author is likely to have
+      // MEANT a quotation and left the marks off — the evidence a bean of
+      // this kind carries is a table of "what it says" against "what the
+      // store says". The rule does not bend for it (see `insideQuotation`:
+      // the only unquoted cell in the store is a real self-assertion), so the
+      // message teaches the marking instead of the checker guessing at it.
+      const hint = line.trimStart().startsWith("|")
+        ? ". This is a table cell — if it quotes another bean, put the cell's " +
+          "text in double quotes and this check will read it as a quotation"
+        : "";
       if (!target) {
-        problems.push({ id: b.id, kind: "dead-blocker", detail: `"blocked on \`${ref}\`" — no such bean in the store or its archive` });
+        problems.push({ id: b.id, kind: "dead-blocker", detail: `"blocked on \`${ref}\`" — no such bean in the store or its archive${hint}` });
       } else if (CLOSED_STATUSES.has(target.status)) {
         problems.push({
           id: b.id,
           kind: "dead-blocker",
-          detail: `"blocked on \`${ref}\`" — that bean is \`${target.status}\`, so the block can never lift on its own`,
+          detail: `"blocked on \`${ref}\`" — that bean is \`${target.status}\`, so the block can never lift on its own${hint}`,
         });
       }
       }
@@ -324,12 +441,17 @@ export function checkBeanBodies(root: string): BeanBodyReport {
     problems: found.filter((p) => !baseline.has(key(p))),
     outstanding: found.filter((p) => baseline.has(key(p))),
     stale: [...baseline].filter((k) => !matched.has(k)).sort(),
+    // Counted over the beans this check does NOT scan — see the field's docs.
+    closedWithShadow: all.filter(
+      (b) => !(!b.archived && OPEN_STATUSES.has(b.status)) && shadowedItems(b.body).length > 0,
+    ).length,
   };
 }
 
 function formatReport(r: BeanBodyReport): string {
   if (!r.store) return "Bean bodies\n  · no bean store — nothing to check";
   const out = [`Bean bodies (${r.examined} open, ${r.outstanding.length} baselined)`];
+  closedNote(r, out);
   if (r.problems.length === 0) {
     out.push("  ✓ no NEW defect — every open bean has a body, a one-line title, and no blocker on a closed bean");
   }

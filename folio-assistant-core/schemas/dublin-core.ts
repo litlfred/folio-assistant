@@ -52,8 +52,12 @@
  * which identifier is authoritative belongs to the `iris-dspace` skill, which
  * can say WHY; a schema that deduplicated would make that judgement invisibly
  * and permanently.
+ *
+ * @conformsTo dcmi-terms
  */
 import { z } from "zod";
+
+import { ownNamespace } from "../../cat-harness/schemas/namespaces.js";
 
 /** The `$schema` tag a record declares itself with. Extension is a coincidence; a declaration inside the file is the contract. */
 export const DUBLIN_CORE_SCHEMA_TAG = "folio-dublin-core/v1";
@@ -195,7 +199,7 @@ export const DCTERMS_NS = "http://purl.org/dc/terms/";
  * owns the Dublin Core model — the same rule that put this module here rather
  * than in `who-iris/`.
  */
-export const DSPACE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns/dspace#";
+export const DSPACE_NS = ownNamespace("folio-assistant-core-dspace");
 
 /** The fifteen. A qualifier on any of them is a refinement, not one of these. */
 const SIMPLE_ELEMENTS = new Set([

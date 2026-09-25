@@ -62,6 +62,19 @@ commit.
 - When you encounter a **finding that contradicts another PR's
   framing** — write the disagreement up explicitly, post it to both
   PRs, and tag the author for resolution.
+- **A COLLISION — coordinate.** A merge conflict caused by a
+  sibling's landed work is not merely a thing to resolve; it is the
+  signal that two sessions are editing one subject. Resolve it AND
+  coordinate. Owner, 2026-09-21: *"collision=coordinate"*.
+- **A POTENTIAL collision, seen in the beans — coordinate.** Before
+  you start a topic, and at each triage, scan for an `in-progress`
+  bean whose scope overlaps yours. That is the cheapest collision to
+  find, because it is the one found BEFORE either of you has written
+  anything. Owner, same day: *"potential collision by looking at
+  beans = coordinate"*. How to read a sibling's state out of the
+  store, and the boundary of that inference, is
+  [`bean-coordination`](bean-coordination.md) §"Where a sibling
+  session is visible from" — not restated here.
 
 ## Inputs
 
@@ -211,8 +224,117 @@ commits or comments that **contradict** your branch's framing. Per
 §6: escalate inconsistent findings to the user. Do not silently
 adopt the sibling's framing without an §6 conversation.
 
+## What actually reaches a sibling — measured, 2026-09-21
+
+**Do not assume you can message a sibling session.** Measured from a
+cloud session with eleven siblings live on one repository:
+
+| channel | reaches a cloud sibling? |
+|---|---|
+| `list_sessions` | **sees** them — id, title, branch, task summary |
+| `ListAgents` | **no** — "no other Claude session is running on this machine" |
+| `SendMessage` | **no** — the send is refused, target not reachable |
+| a committed **bean** | yes — every session reads the store at session start |
+| a **PR or issue** comment | yes — to whoever looks, and it is durable |
+
+So `list_sessions` tells you WHO is working and on WHAT, and then the
+message has to travel through something committed. That asymmetry is
+worth knowing before you spend a turn on it: this list exists because
+a session read the sibling list, drafted a careful message, and
+discovered on the send that there was no channel.
+
+The practical order:
+
+1. `list_sessions` (or the beans) to find WHO overlaps and how.
+2. Write the coordination INTO the artefacts they will read — the
+   bean, the PR body, the issue. A bean is the strongest, because
+   `bean-coordination` §"The store on `main` is the one every sibling
+   reads" makes it the one surface every session opens.
+3. Only then consider a direct message, and only for a sibling
+   `ListAgents` actually lists.
+
+### Eleven sessions is the normal case, not the exception
+
+The same measurement: eleven sessions on `litlfred/folio-assistant`,
+each on its own branch, each merging `main` on a loop. One branch took
+**four** base merges in three hours, three of them conflicted. Main
+moved 109, 38, 20, 24 and 28 commits between them.
+
+A session that treats a conflict as an accident will treat all four as
+accidents. The rate IS the environment, and the thing to do about it
+is coordinate earlier, not merge harder.
+
+### The worked example: a voice landing in a directory being deleted
+
+A branch migrated every voice from `<instance>/voices/` to
+`<instance>/skills/voices/`. Mid-flight, `main` landed a NEW voice in
+`cat-harness/voices/` — the directory the branch removes. Git's rename
+detection then placed the new file inside another voice's folder.
+
+Nothing was wrong with either piece of work. What was missing was that
+neither session knew about the other, and the beans said so the whole
+time: the migration's bean was `in-progress` and names the directory.
+**A bean scan by either session would have caught it before a line was
+written**, which is exactly why the trigger above is worth having.
+
+## Crossing into a sibling's subject — permitted, and what it costs
+
+Owner, 2026-09-22, on stream 3 of the #956 consolidation rewriting the `yg29`
+milestone it had been told not to touch:
+
+> *"crossing stream is ok, but /coordinate and be aware of potential collisions.
+> try avoid duplicating work."*
+
+Two rulings, and they are not the same one twice.
+
+**1. The stream that owns a milestone's WORK may repair the milestone.**
+`check-stale-paths.ts` reserved that repair to "the bean's OWNER" on the ground
+that *"a milestone is a statement of what its owner believes the goal needs
+next, and rewriting somebody else's belief is not a checker's to do."* That
+ground still holds **for a checker** — a gate that guesses replaces a stale
+belief with an invented one. It does **not** hold for a session that has
+re-measured the goal's whole surface. Stream 3 repaired `yg29` and found two
+defects a path detector structurally cannot see: `hqku` carried as a live
+"blocked on the owner" for two days after it completed, and *"`who-iris/` has no
+`docs/`"* against a directory holding three rendered pages.
+
+So the line is **checker vs. session**, not owner vs. non-owner. A session
+repairing somebody's milestone re-measures every line it rewrites, in a fresh
+container, by running the thing — and says which clause it could not verify.
+
+**2. Crossing is permitted; colliding silently is not.** Cross freely, but the
+crossing is what triggers this skill rather than what excuses skipping it.
+
+### The collision surface is FILES, and it is predictable before you touch one
+
+A bean scan finds sessions working the same *subject*. It does not find two
+sessions about to edit the same *file* from different subjects, which is how
+the #956 consolidation nearly lost a baseline:
+
+| file | why two sessions want it |
+|---|---|
+| `scripts/stale-paths-baseline.json` | **two lines long.** Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it *shrinks rather than fossilises* — and an empty baseline fails every finding, "which is the safe direction" only if somebody notices. |
+| a shared bean like `k59d` | every stream appends its own outcome. **"An append cannot collide" is false when two sessions append**, because both land at EOF. That precedent is recorded in `k59d` itself and is wrong as stated. |
+| generated dirs (`docs-auto/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. |
+
+**Name the files you will touch, not just the beans**, when you post intent.
+A sibling can dodge a file; it cannot dodge a subject it cannot see.
+
+### Duplicated work is measured in what was already pushed, not in what is open
+
+The same consolidation measured `p5wm`'s critical path **twice** — once in the
+session writing the stream claims, once in the stream that received them,
+reaching the identical answer (five live steps, not eight). Neither was wrong
+and both were competent; the second was free to skip. Before re-deriving a
+measurement, check whether a sibling's **pushed commit** already carries it:
+an open PR's diff is a fact, and reading it costs one call against a session's
+worth of re-measurement.
+
 ## Related skills
 
+- `bean-coordination` — the committed store siblings read, how to
+  claim, and how far a sibling's state can be inferred from it. The
+  DETECTION half of this skill's bean trigger lives there.
 - `delivery-summary` — what to post **after** a feature lands
   (one PR scope).
 - `watch` — passive monitoring of upstream branches.

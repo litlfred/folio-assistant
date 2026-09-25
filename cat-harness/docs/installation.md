@@ -12,6 +12,13 @@ nav_order: 2
 
 ---
 
+> Installing is the easy half. What to run **before you push** is
+> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> `bun test` passing is not the gates passing, and the list is derived from the
+> CI workflow rather than written down. If you are laying folio-assistant over
+> a repository that already exists, read
+> [`repo-conversion`](reference/skill-instructions/repo-conversion.html) first.
+
 ## Prerequisites
 
 folio-assistant runs on [Bun](https://bun.sh) and connects to an LLM agent over
@@ -109,7 +116,9 @@ Copy the example config into your **content** repository (not into
 folio-assistant) and adjust it for your content type:
 
 ```sh
-cp harness.config.example.json /path/to/your/content-repo/harness.config.json
+# The DESTINATION is named for your instance -- `my-folio.config.json`, not a
+# fixed word. The example file keeps its own name: that is what it is called.
+cp harness.config.example.json /path/to/your/content-repo/<your-name>.config.json
 ```
 
 ```json

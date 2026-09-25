@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/theming/create-sticky-note.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/create-sticky-note.md) — do not edit here.
+> Generated from [`cat-harness/skills/theming/create-sticky-note.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/create-sticky-note.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/create-sticky-note.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/create-sticky-note.md){: .fa-edit-source }
 
 {% raw %}
 # Create a sticky note
@@ -93,7 +93,7 @@ Two mechanical facts worth knowing before choosing:
 |---|---|---|
 | **`todos/items/`** — the default | somebody has an outstanding item | a `folio-todo/v1` node: `status`, `priority`, `origin`, plus the tags below |
 | **`todos/feedback/`** | it is about a specific block, with the submitter's identity | the content-review feedback workflow the `todo-review` skill reads |
-| **`folio/`** | it belongs on a rendered page | a landing sticky — but a *page's* sticky is a layer's **contribution**, so it is declared in that layer's `harness.json`, not written here |
+| **`folio/`** | it belongs on a rendered page | a landing sticky — but a *page's* sticky is a layer's **contribution**, so it is declared in that layer's `<name>.json`, not written here |
 | **nowhere** | it was worth showing and not worth keeping | previewed in the conversation and left there |
 
 **`todos/` is not `beans/`, and this is the line the repository keeps paying to
@@ -154,7 +154,7 @@ Asked for a sticky about reading the documentation, explicitly **not** in
 ## What this skill does not do
 
 - **It does not write a landing-page sticky.** Those are a layer's contribution,
-  declared in its `harness.json` — see `sticky-contribution.ts`.
+  declared in its declaration — see `sticky-contribution.ts`.
 - **It does not create beans.** Agent work is `todo-manager`'s.
 - **It does not delete or overwrite a sticky it did not make.** Editing somebody
   else's note is the `deletion-requires-confirmation` case.

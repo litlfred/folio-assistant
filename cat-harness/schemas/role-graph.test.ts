@@ -3,6 +3,7 @@
  * role's skills" — one test per join, plus the two compositions that are
  * deliberately NOT the same thing.
  */
+import { readPolicyGrants } from "./odrl.ts";
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -14,7 +15,6 @@ import {
   resolveRoleSkills,
   resolveRoleStack,
   roleForLane,
-  boundLaneNames,
   readPermissions,
   findRole,
   toJsonLd,
@@ -37,13 +37,12 @@ function withKg(graph: unknown): string {
 const base = {
   name: "t",
   roles: [
-    { id: "viewer", title: "Viewer", description: "reads", actorKinds: ["person"], lanes: ["Viewer"], skills: ["read"] },
+    { id: "viewer", title: "Viewer", description: "reads", actorKinds: ["person"], skills: ["read"] },
     {
       id: "reviewer",
       title: "Reviewer",
       description: "judges",
       actorKinds: ["person"],
-      lanes: ["Reviewer / SME", "Review Committee"],
       skills: ["review"],
       inherits: ["viewer"],
     },
@@ -52,7 +51,6 @@ const base = {
       title: "Editor",
       description: "decides",
       actorKinds: ["person"],
-      lanes: ["Editor"],
       skills: ["commit"],
       inherits: ["reviewer"],
     },
@@ -60,7 +58,7 @@ const base = {
 };
 
 /** The minimal valid role, spread by the fixtures that vary one key. */
-const ROLE_A = { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [] };
+const ROLE_A = { id: "a", title: "A", description: "s", actorKinds: ["person"], skills: [] };
 
 describe("readRoleGraph", () => {
   test("absent declaration is undefined, not an error", () => {
@@ -80,10 +78,18 @@ describe("readRoleGraph", () => {
   test("a dangling `inherits` is refused at read, so no closure is silently short", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["ghost"] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["person"], skills: [], inherits: ["ghost"] }],
     });
     expect(() => readRoleGraph(root)).toThrow(/inherits "ghost"/);
     rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a role carrying `voice` or `useCases` is refused — each points at the role now (#1168)", () => {
+    for (const key of ["voice", "useCases"]) {
+      const root = withKg({ name: "t", roles: [{ ...ROLE_A, [key]: key === "voice" ? "Plain." : ["x"] }] });
+      expect(() => readRoleGraph(root)).toThrow(new RegExp(`${key}|not a valid role graph`));
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
   test("an unknown key on a ROLE is refused, not stripped", () => {
@@ -94,7 +100,7 @@ describe("readRoleGraph", () => {
     //
     // It is not hypothetical. `role-model.md` said to write a `summary` —
     // not a field, since `title`/`description` are the two labels every kg
-    // node carries — and PR #453 gave all three cat-bootstrap roles one.
+    // node carries — and PR #453 gave all three bootstrap roles one.
     const root = withKg({
       name: "t",
       roles: [{ ...ROLE_A, summary: "a field that does not exist" }],
@@ -107,7 +113,7 @@ describe("readRoleGraph", () => {
     // What makes `.strict()` affordable: there is a spelling for a key MEANT
     // not to be read. The convention is established rather than invented for
     // this test — `_comment` in this graph, `_comment`/`_title` in
-    // harness.json, `_lanes_comment` in cat-bootstrap's graph.
+    // harness.json, `_lanes_comment` in bootstrap's graph.
     const root = withKg({
       _comment: "why this graph exists",
       _lanes_comment: "why no lanes",
@@ -125,8 +131,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
-        { id: "a", title: "A2", description: "s", actorKinds: ["person"], lanes: [], skills: [] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], skills: [] },
+        { id: "a", title: "A2", description: "s", actorKinds: ["person"], skills: [] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/declared twice/);
@@ -137,8 +143,8 @@ describe("readRoleGraph", () => {
     const root = withKg({
       name: "t",
       roles: [
-        { id: "a", title: "A", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["b"] },
-        { id: "b", title: "B", description: "s", actorKinds: ["person"], lanes: [], skills: [], inherits: ["a"] },
+        { id: "a", title: "A", description: "s", actorKinds: ["person"], skills: [], inherits: ["b"] },
+        { id: "b", title: "B", description: "s", actorKinds: ["person"], skills: [], inherits: ["a"] },
       ],
     });
     expect(() => readRoleGraph(root)).toThrow(/cycle/);
@@ -148,7 +154,7 @@ describe("readRoleGraph", () => {
   test("an unknown actorKind is rejected, not accepted and ignored", () => {
     const root = withKg({
       name: "t",
-      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["wizard"], lanes: [], skills: [] }],
+      roles: [{ id: "a", title: "A", description: "s", actorKinds: ["wizard"], skills: [] }],
     });
     expect(() => readRoleGraph(root)).toThrow();
     rmSync(root, { recursive: true, force: true });
@@ -196,11 +202,11 @@ describe("resolveRoleStack — subprocess composition is NOT inheritance", () =>
 describe("roleForLane", () => {
   const g = base as unknown as RoleGraph;
 
-  test("matches a lane by its exact free-text name", () => {
-    expect(roleForLane(g, "Review Committee")?.id).toBe("reviewer");
+  test("a lane's name alone binds nothing: roles list no lanes (#1168)", () => {
+    expect(roleForLane(g, "Reviewer")).toBeUndefined();
   });
 
-  test("an explicit <folio:role ref> wins over name matching", () => {
+  test("the lane's explicit <folio:role ref> is what binds it", () => {
     expect(roleForLane(g, "Review Committee", "editor")?.id).toBe("editor");
   });
 
@@ -210,10 +216,6 @@ describe("roleForLane", () => {
 
   test("an unbound lane name is undefined, which is the finding the audit reports", () => {
     expect(roleForLane(g, "Some New Lane")).toBeUndefined();
-  });
-
-  test("boundLaneNames is the denominator for lane coverage", () => {
-    expect(boundLaneNames(g).size).toBe(4);
   });
 });
 
@@ -234,7 +236,7 @@ describe("readActors", () => {
 });
 
 describe("this repository's own role graph", () => {
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"));
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"));
 
   test("is declared and loads", () => {
     expect(g).toBeDefined();
@@ -254,7 +256,7 @@ describe("this repository's own role graph", () => {
 
 describe("this repository's actor registry, after the roles[] migration", () => {
   const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
-  const g = readRoleGraph(join(import.meta.dir, "..", "skills"))!;
+  const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
     expect(actors.filter((a) => a.looksLikeRole).map((a) => a.id)).toEqual([]);
@@ -315,8 +317,9 @@ describe("permissions are an actor property, not a role property", () => {
   test("a permission genuinely cross-cuts roles — which is why it cannot live on Role", () => {
     // This is the measurement that falsified the obvious design. If a future
     // change makes every permission role-uniform, revisit the model; until
-    // then, moving them to Role reintroduces the 36 conflicts.
-    const actors = readActors(actorsDir);
+    // then, moving them to Role reintroduces the 36 conflicts. The grants are
+    // read from the ODRL policies since issue #1180; the measurement is the same.
+    const actors = readActors(actorsDir, readPolicyGrants(join(import.meta.dir, "..", "policies")));
     const rolesOf = (perm: string) =>
       new Set(actors.filter((a) => (a.permissions ?? []).includes(perm)).flatMap((a) => a.roles ?? []));
     expect(rolesOf("content-authoring").size).toBeGreaterThan(1);
@@ -367,9 +370,16 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // NOT `ci-pipeline`: it runs where the reader is, once per click, and
     // publishes nothing. Folding a reader-facing renderer into the build
     // actor would put a person's click behind a build.
+    // `local-sweep` (bean `a58y`) is the same QA sweep programs as
+    // `ci-pipeline`, run on a contributor's machine — mechanical by the same
+    // test, and a SEPARATE actor for a reason that is not bookkeeping: a CI
+    // verdict is reproducible from the `reviewed_sha` it records, while a
+    // local one may rest on an uncommitted edit, so the same sha addresses a
+    // tree that produced something else. Folding the two together would make
+    // `reviewed_sha` a decoration rather than an address.
     expect(by("system")).toEqual([
       "attestation-service", "board-renderer", "ci-health-watcher", "ci-pipeline",
-      "ig-publisher-service", "lean-mcp",
+      "ig-publisher-service", "lean-mcp", "local-sweep",
     ]);
   });
 

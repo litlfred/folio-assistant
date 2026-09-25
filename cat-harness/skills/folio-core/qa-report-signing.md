@@ -6,7 +6,9 @@ name: qa-report-signing
 
 A QA report becomes **evidence** when a third party can establish what was
 measured and who vouches for it. `folio-test-run/v1` (`schemas/test-run.ts`)
-answers the first: a data hash and a process hash, each all-or-nothing. This
+answers the first: a data hash and a process hash, each all-or-nothing, plus
+the `skill` it tests, whose contract its recorded `cases` are checked against
+(`test-run-conforms`, #1168). This
 skill answers the second, and it has **two routes** because the participant
 doing the signing may not be able to reach anything.
 
@@ -24,7 +26,7 @@ signed.
 
 ## The process is executable — do not hand-roll the branch
 
-`skills/workflows/qa-report-signing.bpmn`, with the branch computed by
+`processes/qa-report-signing.bpmn`, with the branch computed by
 `decisions/signing-route.dmn`. Run it with `workflow_start` /
 `workflow_next` / `workflow_complete` like every other diagram here. The
 gateway **refuses a hand-supplied outcome**, which is the point: the route
@@ -92,7 +94,7 @@ measurement of that was too generous: this said the only reader was
 workflow, and its output directory `schemas/generated/` does not exist. So
 the degradation model has **zero** effective readers, not one. The gateway is
 what executes. (`folio-assistant-3lbz`, and
-`fsh-guts/proposals/zod-schemas-as-tools.md`.)
+`cat-harness/docs/proposals/zod-schemas-as-tools.md`.)
 
 Both are worth having, and they must agree — the declaration is what a
 reader, a generated doc and `check:fallback-roles` can see without executing

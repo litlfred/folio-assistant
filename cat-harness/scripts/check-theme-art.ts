@@ -3,6 +3,7 @@
  * Report on this instance's theme art — the intake check, run over what shipped.
  *
  * @module scripts/check-theme-art
+ * @covers themes
  *
  * The owner, 2026-09-20: *"make skills for avatar theme ingestion (need 3
  * meeting certain formatting constraints), return sucches or explnation of
@@ -41,10 +42,6 @@ import {
   readDeclaration,
   siteDirFor,
 } from "../schemas/cat-harness.js";
-// REQUIRED: this instance declares a `folio` graph, whose kind is registered by
-// a load-time side effect in core. Without it `readDeclaration` throws on the
-// declaration this script exists to read.
-import "../schemas/folio-graph-kind.js";
 import { THEME_LAYOUTS, type ThemeLayout } from "../schemas/theme.js";
 import {
   formatIntakeReport,

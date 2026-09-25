@@ -16,7 +16,7 @@ The core document model, organized as atomic knowledge units:
 Not content. These describe the **instance** and the people and processes
 around it, and they are read by tools rather than rendered.
 
-- **[cat-harness.ts](./cat-harness.ts)** — the root `harness.json`
+- **[cat-harness.ts](./cat-harness.ts)** — the repository's declaration
   declaration: which directories an instance scans and what **kind of graph**
   each holds (`tools`, `kg`, `schemas`, `beans`, and `folio`, which core
   registers because only core can render).
@@ -27,7 +27,7 @@ around it, and they are read by tools rather than rendered.
   performs a task in a process as a role, using that role's skills.* A role **is
   a BPMN swimlane**; `inherits` is a static IS-A closure and the subprocess stack
   is a scoped union along a call path, and the two are deliberately not merged.
-  Declared in `skills/roles/roles.json`.
+  Declared in `scenarios/roles.json`.
 - **[kg-qa.ts](./kg-qa.ts)** — the QA sidecar for that graph: 14 criteria, one
   per join, written to `kg-qa/` beside each audited node by
   `scripts/kg-audit.ts`. The third QA subject kind, after blocks and scripts.

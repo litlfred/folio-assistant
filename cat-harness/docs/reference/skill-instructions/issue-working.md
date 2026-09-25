@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/issue-working.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/issue-working.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/issue-working.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/issue-working.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/issue-working.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/issue-working.md){: .fa-edit-source }
 
 {% raw %}
 # Working an issue — announce, then re-check
@@ -126,8 +126,16 @@ apply reads from the outside exactly like a rule being followed.
 (`mggs`). One direction is not enough: a reader arriving at either object has
 to be able to reach the other, and a check reports the ones that cannot.
 
-When to open an issue at all is [`crdm-detect`](../../methodologies/crdm/crdm-detect.md)
+When to open an issue at all is [`crdm-detect`](../crdm/crdm-detect.md)
 §"Issue association" — **scan before creating one, and never create one without
 permission**. This section is about what is owed once the work exists, not
 about manufacturing an issue for every bean.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Branch, and announce it |
+| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per&#10;(PR, head sha) |
+

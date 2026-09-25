@@ -47,6 +47,9 @@ const QA_SRC_URL = "/assets/qa/harness/page.translation.json";
 interface Meta {
   lang: string;
   translationStatus?: string;
+  /** The page this one translates. `docs-ui.js` shows it in the unverified
+   *  notice's drawer, so the notice specs need to be able to set it. */
+  translationSource?: string;
   translationQa?: { key: string; src: string; index: string } | null;
   availableLocales?: string[];
   supportedLocales?: string[];
@@ -455,7 +458,6 @@ test.describe("the translation badges are themed, not painted inline", () => {
         const r = await page.evaluate((fn) => {
           const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
           const c = getComputedStyle(e);
-          // eslint-disable-next-line no-eval
           return (eval(fn) as (a: string, b: string) => number)(c.color, c.backgroundColor);
         }, CONTRAST);
         expect(r).toBeGreaterThanOrEqual(4.5);
@@ -472,7 +474,6 @@ test.describe("the translation badges are themed, not painted inline", () => {
         const r = await page.evaluate((fn) => {
           const e = document.querySelector(".fa-lang-coverage-badge") as HTMLElement;
           const c = getComputedStyle(e);
-          // eslint-disable-next-line no-eval
           return (eval(fn) as (a: string, b: string) => number)(c.borderTopColor, c.backgroundColor);
         }, CONTRAST);
         expect(r).toBeGreaterThanOrEqual(3);
@@ -491,5 +492,114 @@ test.describe("the translation badges are themed, not painted inline", () => {
       });
     };
     expect(await read("light")).not.toBe(await read("dark"));
+  });
+});
+
+/* ── The unverified notice is ONE LINE that opens ─────────────────────────
+ *
+ * Owner, 2026-09-21, on a translated page: *"should be a slim one line
+ * '⚠️ Unverified translation — …' which then can open to the full
+ * trnslation QA report."*
+ *
+ * It was a four-line block above the page title, on every translated page,
+ * permanently. Nothing guarded its shape, which is why it could grow to four
+ * lines without anyone noticing — so these tests assert the SHAPE, not just
+ * that the words are present. `textContent` is DOM order regardless of CSS,
+ * so a collapsed drawer answers every text assertion; geometry and the
+ * `open` attribute are what separate the two arrangements.
+ */
+test.describe("the unverified-translation notice", () => {
+  test("is a collapsed disclosure, not a block", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    await expect(notice).toHaveCount(1);
+    await expect(notice).not.toHaveAttribute("open", "");
+
+    // ONE LINE. The old block ran to four, and a height assertion is the only
+    // thing that catches it growing back — the words are the same either way.
+    const box = await notice.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeLessThan(64);
+  });
+
+
+  test("the detail is hidden until opened, then reachable", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    const summary = notice.locator("summary");
+    const body = notice.locator(".fa-translation-warning__body");
+
+    await expect(body).toBeHidden();
+    // NOT AT THE CENTRE, and this is the ACCEPTED design rather than a
+    // workaround waiting on a decision. `funp` (R25's glass, stage 1) puts
+    // `.fa-glass-handle` on EVERY page — `position: fixed; top: 0;
+    // left: 50%`, measured 2026-09-22 at 71 x 44 px. The notice is inserted
+    // as the first child of `.main-content`, so its one-line summary sits at
+    // y 14.75 spanning the full column, and the two overlap at the column's
+    // centre — exactly where Playwright clicks by default.
+    //
+    // Bean `tr1m` put three options to the owner — accept the overlap,
+    // reserve 44 px of top padding on every page, or move the tab out of the
+    // content column — and the owner chose ACCEPT (2026-09-22). A tab at the
+    // top edge is the pull-down metaphor, and 71 px of a full-width line is
+    // a dead spot rather than a dead control: a reader clicks anywhere else
+    // on the line, and the keyboard path has its own test below.
+    //
+    // So clicking off-centre is what a reader does. The test beneath is what
+    // keeps that sentence true as the glass changes.
+    await summary.click({ position: { x: 24, y: 12 } });
+    await expect(body).toBeVisible();
+    await expect(body).toContainText("index.md");
+    await expect(body).toContainText("translation_signoff");
+  });
+
+  test("the glass handle takes a slice of the notice, never the line", async ({ page }) => {
+    // THE GUARD ON AN ACCEPTED OVERLAP, which is what makes accepting it
+    // safe. The owner's choice on `tr1m` was "accept", and that choice rests
+    // on a measurement — 5.7% of one line — rather than on the overlap being
+    // harmless in principle. A decision resting on a number needs the number
+    // checked, or it silently becomes a decision about something else.
+    //
+    // Concretely: if the glass ever grows to cover the line, the test above
+    // would go on passing at x=24 while a reader met a control that did not
+    // respond.
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const s = (await page.locator(".fa-translation-warning summary").boundingBox())!;
+    const h = (await page.locator(".fa-glass-handle").boundingBox())!;
+    const overlapX = Math.max(0, Math.min(s.x + s.width, h.x + h.width) - Math.max(s.x, h.x));
+    const overlapY = Math.max(0, Math.min(s.y + s.height, h.y + h.height) - Math.max(s.y, h.y));
+    // Vertically they DO overlap — that is the fact this test records rather
+    // than wishes away. Asserting they do not would make the test fail the
+    // day somebody fixed the layout, which is backwards.
+    expect(overlapY).toBeGreaterThan(0);
+    // A tenth of the line at most. The measured figure is 71 of 1238, or 5.7%.
+    expect(overlapX / s.width).toBeLessThan(0.1);
+  });
+
+  test("opens from the keyboard, and closing is reachable — `l4zi`", async ({ page }) => {
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationSource: "index.md" });
+    const notice = page.locator(".fa-translation-warning");
+    const summary = notice.locator("summary");
+
+    await summary.press("Enter");
+    await expect(notice).toHaveAttribute("open", "");
+    await summary.press("Enter");
+    await expect(notice).not.toHaveAttribute("open", "");
+  });
+
+  test("offers the QA report only when there IS one", async ({ page }) => {
+    // `pb04`: a control that opens nothing is worse than no control. The
+    // button is drawn from `translationQa.src`, so a page with no projection
+    // gets the notice and no dead button.
+    await serve(page, { lang: "fr", translationStatus: "unverified", translationQa: null });
+    await expect(page.locator(".fa-translation-warning")).toHaveCount(1);
+    await expect(page.locator(".fa-translation-warning__report")).toHaveCount(0);
+  });
+
+  test("and a verified page gets no notice at all", async ({ page }) => {
+    // The control that makes the rest mean something: every assertion above
+    // would pass over a notice injected onto every page.
+    await serve(page, { lang: "fr", translationStatus: "verified" });
+    await expect(page.locator(".fa-translation-warning")).toHaveCount(0);
   });
 });

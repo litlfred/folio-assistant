@@ -2,7 +2,7 @@
  * The rendering exemption — declared, reasoned, substituted, and not spreading.
  *
  * Bean `hfkl`. The obligation every instance carries is a visualiser per
- * declared subgraph (`2krx`); cat-bootstrap is excused it and owes its own
+ * declared subgraph (`2krx`); bootstrap is excused it and owes its own
  * `.jsonld`/`.json` instead. Three things have to hold for that to be an
  * exemption rather than a silence list: it is DECLARED where the axis reads it,
  * it names what it owes INSTEAD, and a second claimant is a finding rather than
@@ -17,7 +17,7 @@ import { join, resolve } from "node:path";
 import { RENDER_OBLIGATIONS, isExemptFrom, readDeclaration, renderExemptionProblems, repoRootFor, type RenderExemption, findDeclarationFile } from "./cat-harness.js";
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
-const CAT_BOOTSTRAP = join(REPO, "cat-bootstrap");
+const CAT_BOOTSTRAP = join(REPO, "bootstrap");
 
 /** A well-formed exemption, so each malformation below differs in one field. */
 const ok: RenderExemption = {
@@ -27,10 +27,10 @@ const ok: RenderExemption = {
 };
 
 describe("this repository's actual declaration", () => {
-  test("cat-bootstrap claims the exemption, and it is well-formed", () => {
+  test("bootstrap claims the exemption, and it is well-formed", () => {
     const d = readDeclaration(CAT_BOOTSTRAP);
     expect(d?.renderExemption).toBeDefined();
-    expect(renderExemptionProblems([{ name: "cat-bootstrap", renderExemption: d?.renderExemption }])).toEqual([]);
+    expect(renderExemptionProblems([{ name: "bootstrap", renderExemption: d?.renderExemption }])).toEqual([]);
   });
 
   test("it excuses BOTH visualisers the owner named, and nothing else", () => {
@@ -47,13 +47,13 @@ describe("this repository's actual declaration", () => {
     // fixture. `renderExemptionProblems` allows at most one; this asserts the
     // count is 1 rather than 0, so the guard is not vacuously satisfied by a
     // repository that lost the declaration.
-    const roots = ["cat-bootstrap", "cat-harness", "folio-assist-core", "."].map((r) => join(REPO, r));
+    const roots = ["bootstrap", "cat-harness", "folio-assist-core", "."].map((r) => join(REPO, r));
     const claiming = roots
       .filter((r) => findDeclarationFile(r) !== undefined)
       .map((r) => readDeclaration(r))
       .filter((d) => d?.renderExemption !== undefined);
     expect(claiming.length).toBe(1);
-    expect(claiming[0]?.name).toBe("cat-bootstrap");
+    expect(claiming[0]?.name).toBe("bootstrap");
   });
 
   test("what it OWES exists on disk — the two render skills it names", () => {
@@ -61,22 +61,31 @@ describe("this repository's actual declaration", () => {
     // substitute is a sentence nobody can follow is the hole the field exists
     // to close, and a path named in prose rots exactly like any other link.
     const owes = readDeclaration(CAT_BOOTSTRAP)?.renderExemption?.owes ?? "";
-    const named = [...owes.matchAll(/`([^`]*cat-bootstrap-graph-[a-z-]+\.md)`/g)].map((m) => m[1]!);
+    const named = [...owes.matchAll(/`([^`]*bootstrap-graph-[a-z-]+\.md)`/g)].map((m) => m[1]!);
     expect(named.length).toBeGreaterThan(0); // not vacuous
     for (const rel of named) expect(existsSync(join(CAT_BOOTSTRAP, rel))).toBe(true);
   });
 
-  test("the render/ subgraph it owes is DECLARED, not merely present", () => {
+  test("the subgraph it owes is DECLARED, not merely present", () => {
     // A directory that exists and is undeclared is not this instance's graph,
-    // however many files sit in it — cat-bootstrap's own declaration says so.
+    // however many files sit in it — bootstrap's own declaration says so.
     // So "the skills are on disk" is not the property; "the graph reaches
     // them" is.
+    //
+    // Asked of the FILES the exemption owes, not of an entry id. This looked
+    // up `bootstrap-render` by id until bean `n350` moved the two skills into
+    // `skills/` and removed that entry; an id-shaped assertion would have died
+    // with the entry while the property it guards held. The property is:
+    // every owed file sits in a directory bootstrap DECLARES as a skills graph.
     const dirs = readDeclaration(CAT_BOOTSTRAP)?.directories ?? [];
-    const render = dirs.find((d) => d.path === "render/");
-    expect(render?.id).toBe("cat-bootstrap-render");
-    // A SEPARATE id from `skills/`: overrides match on id, so reusing
-    // `cat-harness` would replace cat-bootstrap's skills with these.
-    expect(dirs.filter((d) => d.id === render?.id)).toHaveLength(1);
+    const owes = readDeclaration(CAT_BOOTSTRAP)?.renderExemption?.owes ?? "";
+    const named = [...owes.matchAll(/`([^`]*bootstrap-graph-[a-z-]+\.md)`/g)].map((m) => m[1]!);
+    expect(named.length).toBeGreaterThan(0); // not vacuous
+    for (const rel of named) {
+      const home = dirs.find((d) => rel.startsWith(d.path));
+      expect(home, `${rel} is in no directory bootstrap declares`).toBeDefined();
+      expect(home?.graphKinds).toContain("skills");
+    }
   });
 });
 
@@ -110,16 +119,16 @@ describe("a claim that is not well-formed is refused", () => {
 describe("the exemption does not spread", () => {
   test("two claimants is a finding, and it names them", () => {
     const problems = renderExemptionProblems([
-      { name: "cat-bootstrap", renderExemption: ok },
+      { name: "bootstrap", renderExemption: ok },
       { name: "cat-harness", renderExemption: ok },
     ]);
     expect(problems).toHaveLength(1);
-    expect(problems[0]).toContain("cat-bootstrap");
+    expect(problems[0]).toContain("bootstrap");
     expect(problems[0]).toContain("cat-harness");
   });
 
   test("none is fine — at most one, not exactly one", () => {
-    // A repository that vendors no cat-bootstrap has nothing to exempt.
+    // A repository that vendors no bootstrap has nothing to exempt.
     // Failing it would be asking it to declare something to stay green, which
     // is how a declaration stops meaning anything.
     expect(renderExemptionProblems([{ name: "some-folio" }])).toEqual([]);
@@ -140,13 +149,13 @@ describe("isExemptFrom is what the QA axis calls", () => {
   });
 
   test("the axis reads the DECLARATION, not an instance name", () => {
-    // Guarded because the obvious shortcut is `if (name === "cat-bootstrap")`,
+    // Guarded because the obvious shortcut is `if (name === "bootstrap")`,
     // which states a rule true only for the instance somebody remembered —
     // and a vendored or renamed bootstrap would silently reacquire the
     // obligation it was excused from.
     const checker = readFileSync(join(ROOT, "scripts", "check-instance-render.ts"), "utf-8");
     expect(checker).toContain("renderExemptionProblems");
-    expect(checker).not.toContain('=== "cat-bootstrap"');
+    expect(checker).not.toContain('=== "bootstrap"');
   });
 });
 

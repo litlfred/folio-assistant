@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/feature-staging.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/feature-staging.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/feature-staging.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/feature-staging.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/feature-staging.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/feature-staging.md){: .fa-edit-source }
 
 {% raw %}
 # Feature-branch staging
@@ -88,21 +88,44 @@ prepends the `baseurl` to ~235 hrefs per page and the `fa-translation-index`
 island publishes `site.baseurl` to JavaScript. Those are coupled to the
 language switcher and are `g196`'s remaining half — not fixed here.
 
-### 3. Commit SHA stamping
+### 3. Commit SHA stamping — and the four fields staging must NOT write
 
-Both the main site (`docs-site.yml`) and staging sites write `docs/_data/build.yml`:
+Both builds write `docs/_data/build.yml`, and **they do not write the same
+fields.** The difference is not an oversight to tidy up; it is the second half
+of the deduplication above, and restoring it undoes that work silently.
 
-```yaml
-sha: "a1b2c3d4e5f6..."
-short_sha: "a1b2c3d"
-built_at: "2026-09-18T00:30:00Z"
-branch: "feature/update-schedule"
-staging: true                      # false on main
-staging_slug: "feature-update-schedule"
-run_url: "https://github.com/.../actions/runs/12345"
-```
+| | `docs-site.yml` (main) | `feature-staging.yml` (a preview) |
+|---|---|---|
+| `sha`, `short_sha`, `built_at`, `run_url` | **written** | **DELIBERATELY ABSENT** |
+| `branch`, `staging`, `staging_slug`, `pr_number`, `search_index` | — | written |
 
-A Jekyll layout can read `site.data.build.sha` to display the deployed version.
+**Why staging omits them.** `docs/_includes/footer_custom.html` renders
+`short_sha`, `built_at` and `run_url` into the footer of **every** page. A
+fresh `date -u` per run therefore changed every page on every deploy — the
+same defect as the old bash banner, one include along, and it **survived the
+banner fix** because it lives in a Jekyll include rather than in the
+workflow's injection step. Measured on two deploys of one branch three
+minutes apart, both already shipping the constant banner: 613 files,
+1466 insertions, 1465 deletions, **one insertion and one deletion on every
+HTML page**.
+
+The client fills those three in from the **same `staging.json`** the banner
+already fetches — one request, two consumers — and a failed fetch leaves
+Jekyll's `| default: 'dev'` in place rather than blanking the footer, which is
+the same third state §"The facts are fetched, not baked" requires of the
+banner. On main there is one copy and nothing to deduplicate, so the include's
+own reason stands: *"a stale browser cache and a deploy that has not run look
+identical."*
+
+**Adding a per-build field back to the staging stamp will not fail a test.**
+`staging-banner-constant.test.ts` compares the banner **fragment**, which is
+genuinely constant; the footer is not in it. This is the paragraph that guards
+the gap, and bean `g196` records the session that shipped the banner fix, said
+the pages no longer differed across rebuilds, and was proved wrong by reading
+the deploy commits on `gh-pages` rather than the code.
+
+A Jekyll layout can read `site.data.build.sha` to display the deployed
+version — on main. Under a preview, read it from `staging.json`.
 
 ### 4. Before/after comparison
 
@@ -133,7 +156,7 @@ When an author requests a content change:
    `<pages-url>/STAGING/<slug>/`
 6. **Iterate** — each push updates the staging deployment with a new SHA
 
-The BPMN for this workflow is `skills/workflows/content-change-review.bpmn`.
+The BPMN for this workflow is `processes/content-change-review.bpmn`.
 
 ## Staleness detection
 
@@ -189,3 +212,18 @@ so a failed fetch is not evidence either way.
 Full rule and the measured failure:
 [`github-state-inspection`](github-state-inspection.md).
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Staging a feature branch preview, and taking it down](../../processes/feature-staging.html)**.
+
+<img src="../../assets/img/workflows/feature-staging.svg" alt="BPMN diagram: Staging a feature branch preview, and taking it down" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Create feature branch; Build staging site; Deploy to STAGING/<slug>/; Comment staging URL on PR; Remove STAGING/<slug>/ |
+| [CRDM Phase 6 — implement, MVP, acceptance](../../processes/crdm-deliver.html) | Deploy the MVP to staging |
+| [Publishing the docs site, and keeping the previews alive](../../processes/docs-site-publish.html) | Restore the OPEN PRs' staging previews |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Build the docs site Jekyll · TypeDoc · KG export; Publish to STAGING/&lt;slug&gt;; Derive the slug from the head ref |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | MVP: build the candidate on a staging branch |
+

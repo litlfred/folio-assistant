@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/todo-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/todo-manager.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -146,6 +146,58 @@ just clutter:
 
 The runaway loop is not something a doc can prevent; an unguarded `create` is.
 This rule is platform-level so every folio inherits it.
+
+## Check before you UPDATE — `--body-file` REPLACES the body (STRICT)
+
+`beans create` is not idempotent; `beans update` is not additive. They are
+different failures and both cost a durable artefact, so they sit together.
+
+**A bean's body is an append-only record of who found what, when.** Every note
+in it is dated and signed, and later notes cite earlier ones — the closing note
+on `gjli` opens *"the 2026-09-19 note above did"*. Replace the body and you
+have not edited a field; you have deleted findings that other beans, commits
+and issues point at.
+
+`beans update` offers four ways to write one, and **only one of them appends**:
+
+| flag | what it does |
+|---|---|
+| `--body-append <text>` \| `--body-append -` | **appends.** `-` reads stdin |
+| `--body-file <path>` | **REPLACES the whole body** with the file |
+| `--body <text>` \| `--body -` | **REPLACES** |
+| `--body-replace-old/-new` | replaces one substring; leaves the rest |
+
+Measured 2026-09-22 on a scratch store: a bean carrying two notes, given
+`--body-file` with a third, kept the third alone. **Exit 0, no warning, no
+diff, no prompt.** Nothing in the output distinguishes it from an append.
+
+**For a long, multi-paragraph note, use `--body-append -`:**
+
+```bash
+beans update <id> --status completed --body-append - <<'NOTE'
+_2026-09-22T06:51:22Z_ — what you found, and how you know it.
+NOTE
+```
+
+That is the form the long-note case actually needs, and naming only
+`--body-append "Your note"` is why this skill did not prevent the loss it is
+now recording: an agent with four paragraphs to write reaches past an inline
+string argument for the flag that takes a **file**, and `--body-file` is
+sitting right there, one letter's difference from `--body-append`, doing
+something else entirely. (`beans create` **rejects** `--body-file -` with a
+heredoc — bean `5wrg` found that separately. So the two subcommands disagree
+about the same flag name, which is one more reason not to reach for it.)
+
+The timestamp prefix is an **authored convention, not a CLI feature** — no flag
+adds it. Write it yourself or the note joins the previous paragraph undated.
+
+**Recovery, if it has already happened.** The store is committed, which is the
+whole reason this is survivable: `git show HEAD:<bean-file>` returns the body
+as of the last commit, and the lost notes can be reassembled with the new front
+matter. Recover from **git**, not from your own scrollback — a transcript is a
+copy you made, and the repository is the artefact. Then say plainly what was
+lost and restored; a silent repair leaves the next reader unable to tell a
+reconstruction from an original.
 
 ## WHICH parent — the criterion nobody wrote down
 
@@ -316,7 +368,7 @@ defect a test had been written to catch.
 **2. Undoing a decision that was recorded elsewhere.** The expensive one.
 `sa8y`'s *"the three unbound lanes get roles"* reads like a gap. The roles
 exist; what is missing is `lanes`, and its absence is deliberate —
-`cat-bootstrap/skills/roles/roles.json` carries a `_lanes_comment` explaining that
+`bootstrap/scenarios/roles.json` carries a `_lanes_comment` explaining that
 binding them mints three dangling links in the root's graph, with bean `pve3`
 owning the question. **Doing the obvious thing would have re-created the exact
 shape of the wrong fix `sa8y` exists to record.**
@@ -363,7 +415,10 @@ You can map out sequence blockers using:
 **3. Updating Status & Adding Comments**
 - When starting work: `beans update <id> --status in-progress`
 - When completed: `beans update <id> --status completed`
-- To add notes or discussion: `beans update <id> --body-append "Your note"`
+- To add notes or discussion: `beans update <id> --body-append "Your note"`,
+  or `--body-append -` with a heredoc when it runs to paragraphs. **Never
+  `--body-file`** — it replaces the whole body, silently, exit 0:
+  §"Check before you UPDATE".
 
 ## Archiving — two dispositions, and they answer different questions
 
@@ -379,7 +434,7 @@ skills to explain in context of larger process."*
 
 | | **a per-activity op** | **a periodic sweep** |
 |---|---|---|
-| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| what it is | a step inside one process — a fourth `<cat-harness.processes:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
 | the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
 | what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
 | what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
@@ -419,7 +474,7 @@ asked for the sweep by hand.
 
 **Neither disposition is built yet**, and the first question is which —
 bean `folio-assistant-m8gz`, analysis in
-`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+`cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
 owner's word and `beans archive`, run deliberately. Note the CLI prints
 `.beans/archive/` but honours `path:` from `.beans.yml`; here that means
 `beans/defs/archive/`.
@@ -473,3 +528,24 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
   even when the `beans` CLI is absent.
 - `scripts/install-beans.sh` — provisions the CLI.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 2 · Seed the work plan |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 2 · Seed the work plan |
+| [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Check before you create (exact-title search); Create the bean (agent CLI, not an engine op); Work, keeping the body current (this is 'edit'); Complete (no unchecked todos left); Scrap with reasons NEVER delete |
+| [Code change and review](../../processes/code-change-review.html) | Record what was done, and close |
+| [Content Change and Review](../../processes/content-change-review.html) | Open the branch-watch bean; Note the main-branch watch |
+| [Content lifecycle](../../processes/content-lifecycle.html) | Seed the work plan; File feedback as beans |
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Phase 5: Create beans |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Record the gap as a bean |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Open or claim the release bean; Open beans for the change requests; Close the release beans |
+| [Editing and HCI validation](../../processes/editing-hci-validation.html) | Claim or open the bean; Log findings on the bean; Resolve or re-open the bean |
+| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Open a bean for the unverified citation; Record the evidence gap |
+| [Getting started](../../processes/getting-started.html) | Seed the work plan |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Log the environment error on the bean; Log findings on the bean; File QC findings as beans |
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Seed the work plan |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | File QC findings as beans |
+

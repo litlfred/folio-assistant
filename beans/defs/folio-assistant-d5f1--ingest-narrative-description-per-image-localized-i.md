@@ -31,7 +31,7 @@ transcription of the source, and the two have very different standing.
 Each image in `manifest.jsonld` has a description per configured language, each
 stamped with its author, and the PDF-extraction path produces them too.
 
-Diagram: `skills/workflows/ingest-derive-content.bpmn`, `Task_Image`.
+Diagram: `processes/ingest-derive-content.bpmn`, `Task_Image`.
 
 ## 2026-09-19 — measured before building, and it changes the design
 
@@ -86,8 +86,11 @@ A decision on Python dependencies (see the session report). `pypdf` + `Pillow`
 were installed to take these measurements and then **uninstalled**, so the
 environment does not quietly carry deps CI lacks.
 
-_2026-09-19T16:20Z_ — **Blocked on `folio-assistant-68dt`** (declare Python
-dependencies and install them in CI).
+_2026-09-19T16:20Z_ — a block was recorded here against
+`folio-assistant-68dt` (declare Python dependencies and install them in CI).
+**NOT blocked on `folio-assistant-68dt` as of 2026-09-20** — see the entry below, which already recorded the unblock; this
+line is corrected in place because a reader hits it first and a later
+contradiction does not undo a live assertion.
 
 - **waits on**: a working backend for images out of PDFs that CI also has. Measured absent
   2026-09-19; `pip` reaches an index but CI installs only `ruff`, so anything

@@ -1,3 +1,8 @@
+---
+input: schemas/skills/terminology-management/input.schema.json
+output: schemas/skills/terminology-management/output.schema.json
+---
+
 # terminology-management
 
 > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` ·

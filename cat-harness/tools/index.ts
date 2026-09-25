@@ -25,6 +25,7 @@ import { defineTool, type ToolDefinition } from "../schemas/tool.js";
 import { toolTypeIri } from "../schemas/tool-types.js";
 import { mcpTools } from "./mcp.js";
 import { sessionTools } from "./sessions.js";
+import { viewerTools } from "./viewers.js";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 
 // The INSTANCE root — `<repo>/cat-harness`, where `harness.json` lives.
@@ -73,9 +74,9 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Bean `3jj9`, and the owner's ruling that human/agent and agent/agent
     // interaction is documented as a skill plus a tool. The SKILL lives in
-    // `cat-bootstrap/skills/discussion.md`, because an Initiator must be able to
+    // `bootstrap/skills/discussion.md`, because a Bootstrapping Agent must be able to
     // READ it with nothing installed; the typed node lives here, because a
-    // Tool is cat-harness's vocabulary and cat-bootstrap may not import it.
+    // Tool is cat-harness's vocabulary and bootstrap may not import it.
     //
     // `invoke: { manual: true }` — "performed by a person following the
     // skill, with no command", and the `beans-manual` precedent is explicit
@@ -83,7 +84,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // unfinished record. It is the honest declaration: there is no binary and
     // no endpoint, the mechanism is putting a question to a participant and
     // receiving an answer. Declaring a shell or an MCP name would assert
-    // machinery that is not there, and an Initiator that trusted it would be
+    // machinery that is not there, and a Bootstrapping Agent that trusted it would be
     // stuck at the first step of `initialize-harness` — the step this exists
     // to unblock. (`conversation: true` was the first draft; `tsc` refused it,
     // correctly — a new invoke kind for one tool is a vocabulary change, and
@@ -94,6 +95,63 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // settles the matter. The output is a document conforming to
     // `discussion.output.schema.json`, which is what makes the task checkable
     // rather than "we discussed it".
+    // `folio-block-qa-summary` — bean `qbfi`, option 2. The review page's
+    // heat map reads a folio's QA verdicts from a PUBLISHED summary. This
+    // reads the committed `block-qa/v1` sidecars and runs no checker.
+    defineTool({
+      id: "folio-block-qa-summary",
+      title: "Folio block QA summary",
+      description:
+        "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/publish-block-qa.ts" },
+      io: {
+        inputs: [
+          { name: "folio", schema: t("RepoPath"), required: true, arg: { flag: "--folio" }, description: "The folio's `folio` graph directory." },
+          { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write `block-qa.json`." },
+          { name: "repo", schema: t("RepoPath"), required: false, arg: { flag: "--repo" }, description: "The folio's instance root, where verdicts are anchored. Default: found from `folio` exactly as the QA sweep finds it." },
+        ],
+        outputs: [
+          { name: "block-qa", schema: t("RepoPath"), description: "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr." },
+        ],
+      },
+      satisfies: ["review-heatmap"],
+      selection: {
+        when: "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
+        limits:
+          "Reports the LAST sweep: in a staging build, the sweep the job ran just before it (bean tw61); otherwise the committed verdicts. A folio never swept reads unaudited throughout. The instance root is found from --folio exactly as the sweep finds it, so a folio in a subfolder is read at its own root; the folio directory is read second, for folios swept before bean s3p2's fix.",
+        cost: "One text walk of the folio and one read per sidecar. No network.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
+      id: "folio-block-screenshots",
+      title: "Folio block screenshots",
+      description:
+        "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/block-screenshots.ts" },
+      io: {
+        inputs: [
+          { name: "changeset", schema: t("RepoPath"), required: true, arg: { flag: "--changeset" }, description: "The preview's `changeset.json`: which blocks changed, and their kind on each side." },
+          { name: "base", schema: t("RepoPath"), required: false, arg: { flag: "--base" }, description: "The published main site, as a directory (the publish branch's root)." },
+          { name: "head", schema: t("RepoPath"), required: false, arg: { flag: "--head" }, description: "The staging build's site directory." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them." },
+          { name: "count", schema: t("Flag"), required: false, arg: { flag: "--count" }, description: "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work." },
+        ],
+        outputs: [
+          { name: "visual-diff", schema: t("RepoPath"), description: "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr." },
+        ],
+      },
+      satisfies: ["visual-diff"],
+      selection: {
+        when: "A staging build changed a figure, diagram, table, equation or simulator, whose markup diff says little, and the reviewer needs to see before and after.",
+        limits:
+          "The number is how MUCH changed, never whether the change is right. A block's picture is its anchor down to the next anchor, so a page whose anchors are missing or misplaced pictures the wrong region. Pictures are of the light theme.",
+        cost: "A Chromium launch and two page loads, one screenshot and one canvas compare per visual block. Nothing when no visual block changed.",
+      },
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
     defineTool({
       id: "discuss",
       title: "discussion",
@@ -113,7 +171,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       satisfies: ["discussion"],
       selection: {
         when:
-          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
+          "A fact is needed that no file in reach holds — which harness, or which repositories. Narrow the candidates from context first; a repository already carrying `cat-harness/cat-harness.json` is not a blank slate, and a question the agent could have answered itself wastes the one it is entitled to.",
         limits:
           "It cannot manufacture an answer. A participant may decline, and that is `outcome: unsettled` with what is still open — not an error and not a default. An agent that reaches for a documented default because nobody replied has produced a guess.",
         cost: "One round trip through a person's attention, which is the most expensive input in the system and the reason the skill's rule is to ask once.",
@@ -468,7 +526,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "problems", schema: t("Text"), description: "Sources that could not be read, counted rather than silently omitted." },
         ],
       },
-      satisfies: ["kg-export"],
+      // Bean `n350`: the Tool that publishes bootstrap's graph, so it also
+      // satisfies the two skills that govern that graph. They live in
+      // `bootstrap/skills/`; `check-tools` resolves them across instances.
+      satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
       // No `alternativeTo`, deliberately. The four siblings sharing this skill
       // are COMPLEMENTARY steps — export, then publish, then serve — not four
       // ways to do one thing, and the schema's own note on that field says a
@@ -821,6 +882,28 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun", "chromium"], network: false },
     }),
 
+    // Wireframes (issue #1023): the mechanical half of `wireframe-design-review`.
+    // It records per-viewport pass/fail entries and never a score, because the
+    // `wiregen` methodology adopts the structure of its source's rating and
+    // refuses the arithmetic.
+    defineTool({
+      id: "wireframe-check",
+      title: "Wireframe check at web and mobile viewports",
+      description:
+        "Render each mid-fidelity wireframe candidate at a web viewport (1280x800) and a mobile viewport (390x844). For each viewport it records `script` entries for renders, no-overflow and no-placeholder, each pass or fail with a note. It writes a screenshot per viewport and a report.json, and exits non-zero on any fail.",
+      install: { none: true },
+      invoke: { shell: "bun run wireframe:check" },
+      io: {
+        inputs: [
+          { name: "candidates", schema: t("RepoPath"), required: true, repeated: true, arg: { positional: 0 }, description: "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)." },
+          { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where screenshots and report.json go; default .build/wireframes." },
+        ],
+        outputs: [{ name: "report", schema: t("RepoPath"), description: "report.json: per candidate, per viewport, per criterion. The screenshots are beside it." }],
+      },
+      satisfies: ["wireframe-design-review"],
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The site's visual assets, which had no SKILL until 2026-09-20 ─────
     //
     // These two were blocked rather than missing. Both are committed, published,
@@ -840,6 +923,64 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They are siblings rather than alternatives: one renders theme tokens and
     // the other avatar glyphs, and a caller wanting either is not served by the
     // other.
+    // The two UML generators (bean `19cc`). Siblings rather than alternatives:
+    // one draws every declared sub-graph from the registry, the other draws
+    // the harness object model with its relationships, and neither covers
+    // the other.
+    defineTool({
+      id: "uml-overview",
+      title: "UML overview per named sub-graph",
+      description:
+        "Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.",
+      install: { none: true },
+      invoke: { shell: "bun run uml:overview" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any diagram, SVG or page is stale or orphaned, instead of writing." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "uml/overview/ (.puml and .mmd), their SVG renderings, and the docs/uml/overview/ pages that show them." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "uml-object-model",
+      title: "Harness object model as PlantUML",
+      description:
+        "Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-object-model-uml.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if the committed diagram is stale. Needs the beans CLI; without it the result is could-not-check (exit 2)." },
+        ],
+        outputs: [{ name: "diagram", schema: t("RepoPath"), description: "The object-model diagram, in the instance's declared uml directory." }],
+      },
+      satisfies: ["uml-overview"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "content-graph-uml",
+      title: "A paper's block graph as UML",
+      description:
+        "Draw a paper's block graph from buildContentGraph: chapters as packages, editorial edges (uses / interprets) solid and formal Lean edges (type / value) dashed purple, never one derived from the other, and each block filled by its formalization status from proof-objects.json when given. One diagram for the paper and one per chapter, each in portrait and landscape, stamped with its source's hash. Run from a folio: the platform carries no paper.",
+      install: { none: true },
+      invoke: { shell: "bun run content:graph:uml" },
+      io: {
+        inputs: [
+          { name: "root", schema: t("RepoPath"), required: true, arg: { flag: "--root" }, description: "The folio's content directory, where the block manifests are." },
+          { name: "out", schema: t("RepoPath"), required: true, arg: { flag: "--out" }, description: "Where to write the .puml files and their SVGs." },
+          { name: "status", schema: t("RepoPath"), required: false, arg: { flag: "--status" }, description: "proof-objects.json, for status fills. Without it every block is drawn unfilled." },
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if a diagram or SVG is stale or orphaned, instead of writing. Needs no Java." },
+        ],
+        outputs: [{ name: "diagrams", schema: t("RepoPath"), description: "content-graph.puml and content-graph/<chapter>.puml, with portrait and landscape SVGs beside them." }],
+      },
+      satisfies: ["graph-rendering", "content-graph"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
     defineTool({
       id: "themes-css",
       title: "Theme stylesheet",
@@ -961,7 +1102,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "bun run ns:export" },
       io: {
         inputs: [
-          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `cat-bootstrap` for the layer that must resolve before anything else does." },
+          { name: "layer", schema: t("NamespaceLayer"), required: false, arg: { flag: "--layer" }, description: "Emit one namespace layer — `bootstrap` for the layer that must resolve before anything else does." },
           { name: "out", schema: t("RepoPath"), required: false, arg: { flag: "--out" }, description: "Where to write; defaults under `_kg/`, which is build output." },
         ],
         outputs: [{ name: "vocabulary", schema: t("RepoPath"), description: "The written namespace document." }],
@@ -1004,6 +1145,31 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       maintains: [
         { source: "schemas/jsonld.ts", artefact: "ns/content/v1.jsonld", format: "json-ld" },
       ],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── Every prefix spoken is bound, and every own prefix is a stub ──────
+    //
+    // Bean `zaqn`. `content-context` above proves the published context
+    // AGREES with its source; it cannot prove the source is right, and it was
+    // not: twenty terms written `folio:` under a binding spelt `fac`, so 1,737
+    // documents expanded to IRIs in a URI scheme called `folio`. This node is
+    // the check that asks the converse of the emission count — the direction
+    // that corrupts data. The discipline is `kg-export` §"A prefix is the stub".
+    defineTool({
+      id: "context-prefixes",
+      title: "JSON-LD prefix check",
+      description:
+        "Check every committed JSON-LD document in both directions: each prefix a context binds is spoken by something (or forward-declared with a reason), each prefix a document SPEAKS as a key or `@type` is bound in its context, each binding onto one of our own namespaces is spelt as that instance's stub, and every plain key in a document on the published content context is a declared term (never descending into an `@json` value). A context it cannot resolve is reported as undetermined, never clean.",
+      install: { none: true },
+      invoke: { shell: "bun run check:context-emission" },
+      io: {
+        inputs: [
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit both reports as JSON instead of the console summary." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "Console (or JSON) report; exit 1 on an unbound prefix, a misspelt own prefix, a silent binding, or an empty corpus." }],
+      },
+      satisfies: ["kg-export"],
       requires: { runtime: ["bun"], network: false },
     }),
 
@@ -1055,6 +1221,35 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         limits:
           "It runs what the workflow declares, so a check CI does not run is a check this does not run — that is the point, not a gap. The default omits the browser jobs; `--all` adds them, and `render:bpmn:check` needs Chromium.",
         cost: "The fast set is about a minute, dominated by `bun test`. `--all` adds a browser render.",
+      },
+    }),
+
+    // ── The gates, on the COMBINED state — bean `nytj` ──────────────────
+    //
+    // `gates` above runs what CI runs, on THIS tree. The failure it cannot
+    // see is the one neither PR evaluates: green on the branch, green on the
+    // base, stale on the two merged. Three times on 2026-09-23.
+    defineTool({
+      id: "gates-merged",
+      title: "Gates on the merged tree",
+      description:
+        "Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.",
+      install: { none: true },
+      invoke: { shell: "bun run check:merged" },
+      io: {
+        inputs: [
+          { name: "base", schema: t("Branch"), required: false, arg: { flag: "--base" }, description: "The base branch to merge with; `main` when omitted. Fetched first." },
+        ],
+        outputs: [{ name: "report", schema: t("Text"), description: "The gate report for the merged tree, or the conflicting paths." }],
+      },
+      satisfies: ["prepare-merge"],
+      requires: { runtime: ["bun"], network: true },
+      selection: {
+        when:
+          "Immediately before asking for a merge, and again if the base has moved since. Not on every push: it is the full gate set, on a second tree.",
+        limits:
+          "It tests the base as fetched NOW; the base can still move before the merge lands. The merge queue (`merge_group:` on the gating workflows, switched on by the owner) is what closes that last gap.",
+        cost: "One full `bun run gates`, plus a worktree; a `bun install` only when the merge changes the lockfile.",
       },
     }),
 
@@ -1348,7 +1543,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       id: "cat-harness-schema",
       title: "Instance declaration schema",
       description:
-        "The zod definition of `harness.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+        "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
       install: { none: true },
       invoke: { shell: "bun run kg:schema" },
       io: {
@@ -1402,11 +1597,11 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in
-    // `cat-bootstrap/`, and that is a limitation rather than a decision. Tool
+    // `bootstrap/`, and that is a limitation rather than a decision. Tool
     // collection is import-bound — `tools/index.ts` merges what it imports —
     // so a Tool node contributed by a nested instance is not reachable from
     // the barrel yet. Bean `gn4l`. When it is, this node moves to
-    // `cat-bootstrap/tools/` unchanged, and nothing that references it by id
+    // `bootstrap/tools/` unchanged, and nothing that references it by id
     // notices.
     defineTool({
       id: "log-message",
@@ -1415,7 +1610,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
       // The destination is a conversation. There is nothing to install and
       // there could not be — that is the property that makes it the arm an
-      // Initiator can always reach.
+      // Bootstrapping Agent can always reach.
       install: { none: true },
       // `manual`, and honestly so. The agent composes the entry and sends it;
       // no command runs. Modelling it as an absent `shell` would have made it
@@ -1520,8 +1715,147 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "issues", schema: t("Text"), description: "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid." },
         ],
       },
-      satisfies: ["content-validate"],
+      satisfies: ["content-validate", "content-validation"],
       requires: { runtime: ["bun"], network: false },
+    }),
+
+    // ── Scripts a skill used to list as its own (#1168, B3) ─────────────────
+    //
+    // Until B3 a skill named its scripts (`SkillDefinition.scripts`), which is
+    // the general node pointing at its dependents: every new script meant an
+    // edit to the skill. Each script that exists is now a Tool that names the
+    // skill it `satisfies`; the entries naming a script that does not exist
+    // (eleven, e.g. `scripts/verify-proofs.sh`) were dropped rather than
+    // modelled, since a Tool whose command is missing is a false claim.
+    defineTool({
+      id: "content-graph-analysis",
+      title: "Editorial content-graph analysis",
+      description:
+        "Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.",
+      install: { none: true },
+      invoke: { shell: "python3 cat-harness/content/pipeline/content-graph-analysis.py" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "The paper directory under the content root. Its default names one folio's paper, which is migration debt: pass it explicitly." },
+          { name: "chapter", schema: t("Slug"), required: false, arg: { flag: "--chapter" }, description: "Restrict the analysis to one chapter directory." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" }, description: "Emit the whole graph as JSON on stdout and exit." },
+          { name: "md", schema: t("Flag"), required: false, arg: { flag: "--md" }, description: "Write the report to /tmp/content-graph-report.md." },
+          { name: "visualise", schema: t("Flag"), required: false, arg: { flag: "--visualise" }, description: "Render the Graphviz SVGs (needs graphviz)." },
+          { name: "proposals", schema: t("Flag"), required: false, arg: { flag: "--proposals" }, description: "Write concrete reorganisation proposals to /tmp/content-graph-proposals.md." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "The ranked findings, or the graph as JSON with `--json`." },
+        ],
+      },
+      satisfies: ["content-graph"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "paper-latex-build",
+      title: "Paper build to LaTeX chapters",
+      description:
+        "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/build.ts" },
+      io: {
+        inputs: [
+          { name: "paperManifest", schema: t("RepoPath"), required: false, arg: { positional: 0 }, description: "The paper's `<paper>.ts` manifest; absent, the folio's single paper." },
+          { name: "outDir", schema: t("RepoPath"), required: false, arg: { flag: "--out-dir" }, description: "Where to write the chapters; absent, `chapters/` at the content root." },
+        ],
+        outputs: [
+          { name: "chapters", schema: t("RepoPath"), description: "One `.tex` per chapter under the output directory." },
+        ],
+      },
+      satisfies: ["content-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "pages-index",
+      title: "Published-paper index page",
+      description:
+        "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/generate-index.py" },
+      io: {
+        inputs: [
+          { name: "outputHtml", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "Where to write index.html." },
+          { name: "paperEmbed", schema: t("RepoPath"), required: true, arg: { positional: 1 }, description: "The file the Paper tab embeds, typically the PDF." },
+          { name: "pdf", schema: t("RepoPath"), required: true, arg: { flag: "--pdf" }, description: "The PDF filename used in download links." },
+          { name: "md", schema: t("RepoPath"), required: false, arg: { flag: "--md" }, description: "A Markdown rendering to link, when there is one." },
+          { name: "visualizer", schema: t("RepoPath"), required: false, arg: { flag: "--visualizer" }, description: "The visualizer page for the second tab." },
+          { name: "branch", schema: t("Branch"), required: false, arg: { flag: "--branch" }, description: "The branch the build is from." },
+          { name: "repo", schema: t("RepoFullName"), required: false, arg: { flag: "--repo" }, description: "owner/repo, for links back to the source." },
+          { name: "sha", schema: t("CommitSha"), required: false, arg: { flag: "--sha" }, description: "The commit the build is from." },
+        ],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "The written index.html." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-dependency-graph",
+      title: "Proof dependency graph",
+      description:
+        "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/generate_dependency_graph.py" },
+      io: {
+        inputs: [
+          { name: "manifest", schema: t("RepoPath"), required: false, arg: { flag: "--manifest" }, description: "The proof-objects.json to read." },
+          { name: "output", schema: t("RepoPath"), required: false, arg: { flag: "--output" }, description: "Where to write the SVG." },
+          { name: "pdfBaseUrl", schema: t("Url"), required: false, arg: { flag: "--pdf-base-url" }, description: "The published PDF, for the anchor links." },
+          { name: "dotOnly", schema: t("Flag"), required: false, arg: { flag: "--dot-only" }, description: "Write DOT source instead of rendering." },
+        ],
+        outputs: [
+          { name: "graph", schema: t("RepoPath"), description: "The SVG, or DOT with `--dot-only`." },
+        ],
+      },
+      satisfies: ["docs-generation", "proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-objects-extract",
+      title: "Proof-object extraction",
+      description:
+        "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/extract_proof_objects.py" },
+      io: {
+        inputs: [
+          { name: "output", schema: t("RepoPath"), required: false, arg: { flag: "--output" }, description: "Where to write proof-objects.json." },
+        ],
+        outputs: [
+          { name: "manifest", schema: t("RepoPath"), description: "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty." },
+        ],
+      },
+      satisfies: ["proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
+    }),
+
+    defineTool({
+      id: "proof-status-update",
+      title: "Proof status from a Lean build",
+      description:
+        "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+      install: { none: true },
+      invoke: { shell: "python3 .github/scripts/update_proof_status.py" },
+      io: {
+        inputs: [
+          { name: "manifest", schema: t("RepoPath"), required: false, arg: { flag: "--manifest" }, description: "The proof-objects.json to update." },
+          { name: "buildLog", schema: t("RepoPath"), required: false, arg: { flag: "--build-log" }, description: "The Lean build log; stdin when absent." },
+        ],
+        outputs: [
+          { name: "manifest", schema: t("RepoPath"), description: "proof-objects.json with statuses updated in place." },
+        ],
+      },
+      satisfies: ["proof-status-tracking"],
+      requires: { runtime: ["python3"], network: false },
     }),
 
     // ── The evidence path, and the check that is NOT a computation ────────
@@ -1651,7 +1985,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // So of the three dispatch points the bean proposed:
     //
     //   · the BPMN trigger ALREADY EXISTS — `Task_RoundTripQA` carries
-    //     `<folio:skill ref="translation-manager"/>`, so `workflow_next` already
+    //     `<bootstrap.processes:skill ref="translation-manager"/>`, so `workflow_next` already
     //     hands an agent the skill. (A `folio:skill` names a SKILL, never a
     //     script; the mechanism is what this node is for.)
     //   · a `qa-sweep` axis would be WRONG, not merely awkward: the sweep cannot
@@ -1801,6 +2135,151 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // `mcp.ts` — see that file's header on why the two are kept apart.
     ...sessionTools(t),
 
+    // The viewer generators, each declaring the graph kinds it renders
+    // (#1168 B7a). A sibling module for the same reason as `sessions.ts`.
+    ...viewerTools(t),
+
     ...mcpTools(t),
+    /* ── AUDIO TRANSCRIPTION — OPTIONS, DECLARED AND NOT MATERIALIZED ──────
+     *
+     * Bean `r279`. Owner, 2026-09-23, asked which speech-to-text backend to
+     * adopt: *"describe options as Tools fulfilling task but dont need to
+     * materialize"*. So the three candidates are declared as Tool nodes —
+     * substitutable siblings, each with when/limits/cost — and NONE is in
+     * `schemas/python-deps.ts`, `requirements.txt` or CI. There is no audio in
+     * `uploads/` or `library/` to transcribe (measured 2026-09-20 and still
+     * true); choosing one and installing it is `1r0p`'s first step when the
+     * first recording arrives. `install.cli` says how, and is not run. */
+    // `package-release` (bean `v7bg`, owner 2026-09-24: "Yes, general skill").
+    // Two mechanisms for the same four steps. release-please is DECLARED, not
+    // configured here: `.github/workflows/release-please.yml` is dispatch-only
+    // with no config and zero tags (bean `frq2`), so this node says what it
+    // would do and what it needs, and claims no release it has made.
+    defineTool({
+      id: "release-please",
+      title: "release-please (declared, not configured here)",
+      description:
+        "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
+      invoke: { shell: "release-please release-pr" },
+      requires: { runtime: ["node", "release-please"], network: true },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo-url" }, description: "owner/name of the repository whose packages are released." },
+          { name: "config", schema: t("RepoPath"), required: false, arg: { flag: "--config-file" }, description: "The release config. Must exist: a missing one falls back to defaults that find nothing." },
+        ],
+        outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["package-release-manual"],
+      selection: {
+        when:
+          "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
+        limits:
+          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`).",
+        cost: "Not configured here. One config file and one manifest per repository; each run is a few seconds of API calls.",
+      },
+    }),
+    defineTool({
+      id: "package-release-manual",
+      title: "Package release by hand",
+      description:
+        "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "package", schema: t("PackageName"), required: true, description: "The package being released." },
+        ],
+        outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["release-please"],
+      selection: {
+        when: "A first release, a rare one, or a repository whose commit messages carry no conventional prefixes.",
+        limits: "Every step is a person's, so each is a place to slip; the skill's rules (build first, no reused version) are checked by nobody.",
+        cost: "A few minutes of a person's time per release.",
+      },
+      requires: {},
+    }),
+
+    defineTool({
+      id: "transcribe-whisper-cpp",
+      title: "Transcribe audio — whisper.cpp (option, not installed)",
+      description:
+        "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      install: { cli: "build whisper.cpp from source and download a ggml model (tiny ≈ 75 MB, base ≈ 142 MB)" },
+      invoke: { shell: "whisper-cli" },
+      requires: { runtime: ["whisper-cli"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { flag: "-f" }, description: "The recording, under the declared `uploads` graph." },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "-l" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Timed transcript under the entry's `transcript/`." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-faster-whisper", "transcribe-vosk"],
+      selection: {
+        when:
+          "The default candidate: offline, no Python, good accuracy from the tiny model up, and timestamps per segment — what a transcript that can be translated segment by segment needs.",
+        limits:
+          "A C++ build and a model file per container; weights are either vendored (repository size) or fetched at run time (a third-party host in the gate, the `5rfy` shape). Speaker labels are not included.",
+        cost: "Not installed. Build ≈ 1–2 min; tiny model ≈ 75 MB. CPU transcription runs near real time for tiny, slower for larger models.",
+      },
+    }),
+
+    defineTool({
+      id: "transcribe-faster-whisper",
+      title: "Transcribe audio — faster-whisper (option, not installed)",
+      description:
+        "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      install: { cli: "pip install faster-whisper (model weights download on first use)" },
+      invoke: { shell: "python3 -m faster_whisper" },
+      requires: { runtime: ["python3", "faster-whisper"], network: true },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 } },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "--language" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath") }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-whisper-cpp", "transcribe-vosk"],
+      selection: {
+        when:
+          "When the ingestion pipeline should stay in Python beside the PDF arms and `schemas/python-deps.ts` is the one place dependencies are declared. Same models as whisper.cpp, typically faster on CPU.",
+        limits:
+          "Weights download on first use unless pre-fetched — a network dependency in a gate that must run offline. A heavier wheel set than anything in `requirements.txt` today.",
+        cost: "Not installed. A pip install of several wheels plus the model; the CI install time must be re-measured before it is gated (`r279`).",
+      },
+    }),
+
+    defineTool({
+      id: "transcribe-vosk",
+      title: "Transcribe audio — vosk (option, not installed)",
+      description:
+        "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      install: { cli: "pip install vosk, plus a per-language model (small ≈ 40–50 MB)" },
+      invoke: { shell: "vosk-transcriber" },
+      requires: { runtime: ["python3", "vosk"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { flag: "-i" } },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "-l" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Written where `-o` names." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-whisper-cpp", "transcribe-faster-whisper"],
+      selection: {
+        when:
+          "When size and speed matter more than accuracy: the lightest offline option, with a separate small model per language.",
+        limits:
+          "Noticeably lower accuracy than the Whisper family on varied recordings; one model per language to fetch and keep.",
+        cost: "Not installed. Small wheel; ≈ 40–50 MB per language model.",
+      },
+    }),
+
   ];
 }

@@ -1,0 +1,22 @@
+classDiagram
+  direction TB
+  namespace bootstrap__models {
+    class bootstrap_models_Model["Model"] {
+      <<json: ModelRegistrySchema>>
+      id [1] string
+      title [1] string
+      preferredLanguages [0..*] string[]
+      validation [1] unverified | self-reported | human-validated
+      validatedBy [0..1] string
+      validatedOn [0..1] string
+      note [0..1] string
+    }
+    class bootstrap_models_ModelRegistry["ModelRegistry"] {
+      <<json: ModelRegistrySchema>>
+      $schema [1] 'folio-model-registry/v1'
+      models [0..*] Model[]
+    }
+  }
+  bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
+  cssClass "bootstrap_models_Model" fa_uml_kind_models
+  cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models

@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/upstream-pin-watch.bpmn
 # Upstream pin watchdog — the detection half of `upstream-version-adoption`.
 #
 # `docs/_config.yml` used to carry `remote_theme: just-the-docs/just-the-docs`
@@ -12,7 +13,7 @@
 # control. This maintains ONE issue, edited in place, closed automatically —
 # state on the front page rather than another item in an inbox.
 #
-# It never moves a pin. Adoption is `skills/workflows/upstream-version-adoption.bpmn`,
+# It never moves a pin. Adoption is `processes/upstream-version-adoption.bpmn`,
 # and the accepting step there is a `bpmn:userTask` in a person-only lane.
 #
 # Cost: this repository is PUBLIC, so GitHub-hosted runners are free. One ~30s
@@ -38,6 +39,7 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Check every pinned upstream dependency
     runs-on: ubuntu-latest
     timeout-minutes: 10

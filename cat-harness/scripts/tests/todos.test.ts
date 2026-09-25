@@ -23,13 +23,13 @@ import { loadProcessModel } from "../../src/workflow/process-model.js";
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
     const d = readDeclaration(ROOT);
-    const entry = d?.directories?.find((x) => x.graphs?.includes("todos"));
+    const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
     expect(entry?.path).toBe("todos/");
   });
 
   test("the declared directory EXISTS — declare only what exists", () => {
-    expect(existsSync(TODO_ROOT)).toBe(true);
-    expect(existsSync(join(TODO_ROOT, TODO_GRAPH_FILE))).toBe(true);
+    expect(existsSync(TODO_ROOT())).toBe(true);
+    expect(existsSync(join(TODO_ROOT(), TODO_GRAPH_FILE))).toBe(true);
   });
 
   test("its own declaration parses, and names every node", () => {
@@ -39,7 +39,7 @@ describe("the declaration and the directory agree", () => {
     // its Diagram Interchange, where each note was drawn. They share a `path`
     // deliberately, because the layout belongs beside the thing it lays out.
     const g = parseTodoGraph(
-      JSON.parse(readFileSync(join(TODO_ROOT, TODO_GRAPH_FILE), "utf8")),
+      JSON.parse(readFileSync(join(TODO_ROOT(), TODO_GRAPH_FILE), "utf8")),
     );
     expect(g.directories.map((d) => d.id).sort()).toEqual([
       "boards",
@@ -132,7 +132,7 @@ describe("the published process hierarchy", () => {
 
   test("the key order is the diagrams' sorted FILENAMES, not the directory's own order", async () => {
     // Reproducibility, and it is not theoretical. `processHierarchy` builds
-    // this object by walking `skills/workflows/`, and `readdirSync` under Bun
+    // this object by walking `processes/`, and `readdirSync` under Bun
     // returns RAW directory order — on ext4, a hash of each filename against
     // the directory's own seed. `JSON.stringify` preserves insertion order, so
     // the published index came out byte-different on every checkout, and
@@ -143,10 +143,10 @@ describe("the published process hierarchy", () => {
     // PR that un-folded it. Asserting the ORDER rather than merely the set is
     // the point — a set assertion passes under either enumeration.
     // EVERY declared knowledge-graph root, via the same helper the generator
-    // uses — not the literal `skills/workflows`.
+    // uses — not the literal `processes`.
     //
     // This hardcoded that path and broke the moment a second root existed:
-    // `cat-bootstrap/workflows/cat-bootstrap.bpmn` is in the published hierarchy and
+    // `bootstrap/processes/bootstrap.bpmn` is in the published hierarchy and
     // was not in this expectation, so the test called the GENERATOR wrong for
     // correctly reading the declaration. A test that pins an order must derive
     // it from the same source as the thing it pins, or it pins the past.

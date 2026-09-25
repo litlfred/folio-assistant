@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/rendering-fixes.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/rendering-fixes.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/rendering-fixes.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/rendering-fixes.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/rendering-fixes.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/rendering-fixes.md){: .fa-edit-source }
 
 {% raw %}
 # Rendering Fixes
@@ -385,7 +385,7 @@ defaultView: {
 ```
 
 The path is relative to the **folio's** root, and the directory is whatever
-that folio declares as `simulators.dir` in `harness.config.json` — not a
+that folio declares as `simulators.dir` in `<name>.config.json` — not a
 platform path. It read `folio-assistant/simulators/…` until 2026-09-19, when
 the simulators moved to the folio that owns them.
 

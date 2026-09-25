@@ -15,6 +15,8 @@
  *
  *   bun run deps:python          # write both files
  *   bun run deps:python:check    # fail if either is stale
+ *
+ * @covers code
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -66,6 +68,36 @@ export function requirementsBody(tier: DepTier): string {
   return [...head, ...body].join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
 }
 
+/**
+ * Does the Dockerfile install the DECLARED set, rather than a list retyped
+ * beside it?
+ *
+ * Added 2026-09-21 after the two diverged in silence. The Dockerfile carried a
+ * hand-maintained pip list that omitted 6 of the 10 declared packages —
+ * `cffi`, `cryptography`, `pymupdf`, `pillow`, `pdfminer.six`, `pdfplumber` —
+ * and the omission was invisible because `--check` only ever compared
+ * `requirements.txt` against this schema. Both were internally consistent;
+ * nothing asked whether the IMAGE installed what they agreed on.
+ *
+ * The cost is on `requirements.txt` itself, which has documented it since
+ * 2026-09-19: without `cffi`, importing `cryptography` raises
+ * `ModuleNotFoundError: _cffi_backend` and then panics under pyo3, so every
+ * PDF backend fails at import time. The knowledge was written down and the
+ * image did not read it.
+ *
+ * This asserts the WEAK property deliberately — that the Dockerfile installs
+ * `-r requirements.txt` — rather than parsing its package list. A checker that
+ * re-derived the list would be a second opinion about what is installed, free
+ * to disagree with the file it checks; requiring the generated file to be the
+ * source removes the question instead of answering it twice.
+ */
+export function dockerfileInstallsDeclaredSet(root = ROOT): boolean {
+  const p = join(root, "Dockerfile");
+  if (!existsSync(p)) return true; // no Dockerfile is not a drift finding
+  const df = readFileSync(p, "utf-8");
+  return /pip3?\s+install[^\n]*-r\s+\S*requirements\.txt/.test(df);
+}
+
 export function staleTiers(root = ROOT): DepTier[] {
   return DEP_TIERS.filter((tier) => {
     const p = join(root, requirementsPath(tier));
@@ -83,7 +115,15 @@ if (import.meta.main) {
       console.error("  Run: bun run deps:python");
       process.exit(1);
     }
+    if (!dockerfileInstallsDeclaredSet()) {
+      console.error("✗ the Dockerfile does not install the declared set (`pip install -r requirements.txt`).");
+      console.error("  A list retyped beside the generated one drifts, and did: it omitted cffi,");
+      console.error("  cryptography, pymupdf, pillow, pdfminer.six and pdfplumber. Without cffi,");
+      console.error("  importing cryptography panics and every PDF backend fails at import.");
+      process.exit(1);
+    }
     console.log(`✓ ${DEP_TIERS.length} requirements file(s) current with schemas/python-deps.ts`);
+    console.log("✓ the Dockerfile installs the declared set rather than retyping it");
     process.exit(0);
   }
   for (const tier of DEP_TIERS) {

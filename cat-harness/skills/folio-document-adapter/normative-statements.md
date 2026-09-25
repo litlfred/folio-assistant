@@ -1,3 +1,8 @@
+---
+input: schemas/skills/normative-statements/input.schema.json
+output: schemas/skills/normative-statements/output.schema.json
+---
+
 # normative-statements
 
 Carry a **recommendation, requirement or rule** in a document folio — the

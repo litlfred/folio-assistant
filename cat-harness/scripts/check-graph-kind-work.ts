@@ -33,10 +33,10 @@
  * mandatory.
  *
  * @module scripts/check-graph-kind-work
+ * @covers cat-harness
  */
 
 import { defaultGraphKinds, undecidedWorkKinds } from "../schemas/cat-harness.js";
-import "../schemas/folio-graph-kind.js";
 
 export function formatReport(undecided: readonly string[], stateKinds: number): string {
   const out: string[] = ["Graph kinds — every `state` kind says whether it records work", ""];

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/q-usage-watcher.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/q-usage-watcher.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/q-usage-watcher.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/q-usage-watcher.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/q-usage-watcher.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/q-usage-watcher.md){: .fa-edit-source }
 
 {% raw %}
 # /q-usage-watcher
@@ -15,7 +15,7 @@ parent: Skill instructions
 > **Folio-optional axis.** The `q-usage` criteria encode a substrate
 > deformation parameter `q` and its regimes — one folio's mathematics,
 > not a platform concern. They are registered only when the folio opts
-> in via `harness.config.json`:
+> in via `<name>.config.json`:
 >
 > ```json
 > { "qaAxes": ["q-usage"] }

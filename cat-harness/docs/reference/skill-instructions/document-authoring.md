@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-document-adapter/document-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/document-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/document-authoring.html).
+> Generated from [`cat-harness/skills/folio-document-adapter/document-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/document-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/document-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-document-adapter/document-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # document-authoring
@@ -51,7 +51,7 @@ If you find yourself wanting a `theorem`, you want one of two things:
   `normative-statements` for how to carry one in this profile, and read it
   before reaching for a math kind.
 - an actual theorem — in which case this folio is a paper. Change
-  `harness.config.json` to `"contentType": "paper"` deliberately, and know that
+  `<name>.config.json` to `"contentType": "paper"` deliberately, and know that
   you are taking on Lean and TeX as dependencies.
 
 ## Adding a block
@@ -97,3 +97,10 @@ lives in the **folio repo**, as content. This platform holds the formalism.
 If you are about to add a domain constant or a subject-specific rule to
 folio-assistant, you are in the wrong repository.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 4 · Author blocks |
+

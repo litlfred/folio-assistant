@@ -115,7 +115,7 @@ Queued per the owner's standing instruction to queue rather than pivot.
 That makes the slot a **consequence of instantiating**, not a thing an instance
 may opt into. Measured against that (`b5f0` §6): the contribution seam already
 exists and already inverts ownership the right way
-(`schemas/sticky-contribution.ts`), and `cat-bootstrap/harness.json` declares its
+(`schemas/sticky-contribution.ts`), and `bootstrap/harness.json` declares its
 own card — but the **root** instance declares no `stickies` at all, and
 `grep -rln "navbar" cat-harness/schemas cat-harness/src` returns nothing.
 
@@ -168,7 +168,7 @@ review comment or a chat panel rather than rendering seven broken images the
 moment it leaves the repository.
 
 **Verified by looking, this session: all seven frame the cat's head and torso.
-None is on scenery.** The tightest are `cat-bootstrap` and `operations` (0.24)
+None is on scenery.** The tightest are `bootstrap` and `operations` (0.24)
 and they read best at 46px; `landing-card` (0.50) carries the most chest.
 
 It PRINTS and never gates, on purpose — it answers a question no assertion can
@@ -203,6 +203,8 @@ Owner, re-asserting the ask in narrower terms:
 - `cat-harness/scripts/harness-tiles.ts` — one tile per initiated harness,
   discovered by scanning the repository root for `harness.json` (this bean's
   question 1, answered: `harness.json` is what names an instance).
+  **↑ SUPERSEDED TWICE — see the 2026-09-22 entry at the end of this bean.
+  `harness.json` no longer exists, and the answer is no longer a filename.**
 - Wired into `scripts/sync-docs-harness.ts`, so it rides the existing
   `docs:harness:check` staleness gate rather than arriving as a second
   generated file with a second gate free to disagree with the first.
@@ -212,13 +214,13 @@ Owner, re-asserting the ask in narrower terms:
   declared hue.
 - 17 tests.
 
-**Measured on this repository: 11 instances, cat-bootstrap last.**
+**Measured on this repository: 11 instances, bootstrap last.**
 
 **Three decisions worth keeping**
 
 1. **"Bootstrap at bottom" is read from the DECLARATION, not from a name.**
-   `cat-bootstrap/harness.json` carries a `renderExemption` whose reason says
-   it in those words — *"cat-bootstrap IS the navbar footer"* — so the ordering
+   `bootstrap/harness.json` carries a `renderExemption` whose reason says
+   it in those words — *"bootstrap IS the navbar footer"* — so the ordering
    is `isExemptFrom(decl, "visualiser")`. It falls out correctly rather than by
    coincidence: an instance exempt from owing a visualiser is exactly an
    instance whose tile has nothing to open.
@@ -239,15 +241,97 @@ territory and is now visible rather than theoretical.
 
 ## What is still THIS bean, after the slice
 
-- [ ] **Dependency ordering.** This slice sorts by name with the declared
-      footer last; the ask says *"do their rendering (in depdendcy ordering)"*.
-      `harness.config.json` carries dependencies and is a different file from
-      `harness.json` — the ordering wants it read.
-- [ ] **Collapsed = info, opened = docs navigation.** A tile is one target
-      today; the ask has two states.
-- [ ] **The display panel** showing an instance's named display subgraphs.
+- [x] **Dependency ordering.** **Built.** `orderTiles` runs
+      `flattenDependencies` over each instance's declared `needs`, reversed so
+      the foundation is at the bottom, with cycles and dangling names falling
+      back to alphabetical rather than blanking the navbar.
+      **This item's stated route was wrong and is corrected below** — `needs`
+      is on the DECLARATION, not in `<name>.config.json`.
+- [x] **Collapsed = info, opened = docs navigation.** **Built** — `<details>`
+      rather than a JS disclosure, so it is keyboard-operable and announces
+      its own state.
+- [x] **The display panel** showing an instance's named display subgraphs.
+      **Built**, and it carries the 2026-09-22 inert-and-labelled ruling.
 - [ ] **A tab for materialised local subgraphs and declared remote graphs**,
-      and opening content indicating local or remote.
+      and opening content indicating local or remote. **Still open, and it is
+      the only one of the four that is.** No remote/local mechanism exists:
+      `remote` appears three times in `docs-ui.js` and not at all in
+      `harness-tiles.ts`.
+
+---
+
+## VERIFIED ON A RENDERED PAGE, 2026-09-22 — three of these four were already built
+
+Stream `10uc` (GOAL 2), session_01SrFVoXeLER715HHQQaK22u. The list above had
+been untouched since 2026-09-20 while `sjic`/#959 and its successors built
+most of it. **That is `k59d`'s defect inside this bean** — the third instance
+this stream has found today, after `p5wm`'s path and `hfkl`'s ruling.
+
+**Verified by BUILDING the site (`bun run preview:site`) and reading the
+output**, not from the generator's JSON and not from a green gate set. That
+distinction is this milestone's own rule and it earned its keep here: two of
+the checks below can only be made on rendered HTML.
+
+### Dependency ordering — the mechanism works; 8 of 19 instances feed it nothing
+
+The live spine, read from the generated model:
+
+    bootstrap → cat-harness → folio-assistant-core → fhir-harness ‖
+    folio-assistant → smart-base → smart-ig ‖ smart-dak ‖ smart-l1 →
+    smart-trust ‖ smart-immunizations
+
+**Measured: 8 of 19 instances declare no `needs`** — `who-iris`, `detangle`,
+`agent-skills`, `kg-navigation`, `large-datasets`, `who-style-guide`,
+`bootstrap-tools`, `folio-assistant-sci`. Each carries the finding *"declares
+no `needs`, so its place in the stack is alphabetical rather than derived"* and
+sits in an undetermined block above the spine — which is the right behaviour
+(`orderTiles` refuses to assert a layer nobody declared; absent is not `[]`).
+
+So this item is **half-delivered in a way neither state captures**: the
+ordering is correct, and **42 % of instances have nothing for it to order by.**
+Authoring those eight is a claim about the layer stack, not a refactor, and it
+is the owner's. **Not guessed here.**
+
+**And this item's own route was wrong.** It said *"`harness.config.json`
+carries dependencies and is a different file from `harness.json` — the ordering
+wants it read."* `needs` is on the **declaration** (`<name>.json`). The
+`dependencies` key in `folio-assistant.config.json` is a different vocabulary
+for a different thing (`{folioAssistant: [{name, path}]}`, one instance only).
+An implementer following this bean would have read the wrong file.
+
+### The display panel, and the inert ruling holding in the real DOM
+
+Counted in the built `index.html`: **34 inert rows** — 18 *"no viewer yet"*,
+14 *"no viewer by design"*, 2 *"staging only"*. **Zero are `<a>`**, which is
+the `gjli` obligation recorded with the ruling and the one claim that cannot
+be checked from the generator, since the element is chosen in the template.
+
+### One thing to know before editing the wording — and my first reading of it was wrong
+
+*"staging only"* is spelled in **three** places: `inertNote`
+(`harness-tiles.ts:456`), `nav_footer_custom.html:282`, and
+`docs-ui.js:8121`.
+
+I first read this as `inertNote`'s dead branch being reached by a different
+speller — contradicting its docstring's *"reached by NOTHING"*. **That was
+wrong, and the docstring is right.** They are two different states:
+
+| | condition | who words it |
+|---|---|---|
+| `inertNote("staging-only")` | a declared viewer that is staging-only **and does not resolve** | `harness-tiles.ts`, tested |
+| the rendered `fsh-guts` row | a viewer that **has a `path`**, is staging-only, on a canonical build | `nav_footer_custom.html`, a literal |
+
+The data confirms it: `fsh-guts` carries `path` **and** `stagingOnly: true` and
+**no `note`**, so `inertNote`'s branch genuinely never fires here, exactly as
+measured.
+
+**What is left is smaller and still real:** two distinct states share three
+words, and the copy a reader actually sees is an untested literal in a
+template, while the copy with two unit tests is on a path production never
+takes. Changing `inertNote`'s wording would alter nothing visible. That is the
+two-spellers class `inertNote` was extracted to end, one surface short.
+Recorded rather than fixed: `nav_footer_custom.html` is `sjic`'s file and this
+is a judgement about wording, not a defect to sweep.
 
 ---
 
@@ -258,9 +342,212 @@ This bean records *"this bean's question 1, answered: `harness.json` is what
 names an instance"*, and `harness-tiles.ts` scans for that filename. The owner
 ruled **REPLACE** on `b5f0` — `<name>.config.json` becomes the single
 declaration and `harness.json` goes — reconfirmed and widened 2026-09-21 to
-cover `cat-bootstrap/` and the `folio-assistant-*` instances.
+cover `bootstrap/` and the `folio-assistant-*` instances.
 
 The scanner is repointed rather than defended. **Not edited here**: this is a
 sibling's bean, the ruling is recorded on `b5f0` where it was asked, and this
 note exists so the next agent reading question 1 does not implement against a
 superseded answer. The measured cost and the ordering are on `b5f0`.
+
+---
+
+*2026-09-22, session_01V4NobpyNLPku8t7aM7DFqF — **a new owner requirement for
+this bean, with the accessor that already answers it.***
+
+Owner, 2026-09-22, in the same breath as two smaller asks (issue #851):
+
+> All of these style of sub-graph visualizera should all have common expanding
+> nav element ton the navbar to show which dependent harnesses have skills or
+> tools or docs content
+
+This is the part this bean does not already say. The bean has the per-instance
+section, the dependency ordering, and the collapsed/open pair. What is new:
+the expanding element is **common across every sub-graph viewer** rather than
+per-viewer chrome, and what it expands to show is **which DEPENDENT harnesses
+hold content of a given kind**.
+
+**The question it has to answer is already computable, and the accessor
+exists.** `graph-tiles.visualisationsOf(coverage, id)` returns an instance's
+declared viewers for a directory, and `undeclaredProjections` selects the
+opposite case — a published page nobody declared. Between them, "does harness
+X have skills / tools / docs content, and is it reachable" is a lookup rather
+than a new scan. Do not mint a second answer to it; `harness-tiles.ts` already
+reads the same accessor and a second reader is how the navbar and the tiles
+drift apart.
+
+**The per-instance split it needs now exists for `skills`.** As of #851, all
+seven `skills` directories declare a `coverage.visualiser` pointing at their
+own `docs-auto/index/skills/<id>/` page — `cat-harness`, `bootstrap-render`,
+`methodology-raci`, `methodology-crdm`, `kg-navigation`,
+`large-datasets-skills`, `who-iris-skills`. Before that they were rendered but
+undeclared, so every one of them read as "no published viewer" to exactly the
+accessor this element would consult. `schemas` and `library` were already
+split this way. So the data this element needs is per-dependency and present
+for three kinds; `docs` is the one the owner names that is not yet.
+
+**Not built, and deliberately.** The owner was given the collision and chose
+specification over implementation: `sjic`/`p5wm` own the navbar component and
+PR #842 is live on `claude/lhs-navbar-harness-folios-cqo9mu` right now. Two
+sessions designing one expanding element separately is the outcome
+`bean-coordination` exists to prevent. **Not edited above** — this is a
+sibling's bean and the sections it already carries are theirs.
+
+**The kind list, extended.** Owner, same day: *"…or library"*. So the element
+covers **skills, tools, docs and library**. Measured state of each, since the
+four are not in the same position and one of them must not be treated like the
+other three:
+
+| kind | directories | declared viewer | per-instance? |
+|---|---|---|---|
+| `skills` | 7 | 7 | yes, as of #851 |
+| `library` | 4 | 4 | yes, already |
+| `tools` | 1 | 1 | n/a — only one instance declares a tools graph |
+| `docs` | 2 | **0** | **no, and it must not be** |
+
+**`docs` is the exception, and declaring a visualiser for it would be a
+defect.** Its kind is `renderable: true`, and the rule on `owesVisualiser`
+says why: *"a renderable kind is its own view — demanding a separate viewer
+would be asking for a second rendering of the same thing."* So the element
+must link an instance's docs at its RENDERED ROUTE, not through
+`coverage.visualiser`. Reading all four kinds through one accessor is the
+obvious implementation and it is the wrong one; `docs` needs the route and the
+other three need the declaration.
+
+`tools` is not evidence either way. One instance declares a tools graph, so
+"per-instance" is satisfied trivially and would need a second instance with
+tools before the split is exercised. An element that renders correctly today
+for `tools` has not been tested on it.
+
+---
+
+*2026-09-22, session_01SrFVoXeLER715HHQQaK22u, stream `10uc` (GOAL 2) —
+**question 1 is CLOSED, and the note above it is stale by one ruling.***
+
+The 2026-09-21 entry above records the owner ruling **REPLACE** on `b5f0`. That
+ruling was **reversed by the owner later the same day**, so an agent that reads
+this bean top to bottom currently gets the retired answer twice: once as
+`harness.json` and once as the merge that replaced it.
+
+**The standing answer, and it has landed in code:**
+
+| | |
+|---|---|
+| `<name>.json` | the **declaration** — directories, graphs, dependents, assets, stickies. `readDeclaration()` |
+| `<name>.config.json` | the **config** — contentType, adapter, feedbackDir, viewer, readme. `readHarnessConfig()` |
+
+The owner's words, from `b5f0`: *"rename the stub need cat-harness.config.json
+and cat-harness/cat-harness.json, same for folio-assistant (instance,
+declration)"*, and *"1"* when the conflict with REPLACE was put back to them.
+It is the option this bean's §1 had itself offered — *"`<name>.json` +
+`<name>.config.json` would at least pair them"*.
+
+**The important part for this bean is not which name won. It is that the
+question changed shape.**
+
+> **An instance is no longer marked by a FILENAME.** `findDeclarationFile(dir)`
+> takes the file whose filename **stem equals its own declared `name`**
+> (`CONFIG_SUFFIX` / `instanceDeclarationFilename`,
+> `cat-harness/schemas/cat-harness.ts:145-185`). A declaration is
+> self-identifying, so a renamed clone still resolves — which is what answered
+> migration-plan I.8's objection that a per-repo name *"fails silently"*.
+
+So question 1 — *"Which file marks an instance?"* — is answered **"none in
+particular; ask `findDeclarationFile`."** Any future navbar work that scans for
+a literal is wrong under either ruling.
+
+**Measured on `main` 2026-09-22, not carried forward:** six `*.config.json` at
+instantiation roots, paired with `bootstrap/bootstrap.json`,
+`cat-harness/cat-harness.json`, `who-iris/who-iris.json` and
+`folio-assistant.json`. `find . -name harness.json` returns exactly one hit,
+`cat-harness/docs/_data/harness.json`, which `b5f0` names as generated data
+rather than a declaration.
+
+**The code in this bean is already correct.** `harness-tiles.ts:290` and `:297`
+call `findDeclarationFile`, not a literal filename. The scanner was repointed
+when the rename landed. **Only the prose was stale**, which is why the inline
+marker above points here rather than the line being rewritten — an append
+cannot collide with another session.
+
+This closes `b5f0`'s open Done-when *"`AGENTS.md`, `zkgs`'s Done-when and
+`603s`'s recorded answer are corrected, or each says why it still reads the
+other way"* **for this bean only**. `AGENTS.md` and `zkgs` are not this
+stream's and are untouched.
+
+**Still open on this bean, and unchanged:** what a "display subgraph" is, where
+`.fa-landing-board` fits, and the 2026-09-22 common expanding nav element from
+issue #851. Question 1 was the blocking one.
+
+---
+
+## OWNER RULING, 2026-09-22 — a declared graph with NO viewer is SHOWN, inert and labelled
+
+Asked by stream `10uc` (GOAL 2) as the one decision that was next, with the
+three options and their costs compared. Session
+https://claude.ai/code/session_01SrFVoXeLER715HHQQaK22u
+
+**The owner chose: show it, inert and labelled.** A greyed row saying the graph
+exists and has no viewer yet — over omitting it (the default the code would
+have inherited) and over linking it to a generic listing.
+
+### What the question had shrunk to, and why
+
+The open question read *"Which subgraphs are 'display' subgraphs? Every
+declared `graphs` entry, or an opt-in subset?"* **Most of that was already
+built**, and measuring it first is what left one real decision:
+
+| already there | where |
+|---|---|
+| a directory declares its viewers | `coverage.visualiser` |
+| one bare string or a list, normalised in ONE place | `visualisationsOf()`, `cat-harness/schemas/cat-harness.ts:985` |
+| **which surface a visualisation appears on** | `showsOn(v, "navbar" \| "board")`, `:995` — the `surfaces` field |
+| a declared viewer that does not resolve, as a DIFFERENT defect from none | `flh4`, reported by `check:instance-render` |
+| a finding when a declared graph owes a viewer and has none | `2krx`, with `renderExemption` for bootstrap |
+
+So "which subgraphs display" is answered **by the declaration**, and `[]` is,
+in the schema's own words, *"a real answer and a different one from 'declares a
+visualiser that does not resolve'"*. The only thing the declaration could not
+answer is what a READER SEES in that real-answer case — which is not
+hypothetical: `uploads` and `library` are declared today with no renderer, and
+`folio-assist-core` declares none of the four directories at all.
+
+### Why this option, in the repository's own words
+
+`harness-tiles.ts:558` already argues it, about this exact case:
+
+> *staying silent would hide a working viewer behind a rule, which is how
+> "declared and not rendered" and "rendered and not declared" both end up
+> **invisible**.*
+
+Omitting the row is that invisibility moved into the navbar — a reader cannot
+tell *"no viewer yet"* from *"no such graph"*. The generic-listing option was
+priced and rejected in the asking: it is a new renderer, and it would make
+"has a viewer" meaningless, **silencing `2krx`** because everything would then
+have one.
+
+### What the implementer owes, and it is an accessibility obligation
+
+`gjli` is the standing rule, and it binds here specifically:
+
+> **An inert row must not read as a control.** It is not a disabled button and
+> it is not a link with nothing behind it. A greyed thing that takes focus and
+> does nothing is worse than an omitted one, because it costs a keyboard or
+> screen-reader user an interaction to discover it is dead.
+
+So: not focusable, not a `<a>` or `<button>`, and its *state* carried in text
+an assistive technology reads — not in colour alone, which would also fail the
+contrast measurement every other surface here pays.
+
+**And the label says WHICH of the two it is.** `flh4`'s distinction is
+load-bearing: a graph that declares **no** viewer and a graph that declares one
+that **does not resolve** are different defects with different remedies. A row
+that renders both as "no viewer" throws that away at the last step, after two
+gates went to the trouble of telling them apart.
+
+### What this does NOT settle
+
+The **`surfaces`** field already decides navbar-versus-board per visualisation.
+This ruling is about a graph with no visualisation at all; it does not change
+what a declared-and-resolving viewer does, and it does not make any graph
+appear on a surface its declaration excludes.
+
+**This is this bean's open question 2** — *"What is a 'display subgraph'? Every declared `graphs` entry, or an opt-in subset?"* — closed. Question 1 (which file marks an instance) was closed earlier the same day. Still open: where `.fa-landing-board` fits, and issue #851's common expanding nav element.

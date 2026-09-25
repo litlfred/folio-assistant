@@ -9,7 +9,7 @@
  * check BY NAME, commenting "an IRI stem, not a file — nothing serves it and
  * nothing should try to." That was right while a term only had to be an
  * IDENTIFIER. It stopped being right when the owner asked, 2026-09-19, that
- * the cat-bootstrap README link almost every word to its definition: a definition
+ * the bootstrap README link almost every word to its definition: a definition
  * has to dereference.
  *
  * Fourth instance of the defect bean `blv9` records — a link-shaped value that
@@ -18,7 +18,7 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `ToolGraph`, `KnowledgeGraph`, `BeanGraph` and the rest
+ * **The graph kinds.** `ToolGraph`, `KGraph`, `BeanGraph` and the rest
  * already carry a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it
  * from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
@@ -33,22 +33,26 @@
  *
  * @module schemas/vocabulary
  * @graphNode schema
+ *
+ * @conformsTo w3c-skos
  */
+
+import { BOOTSTRAP_TERMS } from "./graph.ts";
 
 /**
  * Which layer owns a term — and therefore which instances must carry it.
  *
  * The owner, 2026-09-19: "we shouldnt need voicegraph or librarygrph or
- * previewgrapjh in cat-bootstrap!!" Exactly right, and the flat vocabulary I first
- * wrote had no way to say so. A cat-bootstrap instance reads a declaration, walks
+ * previewgrapjh in bootstrap!!" Exactly right, and the flat vocabulary I first
+ * wrote had no way to say so. A bootstrap instance reads a declaration, walks
  * a dependency tree and hands over; it has no opinion about editorial voices,
  * an L1 library or a preview target, and a vocabulary that makes it define
- * them has made cat-bootstrap carry the thing cat-bootstrap exists to defer.
+ * them has made bootstrap carry the thing bootstrap exists to defer.
  *
  * Same three layers the repository split uses, so this does not invent a
  * fourth axis:
  *
- * - `cat-bootstrap` — readable with nothing loaded: the declaration, its
+ * - `bootstrap` — readable with nothing loaded: the declaration, its
  *   directories, and the actor/role/process/skill sentence the first BPMN
  *   needs. Nothing here may require the harness.
  * - `harness` — the agentic machinery: tools, capabilities, requirements,
@@ -57,9 +61,36 @@
  *   uploads, todos, the folio itself.
  *
  * The direction rule holds here as everywhere: core may name a harness term,
- * harness may name a cat-bootstrap term, and never the reverse.
+ * harness may name a bootstrap term, and never the reverse.
  */
-export type TermLayer = "cat-bootstrap" | "harness" | "core";
+export const TERM_LAYERS = ["bootstrap", "harness", "core"] as const;
+
+/**
+ * The layers, as a value — and THE ORDER IS PART OF THE CONTRACT.
+ *
+ * It is the direction rule above, written so code can read it: index 0 may be
+ * named by nothing below it, and each layer may name the ones before it. Two
+ * consumers already depend on that reading — the `--layer` slice in
+ * `ns-export.ts` compares indices, and its SKOS scheme ordering sorts by them —
+ * so this is not an incidental array order that a tidy-up may sort.
+ *
+ * IT EXISTS BECAUSE THE TYPE ALONE COULD NOT BE READ AT RUNTIME (#807). A
+ * union has no value, so every site that needed to CHECK a layer wrote the
+ * three names out again, and the copies drifted: `ns-export.ts` validated
+ * against `cat-bootstrap` while the error message beside it already said
+ * `bootstrap`, so a rejected `--layer bootstrap` printed
+ *
+ *     --layer must be bootstrap, harness or core (got bootstrap)
+ *
+ * — a message that names the value it just refused. The failure was real and
+ * ordinary; what made it cost an afternoon is that it was UNREADABLE, so it
+ * looked like an impossible state rather than two lists out of step.
+ *
+ * So the type is derived from this tuple rather than declared beside it: a
+ * layer added here is a layer the type gains, and a message composed from it
+ * cannot disagree with the predicate that used it.
+ */
+export type TermLayer = (typeof TERM_LAYERS)[number];
 
 /** A term's gloss, and where a reader goes for more. */
 export interface TermGloss {
@@ -114,10 +145,10 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
 
   Actor: {
-    layer: "cat-bootstrap",
-    gloss:
-      "A concrete participant — human, agentic or mechanical — that persists across processes and takes on a role in each.",
-    seeAlso: "/agentic-harness.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Actor,
   },
   Convention: {
     layer: "harness",
@@ -132,37 +163,51 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     seeAlso: "/crdm-methodology.html",
   },
   Role: {
-    layer: "cat-bootstrap",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Role,
+  },
+  LaneUsage: {
     gloss:
-      "A BPMN swimlane: the persona an actor takes on because of the lane it is acting in, carrying that lane's skills.",
-    seeAlso: "/agentic-harness.html",
+      "One appearance of a glossary concept as a swimlane in one BPMN process — " +
+      "the process it is in, the label that process gave the lane, and that " +
+      "lane's own documentation. A usage is an occurrence, not a term: it is " +
+      "regenerated wholesale and never retired, while a concept is a term " +
+      "somebody may have cited.",
   },
   Skill: {
-    layer: "cat-bootstrap",
-    gloss: "The instruction body an actor needs to perform a task.",
-    seeAlso: "/skills.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Skill,
   },
   SkillPackage: {
     gloss: "A directory of skills shipped and versioned together.",
     seeAlso: "/skills.html",
   },
   Process: {
-    layer: "cat-bootstrap",
-    gloss: "A BPMN process: lanes that bind roles, activities that name skills, and the flow between them.",
-    seeAlso: "/publication-workflow.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Process,
   },
   ProcessNode: {
-    layer: "cat-bootstrap",
-    gloss: "One element of a process — an activity, a gateway, a start or end event.",
-    seeAlso: "/publication-workflow.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.ProcessNode,
   },
   SequenceFlow: {
-    layer: "cat-bootstrap",
-    gloss: "A directed edge between two process nodes.",
-    seeAlso: "/publication-workflow.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
-    gloss: "A callable operation the harness exposes, declared as a node rather than only as code.",
+    // Harness layer, so its IRI does not move; its DEFINITION is bootstrap's,
+    // because bootstrap/README.md uses the word before anything else loads.
+    gloss: BOOTSTRAP_TERMS.Tool,
     seeAlso: "/architecture.html",
   },
   Schema: {
@@ -172,21 +217,22 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
   Directory: {
-    layer: "cat-bootstrap",
-    gloss: "A declared place to look, naming the kinds of graph found in it.",
-    seeAlso: "/architecture.html",
+    layer: "bootstrap",
+    // bootstrap's word for this is Subgraph: a named directory of a Knowledge
+    // Graph. The class keeps its name, so no published IRI moves.
+    gloss: BOOTSTRAP_TERMS.Subgraph,
   },
   Asset: {
-    layer: "cat-bootstrap",
-    gloss:
-      "A file an instance declares as its own, with the role that file plays for it — the instance " +
-      "saying what something IS rather than a scan inferring it.",
-    seeAlso: "/architecture/harness-instances.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.Asset,
   },
   GraphKind: {
-    layer: "cat-bootstrap",
-    gloss: "What a declared directory holds — the vocabulary a consumer matches on to decide whether to scan it.",
-    seeAlso: "/architecture.html",
+    layer: "bootstrap",
+    // Defined by bootstrap itself (owner, 2026-09-23: "bootstrap = self
+    // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
+    gloss: BOOTSTRAP_TERMS.GraphKind,
   },
   // `Harness`, not `CatHarness`, and `cat:` not `bs:`. The owner, 2026-09-19:
   // "but why bs:catharness? shouldnt that be in cat?... and maybe we name the
@@ -195,7 +241,9 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // stuttered the layer into the term.
   Harness: {
     layer: "harness",
-    gloss: "An instance's root declaration: the directories it scans and the graphs they hold.",
+    // Definition from bootstrap, which the owner stated: "a harness is used to
+    // interact with a knowledge graph". Layer and IRI unchanged.
+    gloss: BOOTSTRAP_TERMS.Harness,
     seeAlso: "/architecture.html",
   },
   Image: {
@@ -212,6 +260,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "core",
     gloss: "Authored content — the folio itself, rendered to a website.",
     seeAlso: "/content-types.html",
+  },
+  GlossaryGraph: {
+    layer: "core",
+    gloss:
+      "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
   },
   PreviewGraph: {
     layer: "core",
@@ -300,6 +353,12 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   issue: { gloss: "The issue that superseded this node, or that it was written for." },
   bean: { gloss: "The work-plan item a node was written under, where there is one." },
   nodeCount: { gloss: "How many nodes a graph or directory yielded." },
+  layer: {
+    gloss:
+      "Which layer of the platform mints a term — bootstrap, harness or core. Declared so a JSON-LD " +
+      "processor keeps it: undeclared, it was silently dropped from all 159 vocabulary terms (bean vigi).",
+  },
+  skipped: { gloss: "A file an exporter looked at and left out, with the reason — so a short output is never mistaken for a small input." },
   flowCount: { gloss: "How many sequence flows a process carries." },
 
   // ── Actors, roles, skills ────────────────────────────────────────────
@@ -326,9 +385,31 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
-  bindsLane: { gloss: "A BPMN lane this role is bound to." },
+  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168)." },
+  hasLaneUsage: {
+    gloss:
+      "One appearance of this glossary concept as a swimlane in one process. " +
+      "The scope note lives on the usage rather than on the concept because a " +
+      "note answers what the lane is accountable for IN THIS PROCESS: measured " +
+      "2026-09-21, all 26 lane names appearing in more than one diagram carry " +
+      "different documentation in each.",
+  },
+  ofConcept: { gloss: "The glossary concept this lane usage is an appearance of." },
+  inProcess: { gloss: "The BPMN process this lane usage appears in." },
+  performerVaries: {
+    // `bootstrap`, with `Role`, not `harness` with the glossary machinery: it
+    // is a fact a LANE declares about itself, and the only diagram declaring
+    // it is bootstrap's own. A term in the layer above would make bootstrap's
+    // diagram depend on the harness to say what it means.
+    layer: "bootstrap",
+    gloss:
+      "Whether this lane declines to name a persona because its performer is " +
+      "whoever invoked the process. A term so marked has no definition, and " +
+      "that absence is an assertion rather than a gap.",
+  },
   isA: { gloss: "A role this one inherits from, statically and everywhere." },
   roleName: { gloss: "The role's own name, as a lane binds it." },
+  satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
   performedBy: { gloss: "The role that performs this activity." },
   implementedBy: { gloss: "The skill that implements this activity." },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },
@@ -398,6 +479,34 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
 
   // ── Reporting ────────────────────────────────────────────────────────
   counts: { gloss: "How many nodes of each type the export produced." },
+  omitted: {
+    gloss:
+      "Instance-bound collectors that were NOT run, on a foreign instance's " +
+      "document — so a reader can tell 'this instance has no tools' from " +
+      "'tools were never looked for'.",
+  },
+  // ── Published dependency set (instance-versioning.md §3.4) ───────────
+  //
+  // `packageId`, `version` and `uri` are FHIR's own spellings, kept so a
+  // consumer that already reads `ImplementationGuide.dependsOn` reads this
+  // without translating.
+  dependsOn: { gloss: "The instances this publishable instance depends on, as FHIR-shaped {packageId, version, uri} records." },
+  packageId: { gloss: "A dependency's reverse-DNS id — the identity a consumer resolves." },
+  // A dependency's `version` reuses `schema:softwareVersion`, already declared
+  // in the export's term table, so it is deliberately not glossed here.
+  uri: { gloss: "A dependency's canonical URL, stable across its versions." },
+  dependsOnGaps: {
+    gloss:
+      "Dependency edges that could NOT become a record, each with which of the " +
+      "four reasons applies — so a reader can tell 'depends on nothing' from " +
+      "'depends on things none of which is publishable'.",
+  },
+  dependsOnUnavailable: {
+    gloss:
+      "Why there is no dependsOn block, when the reason is not an empty " +
+      "dependency set — never rendered as 'depends on nothing'.",
+  },
+
   detection: { gloss: "How a value was arrived at, where it was inferred rather than declared." },
   ambiguous: { gloss: "That more than one answer matched, and none was chosen." },
 };
@@ -413,7 +522,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  *
  * A name this file does not gloss is `harness`, the middle. Same default and
  * same reasoning as {@link TermGloss.layer}: over-assigning to harness costs
- * an instance a term it did not need, while under-assigning to cat-bootstrap makes
+ * an instance a term it did not need, while under-assigning to bootstrap makes
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {

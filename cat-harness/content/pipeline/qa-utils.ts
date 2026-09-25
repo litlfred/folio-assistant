@@ -16,11 +16,6 @@ import { join, resolve } from "path";
 import { execFileSync } from "child_process";
 import { findDeclarationFile, graphLayer, readDeclaration } from "../../schemas/cat-harness.js";
 import { portableSegment } from "../../schemas/portable-path";
-// The `folio` kind is registered by CORE as a load-time side effect. Without
-// it `graphLayer("folio")` is undefined and the folio directory would read as
-// "layer unknown" — which this walker treats as walkable, so the corpus is
-// still swept, but the reason would be luck rather than design.
-import "../../schemas/folio-graph-kind.js";
 import { criterionSourceHash } from "./qa-criterion-hash";
 import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {
@@ -36,6 +31,7 @@ import type {
   QaCriterionEntry,
   QaScriptSidecar,
   CompanionRole,
+  QaCriterionDefinition,
 } from "../../schemas/block-qa";
 import { COMPANION_ROLES } from "../../schemas/block-qa";
 import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
@@ -1123,7 +1119,7 @@ export function* walkBlocks(
   if (!opts.includeNonContent) {
     try {
       for (const e of readDeclaration(declaringRootFor(rootDir))?.directories ?? []) {
-        const layers = (e.graphs ?? []).map((g) => graphLayer(g));
+        const layers = (e.graphKinds ?? []).map((g) => graphLayer(g));
         // Skip only when the entry DECLARES graphs and none of them is
         // content. An entry declaring none says nothing about being retired,
         // so it stays walked — silence is not evidence.
@@ -1666,10 +1662,26 @@ export function summariseFreshness(
   report: BlockQaReport,
   current: QaFieldHash,
   scriptHashesByCriterion?: Record<string, CriterionScriptHashes>,
+  /**
+   * The criterion index to resolve definitions against.
+   *
+   * Defaults to the static registry, which is right for every criterion
+   * written out in it — but NOT for the voice-overlay criteria, which since
+   * bean `btuv` are derived from the voices an instance ships. A caller that
+   * has an instance root passes `qaCriteriaByIdFor(root)`.
+   *
+   * The fallback below happens to give a voice criterion the right answer
+   * today, because its `depends_on` is `["md"]` and so is the fallback. That
+   * is a COINCIDENCE, not a design: the fallback exists for a criterion that
+   * is unknown or fenced out, and reading it as coverage for a criterion that
+   * is merely registered somewhere else would make the first `depends_on`
+   * change on a voice silently produce stale-looking-fresh entries.
+   */
+  criteriaById: Record<string, QaCriterionDefinition> = QA_CRITERIA_BY_ID,
 ): CriterionFreshness[] {
   const out: CriterionFreshness[] = [];
   for (const [criterion, entries] of Object.entries(report.criteria)) {
-    const def = QA_CRITERIA_BY_ID[criterion];
+    const def = criteriaById[criterion];
     const dependsOn = def ? freshnessKeys(def) : (["md"] as CompanionRole[]);
     const sh = scriptHashesByCriterion?.[criterion];
     const fresh: QaCriterionEntry[] = [];
@@ -1771,4 +1783,49 @@ export function saveQaScriptSidecar(
   // ever contains unusual characters, and is faster.
   mkdirSync(dirname(p), { recursive: true });
   writeFileSync(p, JSON.stringify(sidecar, null, 2) + "\n");
+}
+
+/**
+ * The actor a SCRIPT sweep is acting as, resolved from the environment.
+ *
+ * Bean `a58y` measured that **0 of 5,896 QA verdicts resolved to a declared
+ * actor**: `QaReviewer.id` is a script path, an actor id is a persona, and the
+ * two sides never shared a vocabulary. So `qa-reporting` — the permission
+ * governing who may emit a QA report at all — was not *unmet* but
+ * **unevaluable**, for every verdict in the repository, while reading from the
+ * permission graph as a control.
+ *
+ * ## Why two actors and not one
+ *
+ * The owner's ruling, 2026-09-22: attribute by **where the sweep ran**, not by
+ * what it is. A single `qa-sweep` actor would have been simpler and would have
+ * said less — and the difference is not bookkeeping:
+ *
+ * > A CI verdict is reproducible from the `reviewed_sha` it records. A local
+ * > one may rest on an **uncommitted edit**, so the same sha addresses a tree
+ * > that produced something else.
+ *
+ * Recording which one ruled is what keeps `reviewed_sha` an address rather
+ * than a decoration. Both actors hold `qa-reporting`; neither holds
+ * `content-authoring`.
+ *
+ * ## Why there is no third state here
+ *
+ * Every other resolver in this file reports "could not determine" rather than
+ * guessing, and the absence of one here is deliberate rather than an omission.
+ * The environment is always readable and the partition is total: `CI` is set
+ * by every CI system and absent locally, so there is no case where the answer
+ * is unknown. Inventing an `unknown-sweep` actor would manufacture a state
+ * that cannot occur, and a state that cannot occur is one nobody maintains.
+ *
+ * `ci-pipeline` is declared generically — *"the build and validation system"* —
+ * so a non-GitHub CI resolving to it is correct rather than a near-miss.
+ */
+export const CI_SWEEP_ACTOR = "ci-pipeline";
+/** @see {@link sweepActor} */
+export const LOCAL_SWEEP_ACTOR = "local-sweep";
+
+/** Which of the two declared sweep actors is running. Takes `env` so it is testable. */
+export function sweepActor(env: Record<string, string | undefined> = process.env): string {
+  return env.CI === "true" || env.GITHUB_ACTIONS === "true" ? CI_SWEEP_ACTOR : LOCAL_SWEEP_ACTOR;
 }

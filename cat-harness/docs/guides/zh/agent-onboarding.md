@@ -127,7 +127,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 **作品集可选维度轴。** 编码某个作品集特定主题的维度轴仅在作品集明确选择启用时才会注册：
 
 ```json
-// harness.config.json
+// <name>.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

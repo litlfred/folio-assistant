@@ -17,7 +17,7 @@ Or, if your agent already has a folio-assistant server connected, ask it:
 > "Cold Chain Guidance", author A. Author*
 
 Either way you get `content/`, `uploads/`, `library/`, the manifests for one
-document with one chapter and one block, `harness.config.json`, the builder shim,
+document with one chapter and one block, `<name>.config.json`, the builder shim,
 `AGENTS.md` with `CLAUDE.md` / `GEMINI.md` stubs, `.mcp.json`, and the beans
 work plan. See the
 [README quickstart](https://github.com/litlfred/folio-assistant#start-a-new-folio)

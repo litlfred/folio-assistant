@@ -5,7 +5,7 @@
  * ## The defect
  *
  * `harness.json` says where this instance's graphs live. Nine production
- * sites nevertheless hardcoded `skills/workflows`, so a topical split — the
+ * sites nevertheless hardcoded `processes`, so a topical split — the
  * whole point of the declaration — would have been a nine-file edit.
  * `workflowDirs()` fixed those nine, and then a sweep found **four more** the
  * working list had missed (`check-workflow-policy`, `check-workflow-refs`,
@@ -21,7 +21,7 @@
  * and not free. So a literal naming a declared directory is allowed when:
  *
  *  - **it names a FILE that exists.** Authored prose naming one specific
- *    artefact — `source: "methodologies/crdm/workflows/crdm-requirements.bpmn"` in a docs
+ *    artefact — `source: "processes/crdm-requirements.bpmn"` in a docs
  *    page — is not discovery and no declaration would answer it. Eighteen of
  *    these are correct and must stay. They are **checked to resolve**, which
  *    closes the `blv9` defect class (a link-shaped value that does not
@@ -30,7 +30,7 @@
  *    line or the line above. The base cases are here: the module that supplies
  *    the defaults, the scaffolder that CREATES the layout, the partition plan
  *    that describes a layout this repo does not have yet. Same shape as
- *    `<folio:no-skill reason="…"/>`: exempt, but the reason is required, so
+ *    `<cat-harness.processes:no-skill reason="…"/>`: exempt, but the reason is required, so
  *    silencing the check costs more than satisfying it, and the marked sites
  *    are COUNTED in the summary rather than disappearing.
  *
@@ -125,22 +125,13 @@
  *
  * Usage:  bun run check:declared-paths  [--update]
  * Exit:   0 at or under baseline · 1 above it, or a marked literal naming nothing
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { resolveDirectories } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), so the harness alone does not know it exists. This module
-// reads instance declarations, and this instance now DECLARES a folio graph, so
-// without this import `readDeclaration` throws `unknown graph kind "folio"` on a
-// declaration that is perfectly valid. Twelve tests and three gates failed that
-// way the first time a folio graph was declared here (issue #464) — nothing had
-// ever declared one before, so nothing had ever needed the registration to have
-// happened. Same import `scripts/kg-export.ts` and
-// `scripts/check-avatar-coverage.ts` already carry, and for the same reason.
-import "../schemas/folio-graph-kind.js";
 
 const root = resolve(import.meta.dir, "..");
 const update = process.argv.includes("--update");
@@ -154,9 +145,58 @@ const BASELINE = join(root, "scripts", "declared-path-baseline.json");
  */
 function declaredPrefixes(root: string): string[] {
   return resolveDirectories([{ name: "(local)", root, own: true }])
+    .filter((d) => !isAddressedByPath(d))
     .map((d) => d.path.replace(/\/+$/, ""))
     .filter((p) => p.length > 0)
     .sort((a, b) => b.length - a.length);
+}
+
+/**
+ * Is this directory one you address BY PATH on purpose, rather than one you
+ * DISCOVER through the declaration?
+ *
+ * ## Why the distinction, and why it had to be drawn
+ *
+ * This gate's rule is in its header: *a path a declaration could have answered
+ * is not written down in code*. Every prefix it guarded when it was written
+ * was a graph whose access pattern is discovery — `workflowDirs()` answers
+ * "where are the processes", so a literal `processes/` is a site that would
+ * break under a topical split.
+ *
+ * **A declaration cannot answer "which script is the gate runner".** Code
+ * directories are named by path deliberately: `package.json` and the CI
+ * workflows invoke `cat-harness/scripts/*.ts` by name, which is precisely what
+ * `check:ci-invocations` and `check:command-paths` exist to keep honest. There
+ * is no helper to reach for, so the finding this gate would raise names no
+ * remedy.
+ *
+ * ## Measured, 2026-09-22, bean `ylj7`
+ *
+ * Declaring the four code directories took this gate from 0 refusals to
+ * **822**, against a recorded baseline of 38 — a twentyfold jump, in one
+ * change, with not one of them a real instance of the defect the gate
+ * describes. A baseline bump would have hidden that; it would also have raised
+ * the bar under every prefix where the rule DOES apply, which is the failure
+ * mode a shared baseline has.
+ *
+ * So the scope is narrowed at the premise instead. The rule is unchanged for
+ * every kind it was written for.
+ *
+ * ## It is a property of the KIND, never of the path
+ *
+ * Keyed on `code`, not on the strings `src`/`scripts`. Matching on a path
+ * would exempt any future directory that happened to be called `scripts/`,
+ * including one holding a graph you genuinely discover — and it would stop
+ * exempting this one the moment it moved, which is the same reason overrides
+ * here match on an entry's `id` rather than its `path`.
+ *
+ * A directory holding `code` AND a discoverable kind is NOT exempt: the
+ * discoverable half is the access pattern that needs guarding, and a directory
+ * is a place to look that may hold more than one part of a graph.
+ */
+function isAddressedByPath(d: { graphKinds?: readonly string[] }): boolean {
+  const kinds = d.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => k === "code");
 }
 
 /**
@@ -276,7 +316,7 @@ function stripComments(text: string): string {
  * ## Why context and not shape alone
  *
  * A literal containing `/` is a path whatever surrounds it. A BARE segment is
- * not: `join(root, "skills", "workflows")` is the nine-site defect this gate
+ * not: `join(root, "processes")` is the nine-site defect this gate
  * exists for, and `{ id: "beans", module: … }` in `server.ts` is a tool-group
  * identifier that happens to spell a declared directory. Refusing both would
  * put ~100 identifiers in the findings, and `known-skills.ts`'s own header

@@ -7,6 +7,8 @@ description: >-
   automatic badge rendering, and the poSources fallback resolution chain.
 capability: translation
 package: folio-core
+graph-kinds:
+  - translation-sources
 ---
 
 # Translation manager
@@ -68,7 +70,7 @@ Content blocks can declare explicit PO sources via `poSources[]` on
 1. **Block-level:** `translations/<locale>/<block-stem>.po`
 2. **Chapter-level:** `translations/<locale>/<chapter-slug>.po`
 3. **Folio-level:** `translations/<locale>/global.po`
-4. **Dependency walk:** walk `harness.config.json` dependencies depth-first
+4. **Dependency walk:** walk `<name>.config.json` dependencies depth-first
 
 When `poSources` is declared, only the listed files are consulted (no
 fallback). Later entries override earlier for the same msgid.
@@ -86,6 +88,61 @@ fallback). Later entries override earlier for the same msgid.
 | Code blocks | ❌ | Programming language content |
 | Lean companions | ❌ | Formal mathematics |
 | FHIR resources | ⚠️ | Use FHIR's own `designation` system, not gettext |
+
+## The exported GRAPH per locale
+
+The pipeline used to end at the rendered page: a `.po` was injected into a
+diagram and an SVG rendered per locale, while the graph a machine consumes was
+produced once, in the source language. `bun run kg:locale` closes that
+(`kg:locale:bootstrap` for the nested instance, `kg:locale:check` in the gate
+set). Bean `jmpb`.
+
+Four rules, and the first is the owner's and is the one an implementation
+breaks by default.
+
+**1. The core graph must not reference its translations.** No
+`hasTranslation`, no `availableLocales`, no `translationOf`, no per-locale
+`@id`, no locale key in the `@context`. The obvious implementation hangs a
+pointer off each node; that grows the core by an edge per locale per node and
+makes bootstrap's graph reference artefacts it does not own and cannot
+validate. The arrow runs **one way** — a per-locale document references the
+core, never the reverse — and the core is complete with no translation
+existing. The same relation
+[`board-diagram-interchange`](board-diagram-interchange.md) states for a board
+and its folio. `localeDocumentsUnreferenced` checks it rather than trusting it.
+
+**2. A translated node keeps its `@id`.** A translation is not a new term.
+Locale-suffixed IRIs are ruled out by that, not chosen against.
+
+**3. The language tag rides the VALUE, never the document.** A blanket
+`"@language": "fr"` would assert French over every string that fell through —
+and fall-through is the normal case, because `parsePo` takes only non-empty
+`msgstr` and skips fuzzy entries. A translated value is
+`{"@value": …, "@language": …}`; a fall-through stays a plain string under the
+document's declared `sourceLanguage`. Fall-through is then visible *in the
+data* rather than inferable from a coverage number.
+
+**4. A catalogue is scoped to the asset it was extracted from.** This one was
+learned the expensive way. The first implementation merged every `.po` under a
+locale and reported *"1 applicable msgid, 40 substitutions"* in three
+locales — the msgid was **`"yes"` → `"oui"`, from `index.po`, a docs page**,
+matching 40 BPMN gateway branch labels. `oui` is the right French for that
+label, which is exactly why it had to be caught by provenance rather than by
+reading the output: the result looked right while the report claimed diagram
+translation was under way in three locales and **no diagram catalogue existed
+in any of them**.
+
+So a `.po` is read only when its stem names an asset the graph projects. A
+residual is accepted and named: a msgid from diagram A applies to an identical
+string on a node from diagram B — not a new assumption, since `kg-export`
+already dedupes lane-derived `Role` nodes by lane name across every diagram.
+
+**What the gate is not.** `kg:locale:check` says nothing about how much is
+translated. Measured 2026-09-22: 58 of this instance's 62 `.pot` templates are
+diagrams and **none has a `.po` in any locale**, so the exporter writes nothing
+and reports every locale saying so. A locale with nothing to say is
+**reported**, never a missing file a reader cannot tell from a broken build;
+`--all-locales` emits a source-language copy per locale for the other reading.
 
 ## Workflow
 
@@ -211,70 +268,84 @@ gap that says it is a gap — a reader who sees the tick stops asking.
 > All of it is removed — the numbers, the `roundTripQA` field, the page badge
 > that displayed them, and both scripts.
 
-### The agentic round trip — a PAIR of agents, and the separation is the measurement
+### The agentic round trip — an INSTANCE of untainted verification
 
-| agent | is given | produces |
+**The discipline is generic and lives in
+[`untainted-verification`](untainted-verification.md)**: the two parties, why
+neither may see what would let it shortcut, the `TOOLS_USED` declaration that
+is recorded rather than assumed, which party rules, how both are written as
+witnesses, the `model` / `model_source` rule, and the two traps — a sweep
+replaces only entries whose reviewer is itself, and a verdict is hashed to what
+it was about. Read that first. **This section is only what translation adds.**
+
+The round trip was where that discipline was first written down, and
+generalising it turned up a defect in the generalisation: the spine's
+`UntaintedDispatch` was typed over `CompanionRole`, and **`po` is deliberately
+not one** — a PO is a companion of a *(block, locale)* pair, not of a block. So
+the founding case could not be expressed in the type taken from it. The
+abstraction was widened rather than the case bent; `untaintedPartitionDefects`
+now takes its artefact universe as a parameter.
+
+#### The declaration
+
+`ROUNDTRIP_DISPATCH` in `content/pipeline/translation-block-qa.ts`:
+
+| party | sees | never sees |
 |---|---|---|
-| **back-translator** | the target-language text, and nothing else | an independent rendering back into the source language |
-| **adjudicator** | the original and the back-translation, never the target text | `pass` / `warn` / `fail`, with each drift named |
+| **back-translator** | `po` — the target text, and nothing else | `md`, `ts` |
+| **adjudicator** | `md` — the original, plus the back-translation | `po` |
 
-Three rules make it a measurement rather than a ritual:
+Disjoint, which is the whole rule in one line. Shown the source, a
+back-translator writes the source back and the check passes vacuously —
+measuring the lookup table rather than the translation. That is not a warning
+here any more: `untaintedPartitionDefects` reports it, and a test asserts it.
 
-1. **Neither agent sees what would let it shortcut.** A back-translator shown
-   the English writes the English back and the check passes vacuously. An
-   adjudicator shown the French can talk itself into any reading of the
-   back-translation.
-2. **The back-translator must use no tools, and must say so.** The source is in
-   the repository; an agent with filesystem access can find it, and then the
-   verdict measures its search. Ask for a `TOOLS_USED` line and record the
-   answer.
-3. **One agent doing both halves is not this check.** It compares a text with
-   its own paraphrase of itself.
+#### What counts as drift, and what does not
 
-Tell the adjudicator explicitly what is *not* drift — synonyms, articles,
-re-ordering — and what is: a claim added, dropped, weakened, strengthened or
-reversed; a term of art swapped for something that means a different thing; a
-named entity or a quantifier moved. Without that, a round trip degenerates into
-a style review, and every translation "fails".
+**Both halves, always.** Told only what to look for, an adjudicator returns a
+style review and every translation fails.
 
-Record the result with:
+> Synonyms, articles and re-ordering are **not** drift. A claim added, dropped,
+> weakened, strengthened or reversed **is**; so is a term of art swapped for
+> something that means a different thing, and a named entity or quantifier
+> moved.
+
+This is the part that does **not** generalise — the spine requires a `drift`
+statement and checks only that one exists, because "states what is not drift as
+well as what is" is a reading, and a gate pretending to measure it would be the
+defect the whole mechanism exists to stop.
+
+#### Recording it
 
 ```sh
 bun run content/pipeline/translation-roundtrip.ts --payload <file.json>
 ```
 
-It writes **both** agents as witnesses. The adjudicator's entry carries the
-verdict and leads the criterion (the first entry is the operative one
-everywhere in this repo); the back-translator's sits behind it with
-`result: "n/a"` and the back-translation itself in `notes`, because a reader
-asking "on what basis?" needs the intermediate text and a reader asking "who
-did this?" needs both names.
+Where it lands: `translation-block-qa` writes `translation-semantic-roundtrip:
+[]` on every run, and before `mergeCriteria` an unrelated re-run deleted a
+round trip a pair of agents had produced — silently, with nothing in the output
+to say so. That incident is why the spine carries the replace-only-your-own
+rule.
 
-**Record `model` with `modelSource`, or not at all.** A subagent's serving
-model is not directly observable from the session that dispatched it: it
-inherits the parent unless the harness overrides, and the hand-back does not
-say which model served the turn. A bare model string on an agent witness is
-therefore an inference printed as a fact — the same move as the round-trip
-numbers this skill tells you not to write. `modelSource` states how the
-identifier was established (for example: read from `get_session` at record
-time, subagent inheritance assumed, not independently observed), and the panel
-renders it beside the model. Absent both, the panel prints "not recorded",
-which is a true statement and an acceptable one.
+Staleness is per locale here: the entries hash the `.md`, the `.ts` and the
+`.po`, so editing the source stales **every** locale's round trip and editing
+one translation stales only that locale's.
 
-### Two traps this process has already sprung
+#### The instrument, not the translation
 
-**A script sweep must not clobber an agent's verdict.** `translation-block-qa`
-writes `translation-semantic-roundtrip: []` on every run. Before
-`mergeCriteria`, the next unrelated re-run deleted the round trip a pair of
-agents had produced, silently and with nothing in the output to say so. The
-rule: **a sweep replaces only entries whose reviewer is itself**, and carries
-everything else through.
+`translations/fr/index.ts` carried `roundTripQA: { fail: 21, total: 36, method:
+"jaccard-word-overlap" }`, and its own `description` explained those failures
+away as expected *"with limited vocabulary back-translator"*.
 
-**The verdict is hashed to the text it was about.** The entries hash the `.md`,
-the `.ts` and the `.po`, so editing the source stales every locale's round trip
-and editing a translation stales that locale's. This matters more for an agent
-ruling than a script one: nobody can cheaply re-run it, so an agent verdict is
-exactly the kind that quietly outlives its subject.
+The generator's back-translation map held **6 entries for 36 strings**: every
+string nobody had back-translated scored 0 similarity and was counted as drift,
+so `fail: 21` was a count of absences. A second script back-translated by
+applying a 40-pair word-substitution table to the French and wrote the result
+as a `block-qa/v1` sidecar with an **agent** reviewer.
+
+All of it is removed — the numbers, the `roundTripQA` field, the page badge
+that displayed them, and both scripts. **A measurement whose author has to
+explain it away is about the instrument, not the subject.**
 
 ## Automatic badge rendering
 
@@ -512,7 +583,7 @@ reader, whatever locale they chose, which is the bug this section records.
 
 ## Six UN languages
 
-The default `supportedLocales` in `harness.config.json`:
+The default `supportedLocales` in `<name>.config.json`:
 
 | Code | Language | Native |
 |---|---|---|

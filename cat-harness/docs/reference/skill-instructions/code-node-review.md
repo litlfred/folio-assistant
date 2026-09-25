@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/code-node-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/code-node-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/code-node-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/code-node-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/code-node-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/code-node-review.md){: .fa-edit-source }
 
 {% raw %}
 # Code node review
@@ -111,3 +111,11 @@ expectations on.
 - **Do not treat a clean `check:tools` as coverage.** It verifies the Tools that
   exist; it says nothing about the skills that have none.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Review the change |
+| [Code node review](../../processes/review-code.html) | Run the node audits; Review the schema definition node; Record the verdict on the node |
+

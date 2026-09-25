@@ -329,7 +329,7 @@ interaction profile; drag may be added on top, never as the only way in.
 ## In CRDM — instance `crdm--folio-assistant-6lb8`, waiting on the requestor
 
 The remaining scope is not being implemented. It is **in the requirements
-process**, driven by `methodologies/crdm/workflows/crdm-requirements.bpmn`
+process**, driven by `methodologies/crdm/processes/crdm-requirements.bpmn`
 through the real engine — `loadProcessModel`, `startInstance`, `complete` —
 rather than by a hand-rolled phase tracker, which `AGENTS.md` forbids in
 exactly these words. State is committed at
@@ -567,3 +567,24 @@ AS INTERFACE — is still the theme this belongs to, and its own parent is `p5wm
 so this sits in the same goal one level up rather than somewhere else. If you would
 rather it stayed a feature under `yj32`, the alternative is to reparent the ten
 tasks onto `yj32` directly; both are one line of front matter.
+
+
+## Placement settled, 2026-09-21 — stays an epic under `p5wm`
+
+Asked as a selection: `6lb8` sits beside `yj32` under milestone `p5wm`, and the
+two describe overlapping subject matter — `yj32` calls the board part of a
+harness instance's default rendering. Three options were put: leave it, reparent
+it under `yj32`, or close the epic now and re-home `q2wm`'s remainder.
+
+**The owner chose: leave it under `p5wm`.**
+
+The reasoning that went with the recommendation, recorded so it is not
+re-litigated: reparenting a 12-of-13-complete epic under an epic that is still
+`todo` makes the roadmap LESS legible, not more, and the overlap costs one extra
+read rather than a wrong answer. Closing it now was the expensive option — beans
+are never deleted, so a closed epic reopened reads as churn.
+
+`q2wm` stays the one open child. Its Tool-output render vocabulary and lazy
+window fetch remain recorded as partial with their reason: nothing renders a
+tool's output even now, so choosing the vocabulary would be choosing terms with
+no consumer to constrain them.

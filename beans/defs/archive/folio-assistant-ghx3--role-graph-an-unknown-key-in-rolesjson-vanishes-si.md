@@ -24,7 +24,7 @@ parent: folio-assistant-zzmr
 | `actorKind` | `actorKinds` | a SET — settled by the corpus, §"An actor is one of three kinds" |
 
 PR #453 added three bootstrap roles by following that instruction, so
-`cat-bootstrap/skills/roles/roles.json` now carries a `summary` on all three.
+`bootstrap/scenarios/roles.json` now carries a `summary` on all three.
 **Zod strips an unknown key**, so the text parses, type-checks, and reaches
 no graph. Measured: 0 of 33 root roles carry `summary`; 3 of 3 bootstrap
 roles do.

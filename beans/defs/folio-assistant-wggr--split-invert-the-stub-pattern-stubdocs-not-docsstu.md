@@ -185,7 +185,7 @@ a path.**
 ### The hazard for the next slice is a YAML trigger, not code
 
 `.github/workflows/docs-site.yml` fires on `folio-assistant/docs/**` (correct
-after #413) and ALSO on `skills/workflows/**`, `schemas/**` and
+after #413) and ALSO on `processes/**`, `schemas/**` and
 `content/docs/**`. Move any of those three without moving the trigger and the
 site silently stops rebuilding on a skill or schema edit — green CI, stale
 site, nothing saying so. The `xom7` shape, and no code guard covers it. This is
@@ -265,7 +265,7 @@ Not 290 files and one declaration edit. Eight distinct surfaces:
 | surface | what | found by |
 |---|---|---|
 | `harness.json` | `cat-harness` path | — |
-| 2 workflow triggers | `docs-site.yml` `skills/workflows/**`, `feature-staging.yml` `skills/**` | nothing; YAML has no guard |
+| 2 workflow triggers | `docs-site.yml` `processes/**`, `feature-staging.yml` `skills/**` | nothing; YAML has no guard |
 | `scripts/kg-audit.ts` | hardcoded `KG_ROOT`, resolve BY ID | `kg:audit` ENOENT |
 | `src/skills/corpus-grep.ts` | imports `../../skills/framework/types.js` | `tsc` |
 | `folio-assistant/skills/framework/types.ts` | outward import depth `../../` -> `../../../` | `tsc` |
@@ -298,7 +298,7 @@ failures; all **35 CI gates** green (`render:bpmn:check` needs a browser and
 passes with `--with-browser`).
 
 **The declaration gained `scope: "repository"`** — on a directory entry and on
-an asset. Four directories (`beans/`, `todos/`, `fsh-guts/`, `cat-bootstrap/skills/`)
+an asset. Four directories (`beans/`, `todos/`, `fsh-guts/`, `bootstrap/skills/`)
 and both assets (`AGENTS.md`, `README.md`) belong to the CHECKOUT rather than to
 any instance in it. `rootForScope` is the one place it becomes a directory, so
 **no consumer changed**. Two alternatives were rejected and why matters:
@@ -346,7 +346,7 @@ old category 2 would leave it where it is and believe that settled.
 
 **It sharpens `scope: "repository"` rather than complicating it.** That field
 (PR #437) was written to mean "never overlaid", which is a judgement. Under this
-ruling it means exactly the three exceptions — `cat-bootstrap/skills/`, `beans/`,
+ruling it means exactly the three exceptions — `bootstrap/skills/`, `beans/`,
 `todos/` — and `fsh-guts/` stops carrying it. A closed list beats a criterion
 each reader applies for themselves.
 
@@ -371,16 +371,16 @@ bootstrap"*.
 **Bootstrap violates this today, and by more than beans and todos.** Measured on
 `77bb22d697`:
 
-- `cat-bootstrap/harness.json` declares **two** directories, `skills/` and
+- `bootstrap/harness.json` declares **two** directories, `skills/` and
   `workflows/`, both holding one graph kind: `cat-harness`.
-- `cat-bootstrap/cat-bootstrap.jsonld` publishes **18** `graphKind` nodes — `beans`,
+- `bootstrap/bootstrap.jsonld` publishes **18** `graphKind` nodes — `beans`,
   `bean-defs`, `workflow-state`, `todos`, `todo-items`, `todo-feedback`,
   `folio`, `library`, `qa`, `health`, `voices`, `uploads`, `tools`, `schemas`,
   `translation-sources`, `cat-harness` and the rest.
 
 So bootstrap introduces **17 kinds it does not declare**, including every
-bean/todo kind — while `cat-bootstrap/AGENTS.md`, `cat-bootstrap/harness.json` and
-`cat-bootstrap/skills/kg-navigation.md` all state in prose that bootstrap has *"no
+bean/todo kind — while `bootstrap/AGENTS.md`, `bootstrap/harness.json` and
+`bootstrap/skills/kg-navigation.md` all state in prose that bootstrap has *"no
 `beans`"*. The prose is right and the generated graph contradicts it.
 
 **Root cause, and it is a classification rather than a bug.** `COLLECTOR_SCOPE`
@@ -401,7 +401,7 @@ today and nothing checks it.
 Shape of the fix, not yet implemented and not yet authorised: an instance's
 export carries the kinds that instance INTRODUCES, so bootstrap's document
 carries `cat-harness` alone. That is one node where there are now 18, and it
-makes `cat-bootstrap/AGENTS.md`'s "no beans" true of the graph and not only of the
+makes `bootstrap/AGENTS.md`'s "no beans" true of the graph and not only of the
 prose.
 
 Related: `z4mq` item 3 (session todo #8) — the conformance check that any
@@ -441,7 +441,7 @@ three, which is the violation ruling 2 measured (18 published graph kinds
 against 1 declared).
 
 **Net effect on PR #437: none — its `scope: "repository"` set was already
-correct.** `cat-bootstrap/skills/`, `beans/`, `todos/`, `fsh-guts/` carry it and
+correct.** `bootstrap/skills/`, `beans/`, `todos/`, `fsh-guts/` carry it and
 nothing else does. The field's MEANING improves: it is now a closed list of
 four rather than a judgement about overlaying.
 
@@ -481,7 +481,7 @@ was found by the check that owns the area:
 
 1. **Bootstrap's skills left the published graph.** `skillMdDirs` builds from
    the DECLARED `path` — relative to whatever root the entry's *scope* names,
-   and `cat-bootstrap/skills/` is repository-scoped — then returns it as if it were
+   and `bootstrap/skills/` is repository-scoped — then returns it as if it were
    instance-relative. `collectSkills` joins that to the instance root, finds
    nothing, and `continue`s under the comment *"a package this instance does
    not carry"*. `confirm-harness` became a dangling `hasSkill`; `kg-navigation`

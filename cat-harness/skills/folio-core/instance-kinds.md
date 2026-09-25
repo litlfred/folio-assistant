@@ -18,7 +18,7 @@ adds the wrong one:
 
 | | what it is | where it is declared |
 |---|---|---|
-| **instance kind** | what a repository *is* — `cat-harness`, `cat-bootstrap`, `who-iris`. It has a name, a prefix family, a `harness.json`, and files it inherits from whatever it was bootstrapped off | a `harness.json` at the instance root |
+| **instance kind** | what a repository *is* — `cat-harness`, `bootstrap`, `who-iris`. It has a name, a prefix family, a `<name>.json`, and files it inherits from whatever it was bootstrapped off | a `<name>.json` at the instance root |
 | **graph kind** | what a declared DIRECTORY holds — `tools`, `docs`, `beans`, `library`. A value in the graph-kind registry, with `renderable`, `holds` and a summary | `defaultGraphKinds` in `schemas/cat-harness.ts`, or a registration from a layer that owns it |
 
 An instance kind gets a **name**. A graph kind gets a **declaration**. This
@@ -48,7 +48,7 @@ Measured 2026-09-21, the question does not arise:
 
 - **`coverage.visualiser` is a rendered PATH, not a kind.** Every value in the
   corpus has the shape `cat-harness/docs/cat-harness/<graph>/<instance>/index.html`.
-  It names an artefact, the way `coverage.docs` names a page.
+  It names an artefact, the way `coverage.docs` named a page until #1168 B7c.
 - **The owner's own placement rule says Tool.** `v1hw`: *"the visualiser lives
   as a tool in the harness that DEFINES the schema, declared in
   `skills`/`tools`."* Not beside the data, and not in whichever layer happens
@@ -86,14 +86,14 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `cat-bootstrap`, `cat-bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |
 
 **Four of the eleven instances here carry no prefix at all** — `agent-skills`,
 `detangle`, `kg-navigation`, `large-datasets` (measured 2026-09-21,
-`ls -d */harness.json`). That is the state of the corpus, not a backlog: an
+`findDeclarationFile` over each directory). That is the state of the corpus, not a backlog: an
 unprefixed name is undecided, not wrong, and this skill does not make it a
 finding. Do not sweep them into a family to make the table tidy; a rename is
 the one act with consequences that cannot be undone later (§"And the owner may
@@ -120,7 +120,7 @@ it is neither, by the owner's decision.
 > has never been raised — a name that does not match the table is a decision
 > until somebody says otherwise, and renaming an instance changes what every
 > artefact written into it inherits, which is the one thing that cannot be
-> fixed later (`cat-bootstrap/README.md`, §2).
+> fixed later (`bootstrap/README.md`, §2).
 
 A skill that presented the convention as mandatory would have renamed `qou`.
 A default with a documented override is a different thing from a rule, and the
@@ -218,9 +218,9 @@ A new instance kind is bootstrapped from an existing one, and it arrives
 carrying that instance's files. Some of them are **yours**, and nothing
 currently tells a new owner which.
 
-### `cat-bootstrap/README.md` is the first one
+### `bootstrap/README.md` is the first one
 
-It is the page an Initiator reads before it knows anything — *"you have been
+It is the page a Bootstrapping Agent reads before it knows anything — *"you have been
 pointed at a repository, you know nothing about it"* — and it is written for
 **this** repository. Measured 2026-09-21: it resolves **13 links into
 `../cat-harness/`**, across **6 distinct files**:
@@ -232,7 +232,7 @@ pointed at a repository, you know nothing about it"* — and it is written for
 | `../cat-harness/schemas/cat-harness.ts` | 2 |
 | `../cat-harness/schemas/skill-package.ts` | 1 |
 | `../cat-harness/schemas/tool.ts` | 1 |
-| `../cat-harness/skills/workflows` | 1 |
+| `../cat-harness/processes` | 1 |
 
 Every one of those is a **term definition** — what a role is, what a DAK block
 is, what a harness declaration is. Bootstrap a new instance kind that is not

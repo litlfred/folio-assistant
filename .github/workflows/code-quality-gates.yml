@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -55,6 +56,16 @@ on:
   # No `paths:` filter. The TypeScript job is the gate for the whole repo, and
   # a filter is how a gate stops covering the file that broke it.
   pull_request:
+  # The MERGE QUEUE — bean `nytj`. A pull_request run tests the PR merged with
+  # main AS IT WAS WHEN THE PR WAS PUSHED; anything that lands on main after
+  # that is untested in combination. Three times on 2026-09-23 a generated
+  # measurement (`kg:detangle`, `kg:audit`) was green on the branch and green
+  # on main and stale on the two merged — "the state that breaks is the one
+  # neither party evaluates". A merge_group run tests EXACTLY the commit that
+  # will land. Inert until the owner turns the merge queue on for `main`;
+  # harmless before. No job here reads event_name or head_ref, which a
+  # merge_group run leaves empty — checked, and kept that way.
+  merge_group:
   push:
     branches: [main]
   workflow_dispatch:
@@ -64,6 +75,7 @@ permissions:
 
 jobs:
   lean-bare-import:
+    # bpmn-node: Task_Lean
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
@@ -121,6 +133,7 @@ jobs:
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
   python-imports:
+    # bpmn-node: Task_Python
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
@@ -203,6 +216,7 @@ jobs:
           exit $rc
 
   typescript:
+    # bpmn-node: Task_TypeScript
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
@@ -262,6 +276,24 @@ jobs:
       - name: declared assets exist and resolve
         run: bun run check:declared-assets
 
+      # The same question one level up: declared assets are FILES, these are
+      # DIRECTORIES, and nothing asked about them until bean `8mbk`.
+      #
+      # It could not have been caught by reading a consumer, because every
+      # consumer is correct: `resolveDirectories` is existence-filtered, so an
+      # absent declared directory is dropped before anyone sees it. The
+      # declaration then asserts a directory is ours, and every scan of it
+      # reports a clean run over nothing — the `dh4f` shape inside the resolver
+      # they all share.
+      #
+      # Gating from the first commit, same reasoning as the step above: 66
+      # declared directories across 14 instances, ZERO findings, so this starts
+      # at zero rather than measuring debt. The escape hatch is a declared
+      # `absent: { reason }`, and an exemption whose directory later appears is
+      # a finding too — that is the direction that rots quietly.
+      - name: declared directories exist, or say why not
+        run: bun run check:declared-dirs
+
       # THE OTHER DIRECTION of the step above. `check:declared-assets` walks
       # declared -> disk; this walks disk -> declared, over the repository ROOT,
       # which every other sweep skips because the root is deliberately not an
@@ -277,20 +309,29 @@ jobs:
       - name: no undeclared files at the repository root
         run: bun run check:undeclared-files:check
 
-      # `cat-bootstrap/cat-bootstrap.jsonld` HAD a staleness gate here, because it was
+      # `bootstrap/bootstrap.jsonld` HAD a staleness gate here, because it was
       # committed. It no longer is — it is built at render time into the
       # published site by `docs-site.yml` — so there is no committed copy to
       # go stale and nothing for a byte gate to compare against.
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/cat-bootstrap-graph.test.ts`
+      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
       # the TypeScript job above already runs. Removing a check whose
       # coverage lives elsewhere is fine; removing one and saying so is what
       # stops the next reader reinstating it.
+      #
+      # ONE QUALIFICATION, added by bean `dyd3`: `buildCatBootstrapDocument()`
+      # is no longer what the site publishes at that URL —
+      # `kg-export --instance ./bootstrap` is, and the two documents differ on
+      # 74 of their 88 nodes. Those assertions are properties of a builder
+      # that publishes nothing. `kg-export.test.ts` is where the published
+      # document's are, and the two guards in `bootstrap-graph.test.ts` that
+      # DO reach the site are the ones about publication: the path the `@id`
+      # names, and exactly one publisher per workflow.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -301,6 +342,79 @@ jobs:
       # fake ref onto a real step.
       - name: workflow skill refs
         run: bun run check:workflow-refs
+
+      # A task's containing swimlane must DEFINE itself -- bean `sqtq`, issue
+      # #596. Measured 2026-09-21: 157 task-containing lanes, every one named
+      # and NONE documented, so the defined-terms index #596 asks for would
+      # have shipped 157 labels with no definitions. Three axes, because a
+      # glossary term needs all three: a name, a definition, and both
+      # extractable for translation. An activity in NO lane is reported
+      # UNDETERMINED rather than counted as passing, and zero diagrams is a
+      # finding rather than a clean run (`6tkl`).
+      - name: swimlane definitions
+        run: bun run check:lane-documentation
+
+      # ...and the PROCESS says what it is for -- bean `7rna`. The sibling one
+      # level up. `gen-docs-auto`'s index took the first `<documentation>`
+      # after the process opened, so a process carrying none borrowed its
+      # first LANE's and presented it as what the process was for -- which
+      # became true the day `sqtq` wrote 157 lane documentations. 16 of 61
+      # were in that state; all 61 now define themselves, so `--strict` is
+      # what runs here and a new diagram cannot land undefined.
+      - name: process definitions
+        run: bun run check:process-documentation
+
+      # ...and the glossary those definitions feed -- bean `lqo9` slice 2,
+      # issue #596. The DOCUMENT is derived and not committed; the LEDGER is,
+      # because a derived document has no memory: delete a role and its
+      # concept stops appearing, which is what "never existed" also looks
+      # like. This gate is what keeps the ledger current, so retirement stays
+      # distinguishable from accident. Two runs, never one wider scan --
+      # `7u3g`, the isolation two earlier sessions walked into.
+      - name: swimlane glossary ledger
+        run: |
+          bun run glossary:check
+          bun run glossary:check:bootstrap
+
+      # Core's glossary (owner, 2026-09-23: "put glossary into
+      # folio-assistant-core"): every `folio-glossary/v1` document validates,
+      # and the glossary/ page and its SKOS JSON-LD are current.
+      - name: glossary page and SKOS
+        run: |
+          bun run check:glossary
+          # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
+          # authored term's labels and definition have a current .pot in
+          # every locale, beside the BPMN templates.
+          bun run glossary:pot:check
+
+      # The agentic engine's after-check (#1180 step 5): every workflow
+      # instance's history as W3C PROV-O, with authorizeTask re-run on each
+      # step. ADVISORY (owner, 2026-09-23): findings are reported on the
+      # prov-qaqc/ page, never fatal. This fails only on stale outputs, a
+      # prov:Activity that does not validate, or an internal error.
+      - name: PROV-O QA/QC report
+        run: bun run check:prov-qaqc
+
+      # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
+      # is NOT about how much is translated (nothing is, measured 2026-09-22:
+      # 58 of 62 .pot templates are diagrams and none has a .po). It checks
+      # the two properties a translation effort must never break: the CORE
+      # graph references no translation -- no hasTranslation, no
+      # availableLocales, no locale key, no per-locale @id -- and a translated
+      # node keeps its @id, because a translation is not a new term.
+      - name: graph per locale
+        run: |
+          bun run kg:locale:check
+          bun run kg:locale:check:bootstrap
+
+      # A model declares its languages, or it is a finding -- bean `46uh`.
+      # This gate is NOT red on an empty registry: an agent is not a valid
+      # source for the evidence `validation` asks for, so it ships empty and a
+      # person adds entries. It IS red (exit 2) on a registry this code cannot
+      # read, because reporting a malformed file as "no models" would let an
+      # agent fall through to English believing a determination was made.
+      - name: model languages declared
+        run: bun run check:model-languages
 
       # Every link OUT of the files an agent reads first — bean `v8gh`.
       # `AGENTS.md` carried seven dead links, five broken by one directory
@@ -367,6 +481,23 @@ jobs:
       # extraction, which would have broken 28 citations silently.
       - name: voice citations resolve
         run: bun run check:voices
+
+      # The other half of the same claim: the rules are cited, AND the
+      # instruction body beside them does not restate them uncited.
+      #
+      # `schemas/voice-skill.ts` said "`check:voice-skills` enforces it" from
+      # the day it was written, and four `SKILL.md` files repeat the claim in
+      # their own prose — a promise made in five places and kept in none until
+      # this gate (bean `n8br`). An absent gate nobody was told about leaves a
+      # reviewer reading carefully; an absent gate a doc comment promises
+      # leaves them reading PAST.
+      #
+      # Measured over the four voices here, 37 rules: zero findings. A check
+      # that fires on every subject is wrong and so is one that can never
+      # fire, so it is falsified rather than trusted — five mutations, each
+      # caught, in `tests/voice-skills.test.ts`.
+      - name: voice skills do not restate their own rules
+        run: bun run check:voice-skills
 
       # Workflow YAML GitHub will actually parse, and no attacker-controlled
       # expression interpolated into a run body.
@@ -452,6 +583,69 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # WHICH audits reach which kind of node — the neighbour of the audit
+      # above, not a second answer to it. `kg:audit:check` judges the nodes it
+      # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
+      # before bean `xutg` and which got answered by inference instead: an
+      # agent read a sidecar count of zero over the bean store and reported
+      # beans "effectively unaudited", while eight gates audit them.
+      #
+      # `--check` and NOT `--strict`: it fails on a STALE SIDECAR, which is the
+      # half a reviewer needs (it is what lets "never audited" be told from
+      # "lost its audit in this commit"). The findings are reported — 4 kinds
+      # hold files nothing audits, and a gate refusing every push until
+      # somebody writes criteria for `interaction/` is a gate that gets
+      # switched off. `audit:coverage:strict` is for the day that closes.
+      # `--require-all` as of bean `3srh`: every one of the 145 gates CI runs now
+      # DECLARES what kind of node it covers, so the flag that was "for the day
+      # the gap is closed" enforces a property this tree HAS rather than
+      # demanding work — the same reasoning as `check:skills` above.
+      #
+      # What it buys is the report's own honesty. While any gate was undeclared,
+      # every "unaudited" verdict was only an UPPER BOUND and the output said so.
+      # With none undeclared the four remaining kinds are a verdict, and this
+      # step is what stops a new gate arriving undeclared and quietly turning
+      # them back into an upper bound.
+      - name: audit coverage is measured, current, and every gate has declared
+        run: bun run audit:coverage:require-all
+
+      # The four graphs `audit:coverage` reported as `typed-only` — a schema
+      # parses their nodes and nothing had an opinion about what they SAY.
+      # Bean `h1wq`, at the owner's ask (2026-09-24).
+      #
+      # Three of its four families are determined empties on this tree, and the
+      # fourth caught a real one: the committed health report was written by a
+      # checker that no longer existed, so its staging remedy still told a reader
+      # to apply `staging:cleanup` to an orphaned preview — which bean `7umv`
+      # had already proved cannot work. Stale advice presented as the fix.
+      #
+      # Exit 2 (a family that could not be read) is a FAILURE here, not a pass:
+      # could-not-determine outranks a finding, because a sweep blind on one
+      # family has not cleared the others.
+      - name: harness state graphs are judged, not just typed
+        run: bun run check:harness-state:check
+
+      # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
+      # were the only thing holding it red, and the step above judges them. Wired
+      # on the same reasoning as `check:skills`: it locks in a property this tree
+      # HAS rather than demanding work.
+      #
+      # A SECOND step rather than a third flag on the one above, because the two
+      # lock different things and a reader should be able to see which broke:
+      # `--require-all` that every gate has declared, `--strict` that every kind
+      # with files is JUDGED and not merely typed.
+      - name: every kind with files is judged, not merely typed
+        run: bun run audit:coverage:strict
+
+      # The detangle measurements are PINNED, not graded. This fails on a STALE
+      # sidecar or an orphaned one — never on a number being "wrong", because
+      # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
+      # declared step"). Bean `sb6z`: the model was correct and unexercised, so
+      # a regression in it was invisible until somebody ran it by hand AND
+      # remembered last time's numbers.
+      - name: detangle measurements are current
+        run: bun run kg:detangle:check
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -468,9 +662,9 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `cat-bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `cat-bootstrap-tools`, because bootstrap promises an Initiator it needs
-      # no tools and therefore cannot hold a `.ts` of its own. This is the
+      # `bootstrap`'s JSON Schemas are GENERATED from Zod in
+      # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
+      # needs no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
       # whether their output still matched their input.
@@ -478,7 +672,7 @@ jobs:
       # A red here means the Zod moved and the published document did not —
       # and that document sits at an `$id` consumers already follow.
       - name: bootstrap schemas are current
-        run: bun run bootstrap-tools:schemas:check
+        run: bun run bootstrap:schemas:check
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -583,8 +777,23 @@ jobs:
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs
           bun run translate-bpmn:check
+          # bootstrap/ is a NESTED instance, so the run above does not scan its
+          # three diagrams and must not -- widening that scan re-introduces the
+          # leak `instance-graph-isolation.test.ts` exists to stop (`7u3g`).
+          # Its templates therefore need their own run, pointed at the instance
+          # that owns them. Bean `j28g`: they previously sat under
+          # cat-harness/translations/ where nothing refreshed them, and
+          # log-message.pot was measured missing the lane documentation added
+          # to its own diagram the same day.
+          bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
+          # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
+          # every mounted page uses, and committed as an include. Gated here
+          # because a stale include is a sidebar that disagrees with the rail
+          # about what a harness holds -- which is the defect the bean is
+          # about, arriving again through the back door.
+          bun run navbar:include:check
           bun run check:agents-xref
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
@@ -605,7 +814,42 @@ jobs:
           # counted rather than failed -- and `docs/_data/harness.json` is a
           # different file that must NOT be renamed.
           bun run check:declaration-filename
+          # Bean `hrv2`: the sibling above hunts the RETIRED name, so it is blind
+          # to a filename that is wrong but real -- AGENTS.md named
+          # `folio-assistant.config.json`, a file that exists and declares no
+          # graph. This one checks the CLAIM: prose pairing a declared graph id
+          # with a declaration file, verified against the declarations. Its
+          # vocabulary is derived from them, so an empty result is reported as
+          # unknown rather than as a pass.
+          bun run check:declaration-claims
+          # A Liquid interpolation feeding src/srcset/href resolves, or says
+          # it cannot be told (bean `blv9`). The FIFTH shape of one class in
+          # this repo -- a link-shaped value that does not dereference --
+          # and every earlier instance was found by a person asking whether a
+          # URL resolved, never by a test. Only a LITERAL is decidable: a
+          # variable is DECLINED and listed, because `viewHref`/`editHref`
+          # hold absolute forge URLs that the filter would break.
+          bun run check:docs-templates
+          # Every declared image `role` is read by something that can actually
+          # REACH it (bean `5yrl`, split out of `blv9`). Scans
+          # declaration -> consumer, the direction `themes.test.ts` cannot:
+          # that walks theme -> role, so a role NO theme names is outside its
+          # domain by construction, which is how `landing-architecture` sat
+          # declared and unnamed. Half two is the half that matters -- the
+          # favicon shape, where a caller EXISTS and cannot match, because
+          # `imagesForRole` is layout-keyed and a mark declares no layout.
+          bun run check:image-roles
           bun run check:bean-parents
+          # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
+          # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
+          # its own answer, so this gate owns only the half that is PURE GRAPH:
+          # a bean whose status its own children refute. No clock, because a
+          # clock-dependent gate turns CI red at an arbitrary hour with nobody
+          # having changed anything -- `beans.ts` declines a stale-in-progress
+          # finding for the same reason. The age sweep is `-- --sweep` and never
+          # sets the exit code. Baselined at the one the store carries (`5a3l`,
+          # completed over 12 open children), so a NEW one fails.
+          bun run check:bean-rollup
           # Bean `sfhr`: three store defects `beans check` cannot see, because
           # none of them is a link -- an empty body on an open bean, a `title:`
           # block scalar that swallowed the body's first lines, and a prose
@@ -613,6 +857,16 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
+          # regex over a broken document does not notice the document is
+          # broken. A bean committed with a literal `\1` where `updated_at:`
+          # belonged passed 92 gates, then took `beans list`, `roadmap` and
+          # `prime` down for every reader -- the store loads as a unit, and
+          # `prime` is the first command in the AGENTS.md cold start. Fails
+          # hard on a bean NO loader will read; a duplicate key (which `beans`
+          # itself tolerates) is baselined at the two the store carries, so a
+          # NEW one fails and the existing two are listed rather than demanded.
+          bun run check:bean-front-matter
           # Bean `k59d`: check:bean-bodies reads a SENTENCE (`blocked on `id``).
           # A milestone states its blockers as a ROUTE, so both GOAL milestones
           # advertised finished work as next and neither detector could see it.
@@ -633,6 +887,19 @@ jobs:
           # here; the general reverse needs the API and prints as undetermined
           # rather than as clean.
           bun run check:bean-issue-links
+          # Bean `8v0y`: a bean that carries a SKILL'S CONTRACT instead of
+          # pointing at it. `kn0t` held a second copy of
+          # ig-publisher-reduction.md and it had drifted in four places; the P1
+          # one turned "the navigation is DIFFED, and the difference is empty
+          # or explained entry by entry" into "navigation matches", which would
+          # have let a phase be declared done on an impression -- the first
+          # entry in that skill's own `Do not` list. NOT a similarity check:
+          # kn0t's three real drifts score Jaccard 0.25/0.54/0.33, all below
+          # any usable floor, because semantic drift is a REWRITE. Structural
+          # instead -- a table enumerating phases, each row carrying its own
+          # exit condition. Measured over the whole store: 0 of 888 beans, and
+          # 1 of 1 on kn0t as it stood before PR #1185.
+          bun run check:bean-restates-skill
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
@@ -645,11 +912,71 @@ jobs:
           bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
-          bun run check:kind-validators
+          # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
+          # is meant to be closed" and could NEVER have passed: all seven kinds it
+          # counted were either not JSON (`.bpmn`, `.puml`, `.md`, `.ts`) or had no
+          # nodes at all, so the count read as a seven-item backlog over a real
+          # backlog of zero. Each now declares WHY a runtime validator cannot
+          # apply, naming the file format or the absent subject — a fact a reader
+          # can check, so "not applicable" cannot launder a real gap.
+          #
+          # Safe to wire because it is GREEN on this tree, as with `check:skills`:
+          # it locks in a property the repo HAS. What it buys is that a kind added
+          # tomorrow without deciding shows up as `undeclared` rather than joining
+          # a backlog nobody reads.
+          bun run check:kind-validators:require-all
+          # The UML overview is drawn from the declarations and the kind
+          # validators just checked, so it goes stale when either changes.
+          bun run uml:overview:check
           bun run check:artifact-index
           bun run smart-trust:pages:check
+          # The fsh-guts index is generated from the graph, so it goes stale the
+          # moment a file is relocated there -- which is the ONE operation that
+          # graph exists for. Gated here rather than trusted, same as every
+          # other generated page.
+          bun run fsh-guts:viz:check
+          # The tools index is generated from the Tool nodes, so it goes stale
+          # the moment one is added or its `satisfies` changes.
+          bun run tools:viz:check
+          # The themes page renders every theme in schemas/themes.ts with its
+          # declared art, so it goes stale the moment a theme, a palette or a
+          # crop changes.
+          bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
+          # The methodologies index renders the `methodology` graph across
+          # EVERY instance that declares one, so it goes stale when any of them
+          # adopts a method, ingests a source, or changes an `applies-when`.
+          # Gated for the reason every generated page here is: a stale viewer
+          # is a page that reports a corpus that no longer exists.
+          bun run methodologies:viz:check
+          # The external-schemas index renders the registry AND resolves every
+          # `usedBy` path in it, so it goes stale when a record is added, an
+          # edition bumps, or a file a record names is renamed. The last of
+          # those is the one nothing else would notice.
+          bun run external-schemas:viz:check
+          bun run processes:viz:check
+          # MATERIALIZED CONTENT IS READ-ONLY, enforced rather than advised
+          # (owner's ruling, 2026-09-22). Hashes every materialized artefact
+          # against its recorded digest: an edit in place fails here. A
+          # publication step that legitimately rewrites one updates the fixity
+          # in the same change, which is what makes the exception checkable
+          # instead of a carve-out.
+          bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
+          bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A bootstrap schema names no outside concept — no derivative's
+          # content model, layer names or standards (owner, issue #1164).
+          bun run check:bootstrap-concepts
+          # A filed requirement parses as one, its id is its file name, and no
+          # name is both a proposal and a requirement (issue #1164).
+          bun run check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents
@@ -657,6 +984,11 @@ jobs:
           # `40fl` fixed and the silence after the fix were one defect seen
           # twice (bean `tyyc`). Derived from each workflow's own `run:` steps,
           # never a list here.
+          bun run check:artefact-verification
+          bun run check:workflow-injection
+          bun run check:secret-leaks
+          bun run check:lockfile-pinning
+          bun run check:qa-reviewer-permission
           bun run check:workflow-script-paths
           # Can this repository be CHECKED OUT? Every other gate here asks
           # whether the content is right; this one asks whether the tree can be
@@ -677,6 +1009,18 @@ jobs:
           # one harness, so a single `harness.config.json` at the repo
           # root had become an answer to a question with two answers.
           bun run check:instance-config
+          # Every INSTANTIATED harness has a mark of its own. The kind axis is
+          # check-avatar-coverage; this is the instance axis, which nothing
+          # checked until 2026-09-22 — `harness-tiles.ts` claimed the generic
+          # fallback was "reported as a finding" while `genericAvatar` was
+          # computed and read by nobody, so `folio-assistant` rendered a
+          # question mark until the owner saw it. Bean `zc7m`.
+          bun run check:avatar-instances
+          # A reader's folio must be the SAME folio in every library they
+          # browse (F8/F9). A page that forgets the mount is a folio that
+          # silently disappears when they follow a link — the page renders,
+          # the library works, and nothing else reports it. Bean `jpjt`.
+          bun run check:folio-mount
           # Every instance renders its OWN graph, and an unreadable one is
           # `undetermined` rather than a pass (bean `z4mq` item 3).
           bun run check:instance-render
@@ -689,6 +1033,30 @@ jobs:
           # enough to hold.
           bun run check:subgraph-coverage
           bun run check:published-refs
+          # The publishability CENSUS, and it is expected to report every
+          # instance as UNDECIDED — §6 Q1 of `instance-versioning.md` is open,
+          # and absence there means "nobody has said", never "internal". So
+          # this runs for the list rather than for a verdict, and its own
+          # report says in that many words that an all-undecided census is not
+          # a pass. Advisory; `--strict` fails only on the two CROSS-INSTANCE
+          # rules a per-declaration parse cannot hold (a duplicate id, an
+          # unreadable declaration).
+          bun run check:publishable
+          # TWO questions about a code file, never averaged: is it in a
+          # DECLARED directory, and is it REACHABLE from a Tool node. They
+          # fail independently and are fixed by different work, so a single
+          # coverage number would let a rise in one hide a fall in the other —
+          # which is the defect bean `ylj7` was opened for. Advisory: both
+          # questions have open beans, and a gate that fails on a backlog is a
+          # gate somebody switches off.
+          bun run check:code-accounting
+          # §4's bump, computed from the exported-surface diff rather than
+          # claimed by a commit message. §4.1's falsifier was run before this
+          # was built — 18 patch / 1 minor / 1 major over 20 commits on main —
+          # and it reports "no publishable instance" today, which is a stated
+          # nothing rather than a clean run. Advisory until an instance
+          # declares `publishable`.
+          bun run check:version-bump
           bun run check:graph-kind-work
           # One place says what an asset ROLE is — purpose, layer and
           # delivery. A per-asset restatement of any of the three is a
@@ -696,6 +1064,11 @@ jobs:
           # WITHOUT A WORD, so the declaration reads as if it carried one
           # while no consumer ever saw it (bean `7syd`).
           bun run check:asset-roles
+          # Every instance's dependency graph resolves: no missing dependency,
+          # no cycle. At runtime a missing one only WARNS (owner, bean
+          # `a1lq`), because a partial checkout looks the same; CI has the
+          # whole checkout, so here it fails.
+          bun run check:instance-graph
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error
@@ -710,6 +1083,12 @@ jobs:
           # so adding one there is covered here with no edit; finding none
           # is exit 1, not a pass (issue #720, bean `u1iu`).
           bun run check:published-instance-exports
+          # A preview must run the generators the deploy runs, with the same
+          # instance arguments. `3jhq` was exactly this: staging ran the
+          # exporter but not for the foreign instance, so two links 404ed on
+          # every preview. Deploy and preview are DERIVED (the deploy passes no
+          # `--base-url`), so neither is named in the check (bean `qgpo`).
+          bun run check:invocation-parity
 
           # The generators THIS FILE invokes directly, run as a set.
           # Seven `--check` invocations live in workflow YAML and in no
@@ -734,6 +1113,33 @@ jobs:
           # on that is one somebody switches off. Non-zero only on the
           # third state: a file whose edges could not be read at all.
           bun run check:subgraphs
+          # Does each methodology's cited `origin` resolve to an ingested
+          # source? Six cited one and NONE was in any library when this
+          # axis was added (2026-09-22), so it REPORTS rather than gates,
+          # on the same reasoning as `check:subgraphs` above. It is
+          # non-zero only for a node whose front matter does not validate
+          # or whose `evidence` points at a bib-slug no library holds —
+          # a citation that claims to resolve and does not is worse than
+          # none, because every listing reads it as backed.
+          bun run check:methodology-evidence
+          # The layout norm, ENFORCED AS A RATCHET rather than as a gate
+          # on the whole corpus: no declared directory sits inside another
+          # declared directory, with the four `skills/voices` nestings that
+          # exist today baselined. A pair not in the baseline fails, so
+          # `cat-harness` — which reached zero on 2026-09-22 and has no
+          # baseline entry — cannot regress. Owner: "follow established
+          # norms on layout. qa to enforce."
+          bun run check:layout-norms
+          # Every ingested source records its licence, or records that nobody
+          # could find it and where they looked (issue #1023). It REPORTS
+          # absence and `unknown`, because the field is new, and fails only on
+          # a record that claims something it cannot back.
+          bun run check:source-licence
+          # Every declared harness visualiser has a wireframe, checked at a web
+          # AND a mobile viewport (issue #1023; owner: "need both web and
+          # mobile layouts in usability reviews"). Gated: a visualiser added
+          # without a wireframe, or a wireframe checked at one width, fails.
+          bun run check:wireframes
           bun run check:xml-comments
           bun run check:orphan-verdicts
           bun run check:partition
@@ -743,6 +1149,11 @@ jobs:
           # defect that registry exists to end, and a registry nothing runs is
           # the `xom7` shape one level along.
           bun run external-schemas:check
+          # Code lists -- every closed set of codes (adjudication answers, the
+          # namespaces this project mints) is a node with a definition and a
+          # source per code, not a string in an attribute. Owner, 2026-09-23.
+          # Refuses a malformed list, and an adjudication naming no list.
+          bun run code-lists:check
           bun run docs:harness:check
           # Every instantiated harness ABOVE THE FLOOR owes a board, and the
           # board it owes shows the whole folio. Owner, 2026-09-21: "Any
@@ -762,11 +1173,25 @@ jobs:
           bun run readme:sync:check
           bun run avatars:css:check
           bun run themes:css:check
+          # The navbar's geometry (`sjic`). GATED because the defect it closes
+          # was invisible to every test that existed: `navbar.ts` and
+          # `docs-ui.css` each stated the widths and each had a test asserting
+          # its OWN copy, so both were green while the rail rested at 40px and
+          # the sidebar at 56px -- two navbars the owner had asked to be
+          # "presented same way". The generated file is only half the fix; a
+          # snapshot that may go stale silently is the same defect with an
+          # extra step.
+          bun run navbar:geometry:check
           # The ingested-IRIS replica pages, generated from who-iris/catalogue/.
           # A generated page nobody gates drifts from the graph it claims to
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The prefix-sharded identifier lookup over who-iris's REFERENCED
+          # nodes (bean `4pm8`). Gated because a stale shard still answers:
+          # it finds a node the catalogue no longer references, and a reader
+          # cannot tell a stale hit from a current one.
+          bun run id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim
@@ -784,6 +1209,16 @@ jobs:
           # `--check` says in its own output which of the two it ran.
           bun run iris:covers:check
           bun run translation:block-qa:check
+          # The translation STATUS page and its projection, bean `lnur`.
+          # Stale-checked rather than merely generated, for the reason every
+          # other generated artefact here is: a page carrying numbers nobody
+          # regenerated is a page that lies by aging, which is `d2kp`.
+          #
+          # It exits 2 when no `translation-sources` directory is declared,
+          # and that is NOT a pass — a folio with no translations is a real
+          # state, and this generator is not the thing that gets to decide
+          # the absence means "nothing to report".
+          bun run translation:status:check
 
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
@@ -818,6 +1253,56 @@ jobs:
       # omission, every time.
       - name: generated docs pages are current
         run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+
+      # GATED, unlike the two projections below, and the difference is the
+      # INPUT SET — which is the standard those two are excused against.
+      #
+      # `schema:viz` and `library:viz` derive from the WHOLE repository, so any
+      # branch alive for more than a few minutes finds them stale against the
+      # merge ref and a red means "somebody else merged". The voices projection
+      # derives from the declared `voices` directories and the declarations
+      # naming them: four voices in two instances, changed when somebody edits
+      # a voice. A red here means a voice was added or a rule was edited and
+      # the page was not regenerated — an omission by the author of the diff,
+      # every time, which is exactly the test stated twenty lines above.
+      - name: voices projection and viewer are current
+        run: bun run voices:viz:check
+
+      # THE VOICES SHAPE, NOT THE LIBRARY SHAPE, and that distinction is the
+      # whole reason this is gated while `library:viz:check` twenty lines
+      # below is not. The folio projection derives from the declared `folio`
+      # directories and the JSON nodes in them — three stickies in one
+      # directory today — so it changes when somebody edits or adds a landing
+      # sticky, and NOT when somebody else merges. A red here is an omission
+      # by the author of the diff, every time, which is the test the comment
+      # above states. Bean `7ofc`.
+      - name: folio projection and viewer are current
+        run: bun run folio:viz:check
+
+      # REGRESSIONS ONLY, and that is the `library:viz` ruling applied rather
+      # than an exception to it. The viewer-nav audit walks the whole docs
+      # tree, so its sidecar goes stale the moment anybody adds a generated
+      # page anywhere — gating on staleness would make a red mean "somebody
+      # else merged", which is the shape the owner ruled ungated on
+      # 2026-09-20. A page that WAS railed and is not any more is the author
+      # of the diff, every time. Staleness and the still-unwired pages are
+      # `bun run viewer:nav:strict`, which the author of a new generator runs.
+      # Bean `edx7`.
+      - name: viewer pages keep the navbar they had
+        run: bun run check:viewer-nav
+
+      # The handler namespace's own index. Gated on the same ground as the
+      # voices projection: it derives from the DECLARATIONS (which kinds each
+      # instance declares, and whether a `coverage.visualiser` names a
+      # published path), not from the whole repository — so a red means
+      # somebody changed a declaration and did not regenerate.
+      #
+      # It is also the one page a navbar tile points at: `siteLinks` publishes
+      # `kg` as `/<stub>/`, and `verifySiteLinks` reports `unknown` rather
+      # than `dead` on an unbuilt tree, so nothing else here would notice it
+      # going missing until production (bean `8h42`).
+      - name: handler namespace index is current
+        run: bun run handler:index:check
 
       # NOT GATED: the schema and library projections.
       #
@@ -877,6 +1362,7 @@ jobs:
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
   e2e:
+    # bpmn-node: Task_E2E
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
@@ -907,6 +1393,7 @@ jobs:
         run: bunx playwright test
 
   rust-wildcard:
+    # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
@@ -941,3 +1428,35 @@ jobs:
           else
             echo "OK — no non-test wildcard imports in $count Rust file(s)"
           fi
+
+  dependency-advisories:
+    # bpmn-node: Task_Advisories
+    name: Dependency advisories (warn-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
+      # worth keeping next to the step: a HARD gate on advisories hands a
+      # transitive advisory nobody can patch the power to red every PR until
+      # somebody adds a suppression — and the suppression is what rots.
+      # `.github/dependabot.yml` is the other half: it turns the same
+      # advisories into reviewable PRs rather than into a gate.
+      #
+      # `bun audit` needs the registry, not the modules, so there is no
+      # install step. Adding one would make a dependency resolve a
+      # precondition of asking whether dependencies are safe.
+      #
+      # NO `continue-on-error` and NO `|| true`. The script exits 0 in every
+      # state on purpose, and keeps the three states apart in its OUTPUT
+      # instead — which is the only place they can be kept apart once the exit
+      # code carries no information. `|| true` is exactly how "could not
+      # determine" becomes "fine", and this workflow has paid for that once
+      # already: see the ruff note at the top of this file, where a step
+      # "warned about the missing paths and exited 0, so it reported a clean
+      # baseline it had never computed."
+      - name: Known advisories against the resolved tree
+        run: bun run check:dependency-advisories

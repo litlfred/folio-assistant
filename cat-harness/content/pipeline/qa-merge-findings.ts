@@ -41,7 +41,7 @@ import {
   readBlockManifest,
   insertAdjudication,
 } from "./qa-utils";
-import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
+import { qaCriteriaByIdFor } from "./qa-criteria-registry";
 import { blockQaPath, existingBlockQaPath } from "./qa-paths";
 import type {
   BlockQaReport,
@@ -162,6 +162,11 @@ function run(): void {
   let added = 0;
   let skipped = 0;
 
+  // Hoisted out of the loop: `qaCriteriaByIdFor` memoises the derivation but
+  // builds a fresh index on each call, and the repository root is the same for
+  // every finding in a batch.
+  const criteriaById = qaCriteriaByIdFor(repoRoot());
+
   for (const f of batch.findings) {
     const root = blockRootFromInput(f);
     if (!root) {
@@ -184,7 +189,11 @@ function run(): void {
       skipped++;
       continue;
     }
-    const def = QA_CRITERIA_BY_ID[f.criterion];
+    // Instance-aware: every voice-overlay criterion is `automated: false`, so
+    // the findings this tool merges are exactly the kind an agent adjudicates
+    // against a voice. Read from the static index they would come back
+    // undefined and be rejected below as unknown.
+    const def = criteriaById[f.criterion];
     if (!def) {
       console.error(`unknown criterion: ${f.criterion}`);
       skipped++;

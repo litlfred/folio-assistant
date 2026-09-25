@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/agent-memory.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/agent-memory.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/agent-memory.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/agent-memory.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/agent-memory.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/agent-memory.md){: .fa-edit-source }
 
 {% raw %}
 # Subagent memory — what a durable entry may claim
@@ -181,10 +181,10 @@ answers — and if it answers neither, it is a memory entry.
 and `bun run check:asset-roles` keeps the declaration single: a required role
 `ASSET_ROLES` does not govern, a role a running process would be allowed to
 write, or an asset restating `purpose`, `layer` or `delivery` on itself. That
-last one is asked of the RAW `harness.json` on purpose — `KgAssetSchema` is a
+last one is asked of the RAW declaration on purpose — `KgAssetSchema` is a
 non-strict `z.object` and drops an unknown key without a word, so after
 parsing the evidence is gone. It has happened: a `purpose` written into
-`cat-harness/harness.json` read as if it carried one and no consumer ever saw
+`cat-harness/cat-harness.json` read as if it carried one and no consumer ever saw
 it, which is worse than absent because absent is visible.
 Both are required of every instance: one with a README and no `AGENTS.md` is
 readable by a person and mute to an agent, and the reverse leaves a reader

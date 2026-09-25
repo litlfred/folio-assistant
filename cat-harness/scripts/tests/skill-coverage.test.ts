@@ -42,6 +42,7 @@ import { join, resolve } from "node:path";
 import { isSkillMd, knownSkills, skillMdDirs } from "../known-skills.js";
 import { buildExport } from "../kg-export.js";
 import { isPublishedSkill, siteDirFor } from "../../schemas/cat-harness.ts";
+import { ownElementPattern } from "../../schemas/namespaces.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
@@ -145,14 +146,15 @@ describe("skill coverage", () => {
     // here is only that each NAME resolves and has a page; whether the diagram
     // is well-formed, and whether the ref sits on a real activity, is
     // `check-workflow-refs`'s and `kg:audit`'s to make.
-    const wf = join(ROOT, "skills", "workflows");
+    const wf = join(ROOT, "processes");
     const refs = new Set<string>();
     const scan = (dir: string) => {
       for (const e of readdirSync(dir, { withFileTypes: true })) {
         const p = join(dir, e.name);
         if (e.isDirectory()) scan(p);
         else if (e.name.endsWith(".bpmn") || e.name.endsWith(".dmn")) {
-          for (const m of readFileSync(p, "utf-8").matchAll(/<folio:skill\s+ref="([^"]+)"/g)) {
+          const xml = readFileSync(p, "utf-8");
+          for (const m of xml.matchAll(ownElementPattern(xml, "skill", String.raw`\s+ref="([^"]+)"`))) {
             refs.add(m[1]!);
           }
         }

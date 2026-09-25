@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/continual-progress.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/continual-progress.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/continual-progress.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/continual-progress.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/continual-progress.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/continual-progress.md){: .fa-edit-source }
 
 {% raw %}
 # /continual-progress — trackable, always-PR'd, continually-committed work
@@ -74,6 +74,45 @@ green, unreviewed and unmerged, held back with three SVGs attached in chat and a
 note that the layout was machine-accepted but not confirmed legible. The
 author's reply was *"jsut merge so i can help assess"*. The hold made assessment
 harder, not safer, and cost a round-trip to someone who types with difficulty.
+
+### Link the PAGE, never the site root
+
+**When you ask somebody to look at a rendered artefact, link the artefact.**
+Not the site it is on, not the preview's front door — the exact URL of the
+thing you changed.
+
+Owner, 2026-09-21, after a session that had pointed three times at
+`…/STAGING/<branch>/` while asking about the navbar on the IRIS replica:
+
+> *"next time give appropraite link
+> https://litlfred.github.io/folio-assistant/STAGING/claude-determined-euler-gqhkk0/who-iris/"*
+
+The root is not a shortcut, it is a handoff of the last step. It makes the
+reader reconstruct a route the agent already knew, and it does it to the person
+this repository's interaction profile exists for — one who types with
+difficulty. Every extra click is a cost the agent chose not to pay and passed
+on.
+
+It also hides a real failure mode. An agent that links the root has not checked
+that its page is reachable at all: `/who-iris/` 404ed for an hour in that same
+session, under a root that loaded perfectly.
+
+So:
+
+- **One link per thing to look at.** Two changed pages is two links, each
+  labelled with what to look for on it — not one root and a sentence of
+  navigation.
+- **Deep-link past the index.** If the change is on
+  `/docs/who-iris/kg-to-portal.html`, that is the URL, not `/docs/who-iris/`.
+- **Compose it from the preview's own base**, which the staging comment
+  states. Never from memory: a branch slug is exactly the kind of string that
+  is almost right.
+- **The root is the right link for precisely one thing** — a change to the
+  landing page itself.
+
+This is the same rule as the invariant above, one step further on. A human
+cannot assess a rendered artefact from a description of it; they also cannot
+assess it from a link to somewhere near it.
 
 ### What to do with the thing you could not verify
 
@@ -168,6 +207,29 @@ gate can see.
   not re-ask on a timer, and **do not let "not merged yet" become a reason to
   stop pushing.**
 
+### Two green PRs can merge into a red main, and the answer is to fix forward
+
+A PR is tested against the main it last merged, not the main it lands on.
+Two PRs that are each green can still combine into a failure that neither
+branch contained. On 2026-09-24 that happened: #1245 added a generated
+report, and main had just gained a workflow instance the report did not
+cover. Main went red at #1245's merge, and no `regen` on either branch could
+have seen it (bean `391j`).
+
+**The owner's policy is to fix forward, not to add a merge queue or an
+"up to date" requirement** (2026-09-24). So:
+
+- **Watch main's CI after every merge you make**, not only your PR's.
+  "My PR was green" does not mean main is green.
+- **A red main whose failure your diff did not cause is still yours to fix
+  when you find it.** Establish the cause from the failing run and each
+  parent's history first, then regenerate or repair in a small PR of its own,
+  and merge it as soon as it is green. #1249 and #1257 each did this within
+  minutes.
+- **Do not blame the last merge because it is the last merge.** Check whether
+  the parent was already red. In `391j` it was, and the first diagnosis ("a
+  blind spot in `regen`") was wrong for exactly that reason.
+
 ## Why — the failure modes this prevents
 
 - **Stepped-on work.** A branch that hoards uncommitted work collides
@@ -204,3 +266,12 @@ gate can see.
   PR-body status checklist (invariant 3) is its externally-visible
   projection, so a watcher needs no access to the session's bean queue.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Branch, gates, PR and review (calls a sub-process) |
+| [Code change and review](../../processes/code-change-review.html) | Make the change; Commit, push, open the PR |
+| [KG to public portal](../../processes/kg-to-portal.html) | Human eyes on the rendered artefact |
+

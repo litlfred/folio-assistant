@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/semantic-review-scoping.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/semantic-review-scoping.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/semantic-review-scoping.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/semantic-review-scoping.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/semantic-review-scoping.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/semantic-review-scoping.md){: .fa-edit-source }
 
 {% raw %}
 # Semantic review scoping
@@ -85,3 +85,11 @@ statement-level criteria.
 | `lean-proof-vacuity-audit`, `lean-proof-review` | The adjudicators this rations |
 | `delivery-summary` | Report coverage against headline theorems, not raw block counts |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content Change and Review](../../processes/content-change-review.html) | Detect change scope & impact |
+| [Review task](../../processes/review-task.html) | Classify what changed |
+

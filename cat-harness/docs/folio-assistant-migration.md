@@ -16,6 +16,13 @@ generic agent infrastructure (beans work-plan, MCP server, session-start harness
 
 ---
 
+> **This page is a migration record, not the discipline.** The work plan itself
+> is [`todo-manager`](reference/skill-instructions/todo-manager.html), claiming
+> an item across sessions is
+> [`bean-coordination`](reference/skill-instructions/bean-coordination.html),
+> and laying folio-assistant over an existing repository is
+> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+
 ## §1 What beans are
 
 [`hmans/beans`](https://github.com/hmans/beans) is a Go flat-file issue tracker
@@ -179,7 +186,7 @@ script already `source`s `lib/lean-env.sh`, which provides the `has` helper:
 
 ```bash
 # The dir-emptiness check above only catches a *missing* toolchain. But
-# `setup-lean-toolchain` can cat-bootstrap an elan shim whose toolchains/ dir
+# `setup-lean-toolchain` can bootstrap an elan shim whose toolchains/ dir
 # exists yet cannot resolve a usable toolchain — the dir is non-empty, so the
 # guard is bypassed, and every following `lake` call tries to fetch from
 # release.lean-lang.org. In restricted-egress sandboxes that fails with a

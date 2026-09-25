@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_Process_AtomicMassDrift" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_AtomicMassDrift">
+    <bpmn:participant id="Participant_Process_AtomicMassDrift" name="Is AtomicMass.lean still in sync with its data table?" processRef="Process_AtomicMassDrift"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_AtomicMassDrift" name="Is AtomicMass.lean still in sync with its data table?" isExecutable="false">
+    <bpmn:documentation>THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.&amp;#10;&amp;#10;THIS DIAGRAM IS DELIBERATELY SMALL, AND SAYING SO IS PART OF IT. Bean `7yvd` warns that "a diagram that is drawn once and then drifts is worse than none, because it is consulted", so each of the six was read before being drawn and classified by whether it says anything the YAML does not. `docs-site`, `ci-health`, `health-check` and `code-quality-gates` do &amp;#8212; a full-replace compensation pair, two three-state verdict gateways, five independent parallel jobs. THIS ONE DOES NOT: it is one job with no branch and no compensation path, and dressing it up as more would be decoration that still has to be maintained.&amp;#10;&amp;#10;IT EARNS A DIAGRAM FOR A DIFFERENT REASON. Without one its job names no node (`# bpmn-node:` in the workflow), so `check:workflow-coverage` has nothing to compare and a job added here would tell nobody. That is drift detection rather than exposition, and it is worth the file on its own &amp;#8212; but the two are not the same thing, and a reader who opens this expecting the second should be told which they are getting.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- STRICT, and declared (bean `30hn`). One path, as above, and the
+           output a PROOF depends on: if `AtomicMass.lean` and its data table
+           part company, a Lean file that compiles is carrying numbers nothing
+           produced. Strictness costs nothing and records that the diff is not
+           optional. -->
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_AtomicMassDrift">
+      <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>The only lane in the smallest workflow here, and there is nothing else to hand off to: Task_Check's diff result is what GW_Drift reads directly, with no reviewer, no QC pass and no second lane positioned to catch a bad regeneration before End_Drift or End_Clean fires. Keeping this to one mechanical step is deliberate — a second lane would be ceremony over a check that either matches or does not.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Check</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Drift</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Clean</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Drift</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Check" name="Regenerate AtomicMass.lean&amp;#10;from the data table &amp;#8212; and diff">
+      <bpmn:documentation>Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Drift" name="Did anything&amp;#10;change?">
+      <bpmn:documentation>Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source.</bpmn:documentation>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Clean" name="Generated file in sync">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Drift" name="Job RED &amp;#8212; the generated&amp;#10;file is stale">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Change" targetRef="Task_Check"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Check" targetRef="GW_Drift"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Drift" targetRef="End_Clean" name="no &amp;#8212; in sync"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Drift" targetRef="End_Drift" name="yes &amp;#8212; drifted"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_AtomicMassDrift">
+    <bpmndi:BPMNPlane id="Plane_Process_AtomicMassDrift" bpmnElement="Collaboration_Process_AtomicMassDrift">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_AtomicMassDrift" bpmnElement="Participant_Process_AtomicMassDrift" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="1140" height="350"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="1110" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
+        <dc:Bounds x="122" y="92" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Check" bpmnElement="Task_Check">
+        <dc:Bounds x="300" y="70" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Drift" bpmnElement="GW_Drift">
+        <dc:Bounds x="615" y="85" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Clean" bpmnElement="End_Clean">
+        <dc:Bounds x="872" y="92" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Drift" bpmnElement="End_Drift">
+        <dc:Bounds x="622" y="212" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="158" y="110"/>
+        <di:waypoint x="300" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="480" y="110"/>
+        <di:waypoint x="615" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="665" y="110"/>
+        <di:waypoint x="872" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="640" y="135"/>
+        <di:waypoint x="640" y="212"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

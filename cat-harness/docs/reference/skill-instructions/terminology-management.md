@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/terminology-management.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/terminology-management.md) — do not edit here. Typed contract: [schema reference](../skills/terminology-management.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/terminology-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/terminology-management.md) — do not edit here. Typed contract: [schema reference](../skills/terminology-management.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/terminology-management.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/terminology-management.md){: .fa-edit-source }
 
 {% raw %}
 # terminology-management
@@ -68,3 +68,10 @@ run over a toolchain that was never present.
 
 Validation of the resulting artefacts is `fhir-validation`, not this skill.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Terminology bindings |
+

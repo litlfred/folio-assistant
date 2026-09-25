@@ -129,5 +129,8 @@ export function listInstances(repoRoot: string): InstanceState[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")) as InstanceState)
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    // `?? ""`: two committed instances (the `code-change-review--*` pair)
+    // carry no `updatedAt`, and one missing field must not make every
+    // instance unlistable. Found by the PROV-O QA/QC report (#1180 step 5).
+    .sort((a, b) => (b.updatedAt ?? "").localeCompare(a.updatedAt ?? ""));
 }

@@ -3,7 +3,7 @@ name: session-state-machine
 description: >
   An agent PLAYING a state machine rather than an engine executing one. Where
   the non-determinism actually lives, why the diagram stays strict, the
-  `folio:judgement` marker that makes a judgement point countable, and what the
+  `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the
   machine must never do on the actor's behalf.
 ---
 
@@ -13,7 +13,7 @@ description: >
 > Managing state (kinda) during human/agentic discussion.** — the owner,
 > 2026-09-20
 
-The diagram is `skills/workflows/session-state-machine.bpmn`. It keeps a
+The diagram is `processes/session-state-machine.bpmn`. It keeps a
 session's context current across a discussion: establish who is acting, open
 the record, and on each turn decide whether anything changed.
 
@@ -31,7 +31,7 @@ So the shape is strict and enumerable. What varies is **which enabled branch
 the agent takes**, and what it writes.
 
 **That needed no change to the engine.** An exclusive gateway carrying
-`<folio:decision>` is computed and `workflow_complete` *refuses* a
+`<cat-harness.processes:decision>` is computed and `workflow_complete` *refuses* a
 hand-supplied outcome; one without it already meant the caller supplies the
 answer. The mechanism for a non-deterministic transition was there before
 anybody asked for one.
@@ -44,11 +44,11 @@ appearance:
 - **somebody's call**, which no table can make, and
 - **a table nobody has written yet.**
 
-Indistinguishable from the outside — the gap `folio:no-skill` closed for
-activities, one element type along. So `<folio:judgement reason="…"/>`, with
+Indistinguishable from the outside — the gap `cat-harness.processes:no-skill` closed for
+activities, one element type along. So `<cat-harness.processes:judgement reason="…"/>`, with
 the same three rules: the reason is **required** and a declaration without one
 does not load; it is refused on anything but an exclusive gateway; and it is
-refused **alongside** `folio:decision`, because a gateway claiming both that a
+refused **alongside** `cat-harness.processes:decision`, because a gateway claiming both that a
 table decides it and that a person does leaves a reader unable to tell which
 the author meant.
 
@@ -67,7 +67,7 @@ on an un-annotated corpus is a gate somebody turns off.
 
 ## What the machine must never do
 
-**It claims nothing.** No `folio:bean` appears anywhere in the diagram. The
+**It claims nothing.** No `cat-harness.processes:bean` appears anywhere in the diagram. The
 process RECORDS that an actor claimed a bean; it does not claim one. A machine
 that claimed on the actor's behalf would make the claim's owner unrecoverable
 — and a claim *announces rather than reserves* precisely so a reader can tell

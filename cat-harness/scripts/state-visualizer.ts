@@ -3,6 +3,8 @@
  * A dashboard per declared STATE graph, at the path this instance uses for it.
  *
  * @module scripts/state-visualizer
+ * @covers none — it RENDERS every declared state graph rather than judging one; a stale
+ *   dashboard is a currency finding about the render, not a verdict on the graph
  *
  * Owner, 2026-09-20, settling the route after two earlier attempts:
  *
@@ -126,11 +128,10 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
-  readdirSync,
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { dirname, join, relative, sep } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import {
   graphKindsOfLayer,
@@ -143,11 +144,9 @@ import {
   visualisationsOf,
 } from "../schemas/cat-harness.js";
 import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
-// REQUIRED: `folio` is registered by core on import and this instance declares
-// a folio graph, so `readDeclaration` throws on a valid declaration without it.
-// The same line `print-stub.ts` carries, for the same reason.
-import "../schemas/folio-graph-kind.js";
 import { unportableSegment } from "../schemas/portable-path";
+import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
+import { withViewerNav } from "./viewer-page.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -351,7 +350,7 @@ export function declaredVisualiserFor(
 function stateGraphsOf(decl: CatHarnessDeclaration): StateGraph[] {
   const out: StateGraph[] = [];
   for (const d of decl.directories ?? []) {
-    const kinds = (d.graphs ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
+    const kinds = (d.graphKinds ?? []).filter((g) => STATE_KINDS.has(g) && isStateGraph(g));
     if (kinds.length === 0) continue;
     out.push({
       id: d.id,
@@ -418,27 +417,38 @@ export const GENERATED_BY =
  * @returns the orphans' paths relative to `site`, sorted
  */
 export function prunableDashboards(site: string, wantedIds: readonly string[]): string[] {
-  if (!existsSync(site)) return [];
-  const keep = new Set(wantedIds);
-  return readdirSync(site, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && !keep.has(e.name))
-    .map((e) => join(e.name, "index.html"))
-    .filter((rel) => {
-      const abs = join(site, rel);
-      if (!existsSync(abs)) return false;
-      try {
-        return readFileSync(abs, "utf-8").includes(GENERATED_BY);
-      } catch {
-        // Unreadable is NOT ours. A file we cannot read is a file we cannot
-        // prove we wrote, and the safe answer to that is to leave it.
-        return false;
-      }
-    })
-    .sort();
+  // A CALL SITE NOW, not a fourth implementation (bean `s8nu`). The unit is
+  // the same one `orphanSubjectPages` walks -- a directory holding an
+  // `index.html` -- and only the ownership TEST differs, which is why that is
+  // what the shared selector takes.
+  //
+  // The marker is the right test HERE and the weaker of the two: dashboards
+  // publish at the site root among directories nothing here owns, and their
+  // identity is the graph id rather than the path, so there is no self-naming
+  // for a page to do. `declaresItsOwnDirectory` would claim none of them.
+  //
+  // `foreign` is deliberately not returned. This function's contract is the
+  // prunable set, and its callers act on that; the directories declined are
+  // reported by the caller that wants them. Keeping the signature means the
+  // three tests below still falsify the same things.
+  const { owned } = orphanSubjectPages(site, wantedIds, carriesMarker(GENERATED_BY));
+  return owned.map((dir) => join(dir, "index.html")).sort();
 }
 
-/** One generated file, with the `--check` contract every generator here uses. */
+/**
+ * One generated file, with the `--check` contract every generator here uses.
+ *
+ * THE NAVBAR IS APPLIED HERE, before the staleness comparison, because this is
+ * this generator's single write — bean `edx7`, and the same chokepoint rule the
+ * shared `makeEmit` follows. Applying it after the comparison would make the
+ * gate green over pages that gain a rail only when somebody runs the generator.
+ *
+ * Its dashboard pages are keyed by GRAPH ID (`beans`, `todos`, `qa`), not by
+ * instance, so the rail lists this instance's graphs and no instance is
+ * inferred from the id.
+ */
 function emit(path: string, content: string): void {
+  content = withViewerNav(content, path, { built: basename(ROOT), docsRoot: SITE }) ?? content;
   const rel = relative(ROOT, path);
   if (check) {
     if (!existsSync(path)) {
@@ -851,7 +861,7 @@ const taken = all.filter((g) => RESERVED_IDS.has(g.id) || g.id.startsWith("_"));
 for (const g of taken) {
   console.error(
     `  ! declared directory \`${g.id}\` collides with a route this site already uses — ` +
-      `not rendered. Rename the directory's id in harness.json.`,
+      `not rendered. Rename the directory's id in the declaration.`,
   );
 }
 // REFUSED, not encoded — and the difference is the point.
@@ -869,7 +879,7 @@ const unportable = all.filter((g) => !taken.includes(g) && unportableSegment(g.i
 for (const g of unportable) {
   console.error(
     `  ! declared directory \`${g.id}\` cannot be a directory or a route on every platform ` +
-      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in harness.json.`,
+      `(${unportableSegment(g.id)}) — not rendered. Rename the directory's id in the declaration.`,
   );
 }
 const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));

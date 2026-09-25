@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/fsh-guts.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/fsh-guts.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/fsh-guts.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/fsh-guts.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/fsh-guts.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/fsh-guts.md){: .fa-edit-source }
 
 {% raw %}
 # `fsh-guts/` — the trashcan that is kept
@@ -27,7 +27,7 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-`harness.json` declares nine graph kinds and none of them renders. That makes
+The declaration declares nine graph kinds and none of them renders. That makes
 `renderable: false` look like a weak signal, and for the others it is: `tools`,
 `schemas`, `beans` and the rest are graphs a **tool** reads, and there was
 never a page to make of them.

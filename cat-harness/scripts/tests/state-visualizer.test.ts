@@ -23,7 +23,6 @@ import {
   prunableDashboards,
 } from "../state-visualizer.ts";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -385,7 +384,7 @@ describe("orphan dashboards — a page that answers to no declaration", () => {
     // The strongest statement available: ask for the worst case — nothing is
     // wanted — and assert the answer is exactly this generator's own pages,
     // never one of the site's other directories.
-    const ours = ["beans", "todos", "qa", "health", "issue-marks", "uploads"];
+    const ours = ["beans", "todos", "qa", "health", "issue-marks", "uploads", "swimlane-glossary"];
     const selected = prunableDashboards(SITE, []);
     expect(selected.sort()).toEqual(ours.map((g) => join(g, "index.html")).sort());
   });

@@ -17,9 +17,11 @@
  * published artefact carrying one is not a stricter pin, it is an unresolvable
  * one.
  *
- * Scheme: `fsh-guts/proposals/instance-versioning.md`. This is its §3.3 gate,
- * built first on purpose — it is the one that can be written against today's
- * data, before `id`, `version` or `publishable` exist anywhere.
+ * Scheme: `cat-harness/docs/proposals/instance-versioning.md`. This is its §3.3 gate,
+ * built first on purpose — it was the one that could be written against the
+ * data as it stood, before `id`, `version` or `publishable` existed anywhere.
+ * They exist now (§3.1/§3.2), and carrier 3 below is §3.4's dependency set,
+ * which this gate was carrying as a declared gap until then.
  *
  * ## A REFERENCE is not PROVENANCE, and the difference is the whole gate
  *
@@ -54,17 +56,21 @@
  * The reference carriers are enumerated and each prints its count even when
  * that count is nought. A gate that silently covers nothing and exits 0 is
  * this repository's most expensive recurring defect (`xom7`, `dh4f`,
- * `a6kl` — an L1 gate that was a no-op in CI). Today two of the three
- * carriers are genuinely empty, and the report says so in the same breath as
- * it says the third is clean.
+ * `a6kl` — an L1 gate that was a no-op in CI). Each carrier's note says WHY
+ * it is empty when it is, and no count is quoted here: a number in prose is a
+ * claim that the next commit is free to falsify, and this header has already
+ * outlived one.
  *
  * @module scripts/check-published-refs
+ * @covers cat-harness
  */
 
 import { existsSync, readFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { dependsOnFor } from "../schemas/depends-on.js";
+import { expectedInstanceConfigPath } from "../schemas/harness-config.js";
 
 /**
  * Keys whose value records where THIS artefact came from.
@@ -144,10 +150,27 @@ function finding(
 }
 
 /**
- * Carrier 1 — instance dependencies in `harness.config.json`.
+ * Carrier 1 — instance dependencies in an instance's `<name>.config.json`.
  *
  * `major`: this is the reference a consumer resolves to obtain another whole
  * instance. It is the one the FHIR alignment is actually about.
+ *
+ * **The path is RESOLVED, not composed, and that is not a style preference.**
+ * This read `join(root, "harness.config.json")` until 2026-09-21. The config
+ * was renamed to `<name>.config.json` on the 21st, so `existsSync` went false
+ * for every instance, every iteration `continue`d, and the carrier reported
+ * *"no instance carries a harness.config.json — there are no declared
+ * instance dependencies in this repository to check"* with `examined: 0`.
+ *
+ * That sentence was true about a filename and false about the repository:
+ * `folio-assistant.config.json` declares `dependencies.folioAssistant`, with
+ * no `ref` and no `version` — precisely the `major` unpinned finding this
+ * carrier exists to raise. **A check that scans nothing and reports a clean
+ * run is the `dh4f` shape**, and here it was hiding the only dependency edge
+ * in the repository.
+ *
+ * `expectedInstanceConfigPath()` asks the instance what its config is called,
+ * so a future rename moves this with it rather than past it.
  */
 export function dependencyRefs(repoRoot: string): CarrierReport {
   const findings: RefFinding[] = [];
@@ -155,9 +178,12 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
   const seen: string[] = [];
 
   for (const root of instanceRootsIn(repoRoot)) {
-    const cfg = join(root, "harness.config.json");
-    if (!existsSync(cfg)) continue;
-    seen.push(relative(repoRoot, cfg) || "harness.config.json");
+    const cfg = expectedInstanceConfigPath(root);
+    // `undefined` is "nothing here declares an instance", which is not the
+    // same as "an instance with no config" — neither is a finding, but only
+    // the second means this root was examined.
+    if (cfg === undefined || !existsSync(cfg)) continue;
+    seen.push(relative(repoRoot, cfg) || cfg);
     let parsed: { dependencies?: { folioAssistant?: Array<{ name?: string; ref?: string; version?: string }> } };
     try {
       parsed = JSON.parse(readFileSync(cfg, "utf-8"));
@@ -168,7 +194,7 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
         ref: undefined,
         kind: "unpinned",
         severity: "major",
-        detail: "harness.config.json is unreadable — not a clean run, and not an empty dependency set",
+        detail: `${relative(repoRoot, cfg) || cfg} is unreadable — not a clean run, and not an empty dependency set`,
       });
       continue;
     }
@@ -188,8 +214,8 @@ export function dependencyRefs(repoRoot: string): CarrierReport {
     note:
       examined === 0
         ? seen.length === 0
-          ? "no instance carries a harness.config.json — there are no declared instance dependencies in this repository to check"
-          : `${seen.length} harness.config.json file(s) found, none declaring dependencies.folioAssistant`
+          ? "no instance carries a config — there are no declared instance dependencies in this repository to check"
+          : `${seen.length} instance config(s) found, none declaring dependencies.folioAssistant`
         : undefined,
   };
 }
@@ -238,20 +264,59 @@ export function assetSourceRefs(repoRoot: string): CarrierReport {
 }
 
 /**
- * Carrier 3 — `dependsOn` records in the exported graph.
+ * Carrier 3 — `dependsOn` records, §3.4's published dependency set.
  *
- * Not emitted yet; §3.4 of the proposal is what adds them. Declared here with
- * its count at nought so the report states the gap rather than leaving a
- * reader to assume the published graph was checked and found clean.
+ * `major`: this is the reference an EXTERNAL consumer resolves, read straight
+ * out of the published document. It is the carrier the FHIR alignment is
+ * ultimately for.
+ *
+ * ## It is computed from the declarations, not read back from `_kg/`
+ *
+ * `_kg/` is a build output — gitignored, absent in a fresh checkout, and
+ * possibly stale in a dirty one. A gate that read it would pass on an old
+ * export and report `examined: 0` where the file simply had not been built,
+ * which is the `dh4f` shape wearing a plausible number. `dependsOnFor` walks
+ * the same declarations the exporter walks, so this checks what the next
+ * export WILL publish rather than what the last one did.
+ *
+ * **Nought today is a determined nought, and the note says which.** Every
+ * instance is undecided (§6 Q1), so no instance emits the block at all — a
+ * different fact from "the block is emitted and holds no references", and the
+ * report distinguishes them.
  */
-export function publishedGraphRefs(_repoRoot: string): CarrierReport {
+export function publishedGraphRefs(repoRoot: string): CarrierReport {
+  const findings: RefFinding[] = [];
+  let examined = 0;
+  let emitting = 0;
+
+  for (const root of instanceRootsIn(repoRoot)) {
+    const where = relative(repoRoot, root) || ".";
+    let deps;
+    try {
+      deps = dependsOnFor(root);
+    } catch {
+      continue; // reported by `check:publishable`, whose job the census is
+    }
+    if (deps.unavailable !== undefined && deps.records.length === 0) continue;
+    emitting += 1;
+    for (const record of deps.records) {
+      examined += 1;
+      const f = finding("published-graph", `${where} → ${record.packageId}`, record.version, "major");
+      if (f) findings.push(f);
+    }
+  }
+
   return {
     carrier: "published-graph",
-    examined: 0,
-    findings: [],
+    examined,
+    findings,
     note:
-      "the exported graph carries no `dependsOn` records yet — §3.4 of `fsh-guts/proposals/instance-versioning.md` adds them. " +
-      "Its one 40-hex string is the build stamp, which is PROVENANCE and deliberately out of scope",
+      emitting === 0
+        ? "no instance emits a `dependsOn` block — every one is UNDECIDED (§3.1, §6 Q1), which is not the same as emitting an empty one. " +
+          "The graph's one 40-hex string is the build stamp, which is PROVENANCE and deliberately out of scope"
+        : examined === 0
+          ? `${emitting} instance(s) emit a \`dependsOn\` block, all of them empty — a determined empty, not an unchecked one`
+          : undefined,
   };
 }
 

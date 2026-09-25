@@ -166,7 +166,7 @@ describe("coverage is a QA axis, not a promise", () => {
     //
     // The comment here used to say they were "ahead of their declaration",
     // *"the split (#223) has not happened, so nothing declares them yet"*.
-    // Both halves were false by 2026-09-21: `cat-bootstrap/harness.json` and
+    // Both halves were false by 2026-09-21: `bootstrap/harness.json` and
     // `folio-assistant-core/harness.json` both exist and both declare a
     // `name`. The reason the finding is correct changed; the finding did not.
     //
@@ -176,7 +176,7 @@ describe("coverage is a QA axis, not a promise", () => {
     // while the art sat under a name nothing carries. This assertion is what
     // now fails if the key drifts off the declared name again.
     const orphaned = coverage(ROOT).orphaned;
-    expect(orphaned).toContain("cat-bootstrap");
+    expect(orphaned).toContain("bootstrap");
     expect(orphaned).toContain("folio-assistant-core");
   });
 

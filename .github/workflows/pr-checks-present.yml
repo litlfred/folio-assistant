@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/pr-checks-present.bpmn
 # Which open pull requests have NO CI run on their head?
 #
 # Bean `3pqn`. A pull request showing zero checks is indistinguishable from one
@@ -46,6 +47,7 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Open PRs whose head has no run
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -120,15 +122,77 @@ jobs:
         if: steps.check.outputs.verdict == 'findings'
         run: |
           bun run check:prs-have-runs --min-age-minutes 15 2>/dev/null \
-            | awk '/^  ✗ #/ { gsub("#","",$3); print $3 }' > "$RUNNER_TEMP/affected.txt" || true
+            | awk '/^  ✗ #/ { gsub("#","",$2); print $2 }' > "$RUNNER_TEMP/affected.txt" || true
           while read -r pr; do
             [ -n "$pr" ] || continue
-            sha="$(gh pr view "$pr" --json headRefOid --jq .headRefOid)"
+            # STATE and head in one call. A pull request that closed between
+            # the sweep and this loop has nothing owed to it, and saying so
+            # matters for the probe below: `refs/pull/N/head` SURVIVES a close
+            # while `refs/pull/N/merge` is reaped, so on a merged PR the pair
+            # reads exactly like an open conflicted one. Measured: 681 head
+            # refs against 12 merge refs on this repository, the twelve being
+            # precisely the then-open PRs.
+            pr_json="$(gh pr view "$pr" --json state,headRefOid 2>/dev/null || echo '{}')"
+            state="$(printf '%s' "$pr_json" | jq -r '.state // "UNKNOWN"')"
+            sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid // empty')"
+            if [ "$state" != "OPEN" ] || [ -z "$sha" ]; then
+              echo "#$pr is no longer open (state=$state) — nothing owed"
+              continue
+            fi
+            # MERGEABILITY, asked before any advice is given. Bean `sddf`:
+            # a `pull_request` run checks out `refs/pull/N/merge`, which a
+            # conflicted PR has none of, so telling its author to dispatch
+            # hands them a green signal for a tree that will never exist.
+            # Measured on #813 — conflicted: no merge ref for 433s and no run;
+            # resolved: merge ref in 15s and runs in 7s.
+            #
+            # THE MERGE REF, not `gh pr view --json mergeable`. Bean `h2s9`:
+            # that field is computed LAZILY, so a read returns `UNKNOWN`
+            # because nothing has computed it yet — which is not the same as
+            # "this PR's mergeability cannot be determined". Measured on the
+            # first run carrying sddf's fix: the API said `unknown` for #731
+            # while the forge was publishing refs/pull/731/merge, and the
+            # comment went out on the UNKNOWN branch. That is sddf's own
+            # defect class reappearing inside sddf's remedy.
+            #
+            # The ref is deterministic and needs no token, and it is the same
+            # instrument `mergeStateForHead` uses in check-head-has-run.ts —
+            # so the two halves cannot disagree, which is what sddf was for.
+            # Reached only for a CONFIRMED-OPEN pull request, which is what
+            # makes an absent merge ref mean "conflicted" rather than "closed".
+            if ! merge_ref="$(git ls-remote origin "refs/pull/$pr/merge" 2>/dev/null)"; then
+              mergeable=UNKNOWN            # the probe itself failed
+            elif [ -n "$merge_ref" ]; then
+              mergeable=MERGEABLE
+            else
+              mergeable=CONFLICTING
+            fi
             marker="<!-- pr-no-checks:$sha -->"
             if gh pr view "$pr" --json comments --jq '.comments[].body' | grep -qF "$marker"; then
               echo "already told #$pr about $sha"
               continue
             fi
+            # One advice per state, and only ONE of them may say "dispatch".
+            case "$mergeable" in
+              CONFLICTING)
+                advice="This PR is UNMERGEABLE, and that is very likely the whole reason.
+            A \`pull_request\` run checks out \`refs/pull/N/merge\`, which the forge
+            publishes only for a mergeable PR — so this head will never get one
+            until the conflict is resolved. **Merge the base branch in and push.**
+            Do NOT dispatch the workflow: a dispatch resolves \`refs/heads/<branch>\`,
+            so it would test the branch rather than the merge result." ;;
+              MERGEABLE)
+                advice="This PR is mergeable, so a run is owed and its absence is
+            unexplained. Re-pushing may not produce one: on 2026-09-20 two
+            consecutive pushes were both dropped, 26s apart. Elapsed time is no
+            guide either — latency measured 7s and 2m43s within one hour here.
+            Dispatching against this ref is safe while the PR is mergeable,
+            because then the branch and the merge result agree." ;;
+              *)
+                advice="Its mergeability could not be read, so the reason is unknown.
+            Check that FIRST: on a conflicted PR a dispatch tests a tree that
+            will never exist, so it is not a safe default." ;;
+            esac
             # Indented to stay inside the YAML block scalar. Unindented, these
             # lines end the scalar and the file will not parse — which
             # `check:workflow-coverage` reports as COULD NOT DETERMINE rather
@@ -141,11 +205,10 @@ jobs:
             red\" here is not \"nothing wrong\" — it is *nothing was asked*.
             Merging on it merges unverified.
 
-            Re-pushing may not produce a run: on 2026-09-20 two consecutive
-            pushes were both dropped, the second 26s after the first. Dispatch
-            the workflow against this ref and read that run instead.
+            $advice
 
-            Bean \`3pqn\`. Checked with \`bun run check:head-has-run\`."
+            Beans \`3pqn\`, \`sddf\`. Checked with \`bun run check:head-has-run\`,
+            which reports the same three states for one commit."
             gh pr comment "$pr" --body "$(echo "$body" | sed 's/^            //')"
           done < "$RUNNER_TEMP/affected.txt"
         env:

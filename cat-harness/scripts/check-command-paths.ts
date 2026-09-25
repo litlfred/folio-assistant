@@ -48,17 +48,16 @@
  * Exit: 0 every checked path resolves, 1 one does not, 2 could not check.
  *
  * @module folio-assistant/scripts/check-command-paths
+ * @covers docs
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { findDeclarationFile, directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { findDeclarationFile, directoriesForGraph, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../schemas/cat-harness.js";
 
-// `folio` registers on import, and reading the whole declaration refuses an
-// unregistered kind. Same import, same reason, as `agent-memory.ts`.
-import "../schemas/folio-graph-kind.js";
 import { findEntryFiles } from "./check-agent-entry-links.ts";
+import { isSyncedSkillDir } from "./sync-remote-skills.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -216,7 +215,7 @@ export function aboutThisTree(repo: string, tok: string): boolean {
  * ```
  *
  * Same shape as `declared-path-literal:` in `check:declared-paths` and
- * `<folio:no-skill reason="…"/>`: exempt, but **the reason is required**, so
+ * `<cat-harness.processes:no-skill reason="…"/>`: exempt, but **the reason is required**, so
  * silencing the check costs more than satisfying it, and exempted blocks are
  * COUNTED in the summary rather than disappearing.
  *
@@ -622,7 +621,7 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
     if (existsSync(join(repo, f))) out.push({ file: f, corpus: "entry" });
   }
   // ASKED, not composed. The first draft listed `cat-harness/skills`,
-  // `cat-harness/methodologies` and `cat-bootstrap/skills`, and
+  // `cat-harness/methodologies` and `bootstrap/skills`, and
   // `check:declared-paths` refused it — correctly, and with some irony for a
   // check whose whole subject is a path that moved. A topical split of the
   // knowledge graph is exactly the relocation this check would then have
@@ -635,7 +634,7 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
   for (const f of existsSync(join(repo, ".claude/skills")) ? walkMarkdown(join(repo, ".claude/skills")) : []) {
     out.push({ file: f.slice(repo.length + 1), corpus: "skill" });
   }
-  for (const graph of ["cat-harness", "methodology"]) {
+  for (const graph of [...KG_CONTENT_GRAPH_KINDS, "methodology"]) {
     for (const dir of directoriesForGraph(INSTANCE_ROOT, graph)) {
       if (!existsSync(dir)) continue;
       for (const f of walkMarkdown(dir)) out.push({ file: f.slice(repo.length + 1), corpus: "skill" });
@@ -647,6 +646,9 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
 
 function walkMarkdown(dir: string): string[] {
   const out: string[] = [];
+  // A SYNCED skill is upstream's prose, pinned: a dead path in it is not ours
+  // to repair, and editing it would fork the copy fixity vouches for (#556).
+  if (isSyncedSkillDir(dir)) return out;
   for (const name of readdirSync(dir)) {
     if (name.startsWith(".") || name === "node_modules") continue;
     const p = join(dir, name);

@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { extractBpmn, injectBpmn, decodeLabel } from "../../content/pipeline/bpmn-translate.ts";
 
 const ROOT = join(import.meta.dir, "../..");
-const XML = readFileSync(join(ROOT, "methodologies/crdm/workflows/crdm-requirements.bpmn"), "utf-8");
+const XML = readFileSync(join(ROOT, "processes/crdm-requirements.bpmn"), "utf-8");
 /**
  * A phase of the same process, read for the things the parent no longer carries.
  *
@@ -24,11 +24,11 @@ const XML = readFileSync(join(ROOT, "methodologies/crdm/workflows/crdm-requireme
  * pass actually runs, rather than on an inline fixture that cannot go stale
  * because it is not connected to anything.
  */
-const PHASE_XML = readFileSync(join(ROOT, "methodologies/crdm/workflows/crdm-deliver.bpmn"), "utf-8");
+const PHASE_XML = readFileSync(join(ROOT, "processes/crdm-deliver.bpmn"), "utf-8");
 
 describe("extractBpmn", () => {
   test("finds the labels a reader sees", () => {
-    const entries = extractBpmn(XML, "methodologies/crdm/workflows/crdm-requirements.bpmn");
+    const entries = extractBpmn(XML, "processes/crdm-requirements.bpmn");
     const msgids = entries.map((e) => e.msgid);
     expect(msgids).toContain("BA / Feature Requestor");
     expect(msgids).toContain("Detect feature request (crdm-detect skill)");
@@ -65,11 +65,11 @@ describe("injectBpmn", () => {
     // Every structural handle survives untouched.
     expect(out).toContain('id="Lane_BA"');
     expect(out).toContain("<bpmn:flowNodeRef>BA_Submit</bpmn:flowNodeRef>");
-    expect(out).toContain('<folio:skill ref="crdm-detect"/>');
+    expect(out).toContain('<bootstrap.processes:skill ref="crdm-detect"/>');
 
     // A bean operation is structure too, and this diagram's are in its phases.
     const phase = injectBpmn(PHASE_XML, new Map([["Agent", "Agent (fr)"]]));
-    expect(phase).toContain('<folio:bean op="claim"/>');
+    expect(phase).toContain('<cat-harness.processes:bean op="claim"/>');
   });
 
   test("an untranslated msgid keeps its source text", () => {

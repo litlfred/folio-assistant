@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/content-context-and-state-graphs.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/content-context-and-state-graphs.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/content-context-and-state-graphs.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/content-context-and-state-graphs.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/content-context-and-state-graphs.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/content-context-and-state-graphs.md){: .fa-edit-source }
 
 {% raw %}
 # Content, context and state graphs
@@ -223,7 +223,7 @@ possible.
 layer is a property of its graph KIND; an asset's is a property of its ROLE,
 in `ASSET_ROLES`, because an asset has no kind. A per-asset `layer` would be
 eleven instances answering one question, and `check:asset-roles` rejects it —
-asked of the raw `harness.json`, since `KgAssetSchema` strips an unknown key
+asked of the raw declaration, since `KgAssetSchema` strips an unknown key
 without a word.
 
 **Creation at INITIALISATION is not a process write.** A `context` asset that
@@ -235,7 +235,7 @@ written by a process"* cannot mean *"never created"* without leaving every
 instance without one.
 
 That is not hypothetical. `initialize-harness.bpmn` ends with
-`A_WriteRootReadme`, whose skill (`cat-bootstrap/skills/root-readme.md`) writes
+`A_WriteRootReadme`, whose skill (`bootstrap/skills/root-readme.md`) writes
 the root `README.md` when there is none — an `instance-readme`, which is
 `context`. It **never replaces** one that exists: an existing README is
 authored content, and the link and install status go in a marker pair the

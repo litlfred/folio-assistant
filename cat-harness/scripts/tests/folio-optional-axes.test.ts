@@ -23,7 +23,6 @@ import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import "../../schemas/folio-graph-kind.js";
 import { folioDir } from "../../schemas/cat-harness.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
@@ -37,6 +36,8 @@ console.log(JSON.stringify({
   inRegistry: QA_CRITERIA_REGISTRY.some((c) => c.id === "detangler-archimedean-wall"),
   inBucket: DETANGLER_WATCHER_CRITERIA.includes("detangler-archimedean-wall"),
   detanglerCount: QA_CRITERIA_REGISTRY.filter((c) => c.domain === "detangler").length,
+  frameworkCount: QA_CRITERIA_REGISTRY.filter((c) => c.domain === "framework").length,
+  wallCount: QA_CRITERIA_REGISTRY.filter((c) => c.domain === "wall").length,
 }));
 `;
 
@@ -60,6 +61,8 @@ function probe(qaAxes: string[] | undefined): {
   inRegistry: boolean;
   inBucket: boolean;
   detanglerCount: number;
+  frameworkCount: number;
+  wallCount: number;
 } {
   const cwd = folioRoot(qaAxes);
   const r = spawnSync("bun", ["-e", PROBE], { cwd, encoding: "utf-8" });
@@ -91,5 +94,43 @@ describe("detangler-archimedean-wall is folio-optional", () => {
     // criterion the registry never registered is a watcher axis that
     // reports on nothing and looks clean doing it (bean `dh4f`).
     expect(on.detanglerCount).toBe(off.detanglerCount + 1);
+  });
+});
+
+describe("the `framework` domain is folio-optional too", () => {
+  // Bean `btuv`, its last `Done when`. `framework-canonical` asserts a
+  // canonical notation and the notation is one paper's — `(M, Θ, G, P, E)`,
+  // `\omega` as a fibre functor, `\mathcal{C}` for a category, a bare
+  // `$H_q$`. It was registered UNCONDITIONALLY, so every folio was measured
+  // against it: any paper writing `\mathcal{C}` for anything got a `major`
+  // finding telling it the canonical form is `\mathbf{C}`.
+
+  test("absent config key ⇒ no framework criteria, and no wall criteria", () => {
+    const out = probe(undefined);
+    expect(out.frameworkCount).toBe(0);
+    expect(out.wallCount).toBe(0);
+  });
+
+  test("another folio's axis does not open it", () => {
+    expect(probe(["q-usage"]).frameworkCount).toBe(0);
+  });
+
+  test("`archimedean-wall` opens framework AND wall — it is one folio's mathematics", () => {
+    // ONE axis for both, deliberately. Two axes would let a folio opt into
+    // the wall and not the notation, or the reverse, and there is no folio
+    // for which that is a coherent request: the notation and the wall are the
+    // same paper's. The same argument the wall criteria and the detangler
+    // criterion already share.
+    const on = probe(["archimedean-wall"]);
+    expect(on.frameworkCount).toBeGreaterThan(0);
+    expect(on.wallCount).toBeGreaterThan(0);
+  });
+
+  test("the fence changes the registry SIZE, so it is not cosmetic", () => {
+    const off = probe(undefined);
+    const on = probe(["archimedean-wall"]);
+    expect(on.frameworkCount + on.wallCount + on.detanglerCount).toBeGreaterThan(
+      off.frameworkCount + off.wallCount + off.detanglerCount,
+    );
   });
 });

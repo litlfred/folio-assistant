@@ -12,9 +12,6 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { readDeclaration } from "./cat-harness.js";
-// `folio` is registered by core on import and this instance declares a folio
-// graph, so without this `readDeclaration` throws on a valid declaration.
-import "./folio-graph-kind.js";
 import {
   THEME_LAYOUTS,
   ResolvedThemeSchema,
@@ -162,9 +159,10 @@ describe("every shipped backdrop resolves against THIS instance's declaration", 
   //
   // This is also the guard that keeps an INCOMPLETE set out. Measured
   // 2026-09-20: the architecture art arrived as two layouts of three (the third
-  // upload was a byte-identical copy of the second), so no `architecture` theme
-  // is declared. If somebody adds one before the portrait crop arrives, this
-  // fails rather than shipping a theme that serves a landscape crop to a phone.
+  // upload was a byte-identical copy of the second), so the `architecture`
+  // theme shipped palette-only until the owner supplied the portrait crop on
+  // 2026-09-24. Adding a backdrop before that failed here, which is the point:
+  // a theme must never serve a landscape crop to a phone.
   const decl = readDeclaration(resolve(import.meta.dir, ".."));
   const themed = THEMES.filter((t) => t.backdrop !== undefined);
 

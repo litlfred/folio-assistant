@@ -117,7 +117,7 @@ export function instanceRoots(repoRoot: string): Map<string, string> {
 export function libraryDirOf(instanceRoot: string): string | undefined {
   const decl = declarationPathIn(instanceRoot)!;
   if (!existsSync(decl)) return undefined;
-  let dirs: Array<{ path?: string; graphs?: string[]; scope?: string }> = [];
+  let dirs: Array<{ path?: string; graphKinds?: string[]; scope?: string }> = [];
   try {
     dirs = JSON.parse(readFileSync(decl, "utf8"))?.directories ?? [];
   } catch {
@@ -143,7 +143,7 @@ export function libraryDirOf(instanceRoot: string): string | undefined {
   // ANOTHER instance keeps its corpus, and the caller asking
   // `libraryDirOf(who-iris)` gets it from who-iris's own declaration.
   const mine = dirs.filter(
-    (d) => Array.isArray(d.graphs) && d.graphs.includes("library") && d.scope !== "repository",
+    (d) => Array.isArray(d.graphKinds) && d.graphKinds.includes("library") && d.scope !== "repository",
   );
   if (mine.length === 0) return undefined;
   if (mine.length > 1) {

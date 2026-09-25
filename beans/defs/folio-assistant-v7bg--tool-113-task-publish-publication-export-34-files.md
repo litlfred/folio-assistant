@@ -210,7 +210,7 @@ over.
 
 ### Reading 1 is EVIDENCED, not a choice — `content-publish` is folio-side
 
-`cat-harness/skills/workflows/draft-to-publication.bpmn` carries three tasks
+`cat-harness/processes/draft-to-publication.bpmn` carries three tasks
 reffing `content-publish`, and the third is exactly the flow the skill's prose
 describes:
 
@@ -253,6 +253,20 @@ established that call is the owner's, not an agent's.
       `versionIncrement` is supplied by `Task_AuthorizeRelease`
 - [x] reading 1 **evidenced** from `draft-to-publication.bpmn`; recorded as
       unsatisfiable-here-by-design, and tier A's count says why
-- [ ] **reading 3: does `release-please.yml` get its own skill?** — the owner's
+- [x] **reading 3: does `release-please.yml` get its own skill?** — the owner's
       call, and the only question left on this bean
-- [ ] if yes: the skill, then a node over `release-please.yml`
+- [x] if yes: the skill, then a node over `release-please.yml`
+
+--------
+
+## Owner, 2026-09-24 — reading 3: **"Yes, general skill"**
+
+Asked whether `release-please.yml` gets its own skill, the owner chose the
+GENERAL form over a platform-only one: *cut a release of any repository's
+packages*, so a folio can reuse it for its own. Then a Tool node over
+`release-please.yml` that satisfies it.
+
+Done the same day: `package-release` (folio-core), and two Tool nodes that
+satisfy it as alternatives — `release-please` (declared, NOT configured here;
+`frq2` still holds) and `package-release-manual`. The other open items on this
+bean (kg-viewer's skill, the site half) are unchanged.

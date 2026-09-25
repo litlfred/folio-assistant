@@ -2,6 +2,7 @@
  * Agent memory as graph nodes, assembled into the file the harness reads.
  *
  * @module scripts/agent-memory
+ * @covers memory
  *
  * ## What this is for
  *
@@ -66,21 +67,8 @@ import {
   type MemoryLabel,
   type MemoryNode,
 } from "../schemas/memory.js";
-import { directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { portableSegment } from "../schemas/portable-path";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), and `directoriesForGraph` reads the WHOLE declaration,
-// which refuses an unregistered kind. Needed here the moment this module
-// started asking the declaration a question rather than composing a path —
-// and it surfaced the same hour, when `main` declared a `folio` directory.
-//
-// The old `kgRoots` path swallowed it: `kgDirectories` wraps the read in
-// try/catch and returns [] on a throw, so an unreadable declaration produced
-// "no memory directories" rather than an error. That is the quieter bug of
-// the two, and worth naming: this import is not a workaround for a stricter
-// reader, it is what the reader was always entitled to expect.
-import "../schemas/folio-graph-kind.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 /**
@@ -96,12 +84,13 @@ export const ROOT = resolve(import.meta.dir, "..");
  * instance keep its memory graph" — and it survives the next relocation
  * without an edit, which composing a path does not.
  */
-export const MEMORY_DIRS = [directoryForGraph(ROOT, "memory")].filter(
-  (d): d is string => d !== undefined && existsSync(d),
+export const MEMORY_DIRS = deferResolution(
+  () => [directoryForGraph(ROOT, "memory")].filter((d): d is string => d !== undefined && existsSync(d)),
+  { moduleUrl: import.meta.url, what: "its memory directories", under: ROOT },
 );
 // declared-path-literal: the convention fallback, so a generator in an
 // instance that declares nothing still has a directory to report on.
-export const MEMORY_DIR = MEMORY_DIRS[0] ?? join(repoRootFor(ROOT), "memory");
+export const MEMORY_DIR = (): string => MEMORY_DIRS()[0] ?? join(repoRootFor(ROOT), "memory");
 /** Where the HARNESS looks. Not ours to move. */
 export const AGENT_MEMORY_DIR = join(repoRootFor(ROOT), ".claude", "agent-memory");
 
@@ -224,7 +213,7 @@ export function splitDetail(body: string): { comment: string; detail?: string } 
  * strict, as it was, and it goes to everybody: a widened blast radius that
  * nothing reports on and no budget check counts. So an unrecognised value is an
  * error, and silencing an entry costs more than not silencing it — the same
- * reasoning `<folio:no-skill reason="…"/>` already applies.
+ * reasoning `<cat-harness.processes:no-skill reason="…"/>` already applies.
  *
  * Bean `folio-assistant-0j8h`.
  */
@@ -254,7 +243,7 @@ export function readArchivedFlag(raw: unknown, where: string): boolean | undefin
   );
 }
 
-export function readMemoryNodes(dir: string = MEMORY_DIR): MemoryNode[] {
+export function readMemoryNodes(dir: string = MEMORY_DIR()): MemoryNode[] {
   if (!existsSync(dir)) return [];
   const out: MemoryNode[] = [];
   for (const f of readdirSync(dir).sort()) {

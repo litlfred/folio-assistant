@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l2-dak-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/l2-dak-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # l2-dak-authoring
@@ -55,7 +55,7 @@ stated as a data element, a decision rule or an indicator, it belongs here.
 
 | step | produces | note |
 |---|---|---|
-| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `skills/roles/roles.json` — do not conflate the two vocabularies. |
+| Personas and scenarios | the actors and the user journeys they appear in | These are the DAK's own personas, and they are **not** this harness's `scenarios/roles.json` — do not conflate the two vocabularies. |
 | Data dictionary and core data elements | the data dictionary | `data-dictionary-authoring` is a facet of this skill, not a separate one; the input schema already carries `data-dictionary` as a component. |
 | Indicators and requirements | indicators, functional and non-functional requirements | Requirements here are the DAK's, distinct from `skills/requirements/*.json`, which are this harness's own conformance obligations. |
 
@@ -72,8 +72,19 @@ happens when `SMART_BASE_HOME` is unset (the skill degrades to `skip`, it does
 
 ## Where this sits
 
-`l2-dak-authoring.bpmn` carries `<folio:policy enforcement="advisory"/>`: it is
+`l2-dak-authoring.bpmn` carries `<cat-harness.processes:policy enforcement="advisory"/>`: it is
 a per-content-type process, and this package owns what "adequate" means in its
 domain. That is licence to adapt the sequence, not to skip the gate — the base
 processes it feeds (`editing-hci-validation`, `content-lifecycle`) stay strict.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[L2 DAK authoring](../../processes/l2-dak-authoring.html)**.
+
+<img src="../../assets/img/workflows/l2-dak-authoring.svg" alt="BPMN diagram: L2 DAK authoring" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Personas and scenarios; Data dictionary and core data elements; Indicators and requirements |
+

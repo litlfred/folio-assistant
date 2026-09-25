@@ -71,6 +71,7 @@
 import { z } from "zod";
 
 import { NoteTagsSchema } from "./carried-note.js";
+import { TileCountsSchema } from "./tile-count.js";
 
 /** The document's own declaration of what it is, inside the file. */
 export const TODO_INDEX_SCHEMA_TAG = "folio-todo-index/v1";
@@ -157,6 +158,12 @@ export type TodoIndexItem = z.infer<typeof TodoIndexItemSchema>;
 export const TodoIndexSchema = z
   .object({
     $schema: z.literal(TODO_INDEX_SCHEMA_TAG),
+    /**
+     * The tile's declared headline number, keyed by directory — issue #856.
+     * Optional, because declaring one is the projection's choice and a
+     * required field would make "no count" impossible to express.
+     */
+    tile: TileCountsSchema,
     /** The forge address, resolved rather than composed — `gen-docs-pages`' `REPO_WEB`. */
     repoWeb: z.string().min(1),
     items: z.array(TodoIndexItemSchema),

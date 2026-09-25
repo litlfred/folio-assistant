@@ -22,7 +22,6 @@ import {
 } from "./theme-art-intake.js";
 import { CatHarnessDeclarationSchema, declarationPathIn } from "./cat-harness.js";
 import { THEME_LAYOUTS, type ThemeLayout } from "./theme.js";
-import "./folio-graph-kind.js";
 
 const INSTANCE = join(import.meta.dir, "..");
 
@@ -123,15 +122,16 @@ describe("a missing layout is refused — the landing-architecture case", () => 
     expect(r.failures.find((f) => f.kind === "missing-layout")!.remedy).toContain("NO art");
   });
 
-  test("this is a LIVE defect, not a hypothetical", () => {
-    // `landing-architecture` is declared with laptop and card only.
+  test("the live case is CLOSED — architecture now declares all three", () => {
+    // `landing-architecture` was declared with laptop and card only from
+    // 2026-09-20 until the owner supplied the portrait crop on 2026-09-24.
+    // Asserted as complete now, so the incident cannot silently return.
     const decl = CatHarnessDeclarationSchema.parse(
       JSON.parse(readFileSync(declarationPathIn(INSTANCE)!, "utf8")),
     );
     const arch = (decl.images ?? []).filter((i) => i.role === "landing-architecture");
-    expect(arch.length).toBeGreaterThan(0);
     const layouts = new Set(arch.map((i) => i.layout));
-    expect(layouts.has("mobile")).toBe(false);
+    expect([...layouts].sort()).toEqual(["card", "laptop", "mobile"]);
   });
 });
 

@@ -35,7 +35,13 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { checkDeclarationFilename } from "../check-declaration-filename.ts";
+import {
+  checkDeclarationFilename,
+  classifyMarkdownLine,
+  classifyWorkflowLine,
+  markdownUses,
+  workflowUses,
+} from "../check-declaration-filename.ts";
 
 /**
  * A tree holding one source file at `<root>/<rel>`.
@@ -54,6 +60,74 @@ function fixture(rel: string, src: string, instance = "cat-harness"): string {
   writeFileSync(full, src);
   return root;
 }
+
+
+/**
+ * The real-corpus scan, computed ONCE for the whole file.
+ *
+ * `checkDeclarationFilename()` with no argument walks every TypeScript and
+ * markdown file in the repository — measured 2026-09-24 at **4.3 s** here,
+ * against **3.6 s** on `main` before this branch added 118 annotated scripts
+ * and a skill. Three tests below called it separately, so the file paid that
+ * cost three times, and under full-suite parallel load the first of them
+ * crossed bun's 5 s per-test default and failed as a TIMEOUT — with its
+ * assertion (`toEqual([])`) never reached, so a green corpus reported as a
+ * red test.
+ *
+ * Sharing is sound because the scan is PURE and read-only, and all three call
+ * sites pass no argument, so they were computing the same value. Fixing it
+ * here rather than raising the timeout is the `generalise-the-fix` Move 1.1
+ * distinction: the symptom was a budget, the defect was doing the same
+ * expensive work three times. Raising the budget would have left the next
+ * corpus growth to rediscover it.
+ *
+ * The tests that build a synthetic checkout still call it with a path of their
+ * own — those are cheap and must not share this.
+ *
+ * ## Sharing is not sufficient, and {@link CORPUS_TIMEOUT} is the other half
+ *
+ * Sharing fixed the second and third calls; the FIRST one still pays the whole
+ * scan, and 4.3 s standalone becomes 5.2 s under full-suite parallel load, so it
+ * crossed the 5 s default again. There is no margin to find here: the scan reads
+ * the whole corpus by construction, so its cost grows with the repository while
+ * a per-test default does not. That makes an explicit budget the correct fix for
+ * this half rather than a concession — and it has to carry its measurement, or
+ * the next person cannot tell a considered budget from a number somebody raised
+ * until the red went away.
+ */
+let realCorpus: ReturnType<typeof checkDeclarationFilename> | undefined;
+const corpus = (): ReturnType<typeof checkDeclarationFilename> => {
+  if (realCorpus) return realCorpus;
+  const t0 = performance.now();
+  realCorpus = checkDeclarationFilename();
+  const ms = Math.round(performance.now() - t0);
+  // A timeout says only "timed out after N ms", which names nothing a
+  // contributor can act on (bean `6brk`). So the scan says what it cost and
+  // over how much, once it reaches half its budget, BEFORE it is a red: then
+  // "the corpus grew" can be told from "my change is slow".
+  if (ms > CORPUS_TIMEOUT / 2) {
+    console.warn(
+      `check-declaration-filename: the corpus scan took ${ms} ms over ${realCorpus.filesRead} files, ` +
+        `past half its ${CORPUS_TIMEOUT} ms budget. The corpus has grown; see CORPUS_TIMEOUT's basis.`,
+    );
+  }
+  return realCorpus;
+};
+
+/**
+ * The budget for whichever test populates {@link corpus} first.
+ *
+ * BASIS, measured 2026-09-24: the scan is 4.3 s standalone and 5.2 s observed
+ * under `bun test` over all 470 files, against bun's 5 s default. 30 s is ~6x
+ * the standalone cost, which leaves room for the corpus to grow and for a
+ * loaded runner, while still failing fast if the scan regresses into something
+ * quadratic rather than hanging the suite.
+ *
+ * It is on all three tests rather than the first, because which one runs first
+ * is not guaranteed and a budget that depends on ordering is a budget that
+ * comes back.
+ */
+const CORPUS_TIMEOUT = 30_000;
 
 describe("a path to the declaration is built from the constant", () => {
   test("a whole-value string literal is a bypass", () => {
@@ -147,4 +221,199 @@ describe("a path to the declaration is built from the constant", () => {
     expect(checkDeclarationFilename(empty).filesRead).toBe(0);
     // The runner exits non-zero on filesRead === 0 — see the module's main.
   });
+});
+
+// ── The YAML half. It was one bucket until the workflow half of `jijc`. ─────
+//
+// These literals are DATA too — see this module's header. Each is a workflow
+// line the classifier reads, not a line this file executes.
+
+describe("a workflow line is classified, not merely counted", () => {
+  test("a step that READS the retired declaration fails", () => {
+    // Falsified by planting exactly this in `health-check.yml` before any of
+    // the classifier existed: the check printed "✓ no call site names the
+    // retired name" and exited 0.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+  });
+
+  test("a comment naming it is prose — a rename REWORDS these", () => {
+    expect(classifyWorkflowLine("      # the `stub` in harness.json")).toBe("prose");
+    expect(classifyWorkflowLine("# Declared in `harness.json` as the `health` graph.")).toBe("prose");
+  });
+
+  test("the Jekyll data file is its own class, and outranks prose", () => {
+    // Both a comment AND an exemption. The exemption is the part a rename
+    // needs to hear: `docs/_data/harness.json` must NOT be renamed.
+    expect(classifyWorkflowLine("          # and `docs/_data/harness.json` is a")).toBe("jekyll-data");
+    expect(classifyWorkflowLine("        run: cat cat-harness/docs/_data/harness.json")).toBe("jekyll-data");
+  });
+
+  test("a line not naming it at all classifies as null, not as clean", () => {
+    expect(classifyWorkflowLine("      - name: Checkout")).toBeNull();
+  });
+});
+
+describe("GUARD: `cat-harness.json` CONTAINS `harness.json`", () => {
+  test("the CURRENT declaration is not a reference to the retired one", () => {
+    // Load-bearing, and found by writing the fix rather than by foresight: the
+    // corrected `docs-site.yml` comment names `cat-harness/cat-harness.json`,
+    // and a bare indexOf counted the correction as the defect. Same collision
+    // class as `docs/_data`, one character further left.
+    expect(classifyWorkflowLine("      # the `stub` in cat-harness/cat-harness.json")).toBeNull();
+    expect(classifyWorkflowLine("        run: cat cat-harness/cat-harness.json")).toBeNull();
+  });
+
+  test("...and the boundary does not swallow the real thing", () => {
+    // The direction that matters: narrowing for the collision must not make
+    // the case the gate exists for invisible.
+    expect(classifyWorkflowLine("        run: cat cat-harness/harness.json")).toBe("use");
+    expect(classifyWorkflowLine("        run: cat harness.json")).toBe("use");
+  });
+
+  test("a second occurrence in an already-seen file is its own finding", () => {
+    // The old counter counted FILES, so a bypass added to a file already on
+    // the list did not move the number either.
+    const a = classifyWorkflowLine("        run: cat cat-harness/harness.json");
+    const b = classifyWorkflowLine("        run: cat folio-assistant/harness.json");
+    expect([a, b]).toEqual(["use", "use"]);
+  });
+});
+
+/*
+ * The hoist above landed independently on main (#1258) and on this branch,
+ * within hours, with the same shape and different names -- `corpus()` there,
+ * `repoScan()` here. Main's is kept; this branch's duplicate is gone.
+ *
+ * One measurement from this side is worth keeping, because it says WHEN the
+ * cost tipped over: promoting `arxiv-2510.21603v1` added that paper's 22
+ * sections to the corpus, 4,071 -> 4,093 files, and that was the increment
+ * that took the file from passing to intermittently red. Measured against a
+ * worktree of origin/main rather than a stash, which is the only way to
+ * measure main once a branch has commits. Nothing was wrong with the scan or
+ * the promotion -- every promotion adds to this corpus, and it will tip again.
+ */
+
+describe("the workflow scan reports unknown, never zero", () => {
+  test("a checkout with no .github/workflows gives null, and null is not clean", () => {
+    const empty = mkdtempSync(join(tmpdir(), "declfile-noyml-"));
+    mkdirSync(join(empty, "src"), { recursive: true });
+    writeFileSync(join(empty, "src", "a.ts"), "export const x = 1;\n");
+    const r = checkDeclarationFilename(empty);
+    expect(r.workflows).toBeNull();
+    // `workflowUses` must not turn unknown into an empty finding list that a
+    // caller reads as a pass; the runner exits 2 on null before it gets here.
+    expect(workflowUses(r)).toEqual([]);
+  });
+
+  test(
+    "this repository's own workflows carry no USE",
+    () => {
+      const r = corpus();
+      expect(workflowUses(r).map((w) => `${w.file}:${w.line}`)).toEqual([]);
+    },
+    CORPUS_TIMEOUT,
+  );
+});
+
+/**
+ * The markdown half. Bean `vzur`, turned on once its backlog was cleared.
+ *
+ * Prose was exempt on the TypeScript side because "a rename REWORDS these",
+ * which is sound for a doc comment and not for a skill — a skill's whole job
+ * is telling a reader where to look, and a REVERSAL rewords nothing.
+ */
+describe("markdown lines are classified, not matched", () => {
+  const NO_RECORDS: string[] = [];
+  const md = (rel: string, line: string, para?: string) =>
+    classifyMarkdownLine(rel, line, NO_RECORDS, para ?? line);
+
+  test("a current-path claim in a skill FAILS", () => {
+    expect(md("skills/x.md", "declared in `harness.json` at the root")).toBe("use");
+  });
+
+  test("a line naming no declaration is not a finding at all", () => {
+    expect(md("skills/x.md", "nothing to see here")).toBeNull();
+  });
+
+  test("`docs/_data/harness.json` is Jekyll's and must NOT be renamed", () => {
+    expect(md("docs/x.md", "see `docs/_data/harness.json` for the nav")).toBe("jekyll-data");
+  });
+
+  test("a declared record directory is correct history", () => {
+    expect(classifyMarkdownLine("beans/defs/x.md", "we used `harness.json`", ["beans/"])).toBe("record");
+  });
+
+  test("a generated reference follows its source rather than failing", () => {
+    // The prefixes are DERIVED from each instance's `siteDirFor()`, so the
+    // test supplies one rather than assuming this repo's layout.
+    const gen = ["cat-harness/docs/reference/skill-instructions/"];
+    expect(
+      classifyMarkdownLine(
+        "cat-harness/docs/reference/skill-instructions/x.md",
+        "`harness.json`",
+        NO_RECORDS,
+        "`harness.json`",
+        gen,
+      ),
+    ).toBe("generated");
+  });
+
+  test("history is recognised by a CURRENT name in the paragraph, not by tense", () => {
+    const para = "It is `<name>.json` now.\nThat argument ran: the file stays `harness.json`.";
+    expect(md("skills/x.md", "That argument ran: the file stays `harness.json`.", para)).toBe("historical");
+  });
+
+  test("...and a paragraph naming ONLY the retired word cannot excuse itself", () => {
+    const para = "Open `harness.json`.\nIt lists the directories `harness.json` declares.";
+    expect(md("skills/x.md", "It lists the directories `harness.json` declares.", para)).toBe("use");
+  });
+
+  test("a concrete sibling declaration counts as the current name", () => {
+    const para = "`cat-harness/cat-harness.json` replaced `harness.json`.";
+    expect(md("skills/x.md", para, para)).toBe("historical");
+  });
+});
+
+/**
+ * `harness.jsonld` is not `harness.json`, and the bean that added the LEFT
+ * boundary named it in the same sentence as `cat-harness.json` before
+ * guarding only the side it had a failing example for. The markdown scanner
+ * found it on its first run.
+ */
+describe("the retired name is matched as a FILENAME, on both sides", () => {
+  const md = (line: string) => classifyMarkdownLine("skills/x.md", line, []);
+
+  test("a published rendering is not the retired declaration", () => {
+    expect(md("So `…/folio-assistant/harness.jsonld` is this instance's rendering")).toBeNull();
+  });
+
+  test("the CURRENT declaration is not the retired one either", () => {
+    expect(md("open `cat-harness/cat-harness.json` first")).toBeNull();
+  });
+
+  test("...but the retired name itself still matches, bounded either side", () => {
+    expect(md("open `harness.json` first")).toBe("use");
+    expect(md("open `cat-harness/harness.json` first")).toBe("use");
+  });
+});
+
+describe("the markdown corpus, on this repository", () => {
+  test(
+    "carries no STALE PATH",
+    () => {
+      const r = corpus();
+      expect(markdownUses(r).map((m) => `${m.file}:${m.line}`)).toEqual([]);
+    },
+    CORPUS_TIMEOUT,
+  );
+
+  test(
+    "and was actually examined — an empty corpus is not a pass",
+    () => {
+      const r = corpus();
+      expect(r.markdown).not.toBeNull();
+      expect(r.markdown!.length).toBeGreaterThan(0);
+    },
+    CORPUS_TIMEOUT,
+  );
 });

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/voice-overlay-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/voice-overlay-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/voice-overlay-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/voice-overlay-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/voice-overlay-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/voice-overlay-review.md){: .fa-edit-source }
 
 {% raw %}
 # Voice overlay review
@@ -15,7 +15,7 @@ parent: Skill instructions
 ## What you are reviewing, and against what
 
 One block, against the rules of the voices the folio has **activated** — not
-every voice it ships. `harness.config.json` holds the list; an empty list means
+every voice it ships. `<name>.config.json` holds the list; an empty list means
 there is nothing for this skill to do and that is a pass, not a gap.
 
 ```sh
@@ -93,3 +93,11 @@ and deleting it loses the record that anyone looked.
 - **Do not resolve a conflict between two active voices in the prose.** Both
   rules stand: name them and let the editor decide.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Narrative review](../../processes/review-narrative.html) | Voice overlay review (calls a sub-process) |
+| [Voice overlay review](../../processes/voice-review.html) | Load the active voices; Run the rule's mechanical half; Open the rule's citation; The RULE is the defect — bean it; Adjudicate: prose, scope, or exception (calls a sub-process); Record on the block's QA sidecar |
+

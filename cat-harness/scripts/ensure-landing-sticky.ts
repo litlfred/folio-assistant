@@ -3,6 +3,7 @@
  * Give an instance a folio and a landing sticky — the last act of initiation.
  *
  * @module scripts/ensure-landing-sticky
+ * @covers folio
  *
  * The owner's ask, 2026-09-20: *"the sticky note is created dynamically on
  * initailzation by cat-harness bootstrap (as last thing). it creates an empty
@@ -64,15 +65,6 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFile
 import { join, relative, resolve } from "node:path";
 
 import { type ContentDirectory, findDeclarationFile, findInstanceRoot, instanceRootFor, readDeclaration, repoRootFor, rootForScope, declarationPathIn } from "../schemas/cat-harness.js";
-// REQUIRED, and not merely tidy: `folio` is registered by CORE as a load-time
-// side effect (`schemas/folio-graph-kind.ts`, "a layer that cannot render must
-// not own the renderable kind"), so the harness alone does not know the kind
-// exists. Without this import `readDeclaration` throws
-// `unknown graph kind "folio"` on the very declaration this script just wrote —
-// which is what it did on the first re-run, because nothing in this repository
-// had ever DECLARED a folio graph before and so nothing had ever needed the
-// registration to have happened.
-import "../schemas/folio-graph-kind.js";
 import {
   LandingStickySchema,
   stickyFromContribution,
@@ -130,27 +122,49 @@ export const FOLIO_DIRECTORY_ENTRY: ContentDirectory = {
   // folio's authored content is the whole point of a folio, so a dependent
   // gets its own rather than inheriting somebody else's chapters.
   dependents: "reproduce",
-  graphs: [FOLIO_GRAPH_KIND],
+  graphKinds: [FOLIO_GRAPH_KIND],
   description:
     "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
 };
 
+/**
+ * The kinds one raw directory entry declares — `graphKinds`, or the pre-2026-09-21
+ * `graphs`.
+ *
+ * **This path parses the declaration itself**, because the edit below is a byte
+ * splice rather than a re-serialise, so `ContentDirectorySchema`'s preprocess —
+ * which is what accepts the legacy key everywhere else — never runs on it. The
+ * alias has to be restated here or a downstream folio spelling the field the old
+ * way reads as declaring nothing, and `ensureLandingSticky` would splice a
+ * SECOND folio entry into a declaration that already has one.
+ *
+ * Tolerant of a missing or non-array value on purpose: the input is whatever
+ * `JSON.parse` returned, not something a schema has vouched for.
+ */
+function kindsOf(d: { graphKinds?: readonly string[]; graphs?: readonly string[] }): readonly string[] {
+  const k = d.graphKinds ?? d.graphs;
+  return Array.isArray(k) ? k : [];
+}
+
+/** One raw entry as this module reads it — neither spelling assumed present. */
+type RawDirectory = Partial<ContentDirectory> & { graphs?: readonly string[] };
+
 /** Does this declaration already know about a folio graph? */
-export function declaresFolio(decl: { directories?: readonly ContentDirectory[] } | undefined): boolean {
+export function declaresFolio(decl: { directories?: readonly RawDirectory[] } | undefined): boolean {
   // Matched on the GRAPH KIND rather than on `id` or `path`. An instance may
   // keep its folio anywhere and call the entry what it likes — `harness.json`'s
   // own comment records that overrides match on id, not path, precisely because
   // a relocation must not mint a second graph. What makes an entry "the folio"
   // is the kind it declares.
-  return (decl?.directories ?? []).some((d) => d.graphs.includes(FOLIO_GRAPH_KIND));
+  return (decl?.directories ?? []).some((d) => kindsOf(d).includes(FOLIO_GRAPH_KIND));
 }
 
 /** The declared folio directory's path, or the convention when none is declared. */
 export function folioDirPath(
-  decl: { directories?: readonly ContentDirectory[] } | undefined,
+  decl: { directories?: readonly RawDirectory[] } | undefined,
 ): string {
   return (
-    (decl?.directories ?? []).find((d) => d.graphs.includes(FOLIO_GRAPH_KIND))?.path ??
+    (decl?.directories ?? []).find((d) => kindsOf(d).includes(FOLIO_GRAPH_KIND))?.path ??
     FOLIO_DIR_PATH
   );
 }
@@ -174,13 +188,13 @@ export function toAsciiJson(value: unknown, indent: number): string {
  * **A text edit, not a re-serialise**, for the reasons in the module docs. The
  * array's bounds are found by bracket matching rather than by a regex, because a
  * regex over nested JSON either stops at the first `]` — there are nested arrays
- * inside these entries, `graphs` among them — or is unreadable.
+ * inside these entries, `graphKinds` among them — or is unreadable.
  *
  * Returns the input unchanged when a folio is already declared, so calling this
  * twice is the same as calling it once.
  */
 export function insertDirectoryEntry(raw: string, entry: ContentDirectory): string {
-  const decl = JSON.parse(raw) as { directories?: ContentDirectory[] };
+  const decl = JSON.parse(raw) as { directories?: RawDirectory[] };
   if (declaresFolio(decl)) return raw;
 
   const key = '"directories"';

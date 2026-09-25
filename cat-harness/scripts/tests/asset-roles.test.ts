@@ -21,7 +21,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { AGENT_INSTRUCTIONS_ROLE, ASSET_ROLES, INSTANCE_README_ROLE, REQUIRED_ASSET_ROLES, ROLE_OWNED_ASSET_KEYS, assetRoleDelivery, assetRoleLayer, assetRolePurpose, declaredAssetPath, graphLayer, layerIsWritable, processMayWrite, processMayWriteAsset, strayAssetRoleKeys } from "../../schemas/cat-harness.js";
-import "../../schemas/folio-graph-kind.js";
 import { collect, formatReport, isClean } from "../check-asset-roles.js";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -55,13 +54,13 @@ describe("the layer both required roles hold", () => {
   });
 
   test("an ungoverned role is `undefined`, not `false` — the third state", () => {
-    // `cat-bootstrap-initialization` is cat-bootstrap's role, and a layer
+    // `bootstrap-initialization` is bootstrap's role, and a layer
     // invented for it here would be this layer speaking for one it does not
     // own. A caller must be able to tell "not ours" from "ours, and read-only":
     // the first sends them to another layer, the second is an answer.
-    expect(assetRoleLayer("cat-bootstrap-initialization")).toBeUndefined();
-    expect(processMayWriteAsset("cat-bootstrap-initialization")).toBeUndefined();
-    expect(assetRolePurpose("cat-bootstrap-initialization")).toBeUndefined();
+    expect(assetRoleLayer("bootstrap-initialization")).toBeUndefined();
+    expect(processMayWriteAsset("bootstrap-initialization")).toBeUndefined();
+    expect(assetRolePurpose("bootstrap-initialization")).toBeUndefined();
   });
 
   test("assets and graphs share ONE rule about what `context` permits", () => {

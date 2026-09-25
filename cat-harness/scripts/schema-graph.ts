@@ -75,12 +75,6 @@ import { basename, join, relative } from "node:path";
 import ts from "typescript";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE on import
-// (`schemas/folio-graph-kind.ts`), so the harness alone does not know it
-// exists. This module resolves this instance's directories and the instance
-// DECLARES a folio graph, so without this the read throws `unknown graph kind
-// "folio"` on a perfectly valid declaration (issue #464).
-import "../schemas/folio-graph-kind.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -143,6 +137,17 @@ export interface SchemaField {
   /** First line of the field's own doc comment, when it has one. */
   doc?: string;
   /**
+   * The first prose PARAGRAPH of the field's doc comment, its lines joined by
+   * one space: everything up to the first blank line or tag line.
+   *
+   * `doc` is the first LINE, which is right for a detail panel and wrong for
+   * a definition: measured 2026-09-24, 177 of 1,515 documented fields break
+   * their first sentence across lines, so `doc` ends mid-clause ("OPTIONAL
+   * because folio"). The glossary's extracted schema-field terms (bean `lqo9`)
+   * read this instead. Not carried into the published projection.
+   */
+  paragraph?: string;
+  /**
    * The declaration this field's STRING ID points at, when the field declares
    * one with `@ref <Name>`.
    *
@@ -169,6 +174,15 @@ export interface SchemaDecl {
   note?: string;
   /** First prose line of the declaration's doc comment. */
   doc?: string;
+  /**
+   * `true` when the declaration's doc comment carries `@general` — a node
+   * others DEPEND on (a Role, a Skill, a Requirement statement), which may
+   * point only at other general nodes and never at its dependents
+   * (data-modelling step 8; #1168, B5). Read from the tag, never inferred:
+   * which nodes are general is a modelling decision, and `arrow-direction`
+   * checks the arrows against it.
+   */
+  general?: true;
   fields: SchemaField[];
   /**
    * Names this declaration extends or merges — the generalisation arrow.
@@ -294,6 +308,32 @@ function firstProse(block: string): string | undefined {
     .find((l) => l.length > 0 && !l.startsWith("@"));
 }
 
+/** The first prose paragraph of a JSDoc block: {@link firstProse}'s line and the lines that continue it. */
+function firstParagraph(block: string): string | undefined {
+  const lines = block
+    .replace(/^\/\*\*+/, "")
+    .replace(/\*+\/\s*$/, "")
+    .split("\n")
+    .map((l) => l.replace(/^\s*\*+\s?/, "").trim());
+  const start = lines.findIndex((l) => l.length > 0 && !l.startsWith("@"));
+  if (start < 0) return undefined;
+  const out: string[] = [];
+  for (const l of lines.slice(start)) {
+    if (l.length === 0 || l.startsWith("@")) break;
+    out.push(l);
+  }
+  return out.join(" ");
+}
+
+/** The first prose paragraph of the JSDoc block immediately above a node. */
+function paragraphOf(node: ts.Node, text: string): string | undefined {
+  const ranges = ts.getLeadingCommentRanges(text, node.getFullStart());
+  const last = ranges?.[ranges.length - 1];
+  if (!last) return undefined;
+  const raw = text.slice(last.pos, last.end);
+  return raw.startsWith("/**") ? firstParagraph(raw) : undefined;
+}
+
 /**
  * The `@ref <Name>` a field declares, if any.
  *
@@ -309,6 +349,15 @@ function refTagOf(node: ts.Node, text: string): string | undefined {
   if (!raw.startsWith("/**")) return undefined;
   const m = /@ref\s+([A-Za-z_$][\w$]*)/.exec(raw);
   return m?.[1];
+}
+
+/** Whether the JSDoc block immediately above a node carries `@general`. */
+function generalTagOf(node: ts.Node, text: string): true | undefined {
+  const ranges = ts.getLeadingCommentRanges(text, node.getFullStart());
+  const last = ranges?.[ranges.length - 1];
+  if (!last) return undefined;
+  const raw = text.slice(last.pos, last.end);
+  return raw.startsWith("/**") && /(^|\s)@general\b/m.test(raw) ? true : undefined;
 }
 
 /** The JSDoc block immediately above a node, as source text. */
@@ -427,6 +476,7 @@ function zodFields(lit: ts.ObjectLiteralExpression, text: string): SchemaField[]
       array: chain.includes("array"),
       names: namesIn(p.initializer),
       doc: docOf(p, text),
+      paragraph: paragraphOf(p, text),
       ref: refTagOf(p, text),
     });
   }
@@ -529,6 +579,7 @@ function typeMembers(members: ts.NodeArray<ts.TypeElement>, text: string): Schem
       array: ts.isArrayTypeNode(m.type),
       names: namesIn(m.type),
       doc: docOf(m, text),
+      paragraph: paragraphOf(m, text),
       ref: refTagOf(m, text),
     });
   }
@@ -637,6 +688,7 @@ function readModule(
           kind: read.kind,
           note: read.note,
           doc: docOf(st, text),
+          ...(generalTagOf(st, text) ? { general: true as const } : {}),
           fields: read.fields,
           extendsNames: read.extendsNames,
           values:
@@ -668,6 +720,7 @@ function readModule(
         module: moduleRel,
         kind: "interface",
         doc: docOf(st, text),
+        ...(generalTagOf(st, text) ? { general: true as const } : {}),
         fields: typeMembers(st.members, text),
         extendsNames: heritage,
         values: [],
@@ -691,6 +744,7 @@ function readModule(
         module: moduleRel,
         kind: "type-alias",
         doc: docOf(st, text),
+        ...(generalTagOf(st, text) ? { general: true as const } : {}),
         fields,
         extendsNames: [],
         values,

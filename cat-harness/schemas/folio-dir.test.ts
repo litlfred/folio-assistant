@@ -13,11 +13,6 @@ import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
-// The `folio` kind is registered by CORE as a load-time side effect. Without
-// this import `directoryForGraph` cannot read a declaration that names it —
-// which is the fragility `ot9a` recorded, and which `folioDir` now refuses to
-// paper over.
-import "./folio-graph-kind.js";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 /** A repository root with an optional declaration. */
@@ -33,7 +28,7 @@ function declaring(path: string): Record<string, unknown> {
   return {
     name: "probe",
     description: "a folio that says where its content lives",
-    directories: [{ id: "folio", path, dependents: "reproduce", graphs: ["folio"] }],
+    directories: [{ id: "folio", path, dependents: "reproduce", graphKinds: ["folio"] }],
   };
 }
 
@@ -68,7 +63,7 @@ describe("folioDir", () => {
     const root = repo({
       name: "probe",
       description: "declares something else entirely",
-      directories: [{ id: "beans", path: "beans/", dependents: "reproduce", graphs: ["beans"] }],
+      directories: [{ id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] }],
     });
     expect(folioDir(root)).toBe(join(root, "folio"));
   });

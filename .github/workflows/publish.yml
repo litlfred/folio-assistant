@@ -197,7 +197,14 @@ jobs:
             witness-cache-${{ runner.os }}-
 
       - name: Install content pipeline dependencies
-        run: cd content && bun install --frozen-lockfile 2>/dev/null || bun install
+        run: if [ ! -d content ]; then
+            echo "::notice::no content/ in this checkout — nothing to install (this instance carries no folio)"
+          elif [ -f content/bun.lock ]; then
+            (cd content && bun install --frozen-lockfile)
+          else
+            echo "::warning::content/ carries no bun.lock — installing UNPINNED"
+            (cd content && bun install)
+          fi
 
       - name: Check references.bib is in sync with references.ts
         # Guard against the recurring "Citation 'foo' undefined" failure
@@ -558,10 +565,10 @@ jobs:
           bun-version: latest
 
       - name: TypeDoc generate
-        working-directory: folio-assistant
+        working-directory: cat-harness
         run: |
           bun install || npm install
-          npx typedoc --out ../schema-docs \
+          npx --yes typedoc@0.28.20 --out ../schema-docs \
             --entryPointStrategy expand \
             --readme none --hideGenerator \
             schemas/ adapters/paper/schemas/ 2>&1 | tail -10

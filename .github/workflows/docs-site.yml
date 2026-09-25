@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -54,7 +55,7 @@ on:
       # still rendered from them at deploy time, so without this path a diagram
       # edit would not rebuild the site and the published page would serve a
       # stale render — exactly the "move the wiring with the script" failure.
-      - 'cat-harness/skills/workflows/**'
+      - 'cat-harness/processes/**'
       - 'cat-harness/schemas/**'
       # The schema viewer is generated, so a change to the generator or to the
       # reader behind it changes the published page while touching nothing
@@ -83,12 +84,16 @@ on:
       # deliberate — the same silent miss `tyyc` is about, inside `tyyc`'s own
       # fix. A suffix that moves twice in a day is not a thing to spell twice.
       - 'cat-harness/*.json'
-      - 'cat-bootstrap/*.json'
+      - 'bootstrap/*.json'
+      # Every file of bootstrap is published as it sits (`publish-instance-files.ts`,
+      # bean `iwtn`), so a change to any of them changes the site.
+      - 'bootstrap/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
 permissions:
   contents: write  # required to push to the gh-pages branch
+  issues: write    # the publication manager's alert (bean vigi): one tracking issue
 
 concurrency:
   group: docs-site-${{ github.ref }}
@@ -96,6 +101,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    # bpmn-node: Start_Push
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
@@ -123,7 +129,7 @@ jobs:
           bun-version: latest
 
       - name: Install deps
-        run: bun install --frozen-lockfile || bun install
+        run: bun install --frozen-lockfile
 
       - name: Regenerate skill schema reference
         run: bun run cat-harness/scripts/gen-schema-docs.ts
@@ -157,6 +163,41 @@ jobs:
       - name: Regenerate the library projection and viewer
         run: bun run library:viz
 
+      # THE INTAKE QUEUE, as its own harness. Split from the library viewer
+      # 2026-09-21: both directories declared the same `coverage.visualiser`,
+      # so the uploads tile opened the corpus browser and rendered the
+      # library's entry count -- 0 on this instance, while 27 sources waited
+      # in the queue beside it.
+      #
+      # It runs HERE rather than being gated by `code-quality-gates`, for the
+      # reason stated against `library:viz:check` in that file: it derives from
+      # the whole repository, so a branch alive for a few minutes finds it
+      # stale against the merge ref and a red would mean "somebody else
+      # merged". Nothing published goes stale, because this step regenerates
+      # it from the tree being deployed.
+      - name: Regenerate the uploads projection and viewer
+        run: bun run uploads:viz
+
+      # Every voice its instance declares, with the passage each rule was read
+      # from. Same contract as the two viewers above: the committed copy is
+      # browsable on GitHub and the published one must never be its stale half.
+      #
+      # This one carries a claim the others do not. `check-voices.ts` exists
+      # because PR #210 shipped ten plausible rules per voice with
+      # `source: null`, one asserting the opposite of its source — so every
+      # rule now cites a page and a quote, and until this page NONE of those
+      # citations was readable without opening JSON (bean `bu2q`).
+      - name: Regenerate the voices projection and viewer
+        run: bun run voices:viz
+
+      # The handler namespace's own index, at `/<handler>/`. It lists what the
+      # four generators above publish, so it runs AFTER them — not because it
+      # reads their output (it derives from the declarations) but because a
+      # reader arriving at the index should not find it describing a kind the
+      # build has not written yet.
+      - name: Regenerate the handler namespace index
+        run: bun run handler:index
+
       # Same reasoning as the three regenerations above: the committed copy is
       # browsable on GitHub and the PUBLISHED one must never be the stale half
       # of that pair. A stale index here is not cosmetic — it is the navbar
@@ -168,7 +209,7 @@ jobs:
       - name: Regenerate the translation index
         run: bun run translation:index
 
-      # The BPMN sources under skills/workflows/ are the source of truth; the SVGs
+      # The BPMN sources under processes/ are the source of truth; the SVGs
       # the workflow pages embed are rendered from them with bpmn-js in headless
       # Chromium, so the published site can never show a stale diagram.
       - name: Render BPMN workflow diagrams
@@ -280,8 +321,9 @@ jobs:
       # is published as DATA rather than as a page. Something else may draw it.
       # A non-zero exit means a source could not be read, and a partial graph
       # must not be published as a whole one.
-      # Both artefacts are named after the repository (the `stub` in
-      # harness.json) and land AT THE BASE, at the URLs their own
+      # Both artefacts are named after the repository (the `stub` in the
+      # instance's own declaration -- `cat-harness/cat-harness.json` here)
+      # and land AT THE BASE, at the URLs their own
       # `@id`/`$id` claim. There is no `kg/` subdirectory: the repository IS
       # its declaration that it holds a graph, and the stub is what separates
       # one instance's renderings from another's in a tree that overlays
@@ -313,21 +355,105 @@ jobs:
           bun run cat-harness/scripts/kg-viewer.ts             --out "./_site/${STUB}/index.html"
           cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
 
-          # cat-bootstrap's OWN graph, as its own document.
+          # bootstrap's OWN graph, as its own document.
           #
           # Not decoration: this instance's graph LINKS INTO it. Bean `pve3`,
           # the owner's ruling of 2026-09-21 ("neither"), removed
-          # `cat-bootstrap/skills/` from cat-harness's declared directories, so
+          # `bootstrap/skills/` from cat-harness's declared directories, so
           # a Tool here that satisfies a skill there now mints
-          # `cat-bootstrap.jsonld#skill/<id>`. Publishing the target is what
+          # `bootstrap.jsonld#skill/<id>`. Publishing the target is what
           # keeps that an IRI rather than a 404 with an `@id` in front of it,
           # and `kg-export.test.ts` fails if this step is removed.
           #
           # `--instance` builds the GENERIC collectors against that root, never
           # this instance's content under that name — see `buildExport`.
-          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./cat-bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./cat-bootstrap --out "./_site/${BOOT_STUB}.jsonld"
-          cp "./_site/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}.json"
+          #
+          # TWO publishers wrote a bootstrap graph until bean `dyd3`: this one,
+          # at `<base>/bootstrap.jsonld`, and `gen-bootstrap-graph.ts` at
+          # `<base>/bootstrap/bootstrap.jsonld`. Measured 2026-09-21: 88 nodes
+          # each, 85 of them doc-relative — so 85 subjects under two identities
+          # no consumer merges, with only the 3 absolute namespace IRIs shared.
+          # A reader got whichever URL they happened to hold.
+          #
+          # Collapsing the PATHS alone would not have settled it: at one URL the
+          # two still disagree on 74 of the 88 nodes, so the site would publish
+          # whichever step ran last. One publisher is the fix.
+          #
+          # The surviving path is `<stub>/<stub>.jsonld` rather than
+          # `<stub>.jsonld` because `bootstrap/` already holds that instance's
+          # OTHER rendered documents — `ns.jsonld` among them — so the graph
+          # belongs beside them rather than one level up.
+          # `gen-bootstrap-graph.ts` stays as a generator and a test subject;
+          # it no longer publishes.
+          #
+          # `.json` alongside for the reason every other rendering here has
+          # one: Pages has no media type for `.jsonld` and serves it as
+          # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
+          # names — so this is an alias, not a rename.
+          BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
+
+          # The swimlane glossaries, beside the graphs whose role IRIs they
+          # reuse -- bean `lqo9` slice 2, issue #596. PUBLISHED rather than
+          # left as a build output because the document IS its own
+          # `skos:ConceptScheme`: every concept's `inScheme` names this URL, so
+          # an unpublished one would be `blv9` -- a scheme IRI that resolves to
+          # nothing, which is the defect `ns-export` exists to have fixed.
+          #
+          # `.json` alias for the same reason as every document above: Pages
+          # serves `.jsonld` as octet-stream. The `.jsonld` stays canonical.
+          bun run cat-harness/scripts/glossary-export.ts --out "./_site/${STUB}-glossary.jsonld"
+          cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
+          bun run cat-harness/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld"
+
+          # The graph once per locale -- bean `jmpb`, on the owner's ruling.
+          # Writes NOTHING today and says so: measured 2026-09-22, no locale
+          # carries a catalogue applying to either graph. It is wired now
+          # rather than later so the first diagram `.po` to land publishes its
+          # locale with no workflow edit, and so the gates and the deploy run
+          # the same command. Each document's node `@id`s are the core's --
+          # a translation is not a new term.
+          bun run cat-harness/scripts/kg-locale-export.ts --out-dir ./_site
+          bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
+          cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
+
+          # bootstrap's OWN files, as they sit, with each `.md` also rendered
+          # as `.html` -- bean `iwtn`, ruling 3. bootstrap renders nothing, so
+          # its `renderExemption.reachableAt` names its own `README.md`, and
+          # the navbar tab links to `<base>/bootstrap/README.html`. LAST, and
+          # it never overwrites: the graph's `.json` copy above has the same
+          # name as bootstrap's declaration, and the graph keeps that address.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+
+          # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
+          # here, after the line above, for a reason that cost a wrong claim.
+          #
+          # A page Jekyll copies through verbatim inherits no layout and so no
+          # sidebar. `mount-instance-docs.ts` rails the MOUNT ROUTES, and
+          # `viewer-page.ts` rails what the generators emit; everything else
+          # fell between them — 23 wireframe `as-is.html` pages with no
+          # navigation and no outward link at all, and bootstrap's 10.
+          #
+          # The first version called this from `mount-instance-docs.ts`, 142
+          # lines above, where bootstrap's pages DO NOT YET EXIST. It railed the
+          # wireframes (committed) and silently missed bootstrap (generated),
+          # and no unit test could see it because a fixture hands the pass a
+          # finished directory. Caught by counting the staged build.
+          #
+          # So: LAST, after every generator that writes a page. It is
+          # idempotent — `injectRail` refuses a page that already has one — so
+          # anything railed earlier is left byte-identical.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
@@ -352,7 +478,7 @@ jobs:
           # THE VOCABULARY — one document per namespace, plus the union.
           #
           # Every term now hangs off its declaring layer's namespace: bs: for
-          # cat-bootstrap, cat: for the harness, fac: for core. Each of those is an
+          # bootstrap, cat: for the harness, fac: for core. Each of those is an
           # IRI stem, so each needs a document or `bs:Actor` dereferences to
           # nothing — the very defect this work exists to fix, and splitting
           # one namespace into three created three fresh instances of it. The
@@ -383,32 +509,13 @@ jobs:
           bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
           cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
 
-          for pair in "cat-bootstrap:cat-bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns"
             cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
           done
-
-          # THE CAT_BOOTSTRAP GRAPH, and this is the first build that publishes it.
-          #
-          # It was COMMITTED to `cat-bootstrap/cat-bootstrap.jsonld` instead, on a
-          # rationale that said a cold reader with nothing installed could not
-          # build it — which was true — and cited a README step telling that
-          # reader to load it, which does not exist: no prose file under
-          # `cat-bootstrap/` mentions this document at all. Meanwhile the loop
-          # above published `cat-bootstrap/ns.jsonld`, the NAMESPACE document, and
-          # nothing published the GRAPH, so the `@id` it names itself by —
-          # `<base>/cat-bootstrap/cat-bootstrap.jsonld` — resolved to nothing. Bean
-          # `blv9`, in the artefact whose entire purpose is being resolved.
-          #
-          # `.json` alongside for the reason every other rendering here has
-          # one: Pages has no media type for `.jsonld` and serves it as
-          # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
-          # names — so this is an alias, not a rename.
-          bun run cat-harness/scripts/gen-cat-bootstrap-graph.ts --out "./_site/cat-bootstrap/cat-bootstrap.jsonld"
-          cp "./_site/cat-bootstrap/cat-bootstrap.jsonld" "./_site/cat-bootstrap/cat-bootstrap.json"
 
       # Every `maintains` claim, checked where the answer exists.
       #
@@ -431,6 +538,7 @@ jobs:
       # cannot fail, which is bean `ot9a` exactly. Found by that ratchet on its
       # first encounter with this step.
       - name: Every maintained artefact is in the published tree
+        id: artefacts
         run: bun run check:maintained-artefacts ./_site
 
       # No page carries a block-level tag as escaped TEXT.
@@ -495,6 +603,17 @@ jobs:
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+
+      # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
+      # "a set of post processing tools for verification that a failure
+      # triggers an alert to the publisher manager ... before deployment".
+      # `processes/publish-verification.bpmn`. The verifier set runs over the
+      # built tree; exit 1 (a finding) and exit 2 (could not tell) both stop
+      # the job here, so nothing below deploys, and the alert step at the end
+      # carries the report to the publication manager.
+      - name: Verify the export before deploying
+        id: verify
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
@@ -574,6 +693,7 @@ jobs:
           persist-credentials: true
 
       - name: Publish to gh-pages
+        id: deploy
         env:
           SITE: ./_site
           STATE: ./.staging-restored.json
@@ -596,4 +716,64 @@ jobs:
       # the accepted cost — the alternative is the silence this bean exists to
       # retire.
       - name: Verify the staging previews survived the deploy
+        id: previews
         run: bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-restored.json
+
+      # THE ONE ALERT — `processes/publish-alert.bpmn`. Owner, 2026-09-23:
+      # "every step post 'push the publish button' should be same". Any failure
+      # in this job — an incomplete export, the verifier set, the deploy, a lost
+      # preview — reaches the publication manager the same way: ONE tracking
+      # issue labelled with the role, opened on the first failure and COMMENTED
+      # on for each later one (an edit does not notify; a new failed publish is
+      # news). The next clean publish closes it. The role, not a person: no
+      # actor declares a GitHub account for `publication-manager`.
+      - name: Alert the publication manager
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+          DEPLOY: ${{ steps.deploy.outcome }}
+          PREVIEWS: ${{ steps.previews.outcome }}
+        run: |
+          set -euo pipefail
+          gh label create publication-manager --color 5319E7 --description "The publication manager's alert: a step after the publish button failed" --force
+          {
+            echo "A publish of \`${GITHUB_SHA::8}\` failed after the publish button — [run]($RUN_URL)."
+            echo
+            echo "| step | outcome |"
+            echo "|---|---|"
+            echo "| every maintained artefact present | ${ARTEFACTS:-not reached} |"
+            echo "| verify the export before deploying | ${VERIFY:-not reached} |"
+            echo "| deploy to gh-pages | ${DEPLOY:-not reached} |"
+            echo "| staging previews survived | ${PREVIEWS:-not reached} |"
+            echo
+            if [ "${DEPLOY:-}" = "success" ]; then
+              echo "**The site DID deploy** — what failed is after it, and is live."
+            else
+              echo "**Nothing was deployed.** The live site is the previous publish."
+            fi
+            if [ -f "$RUNNER_TEMP/publish-verify.md" ]; then echo; cat "$RUNNER_TEMP/publish-verify.md"; fi
+            echo
+            echo "Triage: hold the release, or fix forward and publish again. The next clean publish closes this issue. \`processes/publish-alert.bpmn\`, bean \`vigi\`."
+          } > "$RUNNER_TEMP/alert.md"
+          existing=$(gh issue list --label publication-manager --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file "$RUNNER_TEMP/alert.md"
+            echo "commented on #$existing"
+          else
+            gh issue create --title "Publishing failed after the publish button" --label publication-manager --body-file "$RUNNER_TEMP/alert.md"
+          fi
+
+      - name: Close the publication manager's alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --label publication-manager --state open --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Published cleanly in [this run]($RUN_URL). Closed by \`docs-site.yml\`."
+          fi

@@ -3,6 +3,7 @@
  * Every harness above the floor gets a board, and it shows everything.
  *
  * @module scripts/gen-default-boards
+ * @covers boards
  *
  * The owner, 2026-09-21:
  *
@@ -25,11 +26,11 @@
  *
  * ## "Above bootstrap" is read from the DECLARATION, not from a name
  *
- * `cat-bootstrap` is exempt: its own `renderExemption` says why in its own
- * words — *"cat-bootstrap IS the navbar footer… it produces nothing a human
+ * `bootstrap` is exempt: its own `renderExemption` says why in its own
+ * words — *"bootstrap IS the navbar footer… it produces nothing a human
  * browses"* — and a layer that renders nothing has nothing to put on a board.
  * So the test is {@link isExemptFrom}`(decl, "visualiser")`, the same rule the
- * navbar tiles sort by, rather than a check for the string `cat-bootstrap`.
+ * navbar tiles sort by, rather than a check for the string `bootstrap`.
  * A checker that names one instance states a rule true only for the instance
  * somebody remembered (bean `hfkl`).
  *
@@ -52,9 +53,6 @@ import { isExemptFrom, readDeclaration } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
 import { TODO_ROOT } from "./todos.js";
-// REQUIRED for the side effect: `folio` is registered by core on import and
-// this instance declares a folio graph. See `scripts/print-stub.ts`.
-import "../schemas/folio-graph-kind.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
@@ -69,9 +67,9 @@ const check = process.argv.includes("--check");
  * declarations, and `check:declared-paths` is what stops either becoming a
  * literal — it caught this function composing `todos/` by hand.
  */
-export function boardsDir(_repoRoot: string, todoRoot: string = TODO_ROOT): string {
+export function boardsDir(_repoRoot: string, todoRoot: string = TODO_ROOT()): string {
   const graph = parseTodoGraph(JSON.parse(readFileSync(join(todoRoot, TODO_GRAPH_FILE), "utf8")));
-  const entry = graph.directories.find((d) => (d.graphs ?? []).includes("boards"));
+  const entry = graph.directories.find((d) => (d.graphKinds ?? []).includes("boards"));
   if (entry === undefined) {
     throw new Error(
       `${todoRoot}/${TODO_GRAPH_FILE} declares no directory holding a \`boards\` graph. ` +

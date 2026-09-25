@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/quality-control.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/quality-control.md) — do not edit here. Typed contract: [schema reference](../skills/quality-control.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/quality-control.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/quality-control.md) — do not edit here. Typed contract: [schema reference](../skills/quality-control.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/quality-control.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/quality-control.md){: .fa-edit-source }
 
 {% raw %}
 # quality-control
@@ -46,7 +46,7 @@ that relaxed them would leave "strict base" meaning nothing.
 
 ## Compute the gate, do not assert it
 
-Where a gateway carries `<folio:decision/>`, pass the **facts** — e.g.
+Where a gateway carries `<cat-harness.processes:decision/>`, pass the **facts** — e.g.
 `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals — and let the DMN
 table return the branch. `workflow_complete` refuses a hand-supplied `outcome`
 at such a gateway.
@@ -75,3 +75,12 @@ cleared, and a QC gate is the last place that should be blurred.
 `findings` and `checklistResults` are what the reviewer reads — not
 `overallResult` alone, which is a summary of them rather than a substitute.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Run publication QA gates |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Post the cone report on the PR; QC gates on the aggregate QA |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | QC gates |
+

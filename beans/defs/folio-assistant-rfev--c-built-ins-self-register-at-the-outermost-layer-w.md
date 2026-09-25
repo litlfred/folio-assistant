@@ -101,7 +101,7 @@ Falsified: removing the root pin fails exactly the one test that asserts it.
 
 The instances C would contribute FROM already exist: `instanceRootsIn` lists
 `folio-assistant-sci` and `folio-assistant-core` beside `cat-harness`,
-`cat-bootstrap`, `agent-skills` and the rest. So this is not blocked on the
+`bootstrap`, `agent-skills` and the rest. So this is not blocked on the
 instances being created.
 
 It is blocked on the **files**. `folio-assistant-sci` declares exactly one

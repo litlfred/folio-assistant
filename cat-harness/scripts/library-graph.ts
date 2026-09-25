@@ -77,14 +77,14 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 
 import type { LibraryRef } from "./library-refs.ts";
-import { basename, dirname, join, relative } from "node:path";
+import { basename, dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
+import { withheldReason } from "./lib/withheld.ts";
+import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
-// The `folio` graph kind is registered by CORE on import; this module resolves
-// this instance's directories and the instance declares a folio graph.
-import "../schemas/folio-graph-kind.js";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -148,6 +148,103 @@ export interface LibraryEntry {
    * which is again not the same as empty.
    */
   referencedBy?: LibraryRef[];
+  /**
+   * The entry's AVATAR — the picture a reader sees for this book on a library
+   * row and on the folio glass. Bean `zrvt`, issue #1006. Owner, 2026-09-23:
+   * *"library items need avatar (book's) which should use the cover or
+   * whatever is associated to it if there is something"*.
+   *
+   * In order: the rendered COVER beside the entry (`<slug>-cover.png`, the
+   * file `who-iris/scripts/gen-covers.ts` writes, emblem already masked),
+   * then the first image `images.json` declares a `figure`. A logo is never
+   * the avatar — it names who published the book, not the book.
+   *
+   * **ABSENT when there is nothing, or only something too big to be a
+   * thumbnail** ({@link AVATAR_MAX_BYTES}). No guess, no placeholder URL: the
+   * viewer draws a book glyph for an absent avatar, which says "no picture"
+   * rather than a broken image saying "a picture failed".
+   */
+  avatar?: LibraryAvatar;
+  /**
+   * Why this entry is WITHHELD from publication, or absent when it is not —
+   * the reason its library root's `withheld.json` gives (bean `cw35`).
+   *
+   * A withheld entry is still listed: its title, id and counts are metadata,
+   * and hiding it would make "not ours to publish" look like "not ingested".
+   * What goes is everything that reproduces the work — no avatar (its cover or
+   * a figure), and no verbatim text in its block excerpts
+   * ({@link readEntryBlocks} with `verbatim: false`). Our own writing about it
+   * — figure descriptions and block summaries — stays (owner, 2026-09-24:
+   * "Fix, keep summaries").
+   */
+  withheld?: string;
+  /**
+   * The block-summary drain's counts for this entry — owner, 2026-09-24.
+   *
+   * Attached by the CALLER (`gen-library-viz`), for the reason `referencedBy`
+   * is: counting needs every prose block's text read and hashed, and this
+   * reader runs on every call of `check:l1-complete`, the narrative queue and
+   * the MCP roots, none of which want that cost for a number they do not use.
+   * Absent means nobody counted — never "nothing to summarise".
+   */
+  summaries?: SummaryTally;
+}
+
+/** Where an entry's picture came from, where it lives, and where it is published. */
+export interface LibraryAvatar {
+  /** Site-root-relative, leading `/`, no base — composed by the viewer. */
+  href: string;
+  /** The source file, REPO-relative — what `gen-library-viz` copies to {@link href}. */
+  src: string;
+  source: "cover" | "figure";
+}
+
+/**
+ * The largest picture that becomes an avatar. Measured 2026-09-23 over every
+ * library entry: covers are 6–15 KB, but a first figure runs to 1.3 MB (a
+ * full-page scan). An avatar is a thumbnail's job, and the copy is committed,
+ * so a picture over this has NO avatar rather than a megabyte in the site.
+ */
+export const AVATAR_MAX_BYTES = 128 * 1024;
+
+/**
+ * The entry's avatar, or `undefined`.
+ *
+ * PUBLISHED AS A COPY under the site's own `assets/library/avatars/`, not at
+ * the instance's mount. The mount (`/library/<instance>/`) exists only on the
+ * BUILT site, so a cover linked there 404'd on every surface that serves the
+ * committed tree — the e2e server, and any page read before the build. A
+ * copy resolves on all of them, and `gen-library-viz --check` fails when a
+ * copy's bytes differ from its source, so it cannot drift.
+ */
+export function avatarOf(
+  libDir: string,
+  instance: string,
+  slug: string,
+  images: { images?: unknown[] } | null | undefined,
+  repoRoot: string,
+): LibraryAvatar | undefined {
+  const fits = (abs: string): boolean =>
+    existsSync(abs) && statSync(abs).isFile() && statSync(abs).size <= AVATAR_MAX_BYTES;
+  const make = (abs: string, source: LibraryAvatar["source"]): LibraryAvatar => {
+    const ext = extname(abs).toLowerCase() || ".png";
+    return {
+      href: `/assets/library/avatars/${instance}/${slug}${ext}`,
+      src: relative(repoRoot, abs).split("\\").join("/"),
+      source,
+    };
+  };
+  const cover = join(libDir, `${slug}-cover.png`);
+  if (fits(cover)) return make(cover, "cover");
+  for (const raw of images?.images ?? []) {
+    const img = raw as { file?: unknown; role?: unknown };
+    if (img.role !== "figure" || typeof img.file !== "string") continue;
+    // The FIRST figure decides. A later, smaller one is not "the picture
+    // associated with the book", it is whichever happened to be small.
+    const abs = join(libDir, slug, img.file);
+    return fits(abs) ? make(abs, "figure") : undefined;
+  }
+  return undefined;
 }
 
 /**
@@ -221,6 +318,17 @@ export interface LibraryGraph {
 }
 
 /** Parse JSON, or `undefined`. Unreadable and absent are the caller's to tell apart. */
+/** A file's text, or null — the third state, never an empty string. */
+function readText(path: string): string | null {
+  try {
+    return readFileSync(path, "utf-8");
+  } catch {
+    // Absent or unreadable. The caller renders "no content" rather than an
+    // empty document, which are different facts.
+    return null;
+  }
+}
+
 function readJson<T>(path: string): T | undefined {
   if (!existsSync(path)) return undefined;
   try {
@@ -288,6 +396,249 @@ function instanceOf(absDir: string, repoRoot: string): string {
  * with no corpus simply has none, and a consumer rendering the two alike
  * reports a clean run over something it never opened.
  */
+/**
+ * One block of an entry's graph, as a viewer needs it — bean `7nvr`.
+ *
+ * NOT the whole `.jsonld`. The corpus holds 1715 blocks over roughly a
+ * megabyte of JSON-LD against a 44 KB index, so projecting every field of
+ * every block into one file is how a viewer stops loading. What a reader
+ * wants of a block is what it IS, where it sits and whether anybody has
+ * described it; the prose itself is a `.md` the entry already carries and the
+ * viewer does not render.
+ *
+ * `types` keeps BOTH — a block is dual-typed
+ * (`["folio-assistant-core:Figure", "doco:Figure"]`) so a DoCO reader gets
+ * something meaningful without knowing our vocabulary, and collapsing that to
+ * one would throw away the half this project did not invent.
+ */
+export interface LibraryBlock {
+  id: string;
+  /** Both of them. See above. */
+  types: string[];
+  kind: string;
+  title: string;
+  pageStart: number | null;
+  pageEnd: number | null;
+  /** The section `.md` or image this block points at, entry-relative. */
+  target: string | null;
+  /** `not-authored` | `draft` | `confirmed` | `rejected`, or null where a kind carries none. */
+  narrative: string | null;
+  /**
+   * What the block actually SAYS — bean `lrmo`.
+   *
+   * A row showing only a narrative STATE tells a reader that a description
+   * exists and not what it is, which is the gap the owner hit on first use:
+   * *"i expected to be able to see narrative content of extracted node"*.
+   *
+   * Two sources, because the two kinds carry content differently. A FIGURE's
+   * is `narrative.text` — an authored description, ours, short: 404 of them
+   * total 128 KB, so it is carried whole. A PROSE block's is the section
+   * markdown it points at, and those total **3.25 MB** with one entry at
+   * 508 KB, so carrying them whole would make opening one entry cost half a
+   * megabyte. Prose is excerpted.
+   */
+  content: string | null;
+  /**
+   * True when {@link content} is an excerpt rather than the whole thing.
+   *
+   * Stated rather than inferred from length. A reader who cannot tell a short
+   * section from a truncated one is being shown a claim about the document
+   * that the data does not support, and silent truncation is the same defect
+   * as a silent skip everywhere else in this repository.
+   */
+  truncated: boolean;
+  provenance: string;
+  /**
+   * The agent summary of a PROSE block, carried BESIDE {@link content} —
+   * never instead of it. Owner, 2026-09-24: *"the extract of a node is
+   * shown, but no agentic summary"*.
+   *
+   * Its own field because the two are different kinds of claim: `content` is
+   * the source's words, `summary.text` is an agent's account of them, with a
+   * state that says whether a person has agreed. Folding one into the other
+   * is the defect `content` already has for figures, where a narrative
+   * replaces the extract and a block cannot show both.
+   *
+   * `null` for a kind that is not summarised (figures). A prose block with no
+   * summary yet is NOT null: it is `{status: "not-summarised"}`, which the
+   * viewer says out loud.
+   */
+  summary: BlockSummaryView | null;
+}
+
+/**
+ * What the viewer needs of a block summary — its words, its state and whose
+ * they are. Every field but `status` is OMITTED when there is nothing to say:
+ * 1325 prose blocks carry one of these, and a dozen nulls on each is how a
+ * per-entry file grows by megabytes to say "not yet summarised".
+ */
+export interface BlockSummaryView {
+  status: SummaryStatus;
+  /** The summary's words. */
+  text?: string;
+  /** The narrative's own state — `rejected` stays visible although the block is back in the backlog. */
+  state?: string;
+  /** Who drafted it: kind, id and — for an agent — the model. */
+  draftedBy?: { kind: string; id: string; model?: string };
+  draftedAt?: string;
+  /** Who confirmed it — always a person when present. */
+  confirmedBy?: string;
+  rejectionReason?: string;
+}
+
+/**
+ * Read ONE entry's blocks, in page order.
+ *
+ * Separate from {@link readLibraryGraph} on purpose. That one runs over every
+ * declared library on every call — `check:l1-complete`, the narrative queue,
+ * `gen-library-jsonld` and the MCP graph roots all use it — and reading 1715
+ * files to answer "how many blocks" would make every one of them slower for a
+ * number they already have. The index counts; this reads, and only when
+ * somebody opens an entry.
+ *
+ * ## The order is NOT the manifest's, because the manifest does not have one
+ *
+ * The obvious source is `manifest.contains`, and the first draft of this
+ * function used it. Measured on `arxiv-2602.12670v4`: `contains` holds **82
+ * entries, all of them sections, and names no block at all** — while the
+ * entry has 85 block files. So every block fell through to the alphabetical
+ * tail, which sorts `figure-img-p025-1` ahead of `prose-sec-000` and presents
+ * the document opening with a colourbar from page 25.
+ *
+ * **A manifest links DOWN to its sections; blocks link UP to the manifest**
+ * (`derivedFrom`, `sourceDocument`). There is no downward edge to a block, so
+ * there is no manifest order to take. That asymmetry is a property of the
+ * graph, not of this reader, and it is left as it is — bean `7nvr` reports it
+ * rather than inventing the missing edge.
+ *
+ * So the order is `pageStart`, then id: derivable from what a block actually
+ * carries, and it IS document order. A block with no page sorts last rather
+ * than first, because an unplaced block is an oddity and burying it at the
+ * top of the list is how it goes unnoticed.
+ */
+/**
+ * How much of a prose section travels in the projection.
+ *
+ * 600 characters is a paragraph or so — enough to tell one section from
+ * another while browsing, which is what this view is for. Reading the section
+ * is a different act and the file is right there.
+ *
+ * Derived rather than picked: 1311 prose blocks at this bound add roughly
+ * 790 KB across 27 entries, against 3.25 MB for the whole corpus and a 508 KB
+ * worst entry. The largest single entry stays well under what one on-demand
+ * fetch should cost.
+ */
+const PROSE_EXCERPT = 600;
+
+export function readEntryBlocks(dir: string, opts: { verbatim?: boolean } = {}): LibraryBlock[] {
+  // `verbatim: false` — the entry is WITHHELD (bean `cw35`): a prose block's
+  // excerpt IS the source's words, so it goes; a figure's narrative and every
+  // summary are ours, so they stay.
+  const verbatim = opts.verbatim ?? true;
+  const blocksDir = join(dir, "blocks");
+  const files = filesIn(blocksDir).filter((f) => f.endsWith(".jsonld"));
+
+  const byId = new Map<string, LibraryBlock>();
+  // The summary drain's own reading of this entry — its statuses, including
+  // STALE, come from one definition rather than a second one here. An
+  // invalid sidecar yields no summaries rather than no blocks: the extract is
+  // still worth showing, and `check:l1-complete` reports the sidecar.
+  let items: ReturnType<typeof entryItems> = [];
+  try {
+    items = entryItems(dir);
+  } catch {
+    items = [];
+  }
+  const summaryOf = new Map(items.map((it) => [it.block, it]));
+  for (const f of files) {
+    const d = readJson<Record<string, unknown>>(join(blocksDir, f));
+    if (!d) continue;
+    const id = typeof d["@id"] === "string" ? (d["@id"] as string) : f.replace(/\.jsonld$/, "");
+    const t = d["@type"];
+    const nar = d.narrative as { state?: unknown; text?: unknown } | undefined;
+    // A figure's description is authored and short — carried whole. A prose
+    // block's is the section file, excerpted. See `content` on the interface.
+    let content: string | null = typeof nar?.text === "string" ? (nar.text as string) : null;
+    let truncated = false;
+    if (content === null && verbatim && typeof d.text === "string") {
+      const md = readText(join(blocksDir, d.text as string));
+      if (md !== null) {
+        const body = proseBody(md);
+        truncated = body.length > PROSE_EXCERPT;
+        content = truncated ? body.slice(0, PROSE_EXCERPT).trimEnd() : body;
+      }
+    }
+    byId.set(id, {
+      id,
+      types: Array.isArray(t) ? (t as string[]) : typeof t === "string" ? [t] : [],
+      kind: typeof d.kind === "string" ? d.kind : "",
+      title: typeof d.title === "string" ? d.title : "",
+      pageStart: typeof d.pageStart === "number" ? d.pageStart : null,
+      pageEnd: typeof d.pageEnd === "number" ? d.pageEnd : null,
+      // `text` on prose, `file` on a figure — one field for the viewer, and
+      // which one it came from is already said by `kind`.
+      target: typeof d.text === "string" ? d.text : typeof d.file === "string" ? d.file : null,
+      narrative: typeof nar?.state === "string" ? nar.state : null,
+      content,
+      truncated,
+      provenance: typeof d.provenance === "string" ? d.provenance : "",
+      summary: (() => {
+        const it = summaryOf.get(id);
+        if (!it) return null;
+        const n = it.record?.narrative;
+        const d = n?.drafted_by;
+        return {
+          status: it.status,
+          ...(n?.text ? { text: n.text } : {}),
+          ...(n ? { state: n.state } : {}),
+          ...(d ? { draftedBy: { kind: d.kind, id: d.id, ...(d.model ? { model: d.model } : {}) } } : {}),
+          ...(n?.drafted_at ? { draftedAt: n.drafted_at } : {}),
+          ...(n?.confirmed_by ? { confirmedBy: n.confirmed_by.id } : {}),
+          ...(n?.rejection_reason ? { rejectionReason: n.rejection_reason } : {}),
+        };
+      })(),
+    });
+  }
+
+  // `?? Infinity` rather than `?? 0`: an unplaced block sorts LAST. See above.
+  return [...byId.values()].sort(
+    (a, b) => (a.pageStart ?? Infinity) - (b.pageStart ?? Infinity) || a.id.localeCompare(b.id),
+  );
+}
+
+/**
+ * What an intake is a capture OF, as a title (bean `d4lb`).
+ *
+ * `folio-intake/v1` no longer repeats what another record says: it names a
+ * catalogue `item`, or a Dublin Core `record`, and carries its own `title`
+ * only when neither exists. So the title is looked up in that order — the
+ * intake's own, then the catalogue node (in the instance's declared
+ * `catalogue` graph), then the record's `dc.title` — and is `""` when none
+ * answers, which the uploads view already renders as untitled.
+ */
+function intakeTitle(intake: { title?: string; item?: string; record?: string }, dir: string): string {
+  if (intake.title) return intake.title;
+  if (intake.item) {
+    const instanceRoot = dirname(dirname(dir));
+    for (const cat of directoriesForGraph(instanceRoot, "catalogue")) {
+      const nodes = join(cat, "nodes");
+      if (!existsSync(nodes)) continue;
+      for (const f of readdirSync(nodes).filter((n) => n.endsWith(".json"))) {
+        const node = readJson<{ id?: string; title?: string }>(join(nodes, f));
+        if (node?.id === intake.item && node.title) return node.title;
+      }
+    }
+  }
+  if (intake.record) {
+    const rec = readJson<{ fields?: { element?: string; qualifier?: string; values?: { value?: string }[] }[] }>(
+      join(dir, intake.record),
+    );
+    const t = rec?.fields?.find((f) => f.element === "title" && !f.qualifier)?.values?.[0]?.value;
+    if (t) return t;
+  }
+  return "";
+}
+
 export function readLibraryGraph(roots: string[]): LibraryGraph | null {
   const repoRoot = repoRootFor(roots[0] ?? ".");
   const libDirs = new Set<string>();
@@ -330,6 +681,31 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         sections?: Array<{ page_start?: number; page_end?: number; n_words?: number; n_chars?: number }>;
       }>(join(dir, "structure.json"));
       const secs = structure?.sections ?? [];
+      /**
+       * Sum a section field, keeping only the values that are actually numbers.
+       *
+       * The guard is not defensive tidiness — it is the difference between a
+       * count and a script. `structure.json` comes from an ingested corpus
+       * this repository did not author, and `reduce((n, s) => n + s.n_words)`
+       * is string CONCATENATION the moment one `n_words` is a string. The
+       * result then flows to `gen-library-viz`, which renders `words` through
+       * `toLocaleString()` — one of only two fields it does NOT pass through
+       * `esc()`, because both were assumed numeric — and straight into
+       * `innerHTML`.
+       *
+       * Measured 2026-09-22 with `n_words: '<img src=x onerror="alert(1)">'`:
+       * `words` came out as the string `0<img src=x onerror="alert(1)">` and
+       * rendered unescaped. Bean `1wef`, surface 2.
+       *
+       * The `pages` line directly below already guards this exact class with
+       * `typeof n === "number"`. That guard was the one `words` and `chars`
+       * needed, four lines away.
+       */
+      const sumSections = (pick: (s: (typeof secs)[number]) => unknown): number =>
+        secs.reduce((n, s) => {
+          const v = pick(s);
+          return typeof v === "number" && Number.isFinite(v) ? n + v : n;
+        }, 0);
       const pages = secs.flatMap((s) => [s.page_start, s.page_end]).filter((n): n is number => typeof n === "number");
       const images = readJson<{ images?: unknown[] }>(join(dir, "images.json"));
       const sourceFile = str("source_file");
@@ -359,13 +735,19 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         hasImagesJson: has("images.json"),
         pageStart: pages.length ? Math.min(...pages) : null,
         pageEnd: pages.length ? Math.max(...pages) : null,
-        words: secs.reduce((n, s) => n + (s.n_words ?? 0), 0),
-        chars: secs.reduce((n, s) => n + (s.n_chars ?? 0), 0),
+        words: sumSections((s) => s.n_words),
+        chars: sumSections((s) => s.n_chars),
         bytes: treeBytes(dir),
         // Filled in by the uploads pass: the link is a fact about both ends,
         // and deciding it here would mean deciding it without the file.
         upload: sourceFile ? "absent" : "unknown",
         uploadInstance: "",
+        ...(() => {
+          const withheld = withheldReason(dir);
+          if (withheld) return { withheld };
+          const avatar = avatarOf(libDir, instance, slug, images, repoRoot);
+          return avatar ? { avatar } : {};
+        })(),
       });
     }
   }
@@ -386,6 +768,8 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       const intake = readJson<{
         doc_id?: string;
         title?: string;
+        item?: string;
+        record?: string;
         files?: unknown[];
       }>(join(sub, "intake.json"));
       // A subdirectory with no intake is not a queued unit and not an error
@@ -404,7 +788,7 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
         ext: "",
         ingestedBy: hit,
         docId,
-        title: intake.title ?? "",
+        title: intakeTitle(intake, sub),
         declaredFiles: intake.files?.length ?? 0,
       });
       const e = byId.get(docId);
@@ -416,7 +800,29 @@ export function readLibraryGraph(roots: string[]): LibraryGraph | null {
       }
     }
 
-    const files = filesIn(upDir);
+    const loose = filesIn(upDir);
+    // A SIDECAR IS NOT A QUEUED DOCUMENT.
+    //
+    // `<source>.extraction.json` describes the capture of `<source>`; counting
+    // it as a unit of its own is the same error `UploadItem`'s own note records
+    // for an intake's declared files, and that note names THIS case in the same
+    // breath: *"counting the `.extraction.json` sidecars beside them would have
+    // made it 7."* The intake half was handled when it was written; the loose
+    // half was not, so a queue of fifteen sources counted as thirty and the
+    // uploads view's headline — the number the whole page exists to state —
+    // was inflated by its own metadata. Found by rendering it (issue #836).
+    //
+    // Keyed on the SOURCE being present, so an ORPHAN sidecar whose source has
+    // gone stays visible as a unit rather than vanishing. A file nothing
+    // accounts for is precisely what a queue view exists to surface, and
+    // silently dropping it would be this defect with the sign flipped.
+    const present = new Set(loose);
+    const files = loose.filter((f) => {
+      const source = f.endsWith(".extraction.json")
+        ? f.slice(0, -".extraction.json".length)
+        : "";
+      return source === "" || !present.has(source);
+    });
     for (const file of files) {
       const hit = named.get(file);
       if (hit) {

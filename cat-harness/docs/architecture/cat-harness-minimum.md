@@ -148,7 +148,7 @@ Classified by reading each skill's description, not its filename — the
 | `crdm-detect` | feature-request detection (16:16, explicit) |
 | `crdm-requirements-workflow` | the six-phase process (16:16, explicit) |
 | `getting-started` | folio-creation triage (16:13, explicit) |
-| `repo-conversion` | laying the harness over an existing repo — cat-bootstrap |
+| `repo-conversion` | laying the harness over an existing repo — bootstrap |
 | `integration-watcher` *(abstract parent only)* | the shared watcher mechanics; the concrete watchers are downstream |
 | `directory-conventions` | the declaration and its graph kinds |
 
@@ -430,7 +430,7 @@ Legend — **AH** `cat-harness` · **AHT** `cat-harness-tools` ·
 | `who-smart-dak.md` | 97 | **W** | L2. |
 | `who-smart-ig.md` | 144 | **W** | L3. |
 
-### BPMN processes (`skills/workflows/`) — 20 files
+### BPMN processes (`processes/`) — 20 files
 
 | process | → | reasoning |
 |---|---|---|
@@ -534,7 +534,7 @@ find-the-right-one problem that motivated it.
 ### No MCP in the harness — but the harness knows how to emit one
 
 **`agentic-harness` assumes no MCP server.** Everything it needs is files in
-declared directories, readable with a filesystem and `harness.json`
+declared directories, readable with a filesystem and `<name>.json`
 alone. `ToolDefinition.invoke` carries `mcp` as **one optional arm** beside
 `shell` and `container`, and the harness relies on `shell`; a Tool whose only
 invocation is an MCP call is not usable by the harness that defines it.
@@ -573,7 +573,7 @@ kg/
   interaction/        interaction-modality, symbiotic-interaction             [2]
   process/            crdm-detect, crdm-requirements-workflow,                [4]
                       process-state, dispatch-agent
-  cat-bootstrap/          getting-started, repo-conversion,                       [7]
+  bootstrap/          getting-started, repo-conversion,                       [7]
                       directory-conventions, skills-and-tools,
                       mcp-projection, mcp-assembly, mcp-contract
   watchers/           integration-watcher (abstract parent; the concrete       [1]
@@ -581,10 +581,10 @@ kg/
                                                                         total  24
 ```
 
-The three `mcp-*` skills sit in `cat-bootstrap/` because standing a service up is
+The three `mcp-*` skills sit in `bootstrap/` because standing a service up is
 bootstrapping — that is the owner's classification, and it is the right one:
 an agent looking for "how do I make this tool reachable" is asking a
-setup question, not an MCP question. If `cat-bootstrap/` keeps growing, an
+setup question, not an MCP question. If `bootstrap/` keeps growing, an
 `mcp/` subgroup under it is the natural split, and splitting a group is a
 `git mv` rather than a decision to relitigate.
 

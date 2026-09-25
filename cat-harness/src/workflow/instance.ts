@@ -33,6 +33,10 @@ import { isActivity, type ProcessModel, type ProcessNode } from "./process-model
 import { evaluate } from "./decision-table.js";
 import { roleForLane, resolveRoleSkills, type RoleGraph } from "../../schemas/role-graph.js";
 import type { ConventionScope } from "../../schemas/convention.js";
+import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "./authorize.js";
+import { provActivityFor } from "./prov-record.js";
+import type { ProvActivity } from "../../schemas/prov.js";
+import type { AccessContext, Principal } from "../core/access.js";
 
 export interface HistoryEntry {
   at: string;
@@ -42,6 +46,34 @@ export interface HistoryEntry {
   /** Who recorded it — free text, e.g. a role or an agent name. */
   actor?: string;
   note?: string;
+  /**
+   * The task-authorization verdict the step was recorded under (issue #1207):
+   * how the actor was authenticated, whether it may take the lane's role, and
+   * what the ODRL policies said. Absent on entries written before the check
+   * existed, and on a call activity released by its subprocess finishing.
+   */
+  authz?: TaskAuthVerdict;
+  /**
+   * The `prov:Activity` the engine wrote as it recorded this step (bean
+   * `n2l9`): the authenticated agent, the lane's role, the plan and every
+   * policy in force. Absent when the step ran without an authorization
+   * context, or when an activity would have to be invented (no actor, no lane
+   * role). The PROV-O after-check reads it in preference to deriving one.
+   */
+  prov?: ProvActivity;
+}
+
+/**
+ * What `complete` needs to run the task-authorization check. Optional so the
+ * interpreter still runs where no caller supplies it (tests, a script that
+ * replays history); the MCP tools always do.
+ */
+export interface AuthzOptions {
+  ctx: AccessContext;
+  principal: Principal;
+  /** The content the step acts on. */
+  target?: string;
+  mode?: "advisory" | "strict";
 }
 
 /**
@@ -459,6 +491,8 @@ export function complete(
     facts?: Record<string, unknown>;
     actor?: string;
     note?: string;
+    /** Run the task-authorization check before recording anything. */
+    authz?: AuthzOptions;
   } = {},
 ): InstanceState {
   if (state.status !== "running") {
@@ -491,6 +525,27 @@ export function complete(
         `steps do — complete those instead` +
         (open.length ? `: ${open.join(", ")}.` : "."),
     );
+  }
+
+  // Every task and every decision, before anything is recorded: authenticated,
+  // assigned to the lane's role, and permitted by policy (issue #1207). Here
+  // rather than in the MCP tool so that any caller of the interpreter that
+  // supplies a context gets the same check — it is the engine's duty, not a
+  // tool's.
+  let authz: TaskAuthVerdict | undefined;
+  if (opts.authz) {
+    authz = authorizeTask(
+      opts.authz.ctx,
+      {
+        principal: opts.authz.principal,
+        process: model.id,
+        task: nodeId,
+        role: node.roleRef,
+        target: opts.authz.target,
+      },
+      opts.authz.mode,
+    );
+    if (!authz.allowed) throw new WorkflowError(`${nodeId} ("${node.name}"): ${describeVerdict(authz)}`);
   }
 
   let chosen: string | undefined;
@@ -547,13 +602,28 @@ export function complete(
   }
 
   state.tokens = state.tokens.filter((t) => t !== nodeId);
+  const at = now();
+  const prov =
+    authz && opts.authz
+      ? provActivityFor({
+          id: `${state.id}#${state.history.length}`,
+          at,
+          source: state.source,
+          node: nodeId,
+          verdict: authz,
+          policies: [...opts.authz.ctx.policies.keys()],
+          target: opts.authz.target,
+        })
+      : undefined;
   state.history.push({
-    at: now(),
+    at,
     node: nodeId,
     outcome: chosen ? model.flows.get(chosen)!.name : undefined,
     actor: opts.actor,
     // The rule that fired is the audit trail: "which table said so, and why".
     note: [opts.note, computedNote].filter(Boolean).join(" · ") || undefined,
+    authz,
+    prov,
   });
 
   const flowIds = chosen ? [chosen] : node.outgoing;

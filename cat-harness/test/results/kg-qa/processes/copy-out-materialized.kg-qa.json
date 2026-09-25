@@ -1,0 +1,143 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CopyOutMaterialized",
+    "path": "processes/copy-out-materialized.bpmn"
+  },
+  "source_hash": "sha256:76d36905dd17db67deddb66de47bb88aeae3db4a97f3bfafb50c9abc4f5e01a3",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_EditDirectly",
+          "detail": "needs skill \"copy-out-materialized\", but its lane's role \"user\" does not carry it."
+        },
+        {
+          "where": "Task_ReadSource",
+          "detail": "needs skill \"copy-out-materialized\", but its lane's role \"corpus\" does not carry it."
+        },
+        {
+          "where": "Task_Land",
+          "detail": "needs skill \"copy-out-materialized\", but its lane's role \"author\" does not carry it."
+        },
+        {
+          "where": "Task_RecordProvenance",
+          "detail": "needs skill \"copy-out-materialized\", but its lane's role \"author\" does not carry it."
+        },
+        {
+          "where": "Task_VerifySourceUntouched",
+          "detail": "needs skill \"copy-out-materialized\", but its lane's role \"validation-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Land",
+          "detail": "\"Land the bytes in the copier's own folio/\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_RecordProvenance",
+          "detail": "\"Record provenance.local — what this is a copy OF\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 13,
+    "fail": 2,
+    "n/a": 9,
+    "unknown": 0
+  }
+}

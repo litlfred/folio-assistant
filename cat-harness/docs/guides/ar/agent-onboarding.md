@@ -162,7 +162,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 إلا عندما يختار الـ folio الاشتراك فيه صراحة:
 
 ```json
-// harness.config.json
+// <name>.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

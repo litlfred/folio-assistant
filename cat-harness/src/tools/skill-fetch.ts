@@ -7,17 +7,20 @@ import { nodeSummary } from "../../scripts/front-matter.js";
 import { isSkillMd } from "../../scripts/known-skills.js";
 import { resolveSkillDirs } from "../../schemas/harness-config.js";
 import { readDeclaration, findInstanceRoot } from "../../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), so the harness alone does not know it exists. This module
-// reads instance declarations, and this instance now DECLARES a folio graph, so
-// without this import `readDeclaration` throws `unknown graph kind "folio"` on a
-// declaration that is perfectly valid. Twelve tests and three gates failed that
-// way the first time a folio graph was declared here (issue #464) — nothing had
-// ever declared one before, so nothing had ever needed the registration to have
-// happened. Same import `scripts/kg-export.ts` and
-// `scripts/check-avatar-coverage.ts` already carry, and for the same reason.
-import "../../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it — and since #840 every caller does, because
+// the trigger sits at the foot of `cat-harness.ts` and a reader lives in that
+// module, so loading it is a precondition of calling one.
+//
+// THIS COMMENT NAMED `check:composition-roots` AS THE GUARANTEE UNTIL
+// 2026-09-22, in SEVEN files, AND THAT SCRIPT DOES NOT EXIST. `bun run
+// check:composition-roots` exits "Script not found". The safety argument for
+// a library omitting the registration rested on a gate nobody built, and no
+// gate failed to say so — the same silence this repository keeps paying for.
+// It is moot now rather than fixed: #840 made the registration automatic, so
+// there is no longer a command that can forget it (bean `z9ax`).
 
 // Session-level cache (lives for the lifetime of the MCP server process)
 const skillCache = new Map<string, { content: string; fetchedAt: number }>();
@@ -53,7 +56,8 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // Locally-served skill packages (no network fetch). Each maps a package name to
 // the directory holding its `<skill>.md` instruction bodies. The skill lists are
 // read from disk so they stay in sync with the files — no hardcoded names.
-//   - folio-assistant        : the agent skills under src/skills/
+//   - folio-core             : the core agent skills, including `corpus-grep`,
+//                              which sits beside the `.ts` implementing it
 //   - content-lifecycle      : plan → author → validate → review → test →
 //                              publish → feedback, the skills every BPMN
 //                              content process names
@@ -75,8 +79,8 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // consequence was not subtle: its eight skills — `content-author`,
 // `content-validate`, `content-review`, `content-publish`, `content-plan`,
 // `content-test`, `content-feedback`, `content-retire` — are named by **52**
-// `<folio:skill ref>` activities across the twenty diagrams in
-// `skills/workflows/`. So `workflow_next` handed an agent `content-validate`,
+// `<bootstrap.processes:skill ref>` activities across the twenty diagrams in
+// `processes/`. So `workflow_next` handed an agent `content-validate`,
 // the agent called `skill_fetch`, and got "package not found". Every step of
 // every content-lifecycle process. `kg:audit`'s `skill-servable` criterion
 // exists to keep that closed.
@@ -102,7 +106,7 @@ function holdsSkill(dir: string): boolean {
  *
  * This was a hardcoded table, and the cost of that is on the record: a package
  * missing from it is a package `skill_fetch` answers "not found" for, which is
- * how `content-lifecycle` — named by **52** `<folio:skill ref>` activities —
+ * how `content-lifecycle` — named by **52** `<bootstrap.processes:skill ref>` activities —
  * was unservable until 2026-09-18.
  *
  * It is discovered through {@link resolveSkillDirs}, which reads each
@@ -116,6 +120,14 @@ function holdsSkill(dir: string): boolean {
  * `requirements`, `framework`, `remote-packages` and `memory` — and `memory`
  * is the one already on the record for making `kg-audit` write **25 bogus
  * sidecars** against agent-memory nodes that are not instruction bodies.
+ *
+ * That list is the 2026-09-19 MEASUREMENT and is kept as measured. Three of
+ * the seven have since left `skills/` — `roles` and `workflows` became the
+ * sibling `scenarios/` and `processes/` on 2026-09-21, and `memory` became a
+ * declared directory of its own — so a scan today meets fewer of them. The
+ * argument is unaffected and is the reason not to re-derive it: the filter
+ * exists because a directory's CONTENTS declare what they are, which is what
+ * makes it hold when the layout moves under it.
  *
  * {@link isSkillMd} is what excludes them, and it is **declaration over
  * location**: a markdown file carrying `$schema:` is stating that it is
@@ -138,9 +150,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
   const held: string[] = [];
   for (const kgDir of resolveSkillDirs(root)) {
     // A kg directory may hold skills DIRECTLY as well as in subdirectories,
-    // and BOTH shapes are real here: `skills/` holds none directly and every
-    // package is a subdirectory, while `src/skills/` holds `corpus-grep.md`
-    // beside the `.ts` implementing it and has no subdirectory at all.
+    // and BOTH shapes are real: `skills/` holds none directly and every
+    // package is a subdirectory, while `bootstrap/skills/` and
+    // `who-iris/skills/` hold theirs at their root with no subdirectory.
+    //
+    // The worked example through the rest of this comment is `src/skills/`,
+    // which held `corpus-grep.md` beside the `.ts` implementing it. It is GONE
+    // as of #760 — `skills/folio-core/` already co-located eight such pairs,
+    // so the separate directory bought nothing and cost a name: this function
+    // called it `cat-harness` while the declaration gave that id to `skills/`.
+    // The history below is kept because the RULES it explains are unchanged
+    // and were paid for; only their subject moved.
     //
     // A directly-held set is the INSTANCE's own package, named after the
     // instance, because that is what it is — there is no subdirectory name to
@@ -151,17 +171,17 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // `readDeclaration(root)` gave the ROOT's name to every directly-held set
     // regardless of which instance contributed it, which is correct only while
     // exactly one such directory is ever discovered. The moment a second one
-    // is — `cat-bootstrap/skills/`, once `ownDirectories` resolved its declared
+    // is — `bootstrap/skills/`, once `ownDirectories` resolved its declared
     // repository scope — both are assigned the same key and the later wins.
-    // Not an error, not a collision report: cat-bootstrap's skills would have
+    // Not an error, not a collision report: bootstrap's skills would have
     // been found and then silently dropped, which is the same `dh4f` shape one
     // layer up from the one that hid them in the first place.
     //
     // `findInstanceRoot` walks to the nearest enclosing declaration, so the
     // name is a property of where the skills live rather than of who asked:
     // `src/skills/` → `cat-harness/harness.json` → `folio-assistant`,
-    // unchanged and measured; `cat-bootstrap/skills/` → `cat-bootstrap/harness.json`
-    // → `cat-bootstrap`. A directory under no declaration at all is skipped rather
+    // unchanged and measured; `bootstrap/skills/` → `bootstrap/harness.json`
+    // → `bootstrap`. A directory under no declaration at all is skipped rather
     // than guessed at.
     //
     // ...AND THE INSTANCE NAME IS TAKEN BY THE `skills` DIRECTORY ALONE.
@@ -178,9 +198,12 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // took the name. A directory basenamed `skills` IS the instance's own
     // package — there is no other name for it — so it takes the instance name;
     // any other directly-held directory takes its own basename, which is what
-    // a person calls it anyway. `src/skills/` stays `folio-assistant` and
-    // `cat-bootstrap/skills/` stays `cat-bootstrap`, both measured unchanged;
-    // `theming/` becomes `theming`.
+    // a person calls it anyway. `src/skills/` stayed `folio-assistant` and
+    // `bootstrap/skills/` stays `bootstrap`, both measured unchanged
+    // at the time; `theming/` becomes `theming`. Since #760 removed
+    // `src/skills/`, the live subjects of rule 1 are `bootstrap/skills/`,
+    // `large-datasets/skills/` and `who-iris/skills/` — `kg-navigation/skills/`
+    // was one until bean `byql` folded it into `skills/kg-navigation/`.
     //
     // Two `skills`-named directly-held directories in ONE instance would still
     // collide. That is a narrower and more obviously wrong configuration than
@@ -206,16 +229,16 @@ export function discoverLocalPackages(root: string): Record<string, string> {
  *
  * 1. A directory basenamed **`skills`** is the instance's own package — there
  *    is no other name for it — so it takes the instance's name. `src/skills/`
- *    stays `folio-assistant`; `cat-bootstrap/skills/` stays `cat-bootstrap`.
+ *    stays `folio-assistant`; `bootstrap/skills/` stays `bootstrap`.
  * 2. Otherwise, if it is the instance's **only** directly-held directory, it
  *    takes the instance's name, because there is nothing to disambiguate it
  *    from and the instance's name is the better one.
- * 3. Otherwise it takes its **basename** — `theming/`, `methodologies/crdm/`.
+ * 3. Otherwise it takes its **basename** — `theming/`, `skills/crdm/`.
  *
  * Rule 2 is the one that needs the set, and stating it as "unique" rather than
  * "first" is the whole point: FIRST-WINS was the defect. `cat-harness`
- * declares `src/skills/`, `theming/`, `methodologies/crdm/` and
- * `methodologies/raci/` — four directly-held directories, all resolving to the
+ * declares `src/skills/`, `theming/`, `skills/crdm/` and
+ * `skills/raci/` — four directly-held directories, all resolving to the
  * name `folio-assistant`, with the last assignment winning. Measured on
  * 2026-09-20 (bean `1hvo`): three packages were found and silently dropped,
  * `kg:audit` reported six `manifest-skill-exists` CRITICALs for theming alone,

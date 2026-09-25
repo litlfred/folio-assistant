@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schema graph</title>
@@ -114,8 +116,86 @@ svg { max-width: 100%; height: auto; display: block; margin: 8px 0 16px; }
 .ov-key i.k-field { width: 16px; height: 0; border-top: 2px solid var(--accent); border-radius: 0; }
 .ov-key i.k-idref { width: 16px; height: 0; border-top: 2px dashed var(--warn); border-radius: 0; }
 </style>
+<style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style>
 </head>
-<body>
+<body><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}.fa-nav-kids{grid-column:1/-1}.fa-nav-action{display:none;background:none;border:0;cursor:pointer;padding:0 12px;font-size:13px;line-height:1;color:inherit;opacity:.7}.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">large-datasets</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
 <header>
   <h1>Schema graph</h1>
   <p class="counts" id="counts">loading…</p>
@@ -365,9 +445,34 @@ function diaWidth(svg) {
   return svg.getBoundingClientRect().width || 900;
 }
 
+/* THE LIST AND THE PICTURE FILTER THROUGH ONE PREDICATE, and that is the
+   point of this function existing rather than each caller writing its own.
+   They drifted precisely because there were two: render() honoured search,
+   kind and module while diaModel() honoured module alone, so a reader who
+   typed into the search box narrowed the list and the diagram did not move.
+   Nothing on the page said why, which makes a deliberate choice and a bug
+   look identical to the person looking at them. */
+function matchesFilter(d, q, k, m) {
+  if (!inScope(d)) return false;
+  if (k && d.kind !== k) return false;
+  if (m && d.module !== m) return false;
+  if (!q) return true;
+  return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
+}
+
+/** The three filter controls, read once so every caller sees one state. */
+function filterState() {
+  return {
+    q: $("q") ? $("q").value.trim().toLowerCase() : "",
+    k: $("kind") ? $("kind").value : "",
+    m: $("mod") ? $("mod").value : "",
+  };
+}
+
 function diaModel() {
-  var mod = $("mod") ? $("mod").value : "";
-  var core = G.decls.filter(function (d) { return inScope(d) && (!mod || d.module === mod); });
+  var f = filterState();
+  var mod = f.m;
+  var core = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
   var index = {}, decls = [];
   core.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = false; });
 
@@ -391,12 +496,24 @@ function diaModel() {
   var ctxShown = ctx.slice(0, DIA_CONTEXT_MAX);
   ctxShown.forEach(function (d) { index[d.id] = decls.length; decls.push(d); d.__ctx = true; });
 
-  var edges = [];
+  var edges = [], ctxEdges = 0;
   G.edges.forEach(function (e) {
     var a = index[e.from], b = index[e.to];
     if (a === undefined || b === undefined || a === b) return;
-    /* Context-to-context would draw a graph the page is not about. */
-    if (decls[a].__ctx && decls[b].__ctx) return;
+    /* Context-to-context would draw a graph the page is not about -- but BOTH
+       boxes are on screen, so a reader sees two declarations with no line and
+       has no way to know a relationship was suppressed rather than absent.
+       Counted, not dropped: the same contract the module-aggregation count
+       used to carry before the layered diagram replaced it, and the reason
+       this bean's own closing line requires the report survive every mode.
+       Measured when this was added, over the COMMITTED projection of 842
+       declarations and 525 edges: 15 summed across the 79 module filters,
+       and 0 across eight sample searches -- so it is a SMALL loss, and the
+       reason to report it is that it is INVISIBLE, not that it is large. An
+       earlier draft of this comment claimed a tighter filter makes more of
+       them; that was asserted, then measured, and it is false. The figures
+       move as the corpus does; the contract does not. */
+    if (decls[a].__ctx && decls[b].__ctx) { ctxEdges++; return; }
     edges.push({ a: a, b: b, via: e.via, kind: e.kind, array: e.array, optional: e.optional });
   });
   return {
@@ -407,6 +524,10 @@ function diaModel() {
     coreCount: core.length,
     ctxShown: ctxShown.length,
     ctxHidden: ctx.length - ctxShown.length,
+    ctxEdges: ctxEdges,
+    /* Whether any filter is NARROWING the picture, so an empty result can say
+       which. Module is included: it empties the set the same way. */
+    filtered: !!(f.q || f.k || f.m),
   };
 }
 
@@ -452,7 +573,15 @@ function diagram() {
   var m = diaModel();
 
   if (!m.decls.length) {
-    cap.textContent = "Nothing in scope to draw.";
+    /* NAME THE CAUSE. This said "Nothing in scope to draw" while only scope
+       and the module select could empty it, and that was true then. Once the
+       search and kind filters narrow the picture too, the same words blame
+       the SUBJECT for what a filter did, and a reader who typed a word that
+       matches nothing is told the page is empty. */
+    var why = m.filtered
+      ? "No declaration matches the filters above, so there is nothing to draw. Clear the search or the kind to get the picture back."
+      : "Nothing in scope to draw.";
+    cap.textContent = why;
     svg.innerHTML = ""; key.innerHTML = "";
     return;
   }
@@ -638,6 +767,11 @@ function diagram() {
     (m.ctxShown ? " <b>" + m.ctxShown + "</b> faded box(es) sit OUTSIDE this filter and are drawn because " +
       "something here links to them — a cut edge is the one most worth seeing." : "") +
     (m.ctxHidden ? " <b>" + m.ctxHidden + "</b> further neighbour(s) not drawn." : "") +
+    /* Both endpoints ARE drawn, so an unreported suppression reads as "these
+       two are unrelated" -- a false statement the picture makes silently. */
+    (m.ctxEdges ? " <b>" + m.ctxEdges + "</b> relationship(s) BETWEEN two faded boxes are not drawn, because " +
+      "the picture is about this filter rather than about its surroundings — counted here so a missing " +
+      "line is never mistaken for a missing relationship." : "") +
     /* Said rather than left to be noticed: a wrapped layer looks like two
        layers to a reader who was not told, and the alternative the panel used
        to take was to shrink the whole picture without saying so. */
@@ -651,15 +785,8 @@ function diagram() {
 }
 
 function render() {
-  var q = $("q").value.trim().toLowerCase();
-  var k = $("kind").value, m = $("mod").value;
-  var rows = G.decls.filter(function (d) {
-    if (!inScope(d)) return false;
-    if (k && d.kind !== k) return false;
-    if (m && d.module !== m) return false;
-    if (!q) return true;
-    return (d.name + " " + d.module + " " + (d.doc || "")).toLowerCase().indexOf(q) >= 0;
-  });
+  var f = filterState();
+  var rows = G.decls.filter(function (d) { return matchesFilter(d, f.q, f.k, f.m); });
   $("items").innerHTML = rows.slice(0, 400).map(function (d) {
     return '<li><button type="button" data-id="' + esc(d.id) + '" aria-current="' + (SEL === d.id) + '">' +
       '<span class="nm">' + esc(d.name) + "</span>" +
@@ -726,15 +853,28 @@ fetch(DATA_HREF).then(function (r) {
     o.textContent = nameCount[m.name] > 1 ? m.instance + " / " + m.name : m.name;
     $("mod").appendChild(o);
   });
-  $("q").addEventListener("input", render);
-  $("kind").addEventListener("change", render);
-  $("mod").addEventListener("change", function () {
-    render();
-    /* The diagram narrows with the module filter — that is how a
-       754-declaration instance still has a readable picture. Redrawn only
-       when the panel is open; a closed one costs nothing. */
+  /* Redrawn only when the panel is OPEN; a closed one costs nothing, and the
+     toggle handler below draws it on first open. */
+  function redrawIfOpen() {
     if ($("overview").open) diagram();
+  }
+  /* Search is debounced and the two selects are not: a select fires once per
+     choice, while typing fires per keystroke and the layout is the expensive
+     part -- the same trade the resize handler below makes, at the same 150ms.
+     The LIST stays undebounced either way, so typing still feels immediate;
+     only the picture waits. */
+  var flt;
+  $("q").addEventListener("input", function () {
+    render();
+    clearTimeout(flt);
+    flt = setTimeout(redrawIfOpen, 150);
   });
+  /* The diagram narrows with EVERY filter, not just the module one. A
+     754-declaration instance is over DIA_MAX and refuses to draw, so before
+     this the only way to get a picture was to know which module to pick;
+     a search that narrows the set under the limit now earns one too. */
+  $("kind").addEventListener("change", function () { render(); redrawIfOpen(); });
+  $("mod").addEventListener("change", function () { render(); redrawIfOpen(); });
   $("items").addEventListener("click", function (e) {
     var b = e.target.closest("button[data-id]");
     if (b) select(b.getAttribute("data-id"));

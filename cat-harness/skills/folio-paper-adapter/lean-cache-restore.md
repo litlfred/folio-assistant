@@ -72,6 +72,42 @@ for a build.
 So `status` reports coverage, and anything under 90% is a warning you
 should act on rather than route around.
 
+## This cache is a `compiled` materialization
+
+Bean `gpdo`, owner's pick 2026-09-23 ("Third purpose"). The Lean cache is
+not a special case: it is one instance of the `compiled` purpose in
+`folio-assistant-core/schemas/materialization.ts`. Its policy used to live
+only in `lake-cache-refresh.yml`; this section is where it is stated, and the
+workflow is **adopted, not superseded**.
+
+| the cache's own terms | the `compiled` record |
+|---|---|
+| orphan branch `lake-cache/<package>-<toolchain>` | one record per package; the branch name's toolchain is `inputs.toolchain` |
+| the Lake root's commit at build time | `inputs.sourceRevision` |
+| Lake's per-module `.trace` files | the fine-grained input digests. Lake checks these itself, module by module, which is why an untraced olean is rebuilt (above). A whole-tree `inputs.inputDigest` is optional for that reason. |
+| keep ≤2 toolchains per package (the cleanup job) | retention: a copy whose toolchain is no longer one of the two is `stale-inputs` for every current build |
+| the ~1.6 GB payload | `bytes`, and the SIZE gate `materialize-remote` asks |
+
+**Before use, not on a schedule.** Call `compiledValidity(record, current)`
+with the toolchain from `lean-toolchain` and the current commit:
+
+- `valid`: restore and build; Lake's traces handle the per-module rest.
+- `stale-inputs`: it names what changed (toolchain, revision or digest).
+  Restore the cache for the *current* toolchain instead, or build cold.
+- `cannot-tell`: you could not state an input the record needs. That is
+  never a pass. Build cold, or find the missing input first.
+
+A compiled copy can never satisfy the source-loss gate: it is derived, and
+the source is what you would rebuild from. It has no expiry date; its
+lifetime is its inputs, so `freshness()` reports it `input-bound` and
+`cache:index` never lists it just for having no expiry.
+
+**The second instance is FHIR.** sushi turning FSH into FHIR resources (and
+an AST) has the same shape: `inputs.toolchain` is the sushi version,
+`inputs.sourceRevision` the FSH commit. Two instances is what makes this a
+purpose and not a Lean detail. The FHIR pipeline records its builds this way
+when it lands; nothing FHIR-side is built here.
+
 ## Exit codes — branch on these, don't grep
 
 | Code | Meaning | Next |
@@ -87,7 +123,7 @@ package+toolchain. `3` means someone did and it is broken — repair with
 
 ## Cold start
 
-If there is no usable branch at all, that is a cat-bootstrap, not a session
+If there is no usable branch at all, that is a bootstrap, not a session
 task:
 
 ```sh

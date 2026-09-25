@@ -162,7 +162,7 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 регистрируется только в том случае, если фолио явно ее подключает:
 
 ```json
-// harness.config.json
+// <name>.config.json
 { "qaAxes": ["q-usage"] }
 ```
 

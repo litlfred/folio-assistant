@@ -3,13 +3,21 @@ layout: default
 title: Subgraph viewers
 nav_order: 14
 lang: en
+documents:
+  - library
+  - schemas
+  - uploads
+  - voices
 ---
 
 # Subgraph viewers
 {: .no_toc }
 
 A harness instance declares the directories it holds and the **kind of graph**
-in each. Two of those graphs now have a page you can open.
+in each. Some of those graphs have a page you can open; the sections below are
+the list, and **counting them here would be a number that goes stale by
+lying** — a section is added when a viewer is, and a reader wanting the total
+counts the sections.
 
 1. TOC
 {:toc}
@@ -141,6 +149,47 @@ Nothing on this page edits an asset. The actions that would write — starting a
 ingest from the corpus view, and materialising an entry into a folio of choice
 — are open work, because the write path is a decision the repository owner has
 not yet made.
+
+## The voices — what each rule cites
+
+**[`/cat-harness/voices/`]({{ '/cat-harness/voices/' | relative_url }})** — every voice
+its instance declares, every rule, and **the passage the rule was read from**.
+
+A voice is an editorial register asserted by an instance, and this subsystem's
+whole claim is that it is **auditable rather than asserted**. `check-voices.ts`
+exists because PR #210 shipped three WHO profiles carrying ten plausible rules
+each with `source: null` — and one of those plausible rules asserted the
+opposite of what the WHO Editorial Style Manual says on p14. Every rule now
+carries the page and the quote.
+
+**Until this page, none of it was readable without opening JSON.** A citation
+that is only machine-checked is one the reader takes on trust, which is the
+state the citations were added to end. So the rule row leads with the quote,
+and the citation is the one column that cannot be filtered away. Bean `bu2q`.
+
+### A rule citing nothing is drawn as a finding, not as a blank
+
+`VoiceRuleSourceSchema` requires **exactly one** of an ingested source
+(`libraryId` + `sectionId`) or a node of the instance's own knowledge graph
+(`kgRef`), so a rule with neither cannot load. The viewer renders that state
+anyway, in red, saying that something is loading voices without validating
+them — because a reader who cannot tell "no citation" from "citation not
+rendered" learns nothing from an empty cell.
+
+### A declared directory that is not there gets a row
+
+`agent-skills` declares a `voices` graph and ships none. It appears in the
+directories table as **declared, not present**, rather than being omitted:
+those are different facts, and a consumer that scans nothing and reports a
+clean run is the `dh4f` defect.
+
+### The visualiser rule did not ask for this page
+
+`owesVisualiser` returns false for a `content` kind and `voices` is `content`,
+so `check:subgraph-coverage` never raised a finding for it — exactly as it
+never raised one for the library. What this page answers is `2krx`'s own
+sentence, *"a directory nobody can see is one nobody checks"*, which is a
+reason to build a viewer and not a row in a report.
 
 ## Where they are published — two rules, not three
 

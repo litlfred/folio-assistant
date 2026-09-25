@@ -5,7 +5,7 @@
  * @graphNode schema
  *
  * The owner's ask, 2026-09-20: *"each intiator should create its own sticky.
- * cat-bootstrap sticky will have link back to the source code + ghpaghes for boot
+ * bootstrap sticky will have link back to the source code + ghpaghes for boot
  * strrap."*
  *
  * ## What this replaces, and why it is a change of shape
@@ -24,7 +24,7 @@
  *
  * | | code registry | declaration |
  * |---|---|---|
- * | cat-bootstrap can contribute | **no** — `cat-bootstrap/` holds no TypeScript, and `cat-bootstrap/harness.json` declares an instance that *may not import from the layer composed on top of it* | yes |
+ * | bootstrap can contribute | **no** — `bootstrap/` holds no TypeScript, and `bootstrap/harness.json` declares an instance that *may not import from the layer composed on top of it* | yes |
  * | a downstream folio can contribute | only by shipping code | yes |
  * | inheritance | hand-wired | already resolved, `resolveDirectories`-style |
  * | expressiveness | arbitrary | the fields below, and no more |
@@ -59,13 +59,13 @@
  *    LIST of roots rather than walking one, so that change is a caller change
  *    rather than a rewrite.
  *
- *    Stated rather than left to be inferred, because "cat-bootstrap's card is
+ *    Stated rather than left to be inferred, because "bootstrap's card is
  *    written by cat-harness" looks like a layering violation until you know it
  *    is a pre-split accommodation with a named end.
  *
  * 2. **Every sticky links to ITS OWN harness's docs.** Not to the composing
- *    instance's — cat-bootstrap's card points at `cat-bootstrap/README.md` on the forge,
- *    because this site is cat-harness's and cat-bootstrap has no site of its own
+ *    instance's — bootstrap's card points at `bootstrap/README.md` on the forge,
+ *    because this site is cat-harness's and bootstrap has no site of its own
  *    yet. A card that sent a reader to the wrong layer's documentation would be
  *    worse than one with no link, since it looks like it worked.
  *
@@ -152,7 +152,7 @@ export function isExternalLink(link: StickyLink): boolean {
  * than implied.
  *
  * **`description` is the DECLARING instance's description, not the root's.** That
- * is the whole point of a contribution: cat-bootstrap's sticky carries cat-bootstrap's
+ * is the whole point of a contribution: bootstrap's sticky carries bootstrap's
  * description, and cat-harness's carries cat-harness's. Reading the root's for
  * every layer would give a board of one sentence repeated.
  */
@@ -165,13 +165,13 @@ export type StickyBodySource = (typeof STICKY_BODY_SOURCES)[number];
  * **Declared, never inherited from dependency resolution.** This is the cost the
  * work-plan item called out before any of it was written: a composed set with no
  * declared order renders in `resolveDirectories`' deepest-dependency-first order,
- * which would put cat-bootstrap's sticky **above the instance's own description** —
+ * which would put bootstrap's sticky **above the instance's own description** —
  * and the description has to come first, because a reader needs to know what the
  * instance IS before anything else means anything.
  *
  * The scale reads *how early should a reader meet this*, 0 first. A layer can
- * only state its own priority — it cannot see the others — so cat-bootstrap declaring
- * {@link STICKY_ORDER_TRAILING} is cat-bootstrap's own judgement that it is the least
+ * only state its own priority — it cannot see the others — so bootstrap declaring
+ * {@link STICKY_ORDER_TRAILING} is bootstrap's own judgement that it is the least
  * interesting card on the board, not cat-harness reaching down to place it.
  *
  * Gaps of ten, so a contribution can be slipped between two without renumbering
@@ -346,9 +346,9 @@ export const StickyContributionSchema = z
     /**
      * The theme id, by reference. **No default, and that is load-bearing.**
      *
-     * A default here is exactly how *"a bare cat-bootstrap instance gets no cat"*
+     * A default here is exactly how *"a bare bootstrap instance gets no cat"*
      * would stop being true: the owner's ruling was *"i want the grumpy cat moved
-     * out of cat-bootstrap and into cat harness"*, and a schema defaulting to
+     * out of bootstrap and into cat harness"*, and a schema defaulting to
      * `grumpy-cat` would hand one back to every layer that forgot to say
      * otherwise. Requiring it makes the choice visible in the declaration.
      *
@@ -425,7 +425,7 @@ export interface DeclaredContribution {
   declaredBy: string;
   /**
    * The declaration this contribution came from, RELATIVE TO THE REPOSITORY —
-   * `cat-harness/harness.json`, `cat-bootstrap/harness.json`, `harness.json`.
+   * `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.
    *
    * ## Why the path and not just the name
    *

@@ -1,0 +1,50 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "tool",
+    "id": "tool-schema",
+    "path": null
+  },
+  "source_hash": "95b84992ed04",
+  "criteria": {
+    "tool-invoke-path-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-contract-met": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-io-types-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-args-shell-safe": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-alternative-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-maintains-in-tree": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "tool-schema",
+          "detail": "maintains \"tool.schema.json\" — presence is a fact about the assembled site, not this checkout. Answered by `check:maintained-artefacts ./_site` in the docs-site workflow."
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 1
+  }
+}

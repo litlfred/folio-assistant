@@ -29,7 +29,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
 
 import { readDeclaration } from "../schemas/cat-harness.js";
-import { resolveKindValidator } from "../schemas/kind-validator.js";
+import type { z } from "zod";
+
+import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
 
 const instanceRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
 
@@ -48,7 +50,7 @@ export type Verdict =
 export function kindForPath(
   filePath: string,
   root: string,
-  dirs: { path: string; graphs: string[] }[],
+  dirs: { path: string; graphKinds: string[] }[],
 ): string | undefined {
   const rel = relative(root, resolve(filePath));
   if (rel.startsWith("..")) return undefined;
@@ -59,8 +61,8 @@ export function kindForPath(
       // A directory may declare several graphs; one is unambiguous, more is
       // not, and guessing which would be the lie of precision the
       // `cat-harness` kind's own doc comment warns about.
-      if (d.graphs.length === 1 && (!best || dir.length > best.len)) {
-        best = { len: dir.length, kind: d.graphs[0] };
+      if (d.graphKinds.length === 1 && (!best || dir.length > best.len)) {
+        best = { len: dir.length, kind: d.graphKinds[0] };
       }
     }
   }
@@ -85,11 +87,6 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
         "several graphs and which applies is not stated",
     };
   }
-  const v = await resolveKindValidator(kind, root);
-  if (v.state !== "resolved") {
-    return { path: filePath, state: "undetermined", kind, reason: v.reason };
-  }
-
   let data: unknown;
   try {
     data = JSON.parse(readFileSync(filePath, "utf-8"));
@@ -101,7 +98,34 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
       reason: `not readable as JSON: ${e instanceof Error ? e.message : String(e)}`,
     };
   }
-  const parsed = v.schema.safeParse(data);
+
+  // Bean `rdkm`: a kind that names its `$schema` families routes the node by
+  // its own tag first — `qa` holds seven families, and the kind-level
+  // validator would check six of them against the wrong shape.
+  const families = await resolveNodeSchemas(kind, root);
+  let schema: z.ZodTypeAny;
+  if (families.length) {
+    const tag = (data as { $schema?: unknown } | null)?.$schema;
+    const fam = families.find((f) => f.tag === tag);
+    if (!fam) {
+      return { path: filePath, state: "undetermined", kind, reason: `${kind} names no $schema family ${JSON.stringify(tag)}` };
+    }
+    if (fam.state !== "resolved") {
+      const why =
+        fam.state === "shape" ? "is a TypeScript shape, not a runnable schema"
+        : fam.state === "external" ? `conforms to ${fam.spec}, which nothing here runs`
+        : fam.reason;
+      return { path: filePath, state: "undetermined", kind, reason: `${fam.tag} ${why}` };
+    }
+    schema = fam.schema;
+  } else {
+    const v = await resolveKindValidator(kind, root);
+    if (v.state !== "resolved") {
+      return { path: filePath, state: "undetermined", kind, reason: v.reason };
+    }
+    schema = v.schema;
+  }
+  const parsed = schema.safeParse(stripAnnotations(data));
   if (parsed.success) return { path: filePath, state: "valid", kind };
   return {
     path: filePath,

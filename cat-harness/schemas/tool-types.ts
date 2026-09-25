@@ -71,6 +71,21 @@ export const BranchSchema = z
   .refine((b) => !b.includes(".."), "a branch name may not contain `..`")
   .describe("A git branch name");
 
+/**
+ * A forge repository's full name, `owner/name`.
+ *
+ * Its own type rather than `Text` because a Tool takes it on the command line
+ * (`folio-review-comments --repo`, bean `423d`), and `Text` is deliberately
+ * not admissible there. Each half is the character set GitHub allows in an
+ * owner and a repository name, which contains no shell metacharacter, and
+ * `..` is refused, so it can never climb a path it is joined into.
+ */
+export const RepoFullNameSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/, "a repository is `owner/name`")
+  .refine((r) => !r.includes(".."), "a repository name may not contain `..`")
+  .describe("A forge repository's full name, owner/name");
+
 /** A pull/merge request number. */
 export const ChangeProposalNumberSchema = z
   .number()
@@ -91,7 +106,7 @@ export const ChangeProposalNumberSchema = z
 export const MarkdownSchema = z.string().describe("Markdown text. Not admissible as a command-line argument — see INJECTION_SAFE.");
 
 /**
- * The name of a skill, as an activity's `<folio:skill ref>` writes it.
+ * The name of a skill, as an activity's `<bootstrap.processes:skill ref>` writes it.
  *
  * Same shape as a file stem under `skills/<package>/`, because that is what it
  * resolves to — `knownSkills()` in `scripts/known-skills.ts` builds its set by
@@ -113,6 +128,8 @@ export const PackageNameSchema = z
 /**
  * A BPMN process id — the stem of a `.bpmn` under a declared workflow
  * directory, e.g. `crdm-requirements`.
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
 export const ProcessIdSchema = z
   .string()
@@ -368,7 +385,7 @@ export const ReadmeSectionSchema = z
  * fails `tsc`, rather than producing a Tool contract that quietly refuses a
  * value the script accepts.
  */
-const NAMESPACE_LAYERS = ["cat-bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
+const NAMESPACE_LAYERS = ["bootstrap", "harness", "core"] as const satisfies readonly TermLayer[];
 
 /** Fails to compile if `TermLayer` gains a member this tuple does not list. */
 type NamespaceLayerCovers = Exclude<TermLayer, (typeof NAMESPACE_LAYERS)[number]> extends never
@@ -408,7 +425,7 @@ export const LakeCacheActionSchema = z
 
 export const NamespaceLayerSchema = z
   .enum(NAMESPACE_LAYERS)
-  .describe("A namespace layer: cat-bootstrap resolves before anything else, then harness, then core.");
+  .describe("A namespace layer: bootstrap resolves before anything else, then harness, then core.");
 
 /** The granularity a translation sign-off covers. */
 export const TranslationLevelSchema = z
@@ -494,7 +511,7 @@ export const PortSchema = z
  * moment the constraint is discovered.
  */
 export const DecisionFactsSchema = z
-  .record(z.union([z.string(), z.number(), z.boolean()]))
+  .record(z.string(), z.union([z.string(), z.number(), z.boolean()]))
   .describe("Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument.");
 
 /** Everything published in the shared types document, keyed by `$defs` name. */
@@ -513,6 +530,7 @@ export const TOOL_TYPES = {
   RepoPath: RepoPathSchema,
   Url: UrlSchema,
   Branch: BranchSchema,
+  RepoFullName: RepoFullNameSchema,
   ChangeProposalNumber: ChangeProposalNumberSchema,
   Markdown: MarkdownSchema,
   Text: TextSchema,
@@ -611,6 +629,7 @@ export const INJECTION_SAFE: ReadonlySet<ToolTypeName> = new Set<ToolTypeName>([
   "RepoPath",
   "Url",
   "Branch",
+  "RepoFullName",
   "ChangeProposalNumber",
   "Slug",
   // Every enum below is injection-safe by construction: a value outside the

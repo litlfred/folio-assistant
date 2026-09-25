@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_HumanTranslation"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       Human Translation Workflow — folio-assistant
+       Issue: https://github.com/litlfred/folio-assistant/issues/206
+
+       Swimlanes:
+         - Translation Coordinator (assigns, tracks, manages)
+         - Human Translator (translates, uses tools)
+         - Subject-Matter Expert / Reviewer (reviews, signs off)
+         - Automated Pipeline (extracts, injects, QA)
+       ═══════════════════════════════════════════════════════════ -->
+
+  <bpmn:collaboration id="Collab_HumanTranslation">
+    <bpmn:participant id="Pool_HumanTranslation" name="Human Translation Process"
+                      processRef="Process_HumanTranslation" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_HumanTranslation" name="Human Translation Workflow" isExecutable="false">
+    <bpmn:documentation>The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.
+
+You are in this process when a person is doing the translating. `translation-workflow` is the machine half — extraction, injection, staleness — and it hands off to this one at exactly the point a judgement is needed. The two are separate because completeness is mechanical and accuracy is not: the coordinator's gate asks whether enough strings are filled, the reviewer's asks whether they are right, and no amount of the first substitutes for the second.
+
+What makes a translation OFFICIAL is the reviewer's sign-off, never the file being complete.</bpmn:documentation>
+
+    <!-- ── Lanes ──────────────────────────────────────────────── -->
+    <bpmn:laneSet id="LaneSet_Main">
+      <bpmn:lane id="Lane_Coordinator" name="Translation Coordinator">
+        <bpmn:documentation>Owns the completeness gate, Gateway_Complete, a different question from the accuracy Lane_Reviewer judges later: this lane can send work back to the translator for missing or fuzzy strings before a single sentence has been checked for meaning.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="translation-coordinator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_TranslationNeeded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IdentifyContent</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AssignTranslator</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckCompleteness</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Complete</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RequestMoreWork</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Translator" name="Human Translator">
+        <bpmn:documentation>Task_TranslateInTool is where both loops in this process land — an incompleteness request from the coordinator and a correction from the reviewer — so nothing in the task itself says which one sent the work back; only the annotations that travel with each loop carry that distinction.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="translator"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_ReceiveAssignment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TranslateInTool</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SubmitPO</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reviewer" name="Subject-Matter Expert / Reviewer">
+        <bpmn:documentation>The one reviewer lane in this corpus where sign-off is acceptance: Task_Signoff makes the translation official directly, with no separate editor lane after it, because translation fidelity is the acceptance criterion and there is no different judgement left for an editor to add.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_SMEReview</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Accurate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReturnForCorrection</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Signoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_OfficialTranslation</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Pipeline" name="Automated Pipeline">
+        <bpmn:documentation>Owns extraction, glossary preparation, injection and round-trip QA — the only machine check for semantic drift — whose findings go to Task_SMEReview whatever they say, so a clean round-trip is evidence for the reviewer, never a bypass of them. The same lane writes the final status.json once sign-off lands, so the official record sits beside the checks that fed it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_ExtractPOT</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PrepareGlossary</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_InjectPO</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RoundTripQA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AppendDisclaimer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WriteStatus</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <!-- ══════ COORDINATOR LANE ════════════════════════════════ -->
+
+    <bpmn:startEvent id="Start_TranslationNeeded" name="Translation needed&#10;for content node(s)">
+      <bpmn:documentation>A translation coordinator identifies one or more content
+nodes that require human translation into a target locale.</bpmn:documentation>
+    </bpmn:startEvent>
+
+    <bpmn:userTask id="Task_IdentifyContent" name="Identify content&#10;and target locale">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>The coordinator selects:
+- Which content nodes need translation (block, section, chapter, or folio)
+- The target locale (one of the supportedLocales in &lt;name&gt;.config.json)
+- The priority and deadline</bpmn:documentation>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="Task_AssignTranslator" name="Assign to qualified&#10;human translator">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>The coordinator assigns the translation to a qualified
+translator, ideally a domain SME for the content area. For WHO content,
+the translator should be familiar with WHO SMART Guidelines terminology.
+
+The assignment includes:
+- The .pot file(s) from extraction
+- The domain glossary
+- Context notes (block kind, chapter, content area)
+- The deadline</bpmn:documentation>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="Task_CheckCompleteness" name="Check translation&#10;completeness">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Verify that all msgid entries have msgstr translations.
+Partial translations are acceptable for initial submissions but must be
+flagged for follow-up. The coordinator checks:
+- % of strings translated
+- Any fuzzy-flagged entries
+- Missing critical sections</bpmn:documentation>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="Gateway_Complete" name="Complete enough?">
+      <bpmn:documentation>Answered by the completeness check on the submitted PO file: are enough strings translated? `Incomplete` asks the translator to finish the rest; `Complete` injects the PO into translated Markdown.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="Task_RequestMoreWork" name="Request completion&#10;of remaining strings">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Return to the translator with a list of untranslated
+or fuzzy strings that need attention.</bpmn:documentation>
+    </bpmn:userTask>
+
+    <!-- ══════ TRANSLATOR LANE ════════════════════════════════ -->
+
+    <bpmn:userTask id="Task_ReceiveAssignment" name="Receive assignment&#10;and materials">
+      <bpmn:documentation>The translator receives:
+- .pot file with source strings (msgid)
+- Domain glossary with approved term translations
+- Context notes per string
+- Style guide and WHO terminology references
+
+Tools: Poedit, Weblate, Crowdin, or direct .po editing.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="Task_TranslateInTool" name="Translate strings&#10;in preferred tool">
+      <bpmn:documentation>The translator works through each msgid, producing
+msgstr translations. They:
+- Follow the domain glossary for technical terms
+- Preserve placeholder tokens ({1}, {2}) in position
+- Mark uncertain translations as #fuzzy
+- Note any source ambiguities for the coordinator</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="Task_SubmitPO" name="Submit completed&#10;.po file">
+      <bpmn:documentation>The translator submits the completed .po file back
+to the pipeline. This may happen via:
+- Git commit + push
+- Weblate/Crowdin sync
+- File upload to the coordinator</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+
+    <!-- ══════ REVIEWER LANE ══════════════════════════════════ -->
+
+    <bpmn:userTask id="Task_SMEReview" name="Review translation&#10;for accuracy">
+      <bpmn:documentation>A subject-matter expert reviews the injected translated
+markdown for:
+- Clinical/technical accuracy of terminology
+- Preservation of meaning from the source
+- Cultural appropriateness for the target locale
+- Consistency with the domain glossary
+
+For WHO content: the SME verifies that normative statements
+("SHALL", "SHOULD", "MAY") are translated with the correct
+force in the target language.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+        <bootstrap.processes:skill ref="translation-manager" />
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="Gateway_Accurate" name="Translation accurate?">
+      <bpmn:documentation>The SME's result. `Needs correction` returns the translation with annotations; `Accurate` goes on to the WHO disclaimer, sign-off and status.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="Task_ReturnForCorrection" name="Return for correction&#10;with annotations">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>The reviewer annotates specific passages that need
+correction and returns to the translator with detailed feedback.
+Each annotation includes:
+- The passage in question
+- What is wrong (terminology, meaning, style)
+- The suggested correction or reference</bpmn:documentation>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="Task_Signoff" name="Sign off translation&#10;as official">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>The reviewer signs off the translation, making it
+official. This records:
+- signedOffBy: the reviewer's identity
+- signedOffAt: the current timestamp
+- sourceHash: SHA-256 of the source .md
+- level: block | section | chapter | folio
+
+Tool: translation_signoff MCP tool</bpmn:documentation>
+    </bpmn:userTask>
+
+    <bpmn:endEvent id="End_OfficialTranslation" name="Translation is official" />
+
+    <!-- ══════ PIPELINE LANE ══════════════════════════════════ -->
+
+    <bpmn:serviceTask id="Task_ExtractPOT" name="Extract POT&#10;(translatable strings)">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Pre-processes source markdown:
+1. Segments prose by paragraph
+2. Shields non-translatable content (math, code, labels) as placeholders
+3. Normalizes whitespace
+4. Extracts metadata (titles, alt text, captions)
+Produces .pot file(s) at the configured granularity.
+Tool: translation_extract MCP tool</bpmn:documentation>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_PrepareGlossary" name="Prepare domain&#10;glossary">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Generates or retrieves the domain glossary for the
+target locale. Sources:
+1. Root folio's translations/ glossary
+2. Folio-assistant dependency translations (depth-first walk)
+3. WHO standard terminology (from smart-base)
+4. Previous translations of related content</bpmn:documentation>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_InjectPO" name="Inject PO →&#10;translated Markdown">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Post-processes the completed .po file:
+1. Substitutes msgstr for msgid in source markdown
+2. Unshields placeholder tokens back to original content
+3. Validates structural integrity (paragraph count, heading levels)
+4. Validates completeness (flags empty msgstr)
+5. Runs linting (doubled punctuation, orphaned placeholders)
+Tool: translation_inject MCP tool</bpmn:documentation>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_RoundTripQA" name="Round-trip&#10;translation QA">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Bean: folio-assistant-ktt2
+Back-translates target-language .md to source language and compares
+meaning. Distinguishes semantic drift from terminology misses.
+Tool: translation_validate MCP tool
+
+No gateway follows: drift or clean, the translation goes to Task_SMEReview
+with the findings attached. Which of two readings is right is a human call
+(translation-manager, "route drift to a human reviewer"), and every
+translation in this workflow is reviewed and signed off anyway, so a clean
+result is evidence for the reviewer and never a way around them.</bpmn:documentation>
+    </bpmn:serviceTask>
+
+
+    <bpmn:serviceTask id="Task_AppendDisclaimer" name="Append WHO&#10;disclaimer (if DAK)">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>For WHO SMART Guidelines content, automatically appends
+the WHO legal disclaimer:
+- Translation not created by WHO
+- English edition is authoritative original
+- WHO not responsible for translation accuracy
+
+Only applies when folio contentType includes WHO/DAK content.</bpmn:documentation>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="Task_WriteStatus" name="Write status.json&#10;(official)">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="translation-manager"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Writes translations/&lt;locale&gt;/status.json with the
+official sign-off metadata and source hash for staleness detection.</bpmn:documentation>
+    </bpmn:serviceTask>
+
+    <!-- ══════ SEQUENCE FLOWS ═════════════════════════════════ -->
+
+    <!-- Coordinator start -->
+    <bpmn:sequenceFlow id="F01" sourceRef="Start_TranslationNeeded" targetRef="Task_IdentifyContent" />
+    <bpmn:sequenceFlow id="F02" sourceRef="Task_IdentifyContent" targetRef="Task_ExtractPOT" />
+
+    <!-- Pipeline: extract + glossary (parallel in practice, sequential in BPMN for clarity) -->
+    <bpmn:sequenceFlow id="F03" sourceRef="Task_ExtractPOT" targetRef="Task_PrepareGlossary" />
+    <bpmn:sequenceFlow id="F04" sourceRef="Task_PrepareGlossary" targetRef="Task_AssignTranslator" />
+
+    <!-- Coordinator assigns to translator -->
+    <bpmn:sequenceFlow id="F05" sourceRef="Task_AssignTranslator" targetRef="Task_ReceiveAssignment" />
+
+    <!-- Translator works -->
+    <bpmn:sequenceFlow id="F06" sourceRef="Task_ReceiveAssignment" targetRef="Task_TranslateInTool" />
+    <bpmn:sequenceFlow id="F07" sourceRef="Task_TranslateInTool" targetRef="Task_SubmitPO" />
+
+    <!-- Back to coordinator for completeness check -->
+    <bpmn:sequenceFlow id="F08" sourceRef="Task_SubmitPO" targetRef="Task_CheckCompleteness" />
+    <bpmn:sequenceFlow id="F09" sourceRef="Task_CheckCompleteness" targetRef="Gateway_Complete" />
+    <bpmn:sequenceFlow id="F10" name="Incomplete" sourceRef="Gateway_Complete" targetRef="Task_RequestMoreWork" />
+    <bpmn:sequenceFlow id="F11" sourceRef="Task_RequestMoreWork" targetRef="Task_TranslateInTool" />
+    <bpmn:sequenceFlow id="F12" name="Complete" sourceRef="Gateway_Complete" targetRef="Task_InjectPO" />
+
+    <!-- Pipeline: inject + QA -->
+    <bpmn:sequenceFlow id="F13" sourceRef="Task_InjectPO" targetRef="Task_RoundTripQA" />
+    <bpmn:sequenceFlow id="F14" name="findings attached" sourceRef="Task_RoundTripQA" targetRef="Task_SMEReview" />
+
+    <!-- Reviewer -->
+    <bpmn:sequenceFlow id="F17" sourceRef="Task_SMEReview" targetRef="Gateway_Accurate" />
+    <bpmn:sequenceFlow id="F18" name="Needs correction" sourceRef="Gateway_Accurate" targetRef="Task_ReturnForCorrection" />
+    <bpmn:sequenceFlow id="F19" sourceRef="Task_ReturnForCorrection" targetRef="Task_TranslateInTool" />
+    <bpmn:sequenceFlow id="F20" name="Accurate" sourceRef="Gateway_Accurate" targetRef="Task_AppendDisclaimer" />
+
+    <!-- Final pipeline steps -->
+    <bpmn:sequenceFlow id="F21" sourceRef="Task_AppendDisclaimer" targetRef="Task_Signoff" />
+    <bpmn:sequenceFlow id="F22" sourceRef="Task_Signoff" targetRef="Task_WriteStatus" />
+    <bpmn:sequenceFlow id="F23" sourceRef="Task_WriteStatus" targetRef="End_OfficialTranslation" />
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_HumanTranslation">
+    <bpmndi:BPMNPlane id="BPMNPlane_HumanTranslation" bpmnElement="Collab_HumanTranslation">
+      <bpmndi:BPMNShape id="Pool_HumanTranslation_di" bpmnElement="Pool_HumanTranslation" isHorizontal="true">
+        <dc:Bounds x="120" y="60" width="3760" height="720" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Coordinator_di" bpmnElement="Lane_Coordinator" isHorizontal="true">
+        <dc:Bounds x="150" y="60" width="3730" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Translator_di" bpmnElement="Lane_Translator" isHorizontal="true">
+        <dc:Bounds x="150" y="240" width="3730" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Reviewer_di" bpmnElement="Lane_Reviewer" isHorizontal="true">
+        <dc:Bounds x="150" y="420" width="3730" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Pipeline_di" bpmnElement="Lane_Pipeline" isHorizontal="true">
+        <dc:Bounds x="150" y="600" width="3730" height="180" />
+      </bpmndi:BPMNShape>
+
+      <!-- Coordinator Shapes -->
+      <bpmndi:BPMNShape id="Start_TranslationNeeded_di" bpmnElement="Start_TranslationNeeded">
+        <dc:Bounds x="200" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="175" width="116" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IdentifyContent_di" bpmnElement="Task_IdentifyContent">
+        <dc:Bounds x="280" y="110" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssignTranslator_di" bpmnElement="Task_AssignTranslator">
+        <dc:Bounds x="880" y="110" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheckCompleteness_di" bpmnElement="Task_CheckCompleteness">
+        <dc:Bounds x="1680" y="110" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Complete_di" bpmnElement="Gateway_Complete" isMarkerVisible="true">
+        <dc:Bounds x="1880" y="125" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1840" y="180" width="130" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RequestMoreWork_di" bpmnElement="Task_RequestMoreWork">
+        <dc:Bounds x="1990" y="110" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Translator Shapes -->
+      <bpmndi:BPMNShape id="Task_ReceiveAssignment_di" bpmnElement="Task_ReceiveAssignment">
+        <dc:Bounds x="1080" y="290" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TranslateInTool_di" bpmnElement="Task_TranslateInTool">
+        <dc:Bounds x="1280" y="290" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SubmitPO_di" bpmnElement="Task_SubmitPO">
+        <dc:Bounds x="1480" y="290" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Reviewer Shapes -->
+      <bpmndi:BPMNShape id="Task_SMEReview_di" bpmnElement="Task_SMEReview">
+        <dc:Bounds x="2700" y="470" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Accurate_di" bpmnElement="Gateway_Accurate" isMarkerVisible="true">
+        <dc:Bounds x="2900" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2860" y="540" width="130" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ReturnForCorrection_di" bpmnElement="Task_ReturnForCorrection">
+        <dc:Bounds x="2980" y="430" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Signoff_di" bpmnElement="Task_Signoff">
+        <dc:Bounds x="3380" y="470" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_OfficialTranslation_di" bpmnElement="End_OfficialTranslation">
+        <dc:Bounds x="3780" y="492" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3730" y="535" width="136" height="30" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <!-- Pipeline Shapes -->
+      <bpmndi:BPMNShape id="Task_ExtractPOT_di" bpmnElement="Task_ExtractPOT">
+        <dc:Bounds x="480" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PrepareGlossary_di" bpmnElement="Task_PrepareGlossary">
+        <dc:Bounds x="680" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_InjectPO_di" bpmnElement="Task_InjectPO">
+        <dc:Bounds x="2180" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RoundTripQA_di" bpmnElement="Task_RoundTripQA">
+        <dc:Bounds x="2380" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AppendDisclaimer_di" bpmnElement="Task_AppendDisclaimer">
+        <dc:Bounds x="3180" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WriteStatus_di" bpmnElement="Task_WriteStatus">
+        <dc:Bounds x="3580" y="650" width="140" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Edges -->
+      <bpmndi:BPMNEdge id="F01_di" bpmnElement="F01">
+        <di:waypoint x="236" y="150" />
+        <di:waypoint x="280" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F02_di" bpmnElement="F02">
+        <di:waypoint x="420" y="150" />
+        <di:waypoint x="450" y="150" />
+        <di:waypoint x="450" y="690" />
+        <di:waypoint x="480" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F03_di" bpmnElement="F03">
+        <di:waypoint x="620" y="690" />
+        <di:waypoint x="680" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F04_di" bpmnElement="F04">
+        <di:waypoint x="820" y="690" />
+        <di:waypoint x="850" y="690" />
+        <di:waypoint x="850" y="150" />
+        <di:waypoint x="880" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F05_di" bpmnElement="F05">
+        <di:waypoint x="1020" y="150" />
+        <di:waypoint x="1050" y="150" />
+        <di:waypoint x="1050" y="330" />
+        <di:waypoint x="1080" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F06_di" bpmnElement="F06">
+        <di:waypoint x="1220" y="330" />
+        <di:waypoint x="1280" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F07_di" bpmnElement="F07">
+        <di:waypoint x="1420" y="330" />
+        <di:waypoint x="1480" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F08_di" bpmnElement="F08">
+        <di:waypoint x="1620" y="330" />
+        <di:waypoint x="1650" y="330" />
+        <di:waypoint x="1650" y="150" />
+        <di:waypoint x="1680" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F09_di" bpmnElement="F09">
+        <di:waypoint x="1820" y="150" />
+        <di:waypoint x="1880" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1930" y="150" />
+        <di:waypoint x="1990" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11">
+        <di:waypoint x="2060" y="110" />
+        <di:waypoint x="2060" y="80" />
+        <di:waypoint x="1350" y="80" />
+        <di:waypoint x="1350" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
+        <di:waypoint x="1905" y="175" />
+        <di:waypoint x="1905" y="690" />
+        <di:waypoint x="2180" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
+        <di:waypoint x="2320" y="690" />
+        <di:waypoint x="2380" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
+        <di:waypoint x="2520" y="690" />
+        <di:waypoint x="2610" y="690" />
+        <di:waypoint x="2610" y="510" />
+        <di:waypoint x="2700" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2616" y="595" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
+        <di:waypoint x="2840" y="510" />
+        <di:waypoint x="2900" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F18_di" bpmnElement="F18">
+        <di:waypoint x="2925" y="485" />
+        <di:waypoint x="2925" y="470" />
+        <di:waypoint x="2980" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F19_di" bpmnElement="F19">
+        <di:waypoint x="3050" y="430" />
+        <di:waypoint x="3050" y="405" />
+        <di:waypoint x="1350" y="405" />
+        <di:waypoint x="1350" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F20_di" bpmnElement="F20">
+        <di:waypoint x="2925" y="535" />
+        <di:waypoint x="2925" y="690" />
+        <di:waypoint x="3180" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F21_di" bpmnElement="F21">
+        <di:waypoint x="3320" y="690" />
+        <di:waypoint x="3350" y="690" />
+        <di:waypoint x="3350" y="510" />
+        <di:waypoint x="3380" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F22_di" bpmnElement="F22">
+        <di:waypoint x="3520" y="510" />
+        <di:waypoint x="3550" y="510" />
+        <di:waypoint x="3550" y="690" />
+        <di:waypoint x="3580" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F23_di" bpmnElement="F23">
+        <di:waypoint x="3720" y="690" />
+        <di:waypoint x="3750" y="690" />
+        <di:waypoint x="3750" y="510" />
+        <di:waypoint x="3780" y="510" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

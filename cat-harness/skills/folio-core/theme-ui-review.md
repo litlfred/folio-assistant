@@ -1,25 +1,69 @@
 ---
 name: theme-ui-review
 description: >
-  Review what the MVP actually renders — accessibility, branding, languages —
-  once stakeholders have accepted it. Post-MVP by design: there is no
-  role-to-theme mapping to check at build time, so what gets reviewed is the
-  result. Measures rather than asserts, and raises findings rather than fixing
-  them.
+  Review graphical assets AS THEY ARE INGESTED, in the context of the website
+  or app design they are for — accessibility, branding, languages — to
+  determine what the assets and the UI will be. At ingestion only, by owner
+  ruling; called from ingest-theme. Measures rather than asserts, and raises
+  findings rather than fixing them.
 ---
 
-# Post-MVP, because there is nothing to check before there is a render
+# At ingestion, and only at ingestion
 
-The owner, 2026-09-20: theme choice is *"authoring (human/agentic)
-decision/judgement"*, and reviewing themes and UI *"should be part of post MVP
-process in SDLC"*.
+**The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`:
 
-Those two go together. Because there is **no role-to-theme mapping**
-([`theme.ts`](../../schemas/theme.ts) records why), there is no table to audit,
-no binding to verify, nothing a build-time gate could assert. A theme is chosen
-per note by whoever writes it. What *can* be reviewed is the result, and only
-once there is one — which is why this hangs off MVP acceptance in
-`crdm-deliver.bpmn` rather than sitting in the requirements phases.
+> theme review to ingestion of graphical assets in context of website or app
+> design and determining graphical assets/UI
+
+and, asked directly whether that meant *only* at ingestion:
+
+> Yes only at ingestion
+
+So this skill runs in exactly one place: `theme-ui-review.bpmn`, called from
+`ingest-theme.bpmn` `Task_Review`, whose agent lane is `ingestion-agent`. It is
+**not** called from `crdm-deliver.bpmn` any more — that call was removed.
+
+## This supersedes an earlier ruling, and both are quoted on purpose
+
+On **2026-09-20** the owner said reviewing themes and UI *"should be part of
+post MVP process in SDLC"*, and this skill was written around that: it hung off
+MVP acceptance and reviewed what had shipped. **The 2026-09-24 ruling replaces
+it.** Both are kept here because a reader who finds only the older one in some
+other file would otherwise conclude one of them is an error. Neither is — the
+later one governs.
+
+## What moved, and what did not
+
+**The object moved upstream.** Post-MVP, the review looked at what shipped, and
+a finding was a defect in something built. At ingestion it looks at the arriving
+graphical assets laid out in the design they are for, and the same finding is a
+decision about what the assets **will be**, taken while it is still cheap.
+
+**The questions did not move.** Accessibility measured rather than asserted,
+branding against the instance's own declaration, every declared locale — the
+sections below are unchanged in substance and now apply to the ingested assets.
+
+**Theme choice is still an authoring judgement.** There is still no
+role-to-theme mapping ([`theme.ts`](../../schemas/theme.ts) records why), so
+nothing here checks a binding. What gets reviewed is the ingested art in its
+design context.
+
+## What this gives up — accepted, and written down so it stays accepted
+
+A post-build review answered *"what did this turn into?"* — how a crop reads at
+320px in Arabic over a photograph, once it is in the page. An ingestion review
+answers that only as far as the assets can be laid out in their design before
+the site exists. That gap is the cost of the ruling. It is recorded here so a
+later reader who notices it finds it was **priced and accepted**, not missed —
+and does not re-add a post-MVP call on their own initiative.
+
+## A person is in the loop, inside ingestion
+
+`R_Judge` is a human step: a person looks at the assets laid out at a web and a
+mobile width. Moving the review to ingestion does not remove that person, so
+**ingesting a theme source is attended at that step.** Ingesting anything else
+stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes
+non-theme documents past `ingest-theme.bpmn` entirely.
 
 ## Measure; do not assert
 
@@ -44,8 +88,10 @@ gets skipped. Two measured cases from this repository:
   wrong combinator put a backdrop at its intrinsic 1672px across the viewport,
   with the suite green, every gate green and every request returning 200.
 
-So a person looks at the rendered page. That is a step in the diagram, not an
-optional extra.
+So a person looks at the assets laid out in their design (`R_Judge`). That is a
+step in the diagram, not an optional extra — and those two measured cases are
+why it survived the move to ingestion rather than being dropped as "the manual
+bit".
 
 ## Branding is a question about the INSTANCE, not about taste
 
@@ -85,5 +131,13 @@ get fixed.
 
 Not the choice itself. Whether a sticky should be `engineer` or `library` is an
 authoring decision, and this review does not second-guess it; it asks whether
-what was chosen **renders legibly, consistently and in every declared
-language**.
+what was ingested **will render legibly, consistently and in every declared
+language** in the design it is for.
+
+## Both viewports, always
+
+Owner, 2026-09-23 (issue #1023): *"need both web and mobile layouts in usability reviews"*.
+
+- Every surface is inventoried and judged at a **web** width and at a **mobile** width.
+- A review done at one width is **incomplete**, not passed.
+- The surface's wireframe, in [`wireframe-design-review`](wireframe-design-review.md), states what each layout was meant to be, so the review compares the build against an intent rather than against memory.

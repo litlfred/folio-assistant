@@ -38,7 +38,7 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { unresolvedPaths } from "../check-tools.ts";
-import { tools } from "../../tools/index.js";
+import { tools } from "../../tools/discover.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = resolve(INSTANCE, "..");

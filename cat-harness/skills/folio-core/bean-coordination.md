@@ -192,6 +192,38 @@ An **unclaimed** bean is fair game for any session; a claimed one is not.
 Respect sibling claims. Agents create and set `in-progress`; they do not take
 over the work another session is mid-flight on.
 
+### Complete it in the PR's own last commit (bean `4d22`)
+
+**Mark the bean `completed` in the last commit of the PR that does its work.**
+Do not wait for the merge.
+
+The natural order loses it. The PR merges, the agent then commits the bean's
+completion to the branch, then re-branches from the new `main`
+(`git checkout -B <branch> origin/main`). That completion commit was never in
+any PR, so it is orphaned: the bean still reads open on `main`, and the next
+session's ready-list offers finished work. Measured twice on 2026-09-22
+(`ebvl`, `7ofc`), each caught only because somebody noticed.
+
+The completion cannot ride its own PR *after* the merge, because then there is
+no PR left to carry it. So it rides the PR *before*, as its last commit,
+asserting `completed` a few minutes before the merge makes it true. That is the
+lesser error: if the PR is abandoned, the bean reads done on a branch that never
+lands, and `main` never saw it. Practised on 2026-09-23 for eight beans in a
+row with no orphan.
+
+Two things that follow:
+
+- The `## Done when` items are ticked in that same commit, with the evidence,
+  so the bean on `main` shows *why* it is complete, not just that it is.
+- A bean whose Done-when is not yet all met **stays open** in that commit, with
+  a note saying what is left. Completing it to avoid an orphan would be the
+  opposite error.
+
+`bun run beans:landed` reports what slipped through: open, non-epic beans named
+in a merged PR's title on `main`, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.
+
 ## Closing a bean whose work has already landed (STRICT)
 
 The sentence above used to end *"they do not resolve another session's
@@ -346,6 +378,32 @@ repository in one four-hour window. The session API returned **not found** for
 all eight lookups by id, and its listing showed only the asking session. So
 both of this skill's central instructions — claim before you work, and watch
 the open PRs — assume a visibility that did not exist, and nothing said so.
+
+### RE-MEASURED 2026-09-21: the listing works now, the messaging still does not
+
+The paragraph above was half stale within a day, which is why it is corrected
+here rather than rewritten — a measurement carries its date, and the shape of
+the change is the finding.
+
+`list_sessions` returned **eleven** running sessions on this repository, each
+with its id, title, branch and a live task summary ("merging main (58 commits
+behind); resolving conflicts in config, graphs schema"). That is a great deal
+more than "only the asking session", and it is enough to see WHO overlaps you
+and HOW before you write anything.
+
+What still does not work is reaching them. `ListAgents` answers *"no other
+Claude session is running on this machine"* — every sibling is its own cloud
+container — and `SendMessage` to a session id is refused outright. So:
+
+| | 2026-09-20 | 2026-09-21 |
+|---|---|---|
+| listing siblings | only self | **eleven, with branch and task** |
+| looking one up by id | not found | (not retried) |
+| messaging one | — | **refused, not reachable** |
+
+**The durable conclusion below is unchanged**, and the re-measurement is why
+it is worth trusting: seeing a sibling is not the same as reaching one, and
+what you commit is still the only thing that arrives.
 
 > **A session is an ephemeral container, and nothing about it survives the
 > container except what it committed. The `Claude-Session:` trailer on a commit

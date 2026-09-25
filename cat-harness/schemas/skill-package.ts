@@ -33,6 +33,13 @@
  */
 
 import { z } from "zod";
+import {
+  RequirementFields,
+  RequirementLevelSchema,
+  RequirementStatementFields,
+  refineRequirement,
+  refineStatement,
+} from "./requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
@@ -57,11 +64,9 @@ import { NETWORK_REACHES } from "./cat-harness";
  */
 export const ACTOR_KINDS = ["person", "agent", "system", "external"] as const;
 export const ActorKindSchema = z.enum(ACTOR_KINDS);
-export const ConformanceSchema = z.enum(["SHALL", "SHOULD", "MAY", "SHALL NOT"]);
+/** The requirement level — the bootstrap base's, so a harness cannot drift from it. */
+export const ConformanceSchema = RequirementLevelSchema;
 export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallback"]);
-export const ScriptRuntimeSchema = z.enum(["bash", "python", "typescript", "bun"]);
-export const ScriptPhaseSchema = z.enum(["pre", "execute", "validate", "post"]);
-export const ValidatorScopeSchema = z.enum(["file", "block", "chapter", "project"]);
 /**
  * The lifecycle points a hook can bind to.
  *
@@ -85,7 +90,6 @@ export const HookEventSchema = z.enum([
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",
 ]);
-export const SatisfiedByKindSchema = z.enum(["skill", "capability", "requirement-statement"]);
 export const DependencyKindSchema = z.enum(["skill", "requirement"]);
 export const LifecycleStageSchema = z.enum([
   "plan", "author", "validate", "review", "test", "publish", "feedback", "retire",
@@ -103,13 +107,17 @@ export const CapabilityDetectionSchema = z.discriminatedUnion("method", [
 
 // ─── ActorDefinition ─────────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const ActorDefinitionSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   kind: ActorKindSchema,
   description: z.string(),
   // DEPRECATED. An actor does not inherit — a ROLE does, and the lattice that
-  // used to live here now lives in `skills/roles/roles.json`. Kept optional so
+  // used to live here now lives in `scenarios/roles.json`. Kept optional so
   // an unmigrated registry still validates; `kg:audit` reports any entry that
   // still carries it (`actor-is-not-a-role`).
   inherits: z.array(z.string()).optional().default([]),
@@ -123,11 +131,15 @@ export const ActorDefinitionSchema = z.object({
    * `schemas/actor-reach.ts` for how it composes with the deployment's.
    */
   reach: z.enum(NETWORK_REACHES).optional(),
-  meta: z.record(z.unknown()).optional(),
+  meta: z.record(z.string(), z.unknown()).optional(),
 });
 
 // ─── CapabilityDefinition ────────────────────────────────────────────────────
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const CapabilityDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -150,6 +162,11 @@ export const CapabilityDefinitionSchema = z.object({
    * the fallback never fires. `check:fallback-roles` reports that.
    */
   fallbackTo: z.string().min(1).optional(),
+  /**
+   * The requirement statements this capability discharges. See
+   * {@link RequirementStatementRefSchema}.
+   */
+  satisfies: z.array(z.lazy(() => RequirementStatementRefSchema)).optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────
@@ -180,20 +197,6 @@ export const SkillDependencySchema = z.object({
   conformance: ConformanceSchema,
 });
 
-export const SkillScriptSchema = z.object({
-  path: z.string(),
-  runtime: ScriptRuntimeSchema,
-  phase: ScriptPhaseSchema,
-  args: z.array(z.string()).optional(),
-});
-
-export const SkillValidatorSchema = z.object({
-  id: z.string(),
-  path: z.string(),
-  runtime: ScriptRuntimeSchema,
-  scope: ValidatorScopeSchema,
-});
-
 /** Mirrors `SkillSchemaRef` — a TS module + the type names a skill touches. */
 export const SkillSchemaRefSchema = z.object({
   module: z.string().min(1),
@@ -201,6 +204,10 @@ export const SkillSchemaRefSchema = z.object({
   access: z.enum(["read", "write", "read-write"]),
 });
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -215,7 +222,8 @@ export const SkillDefinitionSchema = z.object({
    * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
    * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
    * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
-   * consulted it: routes hardcode `hasRole(req, "collaborator")`. A field
+   * consulted it: routes hardcoded `hasRole(req, "collaborator")` (they name an
+   * ODRL action since issue #1207). A field
    * that reads as enforcement and enforces nothing is worse than an absent
    * one. Reinstating it means writing the consumer first, and deciding which
    * of the two vocabularies it speaks.
@@ -224,9 +232,11 @@ export const SkillDefinitionSchema = z.object({
   requiredCapabilities: z.array(SkillCapabilityRefSchema),
   dependsOn: z.array(SkillDependencySchema).optional(),
   allowedTools: z.array(z.string()).optional(),
-  scripts: z.array(SkillScriptSchema).optional(),
-  mcpServices: z.array(z.string()).optional(),
-  validators: z.array(SkillValidatorSchema).optional(),
+  // No `scripts`, `mcpServices` or `validators` (#1168, B3). Each named a
+  // mechanism FROM the skill, the general node pointing at its dependents:
+  // a new script meant editing the skill, and nothing read any of the three.
+  // A mechanism is a Tool that names the skill it `satisfies`
+  // (`schemas/tool.ts`); a Tool reachable only over MCP is refused there.
   routingPatterns: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
   package: z.string().optional(),
@@ -241,35 +251,48 @@ export const SkillDefinitionSchema = z.object({
   // evidence that anything is on the other end — this one was two years of
   // declaration with no destination (`folio-assistant-t2yg`).
   lifecycleStages: z.array(LifecycleStageSchema).optional(),
-  schemaRef: z.string().optional(),
+  // No `schemaRef` (#1168, B3b). It named a directory and was read only by a
+  // retired generator. A skill names its contracts in its front matter —
+  // `input:` and `output:`, a path into the instance or an https IRI — and
+  // `scripts/skill-contracts.ts` is the one reader.
 });
 
 // ─── Requirement ─────────────────────────────────────────────────────────────
 
-export const SatisfiedByRefSchema = z.object({
-  kind: SatisfiedByKindSchema,
-  ref: z.string(),
-});
+/**
+ * A pointer AT one requirement statement: `req:<requirement id>#<statement key>`.
+ *
+ * Held by what SATISFIES the statement — a skill in its front matter
+ * (`satisfies:`), a capability in its JSON — never by the statement (#1168,
+ * B3). A requirement is the general node: it is written once, and skills and
+ * capabilities come to discharge it later, so a statement listing its
+ * satisfiers had to be edited every time one was added. FHIR R5's
+ * `Requirements.statement.satisfiedBy` is the inverse of this relation and is
+ * derivable from it for a projection that needs it.
+ *
+ * @ref RequirementStatementSchema
+ */
+export const RequirementStatementRefSchema = z
+  .string()
+  .regex(/^req:[a-z0-9-]+#[a-z0-9-]+$/, "a requirement statement ref is req:<requirement>#<statement key>");
 
-export const RequirementStatementSchema = z.object({
-  key: z.string().min(1),
-  label: z.string(),
-  conformance: ConformanceSchema,
-  requirement: z.string(),
-  actors: z.array(z.string()).optional(),
-  satisfiedBy: z.array(SatisfiedByRefSchema).optional(),
-  dependsOn: z.array(z.string()).optional(),
-});
+/*
+ * BUILT ON THE BOOTSTRAP BASE (issue #1164, owner: "1 + 2"). The base in
+ * `bootstrap/schemas/requirement.schema.json` (Zod source: `cat-harness/schemas/requirement.ts`) is what every harness gets — the
+ * statement, its level, the functional and non-functional fields. Neither
+ * lists what satisfies a statement: that pointer is held by the satisfier
+ * (`satisfies:`, above). The base's refinements are re-applied, because a
+ * refined schema cannot be extended and the rules must not be lost.
+ */
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
+export const RequirementStatementSchema = RequirementStatementFields.superRefine(refineStatement);
 
-export const RequirementSchema = z.object({
-  id: z.string().min(1),
-  title: z.string(),
-  description: z.string(),
-  derivedFrom: z.array(z.string()).optional(),
-  actors: z.array(z.string()),
-  statements: z.array(RequirementStatementSchema),
-  tags: z.array(z.string()).optional(),
-});
+export const RequirementSchema = RequirementFields.extend({
+  statements: z.array(RequirementStatementSchema).min(1),
+}).superRefine(refineRequirement);
 
 // ─── Registry ────────────────────────────────────────────────────────────────
 
@@ -309,8 +332,8 @@ export const DockerRequirementsSchema = z.object({
   npmPackages: z.array(z.string()).optional(),
   setupCommands: z.array(z.string()).optional(),
   exposePorts: z.array(z.number()).optional(),
-  env: z.record(z.string()).optional(),
-  labels: z.record(z.string()).optional(),
+  env: z.record(z.string(), z.string()).optional(),
+  labels: z.record(z.string(), z.string()).optional(),
 });
 
 export const SkillPackageManifestSchema = z.object({
@@ -348,38 +371,26 @@ export const SkillRegistrySchema = z.object({
 export const RemoteSyncStrategySchema = z.enum(["shallow-clone", "sparse-checkout", "subtree"]);
 
 /**
- * How a remote package WOULD be brought in. **Declared intent; nothing performs
- * it.**
+ * How a remote package's skills are brought in — PERFORMED since 2026-09-24
+ * (issue #556, bean `wlqd`) by `scripts/sync-remote-skills.ts`
+ * (`bun run sync:remote-skills`).
  *
- * Measured 2026-09-19 (bean `wlqd`): `shallow-clone` appears only as a value in
- * {@link RemoteSyncStrategySchema}; `src/tools/skill-fetch.ts` and
- * `scripts/generate-registry.ts` contain no mention of `skills/remote-packages/`
- * at all; and the directory's only substantive reader,
- * `scripts/generate-docs.ts`, reads it for the Docker requirements this type's
- * own doc comment names. So `frequency` and `autoUpdate` are fields no code
- * consults.
+ * Until then this was declared intent that nothing performed: `shallow-clone`
+ * appeared only as a value in {@link RemoteSyncStrategySchema}, and both
+ * wrappers pinned `ref: "main"` with `autoUpdate: true`. The owner chose to
+ * implement it, **committed, pinned and read-only**:
  *
- * **Stronger since 2026-09-20**: that "only substantive reader" was itself
- * never invoked — no package.json entry and no workflow, in any commit since
- * the root commit — and is retired to `fsh-guts/scripts/` (bean
- * `folio-assistant-3w0i`). The directory now has no substantive reader at
- * all, which does not change the conclusion below; it removes the last
- * reason to soften it.
+ * - the sync copies each declared skill at the wrapper's `ref` into its own
+ *   package under the instance's skills directory, with a sha256 fixity record
+ *   per file, so `check:materialized-fixity` fails an edit in place;
+ * - a wrapper that declares `sync` must pin a full commit SHA and may not
+ *   `autoUpdate` — a skill body is a prompt an agent follows, so an unpinned
+ *   one is an unreviewed prompt. {@link RemotePackageRefSchema} refuses both;
+ * - `bun run check:remote-skills` fails, offline, when a declared skill is
+ *   not materialized at its wrapper's pin.
  *
- * It is documented rather than deleted because the intent is real information
- * about two real external dependencies — a maintainer chose `shallow-clone` over
- * `subtree` — and losing that costs the next reader the same decision. What was
- * costly was stating it as fact: the generated docs page said "Agents can sync
- * and update these automatically based on the sync configuration", which a reader
- * of the published site cannot check against the code.
- *
- * **If you implement it, two things are decisions and not details.** Both
- * wrappers currently pin `ref: "main"` with `autoUpdate: true`, which would
- * auto-ingest whatever the upstream pushes — prefer a pinned commit. And
- * `manifest-skill-exists` deliberately stops treating a remote declaration as
- * resolution (bean `nup0`); that allowance should come back, and
- * `scripts/tests/manifest-remote-resolution.test.ts` records the argument for
- * closing it so it is revisited rather than rediscovered.
+ * The synced skills resolve as LOCAL skills, so `manifest-skill-exists` needs
+ * no remote allowance (bean `nup0`) — it sees them as it sees any other.
  */
 export const RemoteSyncConfigSchema = z.object({
   strategy: RemoteSyncStrategySchema,
@@ -407,6 +418,51 @@ export const RemotePackageRefSchema = z.object({
     skills: z.array(z.string()),
     lifecycleStages: z.array(LifecycleStageSchema).optional(),
   }),
+}).superRefine((w, ctx) => {
+  // PINNED, OR NOT SYNCED (issue #556). A synced skill is a prompt an agent
+  // follows, so it moves only by a reviewed change to this pin.
+  if (!w.sync) return;
+  if (!/^[0-9a-f]{40}$/.test(w.ref)) {
+    ctx.addIssue({ code: "custom", path: ["ref"],
+      message: "a wrapper that syncs pins a full 40-character commit SHA, never a branch or tag" });
+  }
+  if (w.sync.autoUpdate) {
+    ctx.addIssue({ code: "custom", path: ["sync", "autoUpdate"],
+      message: "a pinned sync never updates itself; move the pin in a reviewed change instead" });
+  }
+});
+
+/**
+ * The record `sync-remote-skills.ts` writes beside a synced skill
+ * (`materialization.json`, tag `folio-remote-skill/v1`, issue #556).
+ *
+ * Each file's `materialization` is the shape `check:materialized-fixity`
+ * walks. It is restated narrowly here rather than imported, because the full
+ * `MaterializationSchema` belongs to a layer above this one; this is the
+ * subset a synced skill always carries — materialized, pinned, with sha256.
+ */
+export const RemoteSkillRecordSchema = z.object({
+  $schema: z.literal("folio-remote-skill/v1"),
+  skill: z.string().min(1),
+  package: z.string().min(1),
+  repo: z.string().url(),
+  ref: z.string().regex(/^[0-9a-f]{40}$/, "a synced skill is pinned to a full commit SHA"),
+  wrapper: z.string().min(1),
+  note: z.string().min(1),
+  files: z.array(z.object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    materialization: z.object({
+      state: z.literal("materialized"),
+      provenance: z.object({ upstream: z.string().url() }),
+      localPath: z.string().min(1),
+      bytes: z.number().int().nonnegative(),
+      purpose: z.literal("archival"),
+      fixity: z.object({ algorithm: z.literal("sha256"), digest: z.string().regex(/^[0-9a-f]{64}$/) }),
+      materializedAt: z.string().min(1),
+      upstreamVersion: z.string().regex(/^[0-9a-f]{40}$/),
+    }),
+  })).min(1),
 });
 
 // ─── Inferred types ──────────────────────────────────────────────────────────
@@ -419,20 +475,17 @@ export const RemotePackageRefSchema = z.object({
 /** Actor classification: human user or automated system. */
 export type ActorKind = z.infer<typeof ActorKindSchema>;
 
-/** FHIR R5 conformance verbs for requirement statements. */
+/** How strongly a requirement statement binds. */
 export type Conformance = z.infer<typeof ConformanceSchema>;
 
 /** Behavior when a required capability is absent at runtime. */
 export type DegradationStrategy = z.infer<typeof DegradationStrategySchema>;
 
 /** Script execution runtimes. */
-export type ScriptRuntime = z.infer<typeof ScriptRuntimeSchema>;
 
 /** Lifecycle phase in which a script runs. */
-export type ScriptPhase = z.infer<typeof ScriptPhaseSchema>;
 
 /** Scope of a validator's operation. */
-export type ValidatorScope = z.infer<typeof ValidatorScopeSchema>;
 
 /** Hook events that trigger session lifecycle actions. */
 export type HookEvent = z.infer<typeof HookEventSchema>;
@@ -441,7 +494,6 @@ export type HookEvent = z.infer<typeof HookEventSchema>;
 export type IdentitySource = z.infer<typeof IdentitySourceSchema>;
 
 /** What satisfies a requirement statement. */
-export type SatisfiedByKind = z.infer<typeof SatisfiedByKindSchema>;
 
 /** Dependency target kind. */
 export type DependencyKind = z.infer<typeof DependencyKindSchema>;
@@ -480,9 +532,7 @@ export type SkillCapabilityRef = z.infer<typeof SkillCapabilityRefSchema>;
 
 export type SkillDependency = z.infer<typeof SkillDependencySchema>;
 
-export type SkillScript = z.infer<typeof SkillScriptSchema>;
 
-export type SkillValidator = z.infer<typeof SkillValidatorSchema>;
 
 /**
  * The core type. A skill has typed metadata (who can invoke it, what it needs,
@@ -490,14 +540,11 @@ export type SkillValidator = z.infer<typeof SkillValidatorSchema>;
  */
 export type SkillDefinition = z.infer<typeof SkillDefinitionSchema>;
 
-export type SatisfiedByRef = z.infer<typeof SatisfiedByRefSchema>;
+export type RequirementStatementRef = z.infer<typeof RequirementStatementRefSchema>;
 
 export type RequirementStatement = z.infer<typeof RequirementStatementSchema>;
 
-/**
- * Models workflow rules agents must follow.
- * Maps to FHIR R5 `Requirements` resource.
- */
+/** Models workflow rules agents must follow — the bootstrap `Requirement`, narrowed. */
 export type Requirement = z.infer<typeof RequirementSchema>;
 
 export type SkillPackageRef = z.infer<typeof SkillPackageRefSchema>;

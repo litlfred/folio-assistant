@@ -28,8 +28,8 @@ how to read it and what to do before adding to it.
 | obligation | declared as | the question it answers |
 |---|---|---|
 | **visualiser** | `coverage.visualiser` on the directory entry | can a person LOOK at this? |
-| **docs** | `coverage.docs` | can a person READ ABOUT this? |
-| **skill** | `coverage.skill` | is an agent handed something that GOVERNS this? |
+| **docs** | by the PAGE: `documents:` in its front matter (or its manifest, or `<meta name="documents">` in generated HTML) names the kind or `<instance>/<id>` (#1168 B7c) | can a person READ ABOUT this? |
+| **skill** | by the SKILL: `graph-kinds:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
 | **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
 | **README** | an `instance-readme` asset, inside the instance | can a reader ENTER this instance at all? |
 
@@ -96,7 +96,7 @@ pages, so the pages ARE the view and a separate viewer would be a second
 rendering of the same thing.
 
 **Bootstrap is exempt by INSTANCE, not by kind.** `hfkl` carries the ruling
-that `cat-bootstrap` has no visualiser *"but it must have its json/jsonld…
+that `bootstrap` has no visualiser *"but it must have its json/jsonld…
 that is its existence"*. Keyed on the instance name, so every other instance
 declaring the same kind keeps the obligation — and it is a **second criterion,
 not a hole**: an axis that dropped bootstrap by kind would stop checking the
@@ -165,7 +165,7 @@ could waive it could declare a directory into the knowledge graph and then make
 its contents unreachable — which is the `dh4f` defect with a signature on it, a
 consumer scanning nothing and reporting a clean run over it.
 
-**`hfkl` is the proof rather than the exception.** `cat-bootstrap` is excused a
+**`hfkl` is the proof rather than the exception.** `bootstrap` is excused a
 visualiser — *"it is exception to harness/layer not having visualtion/workflow
 visualizer. but it must have its json/jsonld… that is its existence."* The
 thing it is excused INTO is this obligation. A floor that the one exempt case

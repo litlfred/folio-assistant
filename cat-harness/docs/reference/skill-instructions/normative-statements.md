@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-document-adapter/normative-statements.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-document-adapter/normative-statements.md) — do not edit here. Typed contract: [schema reference](../skills/normative-statements.html).
+> Generated from [`cat-harness/skills/folio-document-adapter/normative-statements.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/normative-statements.md) — do not edit here. Typed contract: [schema reference](../skills/normative-statements.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-document-adapter/normative-statements.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-document-adapter/normative-statements.md){: .fa-edit-source }
 
 {% raw %}
 # normative-statements
@@ -90,3 +90,10 @@ If you are choosing between waiting for that kind and writing the folio: write
 the folio. A `prose` block converts to a `recommendation` block by changing
 one builder call.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 4 · Author blocks |
+

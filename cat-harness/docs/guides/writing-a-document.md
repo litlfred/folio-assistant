@@ -33,7 +33,7 @@ with an LLM, published without a TeX installation.
 ## What a document folio is
 {: #what-a-document-folio-is data-fa-label="sec:guides-writing-a-document-what-a-document-folio-is" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/authoring-a-document.bpmn){: .fa-node-edit title="Edit skills/workflows/authoring-a-document.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="what-a-document-folio-is.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="what-a-document-folio-is.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/authoring-a-document.bpmn){: .fa-node-edit title="Edit processes/authoring-a-document.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="what-a-document-folio-is.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="what-a-document-folio-is.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/guides-writing-a-document/what-a-document-folio-is.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 Everything a paper folio is, minus the formal layer. The same tree of chapters
 and sections over typed **blocks**, the same editorial `uses[]` graph, the same
@@ -53,7 +53,7 @@ them. No Lean. No LaTeX.
        alt="BPMN swimlane diagram of document authoring, plan to published.">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn)
 {: .bpmn-source }
 
 ---
@@ -82,7 +82,7 @@ Or, if your agent already has a folio-assistant server connected, ask it:
 > "Cold Chain Guidance", author A. Author*
 
 Either way you get `content/`, `uploads/`, `library/`, the manifests for one
-document with one chapter and one block, `harness.config.json`, the builder shim,
+document with one chapter and one block, `<name>.config.json`, the builder shim,
 `AGENTS.md` with `CLAUDE.md` / `GEMINI.md` stubs, `.mcp.json`, and the beans
 work plan. See the
 [README quickstart](https://github.com/litlfred/folio-assistant#start-a-new-folio)
@@ -282,7 +282,7 @@ working.
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/guides-writing-a-document/moving-between-content-types.md){: .fa-node-edit title="Edit content/docs/guides-writing-a-document/moving-between-content-types.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="moving-between-content-types.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/guides-writing-a-document/moving-between-content-types.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/guides-writing-a-document/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-`harness.config.json`'s `contentType` is the switch.
+`<name>.config.json`'s `contentType` is the switch.
 
 **document → paper** is a one-line change. You are adding toolchains, not
 removing content.
@@ -305,4 +305,4 @@ lists exactly what is in the way.
 | Skill package | `skills/folio-document-adapter/package-manifest.json` |
 | Adapter | `adapters/document/` |
 | Vocabulary | `schemas/block-kinds.ts` — `DOCUMENT_BLOCK_KINDS`, `MATH_BLOCK_KINDS` |
-| Process | [`authoring-a-document.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/authoring-a-document.bpmn) |
+| Process | [`authoring-a-document.bpmn`](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) |

@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -14,7 +14,7 @@ import { registerFolioGraphKind } from "./folio-graph-kind";
 import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
-import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, instanceRootsIn, toJsonLd, type ResolvedDirectory } from "./cat-harness";
+import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, toJsonLd, type ResolvedDirectory } from "./cat-harness";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
@@ -31,19 +31,19 @@ beforeAll(() => {
   writeDeclaration(HARNESS, JSON.stringify({
       name: "agentic-harness",
       directories: [
-        { id: "tools", path: "tools/", dependents: "reproduce", graphs: ["tools"] },
-        { id: "kg", path: "kg/", dependents: "reproduce", graphs: ["kg"] },
-        { id: "schemas", path: "schemas/", dependents: "reproduce", graphs: ["schemas"] },
+        { id: "tools", path: "tools/", dependents: "reproduce", graphKinds: ["tools"] },
+        { id: "kg", path: "kg/", dependents: "reproduce", graphKinds: ["kg"] },
+        { id: "schemas", path: "schemas/", dependents: "reproduce", graphKinds: ["schemas"] },
       ],
     }));
 
   // core declares ONLY folio/ — the other three are inherited.
   mkdirSync(CORE, { recursive: true });
-  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphs: ["folio"] }] }));
+  writeDeclaration(CORE, JSON.stringify({ name: "folio-assist-core", directories: [{ id: "folio", path: "folio/", dependents: "reproduce", graphKinds: ["folio"] }] }));
 
   // An instance that moves its knowledge graph somewhere else.
   mkdirSync(RELOCATED, { recursive: true });
-  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphs: ["kg"] }] }));
+  writeDeclaration(RELOCATED, JSON.stringify({ name: "relocated", directories: [{ id: "kg", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["kg"] }] }));
 
   mkdirSync(BROKEN, { recursive: true });
   writeDeclaration(BROKEN, "{ not json", "broken");
@@ -82,9 +82,9 @@ describe("reading a declaration", () => {
     writeDeclaration(bad, JSON.stringify({
         name: "x",
         directories: [
-          { id: "uploads", path: "uploads/", dependents: "reproduce", graphs: ["uploads"] },
-          { id: "methodology-raci", path: "methodologies/raci/", graphs: ["cat-harness"] },
-          { id: "methodology-crdm", path: "methodologies/crdm/", graphs: ["cat-harness"] },
+          { id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] },
+          { id: "methodology-raci", path: "methodologies/raci/", graphKinds: ["cat-harness"] },
+          { id: "methodology-crdm", path: "methodologies/crdm/", graphKinds: ["cat-harness"] },
         ],
       }));
     let err: unknown;
@@ -112,7 +112,7 @@ describe("reading a declaration", () => {
   it("rejects an unknown graph kind rather than accepting it", () => {
     const bad = join(TMP, "bad-kind");
     mkdirSync(bad, { recursive: true });
-    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphs: ["wishful"] }] }));
+    writeDeclaration(bad, JSON.stringify({ name: "x", directories: [{ id: "a", path: "a/", dependents: "reproduce", graphKinds: ["wishful"] }] }));
     // The message must name the offending kind AND what is known, so the
     // author can see whether they typo'd or forgot to register a dependency's
     // contribution — those need different fixes.
@@ -132,7 +132,7 @@ describe("reading a declaration", () => {
     mkdirSync(ld, { recursive: true });
     writeDeclaration(ld, JSON.stringify(toJsonLd(readDeclaration(HARNESS)!)));
     const back = readDeclaration(ld)!;
-    // The fixture declares `id: "kg"` with `graphs: ["kg"]`, the pre-rename
+    // The fixture declares `id: "kg"` with `graphKinds: ["kg"]`, the pre-rename
     // spelling.
     //
     // **The id survives and the kind CANONICALISES**, and the asymmetry is
@@ -140,14 +140,14 @@ describe("reading a declaration", () => {
     // be stable across a relocation — so a projection must hand it back
     // unchanged. A graph KIND is projected as its type IRI, and the IRI is
     // the identity: `kg` and `cat-harness` are two spellings of
-    // `fa:KnowledgeGraph`, of which only one is current. Reading the
+    // `cat:KGraph`, of which only one is current. Reading the
     // projection back resolves the IRI to the current name.
     //
     // That makes project-and-read-back a MIGRATION PATH for a downstream
     // declaration written against the old vocabulary, rather than a way to
     // lose information.
     expect(back.directories.map((d) => d.id).sort()).toEqual(["kg", "schemas", "tools"]);
-    expect(back.directories.find((d) => d.id === "kg")!.graphs).toEqual(["cat-harness"]);
+    expect(back.directories.find((d) => d.id === "kg")!.graphKinds).toEqual(["cat-harness"]);
   });
 });
 
@@ -187,6 +187,19 @@ describe("inheritance — the Phase 0.3 gate", () => {
     expect(kg).toHaveLength(1);
     expect(kg[0]!.path).toBe("graph/knowledge/");
     expect(kg[0]!.declaredBy).toBe("relocated");
+  });
+
+  it("a renamed id still overrides the entry it meant (cat-harness → skills, bean iwtn)", () => {
+    const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
+    try {
+      mkdirSync(join(root, "old-skills"));
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", dependents: "skip", graphKinds: ["skills"] }] });
+      const dirs = resolveDirectories([{ name: "older", root, own: true }]);
+      expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
+      expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
   it("an override keeps the inherited position rather than reshuffling the scan order", () => {
@@ -409,7 +422,7 @@ describe("materialiseDirectories", () => {
   ): ResolvedDirectory => ({
     id,
     path,
-    graphs: ["kg"],
+    graphKinds: ["kg"],
     // The fixture default. A case that is ABOUT `dependents` overrides it
     // through `extra`; every other case should not have to mention it.
     dependents: "reproduce",
@@ -571,7 +584,7 @@ describe("materialiseDirectories", () => {
     // call their entries.
     const dirs = resolveDirectories([{ name: "folio-assistant", root: INSTANCE_ROOT, own: true }]);
     expect(dirs.map((d) => d.id)).toContain("uploads");
-    const libraries = dirs.filter((d) => d.graphs.includes("library"));
+    const libraries = dirs.filter((d) => d.graphKinds.includes("library"));
     expect(libraries.length, "no library graph reachable from the platform root").toBeGreaterThan(0);
 
     // SEVERAL, and that is the assertion. The platform declares `library` and
@@ -590,14 +603,26 @@ describe("materialiseDirectories", () => {
     const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
     expect(libraries.length).toBeGreaterThan(1);
-    // The platform's own library EXISTS and is EMPTY. It was absent for a few
-    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
-    // reports a declared-but-missing directory, so re-declaring it required
-    // re-creating it. Emptiness is the assertion — existence is what the
-    // declaration demands, and holding nothing is what the platform rule does.
+    // The platform's own library EXISTS. It was absent for a few hours between
+    // `frs5` and the owner's 2026-09-20 ruling; `harness:dirs:check` reports a
+    // declared-but-missing directory, so re-declaring it required re-creating
+    // it.
+    //
+    // EMPTINESS WAS ALSO ASSERTED HERE UNTIL 2026-09-22, and is not any more.
+    // The owner's ruling that day — "they should be under <stub>/library and
+    // appear in the library visualizer for the harness. dont bury sub-graph
+    // assets" — puts the sources the harness's OWN methodologies cite in this
+    // directory, so an emptiness assertion would forbid what was asked for.
+    //
+    // The rule did not go away, it MOVED, and it moved rather than being
+    // copied: `folio-assistant-core/schemas/library-ref.test.ts` now asserts
+    // that every entry here is cited by a methodology node, which still fails
+    // the moment folio content appears and names the offending entry when it
+    // does. Restating it here would be the one-fact-in-two-places drift this
+    // schema's own comments keep paying for — and the weaker of the two copies
+    // would be this one.
     const own = libraries.find((d) => d.id === "library")!.absPath;
     expect(existsSync(own)).toBe(true);
-    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
@@ -637,10 +662,10 @@ describe("the `kg` → `cat-harness` rename keeps old declarations working", () 
     // instance's `harness.json` looked like before the rename.
     const old = join(TMP, "old-vocabulary");
     mkdirSync(join(old, "skills"), { recursive: true });
-    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphs: ["kg"] }] }));
+    writeDeclaration(old, JSON.stringify({ name: "downstream", directories: [{ id: "kg", path: "skills/", dependents: "reproduce", graphKinds: ["kg"] }] }));
     const d = readDeclaration(old);
     expect(d).toBeDefined();
-    expect(d!.directories[0]!.graphs).toEqual(["kg"]);
+    expect(d!.directories[0]!.graphKinds).toEqual(["kg"]);
   });
 });
 
@@ -661,11 +686,11 @@ describe("default directories — inherit the convention, declare only the devia
     writeDeclaration(inst, JSON.stringify({ name: "minimal" }));
 
     const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
-    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "skills", "tools"]);
     // `(default)` rather than the instance's name: a consumer can tell an
     // inherited convention from something this instance chose.
     expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("skills/");
   });
 
   it("a default whose directory is ABSENT is not seeded", () => {
@@ -689,11 +714,11 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphs: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
-    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "skills")!.declaredBy).toBe("relocated");
     // ...and the defaults it did NOT override are still there.
     expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
   });
@@ -713,7 +738,7 @@ describe("default directories — inherit the convention, declare only the devia
     // refuse its own defaults.
     const bare = new GraphKindRegistry();
     for (const d of DEFAULT_DIRECTORIES) {
-      for (const g of d.graphs) expect(bare.has(g)).toBe(true);
+      for (const g of d.graphKinds) expect(bare.has(g)).toBe(true);
     }
   });
 });
@@ -736,7 +761,7 @@ describe("the scope trap", () => {
     try {
       // The content is at the REPOSITORY root; the entry omits `scope`.
       const dirs = [
-        { id: "shared", path: "shared/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "shared", path: "shared/", dependents: "reproduce", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       expect(() => materialiseDirectories(dirs, instance)).toThrow(/scope/);
       // ...and it did not create the twin on the way to throwing.
@@ -754,7 +779,7 @@ describe("the scope trap", () => {
     mkdirSync(instance, { recursive: true });
     try {
       const dirs = [
-        { id: "own", path: "own/", dependents: "reproduce", graphs: ["beans"], declaredBy: "(t)", absPath: "", own: true },
+        { id: "own", path: "own/", dependents: "reproduce", graphKinds: ["beans"], declaredBy: "(t)", absPath: "", own: true },
       ] as unknown as Parameters<typeof materialiseDirectories>[0];
       const out = materialiseDirectories(dirs, instance);
       expect(out[0]?.created).toBe(true);
@@ -792,8 +817,8 @@ describe("directoryForGraph refuses an ambiguous kind rather than picking one", 
     writeDeclaration(root, JSON.stringify({
         name: "amb",
         directories: [
-          { id: "first", path: "a/", dependents: "reproduce", graphs: ["schemas", "cat-harness"] },
-          { id: "second", path: "b/", dependents: "reproduce", graphs: ["cat-harness"] },
+          { id: "first", path: "a/", dependents: "reproduce", graphKinds: ["schemas", "cat-harness"] },
+          { id: "second", path: "b/", dependents: "reproduce", graphKinds: ["cat-harness"] },
         ],
       }));
     return root;
@@ -890,12 +915,12 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       join(dir, fileName),
       JSON.stringify({
         name: "n",
-        directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphs: ["bean-defs"] }],
+        directories: [{ id: "defs", path: "defs", dependents: "reproduce", graphKinds: ["bean-defs"] }],
       }),
     );
     writeDeclaration(root, JSON.stringify({
         name: "n",
-        directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphs: ["beans"] }],
+        directories: [{ id: "beans", path: `${dirPath}/`, dependents: "reproduce", graphKinds: ["beans"] }],
       }));
     return root;
   }
@@ -932,9 +957,9 @@ describe("a nested declaration is named by its KIND, not by its directory", () =
       mkdirSync(join(root, "qa"), { recursive: true });
       writeFileSync(
         join(root, "qa", "qa.json"),
-        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphs: ["health"] }] }),
+        JSON.stringify({ name: "n", directories: [{ id: "x", path: "x", dependents: "reproduce", graphKinds: ["health"] }] }),
       );
-      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphs: ["qa"] }] }));
+      writeDeclaration(root, JSON.stringify({ name: "n", directories: [{ id: "qa", path: "qa/", dependents: "reproduce", graphKinds: ["qa"] }] }));
       const decl = readDeclaration(root)!;
       expect([...declaredKinds(root, decl)].sort()).toEqual(["health", "qa"]);
     } finally {
@@ -1021,24 +1046,56 @@ describe("instanceRootsIn — discovered, never listed", () => {
     expect(found).toEqual([
       ".",
       "agent-skills",
-      "cat-bootstrap",
-      "cat-bootstrap-tools",
+      "bootstrap",
       "cat-harness",
-      "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
       // the swap is the visible half of the rename.
+      // Added 2026-09-22 with the owner's stack ruling
+      // (`core->fhir-harness->smart-base->siblings{smart-l1, smart-dak,
+      // smart-ig}`, issue #963). It is the BASE the note above is about: the
+      // bare FHIR IG pipeline, with no WHO, DAK or SMART assumption, which is
+      // what `nsbb` had been asking for since 2026-09-21. It sorts here rather
+      // than beside the `smart-*` entries because it is deliberately NOT one
+      // of them -- the WHO package may reference this layer and this layer may
+      // never reference the WHO package.
+      "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "kg-navigation",
       "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
-      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
-      // that is correct — it declares no `harness.json`, so it is a directory
-      // rather than an instance.
+      // between `large-datasets` and `who-iris`. A directory with no
+      // `harness.json` is not an instance and is correctly absent — `smart-kg/`
+      // was the example until it was removed (bean `wg7r`).
+      // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
+      // the owner has since ruled that a per-IG harness should not exist at all
+      // (bean nsbb), so this entry and `smart-trust` below are both expected to
+      // collapse into a `smart-base` instance. It is listed because it EXISTS
+      // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877). This is the `smart-base` instance that
+      // `nsbb` called for, and its arrival is the FIRST half of what the note
+      // above predicted: the per-IG harnesses are expected to collapse into it.
+      // They have NOT collapsed yet and both are still listed, because this
+      // assertion is about what EXISTS today and nothing else. It holds the
+      // ingested WHO digital-health corpus, the DIIG methodology read out of
+      // it, and the voice derived from it -- KG assets, not the IG pipeline,
+      // which stays `nsbb`'s question.
+      "smart-base",
+      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
+      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
+      // smart-dak, smart-ig}`. They were named in the ruling and in
+      // `smart-stack-layering` for a whole PR while no directory declared any
+      // of them, so the stack existed in prose and nowhere a consumer could
+      // read it. Each declares NO directories, deliberately: that is the
+      // `folio-assistant-core` precedent, because a declared-but-absent
+      // directory is the `dh4f` defect.
+      "smart-dak",
+      "smart-ig",
+      "smart-immunizations",
+      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",
@@ -1052,10 +1109,54 @@ describe("instanceRootsIn — discovered, never listed", () => {
   });
 });
 
+describe("`graphKinds` was `graphs` until 2026-09-21, and the old key still reads", () => {
+  // WHY AN ALIAS RATHER THAN A SWEEP. Every in-tree declaration was migrated by
+  // the commit that renamed the field, so none of this fires here. A DOWNSTREAM
+  // folio's declaration was not, and `readDeclaration` throws on a
+  // present-but-unreadable declaration rather than falling back — so without the
+  // alias an unmigrated folio stops resolving its own directories on upgrade.
+  // Same failure `GRAPH_KIND_ALIASES` prevents one layer down, for the same
+  // kind of rename.
+  const base = { id: "voices", path: "voices/", dependents: "reproduce" } as const;
+
+  for (const [name, schema] of [
+    ["GraphNodeDirectorySchema", GraphNodeDirectorySchema],
+    ["ContentDirectorySchema", ContentDirectorySchema],
+  ] as const) {
+    it(`${name} reads a legacy \`graphs\` key as \`graphKinds\``, () => {
+      const r = schema.safeParse({ ...base, graphs: ["voices"] });
+      expect(r.success).toBe(true);
+      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+    });
+
+    it(`${name} takes the canonical key unchanged`, () => {
+      const r = schema.safeParse({ ...base, graphKinds: ["voices"] });
+      expect(r.success).toBe(true);
+      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+    });
+
+    it(`${name} lets \`graphKinds\` WIN when a declaration carries both`, () => {
+      // Deliberately not a merge. Two spellings that disagree is the one case
+      // where guessing which is current would be worse than either answer, so
+      // the canonical key is taken and the legacy one ignored.
+      const r = schema.safeParse({ ...base, graphs: ["stale"], graphKinds: ["voices"] });
+      expect(r.success).toBe(true);
+      if (r.success) expect((r.data as { graphKinds: string[] }).graphKinds).toEqual(["voices"]);
+    });
+  }
+
+  it("still refuses an entry carrying NEITHER key", () => {
+    // The alias must not turn a missing field into an empty one: a directory
+    // that names no kind is a declaration with nothing to resolve, and it fails
+    // here rather than scanning as a clean run over nothing (bean `dh4f`).
+    expect(GraphNodeDirectorySchema.safeParse(base).success).toBe(false);
+  });
+});
+
 describe("a directory declares the theme it renders on (owner, 2026-09-20)", () => {
   it("is optional — absent means the instance's own theme", () => {
     const r = ContentDirectorySchema.safeParse({
-      id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"],
+      id: "x", path: "x/", dependents: "skip", graphKinds: ["cat-harness"],
     });
     expect(r.success).toBe(true);
     if (r.success) expect(r.data.theme).toBeUndefined();
@@ -1064,7 +1165,7 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
   it("refuses an empty theme — absent and blank are different claims", () => {
     expect(
       ContentDirectorySchema.safeParse({
-        id: "x", path: "x/", dependents: "skip", graphs: ["cat-harness"], theme: "",
+        id: "x", path: "x/", dependents: "skip", graphKinds: ["cat-harness"], theme: "",
       }).success,
     ).toBe(false);
   });
@@ -1077,8 +1178,30 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const repo = resolve(import.meta.dir, "..", "..");
     const decl = readDeclaration(join(repo, "cat-harness"));
     const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    // TWO, not four, since 2026-09-22. `methodology-crdm` and
+    // `methodology-raci` were dropped when the owner's "dont bury sub-graph
+    // assets" moved their skills into `skills/` — a package subdirectory of
+    // the already declared `skills/` graph needs no entry of its own, and a
+    // second entry would declare one directory twice.
+    //
+    // The theme did not move with them, deliberately: `theme` is a property of
+    // a DIRECTORY in the declaration, and those two directories no longer
+    // exist as declared subjects. What remains themed is the graph that holds
+    // the methodology nodes — which is the right
+    // grain anyway, since `analyst` describes the methodologies rather than
+    // the skills that apply them.
+    //
+    // TWO since 2026-09-24, when `smart-kg-methodologies` went with GRADE
+    // becoming a skill (bean `wg7r`). `folio-assistant-core-methodologies`
+    // joined 2026-09-23 when core got a methodologies graph of its own
+    // (`doc-researcher`), and it takes `analyst` for the same reason
+    // `methodologies` does: the subject is a
+    // METHOD, and the theme describes methods rather than the layer that holds
+    // them. A second theme for core's copy would say the two graphs render
+    // differently, which nobody decided and which the pages do not do.
     expect(themed.map((d) => d.id).sort()).toEqual([
-      "methodologies", "methodology-crdm", "methodology-raci", "smart-kg-methodologies",
+      "folio-assistant-core-methodologies",
+      "methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");

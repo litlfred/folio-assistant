@@ -89,6 +89,42 @@ function sourceFiles(): string[] {
   return repoFilesWithExt(ROOT, TREES, [".ts", ".mjs"]);
 }
 
+/**
+ * Source with its comments blanked, line numbering preserved.
+ *
+ * ## Why this is a function rather than two `.replace` calls
+ *
+ * It WAS two: `line.replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "")`,
+ * applied per line. That handles `//` and a `/* … *` + `/` opened and closed on
+ * one line, and **misses a `/** … *` + `/` block entirely** — every
+ * continuation line of a JSDoc comment reached the scanner as code.
+ *
+ * So the guard failed on documentation that explained the guard. Measured
+ * 2026-09-22: a test comment reading *"it was `join(REPO, "cat-harness",
+ * "docs")`, and `site-dir-single-answer` refused it"* was reported as a
+ * violation. That is precisely the case the original comment said stripping
+ * existed to prevent — the intent was right and the implementation did not
+ * reach it.
+ *
+ * Worth fixing rather than rewording the comment, because the next person to
+ * document a path decision hits it too, and the obvious escape is to delete
+ * the explanation instead of the literal.
+ *
+ * Blanking rather than deleting, so `${rel}:${i + 1}` still names the real
+ * line. A dropped line would shift every number after it, and a guard that
+ * reports the wrong line is worse than one that misses.
+ *
+ * NOT a full tokenizer: a `/*` inside a string literal blanks from there to
+ * the next `*` + `/`. That direction is safe — it can only HIDE a violation,
+ * never invent one — and a scanner elaborate enough to parse strings is a
+ * scanner with its own bugs. The narrow miss is preferred to the broad one.
+ */
+function stripComments(text: string): string {
+  return text
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/\/\/[^\n]*/g, (m) => " ".repeat(m.length));
+}
+
 describe("the site root is one answer, not a literal", () => {
   test("siteDir composes docs/<stub> and siteDirFor reads this instance's", () => {
     expect(siteDir({ name: "x", stub: "y" })).toBe("docs");
@@ -109,15 +145,17 @@ describe("the site root is one answer, not a literal", () => {
     const offenders: string[] = [];
     for (const rel of sourceFiles()) {
       const text = readFileSync(join(ROOT, rel), "utf-8");
-      text.split("\n").forEach((line, i) => {
-        // Strip comments first: the reasoning around this rule necessarily
-        // names the old path, and a guard that fails on its own rationale is
-        // one the next person deletes.
-        const code = line.replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "");
-        if (!LITERAL.test(code)) return;
-        if (/content["'`]?\s*,\s*["'`]docs|content\/docs/.test(code)) return;
-        offenders.push(`${rel}:${i + 1}: ${line.trim()}`);
-      });
+      // Comments are stripped BEFORE the per-line scan, and the reason is
+      // stated on `stripComments`: the rationale for this rule necessarily
+      // names the old path, and a guard that fails on its own explanation is
+      // one the next person deletes.
+      stripComments(text)
+        .split("\n")
+        .forEach((code, i) => {
+          if (!LITERAL.test(code)) return;
+          if (/content["'`]?\s*,\s*["'`]docs|content\/docs/.test(code)) return;
+          offenders.push(`${rel}:${i + 1}: ${text.split("\n")[i]!.trim()}`);
+        });
     }
     expect(offenders).toEqual([]);
   });

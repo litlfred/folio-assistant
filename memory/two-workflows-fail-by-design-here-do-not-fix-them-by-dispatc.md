@@ -17,8 +17,8 @@ which is why GitHub ran them on `push` despite both being
 report only reads the default branch, so nothing will ever run them here
 again. Bean `lq7e`.
 
-Both would fail if you *did* dispatch them, because the platform carries no
-folio: `qa-sweep` preflights on `content/package.json` and `witness-refresh`
-needs `folio-assistant/computations/`.
+The platform carries no folio: `witness-refresh` needs `computations/`, and
+`qa-sweep` is no longer a workflow here — since bean `52dz` it is a
+`folio_init` template (`cat-harness/templates/`), so its red runs predate that.
 
 Without rule 3 these two would be red forever. That is what rule 3 is for.

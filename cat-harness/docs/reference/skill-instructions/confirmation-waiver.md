@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/confirmation-waiver.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/confirmation-waiver.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/confirmation-waiver.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/confirmation-waiver.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/confirmation-waiver.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/confirmation-waiver.md){: .fa-edit-source }
 
 {% raw %}
 # A confirmation can be waived — by the person who is owed it
@@ -53,7 +53,7 @@ non-destructive move (`scrapped`, with reasons) is always available.
 
 | gate class | the rule it relaxes | waivable |
 |---|---|---|
-| `merge-to-main` | [`crdm-requirements-workflow`](../../methodologies/crdm/crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
+| `merge-to-main` | [`crdm-requirements-workflow`](../crdm/crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
 | `bean-close` | [`bean-coordination`](bean-coordination.md) §"When you cannot re-derive it yourself" — the `ready-to-close` batch | yes |
 | `deletion` | [`deletion-requires-confirmation`](deletion-requires-confirmation.md) — report and wait | yes, **per artefact class**, never blanket |
 | `swarm-spawn` | [`swarm-management`](swarm-management.md) — asked every time, per swarm | yes, with the agent count and model level named in the quote |

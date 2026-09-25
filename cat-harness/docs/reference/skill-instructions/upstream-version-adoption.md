@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/upstream-version-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/upstream-version-adoption.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/upstream-version-adoption.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/upstream-version-adoption.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/upstream-version-adoption.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/upstream-version-adoption.md){: .fa-edit-source }
 
 {% raw %}
 # Adopting an upstream version bump
@@ -22,8 +22,8 @@ ordering:
 
 | Diagram | What it is |
 |---|---|
-| [`upstream-pin-watch.bpmn`](../workflows/upstream-pin-watch.bpmn) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
-| [`upstream-version-adoption.bpmn`](../workflows/upstream-version-adoption.bpmn) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
+| [`upstream-pin-watch.bpmn`](../../processes/upstream-pin-watch.bpmn) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
+| [`upstream-version-adoption.bpmn`](../../processes/upstream-version-adoption.bpmn) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
 
 The second is called, not copied: `calledElement="Process_UpstreamAdoption"`.
 Any pinned upstream dependency enters it the same way, and a new tenant is a
@@ -138,7 +138,7 @@ ours go to the decision as they are.
 **A person decides, and the diagram says so.** `PM_Decide` is a `bpmn:userTask`
 in the publication manager's lane, and that role admits `person` only, so
 `activity-fulfilment-kind` fails the moment somebody tries to make an agent the
-accepting party. It also carries `<folio:policy relaxable="false"/>`: no
+accepting party. It also carries `<cat-harness.processes:policy relaxable="false"/>`: no
 package may relax it.
 
 The lane is the publication manager's rather than the editor's because the pin
@@ -197,3 +197,15 @@ If no fingerprint discriminates, say so and pin the newest release anyway; an
 unverified pin is still strictly better than an unpinned dependency, and
 "could not determine" written down is worth more than a confident guess.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Adopting an upstream version bump](../../processes/upstream-version-adoption.html)**.
+
+<img src="../../assets/img/workflows/upstream-version-adoption.svg" alt="BPMN diagram: Adopting an upstream version bump" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Watching a pinned upstream dependency](../../processes/upstream-pin-watch.html) | Read the pin registry upstream-pins.json; List upstream releases and compare to the pin; Close the tracking issue; Open or EDIT the one tracking issue; Pick up the stale pin claim a bean; Adopt the version bump (calls a sub-process) |
+| [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Scope the delta pinned → candidate; Impact analysis what of ours binds it; Record the hold or the decline |
+

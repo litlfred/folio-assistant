@@ -30,11 +30,18 @@ import {
   render,
   renderPages,
   selfSupersedes,
+  type CitedBean,
   type DeployCommit,
+  type NoRunReason,
   type PagesReport,
   type RunSummary,
   type Window,
 } from "../src/workflow/ci-health.js";
+
+import { whyNoRun } from "../src/workflow/workflow-triggers.js";
+
+import { repoRootFor } from "../schemas/cat-harness.js";
+import { readBeanStore } from "./bean-store-read.js";
 
 const argv = process.argv.slice(2);
 const markdown = argv.includes("--markdown");
@@ -230,6 +237,15 @@ function knownWorkflows(): Array<{ path: string; name: string }> | undefined {
     out.push({ path, name });
   }
   return out;
+}
+
+/** {@link NoRunReason} for a workflow path. Unreadable is `undetermined`. */
+function noRunReason(path: string): NoRunReason {
+  try {
+    return whyNoRun(readFileSync(resolve(repoRoot, path), "utf8"));
+  } catch {
+    return "undetermined";
+  }
 }
 
 /** The workflow's first `cron:` value, or `undefined`. */
@@ -441,7 +457,46 @@ const { runs, unreachable } = await fetchRuns();
 // Independent of the default-branch question above, and asked even when that
 // one failed: a repository whose `main` history is unreadable may still be
 // publishing fine, and the reverse. Two facts, never collapsed into one.
-const pages = await fetchPages();
+/**
+ * The beans {@link renderPages} names in its output.
+ *
+ * Listed here rather than discovered, because a renderer's citations are a
+ * property of its PROSE and nothing can derive them from the report object.
+ * Adding one to the output without adding it here renders as "unknown", which
+ * is the honest failure for this — never a confident wrong claim.
+ */
+const PAGES_CITES = ["yzsj"] as const;
+
+/**
+ * Resolve each cited bean's status ONCE, here, where a repository root exists.
+ *
+ * Bean `xfyk`. The renderer used to state these outright and the claim went
+ * stale when the bean closed. It stays a pure function of its report; the
+ * filesystem read belongs where the root is.
+ */
+function citedBeans(): Record<string, CitedBean> {
+  // `repoRootFor`, NOT `process.cwd()`. Bean `a6kl` is precisely this mistake
+  // one script over: a corpus resolved from the cwd found nothing and reported
+  // `nothing to check` over 1,402 files. Here it would silently render every
+  // citation "unknown" whenever the script ran from a subdirectory.
+  const store = readBeanStore(repoRootFor(resolve(import.meta.dir, "..")));
+  if (store.state !== "read") {
+    const why = store.state === "declared-but-absent"
+      ? `the declared bean store at ${store.dir} is not there`
+      : "no bean store in this instance";
+    return Object.fromEntries(PAGES_CITES.map((id) => [id, { state: "unreadable", why }]));
+  }
+  return Object.fromEntries(
+    PAGES_CITES.map((id) => {
+      // The id is a SUFFIX of the bean's own id (`folio-assistant-yzsj`), and
+      // matching on the full id would tie this to one instance's prefix.
+      const bean = store.beans.find((b) => b.id === id || b.id.endsWith(`-${id}`));
+      return [id, bean ? { state: "read", status: bean.status } : { state: "absent" }];
+    }),
+  );
+}
+
+const pages = { ...(await fetchPages()), citedBeans: citedBeans() };
 const headSha = unreachable ? undefined : await fetchHeadSha();
 const changedFiles = headSha ? await fetchChangedFiles(headSha) : undefined;
 const repoRoot = (() => {
@@ -559,6 +614,7 @@ const health = runs
       headSha,
       triggersOnPush,
       knownWorkflows: files,
+      noRunReason,
       hasSchedule,
       probed: (p) => probes.get(p),
       workflowAddedAt,
@@ -633,12 +689,28 @@ if (markdown) {
           : "scheduled, outside the window, and not asked directly";
     console.log(`  ⚠ ${h.workflow.padEnd(40)} UNJUDGED — ${why}. Not green.`);
   }
-  const other = unjudged.filter((h) => !h.scheduled).length;
-  if (other > 0) {
+  const other = unjudged.filter((h) => !h.scheduled);
+  if (other.length > 0) {
+    /* THE CLASSES ARE MEASURED NOW. This read "(dispatch-only, or vendored for
+     * a folio)" over a count of 31 — a cause asserted rather than computed,
+     * which could not distinguish 31 files that cannot fire from 30 that
+     * cannot and one that should have. The benign classes stay counts, because
+     * naming 30 every run is how a reader learns to skip the section; the one
+     * class that is a defect is named. See `whyNoRun`. */
+    const by = (r: NoRunReason) => other.filter((h) => h.noRunReason === r).length;
     console.log(
-      `\n  ${other} further workflow file(s) produced no run in the window ` +
-        `(dispatch-only, or vendored for a folio) — unjudged, not green.`,
+      `\n  ${other.length} further workflow file(s) produced no run in the window — unjudged, not green:`,
     );
+    console.log(
+      `    ${by("dispatch-only")} cannot fire by themselves (\`workflow_dispatch\` / ` +
+        `\`workflow_call\` only), ${by("path-filtered")} fire only when specific paths ` +
+        `change, ${by("undetermined")} could not be read.`,
+    );
+    for (const h of other.filter((x) => x.noRunReason === "auto-triggered")) {
+      console.log(
+        `  ⚠ ${h.workflow.padEnd(40)} UNJUDGED — it CAN fire on this branch and produced no run. Not green.`,
+      );
+    }
   } else if (files === undefined) {
     console.log(
       "\n  (Could not read .github/workflows/ — this report covers the runs it " +

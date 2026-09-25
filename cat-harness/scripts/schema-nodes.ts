@@ -3,7 +3,7 @@
  *
  * ## The defect this exists for
  *
- * `harness.json` declares `schemas/` with `graphs: ["schemas", "kg"]`.
+ * `harness.json` declares `schemas/` with `graphKinds: ["schemas", "kg"]`.
  * Measured on `814b693e`: the exported graph contained **zero** nodes of the
  * `schemas` kind — 11 node types, none of them a schema. A declaration a
  * consumer reads and finds nothing behind is the `dh4f` shape this repository
@@ -42,17 +42,20 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, sep } from "node:path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
-// The `folio` graph kind is registered by CORE as a load-time side effect
-// (`schemas/folio-graph-kind.ts`: "a layer that cannot render must not own the
-// renderable kind"), so the harness alone does not know it exists. This module
-// reads instance declarations, and this instance now DECLARES a folio graph, so
-// without this import `readDeclaration` throws `unknown graph kind "folio"` on a
-// declaration that is perfectly valid. Twelve tests and three gates failed that
-// way the first time a folio graph was declared here (issue #464) — nothing had
-// ever declared one before, so nothing had ever needed the registration to have
-// happened. Same import `scripts/kg-export.ts` and
-// `scripts/check-avatar-coverage.ts` already carry, and for the same reason.
-import "../schemas/folio-graph-kind.js";
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it — and since #840 every caller does, because
+// the trigger sits at the foot of `cat-harness.ts` and a reader lives in that
+// module, so loading it is a precondition of calling one.
+//
+// THIS COMMENT NAMED `check:composition-roots` AS THE GUARANTEE UNTIL
+// 2026-09-22, in SEVEN files, AND THAT SCRIPT DOES NOT EXIST. `bun run
+// check:composition-roots` exits "Script not found". The safety argument for
+// a library omitting the registration rested on a gate nobody built, and no
+// gate failed to say so — the same silence this repository keeps paying for.
+// It is moot now rather than fixed: #840 made the registration automatic, so
+// there is no longer a command that can forget it (bean `z9ax`).
 
 /**
  * EVERY directory declaring the `schemas` graph, or the convention.

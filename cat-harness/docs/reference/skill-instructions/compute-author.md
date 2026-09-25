@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/compute-author.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/compute-author.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/compute-author.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/compute-author.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/compute-author.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/compute-author.md){: .fa-edit-source }
 
 {% raw %}
 # Compute-author skill — read before writing compute code
@@ -48,7 +48,7 @@ production script or stays in a probe); the current optimization
 roadmap; and the reference implementations for the project's number
 kernels, exact-arithmetic types, and witness base.
 
-### §0.1 Sandbox / fresh-container cat-bootstrap
+### §0.1 Sandbox / fresh-container bootstrap
 
 A fresh container often ships **neither** the script-side deps **nor**
 the compiled native module. Do **not** declare a compute "blocked (no

@@ -37,6 +37,7 @@
  * markers. They render nothing and cost nothing where Lean is absent.
  *
  * @module content/pipeline/readme-sections
+ * @covers docs
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
@@ -459,7 +460,7 @@ const instancesSection: ReadmeSection = {
     // reader is holding a README that sits in a repository which, by
     // construction, contains at least the instance that declared it.
     if (roots.length === 0) {
-      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+      return { markdown: "", notes: ["no instance declares a <name>.json — nothing was read"], skip: true };
     }
 
     const notes: string[] = [];
@@ -502,7 +503,7 @@ const instancesSection: ReadmeSection = {
       // picking one would be this file choosing on the instance's behalf.
       const dirs = (kind: string): Array<{ path: string; scope?: string }> =>
         (decl.directories ?? [])
-          .filter((d) => (d.graphs ?? []).includes(kind))
+          .filter((d) => (d.graphKinds ?? []).includes(kind))
           .map((d) => ({ path: d.path, scope: d.scope }));
 
       const agents = asset(AGENT_INSTRUCTIONS_ROLE);
@@ -608,7 +609,7 @@ const coldStartSection: ReadmeSection = {
     const repo = ctx.root;
     const roots = instanceRootsIn(repo);
     if (roots.length === 0) {
-      return { markdown: "", notes: ["no instance declares a harness.json — nothing was read"], skip: true };
+      return { markdown: "", notes: ["no instance declares a <name>.json — nothing was read"], skip: true };
     }
 
     const { plan, unreadable } = workPlanGraphsIn(repo);
@@ -647,11 +648,11 @@ const coldStartSection: ReadmeSection = {
       "",
       "| | |",
       "|---|---|",
-      "| **1. What the harness is, from nothing** | [`cat-bootstrap/README.md`](cat-bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |",
-      "| **2. How to find the graph, and the skills in it** | [`kg-navigation`](kg-navigation/skills/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `harness.json` and read the directory it names. |",
+      "| **1. What the harness is, from nothing** | [`bootstrap/README.md`](bootstrap/README.md) — the overview of skills and tasks, written to assume no MCP server, no `beans`, no build. |",
+      "| **2. How to find the graph, and the skills in it** | [`kg-navigation`](cat-harness/skills/kg-navigation/kg-navigation.md). **Ask for the skill list; never read one from here** — `skill_list` for what exists, `skill_fetch` to load one. No MCP? Resolve the `kg` graph from `<name>.json` and read the directory it names. |",
       "| **3. Whether this graph is active or static** | The verdict above is computed, not asserted: an instance is ACTIVE when it declares a graph kind whose `recordsWork` is true. Static? Then determine your context instead — [`process-state`](cat-harness/skills/workflow/process-state.md). |",
       active
-        ? "| **4. It is active, so** | Work out your role, process and task from the BPMN under [`skills/workflows/`](cat-harness/skills/workflows/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |"
+        ? "| **4. It is active, so** | Work out your role, process and task from the BPMN under [`processes/`](cat-harness/processes/) — the diagrams are executable, not illustrations. Then read the work plan in [`beans/`](beans/), prioritise it, and **ask which items to work on**. That last step is an interaction rule, not a formality. |"
         : "| **4. It is static, so** | There is no work plan to prioritise and no process to resume. Determine your context from [`process-state`](cat-harness/skills/workflow/process-state.md) and work from what you were asked to do. |",
       "",
       "*Why no list of skills: a README is the one file no check reads, so a list in it is wrong the day a skill is added and nothing says so. The two calls above ask the graph instead.*",

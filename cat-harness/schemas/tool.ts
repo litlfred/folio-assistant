@@ -352,6 +352,18 @@ export const ToolDefinitionSchema = z
      * zod module whose job is to keep a public JSON Schema true.
      */
     maintains: z.array(ToolMaintainsSchema).optional(),
+    /**
+     * The graph KINDS this Tool draws a viewer for — one page per declared
+     * directory of the kind, placed by the Tool itself.
+     *
+     * #1168 B7a, owner 2026-09-24 (*"viz scripts become Tools"*): until then
+     * each directory named its viewer page (`coverage.visualiser`), which is
+     * the directory pointing at what depends on it. The dependent holds the
+     * pointer, so the renderer says what it renders. A kind, not a list of
+     * pages, because which directories exist is the declarations' answer and
+     * a Tool restating it would be a second list free to drift.
+     */
+    renders: z.array(z.string().min(1)).optional(),
   })
   .refine(
     (t) =>

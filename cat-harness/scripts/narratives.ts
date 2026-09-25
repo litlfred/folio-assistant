@@ -28,21 +28,12 @@
  * both draft and confirm would be one `--yes` away from the failure the whole
  * state machine exists to prevent.
  */
-// `folio` is registered by IMPORT SIDE EFFECT (schemas/folio-graph-kind.ts),
-// and this module resolves a DECLARED directory. Without it the first
-// `directoriesForGraph` throws `unknown graph kind "folio"`. Measured
-// 2026-09-20 across the 20 modules that resolve a declared directory: 10
-// threw, including `narratives.ts` and the `translation` MCP tool, while
-// every gate and all 3298 tests passed — nothing covered the path.
-//
-// Importing core's registration is correct by LAYERING, not a workaround:
-// `folio` is CORE's kind, so a content-side module may import it, while the
-// harness alone never sees it (schemas/folio-graph-kind.ts says so).
-import "../schemas/folio-graph-kind.ts";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { NarrativeSchema, REJECTION_REASONS, type Narrative } from "../schemas/narrative.ts";
+import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
+import { entryItems } from "./summaries.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -61,6 +52,10 @@ export const NARRATIVE_BEARING = [
   "contents.jsonld",
   "manifest.jsonld",
   "images.json",
+  // Agent summaries of prose blocks (owner, 2026-09-24). MANY per file, at
+  // `summaries[i].narrative`, like `images.json` — and like it, useless here
+  // without the matching branch in {@link narrativesIn}.
+  SUMMARIES_FILE,
 ] as const;
 
 /** Where a narrative sits inside its document, so `decide` can write it back. */
@@ -82,6 +77,14 @@ export interface QueueItem {
   /** What this narrative is ABOUT, when the file holds more than one. */
   subject?: string;
   narrative: Narrative;
+  /**
+   * A block summary whose block's text has changed since it was drafted.
+   *
+   * Shown, and never confirmable: a person accepting it would be accepting a
+   * summary of text that is no longer there. It goes back to the drain
+   * (`bun run summaries:next`) instead.
+   */
+  stale?: boolean;
 }
 
 /**
@@ -114,6 +117,23 @@ export function narrativesIn(
         // this the queue shows twenty-four entries distinguishable only by
         // their text, which is the thing under review.
         subject: typeof rec.id === "string" ? rec.id : undefined,
+      });
+    });
+  }
+
+  // Block summaries (`summaries.json`). The subject is the block's own name,
+  // so a reviewer sees WHICH section a summary is of without reading the path.
+  const summaries = doc.summaries;
+  if (Array.isArray(summaries)) {
+    summaries.forEach((rec, i) => {
+      if (typeof rec !== "object" || rec === null) return;
+      const r = rec as Record<string, unknown>;
+      const parsed = NarrativeSchema.safeParse(r.narrative);
+      if (!parsed.success) return;
+      out.push({
+        path: ["summaries", i, "narrative"],
+        narrative: parsed.data,
+        subject: typeof r.block === "string" ? r.block.split("/").pop() : undefined,
       });
     });
   }
@@ -160,9 +180,24 @@ export function queue(root = ROOT): QueueItem[] {
       } catch {
         continue;
       }
+      // Which summaries are stale, asked of the drain's own reader — one
+      // definition of "the text changed", not a second one here.
+      let stale = new Set<number>();
+      if (name === SUMMARIES_FILE) {
+        try {
+          const status = new Map(entryItems(join(lib, slug)).map((it) => [it.block, it.status]));
+          const recs = Array.isArray(doc.summaries) ? (doc.summaries as { block?: unknown }[]) : [];
+          stale = new Set(recs.flatMap((r, i) => (status.get(String(r?.block)) === "stale" ? [i] : [])));
+        } catch {
+          // An invalid sidecar is `check:l1-complete`'s finding. Its drafts are
+          // still shown; `decide` re-asks before a confirmation is written, and
+          // refuses when it cannot tell.
+        }
+      }
       for (const { path, narrative, subject } of narrativesIn(doc)) {
         if (narrative.state !== "draft") continue;
-        out.push({ file: relative(root, f), slug, path, subject, narrative });
+        const isStale = path[0] === "summaries" && stale.has(path[1] as number);
+        out.push({ file: relative(root, f), slug, path, subject, narrative, ...(isStale ? { stale: true } : {}) });
       }
     }
   }
@@ -219,6 +254,25 @@ export function reviewer(opts: { interactive?: boolean } = {}): { kind: "human";
   return { kind: "human", id: name };
 }
 
+/**
+ * Is this a block summary whose text has moved — or whose freshness cannot be
+ * established? Asked AGAIN at decision time rather than trusted from the
+ * listing, because the listing may be minutes old and a re-ingest may have
+ * run in between. "Cannot tell" answers true: confirming is the one act that
+ * must not happen on an unknown.
+ */
+function summaryNotCurrent(root: string, item: QueueItem): boolean {
+  if (item.path[0] !== "summaries") return false;
+  try {
+    const doc = JSON.parse(readFileSync(join(root, item.file), "utf-8")) as { summaries?: { block?: unknown }[] };
+    const block = doc.summaries?.[item.path[1] as number]?.block;
+    const it = entryItems(dirname(join(root, item.file))).find((x) => x.block === block);
+    return it?.status !== "draft";
+  } catch {
+    return true;
+  }
+}
+
 /** Apply a decision to one queued item, writing the file. */
 export function decide(
   item: QueueItem,
@@ -226,6 +280,15 @@ export function decide(
   opts: { reason?: string; by?: { kind: "human"; id: string }; now?: Date; root?: string } = {},
 ): Narrative {
   const root = opts.root ?? ROOT;
+  // A stale summary is a summary of text that is no longer there. Accepting
+  // it would record a person agreeing to something they were never shown.
+  if (outcome === "confirm" && (item.stale || summaryNotCurrent(root, item))) {
+    throw new Error(
+      `refusing to confirm a STALE summary: ${item.subject ?? item.file}'s text changed after it was drafted, ` +
+        "or its freshness could not be established — " +
+        "it goes back to the drain (bun run summaries:next), not to a reviewer",
+    );
+  }
   const f = join(root, item.file);
   const doc = JSON.parse(readFileSync(f, "utf-8")) as Record<string, unknown>;
   // `opts.by` is the scripted path and is trusted BY THE CALLER — every test
@@ -270,7 +333,7 @@ function list(items: QueueItem[]): void {
     const d = it.narrative.drafted_by;
     const who = d ? `${d.kind}${d.model ? ` ${d.model}` : ""} (${d.id})` : "unknown";
     const what = it.subject ? `${it.slug}/${it.subject}` : it.slug;
-    console.log(`  [${i + 1}] ${what}  — drafted by ${who}`);
+    console.log(`  [${i + 1}] ${what}  — drafted by ${who}${it.stale ? "  STALE: source changed, cannot be confirmed" : ""}`);
     console.log(`      ${it.narrative.text}`);
     console.log(`      ${it.file}\n`);
   });

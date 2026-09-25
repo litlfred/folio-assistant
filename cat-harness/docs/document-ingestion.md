@@ -2,6 +2,9 @@
 layout: default
 title: Document ingestion
 nav_order: 7
+documents:
+  - uploads
+  - library
 lang: en
 available_locales: ["en"]
 ---
@@ -69,14 +72,14 @@ placed there is silently dropped.
 ## The pipeline
 {: #the-pipeline data-fa-label="sec:document-ingestion-the-pipeline" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/document-ingestion.bpmn){: .fa-node-edit title="Edit skills/workflows/document-ingestion.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-pipeline.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-pipeline.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/document-ingestion.bpmn){: .fa-node-edit title="Edit processes/document-ingestion.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-pipeline.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-pipeline.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/the-pipeline.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-pipeline">
   <img src="assets/img/workflows/document-ingestion.svg"
        alt="BPMN swimlane diagram: a contributor drops a file in uploads; the Ingestion Engine detects its media type and mints a doc id, then calls four subprocesses in turn — extract structure, derive content, build the L1 knowledge graph, and the L1 completeness gate; an incomplete result opens a bean on the shared work plan and returns to the derive step, while a complete one is moved into library under its bibliography slug and becomes citeable as an L1 source.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/document-ingestion.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/document-ingestion.bpmn){: .btn .btn-outline }
 
 Four things in that diagram are worth reading closely.
 
@@ -100,14 +103,14 @@ same corpus an author edits and a reviewer reviews.
 ### Extract structure
 {: #extract-structure data-fa-label="sec:document-ingestion-extract-structure" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-extract-structure.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-extract-structure.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="extract-structure.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="extract-structure.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-extract-structure.bpmn){: .fa-node-edit title="Edit processes/ingest-extract-structure.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="extract-structure.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="extract-structure.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/extract-structure.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-extract-structure">
   <img src="assets/img/workflows/ingest-extract-structure.svg"
        alt="BPMN diagram: from a binary, an exclusive gateway asks whether there is an embedded text layer; if yes the text layer is extracted, if no the document is OCR'd to per-page text files; both paths split the result into section markdown files carrying a document brief, then write structure.json and extract claim candidates.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ingest-extract-structure.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-extract-structure.bpmn){: .btn .btn-outline }
 
 The OCR branch is the one to know about. A document ingested that way keeps its
 text in `ocr/page-*.txt` and only a **stub** in `sections/` — so the documented
@@ -122,14 +125,14 @@ a hit is interpretable without opening anything else.
 ### Derive content
 {: #derive-content data-fa-label="sec:document-ingestion-derive-content" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-derive-content.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-derive-content.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="derive-content.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="derive-content.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-derive-content.bpmn){: .fa-node-edit title="Edit processes/ingest-derive-content.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="derive-content.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="derive-content.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/derive-content.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-derive-content">
   <img src="assets/img/workflows/ingest-derive-content.svg"
        alt="BPMN diagram: a parallel gateway fans out per asset kind — archive contents manifest, technical file metadata, localized image descriptions, audio transcription and translation, and tabular metadata — then joins, and every generated narrative is stamped with the human or agent that authored it.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ingest-derive-content.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-derive-content.bpmn){: .btn .btn-outline }
 
 **This subprocess is mostly not built yet.** Every task in it is tracked; see
 the table below. It is drawn in full anyway, because the shape of the pipeline
@@ -142,17 +145,58 @@ Recording whether a human or an agent wrote it — and for an agent, which model
 version — is what lets a reader weigh it, and what makes a superseded model's
 descriptions findable as a set later. It is unrecoverable once lost.
 
+### Ingest the theme
+{: #ingest-the-theme data-fa-label="sec:document-ingestion-ingest-the-theme" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-theme.bpmn){: .fa-node-edit title="Edit processes/ingest-theme.bpmn" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="ingest-the-theme.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/ingest-the-theme.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+
+<div class="bpmn-figure" id="figure-ingest-the-theme">
+  <img src="assets/img/workflows/ingest-theme.svg"
+       alt="BPMN diagram: from a theme source in hand, an exclusive gateway asks whether the theme is served by a deployment or stated by a style guide; the served stylesheet's declarations or the guide's own rules are read, values are mapped onto the shared palette roles, contradictions in the source are recorded, and a gateway asks whether every layout is present — if not the subprocess ends refused as incomplete, if so a theme and UI review produces the Theme node.">
+</div>
+
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-theme.bpmn){: .btn .btn-outline }
+
+**Only some sources are themes, and a person decides which.** After content is
+derived, the gateway *A theme source?* asks whoever is ingesting whether this
+document also carries a theme: a deployed site that serves one, or a style
+guide that states one. There is deliberately no rule that computes the answer.
+Whether a branded document is a theme source is an authoring judgement, and
+the owner ruled it so for bean `j66n`. A source that is not a theme skips
+straight to building the knowledge graph.
+
+The decision sits at a gateway, not inside the subprocess, because "this is
+not a theme" and "this theme is malformed" are different outcomes. The first
+is the normal case. The second is a defect, and the subprocess reports it by
+refusing.
+
+Inside, the two kinds of source differ in one step only: a deployment's
+**served** stylesheet is read for its declarations, while a guide's **stated**
+rules are read as it writes them. After that the paths join:
+
+- values are mapped onto the shared palette **roles**;
+- contradictions **in the source** are recorded as data, never silently resolved
+  by picking one;
+- a value the source is silent on is marked as a choice, not presented as a
+  measurement;
+- if a layout is missing, the subprocess **refuses** as incomplete rather than
+  producing a theme quietly degraded to the layouts it was given.
+
+A complete theme goes to the theme and UI review, and the result is one Theme
+node. It is one node kind, not three, because the palette vocabulary is shared
+and only the geometry varies between a sticky, a webpage and a publication.
+
 ### Build the L1 knowledge graph
 {: #build-the-l1-knowledge-graph data-fa-label="sec:document-ingestion-build-the-l1-knowledge-graph" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-build-l1-kg.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-build-l1-kg.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="build-the-l1-knowledge-graph.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="build-the-l1-knowledge-graph.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-build-l1-kg.bpmn){: .fa-node-edit title="Edit processes/ingest-build-l1-kg.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="build-the-l1-knowledge-graph.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="build-the-l1-knowledge-graph.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/build-the-l1-knowledge-graph.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-build-the-l1-knowledge-graph">
   <img src="assets/img/workflows/ingest-build-l1-kg.svg"
        alt="BPMN diagram: the engine writes a Dublin Core record, then a manifest referencing it, then the assets array with local paths or remote URLs, then binds the folder name to the bibliography slug; the corpus lane links the resulting L1 nodes into the knowledge graph.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ingest-build-l1-kg.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-build-l1-kg.bpmn){: .btn .btn-outline }
 
 Each folder gets a **standalone `dublin-core.jsonld`** as its record of truth,
 referenced from `manifest.jsonld`. `dcterms` is already this corpus's JSON-LD
@@ -164,14 +208,14 @@ directory are the same string.
 ### The L1 completeness gate
 {: #the-l1-completeness-gate data-fa-label="sec:document-ingestion-the-l1-completeness-gate" }
 
-[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/skills/workflows/ingest-l1-completeness-gate.bpmn){: .fa-node-edit title="Edit skills/workflows/ingest-l1-completeness-gate.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-l1-completeness-gate.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-l1-completeness-gate.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/ingest-l1-completeness-gate.bpmn){: .fa-node-edit title="Edit processes/ingest-l1-completeness-gate.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-l1-completeness-gate.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="the-l1-completeness-gate.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/document-ingestion/the-l1-completeness-gate.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/document-ingestion/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 <div class="bpmn-figure" id="figure-the-l1-completeness-gate">
   <img src="assets/img/workflows/ingest-l1-completeness-gate.svg"
        alt="BPMN swimlane diagram: the engine checks that every derived artefact is present, runs round-trip translation QA, and an exclusive gateway routes drift or bad terminology to a reviewer for adjudication before the L1 completeness verdict is recorded.">
 </div>
 
-[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/skills/workflows/ingest-l1-completeness-gate.bpmn){: .btn .btn-outline }
+[Open the BPMN source](https://github.com/litlfred/folio-assistant/blob/main/processes/ingest-l1-completeness-gate.bpmn){: .btn .btn-outline }
 
 Without this gate every derivation step above is optional in practice: the
 document lands in `library/`, reads as ingested, and the gap surfaces whenever

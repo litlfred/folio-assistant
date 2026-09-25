@@ -25,6 +25,7 @@ import { FeedbackItemSchema } from "../../schemas/constraints";
 import {
   INVALID_ENUM, parseTodoPriority, parseTodoStatus, TODO_PRIORITIES, TODO_STATUSES,
 } from "../../src/core/feedback.js";
+import { allows, forbidden, getUserEmail, getUserName, getUserRole } from "../../src/core/rbac.js";
 // `renderBlock` was reached through `await import(join(REPO_ROOT, …))`, which
 // types as `any` — so nothing checked what was handed to it, and a
 // `ResolvedBlock` went in for two years where a `Block` was declared. The
@@ -52,36 +53,11 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from 
 import { join, relative, resolve, extname } from "path";
 import Anthropic from "@anthropic-ai/sdk";
 
-// ── Role-based access control ────────────────────────────────────
-// Auth-gateway injects X-User-Role, X-User-Email, X-User-Name headers.
-// Roles: viewer < collaborator < owner (ascending privilege).
-
-type UserRole = "viewer" | "collaborator" | "owner";
-const ROLE_LEVELS: Record<UserRole, number> = { viewer: 1, collaborator: 2, owner: 3 };
-
-function getUserRole(req: Request): UserRole {
-  const role = req.headers.get("x-user-role") as UserRole | null;
-  return role && role in ROLE_LEVELS ? role : "viewer";
-}
-
-function getUserEmail(req: Request): string {
-  return req.headers.get("x-user-email") || "anonymous";
-}
-
-function getUserName(req: Request): string {
-  return req.headers.get("x-user-name") || "anonymous";
-}
-
-function hasRole(req: Request, minRole: UserRole): boolean {
-  return ROLE_LEVELS[getUserRole(req)] >= ROLE_LEVELS[minRole];
-}
-
-function forbidden(action: string, minRole: UserRole): Response {
-  return Response.json(
-    { error: `Forbidden: ${action} requires ${minRole} role or higher` },
-    { status: 403 }
-  );
-}
+// ── Access control ───────────────────────────────────────────
+// Decided by the instance's ODRL policies through the core module (issue
+// #1207). This file kept a private copy of the old viewer < collaborator <
+// owner ladder until then — a second copy of a permission rule is a second
+// rule, free to drift from the first.
 
 // ── Feedback storage (TypeScript files, committed to main via worktree) ────
 //
@@ -1351,7 +1327,7 @@ async function handleViewerRequest(url: URL): Promise<Response | null> {
   // ── API: Import list (available imports) ────────────────────
   if (path === "/api/import/list") {
     try {
-      const uploadsDir = UPLOADS_DIR;
+      const uploadsDir = UPLOADS_DIR();
       const imports: Array<Record<string, unknown>> = [];
       if (existsSync(uploadsDir)) {
         const { readdirSync } = await import("fs");
@@ -2165,8 +2141,8 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
 
   // ── Save block markdown (collaborator+ only) ─────────────────
   if (path === "/api/block/save") {
-    if (!hasRole(req, "collaborator")) {
-      return forbidden("editing content", "collaborator");
+    if (!allows(req, "content-authoring")) {
+      return forbidden("editing content", "content-authoring");
     }
     try {
       const body = await req.json() as { paperId: string; rootName: string; md: string };
@@ -2197,8 +2173,8 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
   // ── Revert block to a previous commit (collaborator+ only) ──────
   // POST /api/block/revert { paperId, rootName, sha }
   if (path === "/api/block/revert") {
-    if (!hasRole(req, "collaborator")) {
-      return forbidden("reverting content", "collaborator");
+    if (!allows(req, "content-authoring")) {
+      return forbidden("reverting content", "content-authoring");
     }
     try {
       const body = await req.json() as { paperId: string; rootName: string; sha: string };
@@ -2686,7 +2662,7 @@ async function handlePostRequest(url: URL, req: Request): Promise<Response | nul
               return executeGraphTool(name, input, GRAPH_ROOTS)!;
 
             case "get_imports": {
-              const uploadsDir = UPLOADS_DIR;
+              const uploadsDir = UPLOADS_DIR();
               const imports: unknown[] = [];
               if (existsSync(uploadsDir)) {
                 const { readdirSync: rd } = await import("fs");
@@ -2943,7 +2919,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       if (!file) return Response.json({ error: "No file uploaded" }, { status: 400 });
 
       const id = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-      const uploadDir = join(UPLOADS_DIR, id);
+      const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Save the file
@@ -2993,7 +2969,7 @@ These become clickable buttons so users don't have to type. Make them specific t
       const published = xml.match(/<published>(.*?)<\/published>/)?.[1] || "";
 
       const id = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
-      const uploadDir = join(UPLOADS_DIR, id);
+      const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Try to fetch LaTeX source
@@ -3065,7 +3041,7 @@ These become clickable buttons so users don't have to type. Make them specific t
   if (path === "/api/import/scan") {
     try {
       const body = await req.json() as { paperId: string };
-      const uploadDir = join(UPLOADS_DIR, body.paperId);
+      const uploadDir = join(UPLOADS_DIR(), body.paperId);
       const metaPath = join(uploadDir, "import-meta.json");
       if (!existsSync(metaPath)) {
         return Response.json({ error: `No import found: ${body.paperId}` }, { status: 404 });
@@ -3306,8 +3282,8 @@ These become clickable buttons so users don't have to type. Make them specific t
 
   // ── Delete feedback todo (collaborator+ only) ─────────────────
   if (path === "/api/feedback/delete") {
-    if (!hasRole(req, "collaborator")) {
-      return forbidden("deleting feedback", "collaborator");
+    if (!allows(req, "review-comments")) {
+      return forbidden("deleting feedback", "review-comments");
     }
     try {
       const body = await req.json() as {

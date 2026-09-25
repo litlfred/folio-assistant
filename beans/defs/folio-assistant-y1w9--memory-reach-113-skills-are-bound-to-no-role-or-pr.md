@@ -37,7 +37,7 @@ The knowledge is not only in memory — there is a **skill**,
 `skills/folio-core/github-state-inspection.md`, 6 KB, covering exactly
 these traps. Measured today:
 
-    grep -rl 'github-state-inspection' skills/workflows/ skills/roles/
+    grep -rl 'github-state-inspection' processes/ scenarios/
     → nothing
 
 **Bound by no diagram and no role.** So no process step hands it to
@@ -135,7 +135,11 @@ the same day, from 113.
 Whether a fact in a SUBAGENT's memory can reach the main session. Not
 touched here, deliberately: the triage had to say first whether "bind the
 skill" is even the right remedy, and it now says the binding route is
-blocked on `qif9`. Worth noting that binding is not obviously sufficient
+**not blocked on `qif9`** — it is `completed`. Step 1 of the revised route
+above (*"`qif9` first"*) is therefore satisfied, and the next action is its
+step 2: recount the evidence-backed bucket now that every `roles:` value
+resolves against a declared vocabulary. Worth noting that binding is not
+obviously sufficient
 anyway — a role carrying a skill makes it reachable, not injected.
 
 ---
@@ -328,7 +332,7 @@ matches `"true"` exactly and `yes` would read as absent.
 
 I reported this field earlier as **"51 of 54 values dangling (94 %)"**. The
 arithmetic is right and **the diagnosis is wrong**: that number comes from
-resolving every value against `skills/roles/roles.json`, and 51 of them were
+resolving every value against `scenarios/roles.json`, and 51 of them were
 never role-graph references. Measuring against the wrong registry made a
 vocabulary collision look like a pile of broken links.
 
@@ -463,7 +467,7 @@ Three different problems:
    exist and these sit outside them. Mixed: mostly performed, with real
    reference material among them. **This is what remains on `y1w9`.**
 3. **`bootstrap` (3) — a tooling blind spot, not a corpus fact.** All three
-   ARE named by activities in `cat-bootstrap/workflows/*.bpmn`; `workflowDirs`
+   ARE named by activities in `bootstrap/workflows/*.bpmn`; `workflowDirs`
    composes `<kgdir>/workflows` and bootstrap's diagrams are a SIBLING of its
    skills, so nothing scans them. **Bean `7u3g`.**
 

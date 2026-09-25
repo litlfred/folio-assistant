@@ -46,14 +46,14 @@ selector, not a fourth selector.
 
 ## Done when
 
-- [ ] `orphanSubjectPages` takes the ownership test as a parameter, with the
+- [x] `orphanSubjectPages` takes the ownership test as a parameter, with the
       self-naming test as its default, so a marker-based one is expressible
 - [ ] `prunableDashboards` and `prunableStickies` are call sites of it, with
       their existing tests kept as the falsification — they must still fail on
       directory-selection and on an emptied keep-set
 - [ ] a ruling recorded on whether `OWNED`'s flat-file case is in scope, since
       generalising the unit is the expensive half
-- [ ] nothing names a fifth
+- [x] nothing names a fifth
 
 ## Not in scope
 
@@ -141,3 +141,78 @@ that PR — this bean's remaining *done when* boxes are its acceptance criteria,
 not a second implementation. **A fifth selector is still the thing to avoid**,
 and after #648 the answer for a new generator is: import
 `orphanSubjectPages` and pass an `OwnerReader`.
+
+## 2026-09-22 — unified the two that share a UNIT; the other two need the ruling
+
+`bun run gates` **112/112**, `bunx playwright test` **427 passed**.
+
+### The bean groups by the wrong axis, and that is the finding
+
+It proposes the ownership **test** as the parameter and expects all four to
+become call sites. The deeper difference is the **unit**:
+
+| | unit | ownership test |
+|---|---|---|
+| `orphanSubjectPages` | directory + `index.html` | `SCOPE == dirname` |
+| `prunableDashboards` | directory + `index.html` | marker in file |
+| `prunableStickies` | a flat `.json` **file** | parses as `LandingSticky` |
+| `OWNED*` | flat filenames | regex |
+
+This bean already says generalising the unit for `OWNED` is *"a real design
+step rather than a rename"* — and does not notice **`prunableStickies` sits
+on the same side of that line.** So it belongs with `OWNED` behind the ruling
+below, not with the two unified here.
+
+### It is six selectors, not four
+
+`who-iris` carries `OWNED`, `OWNED_LIB` **and** `OWNED_DOCS`. The same
+understatement as `u9r9` (8 occurrences, not 2) and `alox` (11 selectors, not
+4) — three beans in one session whose counts were low.
+
+### Both sides gained a rule they did not have
+
+This is the argument for merging, beyond one fewer function:
+
+- **`prunableDashboards` gained `foreign`.** It dropped a non-owned directory
+  silently, so a page it did not recognise and a directory it had examined
+  and cleared looked identical.
+- **`orphanSubjectPages` gained *unreadable is not ours*.** It called
+  `readFileSync` bare and would have **thrown** — a generator aborting over
+  one unreadable page rather than declining it.
+
+Neither behaviour was invented; each came from the other side.
+
+### Extracted as a LEAF, for the reason #840 established
+
+`scripts/orphan-pages.ts`, so `state-visualizer.ts` can call it without
+importing `gen-schema-viz.ts` — a 1200-line generator whose body is one
+template literal. `gen-schema-viz.ts` re-exports it, so the three existing
+importers are untouched. `SCOPE_LINE` moved with the function that reads it
+rather than being left behind as a constant nothing used.
+
+### Falsified, and the bean's own falsification kept
+
+Replacing the ownership test with *"select on the directory"* fails **5** of
+the callers' existing tests; restored, 0. Those suites are unchanged, which
+is what the bean asked for. Eleven new tests cover the parameterisation and
+both carried rules.
+
+**Two of my own test defects, caught by the tests themselves:**
+
+1. The fixture put `var SCOPE = "x";` inside a one-line `<script>`. `SCOPE_LINE`
+   is anchored `/^…$/m`, so five tests failed — the helper was wrong, not the
+   selector.
+2. The unreadable case first used `chmod 000` and then branched on *"unless we
+   are root"* — **and this suite runs as root**, so the branch that fires is
+   the one that skips the assertion. A test that skips itself in the
+   environment it actually runs in is the `dh4f` shape. Forced with `EISDIR`
+   instead, which is raised for everyone.
+
+## Still open — one ruling, and it is the expensive half
+
+- [ ] **Is `OWNED`'s flat-file case in scope, and `prunableStickies` with it?**
+      Both select flat FILES rather than subject directories, so folding them
+      in means generalising the unit from *"directory holding an `index.html`"*
+      to *"artefact this generator emits"*. That is a design step, not a
+      rename, and it is the owner's call. Until then the count is **three
+      mechanisms, not one** — which is better than four and is not done.

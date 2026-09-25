@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-20T21:23:04Z
-parent: folio-assistant-kupb
+updated_at: 2026-09-23T02:45:00Z
+parent: folio-assistant-5a3l
 ---
 
 Owner, 2026-09-20, naming the pipeline verbatim:
@@ -40,61 +40,42 @@ Owner reframed this as the general case, with who-iris as its worked example:
 > generalize skils and tools.
 
 Landed on this branch: the skill `kg-to-portal`, the process
-`skills/workflows/kg-to-portal.bpmn`, the architecture drawing at
+`processes/kg-to-portal.bpmn`, the architecture drawing at
 `cat-harness/docs/assets/img/kg-to-portal-architecture.svg`, and
 `who-iris/docs/kg-to-portal.html` as the worked example with this instance's own
 measured numbers.
 
-### The distinction the whole thing turns on
+### The contract is the SKILL. This bean is the work-plan entry.
 
-**A CDN is not a publication host; it is a layer in front of one.**
-`PUBLICATION_HOSTS` answers *what serves the rendering*. A cache answers *what
-stands between the server and the reader*. This bean already said "GH Pages is
-a TOOL CHOICE"; this is the other half of the same thought, and it is what
-makes *"EXTREME care in URL handling"* actionable — model the cache as the host
-and the published URL becomes the cache's, so the day the cache changes every
-citation breaks and the old URL stays warm for as long as its TTL says.
+> [`cat-harness/skills/folio-core/kg-to-portal.md`](../../cat-harness/skills/folio-core/kg-to-portal.md)
 
-**Do not add a CDN value to `PUBLICATION_HOSTS`.** A fifth value with no row in
-`deployment-topologies.md` is a vocabulary nobody agreed, and this one would
-also be wrong.
+It carries the owner's words verbatim, the one distinction the design turns on
+(**a CDN is not a publication host; it is a layer in front of one**, and why
+`PUBLICATION_HOSTS` gains no CDN value), the six stages with who decides each,
+the constraints and their denominators, and the whole GDHCN / WHO SMART Trust
+position — what the trustlist settles, what it does not, and the three
+questions still unread.
 
-### Signing: GDHCN
+**This bean restated all of that, at length, and the restatement was still in
+step on 2026-09-24 — which is the reason to remove it now rather than later.**
+A copy that agrees is a copy that has not drifted *yet*; the GDHCN section in
+particular is explicitly provisional, resting on three specification files
+nobody here has read (`concepts_certificate_governance.md`, `hcert_spec.md`,
+`trust_network_gateway_architecture.md`), so the day somebody reads one, this
+bean becomes a second and wrong answer about what is settled. The skill's own
+§Related already divides the labour and this bean agreed with it — *"This skill
+is what is being published; that bean is who says it may be"* — so the copy was
+surplus to a split both texts state.
 
-Owner, answering the open question in one line: **`propsal signing = GDHCN`** —
-the WHO Global Digital Health Certification Network.
+Removed per `AGENTS.md`'s rule: *where a skill and a copy disagree, the skill
+wins and the copy is wrong*, applied one step earlier, before they disagree.
 
-What it settles is **where trust comes from**, not which algorithm is used, and
-that moves a boundary:
-
-- the publisher signs **as a participant**, so signing capability is granted
-  and can be withdrawn — key rotation and revocation become operations the
-  pipeline must survive, and a package signed with a withdrawn key must be
-  re-signed rather than merely re-served;
-- the verifier resolves the key **from the network**, so it needs reachability
-  the publisher does not control. A portal that fetches the bytes but cannot
-  reach the trust list reports `unknown` — not a failure. `network:
-  air-gapped` is a declared value, so that is a case to answer rather than
-  assume away;
-- the trust anchor sits **outside** publisher and consumer alike, which is the
-  whole reason it is worth having, and is how it is drawn.
-
-**Four things are open against GDHCN's specification and are NOT asserted
-anywhere on this branch.** GDHCN is named in this repository for the first time
-today and the network that would fetch the document is blocked from the
-container (`000` to `worldhealthorganization.github.io`):
-
-1. what envelope it signs, and whether that admits a **file manifest** at all —
-   it was built for health certificates;
-2. how a participant is onboarded, and by whom (an institutional process with a
-   lead time, not a configuration flag);
-3. the key rotation and revocation model;
-4. whether a verifier may cache the trust list, and for how long — which
-   decides whether an intermittently-connected portal can verify at all.
-
-(1) may also settle the package-versus-per-asset question by constraint rather
-than by choice, which is why the specification has to be read before this is
-designed rather than after.
+**Nothing was lost.** Checked line by line before deleting: the CDN-as-layer
+distinction, the `PUBLICATION_HOSTS` prohibition, the DID trustlist's two
+variants and three environments, the hierarchical path filter, the
+ValueSet-not-free-text point, the envelope-versus-key-distribution correction
+and the three unread questions are all in the skill, most of them in more
+detail than here. What follows is only what a WORK PLAN needs.
 
 ### What who-iris has actually built, measured 2026-09-20
 
@@ -113,64 +94,16 @@ The four gates. Nothing above replaces them: this is *what* is published, and
 the gates are *who says it may be*. The URL-layout check that refuses a layout
 which would move an existing published path is still unbuilt.
 
-### Same day: `smart-trust` names the specification, and it corrects the entry above
 
-Owner followed `propsal signing = GDHCN` with one word: **`smart-trust`**. That
-is the [WHO SMART Trust IG](https://smart.who.int/trust)
-(`smart.who.int.trust`, FHIR R5, v1.8.0 as read, support `gdhcn-support@who.int`).
-Read from `sushi-config.yaml` and `input/pagecontent/concepts_did_gdhcn.md` on
-`main`, 2026-09-20. The endpoints below are **transcribed, not fetched** —
-`tng-cdn.who.int` returns `000` from this container.
+## Re-parented off `kupb` 2026-09-23 — owner's ruling
 
-**THE CORRECTION.** The entry above says the publisher *"signs as a
-participant"* and reads as though GDHCN supplies the signing envelope. **It
-supplies the key distribution.** A trustlist carries trust anchors — which keys
-belong to which participant, for which domain and which usage — and says
-nothing about what you wrap your bytes in. The health-certificate envelope is a
-separate specification in the same IG (`hcert_spec.md`), and *a document
-package is not a health certificate*. What is settled is where a verifier
-**gets the key**; what it verifies is still open.
+Owner, 2026-09-22, on *"`kupb` has 12 open children and can't close, blocking
+GOAL 3. Several aren't IRIS-catalogue work"*: **re-parent the non-catalogue
+ones.** `kupb`'s Done-when is *"every child is closed"*, so a child that is not
+about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 
-That is the `r1lz` rule catching its own enforcer. The first draft was
-plausible and confident, and the part it got wrong — envelope versus key
-distribution — is the part that decides what stage 4 *is*.
+**Moved to `5a3l`.** "editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE" — a publication topology, and the bean says so.
 
-**What the IG actually specifies:**
-
-- key material published as **W3C DID documents** (`did.json`);
-- **two variants** — *embedded* (keys inline in `verificationMethod`, immediate
-  verification) and *by reference* (DID ids to resolve, keeping the root
-  document concise and supporting dynamic discovery);
-- **three environments** — DEV, UAT, PROD — each with both variants;
-  PROD is `https://tng-cdn.who.int/v2/trustlist/did.json` and
-  `…/v2/trustlist-ref/did.json`;
-- **the path is a hierarchical filter**:
-  `/v2/trustlist/$domain/$participant/$usage/did.json`, levels ANDed, `-` a
-  wildcard at any level, so a verifier fetches the slice it needs;
-- `$domain`, `$participant`, `$usage` are **FHIR ValueSets in the IG**, not
-  free text.
-
-**The strongest argument this design has, and it is not ours.** WHO's own trust
-network distributes its trust anchors as **static JSON from a CDN** — the host
-is named `tng-cdn`. So "KG → static signed package → CDN → consumer" is not an
-analogy to how GDHCN works; it is how GDHCN works, one layer down. The
-*by reference* variant also answers the caching question outright: resolving a
-slice is the expected case.
-
-**Three of the four questions above are now answered** — onboarding (a
-documented process plus a published
-[checklist](https://smart.who.int/trust/concepts_onboarding_checklist.html)),
-caching (native to the design), and the envelope (a trustlist is keys; the
-envelope is elsewhere and, for a document package, unsettled).
-
-**Still open and unread:**
-
-| question | where |
-|---|---|
-| key rotation and revocation, and what a published package must do when a key is withdrawn | `concepts_certificate_governance.md` |
-| whether a document-package signature can be expressed for a GDHCN-aware verifier at all | nothing in that IG covers arbitrary files |
-| how the gateway relates to the CDN, and who publishes to it | `trust_network_gateway_architecture.md` |
-
-Read those before designing stage 4. **Not ingested** — owner: *"dont ingest
-whole thing."* Two files were read over HTTP and nothing was cloned or added to
-`library/`.
+**Nothing about this bean's own work changed** — not its status, not its
+Done-when, not a line of its body above this note. Only the question *"whose
+goal does finishing this serve?"* is answered differently.

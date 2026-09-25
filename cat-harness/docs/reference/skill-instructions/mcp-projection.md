@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/mcp-projection.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/mcp-projection.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/mcp-projection.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/mcp-projection.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/mcp-projection.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/mcp-projection.md){: .fa-edit-source }
 
 {% raw %}
 # MCP projection — turning a Tool node into an MCP service
@@ -18,7 +18,7 @@ is the whole design: `agentic-harness` runs on a filesystem alone (see
 MCP is something an instance *produces* from its Tool nodes when it wants
 agents to reach them over a protocol rather than by reading files.
 
-So this is a **cat-bootstrap skill**: it stands a service up. An agent with a CLI
+So this is a **bootstrap skill**: it stands a service up. An agent with a CLI
 tool and a Tool node describing it should be able to produce a working MCP
 server without inventing the mapping each time.
 

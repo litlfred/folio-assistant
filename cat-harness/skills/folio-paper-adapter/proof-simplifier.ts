@@ -7,7 +7,6 @@ export const proofSimplifier: SkillDefinition = {
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],
-  mcpServices: ["lean-lsp"],
   routingPatterns: ["simplify.*proof", "streamline", "compress.*tactic"],
   tags: ["lean", "simplification", "proof"],
 };

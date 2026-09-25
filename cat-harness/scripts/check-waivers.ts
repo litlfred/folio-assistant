@@ -40,6 +40,7 @@
  * waiver by its `$schema` tag and by nothing else.
  *
  * @module folio-assistant/scripts/check-waivers
+ * @covers waiver
  */
 
 import { readdirSync, readFileSync } from "node:fs";
@@ -47,11 +48,6 @@ import { join, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { WaiverNodeSchema, waiverState, type WaiverNode } from "../schemas/waiver.js";
-
-// `folio` is registered by CORE as a load-time side effect, and
-// `directoriesForGraph` reads the WHOLE declaration, which refuses an
-// unregistered kind. Same import, and the same reason, as `agent-memory.ts`.
-import "../schemas/folio-graph-kind.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");

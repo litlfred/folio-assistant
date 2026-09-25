@@ -27,30 +27,55 @@ const REPO = resolve(ROOT, "..");
  * assertions change whenever a sibling session adds a directory, and an
  * assertion that drifts with the tree is not an assertion.
  */
-const names = () => ["agent-skills", "cat-bootstrap", "cat-harness", "detangle", "who-iris"];
+const names = () => ["agent-skills", "bootstrap", "cat-harness", "detangle", "who-iris"];
 
 describe("who owes a board", () => {
   test("the real checkout: the instantiated harnesses, minus the floor", () => {
+    // who-iris joined on 2026-09-21, when the owner instantiated it — the
+    // board is a CONSEQUENCE of that declaration, not a second decision. This
+    // list is the real answer for this checkout and is meant to change when
+    // the checkout does; it fails loudly rather than drifting quietly.
     const owed = harnessesOwedABoard(REPO, names());
-    expect(owed).toEqual(["cat-harness", "folio-assistant"]);
+    expect(owed).toEqual(["cat-harness", "folio-assistant", "who-iris"]);
   });
 
-  test("cat-bootstrap is excluded BY ITS DECLARATION, not by its name", () => {
+  test("bootstrap is excluded BY ITS DECLARATION, not by its name", () => {
     // Its own `renderExemption` says why: it produces nothing a human browses,
     // so it has nothing to put on a board. A checker naming one instance
     // states a rule true only for the instance somebody remembered (`hfkl`).
-    const boot = readDeclaration(join(REPO, "cat-bootstrap"))!;
+    const boot = readDeclaration(join(REPO, "bootstrap"))!;
     expect(isExemptFrom(boot, "visualiser")).toBe(true);
-    expect(harnessesOwedABoard(REPO, names())).not.toContain("cat-bootstrap");
+    expect(harnessesOwedABoard(REPO, names())).not.toContain("bootstrap");
     // ...and it IS instantiated, so exclusion cannot be coming from that.
-    expect(existsSync(join(REPO, instanceConfigFilename("cat-bootstrap")))).toBe(true);
+    expect(existsSync(join(REPO, instanceConfigFilename("bootstrap")))).toBe(true);
   });
 
   test("a DEPENDENCY is excluded too — instantiated is a different fact", () => {
-    // who-iris is present, declared, and not instantiated here. "Only the
-    // instiatiated harnesses (not all dependent ones)".
-    expect(existsSync(join(REPO, instanceConfigFilename("who-iris")))).toBe(false);
-    expect(harnessesOwedABoard(REPO, names())).not.toContain("who-iris");
+    // "Only the instiatiated harnesses (not all dependent ones)".
+    //
+    // DERIVED, not named. This asserted that `who-iris` was not instantiated,
+    // as its illustration of the rule — and on 2026-09-21 the owner
+    // instantiated who-iris, so a test about the RULE failed because its
+    // EXAMPLE had changed. The rule never moved. Reading the dependencies off
+    // the candidate list instead means the next instantiation does not look
+    // like a broken rule.
+    const deps = names().filter((n) => !existsSync(join(REPO, instanceConfigFilename(n))));
+    // Vacuity guard: with every candidate instantiated there is no dependency
+    // left to exclude, and `not.toContain` over an empty list asserts nothing.
+    //
+    // The message says what to DO, because this failure is the one most
+    // likely to be "fixed" by deleting the test. It fires only when somebody
+    // instantiates the last remaining dependency, at which point the rule it
+    // guards is still real and only the example is gone — exactly the
+    // situation that produced this rewrite in the first place.
+    expect(
+      deps.length,
+      `no candidate in [${names().join(", ")}] is a non-instantiated dependency, so this ` +
+        "test has no subject. Add a declared-but-not-instantiated instance to `names()` " +
+        "rather than deleting the test.",
+    ).toBeGreaterThan(0);
+    const owed = harnessesOwedABoard(REPO, names());
+    for (const d of deps) expect(owed).not.toContain(d);
   });
 
   test("the set is sorted, so it is a function of the declarations", () => {

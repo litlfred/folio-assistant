@@ -1,3 +1,8 @@
+---
+input: schemas/skills/document-authoring/input.schema.json
+output: schemas/skills/document-authoring/output.schema.json
+---
+
 # document-authoring
 
 Author a **document** folio: policy guidance, a standard, a report, a
@@ -39,7 +44,7 @@ If you find yourself wanting a `theorem`, you want one of two things:
   `normative-statements` for how to carry one in this profile, and read it
   before reaching for a math kind.
 - an actual theorem — in which case this folio is a paper. Change
-  `harness.config.json` to `"contentType": "paper"` deliberately, and know that
+  `<name>.config.json` to `"contentType": "paper"` deliberately, and know that
   you are taking on Lean and TeX as dependencies.
 
 ## Adding a block

@@ -17,17 +17,20 @@
  * @module content/pipeline/repo-root
  */
 
-// `folioDir` reads the instance's declaration, and the `folio` graph kind is
-// registered by CORE as a load-time side effect. Without this, `folioDir`
-// THROWS here rather than quietly returning the convention — which is the
-// contract it was given deliberately, and which this import satisfies.
+// The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
+// does NOT import that registration: a library's edge is inherited by every
+// module that imports it, and the harness may not depend on core. The
+// COMMAND that runs carries it — and since #840 every caller does, because
+// the trigger sits at the foot of `cat-harness.ts` and a reader lives in that
+// module, so loading it is a precondition of calling one.
 //
-// `schemas/cat-harness.ts` cannot carry the import itself: `folio-graph-kind`
-// imports IT, so the dependency is a cycle. Same pattern as
-// `schemas/harness-config.ts` and `src/tools/skill-fetch.ts`, which already
-// do this. That it must be repeated per entry point is `ot9a`'s fragility,
-// not a new one (bean `hs08`).
-import "../../schemas/folio-graph-kind.js";
+// THIS COMMENT NAMED `check:composition-roots` AS THE GUARANTEE UNTIL
+// 2026-09-22, in SEVEN files, AND THAT SCRIPT DOES NOT EXIST. `bun run
+// check:composition-roots` exits "Script not found". The safety argument for
+// a library omitting the registration rested on a gate nobody built, and no
+// gate failed to say so — the same silence this repository keeps paying for.
+// It is moot now rather than fixed: #840 made the registration automatic, so
+// there is no longer a command that can forget it (bean `z9ax`).
 import { folioDir } from "../../schemas/cat-harness.js";
 import { existsSync, readdirSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";

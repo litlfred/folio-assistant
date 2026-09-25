@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/bean-blocking.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bean-blocking.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/bean-blocking.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-blocking.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-blocking.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/bean-blocking.md){: .fa-edit-source }
 
 {% raw %}
 # Blocking is a claim about the work, not a mood
@@ -72,3 +72,10 @@ Sub-beans are also what make parallel work possible without a swarm — see
 - **Never block on something you have not actually asked for.** Asking is the
   work; waiting to be asked is not a dependency.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Record the decision as still open |
+

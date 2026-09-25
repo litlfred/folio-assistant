@@ -1,32 +1,48 @@
 {
-  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository \u2014 the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THIS INSTANCE HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING. Everything under it was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit here is a defect, because the next check will either overwrite it or fail. If something is wrong in this index, the fix is in the pipeline or in the upstream IG, never in these files.",
+  "_comment": "The WHO SMART Trust artefact index, staged as a top-level directory ahead of becoming its own repository — the same path who-iris is on, and deliberately the same shape. The owner settled the location 2026-09-21, choosing a root-level sibling over folding it into `smart-kg/`: each ingested IG becomes another sibling, and `smart-kg/` already holds judgement methodologies (GRADE), which is a different job. THIS INSTANCE HOLDS NO SUBJECT MATTER AND AUTHORS NOTHING. Everything under it was reconstructed from WHO's published output by `ingest:ig`, and `ingest:ig:check` re-derives it; a hand-edit here is a defect, because the next check will either overwrite it or fail. If something is wrong in this index, the fix is in the pipeline or in the upstream IG, never in these files.",
   "name": "smart-trust",
-  "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 \u2014 the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
+  "version": "0.1.0",
+  "description": "WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.",
   "directories": [
     {
       "id": "smart-trust-artifact-index",
       "path": "fhir-artifact-index/",
       "dependents": "skip",
-      "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have \u2014 the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
-      "graphs": [
+      "description": "The reconstructed artefact index, and the DAK API surface it points at. ONE directory rather than two on purpose: `dak/` sits INSIDE the declared graph because a sibling would be an undeclared directory holding the very bytes the index claims to have — the `dh4f` shape, where a consumer scans nothing and reports a clean run over it. `index.json` carries a `provenance` block naming the published file every field came out of, because no IG publishes an artefact index and each row was therefore assembled rather than transcribed.",
+      "graphKinds": [
         "fhir-artifact-index"
       ],
-      "coverage": {
-        "skill": "ig-artifact-ingestion"
-      }
+      "readOnly": true,
+      "readOnlyBasis": "Copies of upstream IG artefacts, and GENERATED -- `ingest-ig-artifacts.ts` rewrites this index, a person does not edit it. Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened."
     },
     {
       "id": "smart-trust-docs",
       "path": "docs/",
       "dependents": "skip",
       "instanceRoot": true,
-      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages`. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind \u2014 so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order \u2014 the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate.",
-      "graphs": [
+      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages`. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll's source is hardcoded to `cat-harness/docs`, so an instance's own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance's docs, BUILT BY cat-harness — the owner's rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance's own file, rather than in the root's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance's `index.md` onto the site's own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance's docs prefix (cat-harness's), not the declaring instance's, which is the same reason `who-iris-library`'s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `docs-auto` indexes the 20 pages it holds and publishes that page. \"No verbatim mount\" and \"no viewer\" are different facts, and declaring this is what stops the second being inferred from the first.",
+      "graphKinds": [
         "docs"
       ],
       "coverage": {
-        "skill": "ig-artifact-ingestion"
-      }
+        "visualiser": [
+          {
+            "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-trust-docs/index.html",
+            "title": "Docs — smart-trust"
+          }
+        ]
+      },
+      "composed": true,
+      "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's."
+    },
+    {
+      "id": "smart-trust-scripts",
+      "path": "scripts/",
+      "dependents": "skip",
+      "description": "`gen-smart-trust-pages.ts` and its tests -- the generator that turns the artefact index into this instance's 681 pages, and as of bean `0818` renders the IG's own menu into the left-hand nav. Undeclared until now while BOTH the index it reads and the docs it writes were declared, so the only undeclared thing in this instance was the transformation between two declared graphs.",
+      "graphKinds": [
+        "code"
+      ]
     }
   ],
   "assets": [
@@ -34,7 +50,7 @@
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 smart-trust",
+      "title": "AGENTS.md — smart-trust",
       "description": "Cold start for work in this layer, and one rule above all others: nothing here is authored, so nothing here is edited."
     },
     {
@@ -46,6 +62,17 @@
     }
   ],
   "needs": [
-    "folio-assistant-core"
+    "smart-ig"
+  ],
+  "_needs_comment": "REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `smart-ig`. THIS IS WHAT MAKES `nsbb`'s RULING TRUE IN THE DECLARATIONS rather than only in prose: there is no per-IG harness, so `smart-trust` is an INSTANCE OF `smart-ig` rather than a harness of its own. `smart-immunizations`'s declaration already called its own harness status 'PROVISIONAL BY DESIGN' pending this restructure. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `<name>.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance's OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here.",
+  "stickies": [
+    {
+      "_comment": "THE INSTANCE'S OWN CARD, and the reason it exists is the navbar rather than the landing board. Owner, 2026-09-22: \"now do smart-trust and folio-assistant-core avatars\", then \"operations\" chosen from three cards that already carry a measured avatarRegion. A THEME IS REACHED THROUGH A STICKY -- an instance contributes a card, the card names a theme, the theme names an imageRole, and the instance's images (or its supplier's) carry that role per layout. So a harness cannot have a theme avatar without contributing a card, and THIS CARD THEREFORE ALSO APPEARS ON THE LANDING BOARD. That is a visible consequence of asking for an avatar and is stated here rather than discovered: every other instance with an avatar has a landing card for the same reason. `bodyFrom: description` so the words are read from this declaration's own `description` and cannot drift from it.",
+      "id": "smart-trust",
+      "order": 30,
+      "theme": "operations",
+      "summary": "A published IG, read back as a graph",
+      "bodyFrom": "description"
+    }
   ]
 }

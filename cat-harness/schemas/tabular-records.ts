@@ -30,6 +30,8 @@
  */
 import { z } from "zod";
 
+import { CONTENT_CONTEXT_URL } from "./jsonld";
+
 import { NarrativeSchema } from "./narrative";
 
 /** Sniffed/declared types that route to the tabular rung. */
@@ -56,6 +58,13 @@ export const TABULAR_RECORDS_SCHEMA_ID = "folio-tabular-records/v1";
 
 export const TabularRecordsSchema = z
   .object({
+    /**
+     * The published content context — bean `yh6u`. OPTIONAL because folio
+     * repositories hold records written before the arm emitted it; when
+     * present it must be that context, since any other would bind these keys
+     * to terms nobody declared.
+     */
+    "@context": z.literal(CONTENT_CONTEXT_URL).optional(),
     $schema: z.literal(TABULAR_RECORDS_SCHEMA_ID),
     "@id": z.string().min(1),
     source: z.record(z.string(), z.unknown()),

@@ -9,7 +9,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { tools } from "../../tools/index.js";
+import { tools } from "../../tools/discover.js";
 import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
@@ -58,6 +58,13 @@ describe("tools", () => {
     // `decisionName`/`inputVariables` — what you supply to WRITE a table, not
     // to answer one).
     expect(checkTools().unmetContracts).toEqual([]);
+  });
+
+  test("where a Tool input and a contract property share a name, their types agree", () => {
+    // The type half of the comparison (#1168, B3b). Weak — most contract
+    // properties are bare strings — but it catches an `array` contract served
+    // by a `string` port, which the name check alone passes.
+    expect(checkTools().mistypedContracts).toEqual([]);
   });
 
   test("a contract that is present but unreadable is never counted as agreement", () => {
@@ -174,14 +181,14 @@ describe("tools", () => {
     // apart; `isSkillMd` does, by their `$schema:` line. Under the old scan a
     // Tool could have satisfied a memory entry and passed.
     expect(s.has("the-complement")).toBe(false);
-    // Missed 2 real ones: `cat-bootstrap/skills/` holds skills DIRECTLY rather
+    // Missed 2 real ones: `bootstrap/skills/` holds skills DIRECTLY rather
     // than in packages, and a scan of a root's subdirectories never looks at
     // the root. Both read as dangling, which is how this was found.
     //
     // THOSE TWO NO LONGER BELONG TO THIS INSTANCE, and the assertion is
     // inverted rather than deleted — bean `pve3`, the owner's ruling of
     // 2026-09-21 ("neither"). `cat-harness/harness.json` no longer declares
-    // `cat-bootstrap/skills/`, so cat-bootstrap's skills are published through
+    // `bootstrap/skills/`, so bootstrap's skills are published through
     // its OWN graph and this instance does not overlay them. Deleting the
     // lines would lose the regression they were written for; flipping them
     // keeps it, because the failure mode being guarded is a SCAN that
@@ -191,7 +198,7 @@ describe("tools", () => {
     // And they are still REACHABLE, which is what makes the removal a
     // relocation rather than a loss. `check-tools`' `satisfiableSkills` reads
     // every declared instance for exactly this reason.
-    expect(canonicalKnownSkills(join(INSTANCE, "../cat-bootstrap")).has("log-message")).toBe(true);
+    expect(canonicalKnownSkills(join(INSTANCE, "../bootstrap")).has("log-message")).toBe(true);
   });
 
   test("io IRIs follow the publication base, not the declaration", async () => {

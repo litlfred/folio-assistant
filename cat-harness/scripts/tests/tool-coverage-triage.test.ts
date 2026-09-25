@@ -57,7 +57,13 @@ describe("a declared script is evidence, so it cannot leave a skill in D", () =>
     const moved = rows.filter((r) => r.evidence.some((e) => e.startsWith("script:")));
     expect(moved.length).toBeGreaterThan(0);
     for (const r of moved) {
-      expect(r.tier).toBe("C");
+      // Out of D always; C unless STRONGER evidence put it higher. A skill with
+      // a script AND an io-contract is A — `crdm-detect` since it gained a
+      // contract (#1168, B4) — and that is the tiering working, not the rule
+      // failing.
+      expect(r.tier).not.toBe("D");
+      const stronger = r.evidence.some((e) => e === "serviceTask" || e === "io-contract" || e === "userTask");
+      if (!stronger) expect(r.tier).toBe("C");
       expect(r.evidence.some((e) => e === `script:${scriptFor(r.skill, scripts)}`)).toBe(true);
     }
   });

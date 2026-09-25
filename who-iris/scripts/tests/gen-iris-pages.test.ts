@@ -16,10 +16,14 @@
  * @module who-iris/scripts/tests/gen-iris-pages.test
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, resolve } from "path";
+import { execFileSync, spawnSync } from "child_process";
+import { createHash } from "crypto";
 
-import { OWNED, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
+import { OWNED, fixedPagesOf, recentOrder, requirementsFromSkill } from "../gen-iris-pages.js";
+import { nodes, pngSize } from "../gen-covers.js";
+import { publicationBlockers } from "../../../folio-assistant-core/schemas/materialization.js";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const NODES = join(INSTANCE, "catalogue", "nodes");
@@ -31,10 +35,16 @@ const DOCS = join(INSTANCE, "docs");
  * and `read()` routes by what the page IS rather than by where it used to be.
  */
 const LIB = join(INSTANCE, "library");
+// WHICH SIDE A TEST'S PAGE LIVES ON — a different question from what the
+// generator OWNS, which is why this is not simply `fixedPagesOf("docs")`.
+//
 // `index.html` exists on BOTH sides — the replica's home and the docs
-// landing. Every test here that names it means the REPLICA's, so it is not in
-// this set; the docs landing is read explicitly by the one test about it.
-const DOC_PAGES = new Set(["ingestion-notes.html", "kg-to-portal.html"]);
+// landing. Every test here that names it means the REPLICA's, so it is
+// excluded; the docs landing is read explicitly by the one test about it.
+// That exclusion is the whole difference, and it is now SUBTRACTED from the
+// generator's own list rather than written out again, so adding a docs page
+// reaches this router without anybody remembering to edit it.
+const DOC_PAGES = new Set(fixedPagesOf("docs").filter((f) => f !== "index.html"));
 const sideOf = (page: string): string => (DOC_PAGES.has(page) ? DOCS : LIB);
 /** Every rendered page, both sides, as `read()` would resolve them. */
 const allHtml = (): string[] => [
@@ -114,7 +124,35 @@ describe("the generator owns its filenames, and prunes only those", () => {
     expect(html.length).toBeGreaterThan(3);
     const items = sortedIds().filter((id) => id.startsWith("item/")).map((id) => `item-${slug(id)}.html`);
     const colls = sortedIds().filter((id) => id.startsWith("collection/")).map((id) => `collection-${slug(id)}.html`);
-    const wanted = new Set(["index.html", "community-list.html", "ingestion-notes.html", "kg-to-portal.html", ...items, ...colls]);
+    // A SECOND LIST BESIDE `OWNED`, and it has now gone stale in BOTH
+    // directions within three days — which is the finding, not the chore.
+    //
+    // 2026-09-22 (morning): `catalogue.html` was added, written, pruned-checked
+    // and gated, and this set still did not know it existed.
+    // 2026-09-22 (later, bean `ha78` / issue #886): it MOVED out of who-iris
+    // altogether, to the conventional viewer route under the built site, and
+    // this set still listed it — so the assertion failed on a page whose
+    // absence was the whole point of the change.
+    //
+    // NOW DERIVED (bean `o6vj`, issue #895). It was a hand-kept list, on the
+    // reasoning that `OWNED` is a regex and cannot enumerate — true, and the
+    // fix was to export the enumerable part rather than to keep a fourth copy
+    // of it. `fixedPagesOf` is the generator's own declaration; the item and
+    // collection families are still built from the catalogue here, because
+    // those genuinely depend on the data and are what the orphan half of this
+    // test is about.
+    //
+    // This does NOT weaken the assertion into agreeing with any change. The
+    // per-side ownership guard now runs inside the generator on every
+    // invocation, so a page added to a side that does not own it fails before
+    // this test is reached — and what this still pins is that the committed
+    // tree holds exactly the pages the declaration says, no more and no less.
+    const wanted = new Set([
+      ...fixedPagesOf("library"),
+      ...fixedPagesOf("docs"),
+      ...items,
+      ...colls,
+    ]);
     expect(html.filter((f) => !wanted.has(f))).toEqual([]);
     expect([...wanted].filter((f) => !html.includes(f))).toEqual([]);
   });
@@ -179,26 +217,141 @@ describe("the IRIS home replica", () => {
     expect(home.toLowerCase()).not.toContain("emblem.svg");
   });
 
-  it("withholds every committed cover from display", () => {
-    // Owner, 2026-09-21, asked whether the emblem printed on a WHO
-    // publication is content or branding: *"logo and other branding"*. So the
-    // covers are rendered and recorded but not shown, and this asserts the
-    // display half only -- the catalogue half is the next test, and they must
-    // be able to disagree or neither is evidence of anything.
-    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
-    expect(covers.length).toBeGreaterThan(0);
-    for (const c of covers) expect(home).not.toContain(`assets/covers/${c}`);
-    expect(home).not.toMatch(/<img[^>]*>/);
+  it("shows every PUBLISHABLE cover, each src RESOLVES, and a withheld one has no <img>", () => {
+    // INVERTED twice, not deleted. It first asserted the covers were withheld
+    // (the owner's 2026-09-21 emblem ruling), then -- once they chose masking --
+    // that every committed cover is shown. Bean `cw35` (2026-09-24) splits it:
+    // a cover is a reproduction of the publication's own cover, so it is shown
+    // only when ITS copyright and restrictions gates are `permitted`. Which
+    // covers that is comes from the catalogue, never a list typed here.
+    //
+    // Resolving the src is still the half that matters: while the covers were
+    // withheld the `<img>` was never emitted, so a `src` broken by moving these
+    // pages (bean `zgba`) sat undetected. Existing on disk is what would not.
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const thumbs = nodes().flatMap((n) => (n.bitstreams ?? []).filter((b) => b.bundle === "THUMBNAIL"));
+    const shown = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length === 0);
+    const withheld = thumbs.filter((b) => publicationBlockers(b.materialization?.gates).length > 0);
+    // Both halves non-empty today, or one of the two assertions below is vacuous.
+    expect(shown.length).toBeGreaterThan(0);
+    expect(withheld.length).toBeGreaterThan(0);
+    for (const b of shown) {
+      const m = new RegExp(`<img[^>]*src="([^"]*${esc(b.name)})"`).exec(home);
+      expect(m, `no <img> for ${b.name}`).not.toBeNull();
+      expect(existsSync(join(LIB, m![1]!)), `${m![1]} does not resolve from library/`).toBe(true);
+    }
+    for (const b of withheld) {
+      expect(home, `${b.name} is withheld by its gates and must not be shown`).not.toMatch(new RegExp(`src="[^"]*${esc(b.name)}"`));
+    }
+    expect(home).toContain("cover<br>withheld");
   });
 
-  it("says WITHHELD where a cover exists, and NO COVER where none does", () => {
-    // Two different facts, and a placeholder that conflates them tells a
-    // reader nothing: "we chose not to show it" and "the catalogue has none"
-    // look identical in a layout. R15's rule, applied to an image.
-    const covers = readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png"));
-    const withheld = [...home.matchAll(/>cover<br>withheld</g)].length;
-    expect(withheld).toBe(covers.length);
-    expect(home).toContain("this replica is not published under WHO");
+  it("links a held PDF only when its publication gates permit it, on EVERY replica page (bean cw35)", () => {
+    // The v048 roast: every held PDF carried `copyright: unknown` and all three
+    // were linked from the pages and a CDN. The rule is enforced in one place,
+    // `linkOrWithheld`; this reads every page the generator wrote, so a new
+    // call site that bypasses it goes red here.
+    const pages = readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => readFileSync(join(LIB, f), "utf-8"));
+    const pdfs = nodes().flatMap((n) =>
+      (n.bitstreams ?? []).filter((b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized"),
+    );
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    let linked = 0;
+    for (const b of pdfs) {
+      const href = new RegExp(`href="[^"]*${esc(encodeURI(b.name))}"|href="[^"]*${esc(b.name)}"`);
+      const hits = pages.filter((p) => href.test(p)).length;
+      if (publicationBlockers(b.materialization?.gates).length > 0) {
+        expect(hits, `${b.name} is not publishable but is linked from ${hits} page(s)`).toBe(0);
+      } else {
+        expect(hits, `${b.name} is publishable and should be linked`).toBeGreaterThan(0);
+        linked += 1;
+      }
+    }
+    expect(linked, "no PDF is linked at all -- the check above would pass vacuously").toBeGreaterThan(0);
+  });
+
+  /**
+   * Is the PDF backend here? Asked once, the way `gen-covers` asks it.
+   *
+   * The CI gate job installs `ruff` and nothing else. `gen-covers.ts` carries
+   * a paragraph about exactly this — `iris:covers:check` went into that job
+   * and "turned the branch red three times" — and the first version of the
+   * test below was written anyway, in the same session that read it. It went
+   * red on the first CI run for precisely the documented reason.
+   */
+  const pdfBackend = spawnSync("python3", ["-c", "import pymupdf"]).status === 0;
+
+  it("the emblem is absent from the BYTES, not merely undisplayed", () => {
+    // The display flag is not the guarantee. `pdf-cover.py` blanks the region
+    // before it computes the digests, so the committed PNG cannot carry the
+    // emblem whatever a page decides to do with it.
+    //
+    // WITHOUT THE BACKEND this degrades to *slightly less* and says so, rather
+    // than to could-not-determine — `verifyWithoutRender`'s rule, and the
+    // reason it exists: a check reporting `unknown` on every CI run is a check
+    // nobody reads. Two of the three claims need no decoder at all.
+    //
+    // MASK_FILL is spelled here rather than imported: this test's job is to be
+    // an independent witness, and a constant shared with the thing it checks
+    // agrees with it by construction.
+    const nodeDir = join(INSTANCE, "catalogue", "nodes");
+    let pixelChecked = 0;
+    let declaredChecked = 0;
+
+    for (const f of readdirSync(nodeDir).filter((x) => x.endsWith(".json"))) {
+      const n = JSON.parse(readFileSync(join(nodeDir, f), "utf-8"));
+      for (const b of n.bitstreams ?? []) {
+        for (const r of b.maskedRegions ?? []) {
+          const abs = join(INSTANCE, b.materialization.localPath);
+
+          // (1) The bytes on disk are the ones the claim describes. No decoder.
+          const sha = createHash("sha256").update(readFileSync(abs)).digest("hex");
+          expect(sha, `${b.name}: committed bytes are not the declared ones`).toBe(
+            b.materialization.fixity.digest,
+          );
+
+          // (2) The rectangle fits the ACTUAL file, read from its IHDR — not
+          // from the declaration, which is the thing that could be stale. This
+          // is the "measured against a different rendering" defect, and it is
+          // checkable with no backend.
+          const size = pngSize(readFileSync(abs))!;
+          expect(size, `${b.name}: not a readable PNG`).toBeDefined();
+          expect(r.x1, `${b.name}: mask runs past the real width`).toBeLessThanOrEqual(size.w);
+          expect(r.y1, `${b.name}: mask runs past the real height`).toBeLessThanOrEqual(size.h);
+          declaredChecked++;
+
+          // (3) The pixels really are flat fill. Needs a decoder.
+          if (!pdfBackend) continue;
+          const out = execFileSync("python3", [
+            "-c",
+            [
+              "import pymupdf,sys",
+              "p,x0,y0,x1,y1 = sys.argv[1], *map(int, sys.argv[2:6])",
+              "pm = pymupdf.Pixmap(p)",
+              "pm = pymupdf.Pixmap(pm, 0) if pm.alpha else pm",
+              "b,W,n = pm.samples, pm.width, pm.n",
+              "cols = {tuple(b[(y*W+x)*n:(y*W+x)*n+3]) for y in range(y0,y1) for x in range(x0,x1)}",
+              "print(len(cols), sorted(cols)[0] if cols else ())",
+            ].join("\n"),
+            abs, String(r.x0), String(r.y0), String(r.x1), String(r.y1),
+          ]).toString().trim();
+          expect(out, `${b.name}: mask is not a single flat colour`).toMatch(/^1 /);
+          expect(out).toContain("128, 128, 128");
+          pixelChecked++;
+        }
+      }
+    }
+
+    // A sweep that found nothing must not report clean — the `dh4f` shape.
+    expect(declaredChecked, "no masked region found to check").toBeGreaterThan(0);
+    if (!pdfBackend) {
+      console.log(
+        `    (no pymupdf: checked ${declaredChecked} declared region(s) against each file's own ` +
+          `IHDR and digest; the flat-fill pixel check was skipped)`,
+      );
+    } else {
+      expect(pixelChecked).toBe(declaredChecked);
+    }
   });
 
   it("states the upstream item count it was given, not a remembered one", () => {
@@ -288,5 +441,43 @@ describe("the KG-to-portal page keeps its claims honest", () => {
     // Traffic is bytes x requests and nothing here counts requests. An
     // invented reader count would make every cost figure under it fiction.
     expect(page).toContain("not measured");
+  });
+});
+
+describe("a phone-width reader never pans sideways — bean `xwrt`", () => {
+  it("every committed page lets inline code break rather than widen the page", () => {
+    // Mounted verbatim, so the harness's narrow-viewport.css never reaches
+    // these pages. Three long code spans made kg-to-portal 566 px wide at a
+    // 390 px viewport before the rule was in the generator's own stylesheet.
+    const pages = [
+      ...readdirSync(DOCS).filter((f) => f.endsWith(".html")).map((f) => join(DOCS, f)),
+      ...readdirSync(LIB).filter((f) => f.endsWith(".html")).map((f) => join(LIB, f)),
+    ];
+    expect(pages.length).toBeGreaterThan(0);
+    const missing = pages.filter((p) => !readFileSync(p, "utf-8").includes(":not(pre) > code { overflow-wrap: anywhere; }"));
+    expect(missing).toEqual([]);
+  });
+});
+
+describe("library/withheld.json is the catalogue's gates, for the mount — bean cw35", () => {
+  const w = JSON.parse(readFileSync(join(LIB, "withheld.json"), "utf-8")) as { paths: { path: string }[] };
+  const listed = new Set(w.paths.map((p) => p.path));
+  const items = nodes().filter((n) => n.libraryId);
+  const originalBlocked = (n: (typeof items)[number]) =>
+    (n.bitstreams ?? []).some(
+      (b) => b.bundle === "ORIGINAL" && b.materialization?.state === "materialized" && publicationBlockers(b.materialization?.gates).length > 0,
+    );
+
+  it("withholds every item whose original's publication gates block, and no other", () => {
+    const blocked = items.filter(originalBlocked);
+    const open = items.filter((n) => !originalBlocked(n));
+    expect(blocked.length, "no blocked item — the assertion below is vacuous").toBeGreaterThan(0);
+    expect(open.length, "no publishable item — the assertion below is vacuous").toBeGreaterThan(0);
+    for (const n of blocked) expect(listed.has(`${n.libraryId}/`), `${n.libraryId} should be withheld`).toBe(true);
+    for (const n of open) expect(listed.has(`${n.libraryId}/`), `${n.libraryId} is publishable and must not be withheld`).toBe(false);
+  });
+
+  it("every withheld path exists under library/ — a stale entry would hide nothing", () => {
+    for (const p of listed) expect(existsSync(join(LIB, p)), `${p} is listed but absent`).toBe(true);
   });
 });

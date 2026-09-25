@@ -67,12 +67,19 @@
  *   bun run kg:audit                 # the same rule, written to sidecars
  *
  * @module scripts/raci-chart
+ * @covers processes, scenarios
  */
 import { resolve } from "node:path";
 
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { readRoleGraph } from "../schemas/role-graph.js";
-import { isActivity, loadProcessModel, RACI_INVOLVEMENTS } from "../src/workflow/process-model.js";
+import {
+  INVOLVEMENT_VOCABULARIES,
+  isActivity,
+  loadProcessModel,
+  RACI_INVOLVEMENTS,
+  type InvolvementVocabulary,
+} from "../src/workflow/process-model.js";
 import type { ProcessNode, RaciInvolvement } from "../src/workflow/process-model.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -87,6 +94,16 @@ export interface RaciRow {
   accountable: string[];
   consulted: string[];
   informed: string[];
+  /**
+   * RASCI's fifth letter: roles that do work on the activity without owning
+   * the deliverable. Always empty in a `raci` process — a `supportive` there
+   * is an `involvement-unknown` breach, not a quietly-accepted extra column.
+   */
+  supportive: string[];
+  /** Declared involvements the process's vocabulary does not admit. */
+  unknown: { role: string; involvement: string }[];
+  /** Which vocabulary the row was judged against, so a finding can name it. */
+  vocabulary: InvolvementVocabulary;
 }
 
 /**
@@ -98,7 +115,21 @@ export interface RaciRow {
  * `role-undeclared` is `role-ref-resolves` on a different edge, while the
  * other two are gaps between roles that all exist.
  */
-export type RaciBreachKind = "accountable-count" | "role-undeclared" | "accountable-also-consulted";
+export type RaciBreachKind =
+  | "accountable-count"
+  | "role-undeclared"
+  | "accountable-also-consulted"
+  /**
+   * A declared `involvement` the process's vocabulary does not admit — a
+   * typo, or `supportive` in a four-letter process.
+   *
+   * The comment at the filter in `process-model.ts` said THIS script reported
+   * these. It never did: the filter runs during parsing, so the rejects were
+   * gone before any row was built. Added 2026-09-23 with the fifth letter,
+   * because a vocabulary is only a choice if choosing the other one is
+   * refused.
+   */
+  | "involvement-unknown";
 
 export interface RaciBreach {
   process: string;
@@ -124,10 +155,19 @@ export function declaredRoles(root: string): Set<string> {
  * the same file free to disagree with the first — and the sidecar records a
  * content hash of that file, so the two answers would be filed under one hash.
  */
-export function raciRowsOf(model: { id: string; nodes: Map<string, ProcessNode> }): RaciRow[] {
+export function raciRowsOf(model: {
+  id: string;
+  nodes: Map<string, ProcessNode>;
+  involvementVocabulary?: InvolvementVocabulary;
+}): RaciRow[] {
   const rows: RaciRow[] = [];
   for (const n of [...model.nodes.values()].filter(isActivity)) {
-    if (n.raci.length === 0) continue;
+    // `n.raci.length === 0` ALONE was the skip, and it is the silent drop in
+    // its purest form: an activity whose every involvement is a typo has an
+    // empty `raci`, so it was passed over as unannotated. It is not
+    // unannotated — it is annotated wrongly, which is the case most worth
+    // reporting.
+    if (n.raci.length === 0 && n.raciUnknown.length === 0) continue;
     const of = (k: RaciInvolvement): string[] =>
       n.raci.filter((r) => r.involvement === k).map((r) => r.role).sort();
     rows.push({
@@ -138,6 +178,9 @@ export function raciRowsOf(model: { id: string; nodes: Map<string, ProcessNode> 
       accountable: of("accountable"),
       consulted: of("consulted"),
       informed: of("informed"),
+      supportive: of("supportive"),
+      unknown: n.raciUnknown,
+      vocabulary: model.involvementVocabulary ?? "raci",
     });
   }
   return rows;
@@ -175,10 +218,25 @@ export function raciBreaches(rows: readonly RaciRow[], roles: ReadonlySet<string
             : `declares ${r.accountable.length} accountable roles (${r.accountable.join(", ")}) — exactly one carries the decision`,
       });
     }
+    for (const u of r.unknown) {
+      out.push({
+        process: r.process,
+        activity: r.activity,
+        kind: "involvement-unknown",
+        detail:
+          `"${u.role}" is declared involvement="${u.involvement}", which the \`${r.vocabulary}\` ` +
+          `vocabulary does not admit (${INVOLVEMENT_VOCABULARIES[r.vocabulary].join(", ")}). ` +
+          `It was NOT coerced to a neighbouring letter and NOT silently dropped. ` +
+          (u.involvement === "supportive"
+            ? "`supportive` is RASCI's fifth letter — declare `<cat-harness.processes:involvement vocabulary=\"rasci\"/>` on the process to use it."
+            : "Fix the spelling, or drop the annotation until it can be made truthfully."),
+      });
+    }
     for (const [kind, list] of [
       ["accountable", r.accountable],
       ["consulted", r.consulted],
       ["informed", r.informed],
+      ["supportive", r.supportive],
     ] as const) {
       for (const role of list) {
         if (!roles.has(role)) {

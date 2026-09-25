@@ -13,6 +13,8 @@ description: >-
 # — which `isPublishedSkill` itself flags as the thing to replace: "if that
 # ever stops being true this needs its own list, not a cleverer derivation".
 published: false
+graph-kinds:
+  - fsh-guts
 ---
 
 # `fsh-guts/` — the trashcan that is kept
@@ -32,7 +34,7 @@ Owner, 2026-09-19:
 
 ## What makes it different from every other non-renderable graph
 
-`harness.json` declares nine graph kinds and none of them renders. That makes
+The declaration declares nine graph kinds and none of them renders. That makes
 `renderable: false` look like a weak signal, and for the others it is: `tools`,
 `schemas`, `beans` and the rest are graphs a **tool** reads, and there was
 never a page to make of them.

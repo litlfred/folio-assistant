@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/readme-sections.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/readme-sections.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/readme-sections.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/readme-sections.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/readme-sections.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/readme-sections.md){: .fa-edit-source }
 
 {% raw %}
 # A folio's README — the folio owns the file, the platform owns the markers
@@ -105,7 +105,7 @@ Added 2026-09-20 (issue #592). The owner:
 > to main one. should provide both Agent links (agents.md , memories) AND human
 > docuemntaion (docs/) link for each harness.
 
-One row per instance declaring a `harness.json`, with **two entries because two
+One row per instance declaring a declaration, with **two entries because two
 readers arrive**: an agent entry (`AGENTS.md`, memories) and a human one
 (README, docs). Both halves are resolved from that instance's own declaration —
 declared assets for the file links, declared `graphs` for the directory links.

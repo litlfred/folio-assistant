@@ -19,7 +19,6 @@ import { join, relative } from "node:path";
 import { DECLARATION_SUFFIX } from "../../schemas/cat-harness.ts";
 
 import { ownKgRoots } from "../known-skills.ts";
-import "../../schemas/folio-graph-kind.ts";
 
 const made: string[] = [];
 afterEach(() => {
@@ -49,13 +48,13 @@ function repo(dirs: string[], opts: { sibling?: string[] } = {}): { repoRoot: st
     JSON.stringify({
       name: "inst",
       directories: [
-        ...dirs.map((d) => ({ id: d.replace(/\//g, "-"), path: `${d}/`, dependents: "skip", graphs: ["cat-harness"] })),
+        ...dirs.map((d) => ({ id: d.replace(/\//g, "-"), path: `${d}/`, dependents: "skip", graphKinds: ["cat-harness"] })),
         ...(opts.sibling ?? []).map((d) => ({
           id: `sib-${d.replace(/\//g, "-")}`,
           path: `${d}/`,
           scope: "repository",
           dependents: "skip",
-          graphs: ["cat-harness"],
+          graphKinds: ["cat-harness"],
         })),
       ],
     }),

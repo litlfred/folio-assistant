@@ -118,7 +118,7 @@ function newId(at: Date): string {
  * success is silent, and the loop costs nothing.
  *
  * `declaredCapture` is whatever the caller managed to resolve — a process's
- * `<folio:log capture>`, a config field, or nothing. Absent becomes `unknown`,
+ * `<cat-harness.processes:log capture>`, a config field, or nothing. Absent becomes `unknown`,
  * never `off`: see {@link resolveCapture}.
  */
 export function writeLogEntry(
@@ -167,7 +167,7 @@ export function writeLogEntry(
       capture,
       eligibleForStore,
       unknownRefKinds,
-      reason: "no fsh-guts directory is declared in harness.json, so there is nowhere to log",
+      reason: "no fsh-guts directory is declared in the instance's `<name>.json`, so there is nowhere to log",
       entry,
     };
   }

@@ -22,14 +22,14 @@ Owner, 2026-09-20, verbatim — three separate instructions in one message:
 
 ## What is true today, measured
 
-- `cat-bootstrap/harness.json` declares `workflows/` under the id
+- `bootstrap/harness.json` declares `workflows/` under the id
   **`cat-harness-workflows`** (renamed from `workflows`; the rename is why
   `harness:dirs:check` now reports `20 declared, 0 missing` rather than the
   `21 / 1 missing` still written into `cat-harness/harness.json`).
 - It holds `initialize-harness.bpmn` and `log-message.bpmn` — its own
   description calls these "the bootstrap PROCESSES".
 - `cat-harness` declares no `workflows/` entry of its own. The platform's
-  diagrams live at `cat-harness/skills/workflows/`, which is inside the `kg`
+  diagrams live at `cat-harness/processes/`, which is inside the `kg`
   graph rather than a graph of its own.
 
 ## The three asks
@@ -59,7 +59,7 @@ entirely, or `workflows/state` names them and the declaration stays.
 ## Open questions, the owner's
 
 - Is `cat-harness/workflows` a NEW declared directory and graph, or the existing
-  `skills/workflows/` renamed? The phrase "content should be at graph
+  `processes/` renamed? The phrase "content should be at graph
   cat-harness/workflows" reads like a graph id, and there is already a graph
   kind called `cat-harness`.
 - Does `workflows/state` "declaring" beans and todos mean a `harness.json`
@@ -79,7 +79,7 @@ Queued per the owner's standing instruction to queue rather than pivot.
 ## BLOCKED 2026-09-20 — the owner chose "rename wholesale", and the measurement is 4× what was quoted
 
 The owner was asked whether `cat-harness/workflows` is a new graph or
-`skills/workflows/` renamed, and chose **rename wholesale**. That answer was
+`processes/` renamed, and chose **rename wholesale**. That answer was
 given against a measurement of *"129 files reference that path"*. **The real
 number is ~470**, and the difference is not padding — two of the categories
 change what "rename" means:
@@ -103,7 +103,7 @@ change what "rename" means:
    translation-pipeline question rather than a rename question.
 
 2. **48 beans.** A bean is a record of what was true when it was written. Mass
-   -rewriting `skills/workflows` to `workflows` inside 48 historical records
+   -rewriting `processes` to `workflows` inside 48 historical records
    makes them describe a tree that did not exist at the time — and this
    repository has already paid for exactly that shape, in comments that
    asserted a state the tree had moved past (`kg-export.ts`'s "COMMITTED
@@ -111,7 +111,7 @@ change what "rename" means:
    should almost certainly be left alone, and that should be said rather than
    assumed.
 
-**What is NOT a problem, measured:** `skills/workflows/` holds 42 `.bpmn` plus
+**What is NOT a problem, measured:** `processes/` holds 42 `.bpmn` plus
 `decisions/` and has **no `package-manifest.json`** — it is not a skill
 package. So the rename does not touch the package machinery that made `1hvo`
 fail silently (a kg directory holding skills directly is folded into the

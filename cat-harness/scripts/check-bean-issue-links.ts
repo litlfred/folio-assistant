@@ -31,6 +31,7 @@
  * Exit: 0 clean or nothing to check, 1 a tracked issue no bean names, 2 unknown.
  *
  * @module folio-assistant/scripts/check-bean-issue-links
+ * @covers bean-defs, beans
  */
 
 import { spawnSync } from "node:child_process";
@@ -39,10 +40,6 @@ import { join, resolve } from "node:path";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { OPEN_STATUSES, readBeanFiles } from "./bean-store-read.ts";
-
-// Same reason as `agent-memory.ts` and `check-waivers.ts`: reading the whole
-// declaration refuses an unregistered kind, and `folio` registers on import.
-import "../schemas/folio-graph-kind.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");

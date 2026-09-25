@@ -6,17 +6,17 @@ user_invocable: true
 
 # /getting-started — what did they actually ask for?
 
-Process: [`skills/workflows/getting-started.bpmn`](../../skills/workflows/getting-started.bpmn).
-Decision table: [`decisions/folio-intent.dmn`](../../skills/workflows/decisions/folio-intent.dmn).
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn).
+Decision table: [`decisions/folio-intent.dmn`](../../processes/decisions/folio-intent.dmn).
 
 ## The landing page is the instance's own description
 
 A folio's home page opens with **its** description inside **its** backdrop, both
-declared in `harness.json` at the repository root. Nothing about any
+declared in the repository's declaration. Nothing about any
 particular instance is written into the template, so a downstream folio does not
 inherit the platform's grumpy cat.
 
-**Where the markdown node is:** `description` in `harness.json`. It is
+**Where the markdown node is:** `description` in `<name>.json`. It is
 markdown and it is rendered as-is. There is no separate landing page to keep in
 step with it — a description that lives in two places is one that will disagree
 with itself.
@@ -101,7 +101,7 @@ that sentence is what the five requests have in common.
 > that carried it. Bean `79t3`.
 >
 > **`folio` and `harness` are different types, and the distinction is load-
-> bearing here.** `harness.json` says *this is an instance*; `harness.config.json`
+> bearing here.** The declaration says *this is an instance*; `harness.config.json`
 > says *this authors folio content*. `cat-harness/` carries the first and not
 > the second — it is a harness and is **not** a folio, which is the
 > platform-not-content rule as a fact about two files. `isFolio` is exactly
@@ -197,6 +197,13 @@ jumping straight to a branch.
    - **unknown** — no URL could be derived, or the probe failed. Say *that*.
      "Should be live shortly" is a claim you do not have evidence for, and an
      author who later finds nothing there has been told something false.
+4. **Tell them the corpus is by reference, and how to change that.** A fresh
+   harness holds references, not the remote content itself: `who-iris` alone
+   is hundreds of gigabytes. When they need part of a remote subgraph locally,
+   that is an ask made later, as the need appears. Name the skill
+   (`materialize-on-demand`) and the one command that shows what is already
+   held (`bun run cache:index`), so they learn the option exists here rather
+   than by finding a schema. Do not materialize anything now. Bean `54rk`.
 
 ## 6. Anti-patterns
 

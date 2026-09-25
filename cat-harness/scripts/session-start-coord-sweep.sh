@@ -20,6 +20,26 @@
 set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# THE REPOSITORY ROOT, which `REPO_ROOT` is NOT.
+#
+# `REPO_ROOT` is `scripts/..` — the INSTANCE root (`cat-harness/`) since the
+# split moved `scripts/` under it. That is right for every `$REPO_ROOT/scripts/…`
+# below, and WRONG for the data directories that live at the repository root.
+# Two call sites read it as the checkout and silently skipped (bean `46uh`):
+#
+#   - `interaction/interaction.json` — the accessibility profile this sweep
+#     prints FIRST by design, citing WCAG 2.2 SC 3.3.7. It has not printed
+#     since the split, and it fails inside `if [ -f ]`, so the section simply
+#     did not appear. A preference that reaches nobody is a preference the
+#     person is asked for again.
+#   - `beans/` in the CLI-absent fallback, which also globbed `beans/*.md`
+#     when the defs are at `beans/defs/`. Doubly wrong, and invisible because
+#     the fallback only runs when `beans` fails to install.
+#
+# The `## Running processes` block already compensated with an inline
+# `$REPO_ROOT/..` — one call site knowing is how the other two went unnoticed.
+# One name, one answer.
+CHECKOUT_ROOT="$(cd "$REPO_ROOT/.." 2>/dev/null && pwd || echo "$REPO_ROOT")"
 cd "$REPO_ROOT"
 
 # Repo-scoped lock so parallel workspaces of the *same* repo don't all fetch at
@@ -34,7 +54,7 @@ flock 200 2>/dev/null || true
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
 # See skills/folio-core/interaction-modality.md.
-INTERACTION="$REPO_ROOT/interaction/interaction.json"
+INTERACTION="$CHECKOUT_ROOT/interaction/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
   echo
@@ -49,8 +69,44 @@ if [ -f "$INTERACTION" ]; then
   echo
 fi
 
+# ── 0b. WHICH LANGUAGE to talk to them in ───────────────────────────────────
+# A separate question from the FORM above, and one that was decided by accident
+# until bean `46uh`: the skills are English, the corpus is English, so an agent
+# answered in English without ever asking whether that was right. Printed here
+# so "never determined" is visible rather than silent.
+# See skills/folio-core/communication-language.md.
+echo "## Communication language"
+echo
+if command -v jq >/dev/null 2>&1 && [ -f "$INTERACTION" ]; then
+  LANGS=$(jq -r '(.users // {}) | to_entries[] | select(.value.language) | "- **\(.key)** speaks **\(.value.language)** _(source: \(.value.source // "unrecorded"))_"' "$INTERACTION" 2>/dev/null)
+  if [ -n "$LANGS" ]; then
+    echo "$LANGS"
+  else
+    echo "- No stated preference on record. Determine it from the person's own turns;"
+    echo "  fall through to the instance's \`defaultLocale\` only after saying so."
+  fi
+else
+  echo "- Could not read \`interaction/interaction.json\` — determine from the conversation."
+fi
+echo
+# The model's languages are ONE INPUT and never the answer: a model strong in a
+# language the person cannot read is worse than the fallback. Only
+# `human-validated` entries are ever read.
+if [ -f "$CHECKOUT_ROOT/bootstrap/models/models.json" ] && command -v jq >/dev/null 2>&1; then
+  MODELS=$(jq -r '[.models[]? | select(.validation == "human-validated")] | length' "$CHECKOUT_ROOT/bootstrap/models/models.json" 2>/dev/null || echo 0)
+  if [ "$MODELS" = "0" ]; then
+    echo "- No model declares human-validated languages, so that input is absent (not English)."
+  else
+    echo "- $MODELS model(s) declare human-validated languages — an INPUT to the choice, never the answer."
+  fi
+  echo
+fi
+
 # ── 1. Work-plan (beans) ────────────────────────────────────────────────────
-BEANS_DIR="$REPO_ROOT/beans"
+# `beans/defs`, not `beans/` — the defs are one level down, as
+# `beans/beans.json` declares. The old glob found nothing and reported an
+# empty work plan, on the one path that exists for a container with no CLI.
+BEANS_DIR="$CHECKOUT_ROOT/beans/defs"
 echo "## Work-plan (beans) — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo
 # Get the CLI in hand rather than reporting its absence — in two steps, cheap
@@ -319,7 +375,7 @@ fi
 # rather than never being asked. A directory that cannot be read is a third
 # state and says so, because "no instances" and "could not look" are the two
 # things this check exists to keep apart.
-wf_dir="$(cd "$REPO_ROOT/.." 2>/dev/null && pwd)/beans/workflows"
+wf_dir="$CHECKOUT_ROOT/beans/workflows"
 echo "## Running processes"
 echo
 if [ ! -d "$wf_dir" ]; then
@@ -342,6 +398,56 @@ else
 fi
 echo
 
+# ── 3d. Sibling sessions waiting on a person ────────────────────────────────
+# Bean `rq8s`. Four sessions were stopped holding a question in the owner's own
+# terms, and the only reason anybody learned that was an agent querying the
+# session API by hand. The signal is not missing -- `session_status` carries
+# `REQUIRES_ACTION` and `task_summary` carries the question verbatim -- so the
+# defect is that NOTHING AGES OR AGGREGATES IT.
+#
+# `check:session-staleness` does both, and this sweep cannot run it, which is
+# the finding rather than an omission. Probed 2026-09-21 from inside a session
+# container: no session credential in the environment,
+# `api.anthropic.com/v1/sessions` -> 401, `claude.ai/api/code/sessions` -> 403.
+# `list_sessions` is an MCP tool the AGENT holds, not an endpoint a shell can
+# call. Wiring a fetch in here would produce a check that examines nothing and
+# reports a clean run over everything -- the `dh4f` defect, in the tool written
+# to stop one.
+#
+# So the input is asked for by NAME, and NOT asking is `unknown` rather than
+# "no sessions are waiting". Same shape as `## Running processes` above: the
+# sweep cannot decide it, so it makes sure the question is put.
+echo "## Sibling sessions waiting on a person"
+echo
+cat <<'SESSIONS'
+**Not checked by this script, and that is not "none".** The listing comes from
+an MCP tool only an agent holds (`list_sessions`), so a shell cannot fetch it:
+probed 2026-09-21, `api.anthropic.com/v1/sessions` → 401 and
+`claude.ai/api/code/sessions` → 403. A fetch wired in here would examine
+nothing and report every session clean.
+
+**Run it yourself, once, early in the turn:**
+
+1. Call `list_sessions` (`mine: true`, `limit: 50` or more).
+2. Save the payload and pipe it in — the reader takes either a `{"ccr":{"data":[…]}}`
+   envelope or a bare array:
+
+   ```sh
+   bun run check:session-staleness <listing.json>
+   ```
+
+3. **Report what it says, including the `task_summary` it prints.** A count
+   cannot be acted on; these questions are usually answerable in a sentence.
+   If you could not obtain the listing, say `unknown` — never "none waiting".
+
+Three classes, each with its threshold's basis, in `src/sessions/staleness.ts`:
+a session in `REQUIRES_ACTION` past 72 h; a `FAILED` session carrying `unread`
+past 24 h; and one whose bucket says `BLOCKED` while its status says `IDLE`,
+which is NAMED separately because waiting and abandoned cannot be told apart
+from the listing.
+SESSIONS
+echo
+
 # ── 4. Recommended action (generic) ─────────────────────────────────────────
 cat <<'EOF'
 **Recommended action:**
@@ -358,4 +464,9 @@ cat <<'EOF'
 3. If the default branch moved, dispatch a **background** subagent to triage the
    new landings + sibling activity above — don't do it in the foreground.
    Escalate only if it surfaces something actionable against the work-plan.
+4. **Run the session-staleness check** described above — `list_sessions`, then
+   `bun run check:session-staleness`. It is the only step here whose input this
+   script cannot produce, so it is the only one that silently reports nothing
+   when skipped. A session that has held a question for days is the cheapest
+   thing in this sweep to fix and the only one nobody else will notice.
 EOF
