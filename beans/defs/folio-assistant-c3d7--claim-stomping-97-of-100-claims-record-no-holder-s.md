@@ -5,7 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T16:08:51Z
-updated_at: 2026-09-25T16:09:23Z
+updated_at: 2026-09-25T16:25:31Z
+parent: folio-assistant-ahvw
 ---
 
 Found while acting on the owner's decision (2026-09-25) to *"add the
