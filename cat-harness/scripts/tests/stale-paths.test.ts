@@ -11,7 +11,15 @@
 
 import { describe, expect, test } from "bun:test";
 
-import { attributedTo, chainRefs, stalePaths, underPathHeading, type Bean } from "../check-stale-paths.ts";
+import {
+  assertsPending,
+  attributedTo,
+  chainRefs,
+  doneWhenClause,
+  stalePaths,
+  underPathHeading,
+  type Bean,
+} from "../check-stale-paths.ts";
 
 const bean = (id: string, status: string, body: string): Bean => ({
   id,
@@ -122,5 +130,76 @@ describe("a numbered step is only a path when its heading says so", () => {
 
   test("a numbered list under no heading at all does not", () => {
     expect(underPathHeading(["1. do `2krx`"], 0)).toBe(false);
+  });
+});
+
+/**
+ * Bean `k59d`, round 2. A milestone states what remains in THREE shapes; the
+ * first two were already read. The third is its Done-when list, and an
+ * UNCHECKED box is structurally a claim about what is still to come — which is
+ * why it can be read where free prose cannot.
+ *
+ * Every guard below is a false positive that the first draft actually produced
+ * over the real store, not a hypothetical.
+ */
+describe("an unchecked Done-when clause that waits on finished work", () => {
+  const done = (body: string) => stalePaths([bean("aaaa", "todo", body), bean("bbbb", "completed", "x")]);
+
+  test("a precondition on a completed bean is a finding", () => {
+    const f = done("## Done when\n\n- [ ] The instances are migrated once `bbbb` is answered");
+    expect(f.map((x) => x.rule)).toEqual(["done-when"]);
+    expect(f[0]!.through).toEqual([{ id: "bbbb", status: "completed" }]);
+  });
+
+  test("the mirror form — the reference first, its completion after", () => {
+    expect(done("- [ ] `bbbb` fixed — before anything else").map((x) => x.rule)).toEqual(["done-when"]);
+  });
+
+  test("a CHECKED box is not a claim about what remains", () => {
+    // The box says the work is done. Naming a finished bean there is correct.
+    expect(done("- [x] The instances are migrated once `bbbb` is answered")).toEqual([]);
+  });
+
+  test("a clause that ACTS ON a finished bean is correct prose, not a stale path", () => {
+    // Measured: 13 of the 16 unchecked clauses naming a closed bean are this
+    // shape. Reporting them would have made the rule noise.
+    expect(done("- [ ] `bbbb` and the others are re-read under that distinction")).toEqual([]);
+  });
+
+  test("an OPEN bean named as a precondition is not a finding", () => {
+    expect(stalePaths([bean("aaaa", "todo", "- [ ] migrated once `cccc` is answered"), bean("cccc", "todo", "x")])).toEqual([]);
+  });
+
+  test('GUARD: the literal words "Done-when" supply neither "when" nor "done"', () => {
+    // Both false positives in the first measurement came from this ONE phrase,
+    // which every bean in the store carries: "when" fed the precondition list
+    // through `Done-when`, and "done" fed the completion list through the same
+    // hyphen. Two plausible-looking findings, neither real.
+    expect(done("- [ ] `bbbb`'s Done-when and the recorded answer are corrected")).toEqual([]);
+    expect(assertsPending("`bbbb`'s Done-when is cited", "bbbb")).toBe(false);
+  });
+
+  test("GUARD: a clause does not borrow the NEXT box's precondition", () => {
+    // A fixed three-line window let one box reach into its neighbour, which
+    // reported two clauses that name no precondition at all.
+    const body = "- [ ] `bbbb` — the import the regex misses\n- [ ] Worth having once `bbbb` is settled";
+    const f = done(body);
+    expect(f).toHaveLength(1);
+    expect(f[0]!.line).toBe("- [ ] Worth having once `bbbb` is settled");
+  });
+
+  test("a clause ends at a dedent, a blank line, a heading or the next box", () => {
+    const lines = ["- [ ] first", "      wrapped continuation", "- [ ] second"];
+    expect(doneWhenClause(lines, 0)).toBe("- [ ] first wrapped continuation");
+    expect(doneWhenClause(lines, 1)).toBeUndefined();
+  });
+
+  test("REACHABILITY: the rule runs on an ordinary line, not only under a path heading", () => {
+    // It did not. `if (!underPathHeading(...)) continue` sat above this rule and
+    // made it unreachable, so it ran on NO line and the check printed ✓ over a
+    // store holding three findings. A green check that never executed looks
+    // exactly like a green one that did.
+    const f = done("Some prose.\n\n- [ ] migrated once `bbbb` is answered\n\nMore prose.");
+    expect(f).toHaveLength(1);
   });
 });

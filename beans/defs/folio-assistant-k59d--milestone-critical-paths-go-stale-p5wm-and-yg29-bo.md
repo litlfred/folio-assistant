@@ -302,3 +302,66 @@ That is the whole case for the mechanical check, stated at the smallest scale
 it can be stated at: the drift here is not weeks, or the five days between
 sweeps — it is **shorter than one edit**. No cadence of hand passes is fast
 enough, which is why round 3 must not be another one.
+
+## The check exists — and I nearly rebuilt it
+
+`check:stale-paths` was already written by a sibling session, citing this bean,
+wired into `code-quality-gates.yml`, with **both** false-positive classes
+already measured and closed: an id must be an *operand* of an arrow (not merely
+on a line containing one), and a bean quoting another's chain is attributed to
+its owner — the trap this bean itself sets, since it quotes `p5wm` verbatim.
+
+Checked before writing anything, because the same session had already
+re-implemented an already-merged fix (`r1vw`) once that day. Nothing was
+rebuilt.
+
+## What was missing: the THIRD shape a milestone states its remainder in
+
+Two rules existed — chain and numbered step. The docblock said so explicitly
+and invited the rest: *"draw the line where it can be drawn, and report the
+rest as could not determine."* The line **can** be drawn for one more shape: an
+**unchecked `- [ ]` Done-when clause** is structurally a claim about what
+remains, unlike free prose, so it is readable.
+
+Added as `done-when`, narrowed to a **precondition position** — "once `x` is
+settled", "until `x` lands", "`x` fixed" — not a mere mention.
+
+| measured over the store | count |
+|---|---|
+| unchecked clauses naming a closed bean | 16 |
+| ...asserting it as a **precondition** (reported) | **3** |
+| ...acting ON a finished bean (correct prose, not reported) | 13 |
+
+The 13 read like *"`1hvo` and `7u3g` are re-read under that distinction"* — an
+instruction to go and read two finished beans, which is not a stale blocker by
+any reading.
+
+### The three findings, baselined rather than edited
+
+`b5f0` twice and `x4a6` once, both other sessions' beans — same ground as the
+original entries. **`b5f0` is the one worth attention: it waits on "`7u3g`
+fixed", and `7u3g` is `scrapped`.** A box that can never tick, which is exactly
+the abandoned-work shape `bean-blocking` describes.
+
+### Three false positives of my own, each caught before shipping
+
+1. **A fixed three-line window** let a clause borrow the NEXT box's "once",
+   reporting `zkgs` and `q2wn` against clauses naming no precondition. Fixed by
+   ending a clause at the next box, a blank line, a heading or a dedent.
+2. **The literal phrase "Done-when"** — which *every* bean carries — supplied
+   `when` to the precondition list and `done` to the completion list through
+   its hyphen. Two plausible-looking findings, neither real.
+3. **The rule was unreachable.** `if (!underPathHeading(...)) continue` sat
+   above it, so it ran on no line at all and the check printed **✓** over a
+   store holding three findings. Caught only because the rule had been measured
+   independently in a scratch script first and was expected to report 3 — a
+   green check that never executed is indistinguishable from one that did.
+
+Falsified both ways: un-baselining `b5f0` exits 1, restoring it exits 0; and
+nine unit tests pin each guard against the shape that produced it.
+
+**This bean stays open.** The mechanism it asked for now exists for all three
+shapes, but the three findings are real and belong to their owners, and
+`k59d`'s own second Done-when asks that what cannot be drawn is reported as
+*could not determine* rather than guessed — which is still the standing state
+for free prose.
