@@ -15,10 +15,11 @@
  *    reading as a clean disconnection.
  */
 import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { isDerivedGraph, owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
-import { scanSubgraphs } from "../check-subgraphs.ts";
+import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
@@ -227,5 +228,53 @@ describe("repository-scoped directories are attributed", () => {
     const scoped = dirs.find((d) => d.id === "smart-base-methodologies");
     expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
     expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
+  });
+});
+
+describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
+  // The report carried this number as a STRING LITERAL for five days: "23
+  // carry one `../` too many", measured once on 2026-09-20 and printed
+  // unchanged beside a total that re-measured every run. When it was finally
+  // computed it read **27** — so the literal had been wrong for most of its
+  // life, and nothing could say so.
+  //
+  // Both halves are asserted, because a fix that returns nothing would pass
+  // the first on its own and would be indistinguishable from a clean corpus.
+  const dir = resolve(ROOT, "docs");
+
+  test("a target that resolves after dropping one `../` IS one", () => {
+    // From `docs/reference/skill-instructions/`, `../../skill-instructions/…`
+    // lands in `docs/` — nothing there — while dropping one `../` lands on
+    // the page's own directory, where `index.md` is.
+    const found = overDeepLinks(ROOT, [
+      {
+        from: "docs/reference/skill-instructions/x.md",
+        fromDir: "docs",
+        target: "../../skill-instructions/index.md",
+      },
+    ]);
+    expect(found.map((f) => f.repaired)).toEqual(["../skill-instructions/index.md"]);
+  });
+
+  test("a target that still does not resolve after dropping one is NOT", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "../../no-such-directory/no-such-file.md" },
+    ]);
+    expect(found, "a repair is tested against disk, never inferred from shape").toEqual([]);
+  });
+
+  test("a target with no `../` at all is never one", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "reference/index.md" },
+    ]);
+    expect(found).toEqual([]);
+  });
+
+  test("the real corpus carries none — the repair of `mi97` holds", () => {
+    // Falsifier for `mi97`, which said the count must fall to zero once the
+    // 27 were repaired. It is checkable ONLY because the number is live.
+    expect(existsSync(dir), "docs/ must exist or this asserts nothing").toBe(true);
+    const { siteResolved } = scanSubgraphs(ROOT);
+    expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
   });
 });

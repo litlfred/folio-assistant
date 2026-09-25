@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ramz
 title: check-context-emission scans GITIGNORED directories, so local residue fails a test about the repository
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T16:02:11Z
-updated_at: 2026-09-25T16:02:37Z
+updated_at: 2026-09-25T16:21:36Z
 parent: folio-assistant-ahvw
 ---
 
@@ -51,3 +51,36 @@ already follows.
 - [ ] Any sibling check doing a bare `Glob`/`readdirSync` walk over the tree
       is audited the same way — this one was found by accident, so the
       question "which others?" has not been asked.
+
+## Done 2026-09-25
+
+`contentDocuments` asks git: `ls-files --cached --others --exclude-standard`.
+
+Not `--cached` alone. A `.jsonld` a contributor has written and not yet staged
+is part of the change under test, and a check that cannot see it passes on the
+file it exists to examine.
+
+Verified by causing both halves on this checkout, not by reading the code: a
+`.jsonld` under the gitignored `cat-harness/ingest-staging/` is invisible
+(3633 documents, 0 from staging), and a new one under a tracked directory
+raises the count by exactly 1.
+
+Where `repo` is not a git work tree — every temp fixture — it falls back to
+the old walk and the fallback is the LOOSER set, so it can only over-report.
+`gitListed` returns `undefined` for "ask something else" and `[]` for "git
+looked and there are none"; collapsing those two is how a check reports a
+clean corpus it never read.
+
+- [x] The scan enumerates what git accounts for, not a bare filesystem walk.
+- [x] A fixture proves both halves (`scripts/tests/check-context-emission.test.ts`,
+      a real temp git repo with a `.gitignore`), verified by disabling the fix
+      and watching that one test fail.
+- [ ] **The sibling audit is `folio-assistant-xd1g`.** Asked, and answered:
+      **11** scripts under `cat-harness/scripts/` walk from the instance or
+      repository root with no gitignore awareness — `check-agents-claims`,
+      `check-code-accounting`, `check-docs-templates`, `check-image-roles`,
+      `check-lane-documentation`, `check-process-documentation`,
+      `check-source-licence`, `check-viewer-backticks`, `glossary-export`,
+      `ns-export`, and `check-subgraphs` (which walks DECLARED directories, so
+      its root is derived, but it is not ignore-aware within them). Only
+      `scan-repo-content` and this file ask git.

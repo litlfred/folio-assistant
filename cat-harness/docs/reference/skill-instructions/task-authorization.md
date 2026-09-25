@@ -270,7 +270,7 @@ pins that.
 1. Read the verdict line: it names which of the four checks said no.
 2. **Role mismatch:** you are acting as the wrong actor, or the lane binds a
    role you do not hold. Hand the step to an actor who may take the role
-   ([`process-state`](../workflow/process-state.md)). Do not edit your actor's
+   ([`process-state`](process-state.md)). Do not edit your actor's
    `roles` to get past it; that is `actor-role-administration.bpmn`, and it
    belongs to the administrator lane.
 3. **`deny`:** a prohibition was written on purpose. Ask the user; never

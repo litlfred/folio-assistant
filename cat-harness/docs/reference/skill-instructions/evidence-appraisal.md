@@ -30,7 +30,7 @@ So: the folio declares the system. This skill covers what appraisal *is*, what
 it attaches to, and what has to survive as a record afterwards — the parts that
 are the same whichever system you have declared.
 
-One system is written down here to declare: [`grade`](../authoring-who-smart-guidelines/grade.md),
+One system is written down here to declare: [`grade`](grade.md),
 for a WHO guideline folio, with its certainty levels, rating reasons, EtD
 criteria and recommendation direction and strength as code lists. It is
 available, not a default — a folio that declares nothing still gets the

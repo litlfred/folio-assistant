@@ -168,7 +168,7 @@ the other as absent.
 ## Related
 
 - [`schema-management`](schema-management.md) — the registry's own discipline.
-- [`terminology-management`](../authoring-who-smart-guidelines/terminology-management.md) —
+- [`terminology-management`](terminology-management.md) —
   the FHIR half, for a folio's clinical terminology.
 - `folio-assistant-core/schemas/external-schema.ts` — the record contract, and
   why `conforms` / `reads` / `cites` are different answers.

@@ -162,9 +162,9 @@ check", and never passes. That is why it is not a CI gate.
 
 ## Related
 
-- [`graph-rendering`](../graph-management/graph-rendering.md): the general
+- [`graph-rendering`](graph-rendering.md): the general
   rules this generator is the first full application of.
-- [`graph-detanglement`](../graph-management/graph-detanglement.md): the
+- [`graph-detanglement`](graph-detanglement.md): the
   practice whose numbers (size, cohesion, links in and out) each page shows
   beside its sub-graphs, read from `detangle/results/`.
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-syrl
 title: check-subgraphs prints '23 carry one ../ too many' as a STRING LITERAL, not a measurement
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T16:02:11Z
-updated_at: 2026-09-25T16:02:37Z
+updated_at: 2026-09-25T16:21:36Z
 parent: folio-assistant-ahvw
 ---
 
@@ -40,3 +40,26 @@ lesson is that a number in a message is a number that has to be computed.
 - [ ] `mi97`'s own falsifier still works: it says the count must fall by
       exactly 23 when the links are repaired, which is only checkable if the
       number is live.
+
+## Done 2026-09-25
+
+`overDeepLinks` in `cat-harness/scripts/check-subgraphs.ts` computes the count
+at report time, beside the total, from the links the check already resolved.
+
+**The literal was wrong, and that is the finding.** It said **23**; the first
+live measurement read **27**. Four links had joined the set at some point in
+the five days the number could not move, and nothing in the output could have
+said so — which is exactly the failure mode the bean names, observed rather
+than argued.
+
+The `.html` → `.md` resolution rule is now one function, `resolveInTree`, used
+both by the scan and by the repair test. Two copies would have been two
+answers to *"does this resolve"*, so the count could have measured something
+other than what the scan measured.
+
+Guarded in `scripts/tests/subgraphs.test.ts`, four tests, and verified by
+BREAKING it: reintroducing one `../` into `docs/agentic-harness.md` fails the
+corpus assertion and only that one.
+
+- [x] Count computed at report time.
+- [x] `mi97`'s falsifier is checkable — it now reads zero, live.

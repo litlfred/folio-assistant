@@ -272,7 +272,7 @@ Three feedback loops are visible:
 The BA is the **bridge**: they keep the agent productive in the inner loop
 while waiting for stakeholder availability in the outer loop.
 
-See the [agentic harness](../agentic-harness.html) page for how this
+See the [agentic harness](agentic-harness.html) page for how this
 workflow fits into the broader agent–user interaction model.
 
 ## Phase 1 — Needs assessment
