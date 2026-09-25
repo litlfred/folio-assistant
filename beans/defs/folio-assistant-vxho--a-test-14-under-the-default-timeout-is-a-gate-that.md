@@ -1,11 +1,12 @@
 ---
 # folio-assistant-vxho
 title: A test 14% under the default timeout is a gate that fails on a busy machine, not a red one
-status: in-progress
-parent: folio-assistant-1xhc
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-24T12:19:24Z
-updated_at: 2026-09-24T18:51:24Z
+updated_at: 2026-09-25T16:37:25Z
+parent: folio-assistant-1xhc
 ---
 
 Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.
@@ -94,3 +95,42 @@ was already ruled out.
 `cat-harness/schemas/viz-generators.test.ts` — `SCHEMA_GRAPH` and
 `LIBRARY_GRAPH` hoisted to module scope; four call sites became two reads.
 No assertion changed.
+
+
+---
+
+## Re-derived and closed by another session, 2026-09-25
+
+Found by `bun run beans:landed` as `done-ticked`. Closed on evidence re-run
+here, not on the ticks — `bean-coordination.md` §"Closing a bean whose work has
+already landed".
+
+**Not mid-flight**: no `Claimed by` note, no open PR, and the last commit on
+`main` touching this bean is its own merge (`c349c374`).
+
+**Box 1 — runtime MEASURED.** Three standalone runs, 2026-09-25:
+
+```
+run 1: 2.02s   16 pass  0 fail
+run 2: 2.40s   16 pass  0 fail
+run 3: 2.02s   16 pass  0 fail
+```
+
+Against bun's 5000ms per-test default that is better than **2× headroom**,
+where the bean opened at 5.6s — 14 % under, which is the margin that made it a
+gate failing on a busy machine rather than a red one.
+
+**Boxes 2 and 3 — the mechanism, read rather than assumed.**
+`cat-harness/schemas/viz-generators.test.ts:33` carries it in the file itself:
+
+> *THE GRAPHS ARE READ ONCE, HERE — not inside the tests that assert on them.*
+
+`SCHEMA_GRAPH` and `LIBRARY_GRAPH` are module-level, so the filesystem work
+happens once at import and sits outside any single test's budget. That is the
+"explicitly-reasoned" half box 3 required, as against a bare raised number —
+and it is why the fix does not decay as the repository grows, which was the
+bean's own objection to raising the timeout.
+
+The bean's diagnosis (**contention**, not growth) is consistent with what I
+measured: the same test standalone is fast, so nothing about the test itself
+was slow.

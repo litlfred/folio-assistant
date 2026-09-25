@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-23T19:56:03Z
-updated_at: 2026-09-23T20:15:41Z
+updated_at: 2026-09-25T16:37:43Z
 parent: folio-assistant-yj32
 ---
 
@@ -127,3 +127,61 @@ settled a layering question inside a stylesheet loader. The question is
 - The mirrored rule set is four selectors, listed explicitly in `MIRRORED`.
   A regex over selectors would quietly widen the mirror every time upstream
   added a rule that matched it.
+
+
+---
+
+## Re-verification ATTEMPTED and it did not pass — left open, 2026-09-25
+
+Found by `bun run beans:landed` as `done-ticked` alongside `0ytk` and `vxho`.
+Both of those closed on re-run evidence. **This one did not, and that is the
+point of the obligation being re-measurement rather than trust**
+(`bean-coordination.md`: *"Two of seven candidates in that sweep failed
+re-verification"*).
+
+Not mid-flight — no `Claimed by` note, no open PR, last commit on `main`
+touching it is its own merge (`6b99bd65`).
+
+**What was run, 2026-09-25:**
+
+```sh
+bun run ingest:ig-chrome:check     # exit 2
+```
+
+```
+could not determine: no --ig and --layer checkouts, so there is nothing to
+read the chrome from.
+  The committed chrome was NOT verified.
+```
+
+**Exit 2 is the gate working, not the gate failing.** It is the `0818` CI
+exemption this bean's own sixth box required it to document, firing exactly as
+designed: without the IG checkout and its `fhir.template` chain there is
+nothing to compare the committed chrome against, and the gate says so instead
+of reporting clean. Refusing to close on it is the same discipline.
+
+So three boxes are verifiable from here (a schema exists; an ingest exists and
+exits 2 with no `--source`; a `--check` gate exists and documents the
+exemption) and **three are not**: the three-layer overlay with its recorded
+type conflicts, that the smart-trust pages carry the blue bar / DRAFT watermark
+/ publish box, and the "135 of 136" gate count — which is a snapshot, and
+`bun run gates` counts differently today.
+
+### What would discharge it
+
+Any ONE of these, by whoever has the checkouts:
+
+- run `bun run ingest:ig-chrome:check --ig <checkout> --layer <base> --layer <…>`
+  and record a **non-2** exit here; or
+- point at a CI run that did, on a named sha; or
+- re-derive from the published smart-trust pages that the three chrome elements
+  are present.
+
+**Expiry: 2026-10-25.** If nothing has discharged it by then, it is not waiting
+on a measurement any more — it is abandoned, and should be re-scoped or
+scrapped with its reasons rather than left reading as in-flight. Same
+requirement `bean-blocking.md` puts on a block, and for the same reason: an
+exception carrying no way to re-derive it cannot be told from an oversight.
+
+**Status deliberately unchanged.** Nothing here reopens, re-scopes or reverts
+anything; it records one failed re-verification and what would settle it.
