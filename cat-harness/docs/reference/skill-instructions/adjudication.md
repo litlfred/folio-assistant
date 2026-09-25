@@ -181,7 +181,7 @@ record the disagreement, lead with the judgement, keep the other entry.
 
 The outcome carries its reason. That mechanism already exists and is
 schema-backed — `block-qa/v1`'s multi-reviewer primitive, documented at length
-in [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md):
+in [`q-usage-watcher`](q-usage-watcher.md):
 
 - a `kind: "human"` entry with `result: "pass"` overrides the script's `fail`
   for the same criterion;
@@ -258,7 +258,7 @@ deliberately stops short of it.
 
 - [`untainted-verification`](untainted-verification.md) — the parties and what
   each is given. Adjudication is what happens when they disagree.
-- [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md) — the
+- [`q-usage-watcher`](q-usage-watcher.md) — the
   dispensation mechanism, documented where it was first applied.
 - [`code-node-review`](code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
   [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce

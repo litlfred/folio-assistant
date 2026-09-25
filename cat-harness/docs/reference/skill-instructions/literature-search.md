@@ -150,7 +150,7 @@ repeating the usual story as fact.
 - [`library-ingestion`](library-ingestion.md) — the next step, once a file exists
 - [`methodology-adoption`](methodology-adoption.md) — what requires an origin in
   the first place, and the selection question this feeds
-- [`evidence-appraisal`](../content-lifecycle/evidence-appraisal.md) — appraising
+- [`evidence-appraisal`](evidence-appraisal.md) — appraising
   what was found
 - [`evidence-review`](evidence-review.md) — separation of appraiser from drafter
 - [`bean-blocking`](bean-blocking.md) — recording outcome 2 so it does not read
