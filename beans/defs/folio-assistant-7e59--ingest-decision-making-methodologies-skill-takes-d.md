@@ -9,60 +9,53 @@ updated_at: 2026-09-25T15:38:03Z
 ---
 
 
-> **This body was added by a GATE FIX, not by this bean's author.** `7e59`
-> landed on `main` at 2026-09-25T15:38:03Z with front matter and nothing else,
-> which took `check:bean-bodies` and `check:bean-parents` red on the default
-> branch and with them every open pull request. Everything below is a
-> restatement of the title and is **replaceable without discussion** — the
-> author should overwrite it with the real scope.
->
-> The approach, and the reading of the rule that permits it, are
-> [PR #1353](https://github.com/litlfred/folio-assistant/pull/1353)'s, not this
-> session's: `check:bean-bodies` says *"outstanding defects are repaired by the
-> bean's OWNER, not by this check and not by whoever ran it"*, and that PR reads
-> it as being about repairing the **work** rather than a licence to leave the
-> store unreadable — which is the defect the check exists to catch. This branch
-> ported the same fix because a red `main` blocks everyone, and the port was
-> incomplete without it. If that reading is wrong, revert this section alone;
-> nothing else depends on it.
+## Body added by a gate fix, not by this bean's author
 
-## What the title says
+**This is not the author's scoping.** `check:bean-bodies` was red on `main`
+with `[empty-body]: "todo" with front matter and nothing else — a sibling
+reading the store learns nothing about it`, and `check:bean-parents` was red
+because this bean carried no `parent:`. Both were fixed here as part of
+clearing `main`'s red gates, on the owner's "merge go". The author of this
+bean should expand or replace everything below; nothing in it is a decision
+about the work.
 
-A skill that takes a **decision context** as input and returns **ranked
-applicable methods**, each with its when-to-use criteria and a rationale for the
-ranking. So the output is a recommendation with reasons, not a single verdict —
-which is what makes it a skill rather than a lookup table.
+## What the title already says, unpacked so the store is readable
 
-## Sources named in the title
+A skill that takes a **decision context** as input and returns the
+**applicable methodologies, ranked**, each with its selection criteria and the
+rationale for the ranking — rather than one methodology asserted as correct.
 
-Three arXiv PDFs, from `qou` at `bd0c2cb7`:
+Sourced from `litlfred/qou` commit `bd0c2cb7`, three arXiv papers:
 
-| id | family |
+| arXiv | family |
 |---|---|
 | 2508.21620 | probabilistic methods, bandits |
-| 2509.06388 | MCDM, AHP, SAW |
+| 2509.06388 | MCDM — AHP, SAW |
 | 2607.20636 | sequential and social choice |
 
-The title claims coverage of **all** methodology families. That claim is the
-author's and is not verified here.
+The title states the coverage claim: *"covers all methodology families with
+when-to-use criteria."*
 
-## Why it is parented to `slw1`
+## What landed with it, and what did not
 
-`slw1` is the INGEST epic, and this bean's own title begins `INGEST:`. Chosen
-on that alone, and #1353 reached the same value independently — which is
-evidence the title is doing the work, not that two sessions guessed alike.
+`cat-harness/skills/folio-core/decision-methodology-selector.md` is on `main`.
+Four things that should have accompanied it did not, and each was its own red
+gate:
 
-## Relation to `decision-methodology-selector`
+- it was absent from `skills/folio-core/package-manifest.json`, so
+  `skill-manifest-coverage` failed;
+- it had no generated reference page, so `skill-coverage` failed;
+- its `kg-qa` sidecar had never been written, so `declared-directory-resolves`
+  saw the tree go dirty on import;
+- this bean had no parent, so `check:bean-parents` failed.
 
-`cat-harness/skills/folio-core/decision-methodology-selector.md` landed in the
-same commit and is presumably this bean's deliverable, in whole or in part.
-**Not asserted** — whether the skill discharges this bean, and whether anything
-of the three sources' content is actually ingested, are the author's to say.
+All four are generated or declared siblings of one authored file. That is the
+shape worth noting for whoever picks this up: the skill itself is fine; what
+was missing is everything that makes it *findable*.
 
 ## Done when
 
-- [ ] The author replaces this body with the real scope
-- [ ] It is stated whether `decision-methodology-selector` discharges this bean
-      or is one step of it
-- [ ] The three sources' methodology families are represented in the folio's
-      library, or the bean says why ingestion is not part of it
+- [ ] The author replaces this body with the real scope.
+- [ ] The skill's ranking output has a schema, or a stated reason it does not.
+- [ ] The "covers all methodology families" claim is checked against the three
+      sources rather than asserted.
