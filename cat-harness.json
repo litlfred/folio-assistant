@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-25T18:31:41.347Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/eb61e53c085a201fefc52b69801911d70c3d0c9b",
-  "sourceCommitSha": "eb61e53c085a201fefc52b69801911d70c3d0c9b",
-  "sourceCommitAt": "2026-09-25T20:28:59+02:00",
+  "generatedAt": "2026-09-25T19:32:22.468Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/450cbdde6890b3b7912b0efe783e4d53be005e5d",
+  "sourceCommitSha": "450cbdde6890b3b7912b0efe783e4d53be005e5d",
+  "sourceCommitAt": "2026-09-25T21:29:22+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -288,7 +288,7 @@
     "Tool": 101,
     "Schema": 123,
     "GraphKind": 34,
-    "Directory": 43,
+    "Directory": 44,
     "Asset": 3
   },
   "@graph": [
@@ -40703,6 +40703,17 @@
       "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception. Declared here as well, repository-scoped, because the consumers that scan for diagrams run from this root."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-deploy",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-deploy",
+      "path": "deploy/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "How a folio-assistant host is stood up and kept current: `provision.sh`, `deploy.sh`, `self-update.sh`, `docker-compose.yml`, `Caddyfile.template` and `GOOGLE_OAUTH_SETUP.md`. Reached from outside the graph today -- the `deploy-access` capability detects on `cat-harness/deploy/.env` -- which is exactly the shape of a directory no declaration-walking consumer could see. Its governing skill is `deployment-auth`, whose architecture diagram is of these files.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-deploy"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -40733,8 +40744,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "eb61e53c085a201fefc52b69801911d70c3d0c9b",
+    "sha": "450cbdde6890b3b7912b0efe783e4d53be005e5d",
     "pr": "main",
-    "run": "36173710643"
+    "run": "36179988668"
   }
 }
