@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 335,
+      "count": 338,
       "unit": "beans"
     }
   },
@@ -951,6 +951,20 @@
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
     {
+      "id": "folio-assistant-6ptx",
+      "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-25T15:44:18Z",
+      "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
+      "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
+    },
+    {
       "id": "folio-assistant-6qk5",
       "title": "QA REVIEW MODE: translation QA joins the audited review record under test/results",
       "status": "todo",
@@ -1059,7 +1073,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-25T15:38:03Z",
       "updatedAt": "2026-09-25T16:43:37Z",
-      "preview": "**Body written 2026-09-25 by a session that did not open this bean**, because\n`check:bean-bodies` is red on `main` over it — `todo` with front matter and\nnothing else. Every sentence below is taken from the repository, not supplied:\nthe title carries the request verbatim, and the work is already on `main`.\n\n## What landed\n\n`0f7b35aa636` — *\"feat: decision methodology selector — skill + schema\"*:\n\n",
+      "preview": "## Body added by a gate fix, not by this bean's author\n\n**This is not the author's scoping.** `check:bean-bodies` was red on `main`\nwith `[empty-body]: \"todo\" with front matter and nothing else — a sibling\nreading the store learns nothing about it`, and `check:bean-parents` was red\nbecause this bean carried no `parent:`. Both were fixed here as part of\nclearing `main`'s red gates, on the owner's \"",
       "file": "beans/defs/folio-assistant-7e59--ingest-decision-making-methodologies-skill-takes-d.md"
     },
     {
@@ -1975,6 +1989,20 @@
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
     {
+      "id": "folio-assistant-e8m3",
+      "title": "ARCHIVING IS A THIRD TERMINAL PATH, and it bypasses the scrapped-with-reasons rule",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-25T15:44:18Z",
+      "preview": "## Measured 2026-09-25, window `2133f720eb` → `origin/main` `0a2150d3f6`\n\n`beans/defs/` has an **`archive/` subdirectory**, and it is now the larger half\nof the store:\n\n```\nactive  (beans/defs/*.md)          327   todo 123 · in-progress 120 · completed 82 · scrapped 2\narchive (beans/defs/archive/*.md)  631   (219 at the window's open edge, +412)\n```\n\nIn this five-day window **131 beans left the to",
+      "file": "beans/defs/folio-assistant-e8m3--archiving-is-a-third-terminal-path-and-it-bypasses.md"
+    },
+    {
       "id": "folio-assistant-edx7",
       "title": "NAVBAR IS A COMMON FIXTURE: 0 of 47 generated viewer pages carry the LHS rail — hw9g fixed mounted instances, not these",
       "status": "completed",
@@ -2180,7 +2208,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:47Z",
-      "updatedAt": "2026-09-25T16:22:33Z",
+      "updatedAt": "2026-09-25T17:47:29Z",
       "preview": "Found 2026-09-25 while closing `mi97`'s bean-store box.\n\n`docs/translation-support.md` links four beans. Three are in `beans/defs/`;\n`folio-assistant-p2en` is `completed` and lives in `beans/defs/archive/`, so\nthe link written when it was open now points at nothing.\n\n**This is not a typo, it is a shape.** Completing a bean MOVES its file, and\nevery reference to that file — from a document, an issu",
       "file": "beans/defs/folio-assistant-gr0r--a-link-into-the-bean-store-breaks-when-the-bean-is.md"
     },
@@ -3139,6 +3167,20 @@
       "updatedAt": "2026-09-20T14:08:26Z",
       "preview": "## What\n\nFor a CSV or spreadsheet, extract what makes a dataset findable rather than\nmerely stored: sheet/tab names, column and row headers, the shape (rows ×\ncolumns per sheet), and a narrative description of what the data is about.\n\n## Done when\n\n`manifest.jsonld` carries a tabular record per sheet, the narrative carries its\nprovenance stamp, and a grep for a column header finds the dataset that",
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
+    },
+    {
+      "id": "folio-assistant-pesg",
+      "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:05:34Z",
+      "updatedAt": "2026-09-25T16:05:34Z",
+      "preview": "## What happened, 2026-09-25\n\n`bun run health` reported **one** orphaned staging preview, named, sized and\nreasoned:\n\n> `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)\n> — no open pull request; and no branch on the remote slugifies to it.\n\nRunning a `goal-review`, I re-derived that finding instead of quoting it. I\nwrote a slug function inline — `re.sub(r'[^a-zA-Z0-9]+",
+      "file": "beans/defs/folio-assistant-pesg--a-review-re-derived-a-finding-the-instrument-had-a.md"
     },
     {
       "id": "folio-assistant-pomp",
