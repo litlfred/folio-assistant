@@ -3,37 +3,59 @@
 title: 'INGEST: decision-making methodologies — skill takes decision context as input, outputs ranked applicable methods with criteria and rationale. Source: qou bd0c2cb7 (3 arxiv PDFs: 2508.21620 probabilistic/bandits, 2509.06388 MCDM/AHP/SAW, 2607.20636 sequential/social). Covers all methodology families with when-to-use criteria.'
 status: todo
 type: task
+parent: folio-assistant-slw1
 created_at: 2026-09-25T15:38:03Z
 updated_at: 2026-09-25T15:38:03Z
-parent: folio-assistant-slw1
 ---
 
----
 
-## Filed under `slw1` 2026-09-25 — and why this was urgent
+## Body added by a gate fix, not by this bean's author
 
-Created 2026-09-25T15:38 with **no `parent`**, which fails
-`check:bean-parents`. That check sits inside `bun test`, at **step 5** of the
-`TypeScript — tests, lint, types` job, so its one failure took `main` red and
-**skipped the 44 gate steps behind it** — run 3636 on `a83f8bee90`. A
-work-plan hygiene slip blacked out the whole gate set.
+**This is not the author's scoping.** `check:bean-bodies` was red on `main`
+with `[empty-body]: "todo" with front matter and nothing else — a sibling
+reading the store learns nothing about it`, and `check:bean-parents` was red
+because this bean carried no `parent:`. Both were fixed here as part of
+clearing `main`'s red gates, on the owner's "merge go". The author of this
+bean should expand or replace everything below; nothing in it is a decision
+about the work.
 
-Parent is **`slw1`** — *"INGEST: one pipeline from uploads/ to a complete L1
-library"* — on this bean's own naming: its title opens `INGEST:`, which is how
-every other child of `slw1` is named, and what it describes is three arXiv PDFs
-ingested from `qou bd0c2cb7`.
+## What the title already says, unpacked so the store is readable
 
-**`ahvw`** (*"PROCESS: how an agent decides what it is doing"*) was the real
-alternative, filing it by what it PRODUCES — a selector over decision
-methodologies — rather than by how the material arrived. Put to the owner with
-both readings; `slw1` chosen.
+A skill that takes a **decision context** as input and returns the
+**applicable methodologies, ranked**, each with its selection criteria and the
+rationale for the ranking — rather than one methodology asserted as correct.
 
-Nothing else about the bean is touched: its scope, status and body are its
-author's.
+Sourced from `litlfred/qou` commit `bd0c2cb7`, three arXiv papers:
 
-## The ordering is arguably the larger defect
+| arXiv | family |
+|---|---|
+| 2508.21620 | probabilistic methods, bandits |
+| 2509.06388 | MCDM — AHP, SAW |
+| 2607.20636 | sequential and social choice |
 
-`7e59` is one line. That one line could dark 44 unrelated gates because
-`check:bean-parents` runs *behind* `bun test` in a single job rather than as its
-own step. Not fixed here — that is a change to the gate topology, and this
-change exists to get `main` green. Worth a bean of its own.
+The title states the coverage claim: *"covers all methodology families with
+when-to-use criteria."*
+
+## What landed with it, and what did not
+
+`cat-harness/skills/folio-core/decision-methodology-selector.md` is on `main`.
+Four things that should have accompanied it did not, and each was its own red
+gate:
+
+- it was absent from `skills/folio-core/package-manifest.json`, so
+  `skill-manifest-coverage` failed;
+- it had no generated reference page, so `skill-coverage` failed;
+- its `kg-qa` sidecar had never been written, so `declared-directory-resolves`
+  saw the tree go dirty on import;
+- this bean had no parent, so `check:bean-parents` failed.
+
+All four are generated or declared siblings of one authored file. That is the
+shape worth noting for whoever picks this up: the skill itself is fine; what
+was missing is everything that makes it *findable*.
+
+## Done when
+
+- [ ] The author replaces this body with the real scope.
+- [ ] The skill's ranking output has a schema, or a stated reason it does not.
+- [ ] The "covers all methodology families" claim is checked against the three
+      sources rather than asserted.

@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1396 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1419 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1576 terms and is 852 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1599 terms and is 867 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1576</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1599</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2386,6 +2386,83 @@ Decision.role <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Role id from `schemas/role-graph.ts` — the lane this was decided in.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts"><code>cat-harness/schemas/qa-review.ts#Decision.role</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.alternativecount" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.alternativeCount <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many alternatives are being compared.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.alternativeCount</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.criteriacount" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.criteriaCount <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many criteria the alternatives are scored against.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaCount</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.criteriaweightsknown" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.criteriaWeightsKnown <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether criteria weights are known a priori or must be derived.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaWeightsKnown</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.datatype" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.dataType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Kind of data available for the criteria values.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.dataType</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.questiontype" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.questionType <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The methodology-adoption lane. When provided, only methods in this lane are candidates.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.questionType</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.reversibility" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.reversibility <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Can the decision be undone, and at what cost?</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.reversibility</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.sequential" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.sequential <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>True when decisions recur or adapt over time (sequential/bandit setting).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.sequential</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.stakeholdercount" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.stakeholderCount <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Number of people involved in the decision.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.stakeholderCount</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.summary" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.summary <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Free-text summary of what is being decided. Not matched algorithmically — carried for the rationale narrative.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.summary</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.timeconstraint" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.timeConstraint <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How much time is available for the analysis.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.timeConstraint</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.decisioncontextschema.uncertainty" data-fa-state="extracted" data-fa-gloss="">
+DecisionContextSchema.uncertainty <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How much is unknown about the problem.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.uncertainty</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--decision-request.decisionoptionschema.con" data-fa-state="extracted" data-fa-gloss="">
 DecisionOptionSchema.con <span class="fa-gloss-status">candidate, extracted</span>
@@ -5516,6 +5593,90 @@ MethodologyFrontMatterSchema.title <span class="fa-gloss-status">candidate, extr
 <dd>
 <p>What a reader sees. Not the id with capitals — it may name the acronym's expansion.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/methodology.ts"><code>cat-harness/schemas/methodology.ts#MethodologyFrontMatterSchema.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.avoidwhen" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.avoidWhen <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Under what conditions this method should NOT be used. Matched against context.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.avoidWhen</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.complexity" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.complexity <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Low / Medium / High.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.complexity</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.datarequirements" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.dataRequirements <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What data the method requires.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.dataRequirements</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.family" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.family <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which method family: mcdm-aggregation, probabilistic, social, classical, hybrid-mcdm.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.family</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.matchtier" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.matchTier <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How well this method fits the context. A tier, not a score — the platform refuses pseudo-measurement (methodology-adoption: &quot;never quantify a judgement to make it look measured; where a method scores and sums, take structure and refuse arithmetic&quot;).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.matchTier</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.methodologyid" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.methodologyId <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The methodology's `name` from its front matter (kebab-case id).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.methodologyId</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.rationale" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.rationale <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why this methodology fits the given context. Matched against `applies-when`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.rationale</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.source" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.source <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Bibliographic source: paper title, authors, arxiv id or standard.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyrecommendationschema.title" data-fa-state="extracted" data-fa-gloss="">
+MethodologyRecommendationSchema.title <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The methodology's human-readable title.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyselectionresultschema.context" data-fa-state="extracted" data-fa-gloss="">
+MethodologySelectionResultSchema.context <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The context that was provided.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.context</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyselectionresultschema.nomatchreason" data-fa-state="extracted" data-fa-gloss="">
+MethodologySelectionResultSchema.noMatchReason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>If no methodology fits, this explains why. Per methodology-adoption: &quot;If none fits, that is a finding, not a licence.&quot;</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.noMatchReason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--decision-methodology-context.methodologyselectionresultschema.recommendations" data-fa-state="extracted" data-fa-gloss="">
+MethodologySelectionResultSchema.recommendations <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Ranked recommendations, best fit first.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/decision-methodology-context.ts"><code>cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.recommendations</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--model-registry.modelentryschema.id" data-fa-state="extracted" data-fa-gloss="">
 ModelEntrySchema.id <span class="fa-gloss-status">candidate, extracted</span>
